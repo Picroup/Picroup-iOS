@@ -13,6 +13,8 @@
 		457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B8E205FEA1000BEDDF1 /* Main.storyboard */; };
 		457B1B92205FEA1000BEDDF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B91205FEA1000BEDDF1 /* Assets.xcassets */; };
 		457B1B95205FEA1000BEDDF1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B93205FEA1000BEDDF1 /* LaunchScreen.storyboard */; };
+		457B1B9F205FF24B00BEDDF1 /* ViewController.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */; };
+		457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1BA0205FF2A100BEDDF1 /* API.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		457B1B91205FEA1000BEDDF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		457B1B94205FEA1000BEDDF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		457B1B96205FEA1000BEDDF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ViewController.graphql; sourceTree = "<group>"; };
+		457B1BA0205FF2A100BEDDF1 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		7A0DB2063FBD3CD08905936E /* Pods-Picroup-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Picroup_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -61,8 +65,10 @@
 		457B1B89205FEA1000BEDDF1 /* Picroup-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				457B1BA0205FF2A100BEDDF1 /* API.swift */,
 				457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */,
 				457B1B8C205FEA1000BEDDF1 /* ViewController.swift */,
+				457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */,
 				457B1B8E205FEA1000BEDDF1 /* Main.storyboard */,
 				457B1B91205FEA1000BEDDF1 /* Assets.xcassets */,
 				457B1B93205FEA1000BEDDF1 /* LaunchScreen.storyboard */,
@@ -96,6 +102,7 @@
 			buildConfigurationList = 457B1B99205FEA1000BEDDF1 /* Build configuration list for PBXNativeTarget "Picroup-iOS" */;
 			buildPhases = (
 				1A832FF15A88A8EFF78CE953 /* [CP] Check Pods Manifest.lock */,
+				457B1B9D205FF08300BEDDF1 /* Generate GraphQL Apollo API */,
 				457B1B83205FEA1000BEDDF1 /* Sources */,
 				457B1B84205FEA1000BEDDF1 /* Frameworks */,
 				457B1B85205FEA1000BEDDF1 /* Resources */,
@@ -152,6 +159,7 @@
 			files = (
 				457B1B95205FEA1000BEDDF1 /* LaunchScreen.storyboard in Resources */,
 				457B1B92205FEA1000BEDDF1 /* Assets.xcassets in Resources */,
+				457B1B9F205FF24B00BEDDF1 /* ViewController.graphql in Resources */,
 				457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -173,6 +181,20 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		457B1B9D205FF08300BEDDF1 /* Generate GraphQL Apollo API */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate GraphQL Apollo API";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output API.swift";
 		};
 		AF94AA55038A9954C3A3312C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -212,6 +234,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				457B1B8D205FEA1000BEDDF1 /* ViewController.swift in Sources */,
+				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
