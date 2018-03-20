@@ -5,5 +5,6 @@ target 'Picroup-iOS' do
   use_frameworks!
 
   pod 'Apollo', '~> 0.8'
-  pod 'Alamofire', '~> 4.7'
+  pod 'RxAlamofire', '~> 4.1'
+  pod 'Kingfisher', '~> 4.0'
 end
