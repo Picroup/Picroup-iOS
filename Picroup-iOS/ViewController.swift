@@ -17,18 +17,18 @@ class ViewController: UIViewController {
     @IBOutlet private weak var uploadButton: UIButton!
     private let disposeBag = DisposeBag()
     
-//    private let client = ApolloClient(url: URL(string: "\(Config.baseURL)/graphql")!)
+    private let client = ApolloClient(url: URL(string: "\(Config.baseURL)/graphql")!)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        _ = client.fetch(query: BooksQuery()) { (result, error) in
-//            guard error == nil else {
-//                print("error: \(error!)")
-//                return
-//            }
-//            print("result: \(result!)")
-//        }
+        _ = client.fetch(query: RandedMediaQuery()) { (result, error) in
+            guard error == nil else {
+                print("error: \(error!)")
+                return
+            }
+            print("result: \(result!)")
+        }
     }
     
     @IBAction func uploadImage(_ sender: UIButton) {

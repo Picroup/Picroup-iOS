@@ -1,7 +1,9 @@
-query Books {
-    books {
-        title
-        author
+query RandedMedia($cursor: Float = null) {
+    rankedMedia(category: popular, cursor: $cursor, rankBy: thisMonth) {
+        cursor
+        items {
+            _id
+        }
     }
 }
 
