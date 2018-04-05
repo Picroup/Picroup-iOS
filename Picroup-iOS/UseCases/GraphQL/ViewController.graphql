@@ -5,5 +5,11 @@ query RandedMedia($cursor: Float = null) {
             _id
         }
     }
+    user: login(username: "pingguo", password: "pingguo") {
+        _id
+        username
+        followersCount
+        followingsCount
+    }
 }
 

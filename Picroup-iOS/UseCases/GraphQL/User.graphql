@@ -1,0 +1,11 @@
+query User($userId: ID!) {
+    user(userId: $userId) {
+        _id
+        username
+        followingsCount
+        followersCount
+        reputation
+        gainedReputation
+        notificationsCount
+    }
+}

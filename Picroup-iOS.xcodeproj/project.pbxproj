@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0501F76BC004870A4FD7F133 /* Pods_Picroup_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */; };
+		450C7E852075DA5C009ABB1E /* RouterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450C7E842075DA5C009ABB1E /* RouterState.swift */; };
+		450C7E872075DD67009ABB1E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450C7E862075DD67009ABB1E /* AppState.swift */; };
+		450C7E892075E7C1009ABB1E /* SubViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450C7E882075E7C1009ABB1E /* SubViewController.swift */; };
 		456C5E412061446C005F981B /* ImageUpoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C5E402061446C005F981B /* ImageUpoader.swift */; };
 		457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */; };
 		457B1B8D205FEA1000BEDDF1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8C205FEA1000BEDDF1 /* ViewController.swift */; };
@@ -17,10 +20,15 @@
 		457B1B9F205FF24B00BEDDF1 /* ViewController.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */; };
 		457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1BA0205FF2A100BEDDF1 /* API.swift */; };
 		457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1BA2205FFE9D00BEDDF1 /* Config.swift */; };
+		45A0393B2075CAD5007498DB /* LoginState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A0393A2075CAD5007498DB /* LoginState.swift */; };
+		45A0393D2075D0E9007498DB /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A0393C2075D0E9007498DB /* User.graphql */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0C1CA8B77EB5486794A21137 /* Pods-Picroup-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		450C7E842075DA5C009ABB1E /* RouterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterState.swift; sourceTree = "<group>"; };
+		450C7E862075DD67009ABB1E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		450C7E882075E7C1009ABB1E /* SubViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubViewController.swift; sourceTree = "<group>"; };
 		456C5E402061446C005F981B /* ImageUpoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUpoader.swift; sourceTree = "<group>"; };
 		457B1B87205FEA1000BEDDF1 /* Picroup-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Picroup-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -32,6 +40,8 @@
 		457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ViewController.graphql; sourceTree = "<group>"; };
 		457B1BA0205FF2A100BEDDF1 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		457B1BA2205FFE9D00BEDDF1 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		45A0393A2075CAD5007498DB /* LoginState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginState.swift; sourceTree = "<group>"; };
+		45A0393C2075D0E9007498DB /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
 		7A0DB2063FBD3CD08905936E /* Pods-Picroup-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Picroup_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -69,18 +79,71 @@
 		457B1B89205FEA1000BEDDF1 /* Picroup-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				457B1BA0205FF2A100BEDDF1 /* API.swift */,
+				45A039362075C608007498DB /* Libaries */,
+				45A039372075C613007498DB /* UseCases */,
+				45A039382075C64E007498DB /* Services */,
+				45A039342075C563007498DB /* Feedbacks */,
 				457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */,
 				457B1B8C205FEA1000BEDDF1 /* ViewController.swift */,
+				450C7E882075E7C1009ABB1E /* SubViewController.swift */,
 				456C5E402061446C005F981B /* ImageUpoader.swift */,
 				457B1BA2205FFE9D00BEDDF1 /* Config.swift */,
-				457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */,
 				457B1B8E205FEA1000BEDDF1 /* Main.storyboard */,
+				45A039332075C4C5007498DB /* SupportingFiles */,
+			);
+			path = "Picroup-iOS";
+			sourceTree = "<group>";
+		};
+		45A039332075C4C5007498DB /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
 				457B1B91205FEA1000BEDDF1 /* Assets.xcassets */,
 				457B1B93205FEA1000BEDDF1 /* LaunchScreen.storyboard */,
 				457B1B96205FEA1000BEDDF1 /* Info.plist */,
 			);
-			path = "Picroup-iOS";
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		45A039342075C563007498DB /* Feedbacks */ = {
+			isa = PBXGroup;
+			children = (
+				45A0393A2075CAD5007498DB /* LoginState.swift */,
+				450C7E862075DD67009ABB1E /* AppState.swift */,
+				450C7E842075DA5C009ABB1E /* RouterState.swift */,
+			);
+			path = Feedbacks;
+			sourceTree = "<group>";
+		};
+		45A039362075C608007498DB /* Libaries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Libaries;
+			sourceTree = "<group>";
+		};
+		45A039372075C613007498DB /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				45A039392075C6F7007498DB /* GraphQL */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		45A039382075C64E007498DB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		45A039392075C6F7007498DB /* GraphQL */ = {
+			isa = PBXGroup;
+			children = (
+				457B1BA0205FF2A100BEDDF1 /* API.swift */,
+				45A0393C2075D0E9007498DB /* User.graphql */,
+				457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */,
+			);
+			path = GraphQL;
 			sourceTree = "<group>";
 		};
 		7AFE53B525738F6B09EB9CDC /* Pods */ = {
@@ -167,6 +230,7 @@
 				457B1B92205FEA1000BEDDF1 /* Assets.xcassets in Resources */,
 				457B1B9F205FF24B00BEDDF1 /* ViewController.graphql in Resources */,
 				457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */,
+				45A0393D2075D0E9007498DB /* User.graphql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,7 +264,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output API.swift";
+			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema UseCases/GraphQL/schema.json --output UseCases/GraphQL/API.swift";
 		};
 		AF94AA55038A9954C3A3312C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -239,11 +303,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45A0393B2075CAD5007498DB /* LoginState.swift in Sources */,
 				457B1B8D205FEA1000BEDDF1 /* ViewController.swift in Sources */,
 				456C5E412061446C005F981B /* ImageUpoader.swift in Sources */,
+				450C7E872075DD67009ABB1E /* AppState.swift in Sources */,
 				457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
+				450C7E892075E7C1009ABB1E /* SubViewController.swift in Sources */,
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
+				450C7E852075DA5C009ABB1E /* RouterState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,7 +451,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6BDKUNMM63;
-				INFOPLIST_FILE = "Picroup-iOS/Info.plist";
+				INFOPLIST_FILE = "Picroup-iOS/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.picroup.Picroup-iOS";
@@ -400,7 +468,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6BDKUNMM63;
-				INFOPLIST_FILE = "Picroup-iOS/Info.plist";
+				INFOPLIST_FILE = "Picroup-iOS/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.picroup.Picroup-iOS";

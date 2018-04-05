@@ -52,5 +52,42 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
+        <!--Sub View Controller-->
+        <scene sceneID="ymA-UX-JuM">
+            <objects>
+                <viewController storyboardIdentifier="SubViewController" id="YEl-aK-UUy" customClass="SubViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fU3-R2-90d">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7tc-hF-1hr">
+                                <rect key="frame" x="164" y="295" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cPb-B6-rlZ">
+                                <rect key="frame" x="166" y="333" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="cPb-B6-rlZ" firstAttribute="top" secondItem="7tc-hF-1hr" secondAttribute="bottom" constant="8" id="IT6-FA-gKn"/>
+                            <constraint firstItem="cPb-B6-rlZ" firstAttribute="centerY" secondItem="1jc-Fv-YOa" secondAttribute="centerY" id="fJW-h3-7Gy"/>
+                            <constraint firstItem="7tc-hF-1hr" firstAttribute="centerX" secondItem="1jc-Fv-YOa" secondAttribute="centerX" id="pum-Qc-No8"/>
+                            <constraint firstItem="cPb-B6-rlZ" firstAttribute="centerX" secondItem="1jc-Fv-YOa" secondAttribute="centerX" id="zEP-mr-ZU9"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="1jc-Fv-YOa"/>
+                    </view>
+                    <connections>
+                        <outlet property="button" destination="7tc-hF-1hr" id="gvi-8A-9j2"/>
+                        <outlet property="label" destination="cPb-B6-rlZ" id="zII-7x-yuL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BqJ-wZ-9al" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1521" y="30"/>
+        </scene>
     </scenes>
 </document>
