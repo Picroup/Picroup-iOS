@@ -22,13 +22,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        _ = client.fetch(query: RandedMediaQuery()) { (result, error) in
-            guard error == nil else {
-                print("error: \(error!)")
-                return
-            }
-            print("result: \(result!)")
-        }
+//        _ = client.fetch(query: RandedMediaQuery()) { (result, error) in
+//            guard error == nil else {
+//                print("error: \(error!)")
+//                return
+//            }
+//            print("result: \(result!)")
+//        }
     }
     
     @IBAction func uploadImage(_ sender: UIButton) {

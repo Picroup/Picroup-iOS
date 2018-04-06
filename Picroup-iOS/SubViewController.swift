@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import RxFeedback
 
+
 struct SubViewConnector {
     
     static let mapParentStateToChildEvent: (Driver<AppState>) -> Signal<SubViewState.Event> = { parentState in
@@ -21,7 +22,22 @@ struct SubViewConnector {
         return .empty()
     }
     
-//    static func createChildDependency(parentFeedback: ())
+    
+    static let connect: (Driver<AppState>) -> Signal<AppState.Event> = { parentState in
+        let parentEvent = PublishRelay<AppState.Event>()
+        let childFeedback: (Driver<SubViewState>) -> Signal<SubViewState.Event> = bind { (childState) in
+            Bindings(subscriptions: [
+                mapChildStateToParentEvent(childState).emit(to: parentEvent)
+            ], events: [
+                mapParentStateToChildEvent(parentState)
+            ])
+        }
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SubViewController") as! SubViewController
+        vc.dependency = childFeedback
+        
+        return parentEvent.asSignal()
+    }
+    
 }
 
 struct SubViewState {
@@ -53,13 +69,14 @@ struct SubViewState {
     }
 }
 
+
 class SubViewController: UIViewController {
 
     @IBOutlet private weak var button: UIButton!
     @IBOutlet private weak var label: UILabel!
     
     private let disposeBag = DisposeBag()
-    var dependency: (event: Signal<SubViewState.Event>, state: AnyObserver<SubViewState>)?
+    var dependency: ((Driver<SubViewState>) -> Signal<SubViewState.Event>)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
