@@ -9,8 +9,8 @@
 import Foundation
 
 struct RouterState {
-    var triggerLogin: Void?
-    var triggerShowMedium: String?
+    var triggerLogin: Timed<Void>?
+    var triggerShowMedium: Timed<String>?
 }
 
 extension RouterState {
@@ -32,10 +32,10 @@ extension RouterState {
         var newState = empty
         switch event {
         case .onTriggerLogin:
-            newState.triggerLogin = ()
+            newState.triggerLogin = Timed(())
             return newState
         case .onTriggerShowMedium(let mediumId):
-            newState.triggerShowMedium = mediumId
+            newState.triggerShowMedium = Timed(mediumId)
             return newState
         }
     }}

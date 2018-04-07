@@ -25,14 +25,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Driver.system(
             initialState: AppState.empty,
             reduce: AppState.reduce,
-            feedback: { state in
-                state.map { $0.routerState.triggerLogin }.distinctUntilChanged(==).filter { $0 != nil }.flatMap { _ -> Signal<AppState.Event> in
-                    let event = PublishRelay<AppState.Event>()
-                    routerService.showSubState(state: state, event: Binder(event) { $0.accept($1) })
-                    return event.asSignal()
-                }
-        }, { _ in
-            Signal.just(AppState.Event.routerEvent(.onTriggerLogin)).delay(3)
+            feedback: connect(
+                keyed: { $0.routerState.triggerLogin },
+                mapChildStateToParentEvent: { childState in
+                    childState.map { $0.trigger }.unwrap().map { _ in .routerEvent(.onTriggerLogin) }
+                        .debug("parentEvent")
+                        .asSignal(onErrorRecover: { _ in .empty() })
+                    
+            },
+                route: { (_, childFeedback) in
+                    routerService.showSubState(dependency: childFeedback)
+            }
+            ), { _ in
+                Signal.just(.routerEvent(.onTriggerLogin)).delay(3)
         })
             .debug("AppState")
             .drive()
