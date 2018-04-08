@@ -9,7 +9,7 @@
 import Foundation
 
 struct AppState {
-    var loginState: LoginState
+    var loginState: SessionState
     var routerState: RouterState
 }
 
@@ -24,7 +24,7 @@ extension AppState {
 
 extension AppState {
     enum Event {
-        case loginEvent(LoginState.Event)
+        case loginEvent(SessionState.Event)
         case routerEvent(RouterState.Event)
     }
 }
@@ -34,7 +34,7 @@ extension AppState {
     static func reduce(state: AppState, event: Event) -> AppState {
         switch event {
         case .loginEvent(let loginEvent):
-            let newLoginState = LoginState.reduce(state.loginState, loginEvent)
+            let newLoginState = SessionState.reduce(state.loginState, loginEvent)
             return AppState(
                 loginState: newLoginState,
                 routerState: state.routerState
