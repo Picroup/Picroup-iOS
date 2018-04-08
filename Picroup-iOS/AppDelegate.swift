@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxFeedback
+import Material
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,30 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let disposeBag = DisposeBag()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        let routerService = RouterService(rootViewController: window!.rootViewController!)
-        
-        Driver.system(
-            initialState: AppState.empty,
-            reduce: AppState.reduce,
-            feedback: connect(
-                keyed: { $0.routerState.triggerLogin },
-                mapChildStateToParentEvent: { childState in
-                    childState.map { $0.trigger }.unwrap().map { _ in .routerEvent(.onTriggerLogin) }
-                        .debug("parentEvent")
-                        .asSignal(onErrorRecover: { _ in .empty() })
-                    
-            },
-                route: { (_, childFeedback) in
-                    routerService.showSubState(dependency: childFeedback)
-            }
-            ), { _ in
-                Signal.just(.routerEvent(.onTriggerLogin)).delay(3)
-        })
-            .debug("AppState")
-            .drive()
-            .disposed(by: disposeBag)
-        
+        window?.tintColor = UIColor.primary
         return true
     }
 

@@ -10,19 +10,18 @@
 		0501F76BC004870A4FD7F133 /* Pods_Picroup_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */; };
 		450C7E852075DA5C009ABB1E /* RouterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450C7E842075DA5C009ABB1E /* RouterState.swift */; };
 		450C7E872075DD67009ABB1E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450C7E862075DD67009ABB1E /* AppState.swift */; };
-		450C7E892075E7C1009ABB1E /* SubViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450C7E882075E7C1009ABB1E /* SubViewController.swift */; };
 		451CD3112079105B0063A972 /* connect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD3102079105B0063A972 /* connect.swift */; };
 		451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD313207910D10063A972 /* SharedSequence+unwrap.swift */; };
 		451CD317207914240063A972 /* Timed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD316207914240063A972 /* Timed.swift */; };
 		456C5E412061446C005F981B /* ImageUpoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C5E402061446C005F981B /* ImageUpoader.swift */; };
 		457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */; };
-		457B1B8D205FEA1000BEDDF1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8C205FEA1000BEDDF1 /* ViewController.swift */; };
 		457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B8E205FEA1000BEDDF1 /* Main.storyboard */; };
 		457B1B92205FEA1000BEDDF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B91205FEA1000BEDDF1 /* Assets.xcassets */; };
 		457B1B95205FEA1000BEDDF1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B93205FEA1000BEDDF1 /* LaunchScreen.storyboard */; };
 		457B1B9F205FF24B00BEDDF1 /* ViewController.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */; };
 		457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1BA0205FF2A100BEDDF1 /* API.swift */; };
 		457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1BA2205FFE9D00BEDDF1 /* Config.swift */; };
+		4595F2082079EECF0040E5FA /* colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F2072079EECF0040E5FA /* colors.swift */; };
 		45A0393B2075CAD5007498DB /* LoginState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A0393A2075CAD5007498DB /* LoginState.swift */; };
 		45A0393D2075D0E9007498DB /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A0393C2075D0E9007498DB /* User.graphql */; };
 		45FF842220765BF600E6A203 /* RouterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FF842120765BF600E6A203 /* RouterService.swift */; };
@@ -32,14 +31,12 @@
 		0C1CA8B77EB5486794A21137 /* Pods-Picroup-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		450C7E842075DA5C009ABB1E /* RouterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterState.swift; sourceTree = "<group>"; };
 		450C7E862075DD67009ABB1E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		450C7E882075E7C1009ABB1E /* SubViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubViewController.swift; sourceTree = "<group>"; };
 		451CD3102079105B0063A972 /* connect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = connect.swift; sourceTree = "<group>"; };
 		451CD313207910D10063A972 /* SharedSequence+unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+unwrap.swift"; sourceTree = "<group>"; };
 		451CD316207914240063A972 /* Timed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timed.swift; sourceTree = "<group>"; };
 		456C5E402061446C005F981B /* ImageUpoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUpoader.swift; sourceTree = "<group>"; };
 		457B1B87205FEA1000BEDDF1 /* Picroup-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Picroup-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		457B1B8C205FEA1000BEDDF1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		457B1B8F205FEA1000BEDDF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		457B1B91205FEA1000BEDDF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		457B1B94205FEA1000BEDDF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +44,7 @@
 		457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ViewController.graphql; sourceTree = "<group>"; };
 		457B1BA0205FF2A100BEDDF1 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		457B1BA2205FFE9D00BEDDF1 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		4595F2072079EECF0040E5FA /* colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = colors.swift; sourceTree = "<group>"; };
 		45A0393A2075CAD5007498DB /* LoginState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginState.swift; sourceTree = "<group>"; };
 		45A0393C2075D0E9007498DB /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
 		45FF842120765BF600E6A203 /* RouterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterService.swift; sourceTree = "<group>"; };
@@ -66,6 +64,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4515A68C2079E3790039C383 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				4515A68D2079E39F0039C383 /* Main */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		4515A68D2079E39F0039C383 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				457B1B8E205FEA1000BEDDF1 /* Main.storyboard */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		451CD30F207910370063A972 /* RxFeedback */ = {
 			isa = PBXGroup;
 			children = (
@@ -115,15 +129,28 @@
 				45A039372075C613007498DB /* UseCases */,
 				45A039382075C64E007498DB /* Services */,
 				45A039342075C563007498DB /* Feedbacks */,
+				4515A68C2079E3790039C383 /* Storyboards */,
 				457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */,
-				457B1B8C205FEA1000BEDDF1 /* ViewController.swift */,
-				450C7E882075E7C1009ABB1E /* SubViewController.swift */,
-				456C5E402061446C005F981B /* ImageUpoader.swift */,
 				457B1BA2205FFE9D00BEDDF1 /* Config.swift */,
-				457B1B8E205FEA1000BEDDF1 /* Main.storyboard */,
 				45A039332075C4C5007498DB /* SupportingFiles */,
 			);
 			path = "Picroup-iOS";
+			sourceTree = "<group>";
+		};
+		4595F2042079EDE20040E5FA /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				4595F2072079EECF0040E5FA /* colors.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		4595F2092079F3630040E5FA /* Minio */ = {
+			isa = PBXGroup;
+			children = (
+				456C5E402061446C005F981B /* ImageUpoader.swift */,
+			);
+			path = Minio;
 			sourceTree = "<group>";
 		};
 		45A039332075C4C5007498DB /* SupportingFiles */ = {
@@ -159,6 +186,8 @@
 		45A039372075C613007498DB /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				4595F2092079F3630040E5FA /* Minio */,
+				4595F2042079EDE20040E5FA /* UIKit */,
 				45A039392075C6F7007498DB /* GraphQL */,
 			);
 			path = UseCases;
@@ -340,14 +369,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				45A0393B2075CAD5007498DB /* LoginState.swift in Sources */,
-				457B1B8D205FEA1000BEDDF1 /* ViewController.swift in Sources */,
 				456C5E412061446C005F981B /* ImageUpoader.swift in Sources */,
 				450C7E872075DD67009ABB1E /* AppState.swift in Sources */,
 				457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
 				45FF842220765BF600E6A203 /* RouterService.swift in Sources */,
-				450C7E892075E7C1009ABB1E /* SubViewController.swift in Sources */,
 				451CD3112079105B0063A972 /* connect.swift in Sources */,
+				4595F2082079EECF0040E5FA /* colors.swift in Sources */,
 				451CD317207914240063A972 /* Timed.swift in Sources */,
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
 				451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */,
