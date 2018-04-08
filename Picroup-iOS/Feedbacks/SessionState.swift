@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LoginState {
+struct SessionState {
     let user: UserQuery.Data.User?
     let isLogin: Bool
     let isExecuting: Bool
@@ -16,9 +16,9 @@ struct LoginState {
     let triggerLogin: Void?
 }
 
-extension LoginState {
-    static var empty: LoginState {
-        return LoginState(
+extension SessionState {
+    static var empty: SessionState {
+        return SessionState(
             user: nil,
             isLogin: false,
             isExecuting: false,
@@ -28,7 +28,7 @@ extension LoginState {
     }
 }
 
-extension LoginState {
+extension SessionState {
     
     enum Event {
         case onExecuting
@@ -39,12 +39,12 @@ extension LoginState {
     }
 }
 
-extension LoginState {
+extension SessionState {
     
-    static let reduce: (LoginState, Event) -> LoginState =  { state, event in
+    static let reduce: (SessionState, Event) -> SessionState =  { state, event in
         switch event {
         case .onExecuting:
-            return LoginState(
+            return SessionState(
                 user: nil,
                 isLogin: false,
                 isExecuting: true,
@@ -52,7 +52,7 @@ extension LoginState {
                 triggerLogin: nil
             )
         case .onSuccess(let user):
-            return LoginState(
+            return SessionState(
                 user: user,
                 isLogin: true,
                 isExecuting: false,
@@ -60,7 +60,7 @@ extension LoginState {
                 triggerLogin: nil
             )
         case .onError(let error):
-            return LoginState(
+            return SessionState(
                 user: nil,
                 isLogin: false,
                 isExecuting: false,
@@ -71,7 +71,7 @@ extension LoginState {
             return empty
         case .onTrigger:
             guard shouldLogin(state: state) else { return state }
-            return LoginState(
+            return SessionState(
                 user: nil,
                 isLogin: false,
                 isExecuting: false,
@@ -81,7 +81,7 @@ extension LoginState {
         }
     }
     
-    private static func shouldLogin(state: LoginState) -> Bool {
+    private static func shouldLogin(state: SessionState) -> Bool {
         return !state.isExecuting
     }
 }
