@@ -20,7 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let disposeBag = DisposeBag()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        window?.tintColor = UIColor.primary
+        let window = UIWindow(frame: Screen.bounds)
+        window.tintColor = UIColor.primary
+        let rootViewController = UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()!
+        window.rootViewController = SnackbarController(rootViewController: rootViewController)
+        window.makeKeyAndVisible()
+        self.window = window
         return true
     }
 

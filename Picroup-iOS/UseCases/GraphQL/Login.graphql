@@ -1,0 +1,11 @@
+query Login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+        _id
+        username
+        followingsCount
+        followersCount
+        reputation
+        gainedReputation
+        notificationsCount
+    }
+}

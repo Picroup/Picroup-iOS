@@ -8,6 +8,7 @@
 
 import UIKit
 import Material
+import RxCocoa
 
 class LoginViewPresenter {
     
@@ -30,24 +31,22 @@ class LoginViewPresenter {
         prepareUsernameField()
     }
     
-    /// Prepares the resign responder button.
     fileprivate func prepareResignResponderButton() {
         raisedButton = RaisedButton(title: "登录", titleColor: .primaryText)
-//        raisedButton.setBackgroundImage(UIImage.createWithColor(.secondary), for: .normal)
         raisedButton.backgroundColor = .secondary
         raisedButton.isEnabled = true
-        view.layout(raisedButton).center().width(100).height(constant).right(20)
+        view.layout(raisedButton).center(offsetX: 100).width(100).height(constant)
     }
     
     fileprivate func prepareUsernameField() {
         usernameField = ErrorTextField()
         usernameField.placeholder = "用户名"
-        usernameField.detail = "用户名无效"
+        usernameField.detail = "至少需要 5 个字"
         usernameField.isClearIconButtonEnabled = true
         usernameField.placeholderActiveColor = .primary
         usernameField.dividerActiveColor = .primary
         
-        view.layout(usernameField).center(offsetY: -raisedButton.bounds.height - passwordField.bounds.height - 120).left(20).right(20)
+        view.layout(usernameField).center(offsetY: -raisedButton.bounds.height - passwordField.bounds.height - 120).width(300)
     }
     
     fileprivate func preparePasswordField() {
@@ -55,7 +54,7 @@ class LoginViewPresenter {
         passwordField.placeholderActiveColor = .primary
         passwordField.dividerActiveColor = .primary
         passwordField.placeholder = "密码"
-        passwordField.detail = "至少需要 8 个字"
+        passwordField.detail = "至少需要 5 个字"
         passwordField.clearButtonMode = .whileEditing
         passwordField.isVisibilityIconButtonEnabled = true
         
@@ -64,7 +63,15 @@ class LoginViewPresenter {
         // Setting the visibilityIconButton color.
         passwordField.visibilityIconButton?.tintColor = .primary
         
-        view.layout(passwordField).center(offsetY: -raisedButton.bounds.height - 60).left(20).right(20)
+        view.layout(passwordField).center(offsetY: -raisedButton.bounds.height - 60).width(300)
+    }
+    
+    var isLoginEnabled: Binder<Bool> {
+        return Binder(raisedButton) { button, isEnabled in
+            button.isEnabled = isEnabled
+            let alpha: CGFloat = isEnabled ? 1 : 0.2
+            button.backgroundColor = UIColor.secondary.withAlphaComponent(alpha)
+        }
     }
 }
 

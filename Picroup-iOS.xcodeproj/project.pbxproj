@@ -13,6 +13,11 @@
 		451CD3112079105B0063A972 /* connect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD3102079105B0063A972 /* connect.swift */; };
 		451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD313207910D10063A972 /* SharedSequence+unwrap.swift */; };
 		451CD317207914240063A972 /* Timed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD316207914240063A972 /* Timed.swift */; };
+		451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD31A207A38F20063A972 /* UIResponder+Rx.swift */; };
+		451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */; };
+		451CD31F207A3B3A0063A972 /* Login.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 451CD31E207A3B3A0063A972 /* Login.graphql */; };
+		451CD322207A3C1D0063A972 /* ApolloClient+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD321207A3C1D0063A972 /* ApolloClient+Rx.swift */; };
+		451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD323207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift */; };
 		456C5E412061446C005F981B /* ImageUpoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C5E402061446C005F981B /* ImageUpoader.swift */; };
 		457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */; };
 		457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B8E205FEA1000BEDDF1 /* Main.storyboard */; };
@@ -39,6 +44,11 @@
 		451CD3102079105B0063A972 /* connect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = connect.swift; sourceTree = "<group>"; };
 		451CD313207910D10063A972 /* SharedSequence+unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+unwrap.swift"; sourceTree = "<group>"; };
 		451CD316207914240063A972 /* Timed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timed.swift; sourceTree = "<group>"; };
+		451CD31A207A38F20063A972 /* UIResponder+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Rx.swift"; sourceTree = "<group>"; };
+		451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+Operator.swift"; sourceTree = "<group>"; };
+		451CD31E207A3B3A0063A972 /* Login.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Login.graphql; sourceTree = "<group>"; };
+		451CD321207A3C1D0063A972 /* ApolloClient+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApolloClient+Rx.swift"; sourceTree = "<group>"; };
+		451CD323207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrimitiveSequence+unwrap.swift"; sourceTree = "<group>"; };
 		456C5E402061446C005F981B /* ImageUpoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUpoader.swift; sourceTree = "<group>"; };
 		457B1B87205FEA1000BEDDF1 /* Picroup-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Picroup-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -102,7 +112,7 @@
 		451CD312207910A10063A972 /* RxSwift */ = {
 			isa = PBXGroup;
 			children = (
-				451CD313207910D10063A972 /* SharedSequence+unwrap.swift */,
+				451CD323207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift */,
 			);
 			path = RxSwift;
 			sourceTree = "<group>";
@@ -114,6 +124,24 @@
 				4595F218207A15010040E5FA /* Mutabled.swift */,
 			);
 			path = Foundation;
+			sourceTree = "<group>";
+		};
+		451CD318207A38CF0063A972 /* RxCocoa */ = {
+			isa = PBXGroup;
+			children = (
+				451CD313207910D10063A972 /* SharedSequence+unwrap.swift */,
+				451CD31A207A38F20063A972 /* UIResponder+Rx.swift */,
+				451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */,
+			);
+			path = RxCocoa;
+			sourceTree = "<group>";
+		};
+		451CD320207A3BF70063A972 /* RxApollo */ = {
+			isa = PBXGroup;
+			children = (
+				451CD321207A3C1D0063A972 /* ApolloClient+Rx.swift */,
+			);
+			path = RxApollo;
 			sourceTree = "<group>";
 		};
 		457B1B7E205FEA1000BEDDF1 = {
@@ -208,8 +236,10 @@
 		45A039362075C608007498DB /* Libaries */ = {
 			isa = PBXGroup;
 			children = (
+				451CD320207A3BF70063A972 /* RxApollo */,
 				451CD3152079140E0063A972 /* Foundation */,
 				451CD312207910A10063A972 /* RxSwift */,
+				451CD318207A38CF0063A972 /* RxCocoa */,
 				451CD30F207910370063A972 /* RxFeedback */,
 			);
 			path = Libaries;
@@ -238,6 +268,7 @@
 				457B1BA0205FF2A100BEDDF1 /* API.swift */,
 				45A0393C2075D0E9007498DB /* User.graphql */,
 				457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */,
+				451CD31E207A3B3A0063A972 /* Login.graphql */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -328,6 +359,7 @@
 				457B1B9F205FF24B00BEDDF1 /* ViewController.graphql in Resources */,
 				457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */,
 				45A0393D2075D0E9007498DB /* User.graphql in Resources */,
+				451CD31F207A3B3A0063A972 /* Login.graphql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,9 +441,13 @@
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
 				4595F219207A15010040E5FA /* Mutabled.swift in Sources */,
 				451CD3112079105B0063A972 /* connect.swift in Sources */,
+				451CD322207A3C1D0063A972 /* ApolloClient+Rx.swift in Sources */,
 				4595F2082079EECF0040E5FA /* colors.swift in Sources */,
 				451CD317207914240063A972 /* Timed.swift in Sources */,
+				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
 				4595F217207A10B50040E5FA /* LoginState.swift in Sources */,
+				451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */,
+				451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */,
 				4595F212207A000C0040E5FA /* LoginViewPresenter.swift in Sources */,
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
 				451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */,

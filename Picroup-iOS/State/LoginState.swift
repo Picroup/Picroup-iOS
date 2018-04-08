@@ -17,14 +17,14 @@ struct LoginState: Mutabled {
     var user: UserQuery.Data.User?
     var isExecuting: Bool
     var error: Error?
-    var triggerLogin: Timed<Void>?
+    var triggerLogin: (String, String)?
 }
 
 extension LoginState {
     var logged: Bool { return user != nil }
     var isUsernameValid: Bool { return username.count > minimalUsernameLength }
     var isPasswordValid: Bool { return password.count > minimalPasswordLength }
-    var shouldLogin: Bool { return isPasswordValid && isPasswordValid && !isExecuting }
+    var shouldLogin: Bool { return isUsernameValid && isPasswordValid && !isExecuting }
 }
 
 extension LoginState {
@@ -39,7 +39,6 @@ extension LoginState {
         )
     }
 }
-
 
 extension LoginState {
     
@@ -57,11 +56,12 @@ extension LoginState {
 extension LoginState {
     
     static let reduce: (LoginState, Event) -> LoginState =  { state, event in
+        print("event:", event)
         switch event {
         case .onExecuting:
             return state.mutated {
                 $0.user = nil
-                $0.isExecuting = false
+                $0.isExecuting = true
                 $0.error = nil
             }
         case .onSuccess(let user):
@@ -69,12 +69,14 @@ extension LoginState {
                 $0.user = user
                 $0.isExecuting = false
                 $0.error = nil
+                $0.triggerLogin = nil
             }
         case .onError(let error):
             return state.mutated {
                 $0.user = nil
                 $0.isExecuting = false
                 $0.error = error
+                $0.triggerLogin = nil
             }
         case .onClear:
             return empty
@@ -84,7 +86,7 @@ extension LoginState {
                 $0.user = nil
                 $0.isExecuting = false
                 $0.error = nil
-                $0.triggerLogin = Timed(())
+                $0.triggerLogin = (state.username, state.password)
             }
         case .onChangeUsername(let username):
             return state.mutated {
@@ -94,6 +96,19 @@ extension LoginState {
             return state.mutated {
                 $0.password = password
             }
+        }
+    }
+}
+
+enum LoginError: LocalizedError {
+    case usernameOrPasswordIncorrect
+}
+
+extension LoginError {
+    
+    var errorDescription: String {
+        switch self {
+        case .usernameOrPasswordIncorrect: return "用户名或密码错误"
         }
     }
 }
