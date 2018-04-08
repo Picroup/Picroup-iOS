@@ -11,6 +11,9 @@
 		450C7E852075DA5C009ABB1E /* RouterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450C7E842075DA5C009ABB1E /* RouterState.swift */; };
 		450C7E872075DD67009ABB1E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450C7E862075DD67009ABB1E /* AppState.swift */; };
 		450C7E892075E7C1009ABB1E /* SubViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450C7E882075E7C1009ABB1E /* SubViewController.swift */; };
+		451CD3112079105B0063A972 /* connect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD3102079105B0063A972 /* connect.swift */; };
+		451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD313207910D10063A972 /* SharedSequence+unwrap.swift */; };
+		451CD317207914240063A972 /* Timed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD316207914240063A972 /* Timed.swift */; };
 		456C5E412061446C005F981B /* ImageUpoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C5E402061446C005F981B /* ImageUpoader.swift */; };
 		457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */; };
 		457B1B8D205FEA1000BEDDF1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8C205FEA1000BEDDF1 /* ViewController.swift */; };
@@ -22,6 +25,7 @@
 		457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1BA2205FFE9D00BEDDF1 /* Config.swift */; };
 		45A0393B2075CAD5007498DB /* LoginState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A0393A2075CAD5007498DB /* LoginState.swift */; };
 		45A0393D2075D0E9007498DB /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A0393C2075D0E9007498DB /* User.graphql */; };
+		45FF842220765BF600E6A203 /* RouterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FF842120765BF600E6A203 /* RouterService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +33,9 @@
 		450C7E842075DA5C009ABB1E /* RouterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterState.swift; sourceTree = "<group>"; };
 		450C7E862075DD67009ABB1E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		450C7E882075E7C1009ABB1E /* SubViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubViewController.swift; sourceTree = "<group>"; };
+		451CD3102079105B0063A972 /* connect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = connect.swift; sourceTree = "<group>"; };
+		451CD313207910D10063A972 /* SharedSequence+unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+unwrap.swift"; sourceTree = "<group>"; };
+		451CD316207914240063A972 /* Timed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timed.swift; sourceTree = "<group>"; };
 		456C5E402061446C005F981B /* ImageUpoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUpoader.swift; sourceTree = "<group>"; };
 		457B1B87205FEA1000BEDDF1 /* Picroup-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Picroup-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,6 +49,7 @@
 		457B1BA2205FFE9D00BEDDF1 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		45A0393A2075CAD5007498DB /* LoginState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginState.swift; sourceTree = "<group>"; };
 		45A0393C2075D0E9007498DB /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
+		45FF842120765BF600E6A203 /* RouterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterService.swift; sourceTree = "<group>"; };
 		7A0DB2063FBD3CD08905936E /* Pods-Picroup-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Picroup_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -58,6 +66,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		451CD30F207910370063A972 /* RxFeedback */ = {
+			isa = PBXGroup;
+			children = (
+				451CD3102079105B0063A972 /* connect.swift */,
+			);
+			path = RxFeedback;
+			sourceTree = "<group>";
+		};
+		451CD312207910A10063A972 /* RxSwift */ = {
+			isa = PBXGroup;
+			children = (
+				451CD313207910D10063A972 /* SharedSequence+unwrap.swift */,
+			);
+			path = RxSwift;
+			sourceTree = "<group>";
+		};
+		451CD3152079140E0063A972 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				451CD316207914240063A972 /* Timed.swift */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
 		457B1B7E205FEA1000BEDDF1 = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +149,9 @@
 		45A039362075C608007498DB /* Libaries */ = {
 			isa = PBXGroup;
 			children = (
+				451CD3152079140E0063A972 /* Foundation */,
+				451CD312207910A10063A972 /* RxSwift */,
+				451CD30F207910370063A972 /* RxFeedback */,
 			);
 			path = Libaries;
 			sourceTree = "<group>";
@@ -132,6 +167,7 @@
 		45A039382075C64E007498DB /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				45FF842120765BF600E6A203 /* RouterService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -309,8 +345,12 @@
 				450C7E872075DD67009ABB1E /* AppState.swift in Sources */,
 				457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
+				45FF842220765BF600E6A203 /* RouterService.swift in Sources */,
 				450C7E892075E7C1009ABB1E /* SubViewController.swift in Sources */,
+				451CD3112079105B0063A972 /* connect.swift in Sources */,
+				451CD317207914240063A972 /* Timed.swift in Sources */,
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
+				451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */,
 				450C7E852075DA5C009ABB1E /* RouterState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

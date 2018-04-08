@@ -11,30 +11,17 @@ import RxSwift
 import RxCocoa
 import RxFeedback
 
-struct SubViewConnector {
-    
-    static let mapParentStateToChildEvent: (Driver<AppState>) -> Signal<SubViewState.Event> = { parentState in
-        return .empty()
-    }
-    
-    static let mapChildStateToParentEvent: (Driver<SubViewState>) -> Signal<AppState.Event> = { childState in
-        return .empty()
-    }
-    
-//    static func createChildDependency(parentFeedback: ())
-}
-
 struct SubViewState {
     let display: String
-    let callback: Void?
+    let trigger: Void?
     
     static var empty: SubViewState {
-        return SubViewState(display: "", callback: nil)
+        return SubViewState(display: "", trigger: nil)
     }
     
     enum Event {
         case setDisplay(String)
-        case triggerCallback
+        case trigger
     }
     
     static let reduce: (SubViewState, Event) -> SubViewState = { state, event in
@@ -42,12 +29,12 @@ struct SubViewState {
         case .setDisplay(let display):
             return SubViewState(
                 display: display,
-                callback: nil
+                trigger: nil
             )
-        case .triggerCallback:
+        case .trigger:
             return SubViewState(
                 display: state.display,
-                callback: ()
+                trigger: ()
             )
         }
     }
@@ -59,7 +46,7 @@ class SubViewController: UIViewController {
     @IBOutlet private weak var label: UILabel!
     
     private let disposeBag = DisposeBag()
-    var dependency: (event: Signal<SubViewState.Event>, state: AnyObserver<SubViewState>)?
+    var dependency: ((Driver<SubViewState>) -> Signal<SubViewState.Event>)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,10 +56,18 @@ class SubViewController: UIViewController {
         Driver<Any>.system(
             initialState: SubViewState.empty,
             reduce: SubViewState.reduce,
-            feedback: [{ state in dependency.event }]
+            feedback:
+            dependency,
+            bind(self) { (me, state) in
+                Bindings(subscriptions: [
+                    state.map { $0.display }.drive(me.label.rx.text)
+                    ], events: [
+                        me.button.rx.tap.asSignal().map { .trigger }
+                    ])
+            }
             )
             .debug("SubViewState")
-            .drive(dependency.state)
+            .drive()
             .disposed(by: disposeBag)
         
         
