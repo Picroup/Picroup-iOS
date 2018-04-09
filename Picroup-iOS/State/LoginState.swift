@@ -15,13 +15,13 @@ struct LoginState: Mutabled {
     var username: String
     var password: String
     var user: UserQuery.Data.User?
-    var isExecuting: Bool
     var error: Error?
     var triggerLogin: (String, String)?
 }
 
 extension LoginState {
     var logged: Bool { return user != nil }
+    var isExecuting: Bool { return triggerLogin != nil }
     var isUsernameValid: Bool { return username.count > minimalUsernameLength }
     var isPasswordValid: Bool { return password.count > minimalPasswordLength }
     var shouldLogin: Bool { return isUsernameValid && isPasswordValid && !isExecuting }
@@ -33,7 +33,6 @@ extension LoginState {
             username: "",
             password: "",
             user: nil,
-            isExecuting: false,
             error: nil,
             triggerLogin: nil
         )
@@ -43,10 +42,8 @@ extension LoginState {
 extension LoginState {
     
     enum Event {
-        case onExecuting
         case onSuccess(UserQuery.Data.User)
         case onError(Error)
-        case onClear
         case onTrigger
         case onChangeUsername(String)
         case onChangePassword(String)
@@ -58,33 +55,22 @@ extension LoginState {
     static let reduce: (LoginState, Event) -> LoginState =  { state, event in
         print("event:", event)
         switch event {
-        case .onExecuting:
-            return state.mutated {
-                $0.user = nil
-                $0.isExecuting = true
-                $0.error = nil
-            }
         case .onSuccess(let user):
             return state.mutated {
                 $0.user = user
-                $0.isExecuting = false
                 $0.error = nil
                 $0.triggerLogin = nil
             }
         case .onError(let error):
             return state.mutated {
                 $0.user = nil
-                $0.isExecuting = false
                 $0.error = error
                 $0.triggerLogin = nil
             }
-        case .onClear:
-            return empty
         case .onTrigger:
             guard state.shouldLogin else { return state }
             return state.mutated {
                 $0.user = nil
-                $0.isExecuting = false
                 $0.error = nil
                 $0.triggerLogin = (state.username, state.password)
             }

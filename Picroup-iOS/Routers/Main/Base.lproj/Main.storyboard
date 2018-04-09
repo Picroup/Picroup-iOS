@@ -17,7 +17,7 @@
                     <view key="view" contentMode="scaleToFill" id="rAX-gk-E17">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <viewLayoutGuide key="safeArea" id="nVI-Iv-nsf"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="排行榜" image="ic_apps" id="zEZ-ZO-4Sb"/>
@@ -33,7 +33,7 @@
                     <view key="view" contentMode="scaleToFill" id="j39-Vp-Mgz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                         <viewLayoutGuide key="safeArea" id="2rA-RN-Gnc"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="我" image="ic_person" id="osV-vc-vIe"/>
@@ -49,7 +49,7 @@
                     <view key="view" contentMode="scaleToFill" id="h6R-Ts-Bnz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                         <viewLayoutGuide key="safeArea" id="9Bg-Tz-SPR"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="通知" image="ic_notifications" id="aMg-as-odJ"/>
@@ -65,7 +65,7 @@
                     <view key="view" contentMode="scaleToFill" id="LK5-li-dKo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <viewLayoutGuide key="safeArea" id="5jv-JJ-q1W"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="主页" image="ic_home" id="8ar-rO-cVV"/>
@@ -93,7 +93,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SwS-3g-yEu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2148" y="216"/>
+            <point key="canvasLocation" x="-2044" y="187"/>
         </scene>
     </scenes>
     <resources>
