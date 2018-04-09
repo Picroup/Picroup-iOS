@@ -13,7 +13,7 @@
         <!--排行榜-->
         <scene sceneID="8dc-24-jnD">
             <objects>
-                <viewController id="99H-pX-vwb" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="1" id="99H-pX-vwb" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rAX-gk-E17">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -29,7 +29,7 @@
         <!--我-->
         <scene sceneID="Vm8-zA-aGD">
             <objects>
-                <viewController id="DDx-Sj-TeR" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="3" id="DDx-Sj-TeR" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="j39-Vp-Mgz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -45,7 +45,7 @@
         <!--通知-->
         <scene sceneID="c5T-Z3-RRJ">
             <objects>
-                <viewController id="ctj-HG-BHH" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="2" id="ctj-HG-BHH" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="h6R-Ts-Bnz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -61,7 +61,7 @@
         <!--主页-->
         <scene sceneID="RB9-Lx-9Ah">
             <objects>
-                <viewController id="BOv-Rc-lua" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="0" id="BOv-Rc-lua" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LK5-li-dKo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

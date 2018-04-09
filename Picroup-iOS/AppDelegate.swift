@@ -27,8 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let relay = PublishRelay<UserQuery.Data.User>()
 //        let rootViewController = LoginViewController(dependency: (client, relay.accept))
 //        RouterService.Login.loginViewController(client: client, observer: relay.accept)
-        let rootViewController = RouterService.Main.mainViewController()
-        window.rootViewController = SnackbarController(rootViewController: rootViewController)
+//        let rootViewController = RouterService.Main.mainViewController()
+        window.rootViewController = SnackbarController(rootViewController: MainTabBarController())
         window.makeKeyAndVisible()
         self.window = window
         return true
