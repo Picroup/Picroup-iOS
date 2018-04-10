@@ -10,7 +10,7 @@ import UIKit
 import Material
 import RxCocoa
 
-class HomePresenter {
+class HomeMenuPresenter {
     
     fileprivate let fabMenuSize = CGSize(width: 56, height: 56)
     fileprivate let bottomInset: CGFloat = 24

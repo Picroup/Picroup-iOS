@@ -20,8 +20,12 @@
 		451CD326207B9E5B0063A972 /* RouterService+Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD325207B9E5B0063A972 /* RouterService+Login.swift */; };
 		451CD328207BA39E0063A972 /* RouterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD327207BA39E0063A972 /* RouterService.swift */; };
 		451CD32A207BA49B0063A972 /* RouterService+Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD329207BA49B0063A972 /* RouterService+Main.swift */; };
-		451CD32D207BB5D90063A972 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD32C207BB5D90063A972 /* HomeViewController.swift */; };
-		451CD330207BB62D0063A972 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD32F207BB62D0063A972 /* HomePresenter.swift */; };
+		451CD32D207BB5D90063A972 /* HomeMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD32C207BB5D90063A972 /* HomeMenuViewController.swift */; };
+		451CD330207BB62D0063A972 /* HomeMenuPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD32F207BB62D0063A972 /* HomeMenuPresenter.swift */; };
+		451CD332207D0A910063A972 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD331207D0A910063A972 /* HomeViewController.swift */; };
+		451CD337207D0B9A0063A972 /* RankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD336207D0B9A0063A972 /* RankViewController.swift */; };
+		451CD339207D0BAA0063A972 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD338207D0BAA0063A972 /* NotificationsViewController.swift */; };
+		451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD33A207D0BB60063A972 /* MeViewController.swift */; };
 		456C5E412061446C005F981B /* ImageUpoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C5E402061446C005F981B /* ImageUpoader.swift */; };
 		457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */; };
 		457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B8E205FEA1000BEDDF1 /* Main.storyboard */; };
@@ -58,8 +62,12 @@
 		451CD325207B9E5B0063A972 /* RouterService+Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouterService+Login.swift"; sourceTree = "<group>"; };
 		451CD327207BA39E0063A972 /* RouterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterService.swift; sourceTree = "<group>"; };
 		451CD329207BA49B0063A972 /* RouterService+Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouterService+Main.swift"; sourceTree = "<group>"; };
-		451CD32C207BB5D90063A972 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		451CD32F207BB62D0063A972 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
+		451CD32C207BB5D90063A972 /* HomeMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenuViewController.swift; sourceTree = "<group>"; };
+		451CD32F207BB62D0063A972 /* HomeMenuPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenuPresenter.swift; sourceTree = "<group>"; };
+		451CD331207D0A910063A972 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		451CD336207D0B9A0063A972 /* RankViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewController.swift; sourceTree = "<group>"; };
+		451CD338207D0BAA0063A972 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		451CD33A207D0BB60063A972 /* MeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
 		456C5E402061446C005F981B /* ImageUpoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUpoader.swift; sourceTree = "<group>"; };
 		457B1B87205FEA1000BEDDF1 /* Picroup-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Picroup-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +123,9 @@
 				451CD329207BA49B0063A972 /* RouterService+Main.swift */,
 				4595F21C207C88E00040E5FA /* MainTabBarController */,
 				451CD32E207BB60B0063A972 /* HomeViewController */,
+				451CD333207D0B6F0063A972 /* RankViewController */,
+				451CD334207D0B770063A972 /* NotificationsViewController */,
+				451CD335207D0B7F0063A972 /* MeViewController */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -174,10 +185,35 @@
 		451CD32E207BB60B0063A972 /* HomeViewController */ = {
 			isa = PBXGroup;
 			children = (
-				451CD32C207BB5D90063A972 /* HomeViewController.swift */,
-				451CD32F207BB62D0063A972 /* HomePresenter.swift */,
+				451CD32C207BB5D90063A972 /* HomeMenuViewController.swift */,
+				451CD32F207BB62D0063A972 /* HomeMenuPresenter.swift */,
+				451CD331207D0A910063A972 /* HomeViewController.swift */,
 			);
 			path = HomeViewController;
+			sourceTree = "<group>";
+		};
+		451CD333207D0B6F0063A972 /* RankViewController */ = {
+			isa = PBXGroup;
+			children = (
+				451CD336207D0B9A0063A972 /* RankViewController.swift */,
+			);
+			path = RankViewController;
+			sourceTree = "<group>";
+		};
+		451CD334207D0B770063A972 /* NotificationsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				451CD338207D0BAA0063A972 /* NotificationsViewController.swift */,
+			);
+			path = NotificationsViewController;
+			sourceTree = "<group>";
+		};
+		451CD335207D0B7F0063A972 /* MeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				451CD33A207D0BB60063A972 /* MeViewController.swift */,
+			);
+			path = MeViewController;
 			sourceTree = "<group>";
 		};
 		457B1B7E205FEA1000BEDDF1 = {
@@ -488,22 +524,26 @@
 				451CD326207B9E5B0063A972 /* RouterService+Login.swift in Sources */,
 				4595F2102079F6B60040E5FA /* LoginViewController.swift in Sources */,
 				4595F21B207C883F0040E5FA /* MainTabBarController.swift in Sources */,
-				451CD330207BB62D0063A972 /* HomePresenter.swift in Sources */,
+				451CD330207BB62D0063A972 /* HomeMenuPresenter.swift in Sources */,
 				456C5E412061446C005F981B /* ImageUpoader.swift in Sources */,
 				450C7E872075DD67009ABB1E /* AppState.swift in Sources */,
 				457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */,
+				451CD337207D0B9A0063A972 /* RankViewController.swift in Sources */,
 				4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
-				451CD32D207BB5D90063A972 /* HomeViewController.swift in Sources */,
+				451CD32D207BB5D90063A972 /* HomeMenuViewController.swift in Sources */,
 				4595F219207A15010040E5FA /* Mutabled.swift in Sources */,
+				451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */,
 				451CD3112079105B0063A972 /* connect.swift in Sources */,
 				451CD32A207BA49B0063A972 /* RouterService+Main.swift in Sources */,
 				451CD322207A3C1D0063A972 /* ApolloClient+Rx.swift in Sources */,
+				451CD339207D0BAA0063A972 /* NotificationsViewController.swift in Sources */,
 				4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */,
 				4595F2082079EECF0040E5FA /* colors.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
 				451CD317207914240063A972 /* Timed.swift in Sources */,
 				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
+				451CD332207D0A910063A972 /* HomeViewController.swift in Sources */,
 				4595F217207A10B50040E5FA /* LoginState.swift in Sources */,
 				451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */,
 				451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */,
