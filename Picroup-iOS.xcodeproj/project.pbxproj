@@ -37,6 +37,10 @@
 		4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F213207A0CA20040E5FA /* UIImage+Color.swift */; };
 		4595F217207A10B50040E5FA /* LoginState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F216207A10B50040E5FA /* LoginState.swift */; };
 		4595F219207A15010040E5FA /* Mutabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F218207A15010040E5FA /* Mutabled.swift */; };
+		4595F21B207C883F0040E5FA /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F21A207C883F0040E5FA /* MainTabBarController.swift */; };
+		4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F21E207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift */; };
+		4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F220207C96620040E5FA /* FABMenu+Rx.swift */; };
+		4595F223207C97410040E5FA /* UIView+Motion+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F222207C97410040E5FA /* UIView+Motion+Rx.swift */; };
 		45A0393D2075D0E9007498DB /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A0393C2075D0E9007498DB /* User.graphql */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +77,10 @@
 		4595F213207A0CA20040E5FA /* UIImage+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
 		4595F216207A10B50040E5FA /* LoginState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginState.swift; sourceTree = "<group>"; };
 		4595F218207A15010040E5FA /* Mutabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mutabled.swift; sourceTree = "<group>"; };
+		4595F21A207C883F0040E5FA /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		4595F21E207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxFABMenuDelegateDelegateProxy.swift; sourceTree = "<group>"; };
+		4595F220207C96620040E5FA /* FABMenu+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FABMenu+Rx.swift"; sourceTree = "<group>"; };
+		4595F222207C97410040E5FA /* UIView+Motion+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Motion+Rx.swift"; sourceTree = "<group>"; };
 		45A0393C2075D0E9007498DB /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
 		7A0DB2063FBD3CD08905936E /* Pods-Picroup-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Picroup_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +113,7 @@
 			children = (
 				457B1B8E205FEA1000BEDDF1 /* Main.storyboard */,
 				451CD329207BA49B0063A972 /* RouterService+Main.swift */,
+				4595F21C207C88E00040E5FA /* MainTabBarController */,
 				451CD32E207BB60B0063A972 /* HomeViewController */,
 			);
 			path = Main;
@@ -196,7 +205,7 @@
 				45A039372075C613007498DB /* UseCases */,
 				45A039382075C64E007498DB /* Services */,
 				45A039342075C563007498DB /* Feedbacks */,
-				4595F215207A10520040E5FA /* State */,
+				4595F215207A10520040E5FA /* States */,
 				4515A68C2079E3790039C383 /* Routers */,
 				457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */,
 				457B1BA2205FFE9D00BEDDF1 /* Config.swift */,
@@ -232,13 +241,31 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		4595F215207A10520040E5FA /* State */ = {
+		4595F215207A10520040E5FA /* States */ = {
 			isa = PBXGroup;
 			children = (
 				450C7E862075DD67009ABB1E /* AppState.swift */,
 				4595F216207A10B50040E5FA /* LoginState.swift */,
 			);
-			path = State;
+			path = States;
+			sourceTree = "<group>";
+		};
+		4595F21C207C88E00040E5FA /* MainTabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				4595F21A207C883F0040E5FA /* MainTabBarController.swift */,
+			);
+			path = MainTabBarController;
+			sourceTree = "<group>";
+		};
+		4595F21D207C96280040E5FA /* Material+Rx */ = {
+			isa = PBXGroup;
+			children = (
+				4595F21E207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift */,
+				4595F220207C96620040E5FA /* FABMenu+Rx.swift */,
+				4595F222207C97410040E5FA /* UIView+Motion+Rx.swift */,
+			);
+			path = "Material+Rx";
 			sourceTree = "<group>";
 		};
 		45A039332075C4C5007498DB /* SupportingFiles */ = {
@@ -266,6 +293,7 @@
 				451CD312207910A10063A972 /* RxSwift */,
 				451CD318207A38CF0063A972 /* RxCocoa */,
 				451CD30F207910370063A972 /* RxFeedback */,
+				4595F21D207C96280040E5FA /* Material+Rx */,
 			);
 			path = Libaries;
 			sourceTree = "<group>";
@@ -459,6 +487,7 @@
 			files = (
 				451CD326207B9E5B0063A972 /* RouterService+Login.swift in Sources */,
 				4595F2102079F6B60040E5FA /* LoginViewController.swift in Sources */,
+				4595F21B207C883F0040E5FA /* MainTabBarController.swift in Sources */,
 				451CD330207BB62D0063A972 /* HomePresenter.swift in Sources */,
 				456C5E412061446C005F981B /* ImageUpoader.swift in Sources */,
 				450C7E872075DD67009ABB1E /* AppState.swift in Sources */,
@@ -470,7 +499,9 @@
 				451CD3112079105B0063A972 /* connect.swift in Sources */,
 				451CD32A207BA49B0063A972 /* RouterService+Main.swift in Sources */,
 				451CD322207A3C1D0063A972 /* ApolloClient+Rx.swift in Sources */,
+				4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */,
 				4595F2082079EECF0040E5FA /* colors.swift in Sources */,
+				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
 				451CD317207914240063A972 /* Timed.swift in Sources */,
 				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
 				4595F217207A10B50040E5FA /* LoginState.swift in Sources */,
@@ -479,6 +510,7 @@
 				451CD328207BA39E0063A972 /* RouterService.swift in Sources */,
 				4595F212207A000C0040E5FA /* LoginViewPresenter.swift in Sources */,
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
+				4595F223207C97410040E5FA /* UIView+Motion+Rx.swift in Sources */,
 				451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

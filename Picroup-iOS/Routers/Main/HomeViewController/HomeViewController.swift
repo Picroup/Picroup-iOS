@@ -10,46 +10,26 @@ import UIKit
 import Material
 import RxSwift
 import RxCocoa
-import RxFeedback
-import Apollo
-
-class MainTabBarController: UITabBarController {
-    
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        self.setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setup() {
-        
-        viewControllers = (0...3).lazy
-            .map { UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\($0)") }
-            .map {
-                let vc = HomeViewController(rootViewController: $0)
-                vc.tabBarItem = $0.tabBarItem
-                return vc
-        }
-        
-        tabBar.isTranslucent = false
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
-}
 
 class HomeViewController: FABMenuController {
     
     fileprivate var homePresenter: HomePresenter!
+    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        fabMenuBacking = .fade
         homePresenter = HomePresenter(view: view, fabMenu: fabMenu)
+        
+        homePresenter.fabMenu.delegate = nil
+        
+        homePresenter.fabMenu.rx.fabMenuWillOpen
+            .bind(to: homePresenter.fabMenu.fabButton!.rx.animate(.rotate(45)))
+            .disposed(by: disposeBag)
+        
+        homePresenter.fabMenu.rx.fabMenuWillClose
+            .bind(to: homePresenter.fabMenu.fabButton!.rx.animate(.rotate(0)))
+            .disposed(by: disposeBag)
     }
 }

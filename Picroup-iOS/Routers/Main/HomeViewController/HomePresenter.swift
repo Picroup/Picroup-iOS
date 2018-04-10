@@ -17,8 +17,8 @@ class HomePresenter {
     fileprivate let rightInset: CGFloat = 24
     
     var fabButton: FABButton!
-    var notesFABMenuItem: FABMenuItem!
-    var remindersFABMenuItem: FABMenuItem!
+    var cameraFABMenuItem: FABMenuItem!
+    var photoFABMenuItem: FABMenuItem!
     let view: UIView
     let fabMenu: FABMenu
 
@@ -33,40 +33,40 @@ class HomePresenter {
         view.backgroundColor = .white
         
         prepareFABButton()
-        prepareNotesFABMenuItem()
-        prepareRemindersFABMenuItem()
+        preparePhotoFABMenuItem()
+        prepareCameraFABMenuItem()
         prepareFABMenu()
 
     }
     fileprivate func prepareFABButton() {
         fabButton = FABButton(image: Icon.cm.add, tintColor: .white)
         fabButton.pulseColor = .white
-        fabButton.backgroundColor = Color.red.base
+        fabButton.backgroundColor = .secondary
     }
     
-    fileprivate func prepareNotesFABMenuItem() {
-        notesFABMenuItem = FABMenuItem()
-        notesFABMenuItem.title = "Audio Library"
-        notesFABMenuItem.fabButton.image = Icon.cm.pen
-        notesFABMenuItem.fabButton.tintColor = .white
-        notesFABMenuItem.fabButton.pulseColor = .white
-        notesFABMenuItem.fabButton.backgroundColor = Color.green.base
+    fileprivate func preparePhotoFABMenuItem() {
+        cameraFABMenuItem = FABMenuItem()
+//        notesFABMenuItem.title = "Audio Library"
+        cameraFABMenuItem.fabButton.image = UIImage(named: "ic_photo_camera")
+        cameraFABMenuItem.fabButton.tintColor = .white
+        cameraFABMenuItem.fabButton.pulseColor = .white
+        cameraFABMenuItem.fabButton.backgroundColor = .primaryLight
 //        notesFABMenuItem.fabButton.addTarget(self, action: #selector(handleNotesFABMenuItem(button:)), for: .touchUpInside)
     }
     
-    fileprivate func prepareRemindersFABMenuItem() {
-        remindersFABMenuItem = FABMenuItem()
-        remindersFABMenuItem.title = "Reminders"
-        remindersFABMenuItem.fabButton.image = Icon.cm.bell
-        remindersFABMenuItem.fabButton.tintColor = .white
-        remindersFABMenuItem.fabButton.pulseColor = .white
-        remindersFABMenuItem.fabButton.backgroundColor = Color.blue.base
+    fileprivate func prepareCameraFABMenuItem() {
+        photoFABMenuItem = FABMenuItem()
+//        remindersFABMenuItem.title = "Reminders"
+        photoFABMenuItem.fabButton.image = UIImage(named: "ic_photo")
+        photoFABMenuItem.fabButton.tintColor = .white
+        photoFABMenuItem.fabButton.pulseColor = .white
+        photoFABMenuItem.fabButton.backgroundColor = Color.blue.base
 //        remindersFABMenuItem.fabButton.addTarget(self, action: #selector(handleRemindersFABMenuItem(button:)), for: .touchUpInside)
     }
     
     fileprivate func prepareFABMenu() {
         fabMenu.fabButton = fabButton
-        fabMenu.fabMenuItems = [notesFABMenuItem, remindersFABMenuItem]
+        fabMenu.fabMenuItems = [cameraFABMenuItem, photoFABMenuItem]
 //        fabMenuBacking = .none
         
         view.layout(fabMenu)
