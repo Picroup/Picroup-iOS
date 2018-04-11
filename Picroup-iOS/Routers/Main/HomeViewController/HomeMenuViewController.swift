@@ -10,6 +10,7 @@ import UIKit
 import Material
 import RxSwift
 import RxCocoa
+import RxFeedback
 
 class HomeMenuViewController: FABMenuController {
     
@@ -23,29 +24,35 @@ class HomeMenuViewController: FABMenuController {
     
     fileprivate var homeMenuPresenter: HomeMenuPresenter!
     private let disposeBag = DisposeBag()
-    
+    typealias Feedback = (Driver<HomeState>) -> Signal<HomeState.Event>
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         fabMenuBacking = .fade
         homeMenuPresenter = HomeMenuPresenter(view: view, fabMenu: fabMenu)
-        
         homeMenuPresenter.fabMenu.delegate = nil
         
-        homeMenuPresenter.fabMenu.rx.fabMenuWillOpen
-            .bind(to: homeMenuPresenter.fabMenu.fabButton!.rx.animate(.rotate(45)))
-            .disposed(by: disposeBag)
+        let uiFeedback: Feedback = bind(homeMenuPresenter) { (presenter, state) in
+            let subscriptions = [
+                state.map { $0.isFABMenuOpened }.distinctUntilChanged().drive(presenter.isFABMenuOpened),
+                state.map { $0.triggerFABMenuClose }.distinctUntilChanged { $0 != nil }.unwrap().drive(presenter.fabMenu.rx.close()),
+
+                ]
+            let events = [
+                presenter.fabMenu.rx.fabMenuWillOpen.map { HomeState.Event.fabMenuWillOpen },
+                presenter.fabMenu.rx.fabMenuWillClose.map { HomeState.Event.fabMenuWillClose },
+                presenter.cameraFABMenuItem.fabButton.rx.tap.map { HomeState.Event.triggerFABMenuClose },
+            ]
+            return Bindings(subscriptions: subscriptions, events: events)
+        }
         
-        homeMenuPresenter.fabMenu.rx.fabMenuWillClose
-            .bind(to: homeMenuPresenter.fabMenu.fabButton!.rx.animate(.rotate(0)))
-            .disposed(by: disposeBag)
-        
-        homeMenuPresenter.cameraFABMenuItem.fabButton.rx.tap
-            .asDriver()
-            .drive(Binder(self) { (me, _) in
-                me.homeMenuPresenter.fabMenu.delegate?.fabMenuWillClose?(fabMenu: me.homeMenuPresenter.fabMenu)
-                me.homeMenuPresenter.fabMenu.close()
-            })
-            .disposed(by: disposeBag)
+        Driver<Any>.system(
+            initialState: HomeState.empty,
+            reduce: logger(identifier: "HomeState")(HomeState.reduce),
+            feedback: uiFeedback
+        )
+        .drive()
+        .disposed(by: disposeBag)
     }
 }

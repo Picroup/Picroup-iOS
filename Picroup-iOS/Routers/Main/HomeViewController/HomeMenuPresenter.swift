@@ -74,4 +74,11 @@ class HomeMenuPresenter {
             .right(rightInset)
             .size(fabMenuSize)
     }
+    
+    var isFABMenuOpened: Binder<Bool> {
+        return Binder(self) { me, isOpen in
+            let z: CGFloat = isOpen ? 45 : 0
+            me.fabMenu.fabButton?.animate(.rotate(z))
+        }
+    }
 }

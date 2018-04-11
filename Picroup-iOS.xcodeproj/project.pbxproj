@@ -45,6 +45,8 @@
 		4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F21E207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift */; };
 		4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F220207C96620040E5FA /* FABMenu+Rx.swift */; };
 		4595F223207C97410040E5FA /* UIView+Motion+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F222207C97410040E5FA /* UIView+Motion+Rx.swift */; };
+		4595F225207D95360040E5FA /* HomeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F224207D95360040E5FA /* HomeState.swift */; };
+		4595F227207D9CF90040E5FA /* logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F226207D9CF90040E5FA /* logger.swift */; };
 		45A0393D2075D0E9007498DB /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A0393C2075D0E9007498DB /* User.graphql */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +91,8 @@
 		4595F21E207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxFABMenuDelegateDelegateProxy.swift; sourceTree = "<group>"; };
 		4595F220207C96620040E5FA /* FABMenu+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FABMenu+Rx.swift"; sourceTree = "<group>"; };
 		4595F222207C97410040E5FA /* UIView+Motion+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Motion+Rx.swift"; sourceTree = "<group>"; };
+		4595F224207D95360040E5FA /* HomeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeState.swift; sourceTree = "<group>"; };
+		4595F226207D9CF90040E5FA /* logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = logger.swift; sourceTree = "<group>"; };
 		45A0393C2075D0E9007498DB /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
 		7A0DB2063FBD3CD08905936E /* Pods-Picroup-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Picroup_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				451CD3102079105B0063A972 /* connect.swift */,
+				4595F226207D9CF90040E5FA /* logger.swift */,
 			);
 			path = RxFeedback;
 			sourceTree = "<group>";
@@ -282,6 +287,7 @@
 			children = (
 				450C7E862075DD67009ABB1E /* AppState.swift */,
 				4595F216207A10B50040E5FA /* LoginState.swift */,
+				4595F224207D95360040E5FA /* HomeState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -541,9 +547,11 @@
 				4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */,
 				4595F2082079EECF0040E5FA /* colors.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
+				4595F225207D95360040E5FA /* HomeState.swift in Sources */,
 				451CD317207914240063A972 /* Timed.swift in Sources */,
 				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
 				451CD332207D0A910063A972 /* HomeViewController.swift in Sources */,
+				4595F227207D9CF90040E5FA /* logger.swift in Sources */,
 				4595F217207A10B50040E5FA /* LoginState.swift in Sources */,
 				451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */,
 				451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */,
