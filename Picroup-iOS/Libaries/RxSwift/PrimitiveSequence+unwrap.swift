@@ -15,3 +15,10 @@ extension PrimitiveSequence where TraitType == SingleTrait {
     }
 }
 
+extension ObservableType {
+    
+    public func unwrap<T>() -> Observable<T> where E == T? {
+        return filter { $0 != nil }.map { $0! }
+    }
+}
+

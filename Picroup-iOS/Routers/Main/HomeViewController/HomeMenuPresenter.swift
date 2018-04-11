@@ -31,7 +31,8 @@ class HomeMenuPresenter {
     
     private func setup() {
         view.backgroundColor = .white
-        
+        fabMenu.delegate = nil
+
         prepareFABButton()
         preparePhotoFABMenuItem()
         prepareCameraFABMenuItem()

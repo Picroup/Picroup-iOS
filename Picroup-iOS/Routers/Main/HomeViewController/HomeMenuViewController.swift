@@ -31,7 +31,6 @@ class HomeMenuViewController: FABMenuController {
 
         fabMenuBacking = .fade
         homeMenuPresenter = HomeMenuPresenter(view: view, fabMenu: fabMenu)
-        homeMenuPresenter.fabMenu.delegate = nil
         
         let uiFeedback: Feedback = bind(homeMenuPresenter) { (presenter, state) in
             let subscriptions = [
@@ -43,14 +42,48 @@ class HomeMenuViewController: FABMenuController {
                 presenter.fabMenu.rx.fabMenuWillOpen.map { HomeState.Event.fabMenuWillOpen },
                 presenter.fabMenu.rx.fabMenuWillClose.map { HomeState.Event.fabMenuWillClose },
                 presenter.cameraFABMenuItem.fabButton.rx.tap.map { HomeState.Event.triggerFABMenuClose },
-            ]
+                presenter.cameraFABMenuItem.fabButton.rx.tap.map { HomeState.Event.triggerPickImage(.camera) },
+                presenter.photoFABMenuItem.fabButton.rx.tap.map { HomeState.Event.triggerFABMenuClose },
+                presenter.photoFABMenuItem.fabButton.rx.tap.map { HomeState.Event.triggerPickImage(.photoLibrary) },
+                ]
             return Bindings(subscriptions: subscriptions, events: events)
+        }
+
+        let pickImage: Feedback = react(query: { $0.triggerPickImage }) { [weak self] (sourceType)  in
+            let rxPicker = UIImagePickerController.rx.createWithParent(self) {
+                $0.sourceType = sourceType
+                }
+                .share(replay: 1)
+            
+            let picked = rxPicker.flatMap {
+                $0.rx.didFinishPickingMediaWithInfo
+                }
+                .map { info in
+                    return info[UIImagePickerControllerOriginalImage] as? UIImage
+                }.unwrap()
+                .map { HomeState.Event.pickedImage($0) }
+            
+            let cancelled = rxPicker.flatMap {
+                $0.rx.didCancel
+                }
+                .map { _ in HomeState.Event.pickeImageCancelled }
+
+            return Observable.merge(picked, cancelled)
+                .take(1)
+                .asSignal(onErrorRecover: { _ in .empty() })
+        }
+        
+        let addImage: Feedback =  react(query: { $0.pickedImage }) { [weak self] (image) in
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateImageViewController") as! CreateImageViewController
+            vc.image = image
+            self?.present(vc, animated: true, completion: nil)
+            return .empty()
         }
         
         Driver<Any>.system(
             initialState: HomeState.empty,
             reduce: logger(identifier: "HomeState")(HomeState.reduce),
-            feedback: uiFeedback
+            feedback: uiFeedback, pickImage, addImage
         )
         .drive()
         .disposed(by: disposeBag)
