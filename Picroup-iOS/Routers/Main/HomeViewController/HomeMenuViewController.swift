@@ -11,6 +11,7 @@ import Material
 import RxSwift
 import RxCocoa
 import RxFeedback
+import Apollo
 
 class HomeMenuViewController: FABMenuController {
     
@@ -75,8 +76,8 @@ class HomeMenuViewController: FABMenuController {
         
         let addImage: Feedback =  react(query: { $0.pickedImage }) { [weak self] (image) in
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateImageViewController") as! CreateImageViewController
-            vc.image = image
-            self?.present(vc, animated: true, completion: nil)
+            vc.dependency = (image, ApolloClient.shared)
+            self?.present(SnackbarController(rootViewController: vc), animated: true, completion: nil)
             return .empty()
         }
         

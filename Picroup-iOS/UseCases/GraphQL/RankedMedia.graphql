@@ -1,0 +1,9 @@
+query RankedMedia($category: MediumCategory, $rankBy: RankBy, $cusor: Float) {
+    rankedMedia(category: $category, rankBy: $rankBy, cursor: $cusor) {
+        cursor
+        items {
+            _id
+            minioId
+        }
+    }
+}

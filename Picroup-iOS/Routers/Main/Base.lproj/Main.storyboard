@@ -121,15 +121,20 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c1s-bq-rQa">
+                                <rect key="frame" x="67" y="323.5" width="240" height="2"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Ziy-9X-M3Y" firstAttribute="top" secondItem="zXt-ZH-5Fc" secondAttribute="bottom" constant="16" id="0FB-Za-e8E"/>
                             <constraint firstItem="wMc-t2-Iqq" firstAttribute="bottom" secondItem="N3W-0e-XRW" secondAttribute="bottom" constant="24" id="2H7-Th-i3Z"/>
                             <constraint firstItem="wMc-t2-Iqq" firstAttribute="trailing" secondItem="N3W-0e-XRW" secondAttribute="trailing" constant="16" id="2f9-Vy-y3b"/>
+                            <constraint firstItem="c1s-bq-rQa" firstAttribute="trailing" secondItem="3Ek-0d-bIC" secondAttribute="trailing" id="7LD-BP-xLR"/>
                             <constraint firstItem="3Ek-0d-bIC" firstAttribute="bottom" secondItem="wMc-t2-Iqq" secondAttribute="centerY" constant="-20" id="BEF-Te-Qqa"/>
                             <constraint firstItem="fsf-nn-wEQ" firstAttribute="top" secondItem="Ziy-9X-M3Y" secondAttribute="top" id="ENp-lr-eXf"/>
                             <constraint firstItem="T15-1S-M59" firstAttribute="leading" secondItem="fsf-nn-wEQ" secondAttribute="trailing" constant="24" id="GH9-oi-Ed0"/>
+                            <constraint firstItem="c1s-bq-rQa" firstAttribute="top" secondItem="3Ek-0d-bIC" secondAttribute="bottom" id="GNh-iW-tlh"/>
                             <constraint firstItem="zXt-ZH-5Fc" firstAttribute="leading" secondItem="wMc-t2-Iqq" secondAttribute="leading" constant="24" id="GT4-q6-3PN"/>
                             <constraint firstItem="N3W-0e-XRW" firstAttribute="leading" secondItem="7Qa-UG-nOj" secondAttribute="trailing" constant="24" id="Pge-Yv-0R4"/>
                             <constraint firstItem="DDM-bu-e3E" firstAttribute="leading" secondItem="T15-1S-M59" secondAttribute="trailing" constant="24" id="R4l-zO-ECj"/>
@@ -139,6 +144,7 @@
                             <constraint firstItem="3Ek-0d-bIC" firstAttribute="centerX" secondItem="wMc-t2-Iqq" secondAttribute="centerX" id="Zwp-a8-lZw"/>
                             <constraint firstItem="DDM-bu-e3E" firstAttribute="top" secondItem="T15-1S-M59" secondAttribute="top" id="btq-io-KKj"/>
                             <constraint firstItem="zXt-ZH-5Fc" firstAttribute="top" secondItem="wMc-t2-Iqq" secondAttribute="centerY" constant="20" id="qVM-LL-d1U"/>
+                            <constraint firstItem="c1s-bq-rQa" firstAttribute="leading" secondItem="3Ek-0d-bIC" secondAttribute="leading" id="qaw-B9-drE"/>
                             <constraint firstItem="Ziy-9X-M3Y" firstAttribute="leading" secondItem="zXt-ZH-5Fc" secondAttribute="trailing" constant="-41" id="xEv-Sl-fbp"/>
                             <constraint firstItem="7Qa-UG-nOj" firstAttribute="bottom" secondItem="N3W-0e-XRW" secondAttribute="bottom" id="xfV-In-oSr"/>
                         </constraints>
@@ -147,6 +153,7 @@
                     <connections>
                         <outlet property="cancelButton" destination="7Qa-UG-nOj" id="Ht6-YI-hxF"/>
                         <outlet property="imageView" destination="3Ek-0d-bIC" id="Rg6-F9-fWU"/>
+                        <outlet property="progressView" destination="c1s-bq-rQa" id="kfF-wb-0hw"/>
                         <outlet property="saveButton" destination="N3W-0e-XRW" id="bfg-Zf-zHE"/>
                     </connections>
                 </viewController>
