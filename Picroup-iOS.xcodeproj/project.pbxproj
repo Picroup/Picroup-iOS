@@ -29,6 +29,7 @@
 		451DD4B7207E3EB5002C509A /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4B6207E3EB5002C509A /* ErrorMessage.swift */; };
 		451DD4B9207E4880002C509A /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4B8207E4880002C509A /* Client.swift */; };
 		451DD4BB207E558A002C509A /* RaisedButton+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4BA207E558A002C509A /* RaisedButton+Rx.swift */; };
+		451DD4BD207F8BC7002C509A /* RankState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4BC207F8BC7002C509A /* RankState.swift */; };
 		45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */; };
 		45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */; };
 		45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */; };
@@ -86,6 +87,7 @@
 		451DD4B6207E3EB5002C509A /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		451DD4B8207E4880002C509A /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		451DD4BA207E558A002C509A /* RaisedButton+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RaisedButton+Rx.swift"; sourceTree = "<group>"; };
+		451DD4BC207F8BC7002C509A /* RankState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankState.swift; sourceTree = "<group>"; };
 		45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxImagePickerDelegateProxy.swift; sourceTree = "<group>"; };
 		45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
 		45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				4595F216207A10B50040E5FA /* LoginState.swift */,
 				4595F224207D95360040E5FA /* HomeState.swift */,
 				45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */,
+				451DD4BC207F8BC7002C509A /* RankState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -607,6 +610,7 @@
 				4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */,
 				451DD4B7207E3EB5002C509A /* ErrorMessage.swift in Sources */,
 				4595F2082079EECF0040E5FA /* colors.swift in Sources */,
+				451DD4BD207F8BC7002C509A /* RankState.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
 				455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */,
 				4595F225207D95360040E5FA /* HomeState.swift in Sources */,

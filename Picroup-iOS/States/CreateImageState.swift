@@ -13,7 +13,7 @@ import RxAlamofire
 struct CreateImageState: Mutabled {
     let userId: String
     let pickedImage: UIImage
-    var selectedCategory: MediumCategory
+    var selectedCategoryInedx: Int
     var progress: RxProgress?
     var error: Error?
     var savedMedia: SaveImageMediumMutation.Data.SaveImageMedium?
@@ -22,6 +22,7 @@ struct CreateImageState: Mutabled {
 }
 
 extension CreateImageState {
+    var selectedCategory: MediumCategory { return MediumCategory.all[selectedCategoryInedx] }
     var isSavingImage: Bool { return triggerSave != nil }
     var shouldSaveImage: Bool { return !isSavingImage && savedMedia == nil }
 }
@@ -32,7 +33,7 @@ extension CreateImageState {
         return CreateImageState(
             userId: userId,
             pickedImage: pickedImage,
-            selectedCategory: .popular,
+            selectedCategoryInedx: 0,
             progress: nil,
             error: nil,
             savedMedia: nil,
@@ -44,7 +45,7 @@ extension CreateImageState {
 
 extension CreateImageState: IsFeedbackState {
     enum Event {
-        case onSelectedCategory(MediumCategory)
+        case onSelectedCategoryIndex(Int)
         case onProgress(RxProgress)
         case onError(Error)
         case onSavedMedium(SaveImageMediumMutation.Data.SaveImageMedium)
@@ -57,9 +58,9 @@ extension CreateImageState {
     
     static func reduce(state: CreateImageState, event: CreateImageState.Event) -> CreateImageState {
         switch event {
-        case .onSelectedCategory(let category):
+        case .onSelectedCategoryIndex(let index):
             return state.mutated {
-                $0.selectedCategory = category
+                $0.selectedCategoryInedx = index
             }
         case .onProgress(let progress):
             return state.mutated {
@@ -86,6 +87,42 @@ extension CreateImageState {
             return state.mutated {
                 $0.triggerCancel = ()
             }
+        }
+    }
+}
+
+extension MediumCategory {
+    
+    static var all: [MediumCategory] {
+        return [
+            .popular,
+            .laughing,
+            .beauty,
+            .handsom,
+            .animal,
+            .photography,
+            .design,
+        ]
+    }
+    
+    var name: String {
+        switch self {
+        case .popular:
+            return "流行"
+        case .laughing:
+            return "搞笑"
+        case .beauty:
+            return "美女"
+        case .handsom:
+            return "帅哥"
+        case .animal:
+            return "动物"
+        case .photography:
+            return "摄影"
+        case .design:
+            return "设计"
+        default:
+            return rawValue
         }
     }
 }

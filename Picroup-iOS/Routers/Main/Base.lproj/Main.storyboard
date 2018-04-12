@@ -30,29 +30,36 @@
                                     <inset key="sectionInset" minX="24" minY="0.0" maxX="24" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CategoryCell" id="E5Y-sh-7Uc" customClass="CategoryCell" customModule="Picroup_iOS" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CategoryCell" id="E5Y-sh-7Uc" customClass="CategoryCell" customModule="Picroup_iOS" customModuleProvider="target">
                                         <rect key="frame" x="24" y="0.0" width="64" height="36"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="64" height="36"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DDM-bu-e3E" userLabel="流行" customClass="RaisedButton" customModule="Material">
-                                                    <rect key="frame" x="0.0" y="0.0" width="63" height="36"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DDM-bu-e3E" userLabel="流行" customClass="RaisedButton" customModule="Material">
+                                                    <rect key="frame" x="0.0" y="0.0" width="64" height="36"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
-                                                    <state key="normal" title="帅哥"/>
+                                                    <state key="normal" title="帅哥">
+                                                        <color key="titleColor" red="0.18039215689999999" green="0.49019607840000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
                                                             <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="pulseOpacity">
+                                                            <real key="value" value="0.0"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </button>
                                             </subviews>
                                         </view>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="DDM-bu-e3E" firstAttribute="leading" secondItem="E5Y-sh-7Uc" secondAttribute="leading" id="0Db-DT-4xu"/>
                                             <constraint firstAttribute="bottom" secondItem="DDM-bu-e3E" secondAttribute="bottom" id="FpB-Mi-MWE"/>
-                                            <constraint firstAttribute="trailing" secondItem="DDM-bu-e3E" secondAttribute="trailing" constant="1" id="XBi-Ne-4Dv"/>
+                                            <constraint firstAttribute="trailing" secondItem="DDM-bu-e3E" secondAttribute="trailing" id="XBi-Ne-4Dv"/>
                                             <constraint firstItem="DDM-bu-e3E" firstAttribute="top" secondItem="E5Y-sh-7Uc" secondAttribute="top" id="ZMc-KP-ECS"/>
                                         </constraints>
                                         <connections>

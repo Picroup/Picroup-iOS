@@ -36,15 +36,15 @@ class CreateImageViewController: UIViewController {
         guard let snackbarController = snackbarController else { return }
         
         let uiFeedback: Feedback = bind(self) { (me, state) in
+            let eventsTrigger = PublishRelay<CreateImageState.Event>()
             let subscriptions = [
                 state.map { $0.pickedImage }.drive(me.imageView.rx.image),
                 state.map { $0.progress }.map { $0?.completed ?? 0 }.distinctUntilChanged().drive(me.progressView.rx.progress),
-                Driver.just(["流行", "搞笑", "美女", "帅哥", "动物", "摄影", "设计"]).drive(me.collectionView.rx.items(cellIdentifier: "CategoryCell", cellType: CategoryCell.self)) { index, title, cell in
-                    cell.button.setTitle(title, for: .normal)
-                    if index == 3 {
-                        cell.button.titleColor = .primaryText
-                        cell.button.backgroundColor = .primary
+                state.map { $0.categoryViewModels }.drive(me.collectionView.rx.items(cellIdentifier: "CategoryCell", cellType: CategoryCell.self)) { index, viewModel, cell in
+                    cell.bind(category: viewModel.category, selected: viewModel.selected) {
+                        eventsTrigger.accept(.onSelectedCategoryIndex(index))
                     }
+                    
                 },
                 state.map { $0.shouldSaveImage }.distinctUntilChanged().drive(me.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 state.map { $0.triggerCancel }.distinctUnwrap().drive(me.rx.dismiss(animated: true)),
@@ -52,8 +52,9 @@ class CreateImageViewController: UIViewController {
                 state.map { $0.savedMedia }.distinctUnwrap().mapToVoid().delay(4).drive(me.rx.dismiss(animated: true)),
                 ]
             let events = [
-                me.cancelButton.rx.tap.map { CreateImageState.Event.triggerCancel },
-                me.saveButton.rx.tap.map { CreateImageState.Event.triggerSave }
+                eventsTrigger.asSignal(),
+                me.cancelButton.rx.tap.asSignal().map { CreateImageState.Event.triggerCancel },
+                me.saveButton.rx.tap.asSignal().map { CreateImageState.Event.triggerSave }
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
@@ -82,8 +83,49 @@ class CreateImageViewController: UIViewController {
     }
 }
 
-class CategoryCell: UICollectionViewCell {
+class RxCollectionViewCell: UICollectionViewCell {
+    
+    var disposeBag = DisposeBag()
+    
+    override func prepareForReuse() {
+        disposeBag = DisposeBag()
+        super.prepareForReuse()
+    }
+}
+
+class CategoryCell: RxCollectionViewCell {
     @IBOutlet weak var button: RaisedButton!
+    
+    func bind(category: MediumCategory, selected: Bool, onTap: @escaping () -> Void) {
+        button.setTitle(category.name, for: .normal)
+        setSelected(selected)
+        bindButtonTap(to: onTap)
+    }
+    
+    private func setSelected(_ selected: Bool) {
+        if selected {
+            button.titleColor = .primaryText
+            button.backgroundColor = .primary
+        } else {
+            button.titleColor = .primary
+            button.backgroundColor = .primaryText
+        }
+    }
+    
+    private func bindButtonTap(to onTap: @escaping () -> Void) {
+        button.rx.tap
+            .subscribe(onNext: onTap)
+            .disposed(by: disposeBag)
+    }
+}
+
+extension CreateImageState {
+    
+    var categoryViewModels: [(category: MediumCategory, selected: Bool)] {
+        return MediumCategory.all.enumerated().map { index, category in
+            return (category, index == selectedCategoryInedx)
+        }
+    }
 }
 
 
