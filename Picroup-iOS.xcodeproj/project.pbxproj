@@ -11,7 +11,6 @@
 		450C7E872075DD67009ABB1E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450C7E862075DD67009ABB1E /* AppState.swift */; };
 		451CD3112079105B0063A972 /* connect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD3102079105B0063A972 /* connect.swift */; };
 		451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD313207910D10063A972 /* SharedSequence+unwrap.swift */; };
-		451CD317207914240063A972 /* Timed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD316207914240063A972 /* Timed.swift */; };
 		451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD31A207A38F20063A972 /* UIResponder+Rx.swift */; };
 		451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */; };
 		451CD31F207A3B3A0063A972 /* Login.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 451CD31E207A3B3A0063A972 /* Login.graphql */; };
@@ -68,7 +67,6 @@
 		450C7E862075DD67009ABB1E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		451CD3102079105B0063A972 /* connect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = connect.swift; sourceTree = "<group>"; };
 		451CD313207910D10063A972 /* SharedSequence+unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+unwrap.swift"; sourceTree = "<group>"; };
-		451CD316207914240063A972 /* Timed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timed.swift; sourceTree = "<group>"; };
 		451CD31A207A38F20063A972 /* UIResponder+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Rx.swift"; sourceTree = "<group>"; };
 		451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+Operator.swift"; sourceTree = "<group>"; };
 		451CD31E207A3B3A0063A972 /* Login.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Login.graphql; sourceTree = "<group>"; };
@@ -182,7 +180,6 @@
 		451CD3152079140E0063A972 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				451CD316207914240063A972 /* Timed.swift */,
 				451DD4B6207E3EB5002C509A /* ErrorMessage.swift */,
 				4595F218207A15010040E5FA /* Mutabled.swift */,
 			);
@@ -609,7 +606,6 @@
 				4595F2082079EECF0040E5FA /* colors.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
 				4595F225207D95360040E5FA /* HomeState.swift in Sources */,
-				451CD317207914240063A972 /* Timed.swift in Sources */,
 				45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */,
 				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
 				451CD332207D0A910063A972 /* HomeViewController.swift in Sources */,

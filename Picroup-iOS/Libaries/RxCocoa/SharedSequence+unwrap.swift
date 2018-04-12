@@ -12,6 +12,15 @@ import RxCocoa
 extension SharedSequence {
     
     public func unwrap<T>() -> SharedSequence<S, T> where Element == T? {
-        return filter { $0 != nil }.map { $0! }
+        return flatMap {
+            if let value = $0 {
+                return .just(value)
+            }
+            return .empty()
+        }
+    }
+    
+    public func distinctUnwrap<T>() -> SharedSequence<S, T> where Element == T? {
+        return distinctUntilChanged { $0 != nil }.unwrap()
     }
 }

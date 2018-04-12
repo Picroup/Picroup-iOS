@@ -37,9 +37,9 @@ class CreateImageViewController: UIViewController {
                 state.map { $0.pickedImage }.drive(me.imageView.rx.image),
                 state.map { $0.progress }.map { $0?.completed ?? 0 }.distinctUntilChanged().drive(me.progressView.rx.progress),
                 state.map { $0.shouldSaveImage }.distinctUntilChanged().drive(me.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
-                state.map { $0.triggerCancel }.distinctUntilChanged { $0 != nil }.unwrap().drive(me.rx.dismiss(animated: true)),
-                state.map { $0.savedMedia }.distinctUntilChanged { $0 != nil }.unwrap().map { _ in "保存成功" }.drive(snackbarController.rx.snackbarText),
-                state.map { $0.savedMedia }.distinctUntilChanged { $0 != nil }.unwrap().mapToVoid().delay(4).drive(me.rx.dismiss(animated: true)),
+                state.map { $0.triggerCancel }.distinctUnwrap().drive(me.rx.dismiss(animated: true)),
+                state.map { $0.savedMedia }.distinctUnwrap().map { _ in "已保存" }.drive(snackbarController.rx.snackbarText),
+                state.map { $0.savedMedia }.distinctUnwrap().mapToVoid().delay(4).drive(me.rx.dismiss(animated: true)),
                 ]
             let events = [
                 me.cancelButton.rx.tap.map { CreateImageState.Event.triggerCancel },

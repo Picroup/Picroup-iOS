@@ -36,7 +36,7 @@ class HomeMenuViewController: FABMenuController {
         let uiFeedback: Feedback = bind(homeMenuPresenter) { (presenter, state) in
             let subscriptions = [
                 state.map { $0.isFABMenuOpened }.distinctUntilChanged().drive(presenter.isFABMenuOpened),
-                state.map { $0.triggerFABMenuClose }.distinctUntilChanged { $0 != nil }.unwrap().drive(presenter.fabMenu.rx.close()),
+                state.map { $0.triggerFABMenuClose }.distinctUnwrap().drive(presenter.fabMenu.rx.close()),
 
                 ]
             let events = [
@@ -77,7 +77,8 @@ class HomeMenuViewController: FABMenuController {
         let addImage: Feedback =  react(query: { $0.pickedImage }) { [weak self] (image) in
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateImageViewController") as! CreateImageViewController
             vc.dependency = (image, ApolloClient.shared)
-            self?.present(SnackbarController(rootViewController: vc), animated: true, completion: nil)
+            self?.transition(to: vc)
+//            self?.present(SnackbarController(rootViewController: vc), animated: true, completion: nil)
             return .empty()
         }
         
