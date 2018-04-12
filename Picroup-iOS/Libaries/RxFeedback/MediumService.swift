@@ -19,7 +19,7 @@ struct MediumService {
     }
     
     static func saveMedium(client: ApolloClient, userId: String, pickedImage: UIImage, category: MediumCategory) -> Observable<MediumService.SaveMediumResult> {
-        let (progress, filename) = ImageUpoader.uploadImage(pickedImage, compressionQuality: 0.5)
+        let (progress, filename) = ImageUpoader.uploadImage(pickedImage, compressionQuality: 0.1)
         let rxProgress = progress.map(SaveMediumResult.progress)
         
         let (width, aspectRatio) = (pickedImage.size.width, pickedImage.size.aspectRatio)

@@ -29,15 +29,22 @@ class HomeMenuViewController: FABMenuController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupPresenter()
+        setupRxFeedback()
+    }
+    
+    private func setupPresenter() {
         fabMenuBacking = .fade
         homeMenuPresenter = HomeMenuPresenter(view: view, fabMenu: fabMenu)
+    }
+    
+    private func setupRxFeedback() {
         
         let uiFeedback: Feedback = bind(homeMenuPresenter) { (presenter, state) in
             let subscriptions = [
                 state.map { $0.isFABMenuOpened }.distinctUntilChanged().drive(presenter.isFABMenuOpened),
-                state.map { $0.triggerFABMenuClose }.distinctUnwrap().drive(presenter.fabMenu.rx.close()),
-
+                state.map { $0.triggerFABMenuClose }.distinctUntilChanged { $0 != nil }.unwrap().drive(presenter.fabMenu.rx.close()),
+                
                 ]
             let events = [
                 presenter.fabMenu.rx.fabMenuWillOpen.map { HomeState.Event.fabMenuWillOpen },
@@ -49,7 +56,7 @@ class HomeMenuViewController: FABMenuController {
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-
+        
         let pickImage: Feedback = react(query: { $0.triggerPickImage }) { [weak self] (sourceType)  in
             let rxPicker = UIImagePickerController.rx.createWithParent(self) {
                 $0.sourceType = sourceType
@@ -68,7 +75,7 @@ class HomeMenuViewController: FABMenuController {
                 $0.rx.didCancel
                 }
                 .map { _ in HomeState.Event.pickeImageCancelled }
-
+            
             return Observable.merge(picked, cancelled)
                 .take(1)
                 .asSignal(onErrorRecover: { _ in .empty() })
@@ -77,8 +84,7 @@ class HomeMenuViewController: FABMenuController {
         let addImage: Feedback =  react(query: { $0.pickedImage }) { [weak self] (image) in
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateImageViewController") as! CreateImageViewController
             vc.dependency = (image, ApolloClient.shared)
-            self?.transition(to: vc)
-//            self?.present(SnackbarController(rootViewController: vc), animated: true, completion: nil)
+            self?.present(SnackbarController(rootViewController: vc), animated: true, completion: nil)
             return .empty()
         }
         
@@ -86,8 +92,8 @@ class HomeMenuViewController: FABMenuController {
             initialState: HomeState.empty,
             reduce: logger(identifier: "HomeState")(HomeState.reduce),
             feedback: uiFeedback, pickImage, addImage
-        )
-        .drive()
-        .disposed(by: disposeBag)
+            )
+            .drive()
+            .disposed(by: disposeBag)
     }
 }
