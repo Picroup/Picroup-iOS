@@ -23,7 +23,7 @@ class MainTabBarController: UITabBarController {
         
         let infos: [(title: String, imageName: String, vc: UIViewController)] = [
             (title: "主页", imageName: "ic_home", vc: HomeMenuViewController()),
-            (title: "排行榜", imageName: "ic_apps", vc: RankViewController()),
+            (title: "排行榜", imageName: "ic_apps", vc: RankContainerController(rootViewController: RankViewController())),
             (title: "通知", imageName: "ic_notifications", vc: NotificationsViewController()),
             (title: "我", imageName: "ic_person", vc: MeViewController()),
             ]

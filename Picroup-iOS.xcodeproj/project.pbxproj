@@ -37,6 +37,7 @@
 		45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */; };
 		455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455414B2207E315900296FDE /* IsFeedbackState.swift */; };
 		455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */; };
+		455D69042080409A00C651A0 /* RankContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69032080409A00C651A0 /* RankContainerController.swift */; };
 		456C5E412061446C005F981B /* ImageUpoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C5E402061446C005F981B /* ImageUpoader.swift */; };
 		457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */; };
 		457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B8E205FEA1000BEDDF1 /* Main.storyboard */; };
@@ -95,6 +96,7 @@
 		45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+dismiss.swift"; sourceTree = "<group>"; };
 		455414B2207E315900296FDE /* IsFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackState.swift; sourceTree = "<group>"; };
 		455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+RxMinioId.swift"; sourceTree = "<group>"; };
+		455D69032080409A00C651A0 /* RankContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankContainerController.swift; sourceTree = "<group>"; };
 		456C5E402061446C005F981B /* ImageUpoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUpoader.swift; sourceTree = "<group>"; };
 		457B1B87205FEA1000BEDDF1 /* Picroup-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Picroup-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				451CD327207BA39E0063A972 /* RouterService.swift */,
 				4515A68D2079E39F0039C383 /* Main */,
 				4595F20A2079F6170040E5FA /* Login */,
+				455D69002080402E00C651A0 /* Rank */,
 			);
 			path = Routers;
 			sourceTree = "<group>";
@@ -156,7 +159,6 @@
 				4595F21C207C88E00040E5FA /* MainTabBarController */,
 				451CD32E207BB60B0063A972 /* HomeViewController */,
 				45384BBA207DEFBC00624A1B /* CreateImageViewController */,
-				451CD333207D0B6F0063A972 /* RankViewController */,
 				451CD334207D0B770063A972 /* NotificationsViewController */,
 				451CD335207D0B7F0063A972 /* MeViewController */,
 			);
@@ -261,6 +263,23 @@
 				45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */,
 			);
 			path = CreateImageViewController;
+			sourceTree = "<group>";
+		};
+		455D69002080402E00C651A0 /* Rank */ = {
+			isa = PBXGroup;
+			children = (
+				455D69012080405800C651A0 /* RankContainerController */,
+				451CD333207D0B6F0063A972 /* RankViewController */,
+			);
+			path = Rank;
+			sourceTree = "<group>";
+		};
+		455D69012080405800C651A0 /* RankContainerController */ = {
+			isa = PBXGroup;
+			children = (
+				455D69032080409A00C651A0 /* RankContainerController.swift */,
+			);
+			path = RankContainerController;
 			sourceTree = "<group>";
 		};
 		457B1B7E205FEA1000BEDDF1 = {
@@ -622,6 +641,7 @@
 				4595F217207A10B50040E5FA /* LoginState.swift in Sources */,
 				451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */,
 				451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */,
+				455D69042080409A00C651A0 /* RankContainerController.swift in Sources */,
 				451CD328207BA39E0063A972 /* RouterService.swift in Sources */,
 				4595F212207A000C0040E5FA /* LoginViewPresenter.swift in Sources */,
 				45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */,

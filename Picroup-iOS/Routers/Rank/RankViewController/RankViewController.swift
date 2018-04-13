@@ -20,6 +20,6 @@ class RankViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        view.backgroundColor = .blue
+        view.backgroundColor = .background
     }
 }
