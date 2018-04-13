@@ -8,23 +8,96 @@
 
 /* Begin PBXBuildFile section */
 		0501F76BC004870A4FD7F133 /* Pods_Picroup_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */; };
+		450C7E872075DD67009ABB1E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450C7E862075DD67009ABB1E /* AppState.swift */; };
+		451CD3112079105B0063A972 /* connect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD3102079105B0063A972 /* connect.swift */; };
+		451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD313207910D10063A972 /* SharedSequence+unwrap.swift */; };
+		451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD31A207A38F20063A972 /* UIResponder+Rx.swift */; };
+		451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */; };
+		451CD31F207A3B3A0063A972 /* Login.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 451CD31E207A3B3A0063A972 /* Login.graphql */; };
+		451CD322207A3C1D0063A972 /* ApolloClient+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD321207A3C1D0063A972 /* ApolloClient+Rx.swift */; };
+		451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD323207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift */; };
+		451CD326207B9E5B0063A972 /* RouterService+Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD325207B9E5B0063A972 /* RouterService+Login.swift */; };
+		451CD328207BA39E0063A972 /* RouterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD327207BA39E0063A972 /* RouterService.swift */; };
+		451CD32A207BA49B0063A972 /* RouterService+Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD329207BA49B0063A972 /* RouterService+Main.swift */; };
+		451CD32D207BB5D90063A972 /* HomeMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD32C207BB5D90063A972 /* HomeMenuViewController.swift */; };
+		451CD330207BB62D0063A972 /* HomeMenuPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD32F207BB62D0063A972 /* HomeMenuPresenter.swift */; };
+		451CD332207D0A910063A972 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD331207D0A910063A972 /* HomeViewController.swift */; };
+		451CD337207D0B9A0063A972 /* RankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD336207D0B9A0063A972 /* RankViewController.swift */; };
+		451CD339207D0BAA0063A972 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD338207D0BAA0063A972 /* NotificationsViewController.swift */; };
+		451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD33A207D0BB60063A972 /* MeViewController.swift */; };
+		451DD4B5207E395F002C509A /* MediumService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4B4207E395F002C509A /* MediumService.swift */; };
+		451DD4B7207E3EB5002C509A /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4B6207E3EB5002C509A /* ErrorMessage.swift */; };
+		451DD4B9207E4880002C509A /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4B8207E4880002C509A /* Client.swift */; };
+		451DD4BB207E558A002C509A /* RaisedButton+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4BA207E558A002C509A /* RaisedButton+Rx.swift */; };
+		451DD4BD207F8BC7002C509A /* RankState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4BC207F8BC7002C509A /* RankState.swift */; };
+		45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */; };
+		45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */; };
+		45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */; };
+		45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */; };
+		45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */; };
+		455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455414B2207E315900296FDE /* IsFeedbackState.swift */; };
+		455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */; };
 		456C5E412061446C005F981B /* ImageUpoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C5E402061446C005F981B /* ImageUpoader.swift */; };
 		457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */; };
-		457B1B8D205FEA1000BEDDF1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8C205FEA1000BEDDF1 /* ViewController.swift */; };
 		457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B8E205FEA1000BEDDF1 /* Main.storyboard */; };
 		457B1B92205FEA1000BEDDF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B91205FEA1000BEDDF1 /* Assets.xcassets */; };
 		457B1B95205FEA1000BEDDF1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B93205FEA1000BEDDF1 /* LaunchScreen.storyboard */; };
 		457B1B9F205FF24B00BEDDF1 /* ViewController.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */; };
 		457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1BA0205FF2A100BEDDF1 /* API.swift */; };
 		457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1BA2205FFE9D00BEDDF1 /* Config.swift */; };
+		4595F2082079EECF0040E5FA /* colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F2072079EECF0040E5FA /* colors.swift */; };
+		4595F20E2079F6780040E5FA /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4595F20D2079F6780040E5FA /* Login.storyboard */; };
+		4595F2102079F6B60040E5FA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F20F2079F6B60040E5FA /* LoginViewController.swift */; };
+		4595F212207A000C0040E5FA /* LoginViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F211207A000C0040E5FA /* LoginViewPresenter.swift */; };
+		4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F213207A0CA20040E5FA /* UIImage+Color.swift */; };
+		4595F217207A10B50040E5FA /* LoginState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F216207A10B50040E5FA /* LoginState.swift */; };
+		4595F219207A15010040E5FA /* Mutabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F218207A15010040E5FA /* Mutabled.swift */; };
+		4595F21B207C883F0040E5FA /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F21A207C883F0040E5FA /* MainTabBarController.swift */; };
+		4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F21E207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift */; };
+		4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F220207C96620040E5FA /* FABMenu+Rx.swift */; };
+		4595F223207C97410040E5FA /* UIView+Motion+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F222207C97410040E5FA /* UIView+Motion+Rx.swift */; };
+		4595F225207D95360040E5FA /* HomeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F224207D95360040E5FA /* HomeState.swift */; };
+		4595F227207D9CF90040E5FA /* logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F226207D9CF90040E5FA /* logger.swift */; };
+		45A0393D2075D0E9007498DB /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A0393C2075D0E9007498DB /* User.graphql */; };
+		45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */; };
+		45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */; };
+		45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0C1CA8B77EB5486794A21137 /* Pods-Picroup-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		450C7E862075DD67009ABB1E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		451CD3102079105B0063A972 /* connect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = connect.swift; sourceTree = "<group>"; };
+		451CD313207910D10063A972 /* SharedSequence+unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+unwrap.swift"; sourceTree = "<group>"; };
+		451CD31A207A38F20063A972 /* UIResponder+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Rx.swift"; sourceTree = "<group>"; };
+		451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+Operator.swift"; sourceTree = "<group>"; };
+		451CD31E207A3B3A0063A972 /* Login.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Login.graphql; sourceTree = "<group>"; };
+		451CD321207A3C1D0063A972 /* ApolloClient+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApolloClient+Rx.swift"; sourceTree = "<group>"; };
+		451CD323207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrimitiveSequence+unwrap.swift"; sourceTree = "<group>"; };
+		451CD325207B9E5B0063A972 /* RouterService+Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouterService+Login.swift"; sourceTree = "<group>"; };
+		451CD327207BA39E0063A972 /* RouterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterService.swift; sourceTree = "<group>"; };
+		451CD329207BA49B0063A972 /* RouterService+Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouterService+Main.swift"; sourceTree = "<group>"; };
+		451CD32C207BB5D90063A972 /* HomeMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenuViewController.swift; sourceTree = "<group>"; };
+		451CD32F207BB62D0063A972 /* HomeMenuPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenuPresenter.swift; sourceTree = "<group>"; };
+		451CD331207D0A910063A972 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		451CD336207D0B9A0063A972 /* RankViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewController.swift; sourceTree = "<group>"; };
+		451CD338207D0BAA0063A972 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		451CD33A207D0BB60063A972 /* MeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
+		451DD4B4207E395F002C509A /* MediumService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MediumService.swift; path = "Picroup-iOS/Libaries/RxFeedback/MediumService.swift"; sourceTree = SOURCE_ROOT; };
+		451DD4B6207E3EB5002C509A /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
+		451DD4B8207E4880002C509A /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
+		451DD4BA207E558A002C509A /* RaisedButton+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RaisedButton+Rx.swift"; sourceTree = "<group>"; };
+		451DD4BC207F8BC7002C509A /* RankState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankState.swift; sourceTree = "<group>"; };
+		45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxImagePickerDelegateProxy.swift; sourceTree = "<group>"; };
+		45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
+		45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
+		45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageViewController.swift; sourceTree = "<group>"; };
+		45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+dismiss.swift"; sourceTree = "<group>"; };
+		455414B2207E315900296FDE /* IsFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackState.swift; sourceTree = "<group>"; };
+		455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+RxMinioId.swift"; sourceTree = "<group>"; };
 		456C5E402061446C005F981B /* ImageUpoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUpoader.swift; sourceTree = "<group>"; };
 		457B1B87205FEA1000BEDDF1 /* Picroup-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Picroup-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		457B1B8C205FEA1000BEDDF1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		457B1B8F205FEA1000BEDDF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		457B1B91205FEA1000BEDDF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		457B1B94205FEA1000BEDDF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -32,6 +105,23 @@
 		457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ViewController.graphql; sourceTree = "<group>"; };
 		457B1BA0205FF2A100BEDDF1 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		457B1BA2205FFE9D00BEDDF1 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		4595F2072079EECF0040E5FA /* colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = colors.swift; sourceTree = "<group>"; };
+		4595F20D2079F6780040E5FA /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		4595F20F2079F6B60040E5FA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		4595F211207A000C0040E5FA /* LoginViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewPresenter.swift; sourceTree = "<group>"; };
+		4595F213207A0CA20040E5FA /* UIImage+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
+		4595F216207A10B50040E5FA /* LoginState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginState.swift; sourceTree = "<group>"; };
+		4595F218207A15010040E5FA /* Mutabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mutabled.swift; sourceTree = "<group>"; };
+		4595F21A207C883F0040E5FA /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		4595F21E207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxFABMenuDelegateDelegateProxy.swift; sourceTree = "<group>"; };
+		4595F220207C96620040E5FA /* FABMenu+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FABMenu+Rx.swift"; sourceTree = "<group>"; };
+		4595F222207C97410040E5FA /* UIView+Motion+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Motion+Rx.swift"; sourceTree = "<group>"; };
+		4595F224207D95360040E5FA /* HomeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeState.swift; sourceTree = "<group>"; };
+		4595F226207D9CF90040E5FA /* logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = logger.swift; sourceTree = "<group>"; };
+		45A0393C2075D0E9007498DB /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
+		45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageState.swift; sourceTree = "<group>"; };
+		45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RankedMedia.graphql; sourceTree = "<group>"; };
+		45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveImageMedium.graphql; sourceTree = "<group>"; };
 		7A0DB2063FBD3CD08905936E /* Pods-Picroup-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Picroup_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -48,6 +138,131 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4515A68C2079E3790039C383 /* Routers */ = {
+			isa = PBXGroup;
+			children = (
+				451CD327207BA39E0063A972 /* RouterService.swift */,
+				4515A68D2079E39F0039C383 /* Main */,
+				4595F20A2079F6170040E5FA /* Login */,
+			);
+			path = Routers;
+			sourceTree = "<group>";
+		};
+		4515A68D2079E39F0039C383 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				457B1B8E205FEA1000BEDDF1 /* Main.storyboard */,
+				451CD329207BA49B0063A972 /* RouterService+Main.swift */,
+				4595F21C207C88E00040E5FA /* MainTabBarController */,
+				451CD32E207BB60B0063A972 /* HomeViewController */,
+				45384BBA207DEFBC00624A1B /* CreateImageViewController */,
+				451CD333207D0B6F0063A972 /* RankViewController */,
+				451CD334207D0B770063A972 /* NotificationsViewController */,
+				451CD335207D0B7F0063A972 /* MeViewController */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		451CD30F207910370063A972 /* RxFeedback */ = {
+			isa = PBXGroup;
+			children = (
+				451CD3102079105B0063A972 /* connect.swift */,
+				4595F226207D9CF90040E5FA /* logger.swift */,
+				455414B2207E315900296FDE /* IsFeedbackState.swift */,
+			);
+			path = RxFeedback;
+			sourceTree = "<group>";
+		};
+		451CD312207910A10063A972 /* RxSwift */ = {
+			isa = PBXGroup;
+			children = (
+				451CD323207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift */,
+			);
+			path = RxSwift;
+			sourceTree = "<group>";
+		};
+		451CD3152079140E0063A972 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				451DD4B6207E3EB5002C509A /* ErrorMessage.swift */,
+				4595F218207A15010040E5FA /* Mutabled.swift */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		451CD318207A38CF0063A972 /* RxCocoa */ = {
+			isa = PBXGroup;
+			children = (
+				451CD313207910D10063A972 /* SharedSequence+unwrap.swift */,
+				451CD31A207A38F20063A972 /* UIResponder+Rx.swift */,
+				451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */,
+				45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */,
+				45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */,
+				45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */,
+				45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */,
+			);
+			path = RxCocoa;
+			sourceTree = "<group>";
+		};
+		451CD320207A3BF70063A972 /* RxApollo */ = {
+			isa = PBXGroup;
+			children = (
+				451CD321207A3C1D0063A972 /* ApolloClient+Rx.swift */,
+			);
+			path = RxApollo;
+			sourceTree = "<group>";
+		};
+		451CD32B207BA5880063A972 /* LoginViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4595F20F2079F6B60040E5FA /* LoginViewController.swift */,
+				4595F211207A000C0040E5FA /* LoginViewPresenter.swift */,
+			);
+			path = LoginViewController;
+			sourceTree = "<group>";
+		};
+		451CD32E207BB60B0063A972 /* HomeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				451CD32C207BB5D90063A972 /* HomeMenuViewController.swift */,
+				451CD32F207BB62D0063A972 /* HomeMenuPresenter.swift */,
+				451CD331207D0A910063A972 /* HomeViewController.swift */,
+			);
+			path = HomeViewController;
+			sourceTree = "<group>";
+		};
+		451CD333207D0B6F0063A972 /* RankViewController */ = {
+			isa = PBXGroup;
+			children = (
+				451CD336207D0B9A0063A972 /* RankViewController.swift */,
+			);
+			path = RankViewController;
+			sourceTree = "<group>";
+		};
+		451CD334207D0B770063A972 /* NotificationsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				451CD338207D0BAA0063A972 /* NotificationsViewController.swift */,
+			);
+			path = NotificationsViewController;
+			sourceTree = "<group>";
+		};
+		451CD335207D0B7F0063A972 /* MeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				451CD33A207D0BB60063A972 /* MeViewController.swift */,
+			);
+			path = MeViewController;
+			sourceTree = "<group>";
+		};
+		45384BBA207DEFBC00624A1B /* CreateImageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */,
+			);
+			path = CreateImageViewController;
+			sourceTree = "<group>";
+		};
 		457B1B7E205FEA1000BEDDF1 = {
 			isa = PBXGroup;
 			children = (
@@ -69,18 +284,138 @@
 		457B1B89205FEA1000BEDDF1 /* Picroup-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				457B1BA0205FF2A100BEDDF1 /* API.swift */,
+				45A039362075C608007498DB /* Libaries */,
+				45A039372075C613007498DB /* UseCases */,
+				45A039382075C64E007498DB /* Services */,
+				45A039342075C563007498DB /* Feedbacks */,
+				4595F215207A10520040E5FA /* States */,
+				4515A68C2079E3790039C383 /* Routers */,
 				457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */,
-				457B1B8C205FEA1000BEDDF1 /* ViewController.swift */,
-				456C5E402061446C005F981B /* ImageUpoader.swift */,
 				457B1BA2205FFE9D00BEDDF1 /* Config.swift */,
-				457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */,
-				457B1B8E205FEA1000BEDDF1 /* Main.storyboard */,
+				45A039332075C4C5007498DB /* SupportingFiles */,
+			);
+			path = "Picroup-iOS";
+			sourceTree = "<group>";
+		};
+		4595F2042079EDE20040E5FA /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				4595F2072079EECF0040E5FA /* colors.swift */,
+				4595F213207A0CA20040E5FA /* UIImage+Color.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		4595F2092079F3630040E5FA /* Minio */ = {
+			isa = PBXGroup;
+			children = (
+				456C5E402061446C005F981B /* ImageUpoader.swift */,
+				455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */,
+			);
+			path = Minio;
+			sourceTree = "<group>";
+		};
+		4595F20A2079F6170040E5FA /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				4595F20D2079F6780040E5FA /* Login.storyboard */,
+				451CD325207B9E5B0063A972 /* RouterService+Login.swift */,
+				451CD32B207BA5880063A972 /* LoginViewController */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		4595F215207A10520040E5FA /* States */ = {
+			isa = PBXGroup;
+			children = (
+				450C7E862075DD67009ABB1E /* AppState.swift */,
+				4595F216207A10B50040E5FA /* LoginState.swift */,
+				4595F224207D95360040E5FA /* HomeState.swift */,
+				45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */,
+				451DD4BC207F8BC7002C509A /* RankState.swift */,
+			);
+			path = States;
+			sourceTree = "<group>";
+		};
+		4595F21C207C88E00040E5FA /* MainTabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				4595F21A207C883F0040E5FA /* MainTabBarController.swift */,
+			);
+			path = MainTabBarController;
+			sourceTree = "<group>";
+		};
+		4595F21D207C96280040E5FA /* Material+Rx */ = {
+			isa = PBXGroup;
+			children = (
+				4595F21E207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift */,
+				4595F220207C96620040E5FA /* FABMenu+Rx.swift */,
+				4595F222207C97410040E5FA /* UIView+Motion+Rx.swift */,
+				451DD4BA207E558A002C509A /* RaisedButton+Rx.swift */,
+			);
+			path = "Material+Rx";
+			sourceTree = "<group>";
+		};
+		45A039332075C4C5007498DB /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
 				457B1B91205FEA1000BEDDF1 /* Assets.xcassets */,
 				457B1B93205FEA1000BEDDF1 /* LaunchScreen.storyboard */,
 				457B1B96205FEA1000BEDDF1 /* Info.plist */,
 			);
-			path = "Picroup-iOS";
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		45A039342075C563007498DB /* Feedbacks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Feedbacks;
+			sourceTree = "<group>";
+		};
+		45A039362075C608007498DB /* Libaries */ = {
+			isa = PBXGroup;
+			children = (
+				451CD320207A3BF70063A972 /* RxApollo */,
+				451CD3152079140E0063A972 /* Foundation */,
+				451CD312207910A10063A972 /* RxSwift */,
+				451CD318207A38CF0063A972 /* RxCocoa */,
+				451CD30F207910370063A972 /* RxFeedback */,
+				4595F21D207C96280040E5FA /* Material+Rx */,
+			);
+			path = Libaries;
+			sourceTree = "<group>";
+		};
+		45A039372075C613007498DB /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				4595F2092079F3630040E5FA /* Minio */,
+				4595F2042079EDE20040E5FA /* UIKit */,
+				45A039392075C6F7007498DB /* GraphQL */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		45A039382075C64E007498DB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				451DD4B4207E395F002C509A /* MediumService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		45A039392075C6F7007498DB /* GraphQL */ = {
+			isa = PBXGroup;
+			children = (
+				457B1BA0205FF2A100BEDDF1 /* API.swift */,
+				451DD4B8207E4880002C509A /* Client.swift */,
+				45A0393C2075D0E9007498DB /* User.graphql */,
+				457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */,
+				451CD31E207A3B3A0063A972 /* Login.graphql */,
+				45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */,
+				45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */,
+			);
+			path = GraphQL;
 			sourceTree = "<group>";
 		};
 		7AFE53B525738F6B09EB9CDC /* Pods */ = {
@@ -113,7 +448,6 @@
 				457B1B84205FEA1000BEDDF1 /* Frameworks */,
 				457B1B85205FEA1000BEDDF1 /* Resources */,
 				E0FCAA82992B2BFE5A43546E /* [CP] Embed Pods Frameworks */,
-				AF94AA55038A9954C3A3312C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -165,8 +499,13 @@
 			files = (
 				457B1B95205FEA1000BEDDF1 /* LaunchScreen.storyboard in Resources */,
 				457B1B92205FEA1000BEDDF1 /* Assets.xcassets in Resources */,
+				4595F20E2079F6780040E5FA /* Login.storyboard in Resources */,
 				457B1B9F205FF24B00BEDDF1 /* ViewController.graphql in Resources */,
 				457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */,
+				45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */,
+				45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */,
+				45A0393D2075D0E9007498DB /* User.graphql in Resources */,
+				451CD31F207A3B3A0063A972 /* Login.graphql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,13 +518,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Picroup-iOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		457B1B9D205FF08300BEDDF1 /* Generate GraphQL Apollo API */ = {
@@ -200,22 +542,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output API.swift";
-		};
-		AF94AA55038A9954C3A3312C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema UseCases/GraphQL/schema.json --output UseCases/GraphQL/API.swift";
 		};
 		E0FCAA82992B2BFE5A43546E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -223,9 +550,28 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Apollo/Apollo.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/Material/Material.framework",
+				"${BUILT_PRODUCTS_DIR}/Motion/Motion.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxFeedback/RxFeedback.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Material.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Motion.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxFeedback.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -239,11 +585,51 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				457B1B8D205FEA1000BEDDF1 /* ViewController.swift in Sources */,
+				45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */,
+				451CD326207B9E5B0063A972 /* RouterService+Login.swift in Sources */,
+				455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */,
+				451DD4B9207E4880002C509A /* Client.swift in Sources */,
+				4595F2102079F6B60040E5FA /* LoginViewController.swift in Sources */,
+				4595F21B207C883F0040E5FA /* MainTabBarController.swift in Sources */,
+				451CD330207BB62D0063A972 /* HomeMenuPresenter.swift in Sources */,
 				456C5E412061446C005F981B /* ImageUpoader.swift in Sources */,
+				450C7E872075DD67009ABB1E /* AppState.swift in Sources */,
 				457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */,
+				451CD337207D0B9A0063A972 /* RankViewController.swift in Sources */,
+				4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
+				451CD32D207BB5D90063A972 /* HomeMenuViewController.swift in Sources */,
+				4595F219207A15010040E5FA /* Mutabled.swift in Sources */,
+				451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */,
+				451CD3112079105B0063A972 /* connect.swift in Sources */,
+				45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */,
+				451CD32A207BA49B0063A972 /* RouterService+Main.swift in Sources */,
+				45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */,
+				451CD322207A3C1D0063A972 /* ApolloClient+Rx.swift in Sources */,
+				451CD339207D0BAA0063A972 /* NotificationsViewController.swift in Sources */,
+				4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */,
+				451DD4B7207E3EB5002C509A /* ErrorMessage.swift in Sources */,
+				4595F2082079EECF0040E5FA /* colors.swift in Sources */,
+				451DD4BD207F8BC7002C509A /* RankState.swift in Sources */,
+				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
+				455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */,
+				4595F225207D95360040E5FA /* HomeState.swift in Sources */,
+				45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */,
+				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
+				451CD332207D0A910063A972 /* HomeViewController.swift in Sources */,
+				4595F227207D9CF90040E5FA /* logger.swift in Sources */,
+				451DD4B5207E395F002C509A /* MediumService.swift in Sources */,
+				4595F217207A10B50040E5FA /* LoginState.swift in Sources */,
+				451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */,
+				451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */,
+				451CD328207BA39E0063A972 /* RouterService.swift in Sources */,
+				4595F212207A000C0040E5FA /* LoginViewPresenter.swift in Sources */,
+				45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */,
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
+				45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */,
+				451DD4BB207E558A002C509A /* RaisedButton+Rx.swift in Sources */,
+				4595F223207C97410040E5FA /* UIView+Motion+Rx.swift in Sources */,
+				451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,7 +769,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6BDKUNMM63;
-				INFOPLIST_FILE = "Picroup-iOS/Info.plist";
+				INFOPLIST_FILE = "Picroup-iOS/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.picroup.Picroup-iOS";
@@ -400,7 +786,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6BDKUNMM63;
-				INFOPLIST_FILE = "Picroup-iOS/Info.plist";
+				INFOPLIST_FILE = "Picroup-iOS/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.picroup.Picroup-iOS";

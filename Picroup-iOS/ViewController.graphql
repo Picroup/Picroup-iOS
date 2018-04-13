@@ -1,7 +1,0 @@
-query Books {
-    books {
-        title
-        author
-    }
-}
-

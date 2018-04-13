@@ -7,5 +7,5 @@
 //
 
 struct Config {
-    static let baseURL = "http://home.beeth0ven.cf:3000"
+    static let baseURL = "http://home.picroup.com:3500"
 }
