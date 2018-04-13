@@ -38,6 +38,8 @@
 		455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455414B2207E315900296FDE /* IsFeedbackState.swift */; };
 		455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */; };
 		455D69042080409A00C651A0 /* RankContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69032080409A00C651A0 /* RankContainerController.swift */; };
+		455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69072080890B00C651A0 /* UIScrollView+Rx.swift */; };
+		455D690B208097EC00C651A0 /* SelectCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D690A208097EC00C651A0 /* SelectCategoryViewController.swift */; };
 		456C5E412061446C005F981B /* ImageUpoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C5E402061446C005F981B /* ImageUpoader.swift */; };
 		457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */; };
 		457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B8E205FEA1000BEDDF1 /* Main.storyboard */; };
@@ -97,6 +99,8 @@
 		455414B2207E315900296FDE /* IsFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackState.swift; sourceTree = "<group>"; };
 		455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+RxMinioId.swift"; sourceTree = "<group>"; };
 		455D69032080409A00C651A0 /* RankContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankContainerController.swift; sourceTree = "<group>"; };
+		455D69072080890B00C651A0 /* UIScrollView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx.swift"; sourceTree = "<group>"; };
+		455D690A208097EC00C651A0 /* SelectCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryViewController.swift; sourceTree = "<group>"; };
 		456C5E402061446C005F981B /* ImageUpoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUpoader.swift; sourceTree = "<group>"; };
 		457B1B87205FEA1000BEDDF1 /* Picroup-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Picroup-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -202,6 +206,7 @@
 				45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */,
 				45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */,
 				45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */,
+				455D69072080890B00C651A0 /* UIScrollView+Rx.swift */,
 			);
 			path = RxCocoa;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 			children = (
 				455D69012080405800C651A0 /* RankContainerController */,
 				451CD333207D0B6F0063A972 /* RankViewController */,
+				455D6909208097CB00C651A0 /* SelectCategoryViewController */,
 			);
 			path = Rank;
 			sourceTree = "<group>";
@@ -280,6 +286,14 @@
 				455D69032080409A00C651A0 /* RankContainerController.swift */,
 			);
 			path = RankContainerController;
+			sourceTree = "<group>";
+		};
+		455D6909208097CB00C651A0 /* SelectCategoryViewController */ = {
+			isa = PBXGroup;
+			children = (
+				455D690A208097EC00C651A0 /* SelectCategoryViewController.swift */,
+			);
+			path = SelectCategoryViewController;
 			sourceTree = "<group>";
 		};
 		457B1B7E205FEA1000BEDDF1 = {
@@ -572,11 +586,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Apollo/Apollo.framework",
+				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Material/Material.framework",
 				"${BUILT_PRODUCTS_DIR}/Motion/Motion.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxFeedback/RxFeedback.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
@@ -584,11 +600,13 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Material.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Motion.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxFeedback.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
@@ -619,6 +637,7 @@
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
 				451CD32D207BB5D90063A972 /* HomeMenuViewController.swift in Sources */,
 				4595F219207A15010040E5FA /* Mutabled.swift in Sources */,
+				455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */,
 				451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */,
 				451CD3112079105B0063A972 /* connect.swift in Sources */,
 				45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */,
@@ -626,6 +645,7 @@
 				45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */,
 				451CD322207A3C1D0063A972 /* ApolloClient+Rx.swift in Sources */,
 				451CD339207D0BAA0063A972 /* NotificationsViewController.swift in Sources */,
+				455D690B208097EC00C651A0 /* SelectCategoryViewController.swift in Sources */,
 				4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */,
 				451DD4B7207E3EB5002C509A /* ErrorMessage.swift in Sources */,
 				4595F2082079EECF0040E5FA /* colors.swift in Sources */,

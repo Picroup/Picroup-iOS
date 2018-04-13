@@ -99,3 +99,4 @@ extension RankedMediaQuery: Equatable {
     }
 }
 
+

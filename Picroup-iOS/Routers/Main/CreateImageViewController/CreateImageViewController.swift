@@ -49,7 +49,7 @@ class CreateImageViewController: UIViewController {
                 state.map { $0.shouldSaveImage }.distinctUntilChanged().drive(me.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 state.map { $0.triggerCancel }.distinctUnwrap().drive(me.rx.dismiss(animated: true)),
                 state.map { $0.savedMedia }.distinctUnwrap().map { _ in "已保存" }.drive(snackbarController.rx.snackbarText),
-                state.map { $0.savedMedia }.distinctUnwrap().mapToVoid().delay(4).drive(me.rx.dismiss(animated: true)),
+                state.map { $0.savedMedia }.distinctUnwrap().mapToVoid().delay(3.3).drive(me.rx.dismiss(animated: true)),
                 ]
             let events = [
                 eventsTrigger.asSignal(),

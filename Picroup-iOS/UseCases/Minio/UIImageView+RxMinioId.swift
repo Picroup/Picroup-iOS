@@ -22,3 +22,13 @@ extension Reactive where Base: UIImageView {
         }
     }
 }
+
+extension UIImageView {
+    
+    func setImage(with minioId: String?) {
+        let url = minioId
+            .map { "\(Config.baseURL)/s3?name=\($0)" }
+            .flatMap(URL.init(string: ))
+        kf.setImage(with: url)
+    }
+}

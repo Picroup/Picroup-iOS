@@ -18,14 +18,14 @@ class RankContainerController: ToolbarController {
         prepareCategoryButton()
         prepareStatusBar()
         prepareToolbar()
-        prepareTabBar()
+//        prepareTabBar()
     }
 }
 
 extension RankContainerController {
     
     fileprivate func prepareCategoryButton() {
-        categoryButton = IconButton(image: Icon.cm.menu, tintColor: .primaryText)
+        categoryButton = IconButton(image: Icon.cm.arrowDownward, tintColor: .primaryText)
         categoryButton.pulseColor = .white
     }
     

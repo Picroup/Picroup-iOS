@@ -7,6 +7,8 @@ target 'Picroup-iOS' do
   pod 'Apollo', '~> 0.8'
   pod 'RxSwift', '~> 4.1'
   pod 'RxCocoa', '~> 4.1'
+  pod 'RxCocoa', '~> 4.1'
+  pod 'RxDataSources', '~> 3.0'
   pod 'RxAlamofire', '~> 4.1'
   pod 'RxFeedback', '~> 1.0'
   pod 'Kingfisher', '~> 4.0'
