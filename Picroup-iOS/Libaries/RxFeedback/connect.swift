@@ -11,13 +11,13 @@ import RxCocoa
 import RxFeedback
 
 func connect<ParentState, ParentEvent, ChildState, ChildEvent, Param>(
-    keyed: @escaping (ParentState) -> Timed<Param>?,
+    keyed: @escaping (ParentState) -> Param?,
     mapParentStateToChildEvent: @escaping (Driver<ParentState>) -> Signal<ChildEvent> = { _ in .never() },
     mapChildStateToParentEvent: @escaping (Driver<ChildState>) -> Signal<ParentEvent> = { _ in .empty() },
     route: @escaping (Param, @escaping (Driver<ChildState>) -> Signal<ChildEvent>) -> Void
     ) -> (Driver<ParentState>) -> Signal<ParentEvent> {
     return { parentState in
-        parentState.map(keyed).unwrap().distinctUntilChanged { $0.time == $1.time }.map { $0.value }
+        parentState.map(keyed).distinctUnwrap()
             .flatMap { param in
                 let parentEvent = PublishRelay<ParentEvent>()
                 let childFeedback: (Driver<ChildState>) -> Signal<ChildEvent> = bind { (childState) in

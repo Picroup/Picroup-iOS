@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  MeViewController.swift
 //  Picroup-iOS
 //
 //  Created by luojie on 2018/4/10.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class MeViewController: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -20,7 +20,9 @@ class HomeViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        view.backgroundColor = .cyan
-        
+        view.backgroundColor = .brown
     }
 }
+
+
+

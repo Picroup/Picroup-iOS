@@ -17,7 +17,6 @@ import Apollo
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    private let client = ApolloClient(url: URL(string: "\(Config.baseURL)/graphql")!)
 
     private let disposeBag = DisposeBag()
     

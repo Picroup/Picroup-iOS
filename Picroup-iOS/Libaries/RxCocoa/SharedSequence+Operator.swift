@@ -12,10 +12,6 @@ import RxCocoa
 
 extension SharedSequence {
     
-    public func distinctTime<T>() -> SharedSequence<SharingStrategy, T> where E == Timed<T> {
-        return distinctUntilChanged { $0.time == $1.time }.map { $0.value }
-    }
-    
     public func mapToVoid() -> SharedSequence<SharingStrategy, Void> {
         return map { _ in }
     }

@@ -45,12 +45,12 @@ class LoginViewController: UIViewController {
                 state.map { $0.password }.distinctUntilChanged().drive(presenter.passwordField.rx.text),
                 state.map { $0.shouldHideUseenameWarning }.distinctUntilChanged().drive(presenter.usernameField.detailLabel.rx.isHidden),
                 state.map { $0.shouldHidePasswordWarning }.distinctUntilChanged().drive(presenter.passwordField.detailLabel.rx.isHidden),
-                state.map { $0.shouldLogin }.distinctUntilChanged().drive(presenter.isLoginEnabled),
-                state.map { $0.triggerLogin }.distinctUntilChanged { $0 != nil }.unwrap().mapToVoid().drive(presenter.usernameField.rx.resignFirstResponder()),
-                state.map { $0.triggerLogin }.distinctUntilChanged { $0 != nil }.unwrap().mapToVoid().drive(presenter.passwordField.rx.resignFirstResponder()),
-                state.map { $0.user }.distinctUntilChanged { $0 != nil }.unwrap().map { _ in "登录成功" }.drive(snackbarController.rx.snackbarText),
-                state.map { $0.error }.distinctUntilChanged { $0 != nil }.unwrap().map { $0.localizedDescription }.drive(snackbarController.rx.snackbarText),
-                state.map { $0.user }.distinctUntilChanged { $0 != nil }.unwrap().drive(onNext: observer),
+                state.map { $0.shouldLogin }.distinctUntilChanged().drive(presenter.raisedButton.rx.isEnabledWithBackgroundColor(.secondary)),
+                state.map { $0.triggerLogin }.distinctUnwrap().mapToVoid().drive(presenter.usernameField.rx.resignFirstResponder()),
+                state.map { $0.triggerLogin }.distinctUnwrap().mapToVoid().drive(presenter.passwordField.rx.resignFirstResponder()),
+                state.map { $0.user }.distinctUnwrap().map { _ in "登录成功" }.drive(snackbarController.rx.snackbarText),
+                state.map { $0.error }.distinctUnwrap().map { $0.localizedDescription }.drive(snackbarController.rx.snackbarText),
+                state.map { $0.user }.distinctUnwrap().drive(onNext: observer),
             ]
             let events = [
                 presenter.usernameField.rx.text.orEmpty.map(LoginState.Event.onChangeUsername),

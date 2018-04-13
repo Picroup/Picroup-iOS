@@ -10,7 +10,7 @@ import UIKit
 import Material
 import RxCocoa
 
-class HomePresenter {
+class HomeMenuPresenter {
     
     fileprivate let fabMenuSize = CGSize(width: 56, height: 56)
     fileprivate let bottomInset: CGFloat = 24
@@ -31,7 +31,8 @@ class HomePresenter {
     
     private func setup() {
         view.backgroundColor = .white
-        
+        fabMenu.delegate = nil
+
         prepareFABButton()
         preparePhotoFABMenuItem()
         prepareCameraFABMenuItem()
@@ -73,5 +74,12 @@ class HomePresenter {
             .bottom(bottomInset)
             .right(rightInset)
             .size(fabMenuSize)
+    }
+    
+    var isFABMenuOpened: Binder<Bool> {
+        return Binder(self) { me, isOpen in
+            let z: CGFloat = isOpen ? 45 : 0
+            me.fabMenu.fabButton?.animate(.rotate(z))
+        }
     }
 }

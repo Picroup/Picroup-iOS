@@ -66,12 +66,6 @@ class LoginViewPresenter {
         view.layout(passwordField).center(offsetY: -raisedButton.bounds.height - 60).width(300)
     }
     
-    var isLoginEnabled: Binder<Bool> {
-        return Binder(raisedButton) { button, isEnabled in
-            button.isEnabled = isEnabled
-            let alpha: CGFloat = isEnabled ? 1 : 0.2
-            button.backgroundColor = UIColor.secondary.withAlphaComponent(alpha)
-        }
-    }
+
 }
 

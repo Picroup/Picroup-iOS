@@ -23,3 +23,13 @@ extension Reactive where Base: FABMenu {
         return ControlEvent(events: delegate._fabMenuWillClose)
     }
 }
+
+extension Reactive where Base: FABMenu {
+    
+    public func close() -> Binder<Void> {
+        return Binder(base) { menu, _ in
+            menu.close()
+        }
+    }
+}
+

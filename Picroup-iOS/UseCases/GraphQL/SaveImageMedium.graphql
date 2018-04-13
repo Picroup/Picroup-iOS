@@ -1,0 +1,16 @@
+mutation SaveImageMedium($userId: ID!, $minioId: ID!, $width: Float!, $aspectRatio: Float!, $category: MediumCategory!){
+    saveImageMedium(userId: $userId, minioId: $minioId, width: $width, aspectRatio: $aspectRatio, category: $category) {
+        _id
+        userId
+        createdAt
+        endedAt
+        category
+        kind
+        detail {
+            width
+            aspectRatio
+        }
+        minioId
+        commentsCount
+    }
+}
