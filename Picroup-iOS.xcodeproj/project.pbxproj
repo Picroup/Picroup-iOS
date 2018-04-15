@@ -30,6 +30,9 @@
 		451DD4B9207E4880002C509A /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4B8207E4880002C509A /* Client.swift */; };
 		451DD4BB207E558A002C509A /* RaisedButton+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4BA207E558A002C509A /* RaisedButton+Rx.swift */; };
 		451DD4BD207F8BC7002C509A /* RankState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4BC207F8BC7002C509A /* RankState.swift */; };
+		451DD4BF208311DA002C509A /* HasDisposeBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4BE208311DA002C509A /* HasDisposeBag.swift */; };
+		451DD4C12083125A002C509A /* Objective.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4C02083125A002C509A /* Objective.swift */; };
+		451DD4C320831287002C509A /* NSObject+objc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4C220831287002C509A /* NSObject+objc.swift */; };
 		45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */; };
 		45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */; };
 		45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */; };
@@ -62,6 +65,7 @@
 		4595F225207D95360040E5FA /* HomeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F224207D95360040E5FA /* HomeState.swift */; };
 		4595F227207D9CF90040E5FA /* logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F226207D9CF90040E5FA /* logger.swift */; };
 		45A0393D2075D0E9007498DB /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A0393C2075D0E9007498DB /* User.graphql */; };
+		45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */; };
 		45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */; };
 		45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */; };
 		45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */; };
@@ -91,6 +95,9 @@
 		451DD4B8207E4880002C509A /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		451DD4BA207E558A002C509A /* RaisedButton+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RaisedButton+Rx.swift"; sourceTree = "<group>"; };
 		451DD4BC207F8BC7002C509A /* RankState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankState.swift; sourceTree = "<group>"; };
+		451DD4BE208311DA002C509A /* HasDisposeBag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HasDisposeBag.swift; sourceTree = "<group>"; };
+		451DD4C02083125A002C509A /* Objective.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Objective.swift; sourceTree = "<group>"; };
+		451DD4C220831287002C509A /* NSObject+objc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+objc.swift"; sourceTree = "<group>"; };
 		45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxImagePickerDelegateProxy.swift; sourceTree = "<group>"; };
 		45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
 		45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
@@ -125,6 +132,7 @@
 		4595F224207D95360040E5FA /* HomeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeState.swift; sourceTree = "<group>"; };
 		4595F226207D9CF90040E5FA /* logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = logger.swift; sourceTree = "<group>"; };
 		45A0393C2075D0E9007498DB /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
+		45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PublishRelay+asBinder.swift"; sourceTree = "<group>"; };
 		45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageState.swift; sourceTree = "<group>"; };
 		45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RankedMedia.graphql; sourceTree = "<group>"; };
 		45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveImageMedium.graphql; sourceTree = "<group>"; };
@@ -192,6 +200,8 @@
 			children = (
 				451DD4B6207E3EB5002C509A /* ErrorMessage.swift */,
 				4595F218207A15010040E5FA /* Mutabled.swift */,
+				451DD4C02083125A002C509A /* Objective.swift */,
+				451DD4C220831287002C509A /* NSObject+objc.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -199,10 +209,12 @@
 		451CD318207A38CF0063A972 /* RxCocoa */ = {
 			isa = PBXGroup;
 			children = (
+				451DD4BE208311DA002C509A /* HasDisposeBag.swift */,
 				451CD313207910D10063A972 /* SharedSequence+unwrap.swift */,
 				451CD31A207A38F20063A972 /* UIResponder+Rx.swift */,
 				451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */,
 				45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */,
+				45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */,
 				45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */,
 				45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */,
 				45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */,
@@ -594,6 +606,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxFeedback/RxFeedback.framework",
+				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -608,6 +621,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxFeedback.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -623,6 +637,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */,
+				45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */,
+				451DD4BF208311DA002C509A /* HasDisposeBag.swift in Sources */,
+				451DD4C320831287002C509A /* NSObject+objc.swift in Sources */,
 				451CD326207B9E5B0063A972 /* RouterService+Login.swift in Sources */,
 				455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */,
 				451DD4B9207E4880002C509A /* Client.swift in Sources */,
@@ -636,6 +653,7 @@
 				4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
 				451CD32D207BB5D90063A972 /* HomeMenuViewController.swift in Sources */,
+				451DD4C12083125A002C509A /* Objective.swift in Sources */,
 				4595F219207A15010040E5FA /* Mutabled.swift in Sources */,
 				455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */,
 				451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */,

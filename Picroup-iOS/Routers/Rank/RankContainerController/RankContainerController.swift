@@ -8,8 +8,14 @@
 
 import UIKit
 import Material
+import RxSwift
+import RxCocoa
 
 class RankContainerController: ToolbarController {
+    
+    typealias Dependency = (category: Driver<MediumCategory?>, onSelectCategoryButtonTap: () -> Void)
+    var dependency: Dependency!
+    
     fileprivate var categoryButton: IconButton!
     fileprivate let tabBar = TabBar()
 
@@ -19,6 +25,7 @@ class RankContainerController: ToolbarController {
         prepareStatusBar()
         prepareToolbar()
 //        prepareTabBar()
+        bindUI()
     }
 }
 
@@ -59,5 +66,17 @@ extension RankContainerController {
         tabBar.backgroundColor = .primary
         
         view.layout(tabBar).top(64).horizontally()
+    }
+    
+    fileprivate func bindUI() {
+        
+        dependency.category.map { $0?.name ?? "全部" }
+            .drive(onNext: { toolbar in { toolbar.title = $0 }}(toolbar))
+            .disposed(by: disposeBag)
+        
+        categoryButton.rx.tap
+            .subscribe(onNext: dependency.onSelectCategoryButtonTap)
+            .disposed(by: disposeBag)
+        
     }
 }

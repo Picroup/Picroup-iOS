@@ -81,7 +81,7 @@ class HomeMenuViewController: FABMenuController {
                 .asSignal(onErrorRecover: { _ in .empty() })
         }
         
-        let addImage: Feedback =  react(query: { $0.pickedImage }) { [weak self] (image) in
+        let addImage: Feedback = react(query: { $0.pickedImage }) { [weak self] (image) in
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateImageViewController") as! CreateImageViewController
             vc.dependency = (image, ApolloClient.shared)
             self?.present(SnackbarController(rootViewController: vc), animated: true, completion: nil)

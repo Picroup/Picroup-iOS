@@ -16,6 +16,10 @@ import Apollo
 
 class RankViewController: UIViewController {
     
+    typealias Dependency = (category: (MediumCategory?) -> Void, onSelectCategoryButtonTap: Signal<Void>)
+    var dependency: Dependency!
+    
+    
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -23,6 +27,7 @@ class RankViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
     
     @IBOutlet weak var collectionView: UICollectionView!
     private let disposeBag = DisposeBag()
@@ -39,7 +44,6 @@ class RankViewController: UIViewController {
         typealias Section = AnimatableSectionModel<String, RankedMediaQuery.Data.RankedMedium.Item>
         typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
         
-        
         let dataSource = DataSource(
             configureCell: { dataSource, collectionView, indexPath, item in
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
@@ -52,12 +56,21 @@ class RankViewController: UIViewController {
         
         let uiFeedback: Feedback = bind(self) { (me, state)  in
             let subscriptions = [
-                state.map { [Section(model: "", items: $0.items)] }.drive(me.collectionView.rx.items(dataSource: dataSource))
+                state.map { [Section(model: "", items: $0.items)] }.drive(me.collectionView.rx.items(dataSource: dataSource)),
+                state.map { $0.nextRankedMediaQuery.category }.drive(onNext: me.dependency.category)
             ]
             let events: [Signal<RankState.Event>] = [
                 state.flatMapLatest {
                     $0.shouldQueryMore ? me.collectionView.rx.isNearBottom.asSignal() : .empty()
-                    }.map { RankState.Event.onTriggerGetMore }
+                    }.map { RankState.Event.onTriggerGetMore },
+                state.flatMapLatest { state in
+                    me.dependency.onSelectCategoryButtonTap.flatMapLatest { _ in
+                        let selected = PublishRelay<MediumCategory?>()
+                        let vc = RouterService.Main.selectCategoryViewController(dependency: (state.nextRankedMediaQuery.category, selected.accept))
+                        me.present(vc, animated: true)
+                        return selected.asSignal().map { RankState.Event.onChangeCategory($0) }
+                    }
+                }
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
@@ -74,17 +87,6 @@ class RankViewController: UIViewController {
         )
         .drive()
         .disposed(by: disposeBag)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            let selectCategoryButton = self.toolbarController!.toolbar.leftViews.first as! IconButton
-            
-            selectCategoryButton.rx.tap
-                .subscribe(onNext: { [weak self] in
-                    let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SelectCategoryViewController")
-                    self?.present(vc, animated: true)
-                })
-                .disposed(by: self.disposeBag)
-        }
     }
 }
 

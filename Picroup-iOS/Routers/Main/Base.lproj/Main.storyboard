@@ -275,6 +275,7 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="wMA-LA-W80" firstAttribute="bottom" secondItem="h4G-Se-rK9" secondAttribute="bottom" id="9nW-og-1h2"/>
                             <constraint firstItem="93l-oA-sPh" firstAttribute="top" secondItem="h4G-Se-rK9" secondAttribute="top" constant="24" id="ECs-cT-9Dj"/>

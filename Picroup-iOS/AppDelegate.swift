@@ -23,11 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow(frame: Screen.bounds)
         window.tintColor = UIColor.primary
-//        let relay = PublishRelay<UserQuery.Data.User>()
-//        let rootViewController = LoginViewController(dependency: (client, relay.accept))
-//        RouterService.Login.loginViewController(client: client, observer: relay.accept)
-//        let rootViewController = RouterService.Main.mainViewController()
-        window.rootViewController = SnackbarController(rootViewController: MainTabBarController())
+        window.rootViewController = RouterService.Main.mainViewController()
         window.makeKeyAndVisible()
         self.window = window
         return true
