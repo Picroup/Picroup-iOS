@@ -41,7 +41,7 @@ class CreateImageViewController: UIViewController {
                 state.map { $0.pickedImage }.drive(me.imageView.rx.image),
                 state.map { $0.progress }.map { $0?.completed ?? 0 }.distinctUntilChanged().drive(me.progressView.rx.progress),
                 state.map { $0.categoryViewModels }.drive(me.collectionView.rx.items(cellIdentifier: "CategoryCell", cellType: CategoryCell.self)) { index, viewModel, cell in
-                    cell.bind(category: viewModel.category, selected: viewModel.selected) {
+                    cell.bind(name: viewModel.category.name, selected: viewModel.selected) {
                         eventsTrigger.accept(.onSelectedCategoryIndex(index))
                     }
                     
@@ -49,7 +49,7 @@ class CreateImageViewController: UIViewController {
                 state.map { $0.shouldSaveImage }.distinctUntilChanged().drive(me.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 state.map { $0.triggerCancel }.distinctUnwrap().drive(me.rx.dismiss(animated: true)),
                 state.map { $0.savedMedia }.distinctUnwrap().map { _ in "已保存" }.drive(snackbarController.rx.snackbarText),
-                state.map { $0.savedMedia }.distinctUnwrap().mapToVoid().delay(4).drive(me.rx.dismiss(animated: true)),
+                state.map { $0.savedMedia }.distinctUnwrap().mapToVoid().delay(3.3).drive(me.rx.dismiss(animated: true)),
                 ]
             let events = [
                 eventsTrigger.asSignal(),
@@ -96,8 +96,8 @@ class RxCollectionViewCell: UICollectionViewCell {
 class CategoryCell: RxCollectionViewCell {
     @IBOutlet weak var button: RaisedButton!
     
-    func bind(category: MediumCategory, selected: Bool, onTap: @escaping () -> Void) {
-        button.setTitle(category.name, for: .normal)
+    func bind(name: String, selected: Bool, onTap: @escaping () -> Void) {
+        button.setTitle(name, for: .normal)
         setSelected(selected)
         bindButtonTap(to: onTap)
     }

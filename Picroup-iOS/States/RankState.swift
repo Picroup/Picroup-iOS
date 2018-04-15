@@ -9,27 +9,31 @@
 import Foundation
 
 struct RankState: Mutabled {
-    var rankedMediaQuery: RankedMediaQuery
+    var nextRankedMediaQuery: RankedMediaQuery
     var items: [RankedMediaQuery.Data.RankedMedium.Item]
-    var shouldGetMedia: Bool
+    var error: Error?
+    var triggerQueryMedia: Bool
 }
 
 extension RankState {
-    var isGettingMedia: Bool { return shouldGetMedia }
-    var triggerGetMedia: RankedMediaQuery? {
-        return shouldGetMedia ? rankedMediaQuery : nil
+    var rankedMediaQuery: RankedMediaQuery? {
+        return triggerQueryMedia ? nextRankedMediaQuery : nil
     }
-    var shouldGetMore: Bool {
-        return !isGettingMedia && rankedMediaQuery.cusor != nil
+    var shouldQueryMore: Bool {
+        return !triggerQueryMedia && nextRankedMediaQuery.cusor != nil
+    }
+    var isItemsEmpty: Bool {
+        return !triggerQueryMedia && error == nil && items.isEmpty
     }
 }
 
 extension RankState {
     static var empty: RankState {
         return RankState(
-            rankedMediaQuery: RankedMediaQuery(),
+            nextRankedMediaQuery: RankedMediaQuery(),
             items: [],
-            shouldGetMedia: true
+            error: nil,
+            triggerQueryMedia: true
         )
     }
 }
@@ -37,7 +41,10 @@ extension RankState {
 extension RankState: IsFeedbackState {
     enum Event {
         case onChangeCategory(MediumCategory?)
+        case onChangeRankBy(RankBy?)
         case onTriggerGetMore
+        case onGetSuccess(RankedMediaQuery.Data.RankedMedium)
+        case onGetError(Error)
     }
 }
 
@@ -47,17 +54,49 @@ extension RankState {
         switch event {
         case .onChangeCategory(let category):
             return state.mutated {
-                $0.rankedMediaQuery.category = category
-                $0.rankedMediaQuery.cusor = nil
+                $0.nextRankedMediaQuery.category = category
+                $0.nextRankedMediaQuery.cusor = nil
                 $0.items = []
-                $0.shouldGetMedia = true
+                $0.error = nil
+                $0.triggerQueryMedia = true
+            }
+        case .onChangeRankBy(let rankBy):
+            return state.mutated {
+                $0.nextRankedMediaQuery.rankBy = rankBy
+                $0.nextRankedMediaQuery.cusor = nil
+                $0.items = []
+                $0.error = nil
+                $0.triggerQueryMedia = true
             }
         case .onTriggerGetMore:
-            guard state.shouldGetMore else { return state }
+            guard state.shouldQueryMore else { return state }
             return state.mutated {
-                $0.shouldGetMedia = true
+                $0.error = nil
+                $0.triggerQueryMedia = true
+            }
+        case .onGetSuccess(let data):
+            return state.mutated {
+                $0.nextRankedMediaQuery.cusor = data.cursor
+                $0.items += data.items.flatMap { $0 }
+                $0.error = nil
+                $0.triggerQueryMedia = false
+            }
+        case .onGetError(let error):
+            return state.mutated {
+                $0.error = error
+                $0.triggerQueryMedia = false
             }
         }
     }
 }
+
+extension RankedMediaQuery: Equatable {
+    
+    public static func ==(lhs: RankedMediaQuery, rhs: RankedMediaQuery) -> Bool {
+        return lhs.category == rhs.category
+            && lhs.rankBy == rhs.rankBy
+            && lhs.cusor == rhs.cusor
+    }
+}
+
 
