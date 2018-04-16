@@ -91,7 +91,8 @@ class RankViewController: UIViewController {
         
         collectionView.rx.modelSelected(RankedMediaQuery.Data.RankedMedium.Item.self)
             .subscribe(onNext: { item in
-                let vc = MeViewController()
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageDetailViewController") as! ImageDetailViewController
+                vc.dependency = item
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
