@@ -22,5 +22,7 @@ class MainTabBarController: UITabBarController {
     
     private func setup() {
         tabBar.isTranslucent = false
+//        hidesBottomBarWhenPushed = true
+        
     }
 }

@@ -179,16 +179,23 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
                                                     <color key="backgroundColor" red="0.90823972225189209" green="0.92638683319091797" blue="0.9317171573638916" alpha="1" colorSpace="calibratedRGB"/>
                                                 </imageView>
+                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="cxv-Ak-E3s">
+                                                    <rect key="frame" x="0.0" y="118" width="120" height="2"/>
+                                                </progressView>
                                             </subviews>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="wMi-x8-9hJ" firstAttribute="leading" secondItem="ase-f4-Gzo" secondAttribute="leading" id="5FU-vm-P8E"/>
                                             <constraint firstAttribute="trailing" secondItem="wMi-x8-9hJ" secondAttribute="trailing" id="8xC-00-0uc"/>
+                                            <constraint firstAttribute="bottom" secondItem="cxv-Ak-E3s" secondAttribute="bottom" id="AHP-T9-z8S"/>
                                             <constraint firstItem="wMi-x8-9hJ" firstAttribute="top" secondItem="ase-f4-Gzo" secondAttribute="top" id="C8k-Qh-CDs"/>
                                             <constraint firstAttribute="bottom" secondItem="wMi-x8-9hJ" secondAttribute="bottom" id="CVn-59-aER"/>
+                                            <constraint firstAttribute="trailing" secondItem="cxv-Ak-E3s" secondAttribute="trailing" id="g5W-Ic-4Zd"/>
+                                            <constraint firstItem="cxv-Ak-E3s" firstAttribute="leading" secondItem="ase-f4-Gzo" secondAttribute="leading" id="v6T-Yp-jUy"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="imageView" destination="wMi-x8-9hJ" id="qNR-Tj-1aw"/>
+                                            <outlet property="progressView" destination="cxv-Ak-E3s" id="Hud-e2-p7K"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -209,7 +216,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CBz-6P-0vY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7.2000000000000002" y="410.64467766116945"/>
+            <point key="canvasLocation" x="585" y="411"/>
         </scene>
         <!--Select Category View Controller-->
         <scene sceneID="VeL-Rl-pgF">
@@ -293,7 +300,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hBj-k7-tFI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="824.79999999999995" y="410.64467766116945"/>
+            <point key="canvasLocation" x="1257" y="411"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.1803921568627451" green="0.49019607843137253" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
