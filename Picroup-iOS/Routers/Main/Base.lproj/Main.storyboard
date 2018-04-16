@@ -480,11 +480,11 @@
                                 </cells>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="oWM-uy-VqI" firstAttribute="top" secondItem="gOC-ff-t3f" secondAttribute="top" id="71W-L0-se2"/>
                             <constraint firstItem="oWM-uy-VqI" firstAttribute="trailing" secondItem="vDe-ez-C2T" secondAttribute="trailing" id="TS4-ed-Wux"/>
                             <constraint firstItem="oWM-uy-VqI" firstAttribute="leading" secondItem="vDe-ez-C2T" secondAttribute="leading" id="Z83-TU-ptc"/>
+                            <constraint firstItem="vDe-ez-C2T" firstAttribute="top" secondItem="oWM-uy-VqI" secondAttribute="top" constant="20" id="hi4-dg-9eN"/>
                             <constraint firstItem="oWM-uy-VqI" firstAttribute="bottom" secondItem="vDe-ez-C2T" secondAttribute="bottom" id="kG1-vh-ehU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vDe-ez-C2T"/>

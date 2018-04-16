@@ -25,16 +25,30 @@ class ImageDetailViewController: UIViewController {
         setupRxFeedback()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     private func setupRxFeedback() {
         
         Driver.just([dependency])
             .drive(collectionView .rx.items(cellIdentifier: "ImageDetailCell", cellType: ImageDetailCell.self)) { index, item, cell in
                 cell.imageView.setImage(with: item?.minioId)
+                cell.contentView.layer.cornerRadius = 5
+                cell.contentView.layer.masksToBounds = true
         }
         .disposed(by: disposeBag)
         
         collectionView.rx.setDelegate(self).disposed(by: disposeBag)
     }
+    
 }
 
 extension ImageDetailViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
