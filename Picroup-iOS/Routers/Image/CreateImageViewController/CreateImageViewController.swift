@@ -85,7 +85,7 @@ class CreateImageViewController: UIViewController {
 
 class RxCollectionViewCell: UICollectionViewCell {
     
-    var disposeBag = DisposeBag()
+    private(set) var disposeBag = DisposeBag()
     
     override func prepareForReuse() {
         disposeBag = DisposeBag()

@@ -38,13 +38,22 @@ class ImageDetailViewController: UIViewController {
     
     private func setupRxFeedback() {
         
+        guard let dependency = dependency else { return }
+        
         Driver.just([dependency])
             .drive(collectionView .rx.items(cellIdentifier: "ImageDetailCell", cellType: ImageDetailCell.self)) { index, item, cell in
-                cell.imageView.setImage(with: item?.minioId)
+                cell.imageView.setImage(with: item.minioId)
                 cell.contentView.layer.cornerRadius = 5
                 cell.contentView.layer.masksToBounds = true
-        }
-        .disposed(by: disposeBag)
+                cell.imageView.motionIdentifier = item.id
+                cell.lifeBar.motionIdentifier = "lifeBar_\(item.id)"
+            }
+            .disposed(by: disposeBag)
+        
+        view.rx.tapGesture().when(.recognized)
+            .map { _ in }
+            .bind(to: rx.pop(animated: true))
+            .disposed(by: disposeBag)
         
         collectionView.rx.setDelegate(self).disposed(by: disposeBag)
     }
@@ -63,4 +72,5 @@ extension ImageDetailViewController: UICollectionViewDelegate, UICollectionViewD
 
 class ImageDetailCell: RxCollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var lifeBar: UIView!
 }

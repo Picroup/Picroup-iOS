@@ -36,7 +36,7 @@ extension RouterService.Main {
         
         let mvc = MainTabBarController()
         mvc.viewControllers = viewControllers
-        
+
         let svc = SnackbarController(rootViewController: mvc)
         return svc
     }

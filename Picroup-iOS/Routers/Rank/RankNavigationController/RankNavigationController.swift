@@ -15,6 +15,8 @@ class RankNavigationController: NavigationController {
 
     override func prepare() {
         super.prepare()
+        isMotionEnabled = true
+        motionNavigationTransitionType = .autoReverse(presenting: .fade)
         prepareNavigationBar()
     }
     

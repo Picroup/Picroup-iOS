@@ -45,7 +45,10 @@ class RankViewController: UIViewController {
             configureCell: { dataSource, collectionView, indexPath, item in
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
                 cell.imageView.setImage(with: item.minioId)
+                cell.imageView.motionIdentifier = item.id
+                cell.transition(.fadeOut, .scale(0.75))
                 cell.progressView.progress = Float(item.remainTime / 56.days)
+                cell.progressView.motionIdentifier = "lifeBar_\(item.id)"
                 return cell
         },
             configureSupplementaryView: { dataSource, collectionView, title, indexPath in
