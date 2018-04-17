@@ -1,0 +1,12 @@
+query Medium($userId: ID!, $mediumId: ID!, $cursor: Float = null) {
+    medium(mediumId: $mediumId) {
+        _id
+        stared(userId: $userId)
+        comments(cursor: $cursor) {
+            cursor
+            items {
+                _id
+            }
+        }
+    }
+}

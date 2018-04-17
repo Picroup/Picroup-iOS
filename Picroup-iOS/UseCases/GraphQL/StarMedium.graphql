@@ -1,0 +1,7 @@
+mutation StarMedium($userId: ID!, $mediumId: ID!){
+    starMedium(userId: $userId, mediumId: $mediumId) {
+        _id
+        endedAt
+    }
+}
+
