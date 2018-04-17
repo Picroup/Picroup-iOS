@@ -29,7 +29,7 @@ extension CreateImageState {
 
 extension CreateImageState {
     
-    static func empty(userId: String = "5aca11401df3b96530ed221e", pickedImage: UIImage) -> CreateImageState {
+    static func empty(userId: String = Config.userId, pickedImage: UIImage) -> CreateImageState {
         return CreateImageState(
             userId: userId,
             pickedImage: pickedImage,

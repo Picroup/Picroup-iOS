@@ -49,6 +49,7 @@ class RankViewController: UIViewController {
                 cell.transition(.fadeOut, .scale(0.75))
                 cell.progressView.progress = Float(item.remainTime / 56.days)
                 cell.progressView.motionIdentifier = "lifeBar_\(item.id)"
+                cell.favoritePlaceholderView.motionIdentifier = "favoriteButton_\(item.id)"
                 return cell
         },
             configureSupplementaryView: { dataSource, collectionView, title, indexPath in
@@ -105,6 +106,7 @@ class RankViewController: UIViewController {
 class RankMediumCell: RxCollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var favoritePlaceholderView: UIView!
 }
 
 extension RankedMediaQuery.Data.RankedMedium.Item: IdentifiableType, Equatable {
@@ -127,7 +129,15 @@ extension RankedMediaQuery.Data.RankedMedium.Item {
 
 extension Double {
     
+    var weeks: TimeInterval {
+        return self * 7 * 24 * 3600
+    }
+    
     var days: TimeInterval {
         return self * 24 * 3600
+    }
+    
+    var hours: TimeInterval {
+        return self * 3600
     }
 }

@@ -66,11 +66,16 @@
 		4595F225207D95360040E5FA /* HomeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F224207D95360040E5FA /* HomeState.swift */; };
 		4595F227207D9CF90040E5FA /* logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F226207D9CF90040E5FA /* logger.swift */; };
 		45A0393D2075D0E9007498DB /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A0393C2075D0E9007498DB /* User.graphql */; };
+		45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A61C0C2086356E00AE7D99 /* StarMedium.graphql */; };
 		45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */; };
 		45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */; };
 		45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */; };
 		45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */; };
 		45E240B22084D2CF004B58EF /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E240B12084D2CF004B58EF /* ImageDetailViewController.swift */; };
+		45E240B520862981004B58EF /* HideNavigationBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E240B420862981004B58EF /* HideNavigationBarViewController.swift */; };
+		45E240B720862AD7004B58EF /* ImageDetailState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E240B620862AD7004B58EF /* ImageDetailState.swift */; };
+		45E240B920862CF6004B58EF /* Medium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45E240B820862CF6004B58EF /* Medium.graphql */; };
+		45E6C24A20863AC3003D7AA8 /* QueryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6C24920863AC3003D7AA8 /* QueryState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -135,11 +140,16 @@
 		4595F224207D95360040E5FA /* HomeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeState.swift; sourceTree = "<group>"; };
 		4595F226207D9CF90040E5FA /* logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = logger.swift; sourceTree = "<group>"; };
 		45A0393C2075D0E9007498DB /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
+		45A61C0C2086356E00AE7D99 /* StarMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = StarMedium.graphql; sourceTree = "<group>"; };
 		45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PublishRelay+asBinder.swift"; sourceTree = "<group>"; };
 		45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageState.swift; sourceTree = "<group>"; };
 		45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RankedMedia.graphql; sourceTree = "<group>"; };
 		45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveImageMedium.graphql; sourceTree = "<group>"; };
 		45E240B12084D2CF004B58EF /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
+		45E240B420862981004B58EF /* HideNavigationBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideNavigationBarViewController.swift; sourceTree = "<group>"; };
+		45E240B620862AD7004B58EF /* ImageDetailState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailState.swift; sourceTree = "<group>"; };
+		45E240B820862CF6004B58EF /* Medium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Medium.graphql; sourceTree = "<group>"; };
+		45E6C24920863AC3003D7AA8 /* QueryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryState.swift; sourceTree = "<group>"; };
 		7A0DB2063FBD3CD08905936E /* Pods-Picroup-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Picroup_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -187,6 +197,7 @@
 				451CD3102079105B0063A972 /* connect.swift */,
 				4595F226207D9CF90040E5FA /* logger.swift */,
 				455414B2207E315900296FDE /* IsFeedbackState.swift */,
+				45E6C24920863AC3003D7AA8 /* QueryState.swift */,
 			);
 			path = RxFeedback;
 			sourceTree = "<group>";
@@ -416,6 +427,7 @@
 				4595F224207D95360040E5FA /* HomeState.swift */,
 				45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */,
 				451DD4BC207F8BC7002C509A /* RankState.swift */,
+				45E240B620862AD7004B58EF /* ImageDetailState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -459,12 +471,13 @@
 		45A039362075C608007498DB /* Libaries */ = {
 			isa = PBXGroup;
 			children = (
-				451CD320207A3BF70063A972 /* RxApollo */,
 				451CD3152079140E0063A972 /* Foundation */,
-				451CD312207910A10063A972 /* RxSwift */,
+				4595F21D207C96280040E5FA /* Material+Rx */,
+				451CD320207A3BF70063A972 /* RxApollo */,
 				451CD318207A38CF0063A972 /* RxCocoa */,
 				451CD30F207910370063A972 /* RxFeedback */,
-				4595F21D207C96280040E5FA /* Material+Rx */,
+				451CD312207910A10063A972 /* RxSwift */,
+				45E240B320862970004B58EF /* UIKit */,
 			);
 			path = Libaries;
 			sourceTree = "<group>";
@@ -497,6 +510,8 @@
 				451CD31E207A3B3A0063A972 /* Login.graphql */,
 				45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */,
 				45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */,
+				45E240B820862CF6004B58EF /* Medium.graphql */,
+				45A61C0C2086356E00AE7D99 /* StarMedium.graphql */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -507,6 +522,14 @@
 				45E240B12084D2CF004B58EF /* ImageDetailViewController.swift */,
 			);
 			path = ImageDetailViewController;
+			sourceTree = "<group>";
+		};
+		45E240B320862970004B58EF /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				45E240B420862981004B58EF /* HideNavigationBarViewController.swift */,
+			);
+			path = UIKit;
 			sourceTree = "<group>";
 		};
 		7AFE53B525738F6B09EB9CDC /* Pods */ = {
@@ -593,8 +616,10 @@
 				4595F20E2079F6780040E5FA /* Login.storyboard in Resources */,
 				457B1B9F205FF24B00BEDDF1 /* ViewController.graphql in Resources */,
 				457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */,
+				45E240B920862CF6004B58EF /* Medium.graphql in Resources */,
 				45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */,
 				45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */,
+				45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */,
 				45A0393D2075D0E9007498DB /* User.graphql in Resources */,
 				451CD31F207A3B3A0063A972 /* Login.graphql in Resources */,
 			);
@@ -730,7 +755,10 @@
 				455D69042080409A00C651A0 /* RankNavigationController.swift in Sources */,
 				451CD328207BA39E0063A972 /* RouterService.swift in Sources */,
 				4595F212207A000C0040E5FA /* LoginViewPresenter.swift in Sources */,
+				45E6C24A20863AC3003D7AA8 /* QueryState.swift in Sources */,
+				45E240B720862AD7004B58EF /* ImageDetailState.swift in Sources */,
 				45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */,
+				45E240B520862981004B58EF /* HideNavigationBarViewController.swift in Sources */,
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
 				45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */,
 				451DD4BB207E558A002C509A /* RaisedButton+Rx.swift in Sources */,

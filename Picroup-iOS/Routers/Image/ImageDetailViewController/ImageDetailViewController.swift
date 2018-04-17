@@ -13,7 +13,7 @@ import RxCocoa
 import RxFeedback
 import Apollo
 
-class ImageDetailViewController: UIViewController {
+class ImageDetailViewController: HideNavigationBarViewController {
     
     typealias Dependency = RankedMediaQuery.Data.RankedMedium.Item
     var dependency: Dependency!
@@ -25,28 +25,13 @@ class ImageDetailViewController: UIViewController {
         setupRxFeedback()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-    
     private func setupRxFeedback() {
         
         guard let dependency = dependency else { return }
         
         Driver.just([dependency])
             .drive(collectionView .rx.items(cellIdentifier: "ImageDetailCell", cellType: ImageDetailCell.self)) { index, item, cell in
-                cell.imageView.setImage(with: item.minioId)
-                cell.contentView.layer.cornerRadius = 5
-                cell.contentView.layer.masksToBounds = true
-                cell.imageView.motionIdentifier = item.id
-                cell.lifeBar.motionIdentifier = "lifeBar_\(item.id)"
+                cell.configure(with: item)
             }
             .disposed(by: disposeBag)
         
@@ -73,4 +58,21 @@ extension ImageDetailViewController: UICollectionViewDelegate, UICollectionViewD
 class ImageDetailCell: RxCollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var lifeBar: UIView!
+    @IBOutlet weak var favoriteButton: FABButton! {
+        didSet {
+            contentView.layer.cornerRadius = 5
+            contentView.layer.masksToBounds = true
+            favoriteButton.image = Icon.favorite
+        }
+    }
+    @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
+    
+    func configure(with item: RankedMediaQuery.Data.RankedMedium.Item) {
+        imageView.setImage(with: item.minioId)
+        imageView.motionIdentifier = item.id
+        lifeBar.motionIdentifier = "lifeBar_\(item.id)"
+        favoriteButton.motionIdentifier = "favoriteButton_\(item.id)"
+        let progress = CGFloat(item.remainTime / 8.0.weeks)
+        lifeViewWidthConstraint.constant = progress * lifeBar.bounds.width
+    }
 }

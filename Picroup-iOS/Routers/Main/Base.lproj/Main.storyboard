@@ -182,18 +182,29 @@
                                                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Q2L-Ly-VCO">
                                                     <rect key="frame" x="0.0" y="118" width="120" height="2"/>
                                                 </progressView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Ma-HJ-YOg">
+                                                    <rect key="frame" x="111" y="119" width="1" height="1"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="IEs-L2-hkS"/>
+                                                        <constraint firstAttribute="width" constant="1" id="O5g-49-x9Q"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                         </view>
                                         <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="3Ma-HJ-YOg" secondAttribute="bottom" id="3Y7-Ty-Rmm"/>
                                             <constraint firstItem="wMi-x8-9hJ" firstAttribute="leading" secondItem="ase-f4-Gzo" secondAttribute="leading" id="5FU-vm-P8E"/>
                                             <constraint firstAttribute="trailing" secondItem="wMi-x8-9hJ" secondAttribute="trailing" id="8xC-00-0uc"/>
                                             <constraint firstItem="wMi-x8-9hJ" firstAttribute="top" secondItem="ase-f4-Gzo" secondAttribute="top" id="C8k-Qh-CDs"/>
                                             <constraint firstAttribute="bottom" secondItem="wMi-x8-9hJ" secondAttribute="bottom" id="CVn-59-aER"/>
                                             <constraint firstAttribute="bottom" secondItem="Q2L-Ly-VCO" secondAttribute="bottom" id="FgP-aQ-aYk"/>
+                                            <constraint firstAttribute="trailing" secondItem="3Ma-HJ-YOg" secondAttribute="trailing" constant="8" id="H8a-9v-5ab"/>
                                             <constraint firstAttribute="trailing" secondItem="Q2L-Ly-VCO" secondAttribute="trailing" id="Ljg-Ki-tOt"/>
                                             <constraint firstItem="Q2L-Ly-VCO" firstAttribute="leading" secondItem="ase-f4-Gzo" secondAttribute="leading" id="SXO-bA-w4c"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="favoritePlaceholderView" destination="3Ma-HJ-YOg" id="Fho-Zd-w8T"/>
                                             <outlet property="imageView" destination="wMi-x8-9hJ" id="qNR-Tj-1aw"/>
                                             <outlet property="progressView" destination="Q2L-Ly-VCO" id="xOI-gb-1Iw"/>
                                         </connections>
@@ -330,7 +341,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="K12-Hw-m0Y">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v1U-Sh-Zer">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v1U-Sh-Zer">
                                                             <rect key="frame" x="0.0" y="0.0" width="375" height="340"/>
                                                             <color key="backgroundColor" red="0.90823972225189209" green="0.92638683319091797" blue="0.9317171573638916" alpha="1" colorSpace="calibratedRGB"/>
                                                         </imageView>
@@ -338,10 +349,10 @@
                                                             <rect key="frame" x="0.0" y="340" width="375" height="8"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yXx-hz-G8I">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="8"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="20" height="8"/>
                                                                     <color key="backgroundColor" red="0.18039215689999999" green="0.49019607840000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="240" id="VWK-RS-JN8"/>
+                                                                        <constraint firstAttribute="width" constant="20" id="VWK-RS-JN8"/>
                                                                     </constraints>
                                                                 </view>
                                                             </subviews>
@@ -454,13 +465,14 @@
                                                         <constraint firstAttribute="width" secondItem="6Xb-Fp-URK" secondAttribute="height" multiplier="1:1" id="inY-fD-ryJ"/>
                                                     </constraints>
                                                     <color key="tintColor" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <state key="normal" image="ic_favorite_white"/>
                                                     <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="image" value="ic_favorite_white"/>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="pulseColor">
+                                                            <color key="value" red="0.68888300657272339" green="0.71366006135940552" blue="0.73448425531387329" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
                                                             <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="image" keyPath="image" value="ic_favorite_white"/>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
-                                                            <color key="value" red="0.76500725749999998" green="0.25787547230000002" blue="0.5677471757" alpha="1" colorSpace="calibratedRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </button>
@@ -475,8 +487,10 @@
                                             <constraint firstItem="K12-Hw-m0Y" firstAttribute="top" secondItem="PPC-7Q-ljg" secondAttribute="top" id="l15-I3-MJ0"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="favoriteButton" destination="6Xb-Fp-URK" id="Nnr-Ua-FUS"/>
                                             <outlet property="imageView" destination="v1U-Sh-Zer" id="IAK-2f-dl3"/>
                                             <outlet property="lifeBar" destination="TpI-pU-q6i" id="n05-IG-1yW"/>
+                                            <outlet property="lifeViewWidthConstraint" destination="VWK-RS-JN8" id="Avg-Fg-810"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

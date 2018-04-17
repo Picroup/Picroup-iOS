@@ -39,7 +39,7 @@ extension LoginState {
     }
 }
 
-extension LoginState {
+extension LoginState: IsFeedbackState {
     
     enum Event {
         case onSuccess(UserQuery.Data.User)
@@ -52,8 +52,7 @@ extension LoginState {
 
 extension LoginState {
     
-    static let reduce: (LoginState, Event) -> LoginState =  { state, event in
-        print("event:", event)
+    static func reduce(state: LoginState, event: LoginState.Event) -> LoginState {
         switch event {
         case .onSuccess(let user):
             return state.mutated {
@@ -92,7 +91,7 @@ enum LoginError: LocalizedError {
 
 extension LoginError {
     
-    var errorDescription: String {
+    var localizedDescription: String {
         switch self {
         case .usernameOrPasswordIncorrect: return "用户名或密码错误"
         }

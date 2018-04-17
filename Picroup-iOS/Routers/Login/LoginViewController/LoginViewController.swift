@@ -73,7 +73,7 @@ class LoginViewController: UIViewController {
         
         Driver<Any>.system(
             initialState: LoginState.empty,
-            reduce: LoginState.reduce,
+            reduce: logger(identifier: "LoginState")(LoginState.reduce),
             feedback: uiFeedback, loginAction
             )
             .debug("LoginState")
