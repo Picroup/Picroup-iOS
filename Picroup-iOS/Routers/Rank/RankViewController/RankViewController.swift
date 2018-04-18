@@ -60,7 +60,9 @@ class RankViewController: UIViewController {
             let subscriptions = [
                 state.map { [Section(model: "", items: $0.items)] }.drive(me.collectionView.rx.items(dataSource: dataSource)),
                 state.map { $0.nextRankedMediaQuery.category }.map { $0?.name ?? "全部" }.drive(onNext: { titleLabel in { titleLabel.text = $0 }}(me.preseter.navigationItem.titleLabel)),
-                
+                state.map { $0.hasMore }.drive(Binder(me.collectionView) { collectionView, hasMore in
+//                    collectionView.contentInset.bottom = hasMore ? 64 : 2
+                })
             ]
             let events: [Signal<RankState.Event>] = [
                 state.flatMapLatest {
@@ -80,7 +82,7 @@ class RankViewController: UIViewController {
         }
         
         let queryMedia: Feedback = react(query: { $0.rankedMediaQuery }) { query in
-            ApolloClient.shared.rx.fetch(query: query).map { $0?.data?.rankedMedia }.unwrap()
+            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.rankedMedia }.unwrap()
                 .map(RankState.Event.onGetSuccess)
                 .asSignal(onErrorRecover: { error in .just(.onGetError(error) )})
         }
@@ -124,20 +126,5 @@ extension RankedMediaQuery.Data.RankedMedium.Item {
     
     var remainTime: TimeInterval {
         return endedAt - Date().timeIntervalSince1970
-    }
-}
-
-extension Double {
-    
-    var weeks: TimeInterval {
-        return self * 7 * 24 * 3600
-    }
-    
-    var days: TimeInterval {
-        return self * 24 * 3600
-    }
-    
-    var hours: TimeInterval {
-        return self * 3600
     }
 }

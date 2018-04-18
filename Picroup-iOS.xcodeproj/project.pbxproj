@@ -52,7 +52,6 @@
 		457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1BA0205FF2A100BEDDF1 /* API.swift */; };
 		457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1BA2205FFE9D00BEDDF1 /* Config.swift */; };
 		458C106920849058005E94CD /* RankViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458C106820849058005E94CD /* RankViewPresenter.swift */; };
-		458C1073208734F7005E94CD /* ImageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458C1072208734F7005E94CD /* ImageDetailCell.swift */; };
 		4595F2082079EECF0040E5FA /* colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F2072079EECF0040E5FA /* colors.swift */; };
 		4595F20E2079F6780040E5FA /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4595F20D2079F6780040E5FA /* Login.storyboard */; };
 		4595F2102079F6B60040E5FA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F20F2079F6B60040E5FA /* LoginViewController.swift */; };
@@ -69,6 +68,8 @@
 		45A0393D2075D0E9007498DB /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A0393C2075D0E9007498DB /* User.graphql */; };
 		45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A61C0C2086356E00AE7D99 /* StarMedium.graphql */; };
 		45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */; };
+		45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */; };
+		45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F71208790C700AC2226 /* TimeInterval+.swift */; };
 		45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */; };
 		45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */; };
 		45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */; };
@@ -127,7 +128,6 @@
 		457B1BA0205FF2A100BEDDF1 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		457B1BA2205FFE9D00BEDDF1 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		458C106820849058005E94CD /* RankViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewPresenter.swift; sourceTree = "<group>"; };
-		458C1072208734F7005E94CD /* ImageDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageDetailCell.swift; path = "../../../../../../../Desktop/Picroup-iOS/Picroup-iOS/Routers/Image/ImageDetailViewController/ImageDetailCell.swift"; sourceTree = "<group>"; };
 		4595F2072079EECF0040E5FA /* colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = colors.swift; sourceTree = "<group>"; };
 		4595F20D2079F6780040E5FA /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		4595F20F2079F6B60040E5FA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -144,6 +144,8 @@
 		45A0393C2075D0E9007498DB /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
 		45A61C0C2086356E00AE7D99 /* StarMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = StarMedium.graphql; sourceTree = "<group>"; };
 		45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PublishRelay+asBinder.swift"; sourceTree = "<group>"; };
+		45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailCell.swift; sourceTree = "<group>"; };
+		45D04F71208790C700AC2226 /* TimeInterval+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+.swift"; sourceTree = "<group>"; };
 		45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageState.swift; sourceTree = "<group>"; };
 		45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RankedMedia.graphql; sourceTree = "<group>"; };
 		45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveImageMedium.graphql; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				4595F218207A15010040E5FA /* Mutabled.swift */,
 				451DD4C02083125A002C509A /* Objective.swift */,
 				451DD4C220831287002C509A /* NSObject+objc.swift */,
+				45D04F71208790C700AC2226 /* TimeInterval+.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -522,7 +525,7 @@
 			isa = PBXGroup;
 			children = (
 				45E240B12084D2CF004B58EF /* ImageDetailViewController.swift */,
-				458C1072208734F7005E94CD /* ImageDetailCell.swift */,
+				45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */,
 			);
 			path = ImageDetailViewController;
 			sourceTree = "<group>";
@@ -711,6 +714,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */,
+				45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */,
 				45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */,
 				451DD4BF208311DA002C509A /* HasDisposeBag.swift in Sources */,
 				451DD4C320831287002C509A /* NSObject+objc.swift in Sources */,
@@ -758,12 +762,12 @@
 				455D69042080409A00C651A0 /* RankNavigationController.swift in Sources */,
 				451CD328207BA39E0063A972 /* RouterService.swift in Sources */,
 				4595F212207A000C0040E5FA /* LoginViewPresenter.swift in Sources */,
-				458C1073208734F7005E94CD /* ImageDetailCell.swift in Sources */,
 				45E6C24A20863AC3003D7AA8 /* QueryState.swift in Sources */,
 				45E240B720862AD7004B58EF /* ImageDetailState.swift in Sources */,
 				45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */,
 				45E240B520862981004B58EF /* HideNavigationBarViewController.swift in Sources */,
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
+				45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */,
 				45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */,
 				451DD4BB207E558A002C509A /* RaisedButton+Rx.swift in Sources */,
 				4595F223207C97410040E5FA /* UIView+Motion+Rx.swift in Sources */,

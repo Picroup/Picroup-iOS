@@ -33,12 +33,8 @@ class ImageDetailViewController: HideNavigationBarViewController {
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let staredMediumTrigger = PublishRelay<Void>()
             let subscriptions = [
-                state.map { [$0] }.bind(to: me.collectionView .rx.items(cellIdentifier: "ImageDetailCell", cellType: ImageDetailCell.self)) { index, state, cell in
-                    let viewModel = ImageDetailCell.ViewModel(
-                        item: state.item,
-                        meduim: state.meduim.data,
-                        onStarButtonTap: staredMediumTrigger.accept
-                    )
+                state.map { [$0] }.throttle(1, scheduler: MainScheduler.instance).bind(to: me.collectionView .rx.items(cellIdentifier: "ImageDetailCell", cellType: ImageDetailCell.self)) { index, state, cell in
+                    let viewModel = ImageDetailCell.ViewModel(imageDetailState: state, onStarButtonTap: staredMediumTrigger.accept)
                     cell.configure(with: viewModel)
                 },
                 me.view.rx.tapGesture().when(.recognized).map { _ in }.bind(to: me.rx.pop(animated: true))

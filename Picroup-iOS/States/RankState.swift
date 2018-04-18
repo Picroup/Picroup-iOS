@@ -25,6 +25,9 @@ extension RankState {
     var isItemsEmpty: Bool {
         return !triggerQueryMedia && error == nil && items.isEmpty
     }
+    var hasMore: Bool {
+        return nextRankedMediaQuery.cusor != nil
+    }
 }
 
 extension RankState {

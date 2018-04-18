@@ -1,6 +1,7 @@
 query Medium($userId: ID!, $mediumId: ID!, $cursor: Float = null) {
     medium(mediumId: $mediumId) {
         _id
+        endedAt
         stared(userId: $userId)
         comments(cursor: $cursor) {
             cursor
