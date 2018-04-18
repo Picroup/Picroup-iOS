@@ -487,10 +487,12 @@
                                             <constraint firstItem="K12-Hw-m0Y" firstAttribute="top" secondItem="PPC-7Q-ljg" secondAttribute="top" id="l15-I3-MJ0"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="favoriteButton" destination="6Xb-Fp-URK" id="Nnr-Ua-FUS"/>
+                                            <outlet property="commentsCountLabel" destination="ny2-fY-l4f" id="l0m-3F-ZdZ"/>
                                             <outlet property="imageView" destination="v1U-Sh-Zer" id="IAK-2f-dl3"/>
                                             <outlet property="lifeBar" destination="TpI-pU-q6i" id="n05-IG-1yW"/>
                                             <outlet property="lifeViewWidthConstraint" destination="VWK-RS-JN8" id="Avg-Fg-810"/>
+                                            <outlet property="remainTimeLabel" destination="DaT-ce-JZD" id="wg1-9x-N3n"/>
+                                            <outlet property="starButton" destination="6Xb-Fp-URK" id="p8d-Vq-hPD"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

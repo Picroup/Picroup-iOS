@@ -29,6 +29,7 @@ extension QueryState {
 extension QueryState: IsFeedbackState {
     
     public enum Event {
+        case trigger
         case onSuccess(Data)
         case onError(Error)
     }
@@ -38,6 +39,12 @@ extension QueryState {
     
     public static func reduce(state: QueryState<Query, Data>, event: QueryState<Query, Data>.Event) -> QueryState<Query, Data> {
         switch event {
+        case .trigger:
+            return state.mutated {
+                $0.data = nil
+                $0.error = nil
+                $0.trigger = true
+            }
         case .onSuccess(let data):
             return state.mutated {
                 $0.data = data
@@ -54,17 +61,3 @@ extension QueryState {
     }
 }
 
-extension QueryState {
-    
-    public mutating func onSuccess(_ data: Data) {
-        self.data = data
-        self.error = nil
-        self.trigger = false
-    }
-    
-    public mutating func onError(_ error: Error) {
-        self.data = nil
-        self.error = error
-        self.trigger = false
-    }
-}

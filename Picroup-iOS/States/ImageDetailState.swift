@@ -9,23 +9,26 @@
 import Foundation
 
 struct ImageDetailState: Mutabled {
+    typealias MeduimState = QueryState<MediumQuery, MediumQuery.Data.Medium>
+    typealias StaredMediumState = QueryState<StarMediumMutation, StarMediumMutation.Data.StarMedium>
+    
     let userId: String
-    var medium: RankedMediaQuery.Data.RankedMedium.Item
-    var meduimState: QueryState<MediumQuery, MediumQuery.Data.Medium>
-    var staredMediumState: QueryState<StarMediumMutation, StarMediumMutation.Data.StarMedium>
+    var item: RankedMediaQuery.Data.RankedMedium.Item
+    var meduim: MeduimState
+    var staredMedium: StaredMediumState
 }
 
 extension ImageDetailState {
-    static func empty(userId: String, medium: RankedMediaQuery.Data.RankedMedium.Item) -> ImageDetailState {
+    static func empty(userId: String, item: RankedMediaQuery.Data.RankedMedium.Item) -> ImageDetailState {
         return ImageDetailState(
             userId: userId,
-            medium: medium,
-            meduimState: QueryState(
-                next: MediumQuery(userId: userId, mediumId: medium.id),
+            item: item,
+            meduim: QueryState(
+                next: MediumQuery(userId: userId, mediumId: item.id),
                 trigger: true
             ),
-            staredMediumState: QueryState(
-                next: StarMediumMutation(userId: userId, mediumId: medium.id),
+            staredMedium: QueryState(
+                next: StarMediumMutation(userId: userId, mediumId: item.id),
                 trigger: false
             )
         )
@@ -35,9 +38,8 @@ extension ImageDetailState {
 extension ImageDetailState: IsFeedbackState {
     
     enum Event {
-        case onQuerySuccess(MediumQuery.Data.Medium)
-        case onQueryError(Error)
-        
+        case meduim(MeduimState.Event)
+        case staredMedium(StaredMediumState.Event)
     }
 }
 
@@ -45,14 +47,15 @@ extension ImageDetailState {
     
     static func reduce(state: ImageDetailState, event: Event) -> ImageDetailState {
         switch event {
-        case .onQuerySuccess(let queriedMedium):
+        case .meduim(let event):
             return state.mutated {
-                $0.meduimState -= .onSuccess(queriedMedium)
+                $0.meduim -= event
             }
-        case .onQueryError(let error):
+        case .staredMedium(let event):
             return state.mutated {
-                $0.meduimState -= .onError(error)
+                $0.staredMedium -= event
             }
         }
     }
 }
+

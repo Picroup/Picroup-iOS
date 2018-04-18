@@ -52,6 +52,7 @@
 		457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1BA0205FF2A100BEDDF1 /* API.swift */; };
 		457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1BA2205FFE9D00BEDDF1 /* Config.swift */; };
 		458C106920849058005E94CD /* RankViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458C106820849058005E94CD /* RankViewPresenter.swift */; };
+		458C1073208734F7005E94CD /* ImageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458C1072208734F7005E94CD /* ImageDetailCell.swift */; };
 		4595F2082079EECF0040E5FA /* colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F2072079EECF0040E5FA /* colors.swift */; };
 		4595F20E2079F6780040E5FA /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4595F20D2079F6780040E5FA /* Login.storyboard */; };
 		4595F2102079F6B60040E5FA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F20F2079F6B60040E5FA /* LoginViewController.swift */; };
@@ -126,6 +127,7 @@
 		457B1BA0205FF2A100BEDDF1 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		457B1BA2205FFE9D00BEDDF1 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		458C106820849058005E94CD /* RankViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewPresenter.swift; sourceTree = "<group>"; };
+		458C1072208734F7005E94CD /* ImageDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageDetailCell.swift; path = "../../../../../../../Desktop/Picroup-iOS/Picroup-iOS/Routers/Image/ImageDetailViewController/ImageDetailCell.swift"; sourceTree = "<group>"; };
 		4595F2072079EECF0040E5FA /* colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = colors.swift; sourceTree = "<group>"; };
 		4595F20D2079F6780040E5FA /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		4595F20F2079F6B60040E5FA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -520,6 +522,7 @@
 			isa = PBXGroup;
 			children = (
 				45E240B12084D2CF004B58EF /* ImageDetailViewController.swift */,
+				458C1072208734F7005E94CD /* ImageDetailCell.swift */,
 			);
 			path = ImageDetailViewController;
 			sourceTree = "<group>";
@@ -755,6 +758,7 @@
 				455D69042080409A00C651A0 /* RankNavigationController.swift in Sources */,
 				451CD328207BA39E0063A972 /* RouterService.swift in Sources */,
 				4595F212207A000C0040E5FA /* LoginViewPresenter.swift in Sources */,
+				458C1073208734F7005E94CD /* ImageDetailCell.swift in Sources */,
 				45E6C24A20863AC3003D7AA8 /* QueryState.swift in Sources */,
 				45E240B720862AD7004B58EF /* ImageDetailState.swift in Sources */,
 				45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */,

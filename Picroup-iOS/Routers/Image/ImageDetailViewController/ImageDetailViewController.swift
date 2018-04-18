@@ -28,16 +28,51 @@ class ImageDetailViewController: HideNavigationBarViewController {
     private func setupRxFeedback() {
         
         guard let dependency = dependency else { return }
+        typealias Feedback = Observable<Any>.Feedback<ImageDetailState, ImageDetailState.Event>
         
-        Driver.just([dependency])
-            .drive(collectionView .rx.items(cellIdentifier: "ImageDetailCell", cellType: ImageDetailCell.self)) { index, item, cell in
-                cell.configure(with: item)
-            }
-            .disposed(by: disposeBag)
+        let uiFeedback: Feedback = bind(self) { (me, state) in
+            let staredMediumTrigger = PublishRelay<Void>()
+            let subscriptions = [
+                state.map { [$0] }.bind(to: me.collectionView .rx.items(cellIdentifier: "ImageDetailCell", cellType: ImageDetailCell.self)) { index, state, cell in
+                    let viewModel = ImageDetailCell.ViewModel(
+                        item: state.item,
+                        meduim: state.meduim.data,
+                        onStarButtonTap: staredMediumTrigger.accept
+                    )
+                    cell.configure(with: viewModel)
+                },
+                me.view.rx.tapGesture().when(.recognized).map { _ in }.bind(to: me.rx.pop(animated: true))
+            ]
+            let events = [
+                state.flatMapLatest { state -> Observable<ImageDetailState.Event>  in
+                    guard state.staredMedium.data == nil && !state.staredMedium.trigger else {
+                        return .empty()
+                    }
+                    return staredMediumTrigger.map { .staredMedium(.trigger) }
+                }
+            ]
+            return Bindings(subscriptions: subscriptions, events: events)
+        }
         
-        view.rx.tapGesture().when(.recognized)
-            .map { _ in }
-            .bind(to: rx.pop(animated: true))
+        let queryMedium: Feedback = react(query: { $0.meduim.query }) { query in
+            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).asObservable().map { $0?.data?.medium }.unwrap()
+                .map { .meduim(.onSuccess($0)) }
+                .catchError  { error in .just(.meduim(.onError(error))) }
+        }
+
+        let starMedium: Feedback = react(query: { $0.staredMedium.query }) { query in
+            ApolloClient.shared.rx.perform(mutation: query).asObservable().map { $0?.data?.starMedium }.unwrap()
+                .map { .staredMedium(.onSuccess($0)) }
+                .catchError  { error in .just(.staredMedium(.onError(error))) }
+        }
+        
+        Observable<Any>.system(
+            initialState: ImageDetailState.empty(userId: Config.userId, item: dependency),
+            reduce: logger(identifier: "ImageDetailState")(ImageDetailState.reduce),
+            scheduler: MainScheduler.instance,
+            scheduledFeedback: uiFeedback, queryMedium, starMedium
+        )
+            .subscribe()
             .disposed(by: disposeBag)
         
         collectionView.rx.setDelegate(self).disposed(by: disposeBag)
@@ -52,27 +87,5 @@ extension ImageDetailViewController: UICollectionViewDelegate, UICollectionViewD
         let imageHeight = width / CGFloat(dependency.detail?.aspectRatio ?? 1)
         let height = imageHeight + 8 + 56 + 48 + 48
         return CGSize(width: width, height: height)
-    }
-}
-
-class ImageDetailCell: RxCollectionViewCell {
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var lifeBar: UIView!
-    @IBOutlet weak var favoriteButton: FABButton! {
-        didSet {
-            contentView.layer.cornerRadius = 5
-            contentView.layer.masksToBounds = true
-            favoriteButton.image = Icon.favorite
-        }
-    }
-    @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
-    
-    func configure(with item: RankedMediaQuery.Data.RankedMedium.Item) {
-        imageView.setImage(with: item.minioId)
-        imageView.motionIdentifier = item.id
-        lifeBar.motionIdentifier = "lifeBar_\(item.id)"
-        favoriteButton.motionIdentifier = "favoriteButton_\(item.id)"
-        let progress = CGFloat(item.remainTime / 8.0.weeks)
-        lifeViewWidthConstraint.constant = progress * lifeBar.bounds.width
     }
 }

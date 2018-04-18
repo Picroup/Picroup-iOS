@@ -49,7 +49,7 @@ class RankViewController: UIViewController {
                 cell.transition(.fadeOut, .scale(0.75))
                 cell.progressView.progress = Float(item.remainTime / 56.days)
                 cell.progressView.motionIdentifier = "lifeBar_\(item.id)"
-                cell.favoritePlaceholderView.motionIdentifier = "favoriteButton_\(item.id)"
+                cell.favoritePlaceholderView.motionIdentifier = "starButton_\(item.id)"
                 return cell
         },
             configureSupplementaryView: { dataSource, collectionView, title, indexPath in
