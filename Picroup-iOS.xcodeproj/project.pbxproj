@@ -38,6 +38,7 @@
 		45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */; };
 		45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */; };
 		45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */; };
+		454F728F2088230C00850471 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F728E2088230C00850471 /* LocalStorage.swift */; };
 		455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455414B2207E315900296FDE /* IsFeedbackState.swift */; };
 		455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */; };
 		455D69042080409A00C651A0 /* RankNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69032080409A00C651A0 /* RankNavigationController.swift */; };
@@ -112,6 +113,7 @@
 		45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
 		45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageViewController.swift; sourceTree = "<group>"; };
 		45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+dismiss.swift"; sourceTree = "<group>"; };
+		454F728E2088230C00850471 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		455414B2207E315900296FDE /* IsFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackState.swift; sourceTree = "<group>"; };
 		455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+RxMinioId.swift"; sourceTree = "<group>"; };
 		455D69032080409A00C651A0 /* RankNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankNavigationController.swift; sourceTree = "<group>"; };
@@ -303,6 +305,14 @@
 			path = CreateImageViewController;
 			sourceTree = "<group>";
 		};
+		454F728D208822EC00850471 /* LocalStorage */ = {
+			isa = PBXGroup;
+			children = (
+				454F728E2088230C00850471 /* LocalStorage.swift */,
+			);
+			path = LocalStorage;
+			sourceTree = "<group>";
+		};
 		455D69002080402E00C651A0 /* Rank */ = {
 			isa = PBXGroup;
 			children = (
@@ -490,6 +500,7 @@
 		45A039372075C613007498DB /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				454F728D208822EC00850471 /* LocalStorage */,
 				4595F2092079F3630040E5FA /* Minio */,
 				4595F2042079EDE20040E5FA /* UIKit */,
 				45A039392075C6F7007498DB /* GraphQL */,
@@ -769,6 +780,7 @@
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
 				45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */,
 				45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */,
+				454F728F2088230C00850471 /* LocalStorage.swift in Sources */,
 				451DD4BB207E558A002C509A /* RaisedButton+Rx.swift in Sources */,
 				4595F223207C97410040E5FA /* UIView+Motion+Rx.swift in Sources */,
 				451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */,

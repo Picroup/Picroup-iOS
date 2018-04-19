@@ -36,7 +36,7 @@ extension RouterService.Main {
         
         let mvc = MainTabBarController()
         mvc.viewControllers = viewControllers
-
+        mvc.selectedIndex = 1
         let svc = SnackbarController(rootViewController: mvc)
         return svc
     }
@@ -48,6 +48,12 @@ extension RouterService.Main {
     
     static func selectCategoryViewController(dependency: SelectCategoryViewController.Dependency) -> SelectCategoryViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SelectCategoryViewController") as! SelectCategoryViewController
+        vc.dependency = dependency
+        return vc
+    }
+    
+    static func imageDetailViewController(dependency: ImageDetailViewController.Dependency) -> ImageDetailViewController {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageDetailViewController") as! ImageDetailViewController
         vc.dependency = dependency
         return vc
     }

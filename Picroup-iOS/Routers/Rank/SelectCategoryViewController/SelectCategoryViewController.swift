@@ -20,7 +20,7 @@ extension SelectCategoryState {
     
     static func empty(selectedCategory: MediumCategory?) -> SelectCategoryState {
         return SelectCategoryState(
-            selectedCategoryIndex: allCategories.index(where: { $0 == selectedCategory }) ?? 0
+            selectedCategoryIndex: MediumCategory.allCategories.index(where: { $0 == selectedCategory }) ?? 0
         )
     }
     
@@ -92,17 +92,13 @@ class SelectCategoryViewController: UIViewController {
 
 extension SelectCategoryState {
     
-    static var allCategories: [MediumCategory?] {
-        return [nil] + MediumCategory.all
-    }
-    
     var categoryViewModels: [(category: MediumCategory?, selected: Bool)] {
-        return type(of: self).allCategories.enumerated().map { index, category in
+        return MediumCategory.allCategories.enumerated().map { index, category in
             return (category, index == selectedCategoryIndex)
         }
     }
     
     var selectedCategory: MediumCategory? {
-        return type(of: self).allCategories[selectedCategoryIndex]
+        return MediumCategory.allCategories[selectedCategoryIndex]
     }
 }

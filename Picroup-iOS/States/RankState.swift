@@ -31,9 +31,9 @@ extension RankState {
 }
 
 extension RankState {
-    static var empty: RankState {
+    static func empty(selectedCategory: MediumCategory?) -> RankState {
         return RankState(
-            nextRankedMediaQuery: RankedMediaQuery(),
+            nextRankedMediaQuery: RankedMediaQuery(category: selectedCategory),
             items: [],
             error: nil,
             triggerQueryMedia: true

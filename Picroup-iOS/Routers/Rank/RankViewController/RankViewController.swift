@@ -60,9 +60,9 @@ class RankViewController: UIViewController {
             let subscriptions = [
                 state.map { [Section(model: "", items: $0.items)] }.drive(me.collectionView.rx.items(dataSource: dataSource)),
                 state.map { $0.nextRankedMediaQuery.category }.map { $0?.name ?? "全部" }.drive(onNext: { titleLabel in { titleLabel.text = $0 }}(me.preseter.navigationItem.titleLabel)),
-                state.map { $0.hasMore }.drive(Binder(me.collectionView) { collectionView, hasMore in
+//                state.map { $0.hasMore }.drive(Binder(me.collectionView) { collectionView, hasMore in
 //                    collectionView.contentInset.bottom = hasMore ? 64 : 2
-                })
+//                })
             ]
             let events: [Signal<RankState.Event>] = [
                 state.flatMapLatest {
@@ -87,18 +87,27 @@ class RankViewController: UIViewController {
                 .asSignal(onErrorRecover: { error in .just(.onGetError(error) )})
         }
         
+        let syncLocalStorage: Feedback = bind(LocalStorage.standard) { (localStorage, state) in
+            let subscriptions = [
+                state.map { $0.nextRankedMediaQuery.category }.drive(onNext: { localStorage.rankImageSelectedCategory = $0 })
+            ]
+            let events = [
+                Signal<RankState.Event>.never()
+            ]
+            return Bindings(subscriptions: subscriptions, events: events)
+        }
+        
         Driver<Any>.system(
-            initialState: RankState.empty,
+            initialState: RankState.empty(selectedCategory: LocalStorage.standard.rankImageSelectedCategory),
             reduce: logger(identifier: "RankState")(RankState.reduce),
-            feedback: uiFeedback, queryMedia
+            feedback: uiFeedback, queryMedia, syncLocalStorage
         )
         .drive()
         .disposed(by: disposeBag)
         
         collectionView.rx.modelSelected(RankedMediaQuery.Data.RankedMedium.Item.self)
             .subscribe(onNext: { item in
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageDetailViewController") as! ImageDetailViewController
-                vc.dependency = item
+                let vc = RouterService.Main.imageDetailViewController(dependency: item)
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
