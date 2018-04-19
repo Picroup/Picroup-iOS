@@ -27,9 +27,9 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Upoad photos</string>
 	<key>NSCameraUsageDescription</key>
+	<string>Upoad photos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Upoad photos</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -39,6 +39,10 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarHidden</key>
+	<true/>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

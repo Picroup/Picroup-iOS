@@ -13,7 +13,7 @@ import RxAlamofire
 struct CreateImageState: Mutabled {
     let userId: String
     let pickedImage: UIImage
-    var selectedCategoryInedx: Int
+    var selectedCategoryIndex: Int
     var progress: RxProgress?
     var error: Error?
     var savedMedia: SaveImageMediumMutation.Data.SaveImageMedium?
@@ -22,18 +22,18 @@ struct CreateImageState: Mutabled {
 }
 
 extension CreateImageState {
-    var selectedCategory: MediumCategory { return MediumCategory.all[selectedCategoryInedx] }
+    var selectedCategory: MediumCategory { return MediumCategory.all[selectedCategoryIndex] }
     var isSavingImage: Bool { return triggerSave != nil }
     var shouldSaveImage: Bool { return !isSavingImage && savedMedia == nil }
 }
 
 extension CreateImageState {
     
-    static func empty(userId: String = "5aca11401df3b96530ed221e", pickedImage: UIImage) -> CreateImageState {
+    static func empty(userId: String = Config.userId, pickedImage: UIImage, selectedCategory: MediumCategory) -> CreateImageState {
         return CreateImageState(
             userId: userId,
             pickedImage: pickedImage,
-            selectedCategoryInedx: 0,
+            selectedCategoryIndex: MediumCategory.all.index(where: { $0 == selectedCategory }) ?? 0,
             progress: nil,
             error: nil,
             savedMedia: nil,
@@ -60,7 +60,7 @@ extension CreateImageState {
         switch event {
         case .onSelectedCategoryIndex(let index):
             return state.mutated {
-                $0.selectedCategoryInedx = index
+                $0.selectedCategoryIndex = index
             }
         case .onProgress(let progress):
             return state.mutated {
@@ -103,6 +103,10 @@ extension MediumCategory {
             .photography,
             .design,
         ]
+    }
+    
+    static var allCategories: [MediumCategory?] {
+        return [nil] + MediumCategory.all
     }
     
     var name: String {

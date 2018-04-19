@@ -60,7 +60,7 @@ class CreateImageViewController: UIViewController {
         }
         
         
-        let save: Feedback = react(query: { $0.triggerSave }) { (param) in
+        let saveMedium: Feedback = react(query: { $0.triggerSave }) { (param) in
             return MediumService.saveMedium(client: dependency.clinet, userId: param.userId, pickedImage: param.pickedImage, category: param.selectedCategory)
                 .map { result in
                     switch result {
@@ -72,10 +72,20 @@ class CreateImageViewController: UIViewController {
                 }.asSignal(onErrorRecover: { error in .just(.onError(error) )})
         }
         
+        let syncLocalStorage: Feedback = bind(LocalStorage.standard) { (localStorage, state) in
+            let subscriptions = [
+                state.map { MediumCategory.all[$0.selectedCategoryIndex] }.drive(onNext: { localStorage.createImageSelectedCategory = $0 })
+            ]
+            let events = [
+                Signal<CreateImageState.Event>.never()
+            ]
+            return Bindings(subscriptions: subscriptions, events: events)
+        }
+        
         Driver<Any>.system(
-            initialState: CreateImageState.empty(pickedImage: dependency.image),
+            initialState: CreateImageState.empty(pickedImage: dependency.image, selectedCategory: LocalStorage.standard.createImageSelectedCategory),
             reduce: logger(identifier: "CreateImageState")(CreateImageState.reduce),
-            feedback: uiFeedback, save
+            feedback: uiFeedback, saveMedium, syncLocalStorage
             )
             .drive()
             .disposed(by: disposeBag)
@@ -85,7 +95,7 @@ class CreateImageViewController: UIViewController {
 
 class RxCollectionViewCell: UICollectionViewCell {
     
-    var disposeBag = DisposeBag()
+    private(set) var disposeBag = DisposeBag()
     
     override func prepareForReuse() {
         disposeBag = DisposeBag()
@@ -123,7 +133,7 @@ extension CreateImageState {
     
     var categoryViewModels: [(category: MediumCategory, selected: Bool)] {
         return MediumCategory.all.enumerated().map { index, category in
-            return (category, index == selectedCategoryInedx)
+            return (category, index == selectedCategoryIndex)
         }
     }
 }

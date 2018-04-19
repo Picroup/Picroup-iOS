@@ -25,12 +25,15 @@ extension RankState {
     var isItemsEmpty: Bool {
         return !triggerQueryMedia && error == nil && items.isEmpty
     }
+    var hasMore: Bool {
+        return nextRankedMediaQuery.cusor != nil
+    }
 }
 
 extension RankState {
-    static var empty: RankState {
+    static func empty(selectedCategory: MediumCategory?) -> RankState {
         return RankState(
-            nextRankedMediaQuery: RankedMediaQuery(),
+            nextRankedMediaQuery: RankedMediaQuery(category: selectedCategory),
             items: [],
             error: nil,
             triggerQueryMedia: true
