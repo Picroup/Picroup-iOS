@@ -72,7 +72,7 @@ class SelectCategoryViewController: UIViewController {
                 },
                 state.map { $0.selectedCategory }.skip(1).delay(0.3).mapToVoid().drive(me.rx.dismiss(animated: true)),
                 state.map { $0.selectedCategory }.skip(1).delay(0.3).drive(onNext: me.dependency.onSelect),
-                me.view.rx.tapGesture().when(.recognized).map { _ in }.bind(to: me.rx.dismiss(animated: true)),
+                me.view.rx.tapGesture().when(.recognized).mapToVoid().bind(to: me.rx.dismiss(animated: true)),
                 ]
             let events = [
                 eventsTrigger.asSignal()

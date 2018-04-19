@@ -22,15 +22,13 @@ extension ImageDetailCell {
         let remainTimeLabelText: String?
         let commentsCountLabelText: String?
         let stared: Bool?
-        let onStarButtonTap: (() -> Void)?
-        let onCommentsTap: (() -> Void)?
         let animatedChangeProgress: Bool
     }
 }
 
 extension ImageDetailCell.ViewModel {
     
-    init(imageDetailState state: ImageDetailState, onStarButtonTap: (() -> Void)?, onCommentsTap: (() -> Void)?) {
+    init(imageDetailState state: ImageDetailState) {
         let (item, meduim, staredMedium) = (state.item, state.meduim.data, state.staredMedium.data)
         
         let endAt = staredMedium?.endedAt ?? meduim?.endedAt ?? item.endedAt
@@ -44,8 +42,6 @@ extension ImageDetailCell.ViewModel {
         self.remainTimeLabelText = "\(Int(remainTime / 1.0.weeks))周"
         self.commentsCountLabelText = "\(item.commentsCount)条"
         self.stared = (staredMedium != nil) ? true : meduim?.stared
-        self.onStarButtonTap = onStarButtonTap
-        self.onCommentsTap = onCommentsTap
         self.animatedChangeProgress = item.endedAt != endAt
     }
 }
@@ -62,10 +58,10 @@ class ImageDetailCell: RxCollectionViewCell {
     }
     @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var remainTimeLabel: UILabel!
-    @IBOutlet weak var commentsContentButton: UIButton!
+    @IBOutlet weak var commentsContentView: UIView!
     @IBOutlet weak var commentsCountLabel: UILabel!
     
-    func configure(with viewModel: ViewModel) {
+    func configure(with viewModel: ViewModel, onStarButtonTap: (() -> Void)?, onCommentsTap: (() -> Void)?, onImageViewTap: (() -> Void)?) {
         imageView.setImage(with: viewModel.imageViewMinioId!)
         imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
         lifeBar.motionIdentifier = viewModel.lifeBarMotionIdentifier
@@ -79,16 +75,29 @@ class ImageDetailCell: RxCollectionViewCell {
                 self.layoutIfNeeded()
             })
         }
+        
+        if let onCommentsTap = onCommentsTap {
+            commentsContentView.rx.tapGesture().when(.recognized).mapToVoid()
+                .subscribe(onNext: onCommentsTap)
+                .disposed(by: disposeBag)
+        }
+        
+        if let onStarButtonTap = onStarButtonTap {
+            starButton.rx.tap
+                .subscribe(onNext: onStarButtonTap)
+                .disposed(by: disposeBag)
+        }
+        
+        if let onImageViewTap = onImageViewTap {
+            imageView.rx.tapGesture().when(.recognized)
+                .mapToVoid()
+                .subscribe(onNext: onImageViewTap)
+                .disposed(by: disposeBag)
+        }
     }
     
     private func configureCommentsContentView(with viewModel: ViewModel) {
         commentsCountLabel.text = viewModel.commentsCountLabelText
-        
-        if let onCommentsTap = viewModel.onCommentsTap {
-            commentsContentButton.rx.tap
-                .subscribe(onNext: onCommentsTap)
-                .disposed(by: disposeBag)
-        }
     }
     
     private func configureStarButton(with viewModel: ViewModel) {
@@ -99,12 +108,6 @@ class ImageDetailCell: RxCollectionViewCell {
             self.starButton.alpha = viewModel.stared == nil ? 0 : 1
             self.setStarButtonSelected(viewModel.stared == true)
         })
-
-        if let onStarButtonTap = viewModel.onStarButtonTap {
-            starButton.rx.tap
-                .subscribe(onNext: onStarButtonTap)
-                .disposed(by: disposeBag)
-        }
         
     }
     

@@ -330,6 +330,22 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
+                                <view key="backgroundView" contentMode="scaleToFill" id="zQy-Dl-Mhy">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ueA-Un-YhH">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="ueA-Un-YhH" secondAttribute="trailing" id="2JK-ch-d7v"/>
+                                        <constraint firstAttribute="bottom" secondItem="ueA-Un-YhH" secondAttribute="bottom" id="FvB-oJ-JqY"/>
+                                        <constraint firstItem="ueA-Un-YhH" firstAttribute="top" secondItem="zQy-Dl-Mhy" secondAttribute="top" id="Le1-DO-cV6"/>
+                                        <constraint firstItem="ueA-Un-YhH" firstAttribute="leading" secondItem="zQy-Dl-Mhy" secondAttribute="leading" id="OXi-du-Zkx"/>
+                                    </constraints>
+                                </view>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageDetailCell" id="PPC-7Q-ljg" customClass="ImageDetailCell" customModule="Picroup_iOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
@@ -445,20 +461,13 @@
                                                                         </label>
                                                                     </subviews>
                                                                 </stackView>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H3k-FO-r21">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
-                                                                </button>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="bottom" secondItem="H3k-FO-r21" secondAttribute="bottom" id="6Pq-ty-pft"/>
                                                                 <constraint firstItem="Bt1-Wi-ilZ" firstAttribute="leading" secondItem="Va6-Fy-j0r" secondAttribute="leading" constant="16" id="7hi-mo-dg6"/>
                                                                 <constraint firstItem="Bt1-Wi-ilZ" firstAttribute="top" secondItem="Va6-Fy-j0r" secondAttribute="top" constant="8" id="WZg-pz-YyV"/>
-                                                                <constraint firstAttribute="trailing" secondItem="H3k-FO-r21" secondAttribute="trailing" id="bgo-aC-QsW"/>
                                                                 <constraint firstAttribute="trailing" secondItem="Bt1-Wi-ilZ" secondAttribute="trailing" constant="16" id="eSF-DA-0eB"/>
-                                                                <constraint firstItem="H3k-FO-r21" firstAttribute="top" secondItem="Va6-Fy-j0r" secondAttribute="top" id="j7g-xl-GUo"/>
                                                                 <constraint firstAttribute="bottom" secondItem="Bt1-Wi-ilZ" secondAttribute="bottom" constant="8" id="qGt-f4-koI"/>
-                                                                <constraint firstItem="H3k-FO-r21" firstAttribute="leading" secondItem="Va6-Fy-j0r" secondAttribute="leading" id="rcF-CF-uGE"/>
                                                                 <constraint firstAttribute="height" constant="48" id="sv3-bG-iSf"/>
                                                             </constraints>
                                                         </view>
@@ -494,7 +503,7 @@
                                             <constraint firstItem="K12-Hw-m0Y" firstAttribute="top" secondItem="PPC-7Q-ljg" secondAttribute="top" id="l15-I3-MJ0"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="commentsContentButton" destination="H3k-FO-r21" id="c5R-PU-5qk"/>
+                                            <outlet property="commentsContentView" destination="Va6-Fy-j0r" id="Wqu-uJ-4zK"/>
                                             <outlet property="commentsCountLabel" destination="ny2-fY-l4f" id="l0m-3F-ZdZ"/>
                                             <outlet property="imageView" destination="v1U-Sh-Zer" id="IAK-2f-dl3"/>
                                             <outlet property="lifeBar" destination="TpI-pU-q6i" id="n05-IG-1yW"/>
@@ -516,6 +525,7 @@
                         <viewLayoutGuide key="safeArea" id="vDe-ez-C2T"/>
                     </view>
                     <connections>
+                        <outlet property="backgroundButton" destination="ueA-Un-YhH" id="xWH-ey-Rjl"/>
                         <outlet property="collectionView" destination="oWM-uy-VqI" id="iae-La-65r"/>
                     </connections>
                 </viewController>
@@ -540,6 +550,22 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
+                                <view key="backgroundView" contentMode="scaleToFill" id="5cR-iq-bWY">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5NE-Fd-DjC">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="5NE-Fd-DjC" secondAttribute="trailing" id="2L3-UG-f54"/>
+                                        <constraint firstItem="5NE-Fd-DjC" firstAttribute="top" secondItem="5cR-iq-bWY" secondAttribute="top" id="3zQ-O0-qs7"/>
+                                        <constraint firstAttribute="bottom" secondItem="5NE-Fd-DjC" secondAttribute="bottom" id="SeR-G8-bc3"/>
+                                        <constraint firstItem="5NE-Fd-DjC" firstAttribute="leading" secondItem="5cR-iq-bWY" secondAttribute="leading" id="Sne-A5-Ghq"/>
+                                    </constraints>
+                                </view>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageCommentsDetailCell" id="eKf-1I-y1T" customClass="ImageCommentsDetailCell" customModule="Picroup_iOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
@@ -587,19 +613,22 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OkT-Mp-vOe">
                                                             <rect key="frame" x="0.0" y="203" width="375" height="48"/>
                                                             <subviews>
-                                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="wnO-oO-h3E">
+                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="wnO-oO-h3E">
                                                                     <rect key="frame" x="16" y="8" width="343" height="32"/>
                                                                     <subviews>
                                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="添加评论" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q4N-CN-8N7">
-                                                                            <rect key="frame" x="0.0" y="6" width="279" height="20"/>
-                                                                            <nil key="textColor"/>
+                                                                            <rect key="frame" x="0.0" y="1" width="271" height="30"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="30" id="PdR-xx-sLh"/>
+                                                                            </constraints>
+                                                                            <color key="textColor" red="0.18039215689999999" green="0.49019607840000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                             <textInputTraits key="textInputTraits"/>
                                                                         </textField>
-                                                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="20" horizontalCompressionResistancePriority="70" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69h-Bv-LgU" customClass="FlatButton" customModule="Material">
-                                                                            <rect key="frame" x="295" y="0.0" width="48" height="32"/>
+                                                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="200" horizontalCompressionResistancePriority="700" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69h-Bv-LgU" customClass="FlatButton" customModule="Material">
+                                                                            <rect key="frame" x="287" y="0.0" width="56" height="32"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="width" constant="48" id="loG-SN-YMU"/>
+                                                                                <constraint firstAttribute="width" constant="56" id="JvV-Lf-raa"/>
                                                                             </constraints>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                             <color key="tintColor" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -667,6 +696,7 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="commentsCountLabel" destination="plc-6Y-KG3" id="b1h-02-he5"/>
+                                            <outlet property="contentTextField" destination="q4N-CN-8N7" id="AjD-C9-dgn"/>
                                             <outlet property="imageView" destination="IvQ-HV-WpJ" id="Kb4-wF-sE1"/>
                                             <outlet property="lifeBar" destination="3KM-3O-qmd" id="FMt-0m-eRo"/>
                                             <outlet property="lifeViewWidthConstraint" destination="vDw-3k-Ty9" id="s7G-jf-f5x"/>
@@ -695,6 +725,7 @@
                         <viewLayoutGuide key="safeArea" id="EmB-hf-ZRu"/>
                     </view>
                     <connections>
+                        <outlet property="backgroundButton" destination="5NE-Fd-DjC" id="cs6-de-c9R"/>
                         <outlet property="collectionView" destination="vGR-PS-00P" id="ZXk-bT-nx6"/>
                     </connections>
                 </viewController>

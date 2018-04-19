@@ -19,6 +19,7 @@ class ImageDetailViewController: HideNavigationBarViewController {
     var dependency: Dependency!
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var backgroundButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,18 +33,22 @@ class ImageDetailViewController: HideNavigationBarViewController {
         
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let staredMediumTrigger = PublishRelay<Void>()
+            let popTrigger = PublishRelay<Void>()
+            let showImageComments = {  (state: ImageDetailState) in { [weak me] in
+                let vc = RouterService.Main.imageCommentsViewController(dependency: state.item)
+                me?.navigationController?.pushViewController(vc, animated: true)
+                }}
             let subscriptions = [
                 state.map { [$0] }.throttle(1, scheduler: MainScheduler.instance).bind(to: me.collectionView .rx.items(cellIdentifier: "ImageDetailCell", cellType: ImageDetailCell.self)) { index, state, cell in
-                    let viewModel = ImageDetailCell.ViewModel(
-                        imageDetailState: state,
+                    let viewModel = ImageDetailCell.ViewModel(imageDetailState: state)
+                    cell.configure(
+                        with: viewModel,
                         onStarButtonTap: staredMediumTrigger.accept,
-                        onCommentsTap: {
-                            let vc = RouterService.Main.imageCommentsViewController(dependency: state.item)
-                            me.navigationController?.pushViewController(vc, animated: true)
-                    })
-                    cell.configure(with: viewModel)
+                        onCommentsTap: showImageComments(state),
+                        onImageViewTap: popTrigger.accept)
                 },
-                me.view.rx.tapGesture().when(.recognized).map { _ in }.bind(to: me.rx.pop(animated: true))
+                me.backgroundButton.rx.tap.bind(to: popTrigger),
+                popTrigger.bind(to: me.rx.pop(animated: true)),
             ]
             let events = [
                 state.flatMapLatest { state -> Observable<ImageDetailState.Event>  in
