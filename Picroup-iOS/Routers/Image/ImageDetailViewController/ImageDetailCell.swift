@@ -23,13 +23,14 @@ extension ImageDetailCell {
         let commentsCountLabelText: String?
         let stared: Bool?
         let onStarButtonTap: (() -> Void)?
+        let onCommentsTap: (() -> Void)?
         let animatedChangeProgress: Bool
     }
 }
 
 extension ImageDetailCell.ViewModel {
     
-    init(imageDetailState state: ImageDetailState, onStarButtonTap: (() -> Void)?) {
+    init(imageDetailState state: ImageDetailState, onStarButtonTap: (() -> Void)?, onCommentsTap: (() -> Void)?) {
         let (item, meduim, staredMedium) = (state.item, state.meduim.data, state.staredMedium.data)
         
         let endAt = staredMedium?.endedAt ?? meduim?.endedAt ?? item.endedAt
@@ -44,6 +45,7 @@ extension ImageDetailCell.ViewModel {
         self.commentsCountLabelText = "\(item.commentsCount)条"
         self.stared = (staredMedium != nil) ? true : meduim?.stared
         self.onStarButtonTap = onStarButtonTap
+        self.onCommentsTap = onCommentsTap
         self.animatedChangeProgress = item.endedAt != endAt
     }
 }
@@ -60,6 +62,7 @@ class ImageDetailCell: RxCollectionViewCell {
     }
     @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var remainTimeLabel: UILabel!
+    @IBOutlet weak var commentsContentButton: UIButton!
     @IBOutlet weak var commentsCountLabel: UILabel!
     
     func configure(with viewModel: ViewModel) {
@@ -69,12 +72,22 @@ class ImageDetailCell: RxCollectionViewCell {
         starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
         lifeViewWidthConstraint.constant = viewModel.progress * lifeBar.bounds.width
         remainTimeLabel.text = viewModel.remainTimeLabelText
-        commentsCountLabel.text = viewModel.commentsCountLabelText
+        configureCommentsContentView(with: viewModel)
         configureStarButton(with: viewModel)
         if viewModel.animatedChangeProgress {
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
                 self.layoutIfNeeded()
             })
+        }
+    }
+    
+    private func configureCommentsContentView(with viewModel: ViewModel) {
+        commentsCountLabel.text = viewModel.commentsCountLabelText
+        
+        if let onCommentsTap = viewModel.onCommentsTap {
+            commentsContentButton.rx.tap
+                .subscribe(onNext: onCommentsTap)
+                .disposed(by: disposeBag)
         }
     }
     

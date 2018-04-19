@@ -49,7 +49,7 @@ class RankViewController: UIViewController {
                 cell.transition(.fadeOut, .scale(0.75))
                 cell.progressView.progress = Float(item.remainTime / 56.days)
                 cell.progressView.motionIdentifier = "lifeBar_\(item.id)"
-                cell.favoritePlaceholderView.motionIdentifier = "starButton_\(item.id)"
+                cell.starPlaceholderView.motionIdentifier = "starButton_\(item.id)"
                 return cell
         },
             configureSupplementaryView: { dataSource, collectionView, title, indexPath in
@@ -117,7 +117,7 @@ class RankViewController: UIViewController {
 class RankMediumCell: RxCollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var progressView: UIProgressView!
-    @IBOutlet weak var favoritePlaceholderView: UIView!
+    @IBOutlet weak var starPlaceholderView: UIView!
 }
 
 extension RankedMediaQuery.Data.RankedMedium.Item: IdentifiableType, Equatable {

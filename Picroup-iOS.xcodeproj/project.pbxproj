@@ -39,6 +39,7 @@
 		45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */; };
 		45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */; };
 		454F728F2088230C00850471 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F728E2088230C00850471 /* LocalStorage.swift */; };
+		454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72912088716900850471 /* ImageCommentsViewController.swift */; };
 		455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455414B2207E315900296FDE /* IsFeedbackState.swift */; };
 		455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */; };
 		455D69042080409A00C651A0 /* RankNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69032080409A00C651A0 /* RankNavigationController.swift */; };
@@ -114,6 +115,7 @@
 		45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageViewController.swift; sourceTree = "<group>"; };
 		45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+dismiss.swift"; sourceTree = "<group>"; };
 		454F728E2088230C00850471 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
+		454F72912088716900850471 /* ImageCommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsViewController.swift; sourceTree = "<group>"; };
 		455414B2207E315900296FDE /* IsFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackState.swift; sourceTree = "<group>"; };
 		455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+RxMinioId.swift"; sourceTree = "<group>"; };
 		455D69032080409A00C651A0 /* RankNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankNavigationController.swift; sourceTree = "<group>"; };
@@ -313,6 +315,14 @@
 			path = LocalStorage;
 			sourceTree = "<group>";
 		};
+		454F72902088714E00850471 /* ImageCommentsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				454F72912088716900850471 /* ImageCommentsViewController.swift */,
+			);
+			path = ImageCommentsViewController;
+			sourceTree = "<group>";
+		};
 		455D69002080402E00C651A0 /* Rank */ = {
 			isa = PBXGroup;
 			children = (
@@ -394,6 +404,7 @@
 			children = (
 				45384BBA207DEFBC00624A1B /* CreateImageViewController */,
 				45E240B02084D2B6004B58EF /* ImageDetailViewController */,
+				454F72902088714E00850471 /* ImageCommentsViewController */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -696,6 +707,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxFeedback/RxFeedback.framework",
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RxViewController/RxViewController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -711,6 +723,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxFeedback.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxViewController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -759,6 +772,7 @@
 				4595F2082079EECF0040E5FA /* colors.swift in Sources */,
 				451DD4BD207F8BC7002C509A /* RankState.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
+				454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */,
 				455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */,
 				4595F225207D95360040E5FA /* HomeState.swift in Sources */,
 				45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */,
