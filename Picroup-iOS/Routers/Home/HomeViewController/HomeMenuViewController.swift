@@ -61,7 +61,6 @@ class HomeMenuViewController: FABMenuController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        
         let pickImage: Feedback = react(query: { $0.triggerPickImage }) { [weak self] (sourceType)  in
             let rxPicker = UIImagePickerController.rx.createWithParent(self) {
                 $0.sourceType = sourceType
@@ -93,10 +92,17 @@ class HomeMenuViewController: FABMenuController {
             return .empty()
         }
         
+        let queryMedia: Feedback = react(query: { $0.query }) { query in
+            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                .map { $0?.data?.user }.unwrap()
+                .map(HomeState.Event.onGetSuccess)
+                .asSignal(onErrorRecover: { error in .just(.onGetError(error)) })
+        }
+        
         Driver<Any>.system(
-            initialState: HomeState.empty,
+            initialState: HomeState.empty(userId: Config.userId),
             reduce: logger(identifier: "HomeState")(HomeState.reduce),
-            feedback: injectDependency, uiFeedback, pickImage, addImage
+            feedback: injectDependency, uiFeedback, pickImage, addImage, queryMedia
             )
             .drive()
             .disposed(by: disposeBag)

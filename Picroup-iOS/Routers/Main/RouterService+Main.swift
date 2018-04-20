@@ -36,13 +36,13 @@ extension RouterService.Main {
         
         let mvc = MainTabBarController()
         mvc.viewControllers = viewControllers
-        mvc.selectedIndex = 1
+//        mvc.selectedIndex = 1
         let svc = SnackbarController(rootViewController: mvc)
         return svc
     }
     
     static func homeMenuViewController() -> UIViewController {
-        let state = BehaviorRelay<HomeState>(value: .empty)
+        let state = BehaviorRelay<HomeState>(value: .empty(userId: Config.userId))
         let events = PublishRelay<HomeState.Event>()
         let hvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
         hvc.dependency = (state.asDriver(), events.accept)

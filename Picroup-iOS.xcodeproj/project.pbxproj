@@ -80,6 +80,9 @@
 		45D04F762088C59100AC2226 /* MediumComments.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D04F752088C59100AC2226 /* MediumComments.graphql */; };
 		45D04F782088C81F00AC2226 /* ImageCommentsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F772088C81F00AC2226 /* ImageCommentsState.swift */; };
 		45D04F7A2088D57B00AC2226 /* SaveComment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D04F792088D57B00AC2226 /* SaveComment.graphql */; };
+		45D04F7C2089FD0500AC2226 /* UserInterestedMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */; };
+		45D04F7E208A040C00AC2226 /* HomeImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F7D208A040C00AC2226 /* HomeImageCell.swift */; };
+		45D04F80208A06D300AC2226 /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F7F208A06D300AC2226 /* HomeViewPresenter.swift */; };
 		45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */; };
 		45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */; };
 		45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */; };
@@ -166,6 +169,9 @@
 		45D04F752088C59100AC2226 /* MediumComments.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MediumComments.graphql; sourceTree = "<group>"; };
 		45D04F772088C81F00AC2226 /* ImageCommentsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsState.swift; sourceTree = "<group>"; };
 		45D04F792088D57B00AC2226 /* SaveComment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveComment.graphql; sourceTree = "<group>"; };
+		45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserInterestedMedia.graphql; sourceTree = "<group>"; };
+		45D04F7D208A040C00AC2226 /* HomeImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeImageCell.swift; sourceTree = "<group>"; };
+		45D04F7F208A06D300AC2226 /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
 		45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageState.swift; sourceTree = "<group>"; };
 		45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RankedMedia.graphql; sourceTree = "<group>"; };
 		45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveImageMedium.graphql; sourceTree = "<group>"; };
@@ -289,6 +295,8 @@
 				451CD32C207BB5D90063A972 /* HomeMenuViewController.swift */,
 				451CD32F207BB62D0063A972 /* HomeMenuPresenter.swift */,
 				451CD331207D0A910063A972 /* HomeViewController.swift */,
+				45D04F7F208A06D300AC2226 /* HomeViewPresenter.swift */,
+				45D04F7D208A040C00AC2226 /* HomeImageCell.swift */,
 			);
 			path = HomeViewController;
 			sourceTree = "<group>";
@@ -554,6 +562,7 @@
 				45A61C0C2086356E00AE7D99 /* StarMedium.graphql */,
 				45D04F752088C59100AC2226 /* MediumComments.graphql */,
 				45D04F792088D57B00AC2226 /* SaveComment.graphql */,
+				45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -663,6 +672,7 @@
 				45E240B920862CF6004B58EF /* Medium.graphql in Resources */,
 				45D04F762088C59100AC2226 /* MediumComments.graphql in Resources */,
 				45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */,
+				45D04F7C2089FD0500AC2226 /* UserInterestedMedia.graphql in Resources */,
 				45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */,
 				45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */,
 				45A0393D2075D0E9007498DB /* User.graphql in Resources */,
@@ -774,6 +784,7 @@
 				451CD337207D0B9A0063A972 /* RankViewController.swift in Sources */,
 				4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
+				45D04F80208A06D300AC2226 /* HomeViewPresenter.swift in Sources */,
 				451CD32D207BB5D90063A972 /* HomeMenuViewController.swift in Sources */,
 				451DD4C12083125A002C509A /* Objective.swift in Sources */,
 				4595F219207A15010040E5FA /* Mutabled.swift in Sources */,
@@ -789,6 +800,7 @@
 				451CD339207D0BAA0063A972 /* NotificationsViewController.swift in Sources */,
 				455D690B208097EC00C651A0 /* SelectCategoryViewController.swift in Sources */,
 				4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */,
+				45D04F7E208A040C00AC2226 /* HomeImageCell.swift in Sources */,
 				451DD4B7207E3EB5002C509A /* ErrorMessage.swift in Sources */,
 				4595F2082079EECF0040E5FA /* colors.swift in Sources */,
 				451DD4BD207F8BC7002C509A /* RankState.swift in Sources */,

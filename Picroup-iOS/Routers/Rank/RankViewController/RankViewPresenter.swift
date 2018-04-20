@@ -8,6 +8,9 @@
 
 import UIKit
 import Material
+import RxSwift
+import RxCocoa
+import RxDataSources
 
 class RankViewPresenter {
     
@@ -38,4 +41,24 @@ class RankViewPresenter {
         navigationItem.rightViews = [categoryButton]
     }
     
+    typealias Section = AnimatableSectionModel<String, RankedMediaQuery.Data.RankedMedium.Item>
+    typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
+    
+    var items: (Observable<[Section]>) -> Disposable {
+        let dataSource = DataSource(
+            configureCell: { dataSource, collectionView, indexPath, item in
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
+                cell.imageView.setImage(with: item.minioId)
+                cell.imageView.motionIdentifier = item.id
+                cell.transition(.fadeOut, .scale(0.75))
+                cell.progressView.progress = Float(item.remainTime / 56.days)
+                cell.progressView.motionIdentifier = "lifeBar_\(item.id)"
+                cell.starPlaceholderView.motionIdentifier = "starButton_\(item.id)"
+                return cell
+        },
+            configureSupplementaryView: { dataSource, collectionView, title, indexPath in
+                return UICollectionReusableView()
+        })
+        return collectionView.rx.items(dataSource: dataSource)
+    }
 }
