@@ -23,8 +23,12 @@ class ImageCommentsPresenter: NSObject {
     @IBOutlet weak var sendButton: FlatButton!
     @IBOutlet weak var hideCommentsIcon: UIImageView!
     @IBOutlet weak var hideCommentsContentView: UIView!
+    @IBOutlet weak var tableViewBackgroundButton: UIButton!
     
     func setup() {
+        tableView.backgroundView = tableViewBackgroundButton
+        tableView.estimatedRowHeight = tableView.rowHeight
+        tableView.rowHeight = UITableViewAutomaticDimension
         hideCommentsIcon.image = Icon.cm.arrowDownward
     }
     
@@ -44,12 +48,23 @@ class ImageCommentsPresenter: NSObject {
     
     var items: (Observable<[Section]>) -> Disposable {
         let dataSource = DataSource(configureCell: { (dataSource, tableView, indexPath, item) in
-            let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell")!
-            cell.textLabel?.text = item.userId
-            cell.detailTextLabel?.text = item.content
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+            cell.configure(with: item)
             return cell
         })
         return tableView.rx.items(dataSource: dataSource)
+    }
+}
+
+class CommentCell: RxTableViewCell {
+    @IBOutlet weak var photoView: UIImageView!
+    @IBOutlet weak var userLabel: UILabel!
+    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    func configure(with item: MediumCommentsQuery.Data.Medium.Comment.Item) {
+//        userLabel?.text = item.userId
+        contentLabel?.text = item.content
     }
 }
 

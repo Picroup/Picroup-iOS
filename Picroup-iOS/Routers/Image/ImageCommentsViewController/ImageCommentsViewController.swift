@@ -38,9 +38,10 @@ class ImageCommentsViewController: HideNavigationBarViewController {
             let subscriptions = [
                 state.map { $0.medium }.throttle(0.3, scheduler: MainScheduler.instance).bind(to: me.presenter.medium),
                 state.map { $0.saveComment.next.content }.bind(to: me.presenter.contentTextField.rx.text),
-                state.map { !$0.shouldSendComment }.bind(to: me.presenter.sendButton.rx.isHidden),
+                state.map { $0.shouldSendComment ? 1 : 0 }.bind(to: me.presenter.sendButton.rx.alpha),
                 me.presenter.hideCommentsContentView.rx.tapGesture().when(.recognized).mapToVoid().bind(to: me.rx.pop(animated: true)),
                 me.presenter.imageView.rx.tapGesture().when(.recognized).mapToVoid().bind(to: me.rx.pop(animated: true)),
+                me.presenter.tableViewBackgroundButton.rx.tap.bind(to: me.rx.pop(animated: true)),
                 me.presenter.sendButton.rx.tap.bind(to: me.presenter.contentTextField.rx.resignFirstResponder()),
                 state.map { [Section(model: "", items: $0.items)]  }.bind(to: me.presenter.items) ,
                 ]
@@ -79,39 +80,4 @@ class ImageCommentsViewController: HideNavigationBarViewController {
     }
 }
 
-
-class ImageCommentsDetailCell: RxCollectionViewCell {
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var lifeBar: UIView!
-    @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var commentsCountLabel: UILabel!
-    @IBOutlet weak var starPlaceholderView: UIView!
-    @IBOutlet weak var sendButton: FlatButton!
-    @IBOutlet weak var contentTextField: UITextField!
-    
-    func configure(with item: RankedMediaQuery.Data.RankedMedium.Item, onImageViewTap: (() -> Void)?, onSendButtonTap: (() -> Void)?, onChangeConent: ((String) -> Void)?) {
-        imageView.setImage(with: item.minioId)
-        imageView.motionIdentifier = item.id
-        lifeBar.motionIdentifier = "lifeBar_\(item.id)"
-        sendButton.motionIdentifier = "starButton_\(item.id)"
-        lifeViewWidthConstraint.constant = CGFloat(item.endedAt.sinceNow / 8.0.weeks) * lifeBar.bounds.width
-        commentsCountLabel.text = "\(item.commentsCount) 条"
-        if let onImageViewTap = onImageViewTap {
-            imageView.rx.tapGesture().when(.recognized)
-                .mapToVoid()
-                .subscribe(onNext: onImageViewTap)
-                .disposed(by: disposeBag)
-        }
-        if let onSendButtonTap = onSendButtonTap {
-            sendButton.rx.tap
-                .subscribe(onNext: onSendButtonTap)
-                .disposed(by: disposeBag)
-        }
-        if let onChangeConent = onChangeConent {
-            contentTextField.rx.text.orEmpty
-                .subscribe(onNext: onChangeConent)
-                .disposed(by: disposeBag)
-        }
-    }
-}
 

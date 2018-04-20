@@ -93,16 +93,6 @@ class CreateImageViewController: UIViewController {
     }
 }
 
-class RxCollectionViewCell: UICollectionViewCell {
-    
-    private(set) var disposeBag = DisposeBag()
-    
-    override func prepareForReuse() {
-        disposeBag = DisposeBag()
-        super.prepareForReuse()
-    }
-}
-
 class CategoryCell: RxCollectionViewCell {
     @IBOutlet weak var button: RaisedButton!
     
