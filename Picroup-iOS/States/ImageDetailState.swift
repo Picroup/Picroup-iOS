@@ -9,13 +9,13 @@
 import Foundation
 
 struct ImageDetailState: Mutabled {
-    typealias MeduimState = QueryState<MediumQuery, MediumQuery.Data.Medium>
-    typealias StaredMediumState = QueryState<StarMediumMutation, StarMediumMutation.Data.StarMedium>
+    typealias Meduim = QueryState<MediumQuery, MediumQuery.Data.Medium>
+    typealias StaredMedium = QueryState<StarMediumMutation, StarMediumMutation.Data.StarMedium>
     
     let userId: String
     var item: RankedMediaQuery.Data.RankedMedium.Item
-    var meduim: MeduimState
-    var staredMedium: StaredMediumState
+    var meduim: Meduim
+    var staredMedium: StaredMedium
 }
 
 extension ImageDetailState {
@@ -38,8 +38,8 @@ extension ImageDetailState {
 extension ImageDetailState: IsFeedbackState {
     
     enum Event {
-        case meduim(MeduimState.Event)
-        case staredMedium(StaredMediumState.Event)
+        case meduim(Meduim.Event)
+        case staredMedium(StaredMedium.Event)
     }
 }
 

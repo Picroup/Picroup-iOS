@@ -39,6 +39,11 @@
 		45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */; };
 		45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */; };
 		454F728F2088230C00850471 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F728E2088230C00850471 /* LocalStorage.swift */; };
+		454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72912088716900850471 /* ImageCommentsViewController.swift */; };
+		454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72932089720C00850471 /* ImageCommentsPresenter.swift */; };
+		454F72962089B44500850471 /* RxCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72952089B44500850471 /* RxCollectionViewCell.swift */; };
+		454F72982089B46300850471 /* RxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72972089B46300850471 /* RxTableViewCell.swift */; };
+		454F729A2089BA1300850471 /* UIView+IBInspectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72992089BA1300850471 /* UIView+IBInspectable.swift */; };
 		455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455414B2207E315900296FDE /* IsFeedbackState.swift */; };
 		455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */; };
 		455D69042080409A00C651A0 /* RankNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69032080409A00C651A0 /* RankNavigationController.swift */; };
@@ -71,6 +76,10 @@
 		45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */; };
 		45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */; };
 		45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F71208790C700AC2226 /* TimeInterval+.swift */; };
+		45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */; };
+		45D04F762088C59100AC2226 /* MediumComments.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D04F752088C59100AC2226 /* MediumComments.graphql */; };
+		45D04F782088C81F00AC2226 /* ImageCommentsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F772088C81F00AC2226 /* ImageCommentsState.swift */; };
+		45D04F7A2088D57B00AC2226 /* SaveComment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D04F792088D57B00AC2226 /* SaveComment.graphql */; };
 		45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */; };
 		45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */; };
 		45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */; };
@@ -114,6 +123,11 @@
 		45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageViewController.swift; sourceTree = "<group>"; };
 		45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+dismiss.swift"; sourceTree = "<group>"; };
 		454F728E2088230C00850471 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
+		454F72912088716900850471 /* ImageCommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsViewController.swift; sourceTree = "<group>"; };
+		454F72932089720C00850471 /* ImageCommentsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsPresenter.swift; sourceTree = "<group>"; };
+		454F72952089B44500850471 /* RxCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCollectionViewCell.swift; sourceTree = "<group>"; };
+		454F72972089B46300850471 /* RxTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxTableViewCell.swift; sourceTree = "<group>"; };
+		454F72992089BA1300850471 /* UIView+IBInspectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+IBInspectable.swift"; sourceTree = "<group>"; };
 		455414B2207E315900296FDE /* IsFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackState.swift; sourceTree = "<group>"; };
 		455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+RxMinioId.swift"; sourceTree = "<group>"; };
 		455D69032080409A00C651A0 /* RankNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankNavigationController.swift; sourceTree = "<group>"; };
@@ -148,6 +162,10 @@
 		45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PublishRelay+asBinder.swift"; sourceTree = "<group>"; };
 		45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailCell.swift; sourceTree = "<group>"; };
 		45D04F71208790C700AC2226 /* TimeInterval+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+.swift"; sourceTree = "<group>"; };
+		45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Operator.swift"; sourceTree = "<group>"; };
+		45D04F752088C59100AC2226 /* MediumComments.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MediumComments.graphql; sourceTree = "<group>"; };
+		45D04F772088C81F00AC2226 /* ImageCommentsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsState.swift; sourceTree = "<group>"; };
+		45D04F792088D57B00AC2226 /* SaveComment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveComment.graphql; sourceTree = "<group>"; };
 		45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageState.swift; sourceTree = "<group>"; };
 		45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RankedMedia.graphql; sourceTree = "<group>"; };
 		45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveImageMedium.graphql; sourceTree = "<group>"; };
@@ -212,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				451CD323207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift */,
+				45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */,
 			);
 			path = RxSwift;
 			sourceTree = "<group>";
@@ -241,6 +260,8 @@
 				45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */,
 				45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */,
 				455D69072080890B00C651A0 /* UIScrollView+Rx.swift */,
+				454F72952089B44500850471 /* RxCollectionViewCell.swift */,
+				454F72972089B46300850471 /* RxTableViewCell.swift */,
 			);
 			path = RxCocoa;
 			sourceTree = "<group>";
@@ -311,6 +332,15 @@
 				454F728E2088230C00850471 /* LocalStorage.swift */,
 			);
 			path = LocalStorage;
+			sourceTree = "<group>";
+		};
+		454F72902088714E00850471 /* ImageCommentsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				454F72912088716900850471 /* ImageCommentsViewController.swift */,
+				454F72932089720C00850471 /* ImageCommentsPresenter.swift */,
+			);
+			path = ImageCommentsViewController;
 			sourceTree = "<group>";
 		};
 		455D69002080402E00C651A0 /* Rank */ = {
@@ -394,6 +424,7 @@
 			children = (
 				45384BBA207DEFBC00624A1B /* CreateImageViewController */,
 				45E240B02084D2B6004B58EF /* ImageDetailViewController */,
+				454F72902088714E00850471 /* ImageCommentsViewController */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -443,6 +474,7 @@
 				45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */,
 				451DD4BC207F8BC7002C509A /* RankState.swift */,
 				45E240B620862AD7004B58EF /* ImageDetailState.swift */,
+				45D04F772088C81F00AC2226 /* ImageCommentsState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -528,6 +560,8 @@
 				45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */,
 				45E240B820862CF6004B58EF /* Medium.graphql */,
 				45A61C0C2086356E00AE7D99 /* StarMedium.graphql */,
+				45D04F752088C59100AC2226 /* MediumComments.graphql */,
+				45D04F792088D57B00AC2226 /* SaveComment.graphql */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -545,6 +579,7 @@
 			isa = PBXGroup;
 			children = (
 				45E240B420862981004B58EF /* HideNavigationBarViewController.swift */,
+				454F72992089BA1300850471 /* UIView+IBInspectable.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -634,11 +669,13 @@
 				457B1B9F205FF24B00BEDDF1 /* ViewController.graphql in Resources */,
 				457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */,
 				45E240B920862CF6004B58EF /* Medium.graphql in Resources */,
+				45D04F762088C59100AC2226 /* MediumComments.graphql in Resources */,
 				45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */,
 				45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */,
 				45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */,
 				45A0393D2075D0E9007498DB /* User.graphql in Resources */,
 				451CD31F207A3B3A0063A972 /* Login.graphql in Resources */,
+				45D04F7A2088D57B00AC2226 /* SaveComment.graphql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -696,6 +733,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxFeedback/RxFeedback.framework",
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RxViewController/RxViewController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -711,6 +749,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxFeedback.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxViewController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -733,6 +772,7 @@
 				455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */,
 				451DD4B9207E4880002C509A /* Client.swift in Sources */,
 				4595F2102079F6B60040E5FA /* LoginViewController.swift in Sources */,
+				454F72962089B44500850471 /* RxCollectionViewCell.swift in Sources */,
 				4595F21B207C883F0040E5FA /* MainTabBarController.swift in Sources */,
 				451CD330207BB62D0063A972 /* HomeMenuPresenter.swift in Sources */,
 				456C5E412061446C005F981B /* ImageUpoader.swift in Sources */,
@@ -748,7 +788,9 @@
 				455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */,
 				451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */,
 				451CD3112079105B0063A972 /* connect.swift in Sources */,
+				454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */,
 				45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */,
+				454F729A2089BA1300850471 /* UIView+IBInspectable.swift in Sources */,
 				451CD32A207BA49B0063A972 /* RouterService+Main.swift in Sources */,
 				45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */,
 				451CD322207A3C1D0063A972 /* ApolloClient+Rx.swift in Sources */,
@@ -759,16 +801,19 @@
 				4595F2082079EECF0040E5FA /* colors.swift in Sources */,
 				451DD4BD207F8BC7002C509A /* RankState.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
+				454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */,
 				455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */,
 				4595F225207D95360040E5FA /* HomeState.swift in Sources */,
 				45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */,
 				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
+				45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */,
 				451CD332207D0A910063A972 /* HomeViewController.swift in Sources */,
 				4595F227207D9CF90040E5FA /* logger.swift in Sources */,
 				451DD4B5207E395F002C509A /* MediumService.swift in Sources */,
 				4595F217207A10B50040E5FA /* LoginState.swift in Sources */,
 				451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */,
 				45E240B22084D2CF004B58EF /* ImageDetailViewController.swift in Sources */,
+				454F72982089B46300850471 /* RxTableViewCell.swift in Sources */,
 				451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */,
 				455D69042080409A00C651A0 /* RankNavigationController.swift in Sources */,
 				451CD328207BA39E0063A972 /* RouterService.swift in Sources */,
@@ -777,6 +822,7 @@
 				45E240B720862AD7004B58EF /* ImageDetailState.swift in Sources */,
 				45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */,
 				45E240B520862981004B58EF /* HideNavigationBarViewController.swift in Sources */,
+				45D04F782088C81F00AC2226 /* ImageCommentsState.swift in Sources */,
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
 				45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */,
 				45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */,

@@ -19,7 +19,7 @@ extension RouterService {
 
 extension RouterService.Main {
     
-    static func mainViewController() -> UIViewController {
+    static func rootViewController() -> UIViewController {
         
         let infos: [(title: String, imageName: String, vc: UIViewController)] = [
             (title: "匹酷普", imageName: "ic_home", vc: HomeMenuViewController()),
@@ -54,6 +54,12 @@ extension RouterService.Main {
     
     static func imageDetailViewController(dependency: ImageDetailViewController.Dependency) -> ImageDetailViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageDetailViewController") as! ImageDetailViewController
+        vc.dependency = dependency
+        return vc
+    }
+    
+    static func imageCommentsViewController(dependency: ImageCommentsViewController.Dependency) -> ImageCommentsViewController {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageCommentsViewController") as! ImageCommentsViewController
         vc.dependency = dependency
         return vc
     }
