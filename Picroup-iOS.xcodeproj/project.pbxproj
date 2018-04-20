@@ -40,6 +40,7 @@
 		45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */; };
 		454F728F2088230C00850471 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F728E2088230C00850471 /* LocalStorage.swift */; };
 		454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72912088716900850471 /* ImageCommentsViewController.swift */; };
+		454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72932089720C00850471 /* ImageCommentsPresenter.swift */; };
 		455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455414B2207E315900296FDE /* IsFeedbackState.swift */; };
 		455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */; };
 		455D69042080409A00C651A0 /* RankNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69032080409A00C651A0 /* RankNavigationController.swift */; };
@@ -120,6 +121,7 @@
 		45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+dismiss.swift"; sourceTree = "<group>"; };
 		454F728E2088230C00850471 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		454F72912088716900850471 /* ImageCommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsViewController.swift; sourceTree = "<group>"; };
+		454F72932089720C00850471 /* ImageCommentsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsPresenter.swift; sourceTree = "<group>"; };
 		455414B2207E315900296FDE /* IsFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackState.swift; sourceTree = "<group>"; };
 		455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+RxMinioId.swift"; sourceTree = "<group>"; };
 		455D69032080409A00C651A0 /* RankNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankNavigationController.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				454F72912088716900850471 /* ImageCommentsViewController.swift */,
+				454F72932089720C00850471 /* ImageCommentsPresenter.swift */,
 			);
 			path = ImageCommentsViewController;
 			sourceTree = "<group>";
@@ -775,6 +778,7 @@
 				455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */,
 				451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */,
 				451CD3112079105B0063A972 /* connect.swift in Sources */,
+				454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */,
 				45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */,
 				451CD32A207BA49B0063A972 /* RouterService+Main.swift in Sources */,
 				45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */,

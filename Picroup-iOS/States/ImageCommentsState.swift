@@ -10,11 +10,12 @@ import Foundation
 
 struct ImageCommentsState: Mutabled {
     typealias SaveComment = QueryState<SaveCommentMutation, SaveCommentMutation.Data.SaveComment>
+    typealias Item = MediumCommentsQuery.Data.Medium.Comment.Item
 
     let userId: String
     var medium: RankedMediaQuery.Data.RankedMedium.Item
     var next: MediumCommentsQuery
-    var items: [MediumCommentsQuery.Data.Medium.Comment.Item]
+    var items: [Item]
     var error: Error?
     var trigger: Bool
     
@@ -101,8 +102,10 @@ extension ImageCommentsState {
         case .saveComment(let event):
             return state.mutated {
                 $0.saveComment -= event
-                if case .onSuccess = event {
+                if case .onSuccess(let data) = event {
                     $0.saveComment.next.content = ""
+                    let newCommet = Item(snapshot: data.snapshot)
+                    $0.items.insert(newCommet, at: 0)
                 }
             }
         case .onChangeCommentContent(let content):

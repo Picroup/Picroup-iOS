@@ -19,8 +19,7 @@ class ImageCommentsViewController: HideNavigationBarViewController {
     typealias Dependency = RankedMediaQuery.Data.RankedMedium.Item
     var dependency: Dependency!
     
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var backgroundButton: UIButton!
+    @IBOutlet private var presenter: ImageCommentsPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,44 +30,28 @@ class ImageCommentsViewController: HideNavigationBarViewController {
         
         guard let dependency = dependency else { return }
         typealias Feedback = Observable<Any>.Feedback<ImageCommentsState, ImageCommentsState.Event>
+        presenter.setup()
         
-        typealias Section = AnimatableSectionModel<String, RankedMediaQuery.Data.RankedMedium.Item>
-        typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
-        
-        let popTrigger = PublishRelay<Void>()
-        let saveCommentTrigger = PublishRelay<Void>()
-        let content = PublishRelay<String>()
-        
-        let dataSource = DataSource(
-            configureCell: { dataSource, collectionView, indexPath, item in
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCommentsDetailCell", for: indexPath) as! ImageCommentsDetailCell
-                cell.configure(
-                    with: item,
-                    onImageViewTap:
-                    popTrigger.accept,
-                    onSendButtonTap: saveCommentTrigger.accept,
-                    onChangeConent: content.accept
-                )
-                return cell
-        },
-            configureSupplementaryView: { dataSource, collectionView, title, indexPath in
-                return UICollectionReusableView()
-        })
+        typealias Section = ImageCommentsPresenter.Section
         
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let subscriptions = [
-                state.map { [Section(model: "", items: [$0.medium])] }.throttle(1, scheduler: MainScheduler.instance).bind(to: me.collectionView.rx.items(dataSource: dataSource)),
-                me.backgroundButton.rx.tap.bind(to: popTrigger),
-                popTrigger.bind(to: me.rx.pop(animated: true)),
+                state.map { $0.medium }.throttle(0.3, scheduler: MainScheduler.instance).bind(to: me.presenter.medium),
+                state.map { $0.saveComment.next.content }.bind(to: me.presenter.contentTextField.rx.text),
+                state.map { !$0.shouldSendComment }.bind(to: me.presenter.sendButton.rx.isHidden),
+                me.presenter.hideCommentsContentView.rx.tapGesture().when(.recognized).mapToVoid().bind(to: me.rx.pop(animated: true)),
+                me.presenter.imageView.rx.tapGesture().when(.recognized).mapToVoid().bind(to: me.rx.pop(animated: true)),
+                me.presenter.sendButton.rx.tap.bind(to: me.presenter.contentTextField.rx.resignFirstResponder()),
+                state.map { [Section(model: "", items: $0.items)]  }.bind(to: me.presenter.items) ,
                 ]
             let events: [Observable<ImageCommentsState.Event>] = [
                 state.flatMapLatest {
-                    $0.shouldQueryMore ? me.collectionView.rx.isNearBottom.asObservable() : .empty()
+                    $0.shouldQueryMore ? me.presenter.tableView.rx.isNearBottom.asObservable() : .empty()
                     }.map { .onTriggerGetMore },
                 state.flatMapLatest {
-                    $0.shouldSendComment ? saveCommentTrigger.asObservable() : .empty()
+                    $0.shouldSendComment ? me.presenter.sendButton.rx.tap.asObservable() : .empty()
                     }.map { .saveComment(.trigger) },
-                content.debounce(1, scheduler: MainScheduler.instance).distinctUntilChanged().map(ImageCommentsState.Event.onChangeCommentContent)
+                me.presenter.contentTextField.rx.text.orEmpty.debounce(0.3, scheduler: MainScheduler.instance).distinctUntilChanged().map(ImageCommentsState.Event.onChangeCommentContent)
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
@@ -112,7 +95,7 @@ class ImageCommentsDetailCell: RxCollectionViewCell {
         lifeBar.motionIdentifier = "lifeBar_\(item.id)"
         sendButton.motionIdentifier = "starButton_\(item.id)"
         lifeViewWidthConstraint.constant = CGFloat(item.endedAt.sinceNow / 8.0.weeks) * lifeBar.bounds.width
-        commentsCountLabel.text = "\(item.commentsCount)条"
+        commentsCountLabel.text = "\(item.commentsCount) 条"
         if let onImageViewTap = onImageViewTap {
             imageView.rx.tapGesture().when(.recognized)
                 .mapToVoid()
