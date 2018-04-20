@@ -15,17 +15,11 @@ import Apollo
 
 class HomeMenuViewController: FABMenuController {
     
-    init() {
-        super.init(rootViewController: HomeViewController())
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     fileprivate var homeMenuPresenter: HomeMenuPresenter!
     private let disposeBag = DisposeBag()
-    typealias Feedback = (Driver<HomeState>) -> Signal<HomeState.Event>
+    
+    typealias Dependency = (state: (HomeState) -> Void, events: Signal<HomeState.Event>)
+    var dependency: Dependency!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,11 +29,21 @@ class HomeMenuViewController: FABMenuController {
     
     private func setupPresenter() {
         fabMenuBacking = .fade
-        homeMenuPresenter = HomeMenuPresenter(view: view, fabMenu: fabMenu)
+        homeMenuPresenter = HomeMenuPresenter(view: view, fabMenu: fabMenu, navigationItem: navigationItem)
     }
     
     private func setupRxFeedback() {
         
+        guard let dependency = dependency else { return }
+        typealias Feedback = (Driver<HomeState>) -> Signal<HomeState.Event>
+        
+        let injectDependency: Feedback = bind { state in
+            return Bindings(
+                subscriptions: [state.drive(onNext: dependency.state)],
+                events: [dependency.events,]
+            )
+        }
+
         let uiFeedback: Feedback = bind(homeMenuPresenter) { (presenter, state) in
             let subscriptions = [
                 state.map { $0.isFABMenuOpened }.distinctUntilChanged().drive(presenter.isFABMenuOpened),
@@ -56,6 +60,7 @@ class HomeMenuViewController: FABMenuController {
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
+        
         
         let pickImage: Feedback = react(query: { $0.triggerPickImage }) { [weak self] (sourceType)  in
             let rxPicker = UIImagePickerController.rx.createWithParent(self) {
@@ -91,7 +96,7 @@ class HomeMenuViewController: FABMenuController {
         Driver<Any>.system(
             initialState: HomeState.empty,
             reduce: logger(identifier: "HomeState")(HomeState.reduce),
-            feedback: uiFeedback, pickImage, addImage
+            feedback: injectDependency, uiFeedback, pickImage, addImage
             )
             .drive()
             .disposed(by: disposeBag)

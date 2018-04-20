@@ -35,7 +35,7 @@ class RankViewPresenter {
         navigationItem.titleLabel.text = "全部"
         navigationItem.titleLabel.textColor = .primaryText
 //        navigationItem.titleLabel.textAlignment = .left
-        navigationItem.leftViews = [categoryButton]
+        navigationItem.rightViews = [categoryButton]
     }
     
 }

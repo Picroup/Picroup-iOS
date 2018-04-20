@@ -7,20 +7,29 @@
 //
 
 import UIKit
+import Material
+import RxSwift
+import RxCocoa
+import RxFeedback
+import RxDataSources
 
 class HomeViewController: UIViewController {
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
+    typealias Dependency = (state: Driver<HomeState>, events: (HomeState.Event) -> Void)
+    var dependency: Dependency!
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func loadView() {
-        super.loadView()
-        view.backgroundColor = .cyan
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        guard let (state, events) = dependency else { return }
+        typealias Feedback = (Driver<HomeState>) -> Signal<HomeState.Event>
+
+        let uiFeedback: Feedback = bind(self) { (me, state) in
+            return Bindings(subscriptions: [], events: [Signal<HomeState.Event>]())
+        }
+        
+        uiFeedback(state)
+            .emit(onNext: events)
+            .disposed(by: disposeBag)
     }
 }
