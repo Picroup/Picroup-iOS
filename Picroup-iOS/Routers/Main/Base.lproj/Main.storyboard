@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -310,14 +310,19 @@
                         <viewLayoutGuide key="safeArea" id="wMc-t2-Iqq"/>
                     </view>
                     <connections>
-                        <outlet property="cancelButton" destination="7Qa-UG-nOj" id="Ht6-YI-hxF"/>
-                        <outlet property="collectionView" destination="QzC-bb-k0o" id="xd3-VF-dGv"/>
-                        <outlet property="imageView" destination="3Ek-0d-bIC" id="Rg6-F9-fWU"/>
-                        <outlet property="progressView" destination="c1s-bq-rQa" id="kfF-wb-0hw"/>
-                        <outlet property="saveButton" destination="N3W-0e-XRW" id="bfg-Zf-zHE"/>
+                        <outlet property="presenter" destination="D0d-OJ-Bh8" id="Ec8-eK-s2Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZAX-yk-3NG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="D0d-OJ-Bh8" customClass="CreateImagePresenter" customModule="Picroup_iOS" customModuleProvider="target">
+                    <connections>
+                        <outlet property="cancelButton" destination="7Qa-UG-nOj" id="kIm-jF-WAW"/>
+                        <outlet property="collectionView" destination="QzC-bb-k0o" id="xD9-73-s5o"/>
+                        <outlet property="imageView" destination="3Ek-0d-bIC" id="tMA-ad-8gl"/>
+                        <outlet property="progressView" destination="c1s-bq-rQa" id="Qt2-3d-kxH"/>
+                        <outlet property="saveButton" destination="N3W-0e-XRW" id="7oY-MF-r4a"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="-900" y="410.64467766116945"/>
         </scene>

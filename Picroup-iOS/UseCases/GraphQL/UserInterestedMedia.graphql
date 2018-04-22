@@ -5,15 +5,15 @@ query UserInterestedMedia($userId: ID!, $cursor: Float = null) {
             items {
                 _id
                 userId
-                minioId
                 createdAt
                 endedAt
                 category
+                kind
                 detail {
-                    width
-                    aspectRatio
+                width
+                aspectRatio
                 }
-                createdAt
+                minioId
                 commentsCount
             }
         }

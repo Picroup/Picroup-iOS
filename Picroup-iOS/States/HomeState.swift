@@ -19,13 +19,21 @@ struct HomeState: Mutabled {
     
     var isFABMenuOpened: Bool
     var triggerFABMenuClose: Void?
-    var triggerPickImage: UIImagePickerControllerSourceType?
-    var pickedImage: UIImage?
     
+    var triggerPickImage: UIImagePickerControllerSourceType?
+    var saveMediumQuery: UIImage?
+
     var next: UserInterestedMediaQuery
     var items: [Item]
     var error: Error?
     var trigger: Bool
+    
+//    var router
+//
+//    struct Router {
+//        var imageDetail: RankedMediaQuery.Data.RankedMedium.Item?
+//        var imageComments: RankedMediaQuery.Data.RankedMedium.Item?
+//    }
 }
 
 extension HomeState {
@@ -50,7 +58,7 @@ extension HomeState {
             isFABMenuOpened: false,
             triggerFABMenuClose: nil,
             triggerPickImage: nil,
-            pickedImage: nil,
+            saveMediumQuery: nil,
             next: UserInterestedMediaQuery(userId: userId),
             items: [],
             error: nil,
@@ -59,15 +67,18 @@ extension HomeState {
     }
 }
 
-extension HomeState {
+extension HomeState: IsFeedbackState {
     
     enum Event {
         case fabMenuWillOpen
         case fabMenuWillClose
         case triggerFABMenuClose
+        
         case triggerPickImage(UIImagePickerControllerSourceType)
         case pickedImage(UIImage)
         case pickeImageCancelled
+        case onSeveMediumSuccess(CreateImageState.SaveImageMedium)
+        case onSeveMediumCancelled
         
         case onTriggerReload
         case onTriggerGetMore
@@ -99,17 +110,27 @@ extension HomeState {
             guard !state.isPickingImage else { return state }
             return state.mutated {
                 $0.triggerPickImage = sourceType
-                $0.pickedImage = nil
+                $0.saveMediumQuery = nil
             }
         case .pickedImage(let image):
             return state.mutated {
                 $0.triggerPickImage = nil
-                $0.pickedImage = image
+                $0.saveMediumQuery = image
             }
         case .pickeImageCancelled:
             return state.mutated {
                 $0.triggerPickImage = nil
-                $0.pickedImage = nil
+                $0.saveMediumQuery = nil
+            }
+        case .onSeveMediumSuccess(let savedMedium):
+            return state.mutated {
+                let item = Item(snapshot: savedMedium.snapshot)
+                $0.items.insert(item, at: 0)
+                $0.saveMediumQuery = nil
+            }
+        case .onSeveMediumCancelled:
+            return state.mutated {
+                $0.saveMediumQuery = nil
             }
         case .onTriggerReload:
             return state.mutated {

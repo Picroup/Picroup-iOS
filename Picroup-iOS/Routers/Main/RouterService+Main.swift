@@ -51,6 +51,12 @@ extension RouterService.Main {
         return BaseNavigationController(rootViewController: hmvc)
     }
     
+    static func createImageViewController(dependency: CreateImageViewController.Dependency) -> CreateImageViewController {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateImageViewController") as! CreateImageViewController
+        vc.dependency = dependency
+        return vc
+    }
+    
     static func rankViewController() -> UIViewController {
         let rvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RankViewController") as! RankViewController
         return BaseNavigationController(rootViewController: rvc)

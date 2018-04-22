@@ -4,15 +4,15 @@ query RankedMedia($category: MediumCategory, $rankBy: RankBy, $cusor: Float) {
         items {
             _id
             userId
-            minioId
             createdAt
             endedAt
             category
+            kind
             detail {
-                width
-                aspectRatio
+            width
+            aspectRatio
             }
-            createdAt
+            minioId
             commentsCount
         }
     }
