@@ -39,8 +39,8 @@ extension HomeViewPresenter: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width - 16
-        let item = dataSource.sectionModels[indexPath.section].items[indexPath.item]
-        let imageHeight = width / CGFloat(item.detail?.aspectRatio ?? 1)
+//        let item = dataSource.sectionModels[indexPath.section].items[indexPath.item]
+        let imageHeight = width
         let height = imageHeight + 8 + 56 + 1 + 48
         return CGSize(width: width, height: height)
     }
