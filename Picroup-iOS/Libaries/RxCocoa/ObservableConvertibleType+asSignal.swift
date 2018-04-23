@@ -15,4 +15,8 @@ extension ObservableConvertibleType {
     public func asSignalOnErrorRecoverEmpty() -> RxCocoa.SharedSequence<RxCocoa.SignalSharingStrategy, Self.E> {
         return asSignal(onErrorRecover: { _ in RxCocoa.SharedSequence<RxCocoa.SignalSharingStrategy, Self.E>.empty() })
     }
+    
+    public func asSignal(onErrorReturnJust: @escaping (Error) -> Self.E) -> RxCocoa.SharedSequence<RxCocoa.SignalSharingStrategy, Self.E> {
+        return asSignal(onErrorRecover: { error in RxCocoa.SharedSequence<RxCocoa.SignalSharingStrategy, Self.E>.just(onErrorReturnJust(error)) })
+    }
 }

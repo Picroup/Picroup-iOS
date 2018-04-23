@@ -1,11 +1,5 @@
-query Me($userId: ID!, $cursor: Float = null) {
+query MyMedia($userId: ID!, $cursor: Float = null) {
     user(userId: $userId) {
-        _id,
-        username,
-        reputation,
-        followersCount,
-        followingsCount,
-        gainedReputation,
         media(cursor: $cursor) {
             cursor
             items {

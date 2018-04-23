@@ -46,7 +46,7 @@
 		454F729C208DAF0500850471 /* ObservableConvertibleType+asSignal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F729B208DAF0500850471 /* ObservableConvertibleType+asSignal.swift */; };
 		454F729E208DB8D200850471 /* Image.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 454F729D208DB8D200850471 /* Image.storyboard */; };
 		454F72A0208DB90000850471 /* RouterService+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F729F208DB90000850471 /* RouterService+Image.swift */; };
-		454F72A2208DD1AA00850471 /* Me.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 454F72A1208DD1AA00850471 /* Me.graphql */; };
+		454F72A2208DD1AA00850471 /* MyMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 454F72A1208DD1AA00850471 /* MyMedia.graphql */; };
 		45525D4A208C3CB500EAF00D /* CreateImagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */; };
 		45525D4D208C44E300EAF00D /* CreateImageState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D4C208C44E300EAF00D /* CreateImageState+GraphQL.swift */; };
 		45525D4F208C468500EAF00D /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D4E208C468500EAF00D /* Feedback.swift */; };
@@ -92,6 +92,10 @@
 		45D04F7C2089FD0500AC2226 /* UserInterestedMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */; };
 		45D04F7E208A040C00AC2226 /* HomeImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F7D208A040C00AC2226 /* HomeImageCell.swift */; };
 		45D04F80208A06D300AC2226 /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F7F208A06D300AC2226 /* HomeViewPresenter.swift */; };
+		45D04F82208E073700AC2226 /* MeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F81208E073700AC2226 /* MeState.swift */; };
+		45D04F84208E0EAA00AC2226 /* MePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F83208E0EAA00AC2226 /* MePresenter.swift */; };
+		45D04F87208E111400AC2226 /* MeState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F86208E111400AC2226 /* MeState+GraphQL.swift */; };
+		45D04F89208E1F8F00AC2226 /* MeState+Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F88208E1F8F00AC2226 /* MeState+Route.swift */; };
 		45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */; };
 		45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */; };
 		45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */; };
@@ -142,7 +146,7 @@
 		454F729B208DAF0500850471 /* ObservableConvertibleType+asSignal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableConvertibleType+asSignal.swift"; sourceTree = "<group>"; };
 		454F729D208DB8D200850471 /* Image.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Image.storyboard; sourceTree = "<group>"; };
 		454F729F208DB90000850471 /* RouterService+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouterService+Image.swift"; sourceTree = "<group>"; };
-		454F72A1208DD1AA00850471 /* Me.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Me.graphql; sourceTree = "<group>"; };
+		454F72A1208DD1AA00850471 /* MyMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyMedia.graphql; sourceTree = "<group>"; };
 		45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImagePresenter.swift; sourceTree = "<group>"; };
 		45525D4C208C44E300EAF00D /* CreateImageState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CreateImageState+GraphQL.swift"; path = "Picroup-iOS/Feedbacks/CreateImageState/CreateImageState+GraphQL.swift"; sourceTree = SOURCE_ROOT; };
 		45525D4E208C468500EAF00D /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
@@ -190,6 +194,10 @@
 		45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserInterestedMedia.graphql; sourceTree = "<group>"; };
 		45D04F7D208A040C00AC2226 /* HomeImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeImageCell.swift; sourceTree = "<group>"; };
 		45D04F7F208A06D300AC2226 /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
+		45D04F81208E073700AC2226 /* MeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeState.swift; sourceTree = "<group>"; };
+		45D04F83208E0EAA00AC2226 /* MePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MePresenter.swift; sourceTree = "<group>"; };
+		45D04F86208E111400AC2226 /* MeState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeState+GraphQL.swift"; sourceTree = "<group>"; };
+		45D04F88208E1F8F00AC2226 /* MeState+Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeState+Route.swift"; sourceTree = "<group>"; };
 		45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageState.swift; sourceTree = "<group>"; };
 		45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RankedMedia.graphql; sourceTree = "<group>"; };
 		45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveImageMedium.graphql; sourceTree = "<group>"; };
@@ -341,6 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				451CD33A207D0BB60063A972 /* MeViewController.swift */,
+				45D04F83208E0EAA00AC2226 /* MePresenter.swift */,
 			);
 			path = MeViewController;
 			sourceTree = "<group>";
@@ -516,6 +525,7 @@
 				451DD4BC207F8BC7002C509A /* RankState.swift */,
 				45E240B620862AD7004B58EF /* ImageDetailState.swift */,
 				45D04F772088C81F00AC2226 /* ImageCommentsState.swift */,
+				45D04F81208E073700AC2226 /* MeState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -554,6 +564,7 @@
 			children = (
 				45525D52208C6F5400EAF00D /* HomeState */,
 				45525D4B208C44B800EAF00D /* CreateImageState */,
+				45D04F85208E10EB00AC2226 /* MeState */,
 			);
 			path = Feedbacks;
 			sourceTree = "<group>";
@@ -606,9 +617,18 @@
 				45D04F752088C59100AC2226 /* MediumComments.graphql */,
 				45D04F792088D57B00AC2226 /* SaveComment.graphql */,
 				45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */,
-				454F72A1208DD1AA00850471 /* Me.graphql */,
+				454F72A1208DD1AA00850471 /* MyMedia.graphql */,
 			);
 			path = GraphQL;
+			sourceTree = "<group>";
+		};
+		45D04F85208E10EB00AC2226 /* MeState */ = {
+			isa = PBXGroup;
+			children = (
+				45D04F86208E111400AC2226 /* MeState+GraphQL.swift */,
+				45D04F88208E1F8F00AC2226 /* MeState+Route.swift */,
+			);
+			path = MeState;
 			sourceTree = "<group>";
 		};
 		45E240B02084D2B6004B58EF /* ImageDetailViewController */ = {
@@ -717,7 +737,7 @@
 				45E240B920862CF6004B58EF /* Medium.graphql in Resources */,
 				45D04F762088C59100AC2226 /* MediumComments.graphql in Resources */,
 				45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */,
-				454F72A2208DD1AA00850471 /* Me.graphql in Resources */,
+				454F72A2208DD1AA00850471 /* MyMedia.graphql in Resources */,
 				45D04F7C2089FD0500AC2226 /* UserInterestedMedia.graphql in Resources */,
 				45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */,
 				45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */,
@@ -812,6 +832,7 @@
 				45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */,
 				45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */,
 				45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */,
+				45D04F87208E111400AC2226 /* MeState+GraphQL.swift in Sources */,
 				451DD4BF208311DA002C509A /* HasDisposeBag.swift in Sources */,
 				45525D4A208C3CB500EAF00D /* CreateImagePresenter.swift in Sources */,
 				451DD4C320831287002C509A /* NSObject+objc.swift in Sources */,
@@ -822,6 +843,7 @@
 				454F72962089B44500850471 /* RxCollectionViewCell.swift in Sources */,
 				4595F21B207C883F0040E5FA /* MainTabBarController.swift in Sources */,
 				451CD330207BB62D0063A972 /* HomeMenuPresenter.swift in Sources */,
+				45D04F82208E073700AC2226 /* MeState.swift in Sources */,
 				456C5E412061446C005F981B /* ImageUpoader.swift in Sources */,
 				458C106920849058005E94CD /* RankViewPresenter.swift in Sources */,
 				450C7E872075DD67009ABB1E /* AppState.swift in Sources */,
@@ -834,6 +856,7 @@
 				451CD32D207BB5D90063A972 /* HomeMenuViewController.swift in Sources */,
 				451DD4C12083125A002C509A /* Objective.swift in Sources */,
 				4595F219207A15010040E5FA /* Mutabled.swift in Sources */,
+				45D04F89208E1F8F00AC2226 /* MeState+Route.swift in Sources */,
 				455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */,
 				451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */,
 				454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */,
@@ -848,6 +871,7 @@
 				4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */,
 				45D04F7E208A040C00AC2226 /* HomeImageCell.swift in Sources */,
 				451DD4B7207E3EB5002C509A /* ErrorMessage.swift in Sources */,
+				45D04F84208E0EAA00AC2226 /* MePresenter.swift in Sources */,
 				45525D4F208C468500EAF00D /* Feedback.swift in Sources */,
 				4595F2082079EECF0040E5FA /* colors.swift in Sources */,
 				45525D4D208C44E300EAF00D /* CreateImageState+GraphQL.swift in Sources */,

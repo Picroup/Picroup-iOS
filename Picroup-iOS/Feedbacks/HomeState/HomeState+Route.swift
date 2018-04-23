@@ -69,7 +69,7 @@ extension DriverFeedback where State == HomeState {
             let dependency = ImageDetailViewController.Dependency(snapshot: item.snapshot)
             let idvc = RouterService.Image.imageDetailViewController(dependency: dependency)
             vc?.navigationController?.pushViewController(idvc, animated: true)
-            return idvc.rx.deallocated.map { HomeState.Event.onShowImageDetailCompleted }
+            return idvc.rx.deallocated.map { .onShowImageDetailCompleted }
                 .take(1)
                 .asSignalOnErrorRecoverEmpty()
         }

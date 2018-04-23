@@ -425,33 +425,36 @@
                                     <constraint firstItem="3cd-Zu-LkP" firstAttribute="top" secondItem="wgK-VO-4AF" secondAttribute="bottom" constant="24" id="kYq-9t-eWI"/>
                                     <constraint firstItem="R7J-ix-0kj" firstAttribute="top" secondItem="ZAd-wP-qlF" secondAttribute="bottom" constant="3" id="m9X-ce-MKb"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="motionIdentifier" value="userHeader"/>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cSn-4y-hl2">
                                 <rect key="frame" x="0.0" y="219.5" width="375" height="447.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="YjU-AH-ekw">
-                                    <size key="itemSize" width="120" height="120"/>
+                                    <size key="itemSize" width="184" height="184"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="64"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RankMediumCell" id="SbS-jV-Ehv" customClass="RankMediumCell" customModule="Picroup_iOS" customModuleProvider="target">
-                                        <rect key="frame" x="2" y="2" width="120" height="120"/>
+                                        <rect key="frame" x="2" y="2" width="184" height="184"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="184" height="184"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cCT-jm-qmx">
-                                                    <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="184" height="184"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
                                                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="g3A-SF-ZLB">
-                                                    <rect key="frame" x="0.0" y="118" width="120" height="2"/>
+                                                    <rect key="frame" x="0.0" y="182" width="184" height="2"/>
                                                 </progressView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dGV-hc-uTr">
-                                                    <rect key="frame" x="111" y="119" width="1" height="1"/>
+                                                    <rect key="frame" x="175" y="183" width="1" height="1"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="HvH-2f-Roy"/>
@@ -492,8 +495,21 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="H0D-Vw-lmH"/>
                     </view>
+                    <connections>
+                        <outlet property="presenter" destination="Bgz-5n-FKD" id="OzF-c7-Wep"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3YW-OY-5K2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="Bgz-5n-FKD" customClass="MePresenter" customModule="Picroup_iOS" customModuleProvider="target">
+                    <connections>
+                        <outlet property="collectionView" destination="cSn-4y-hl2" id="dXY-9g-vwr"/>
+                        <outlet property="displaynameLabel" destination="9ww-Gw-D99" id="xRs-4r-ScO"/>
+                        <outlet property="followersCountLabel" destination="412-mM-oDe" id="gZL-eb-blY"/>
+                        <outlet property="followingsCountLabel" destination="O9R-ng-3fi" id="4cH-Rz-pMm"/>
+                        <outlet property="reputationCountLabel" destination="jSq-np-gGw" id="Fia-DP-FfQ"/>
+                        <outlet property="usernameLabel" destination="zUN-Qh-WrL" id="S7W-30-WqT"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="912.79999999999995" y="404.34782608695656"/>
         </scene>
