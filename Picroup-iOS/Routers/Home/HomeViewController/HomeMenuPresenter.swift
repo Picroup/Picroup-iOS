@@ -21,24 +21,29 @@ class HomeMenuPresenter {
     var photoFABMenuItem: FABMenuItem!
     let view: UIView
     let fabMenu: FABMenu
+    var addUserButton: IconButton!
+    weak var navigationItem: UINavigationItem!
 
 
-    init(view: UIView, fabMenu: FABMenu) {
+    init(view: UIView, fabMenu: FABMenu, navigationItem: UINavigationItem) {
         self.view = view
         self.fabMenu = fabMenu
+        self.navigationItem = navigationItem
         self.setup()
     }
     
     private func setup() {
-        view.backgroundColor = .white
+//        view.backgroundColor = .white
         fabMenu.delegate = nil
 
         prepareFABButton()
         preparePhotoFABMenuItem()
         prepareCameraFABMenuItem()
         prepareFABMenu()
-
+        prepareCategoryButton()
+        prepareNavigationItem()
     }
+    
     fileprivate func prepareFABButton() {
         fabButton = FABButton(image: Icon.cm.add, tintColor: .white)
         fabButton.pulseColor = .white
@@ -52,7 +57,6 @@ class HomeMenuPresenter {
         cameraFABMenuItem.fabButton.tintColor = .white
         cameraFABMenuItem.fabButton.pulseColor = .white
         cameraFABMenuItem.fabButton.backgroundColor = .primaryLight
-//        notesFABMenuItem.fabButton.addTarget(self, action: #selector(handleNotesFABMenuItem(button:)), for: .touchUpInside)
     }
     
     fileprivate func prepareCameraFABMenuItem() {
@@ -62,18 +66,27 @@ class HomeMenuPresenter {
         photoFABMenuItem.fabButton.tintColor = .white
         photoFABMenuItem.fabButton.pulseColor = .white
         photoFABMenuItem.fabButton.backgroundColor = Color.blue.base
-//        remindersFABMenuItem.fabButton.addTarget(self, action: #selector(handleRemindersFABMenuItem(button:)), for: .touchUpInside)
     }
     
     fileprivate func prepareFABMenu() {
         fabMenu.fabButton = fabButton
         fabMenu.fabMenuItems = [cameraFABMenuItem, photoFABMenuItem]
-//        fabMenuBacking = .none
         
         view.layout(fabMenu)
             .bottom(bottomInset)
             .right(rightInset)
             .size(fabMenuSize)
+    }
+    
+    fileprivate func prepareCategoryButton() {
+        navigationItem.titleLabel.text = "关注"
+        navigationItem.titleLabel.textColor = .primaryText
+        addUserButton = IconButton(image: UIImage(named: "ic_person_add"), tintColor: .primaryText)
+        addUserButton.pulseColor = .white
+    }
+    
+    fileprivate func prepareNavigationItem() {
+        navigationItem.rightViews = [addUserButton]
     }
     
     var isFABMenuOpened: Binder<Bool> {

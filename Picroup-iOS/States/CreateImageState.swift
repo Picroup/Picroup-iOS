@@ -11,33 +11,37 @@ import UIKit
 import RxAlamofire
 
 struct CreateImageState: Mutabled {
-    let userId: String
-    let pickedImage: UIImage
+    typealias Query = (userId: String, pickedImage: UIImage, selectedCategory: MediumCategory)
+    typealias SaveImageMedium = SaveImageMediumMutation.Data.SaveImageMedium
+    
     var selectedCategoryIndex: Int
+    
     var progress: RxProgress?
     var error: Error?
-    var savedMedia: SaveImageMediumMutation.Data.SaveImageMedium?
-    var triggerSave: (userId: String, pickedImage: UIImage, selectedCategory: MediumCategory)?
+    var savedMedium: SaveImageMedium?
+    var next: Query
+    var triggerSave: Bool
+    
     var triggerCancel: Void?
+    
 }
 
 extension CreateImageState {
+    var query: Query? { return triggerSave ? next : nil }
     var selectedCategory: MediumCategory { return MediumCategory.all[selectedCategoryIndex] }
-    var isSavingImage: Bool { return triggerSave != nil }
-    var shouldSaveImage: Bool { return !isSavingImage && savedMedia == nil }
+    var shouldSaveImage: Bool { return !triggerSave && savedMedium == nil }
 }
 
 extension CreateImageState {
     
     static func empty(userId: String = Config.userId, pickedImage: UIImage, selectedCategory: MediumCategory) -> CreateImageState {
         return CreateImageState(
-            userId: userId,
-            pickedImage: pickedImage,
             selectedCategoryIndex: MediumCategory.all.index(where: { $0 == selectedCategory }) ?? 0,
             progress: nil,
             error: nil,
-            savedMedia: nil,
-            triggerSave: nil,
+            savedMedium: nil,
+            next: (userId, pickedImage, selectedCategory),
+            triggerSave: false,
             triggerCancel: nil
         )
     }
@@ -61,6 +65,7 @@ extension CreateImageState {
         case .onSelectedCategoryIndex(let index):
             return state.mutated {
                 $0.selectedCategoryIndex = index
+                $0.next.selectedCategory = $0.selectedCategory
             }
         case .onProgress(let progress):
             return state.mutated {
@@ -69,19 +74,19 @@ extension CreateImageState {
         case .onError(let error):
             return state.mutated {
                 $0.error = error
-                $0.savedMedia = nil
-                $0.triggerSave = nil
+                $0.savedMedium = nil
+                $0.triggerSave = false
             }
         case .onSavedMedium(let medium):
             return state.mutated {
                 $0.error = nil
-                $0.savedMedia = medium
-                $0.triggerSave = nil
+                $0.savedMedium = medium
+                $0.triggerSave = false
             }
         case .triggerSave:
             guard state.shouldSaveImage else { return state }
             return state.mutated {
-                $0.triggerSave = ($0.userId, $0.pickedImage, $0.selectedCategory)
+                $0.triggerSave = true
             }
         case .triggerCancel:
             return state.mutated {

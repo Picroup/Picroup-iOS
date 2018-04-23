@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0501F76BC004870A4FD7F133 /* Pods_Picroup_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */; };
 		450C7E872075DD67009ABB1E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450C7E862075DD67009ABB1E /* AppState.swift */; };
-		451CD3112079105B0063A972 /* connect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD3102079105B0063A972 /* connect.swift */; };
 		451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD313207910D10063A972 /* SharedSequence+unwrap.swift */; };
 		451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD31A207A38F20063A972 /* UIResponder+Rx.swift */; };
 		451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */; };
@@ -44,9 +43,16 @@
 		454F72962089B44500850471 /* RxCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72952089B44500850471 /* RxCollectionViewCell.swift */; };
 		454F72982089B46300850471 /* RxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72972089B46300850471 /* RxTableViewCell.swift */; };
 		454F729A2089BA1300850471 /* UIView+IBInspectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72992089BA1300850471 /* UIView+IBInspectable.swift */; };
+		454F729C208DAF0500850471 /* ObservableConvertibleType+asSignal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F729B208DAF0500850471 /* ObservableConvertibleType+asSignal.swift */; };
+		45525D4A208C3CB500EAF00D /* CreateImagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */; };
+		45525D4D208C44E300EAF00D /* CreateImageState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D4C208C44E300EAF00D /* CreateImageState+GraphQL.swift */; };
+		45525D4F208C468500EAF00D /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D4E208C468500EAF00D /* Feedback.swift */; };
+		45525D51208C552800EAF00D /* CreateImageState+LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D50208C552800EAF00D /* CreateImageState+LocalStorage.swift */; };
+		45525D54208C6F8000EAF00D /* HomeState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D53208C6F8000EAF00D /* HomeState+GraphQL.swift */; };
+		45525D56208C707C00EAF00D /* HomeState+Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D55208C707C00EAF00D /* HomeState+Route.swift */; };
 		455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455414B2207E315900296FDE /* IsFeedbackState.swift */; };
 		455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */; };
-		455D69042080409A00C651A0 /* RankNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69032080409A00C651A0 /* RankNavigationController.swift */; };
+		455D69042080409A00C651A0 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69032080409A00C651A0 /* BaseNavigationController.swift */; };
 		455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69072080890B00C651A0 /* UIScrollView+Rx.swift */; };
 		455D690B208097EC00C651A0 /* SelectCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D690A208097EC00C651A0 /* SelectCategoryViewController.swift */; };
 		456C5E412061446C005F981B /* ImageUpoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C5E402061446C005F981B /* ImageUpoader.swift */; };
@@ -80,6 +86,9 @@
 		45D04F762088C59100AC2226 /* MediumComments.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D04F752088C59100AC2226 /* MediumComments.graphql */; };
 		45D04F782088C81F00AC2226 /* ImageCommentsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F772088C81F00AC2226 /* ImageCommentsState.swift */; };
 		45D04F7A2088D57B00AC2226 /* SaveComment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D04F792088D57B00AC2226 /* SaveComment.graphql */; };
+		45D04F7C2089FD0500AC2226 /* UserInterestedMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */; };
+		45D04F7E208A040C00AC2226 /* HomeImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F7D208A040C00AC2226 /* HomeImageCell.swift */; };
+		45D04F80208A06D300AC2226 /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F7F208A06D300AC2226 /* HomeViewPresenter.swift */; };
 		45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */; };
 		45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */; };
 		45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */; };
@@ -93,7 +102,6 @@
 /* Begin PBXFileReference section */
 		0C1CA8B77EB5486794A21137 /* Pods-Picroup-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		450C7E862075DD67009ABB1E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		451CD3102079105B0063A972 /* connect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = connect.swift; sourceTree = "<group>"; };
 		451CD313207910D10063A972 /* SharedSequence+unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+unwrap.swift"; sourceTree = "<group>"; };
 		451CD31A207A38F20063A972 /* UIResponder+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Rx.swift"; sourceTree = "<group>"; };
 		451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+Operator.swift"; sourceTree = "<group>"; };
@@ -128,9 +136,16 @@
 		454F72952089B44500850471 /* RxCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCollectionViewCell.swift; sourceTree = "<group>"; };
 		454F72972089B46300850471 /* RxTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxTableViewCell.swift; sourceTree = "<group>"; };
 		454F72992089BA1300850471 /* UIView+IBInspectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+IBInspectable.swift"; sourceTree = "<group>"; };
+		454F729B208DAF0500850471 /* ObservableConvertibleType+asSignal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableConvertibleType+asSignal.swift"; sourceTree = "<group>"; };
+		45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImagePresenter.swift; sourceTree = "<group>"; };
+		45525D4C208C44E300EAF00D /* CreateImageState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CreateImageState+GraphQL.swift"; path = "Picroup-iOS/Feedbacks/CreateImageState/CreateImageState+GraphQL.swift"; sourceTree = SOURCE_ROOT; };
+		45525D4E208C468500EAF00D /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
+		45525D50208C552800EAF00D /* CreateImageState+LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CreateImageState+LocalStorage.swift"; path = "Picroup-iOS/Feedbacks/CreateImageState/CreateImageState+LocalStorage.swift"; sourceTree = SOURCE_ROOT; };
+		45525D53208C6F8000EAF00D /* HomeState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeState+GraphQL.swift"; sourceTree = "<group>"; };
+		45525D55208C707C00EAF00D /* HomeState+Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeState+Route.swift"; sourceTree = "<group>"; };
 		455414B2207E315900296FDE /* IsFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackState.swift; sourceTree = "<group>"; };
 		455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+RxMinioId.swift"; sourceTree = "<group>"; };
-		455D69032080409A00C651A0 /* RankNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankNavigationController.swift; sourceTree = "<group>"; };
+		455D69032080409A00C651A0 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		455D69072080890B00C651A0 /* UIScrollView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx.swift"; sourceTree = "<group>"; };
 		455D690A208097EC00C651A0 /* SelectCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryViewController.swift; sourceTree = "<group>"; };
 		456C5E402061446C005F981B /* ImageUpoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUpoader.swift; sourceTree = "<group>"; };
@@ -166,6 +181,9 @@
 		45D04F752088C59100AC2226 /* MediumComments.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MediumComments.graphql; sourceTree = "<group>"; };
 		45D04F772088C81F00AC2226 /* ImageCommentsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsState.swift; sourceTree = "<group>"; };
 		45D04F792088D57B00AC2226 /* SaveComment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveComment.graphql; sourceTree = "<group>"; };
+		45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserInterestedMedia.graphql; sourceTree = "<group>"; };
+		45D04F7D208A040C00AC2226 /* HomeImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeImageCell.swift; sourceTree = "<group>"; };
+		45D04F7F208A06D300AC2226 /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
 		45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageState.swift; sourceTree = "<group>"; };
 		45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RankedMedia.graphql; sourceTree = "<group>"; };
 		45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveImageMedium.graphql; sourceTree = "<group>"; };
@@ -218,10 +236,10 @@
 		451CD30F207910370063A972 /* RxFeedback */ = {
 			isa = PBXGroup;
 			children = (
-				451CD3102079105B0063A972 /* connect.swift */,
 				4595F226207D9CF90040E5FA /* logger.swift */,
 				455414B2207E315900296FDE /* IsFeedbackState.swift */,
 				45E6C24920863AC3003D7AA8 /* QueryState.swift */,
+				45525D4E208C468500EAF00D /* Feedback.swift */,
 			);
 			path = RxFeedback;
 			sourceTree = "<group>";
@@ -252,15 +270,16 @@
 			children = (
 				451DD4BE208311DA002C509A /* HasDisposeBag.swift */,
 				451CD313207910D10063A972 /* SharedSequence+unwrap.swift */,
-				451CD31A207A38F20063A972 /* UIResponder+Rx.swift */,
 				451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */,
-				45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */,
+				454F729B208DAF0500850471 /* ObservableConvertibleType+asSignal.swift */,
 				45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */,
 				45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */,
 				45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */,
 				45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */,
+				451CD31A207A38F20063A972 /* UIResponder+Rx.swift */,
 				455D69072080890B00C651A0 /* UIScrollView+Rx.swift */,
 				454F72952089B44500850471 /* RxCollectionViewCell.swift */,
+				45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */,
 				454F72972089B46300850471 /* RxTableViewCell.swift */,
 			);
 			path = RxCocoa;
@@ -289,6 +308,8 @@
 				451CD32C207BB5D90063A972 /* HomeMenuViewController.swift */,
 				451CD32F207BB62D0063A972 /* HomeMenuPresenter.swift */,
 				451CD331207D0A910063A972 /* HomeViewController.swift */,
+				45D04F7F208A06D300AC2226 /* HomeViewPresenter.swift */,
+				45D04F7D208A040C00AC2226 /* HomeImageCell.swift */,
 			);
 			path = HomeViewController;
 			sourceTree = "<group>";
@@ -322,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */,
+				45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */,
 			);
 			path = CreateImageViewController;
 			sourceTree = "<group>";
@@ -343,22 +365,32 @@
 			path = ImageCommentsViewController;
 			sourceTree = "<group>";
 		};
+		45525D4B208C44B800EAF00D /* CreateImageState */ = {
+			isa = PBXGroup;
+			children = (
+				45525D4C208C44E300EAF00D /* CreateImageState+GraphQL.swift */,
+				45525D50208C552800EAF00D /* CreateImageState+LocalStorage.swift */,
+			);
+			name = CreateImageState;
+			path = "Picroup-iOS/Feedbacks/CreateImageState";
+			sourceTree = "<group>";
+		};
+		45525D52208C6F5400EAF00D /* HomeState */ = {
+			isa = PBXGroup;
+			children = (
+				45525D53208C6F8000EAF00D /* HomeState+GraphQL.swift */,
+				45525D55208C707C00EAF00D /* HomeState+Route.swift */,
+			);
+			path = HomeState;
+			sourceTree = "<group>";
+		};
 		455D69002080402E00C651A0 /* Rank */ = {
 			isa = PBXGroup;
 			children = (
-				455D69012080405800C651A0 /* RankNavigationController */,
 				451CD333207D0B6F0063A972 /* RankViewController */,
 				455D6909208097CB00C651A0 /* SelectCategoryViewController */,
 			);
 			path = Rank;
-			sourceTree = "<group>";
-		};
-		455D69012080405800C651A0 /* RankNavigationController */ = {
-			isa = PBXGroup;
-			children = (
-				455D69032080409A00C651A0 /* RankNavigationController.swift */,
-			);
-			path = RankNavigationController;
 			sourceTree = "<group>";
 		};
 		455D6909208097CB00C651A0 /* SelectCategoryViewController */ = {
@@ -442,6 +474,7 @@
 			children = (
 				4595F2072079EECF0040E5FA /* colors.swift */,
 				4595F213207A0CA20040E5FA /* UIImage+Color.swift */,
+				455D69032080409A00C651A0 /* BaseNavigationController.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -511,6 +544,8 @@
 		45A039342075C563007498DB /* Feedbacks */ = {
 			isa = PBXGroup;
 			children = (
+				45525D52208C6F5400EAF00D /* HomeState */,
+				45525D4B208C44B800EAF00D /* CreateImageState */,
 			);
 			path = Feedbacks;
 			sourceTree = "<group>";
@@ -562,6 +597,7 @@
 				45A61C0C2086356E00AE7D99 /* StarMedium.graphql */,
 				45D04F752088C59100AC2226 /* MediumComments.graphql */,
 				45D04F792088D57B00AC2226 /* SaveComment.graphql */,
+				45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -671,6 +707,7 @@
 				45E240B920862CF6004B58EF /* Medium.graphql in Resources */,
 				45D04F762088C59100AC2226 /* MediumComments.graphql in Resources */,
 				45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */,
+				45D04F7C2089FD0500AC2226 /* UserInterestedMedia.graphql in Resources */,
 				45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */,
 				45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */,
 				45A0393D2075D0E9007498DB /* User.graphql in Resources */,
@@ -733,7 +770,6 @@
 				"${BUILT_PRODUCTS_DIR}/RxFeedback/RxFeedback.framework",
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/RxViewController/RxViewController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -749,7 +785,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxFeedback.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxViewController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -767,6 +802,7 @@
 				45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */,
 				45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */,
 				451DD4BF208311DA002C509A /* HasDisposeBag.swift in Sources */,
+				45525D4A208C3CB500EAF00D /* CreateImagePresenter.swift in Sources */,
 				451DD4C320831287002C509A /* NSObject+objc.swift in Sources */,
 				451CD326207B9E5B0063A972 /* RouterService+Login.swift in Sources */,
 				455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */,
@@ -780,16 +816,18 @@
 				450C7E872075DD67009ABB1E /* AppState.swift in Sources */,
 				457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */,
 				451CD337207D0B9A0063A972 /* RankViewController.swift in Sources */,
+				45525D51208C552800EAF00D /* CreateImageState+LocalStorage.swift in Sources */,
 				4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
+				45D04F80208A06D300AC2226 /* HomeViewPresenter.swift in Sources */,
 				451CD32D207BB5D90063A972 /* HomeMenuViewController.swift in Sources */,
 				451DD4C12083125A002C509A /* Objective.swift in Sources */,
 				4595F219207A15010040E5FA /* Mutabled.swift in Sources */,
 				455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */,
 				451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */,
-				451CD3112079105B0063A972 /* connect.swift in Sources */,
 				454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */,
 				45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */,
+				45525D56208C707C00EAF00D /* HomeState+Route.swift in Sources */,
 				454F729A2089BA1300850471 /* UIView+IBInspectable.swift in Sources */,
 				451CD32A207BA49B0063A972 /* RouterService+Main.swift in Sources */,
 				45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */,
@@ -797,14 +835,19 @@
 				451CD339207D0BAA0063A972 /* NotificationsViewController.swift in Sources */,
 				455D690B208097EC00C651A0 /* SelectCategoryViewController.swift in Sources */,
 				4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */,
+				45D04F7E208A040C00AC2226 /* HomeImageCell.swift in Sources */,
 				451DD4B7207E3EB5002C509A /* ErrorMessage.swift in Sources */,
+				45525D4F208C468500EAF00D /* Feedback.swift in Sources */,
 				4595F2082079EECF0040E5FA /* colors.swift in Sources */,
+				45525D4D208C44E300EAF00D /* CreateImageState+GraphQL.swift in Sources */,
 				451DD4BD207F8BC7002C509A /* RankState.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
 				454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */,
+				454F729C208DAF0500850471 /* ObservableConvertibleType+asSignal.swift in Sources */,
 				455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */,
 				4595F225207D95360040E5FA /* HomeState.swift in Sources */,
 				45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */,
+				45525D54208C6F8000EAF00D /* HomeState+GraphQL.swift in Sources */,
 				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
 				45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */,
 				451CD332207D0A910063A972 /* HomeViewController.swift in Sources */,
@@ -815,7 +858,7 @@
 				45E240B22084D2CF004B58EF /* ImageDetailViewController.swift in Sources */,
 				454F72982089B46300850471 /* RxTableViewCell.swift in Sources */,
 				451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */,
-				455D69042080409A00C651A0 /* RankNavigationController.swift in Sources */,
+				455D69042080409A00C651A0 /* BaseNavigationController.swift in Sources */,
 				451CD328207BA39E0063A972 /* RouterService.swift in Sources */,
 				4595F212207A000C0040E5FA /* LoginViewPresenter.swift in Sources */,
 				45E6C24A20863AC3003D7AA8 /* QueryState.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  RankToolBarController.swift
+//  BaseNavigationController.swift
 //  Picroup-iOS
 //
 //  Created by luojie on 2018/4/13.
@@ -11,7 +11,7 @@ import Material
 import RxSwift
 import RxCocoa
 
-class RankNavigationController: NavigationController {
+class BaseNavigationController: NavigationController {
 
     override func prepare() {
         super.prepare()
@@ -21,10 +21,10 @@ class RankNavigationController: NavigationController {
     }
     
 }
-extension RankNavigationController {
+extension BaseNavigationController {
     
     fileprivate func prepareNavigationBar() {
-        navigationBar.depthPreset = .none
+        navigationBar.depthPreset = .depth1
         navigationBar.barTintColor = .primary
         (navigationBar as? NavigationBar)?.backButtonImage = Icon.arrowBack?.tint(with: .primaryText)
     }

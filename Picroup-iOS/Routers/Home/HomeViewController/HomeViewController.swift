@@ -7,20 +7,46 @@
 //
 
 import UIKit
+import Material
+import RxSwift
+import RxCocoa
+import RxFeedback
+import RxDataSources
 
 class HomeViewController: UIViewController {
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
+    typealias Dependency = (state: Driver<HomeState>, events: (HomeState.Event) -> Void)
+    var dependency: Dependency!
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    @IBOutlet var presenter: HomeViewPresenter!
     
-    override func loadView() {
-        super.loadView()
-        view.backgroundColor = .cyan
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        typealias Section = HomeViewPresenter.Section
+        
+        guard let (state, events) = dependency else { return }
+        typealias Feedback = (Driver<HomeState>) -> Signal<HomeState.Event>
+
+        let uiFeedback: Feedback = bind(self) { (me, state) in
+            let _events = PublishRelay<HomeState.Event>()
+            let subscriptions = [
+                state.map { [Section(model: "", items: $0.items)] }.drive(me.presenter.items(_events))
+            ]
+            let events: [Signal<HomeState.Event>] = [
+                state.flatMapLatest {
+                    $0.shouldQueryMore ? me.presenter.collectionView.rx.isNearBottom.asSignal() : .empty()
+                    }.map { .onTriggerGetMore },
+                _events.asSignal(),
+            ]
+            return Bindings(subscriptions: subscriptions, events: events)
+        }
+        
+        uiFeedback(state)
+            .emit(onNext: events)
+            .disposed(by: disposeBag)
+        
+        presenter.collectionView.rx.setDelegate(presenter)
+            .disposed(by: disposeBag)
     }
 }

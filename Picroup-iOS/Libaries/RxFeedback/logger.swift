@@ -16,7 +16,7 @@ public func logger<State, Event>(identifier: String? = nil)
             let prefix = identifier.map { "\($0) " } ?? ""
             print("\(prefix)event: \(event)\n")
             let newState = reduce(state, event)
-            print("\(prefix)state: \(newState)\n")
+//            print("\(prefix)state: \(newState)\n")
             return newState
         }}
 }

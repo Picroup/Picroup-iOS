@@ -11,7 +11,6 @@ target 'Picroup-iOS' do
   pod 'RxAlamofire', '~> 4.1'
   pod 'RxFeedback', '~> 1.0'
   pod 'RxGesture', '~> 1.2'
-  pod 'RxViewController', '~> 0.3'
   pod 'Kingfisher', '~> 4.0'
   pod 'Material', '~> 2.14'
   

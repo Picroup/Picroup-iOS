@@ -50,11 +50,7 @@ class ImageDetailCell: RxCollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var lifeBar: UIView!
     @IBOutlet weak var starButton: FABButton! {
-        didSet {
-            contentView.layer.cornerRadius = 5
-            contentView.layer.masksToBounds = true
-            starButton.image = Icon.favorite
-        }
+        didSet { starButton.image = Icon.favorite }
     }
     @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var remainTimeLabel: UILabel!

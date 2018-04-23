@@ -15,16 +15,16 @@ import Apollo
 
 class CreateImageViewController: UIViewController {
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var cancelButton: RaisedButton!
-    @IBOutlet weak var saveButton: RaisedButton!
-    @IBOutlet weak var progressView: UIProgressView!
+    typealias Dependency = (image: UIImage, client: ApolloClient)
+    var dependency: Dependency?
+    var savedMedium: Signal<CreateImageState.SaveImageMedium> {
+        return _savedMedium.asSignal()
+    }
     
-    var dependency: (image: UIImage, clinet: ApolloClient)?
-    private let disposeBag = DisposeBag()
-    typealias Feedback = (Driver<CreateImageState>) -> Signal<CreateImageState.Event>
-    
+    fileprivate typealias Feedback = DriverFeedback<CreateImageState>
+    @IBOutlet fileprivate var presenter: CreateImagePresenter!
+    fileprivate let _savedMedium = PublishRelay<CreateImageState.SaveImageMedium>()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupRxFeedback()
@@ -33,89 +33,68 @@ class CreateImageViewController: UIViewController {
     private func setupRxFeedback() {
         
         guard let dependency = dependency else { return }
-        guard let snackbarController = snackbarController else { return }
         
-        let uiFeedback: Feedback = bind(self) { (me, state) in
-            let eventsTrigger = PublishRelay<CreateImageState.Event>()
+        let syncState = self.syncState(savedMedium: _savedMedium)
+        let uiFeedback = self.uiFeedback
+        let saveMedium = Feedback.saveMedium(client: dependency.client)
+        let syncLocalStorage = Feedback.syncLocalStorage(LocalStorage.standard)
+        
+        let initialState = CreateImageState.empty(
+            pickedImage: dependency.image,
+            selectedCategory: LocalStorage.standard.createImageSelectedCategory
+        )
+        
+        let reduce = logger(identifier: "CreateImageState")(CreateImageState.reduce)
+        
+        Driver<Any>.system(
+            initialState: initialState,
+            reduce: reduce,
+            feedback:
+                syncState,
+                uiFeedback,
+                saveMedium,
+                syncLocalStorage
+            )
+            .drive()
+            .disposed(by: disposeBag)
+    
+    }
+    
+}
+
+extension CreateImageViewController {
+    
+    fileprivate func syncState(savedMedium: PublishRelay<CreateImageState.SaveImageMedium>) -> Feedback.Raw {
+        return  bind { (state) in
             let subscriptions = [
-                state.map { $0.pickedImage }.drive(me.imageView.rx.image),
-                state.map { $0.progress }.map { $0?.completed ?? 0 }.distinctUntilChanged().drive(me.progressView.rx.progress),
-                state.map { $0.categoryViewModels }.drive(me.collectionView.rx.items(cellIdentifier: "CategoryCell", cellType: CategoryCell.self)) { index, viewModel, cell in
-                    cell.bind(name: viewModel.category.name, selected: viewModel.selected) {
-                        eventsTrigger.accept(.onSelectedCategoryIndex(index))
-                    }
-                    
-                },
-                state.map { $0.shouldSaveImage }.distinctUntilChanged().drive(me.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
-                state.map { $0.triggerCancel }.distinctUnwrap().drive(me.rx.dismiss(animated: true)),
-                state.map { $0.savedMedia }.distinctUnwrap().map { _ in "已保存" }.drive(snackbarController.rx.snackbarText),
-                state.map { $0.savedMedia }.distinctUnwrap().mapToVoid().delay(3.3).drive(me.rx.dismiss(animated: true)),
-                ]
-            let events = [
-                eventsTrigger.asSignal(),
-                me.cancelButton.rx.tap.asSignal().map { CreateImageState.Event.triggerCancel },
-                me.saveButton.rx.tap.asSignal().map { CreateImageState.Event.triggerSave }
-            ]
-            return Bindings(subscriptions: subscriptions, events: events)
-        }
-        
-        
-        let saveMedium: Feedback = react(query: { $0.triggerSave }) { (param) in
-            return MediumService.saveMedium(client: dependency.clinet, userId: param.userId, pickedImage: param.pickedImage, category: param.selectedCategory)
-                .map { result in
-                    switch result {
-                    case .progress(let progress):
-                        return CreateImageState.Event.onProgress(progress)
-                    case .completed(let medium):
-                        return CreateImageState.Event.onSavedMedium(medium)
-                    }
-                }.asSignal(onErrorRecover: { error in .just(.onError(error) )})
-        }
-        
-        let syncLocalStorage: Feedback = bind(LocalStorage.standard) { (localStorage, state) in
-            let subscriptions = [
-                state.map { MediumCategory.all[$0.selectedCategoryIndex] }.drive(onNext: { localStorage.createImageSelectedCategory = $0 })
+                state.map { $0.savedMedium }.asSignal(onErrorJustReturn: nil).unwrap().emit(to: savedMedium)
             ]
             let events = [
                 Signal<CreateImageState.Event>.never()
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-        
-        Driver<Any>.system(
-            initialState: CreateImageState.empty(pickedImage: dependency.image, selectedCategory: LocalStorage.standard.createImageSelectedCategory),
-            reduce: logger(identifier: "CreateImageState")(CreateImageState.reduce),
-            feedback: uiFeedback, saveMedium, syncLocalStorage
-            )
-            .drive()
-            .disposed(by: disposeBag)
-    
-    }
-}
-
-class CategoryCell: RxCollectionViewCell {
-    @IBOutlet weak var button: RaisedButton!
-    
-    func bind(name: String, selected: Bool, onTap: @escaping () -> Void) {
-        button.setTitle(name, for: .normal)
-        setSelected(selected)
-        bindButtonTap(to: onTap)
     }
     
-    private func setSelected(_ selected: Bool) {
-        if selected {
-            button.titleColor = .primaryText
-            button.backgroundColor = .primary
-        } else {
-            button.titleColor = .primary
-            button.backgroundColor = .primaryText
+    fileprivate var uiFeedback: Feedback.Raw {
+       return  bind(self) { (me, state) in
+            let eventsTrigger = PublishRelay<CreateImageState.Event>()
+            let subscriptions = [
+                state.map { $0.next.pickedImage }.drive(me.presenter.imageView.rx.image),
+                state.map { $0.progress?.completed ?? 0 }.distinctUntilChanged().drive(me.presenter.progressView.rx.progress),
+                state.map { $0.categoryViewModels }.drive(me.presenter.items(eventsTrigger)),
+                state.map { $0.shouldSaveImage }.distinctUntilChanged().drive(me.presenter.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
+                state.map { $0.triggerCancel }.distinctUnwrap().drive(me.rx.dismiss(animated: true)),
+                state.map { $0.savedMedium }.distinctUnwrap().map { _ in "已保存" }.drive(me.snackbarController!.rx.snackbarText),
+                state.map { $0.savedMedium }.distinctUnwrap().mapToVoid().delay(3.3).drive(me.rx.dismiss(animated: true)),
+                ]
+            let events = [
+                eventsTrigger.asSignal(),
+                me.presenter.cancelButton.rx.tap.asSignal().map { CreateImageState.Event.triggerCancel },
+                me.presenter.saveButton.rx.tap.asSignal().map { CreateImageState.Event.triggerSave }
+            ]
+            return Bindings(subscriptions: subscriptions, events: events)
         }
-    }
-    
-    private func bindButtonTap(to onTap: @escaping () -> Void) {
-        button.rx.tap
-            .subscribe(onNext: onTap)
-            .disposed(by: disposeBag)
     }
 }
 

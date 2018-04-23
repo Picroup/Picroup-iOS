@@ -15,17 +15,11 @@ import Apollo
 
 class HomeMenuViewController: FABMenuController {
     
-    init() {
-        super.init(rootViewController: HomeViewController())
-    }
+    typealias Dependency = (state: (HomeState) -> Void, events: Signal<HomeState.Event>)
+    var dependency: Dependency!
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+    fileprivate typealias Feedback = DriverFeedback<HomeState>
     fileprivate var homeMenuPresenter: HomeMenuPresenter!
-    private let disposeBag = DisposeBag()
-    typealias Feedback = (Driver<HomeState>) -> Signal<HomeState.Event>
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,12 +29,53 @@ class HomeMenuViewController: FABMenuController {
     
     private func setupPresenter() {
         fabMenuBacking = .fade
-        homeMenuPresenter = HomeMenuPresenter(view: view, fabMenu: fabMenu)
+        homeMenuPresenter = HomeMenuPresenter(view: view, fabMenu: fabMenu, navigationItem: navigationItem)
     }
     
     private func setupRxFeedback() {
         
-        let uiFeedback: Feedback = bind(homeMenuPresenter) { (presenter, state) in
+        guard let dependency = dependency else { return }
+        
+        let syncState = self.syncState(dependency: dependency)
+        let uiFeedback = self.uiFeedback
+        let pickImage = Feedback.pickImage(from: self)
+        let saveMedium = Feedback.saveMedium(from: self)
+        let queryMedia = Feedback.queryMedia(client: ApolloClient.shared)
+        let showComments = Feedback.showComments(from: self)
+        let showImageDetail = Feedback.showImageDetail(from: self)
+        
+        let reduce = logger(identifier: "HomeState")(HomeState.reduce)
+        
+        Driver<Any>.system(
+            initialState: HomeState.empty(userId: Config.userId),
+            reduce: reduce,
+            feedback:
+                syncState,
+                uiFeedback,
+                pickImage,
+                saveMedium,
+                queryMedia,
+                showComments,
+                showImageDetail
+            )
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
+}
+extension HomeMenuViewController {
+    
+    fileprivate func syncState(dependency: Dependency) -> Feedback.Raw {
+        return  bind { state in
+            return Bindings(
+                subscriptions: [state.drive(onNext: dependency.state)],
+                events: [dependency.events,]
+            )
+        }
+    }
+    
+    fileprivate var uiFeedback: Feedback.Raw {
+        return bind(homeMenuPresenter) { (presenter, state) in
             let subscriptions = [
                 state.map { $0.isFABMenuOpened }.distinctUntilChanged().drive(presenter.isFABMenuOpened),
                 state.map { $0.triggerFABMenuClose }.distinctUntilChanged { $0 != nil }.unwrap().drive(presenter.fabMenu.rx.close()),
@@ -56,44 +91,5 @@ class HomeMenuViewController: FABMenuController {
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-        
-        let pickImage: Feedback = react(query: { $0.triggerPickImage }) { [weak self] (sourceType)  in
-            let rxPicker = UIImagePickerController.rx.createWithParent(self) {
-                $0.sourceType = sourceType
-                }
-                .share(replay: 1)
-            
-            let picked = rxPicker.flatMap {
-                $0.rx.didFinishPickingMediaWithInfo
-                }
-                .map { info in
-                    return info[UIImagePickerControllerOriginalImage] as? UIImage
-                }.unwrap()
-                .map { HomeState.Event.pickedImage($0) }
-            
-            let cancelled = rxPicker.flatMap {
-                $0.rx.didCancel
-                }
-                .map { _ in HomeState.Event.pickeImageCancelled }
-            
-            return Observable.merge(picked, cancelled)
-                .take(1)
-                .asSignal(onErrorRecover: { _ in .empty() })
-        }
-        
-        let addImage: Feedback = react(query: { $0.pickedImage }) { [weak self] (image) in
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateImageViewController") as! CreateImageViewController
-            vc.dependency = (image, ApolloClient.shared)
-            self?.present(SnackbarController(rootViewController: vc), animated: true, completion: nil)
-            return .empty()
-        }
-        
-        Driver<Any>.system(
-            initialState: HomeState.empty,
-            reduce: logger(identifier: "HomeState")(HomeState.reduce),
-            feedback: uiFeedback, pickImage, addImage
-            )
-            .drive()
-            .disposed(by: disposeBag)
     }
 }
