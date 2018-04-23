@@ -1,0 +1,28 @@
+query Me($userId: ID!, $cursor: Float = null) {
+    user(userId: $userId) {
+        _id,
+        username,
+        reputation,
+        followersCount,
+        followingsCount,
+        gainedReputation,
+        media(cursor: $cursor) {
+            cursor
+            items {
+                _id
+                userId
+                createdAt
+                endedAt
+                category
+                kind
+                detail {
+                    width
+                    aspectRatio
+                }
+                minioId
+                commentsCount
+            }
+        }
+    }
+}
+

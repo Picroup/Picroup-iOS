@@ -55,7 +55,7 @@ class RankViewController: UIViewController {
                 state.flatMapLatest { state in
                     me.presenter.categoryButton.rx.tap.asSignal().flatMapLatest { _ in
                         let selected = PublishRelay<MediumCategory?>()
-                        let vc = RouterService.Main.selectCategoryViewController(dependency: (state.nextRankedMediaQuery.category, selected.accept))
+                        let vc = RouterService.Image.selectCategoryViewController(dependency: (state.nextRankedMediaQuery.category, selected.accept))
                         me.present(vc, animated: true)
                         return selected.asSignal().map { RankState.Event.onChangeCategory($0) }
                     }
@@ -91,7 +91,7 @@ class RankViewController: UIViewController {
         
         collectionView.rx.modelSelected(RankedMediaQuery.Data.RankedMedium.Item.self)
             .subscribe(onNext: { [weak self] item in
-                let vc = RouterService.Main.imageDetailViewController(dependency: item)
+                let vc = RouterService.Image.imageDetailViewController(dependency: item)
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)

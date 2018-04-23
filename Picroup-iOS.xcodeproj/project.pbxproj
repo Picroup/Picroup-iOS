@@ -44,6 +44,9 @@
 		454F72982089B46300850471 /* RxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72972089B46300850471 /* RxTableViewCell.swift */; };
 		454F729A2089BA1300850471 /* UIView+IBInspectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72992089BA1300850471 /* UIView+IBInspectable.swift */; };
 		454F729C208DAF0500850471 /* ObservableConvertibleType+asSignal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F729B208DAF0500850471 /* ObservableConvertibleType+asSignal.swift */; };
+		454F729E208DB8D200850471 /* Image.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 454F729D208DB8D200850471 /* Image.storyboard */; };
+		454F72A0208DB90000850471 /* RouterService+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F729F208DB90000850471 /* RouterService+Image.swift */; };
+		454F72A2208DD1AA00850471 /* Me.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 454F72A1208DD1AA00850471 /* Me.graphql */; };
 		45525D4A208C3CB500EAF00D /* CreateImagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */; };
 		45525D4D208C44E300EAF00D /* CreateImageState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D4C208C44E300EAF00D /* CreateImageState+GraphQL.swift */; };
 		45525D4F208C468500EAF00D /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D4E208C468500EAF00D /* Feedback.swift */; };
@@ -137,6 +140,9 @@
 		454F72972089B46300850471 /* RxTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxTableViewCell.swift; sourceTree = "<group>"; };
 		454F72992089BA1300850471 /* UIView+IBInspectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+IBInspectable.swift"; sourceTree = "<group>"; };
 		454F729B208DAF0500850471 /* ObservableConvertibleType+asSignal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableConvertibleType+asSignal.swift"; sourceTree = "<group>"; };
+		454F729D208DB8D200850471 /* Image.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Image.storyboard; sourceTree = "<group>"; };
+		454F729F208DB90000850471 /* RouterService+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouterService+Image.swift"; sourceTree = "<group>"; };
+		454F72A1208DD1AA00850471 /* Me.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Me.graphql; sourceTree = "<group>"; };
 		45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImagePresenter.swift; sourceTree = "<group>"; };
 		45525D4C208C44E300EAF00D /* CreateImageState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CreateImageState+GraphQL.swift"; path = "Picroup-iOS/Feedbacks/CreateImageState/CreateImageState+GraphQL.swift"; sourceTree = SOURCE_ROOT; };
 		45525D4E208C468500EAF00D /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
@@ -454,6 +460,8 @@
 		458C106C2084A0C4005E94CD /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				454F729D208DB8D200850471 /* Image.storyboard */,
+				454F729F208DB90000850471 /* RouterService+Image.swift */,
 				45384BBA207DEFBC00624A1B /* CreateImageViewController */,
 				45E240B02084D2B6004B58EF /* ImageDetailViewController */,
 				454F72902088714E00850471 /* ImageCommentsViewController */,
@@ -598,6 +606,7 @@
 				45D04F752088C59100AC2226 /* MediumComments.graphql */,
 				45D04F792088D57B00AC2226 /* SaveComment.graphql */,
 				45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */,
+				454F72A1208DD1AA00850471 /* Me.graphql */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -701,12 +710,14 @@
 			files = (
 				457B1B95205FEA1000BEDDF1 /* LaunchScreen.storyboard in Resources */,
 				457B1B92205FEA1000BEDDF1 /* Assets.xcassets in Resources */,
+				454F729E208DB8D200850471 /* Image.storyboard in Resources */,
 				4595F20E2079F6780040E5FA /* Login.storyboard in Resources */,
 				457B1B9F205FF24B00BEDDF1 /* ViewController.graphql in Resources */,
 				457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */,
 				45E240B920862CF6004B58EF /* Medium.graphql in Resources */,
 				45D04F762088C59100AC2226 /* MediumComments.graphql in Resources */,
 				45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */,
+				454F72A2208DD1AA00850471 /* Me.graphql in Resources */,
 				45D04F7C2089FD0500AC2226 /* UserInterestedMedia.graphql in Resources */,
 				45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */,
 				45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */,
@@ -850,6 +861,7 @@
 				45525D54208C6F8000EAF00D /* HomeState+GraphQL.swift in Sources */,
 				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
 				45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */,
+				454F72A0208DB90000850471 /* RouterService+Image.swift in Sources */,
 				451CD332207D0A910063A972 /* HomeViewController.swift in Sources */,
 				4595F227207D9CF90040E5FA /* logger.swift in Sources */,
 				451DD4B5207E395F002C509A /* MediumService.swift in Sources */,

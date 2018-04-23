@@ -9,20 +9,6 @@
 import UIKit
 
 class MeViewController: UIViewController {
-    
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        hidesBottomBarWhenPushed = true
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func loadView() {
-        super.loadView()
-        view.backgroundColor = .brown
-    }
 }
 
 
