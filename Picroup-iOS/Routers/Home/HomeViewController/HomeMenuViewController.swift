@@ -41,6 +41,8 @@ class HomeMenuViewController: FABMenuController {
         let pickImage = Feedback.pickImage(from: self)
         let saveMedium = Feedback.saveMedium(from: self)
         let queryMedia = Feedback.queryMedia(client: ApolloClient.shared)
+        let showComments = Feedback.showComments(from: self)
+        let showImageDetail = Feedback.showImageDetail(from: self)
         
         let reduce = logger(identifier: "HomeState")(HomeState.reduce)
         
@@ -52,7 +54,9 @@ class HomeMenuViewController: FABMenuController {
                 uiFeedback,
                 pickImage,
                 saveMedium,
-                queryMedia
+                queryMedia,
+                showComments,
+                showImageDetail
             )
             .drive()
             .disposed(by: disposeBag)

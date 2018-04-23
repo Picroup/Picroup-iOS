@@ -17,21 +17,29 @@ class HomeViewPresenter: NSObject {
     typealias Section = AnimatableSectionModel<String, HomeState.Item>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
-    fileprivate lazy var dataSource = DataSource(
-        configureCell: { dataSource, collectionView, indexPath, item in
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeImageCell", for: indexPath) as! HomeImageCell
-            cell.imageView.setImage(with: item.minioId)
-            cell.lifeViewWidthConstraint.constant = CGFloat(item.endedAt.sinceNow / 8.0.weeks) * cell.lifeBar.bounds.width
-            cell.imageView.motionIdentifier = item.id
-            cell.lifeBar.motionIdentifier = "lifeBar_\(item.id)"
-            return cell
-    },
-        configureSupplementaryView: { dataSource, collectionView, title, indexPath in
-            return UICollectionReusableView()
-    })
-    
-    var items: (Observable<[Section]>) -> Disposable {
-        return collectionView.rx.items(dataSource: dataSource)
+    var items: (PublishRelay<HomeState.Event>) -> (Observable<[Section]>) -> Disposable {
+        return { [collectionView] _events in
+            let dataSource = DataSource(
+                configureCell: { dataSource, collectionView, indexPath, item in
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeImageCell", for: indexPath) as! HomeImageCell
+                    cell.imageView.setImage(with: item.minioId)
+                    cell.lifeViewWidthConstraint.constant = CGFloat(item.endedAt.sinceNow / 8.0.weeks) * cell.lifeBar.bounds.width
+                    cell.imageView.motionIdentifier = item.id
+                    cell.lifeBar.motionIdentifier = "lifeBar_\(item.id)"
+                    cell.commentButton.setTitle("  \(item.commentsCount)", for: UIControlState.normal)
+                    cell.commentButton.rx.tap
+                        .subscribe(onNext: { _events.accept(.onTriggerShowComments(indexPath.row)) })
+                        .disposed(by: cell.disposeBag)
+                    cell.imageButton.rx.tap
+                        .subscribe(onNext: { _events.accept(.onTriggerShowImageDetail(indexPath.row)) })
+                        .disposed(by: cell.disposeBag)
+                    return cell
+            },
+                configureSupplementaryView: { dataSource, collectionView, title, indexPath in
+                    return UICollectionReusableView()
+            })
+            return collectionView!.rx.items(dataSource: dataSource)
+        }
     }
 }
 
@@ -39,7 +47,6 @@ extension HomeViewPresenter: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width - 16
-//        let item = dataSource.sectionModels[indexPath.section].items[indexPath.item]
         let imageHeight = width
         let height = imageHeight + 8 + 56 + 1 + 48
         return CGSize(width: width, height: height)

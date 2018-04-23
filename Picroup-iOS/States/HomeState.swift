@@ -28,12 +28,8 @@ struct HomeState: Mutabled {
     var error: Error?
     var trigger: Bool
     
-//    var router
-//
-//    struct Router {
-//        var imageDetail: RankedMediaQuery.Data.RankedMedium.Item?
-//        var imageComments: RankedMediaQuery.Data.RankedMedium.Item?
-//    }
+    var nextShowCommentsIndex: Int?
+    var nextShowImageDetailIndex: Int?
 }
 
 extension HomeState {
@@ -50,6 +46,14 @@ extension HomeState {
     var hasMore: Bool {
         return next.cursor != nil
     }
+    var showCommentsQuery: Item? {
+        guard let index = nextShowCommentsIndex else { return nil }
+        return items[index]
+    }
+    var showImageDetailQuery: Item? {
+        guard let index = nextShowImageDetailIndex else { return nil }
+        return items[index]
+    }
 }
 
 extension HomeState {
@@ -62,7 +66,9 @@ extension HomeState {
             next: UserInterestedMediaQuery(userId: userId),
             items: [],
             error: nil,
-            trigger: true
+            trigger: true,
+            nextShowCommentsIndex: nil,
+            nextShowImageDetailIndex: nil
         )
     }
 }
@@ -84,6 +90,12 @@ extension HomeState: IsFeedbackState {
         case onTriggerGetMore
         case onGetSuccess(UserInterestedMediaQuery.Data.User)
         case onGetError(Error)
+        
+        case onTriggerShowComments(Int)
+        case onShowCommentsCompleted
+        
+        case onTriggerShowImageDetail(Int)
+        case onShowImageDetailCompleted
     }
 }
 
@@ -156,6 +168,22 @@ extension HomeState {
             return state.mutated {
                 $0.error = error
                 $0.trigger = false
+            }
+        case .onTriggerShowComments(let index):
+            return state.mutated {
+                $0.nextShowCommentsIndex = index
+            }
+        case .onShowCommentsCompleted:
+            return state.mutated {
+                $0.nextShowCommentsIndex = nil
+            }
+        case .onTriggerShowImageDetail(let index):
+            return state.mutated {
+                $0.nextShowImageDetailIndex = index
+            }
+        case .onShowImageDetailCompleted:
+            return state.mutated {
+                $0.nextShowImageDetailIndex = nil
             }
         }
     }

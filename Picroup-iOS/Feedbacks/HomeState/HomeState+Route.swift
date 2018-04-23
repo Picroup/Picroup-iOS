@@ -37,7 +37,7 @@ extension DriverFeedback where State == HomeState {
             
             return Observable.merge(picked, cancelled)
                 .take(1)
-                .asSignal(onErrorRecover: { _ in .empty() })
+                .asSignalOnErrorRecoverEmpty()
         }
     }
     
@@ -49,7 +49,29 @@ extension DriverFeedback where State == HomeState {
             let canceled = civc.rx.deallocated.map { HomeState.Event.onSeveMediumCancelled }
             return Observable.merge(saved, canceled)
                 .take(1)
-                .asSignal(onErrorRecover: { _ in .empty() })
+                .asSignalOnErrorRecoverEmpty()
+        }
+    }
+    
+    static func showComments(from vc: UIViewController) -> Raw {
+        return react(query: { $0.showCommentsQuery }) { [weak vc] item in
+            let dependency = ImageCommentsViewController.Dependency(snapshot: item.snapshot)
+            let icvc = RouterService.Main.imageCommentsViewController(dependency: dependency)
+            vc?.navigationController?.pushViewController(icvc, animated: true)
+            return icvc.rx.deallocated.map { HomeState.Event.onShowCommentsCompleted }
+                .take(1)
+                .asSignalOnErrorRecoverEmpty()
+        }
+    }
+    
+    static func showImageDetail(from vc: UIViewController) -> Raw {
+        return react(query: { $0.showImageDetailQuery }) { [weak vc] item in
+            let dependency = ImageDetailViewController.Dependency(snapshot: item.snapshot)
+            let idvc = RouterService.Main.imageDetailViewController(dependency: dependency)
+            vc?.navigationController?.pushViewController(idvc, animated: true)
+            return idvc.rx.deallocated.map { HomeState.Event.onShowImageDetailCompleted }
+                .take(1)
+                .asSignalOnErrorRecoverEmpty()
         }
     }
 }

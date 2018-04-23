@@ -14,6 +14,7 @@ import RxCocoa
 
 class HomeImageCell: RxCollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageButton: UIButton!
     @IBOutlet weak var lifeBar: UIView!
     @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var moreButton: UIButton!

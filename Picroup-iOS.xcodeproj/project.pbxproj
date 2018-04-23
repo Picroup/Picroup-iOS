@@ -43,6 +43,7 @@
 		454F72962089B44500850471 /* RxCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72952089B44500850471 /* RxCollectionViewCell.swift */; };
 		454F72982089B46300850471 /* RxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72972089B46300850471 /* RxTableViewCell.swift */; };
 		454F729A2089BA1300850471 /* UIView+IBInspectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72992089BA1300850471 /* UIView+IBInspectable.swift */; };
+		454F729C208DAF0500850471 /* ObservableConvertibleType+asSignal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F729B208DAF0500850471 /* ObservableConvertibleType+asSignal.swift */; };
 		45525D4A208C3CB500EAF00D /* CreateImagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */; };
 		45525D4D208C44E300EAF00D /* CreateImageState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D4C208C44E300EAF00D /* CreateImageState+GraphQL.swift */; };
 		45525D4F208C468500EAF00D /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D4E208C468500EAF00D /* Feedback.swift */; };
@@ -135,6 +136,7 @@
 		454F72952089B44500850471 /* RxCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCollectionViewCell.swift; sourceTree = "<group>"; };
 		454F72972089B46300850471 /* RxTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxTableViewCell.swift; sourceTree = "<group>"; };
 		454F72992089BA1300850471 /* UIView+IBInspectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+IBInspectable.swift"; sourceTree = "<group>"; };
+		454F729B208DAF0500850471 /* ObservableConvertibleType+asSignal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableConvertibleType+asSignal.swift"; sourceTree = "<group>"; };
 		45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImagePresenter.swift; sourceTree = "<group>"; };
 		45525D4C208C44E300EAF00D /* CreateImageState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CreateImageState+GraphQL.swift"; path = "Picroup-iOS/Feedbacks/CreateImageState/CreateImageState+GraphQL.swift"; sourceTree = SOURCE_ROOT; };
 		45525D4E208C468500EAF00D /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
@@ -268,15 +270,16 @@
 			children = (
 				451DD4BE208311DA002C509A /* HasDisposeBag.swift */,
 				451CD313207910D10063A972 /* SharedSequence+unwrap.swift */,
-				451CD31A207A38F20063A972 /* UIResponder+Rx.swift */,
 				451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */,
-				45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */,
+				454F729B208DAF0500850471 /* ObservableConvertibleType+asSignal.swift */,
 				45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */,
 				45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */,
 				45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */,
 				45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */,
+				451CD31A207A38F20063A972 /* UIResponder+Rx.swift */,
 				455D69072080890B00C651A0 /* UIScrollView+Rx.swift */,
 				454F72952089B44500850471 /* RxCollectionViewCell.swift */,
+				45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */,
 				454F72972089B46300850471 /* RxTableViewCell.swift */,
 			);
 			path = RxCocoa;
@@ -647,7 +650,6 @@
 				457B1B84205FEA1000BEDDF1 /* Frameworks */,
 				457B1B85205FEA1000BEDDF1 /* Resources */,
 				E0FCAA82992B2BFE5A43546E /* [CP] Embed Pods Frameworks */,
-				2BEFA96A0431D2DE6C710678 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -732,22 +734,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		2BEFA96A0431D2DE6C710678 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		457B1B9D205FF08300BEDDF1 /* Generate GraphQL Apollo API */ = {
@@ -783,7 +770,6 @@
 				"${BUILT_PRODUCTS_DIR}/RxFeedback/RxFeedback.framework",
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/RxViewController/RxViewController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -799,7 +785,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxFeedback.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxViewController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -858,6 +843,7 @@
 				451DD4BD207F8BC7002C509A /* RankState.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
 				454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */,
+				454F729C208DAF0500850471 /* ObservableConvertibleType+asSignal.swift in Sources */,
 				455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */,
 				4595F225207D95360040E5FA /* HomeState.swift in Sources */,
 				45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */,

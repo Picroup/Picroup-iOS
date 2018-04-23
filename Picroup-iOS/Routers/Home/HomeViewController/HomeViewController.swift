@@ -29,13 +29,15 @@ class HomeViewController: UIViewController {
         typealias Feedback = (Driver<HomeState>) -> Signal<HomeState.Event>
 
         let uiFeedback: Feedback = bind(self) { (me, state) in
+            let _events = PublishRelay<HomeState.Event>()
             let subscriptions = [
-                state.map { [Section(model: "", items: $0.items)] }.drive(me.presenter.items)
+                state.map { [Section(model: "", items: $0.items)] }.drive(me.presenter.items(_events))
             ]
             let events: [Signal<HomeState.Event>] = [
                 state.flatMapLatest {
                     $0.shouldQueryMore ? me.presenter.collectionView.rx.isNearBottom.asSignal() : .empty()
                     }.map { .onTriggerGetMore },
+                _events.asSignal(),
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
@@ -45,14 +47,6 @@ class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
         
         presenter.collectionView.rx.setDelegate(presenter)
-            .disposed(by: disposeBag)
-        
-        presenter.collectionView.rx.modelSelected(HomeState.Item.self)
-            .subscribe(onNext: { [weak self] item in
-                let dependency = RankedMediaQuery.Data.RankedMedium.Item(snapshot: item.snapshot)
-                let vc = RouterService.Main.imageDetailViewController(dependency: dependency)
-                self?.navigationController?.pushViewController(vc, animated: true)
-            })
             .disposed(by: disposeBag)
     }
 }

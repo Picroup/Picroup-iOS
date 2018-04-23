@@ -46,11 +46,11 @@ class ImageCommentsViewController: HideNavigationBarViewController {
                 state.map { [Section(model: "", items: $0.items)]  }.bind(to: me.presenter.items) ,
                 ]
             let events: [Observable<ImageCommentsState.Event>] = [
-                state.flatMapLatest {
-                    $0.shouldQueryMore ? me.presenter.tableView.rx.isNearBottom.asObservable() : .empty()
+                state.flatMapLatest { [tableView = me.presenter.tableView!] in
+                    $0.shouldQueryMore ? tableView.rx.isNearBottom.asObservable() : .empty()
                     }.map { .onTriggerGetMore },
-                state.flatMapLatest {
-                    $0.shouldSendComment ? me.presenter.sendButton.rx.tap.asObservable() : .empty()
+                state.flatMapLatest { [sendButton = me.presenter.sendButton!] in
+                    $0.shouldSendComment ? sendButton.rx.tap.asObservable() : .empty()
                     }.map { .saveComment(.trigger) },
                 me.presenter.contentTextField.rx.text.orEmpty.debounce(0.3, scheduler: MainScheduler.instance).distinctUntilChanged().map(ImageCommentsState.Event.onChangeCommentContent)
                 ]
@@ -77,6 +77,10 @@ class ImageCommentsViewController: HideNavigationBarViewController {
             )
             .subscribe()
             .disposed(by: disposeBag)
+    }
+    
+    deinit {
+        print("ImageCommentsViewController deinit")
     }
 }
 

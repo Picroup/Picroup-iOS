@@ -23,6 +23,7 @@ struct CreateImageState: Mutabled {
     var triggerSave: Bool
     
     var triggerCancel: Void?
+    
 }
 
 extension CreateImageState {

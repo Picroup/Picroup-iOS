@@ -34,9 +34,10 @@ class ImageDetailViewController: HideNavigationBarViewController {
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let staredMediumTrigger = PublishRelay<Void>()
             let popTrigger = PublishRelay<Void>()
-            let showImageComments = {  (state: ImageDetailState) in { [weak me] in
+            weak var weakMe = me
+            let showImageComments = { (state: ImageDetailState) in {
                 let vc = RouterService.Main.imageCommentsViewController(dependency: state.item)
-                me?.navigationController?.pushViewController(vc, animated: true)
+                weakMe?.navigationController?.pushViewController(vc, animated: true)
                 }}
             let subscriptions = [
                 state.map { [$0] }.throttle(1, scheduler: MainScheduler.instance).bind(to: me.collectionView .rx.items(cellIdentifier: "ImageDetailCell", cellType: ImageDetailCell.self)) { index, state, cell in
@@ -77,7 +78,10 @@ class ImageDetailViewController: HideNavigationBarViewController {
             initialState: ImageDetailState.empty(userId: Config.userId, item: dependency),
             reduce: logger(identifier: "ImageDetailState")(ImageDetailState.reduce),
             scheduler: MainScheduler.instance,
-            scheduledFeedback: uiFeedback, queryMedium, starMedium
+            scheduledFeedback:
+            uiFeedback,
+            queryMedium,
+            starMedium
         )
             .subscribe()
             .disposed(by: disposeBag)
@@ -85,6 +89,9 @@ class ImageDetailViewController: HideNavigationBarViewController {
         collectionView.rx.setDelegate(self).disposed(by: disposeBag)
     }
     
+    deinit {
+        print("ImageDetailViewController deinit")
+    }
 }
 
 extension ImageDetailViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
