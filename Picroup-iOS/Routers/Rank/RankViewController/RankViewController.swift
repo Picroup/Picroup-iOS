@@ -40,27 +40,27 @@ class RankViewController: UIViewController {
         
         typealias Section = RankViewPresenter.Section
         
-        let uiFeedback: Feedback = bind(self) { (me, state)  in
+        weak var weakSelf = self
+        let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let subscriptions = [
-                state.map { [Section(model: "", items: $0.items)] }.drive(me.presenter.items),
-                state.map { $0.nextRankedMediaQuery.category }.map { $0?.name ?? "全部" }.drive(onNext: { titleLabel in { titleLabel.text = $0 }}(me.presenter.navigationItem.titleLabel)),
+                state.map { [Section(model: "", items: $0.items)] }.drive(presenter.items),
+                state.map { $0.nextRankedMediaQuery.category }.map { $0?.name ?? "全部" }.drive(onNext: { titleLabel in { titleLabel.text = $0 }}(presenter.navigationItem.titleLabel)),
 //                state.map { $0.hasMore }.drive(Binder(me.collectionView) { collectionView, hasMore in
 //                    collectionView.contentInset.bottom = hasMore ? 64 : 2
 //                })
             ]
             let events: [Signal<RankState.Event>] = [
                 state.flatMapLatest {
-                    $0.shouldQueryMore ? me.collectionView.rx.isNearBottom.asSignal() : .empty()
-                    }.map { RankState.Event.onTriggerGetMore },
+                    $0.shouldQueryMore ? presenter.collectionView.rx.isNearBottom.asSignal() : .empty()
+                    }.map { .onTriggerGetMore },
                 state.flatMapLatest { state in
-                    me.presenter.categoryButton.rx.tap.asSignal().flatMapLatest { _ in
+                    presenter.categoryButton.rx.tap.asSignal().flatMapLatest { _ in
                         let selected = PublishRelay<MediumCategory?>()
-                        let vc = RouterService.Main.selectCategoryViewController(dependency: (state.nextRankedMediaQuery.category, selected.accept))
-                        me.present(vc, animated: true)
+                        let vc = RouterService.Image.selectCategoryViewController(dependency: (state.nextRankedMediaQuery.category, selected.accept))
+                        weakSelf?.present(vc, animated: true)
                         return selected.asSignal().map { RankState.Event.onChangeCategory($0) }
                     }
                 },
-                
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
@@ -91,7 +91,7 @@ class RankViewController: UIViewController {
         
         collectionView.rx.modelSelected(RankedMediaQuery.Data.RankedMedium.Item.self)
             .subscribe(onNext: { [weak self] item in
-                let vc = RouterService.Main.imageDetailViewController(dependency: item)
+                let vc = RouterService.Image.imageDetailViewController(dependency: item)
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
@@ -104,20 +104,3 @@ class RankMediumCell: RxCollectionViewCell {
     @IBOutlet weak var starPlaceholderView: UIView!
 }
 
-extension RankedMediaQuery.Data.RankedMedium.Item: IdentifiableType, Equatable {
-    
-    public var identity: String {
-        return id
-    }
-    
-    public static func ==(lhs: RankedMediaQuery.Data.RankedMedium.Item, rhs: RankedMediaQuery.Data.RankedMedium.Item) -> Bool {
-        return true
-    }
-}
-
-extension RankedMediaQuery.Data.RankedMedium.Item {
-    
-    var remainTime: TimeInterval {
-        return endedAt - Date().timeIntervalSince1970
-    }
-}

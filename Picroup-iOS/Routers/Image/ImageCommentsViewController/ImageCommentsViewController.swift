@@ -34,25 +34,26 @@ class ImageCommentsViewController: HideNavigationBarViewController {
         
         typealias Section = ImageCommentsPresenter.Section
         
-        let uiFeedback: Feedback = bind(self) { (me, state) in
+        weak var weakSelf = self
+        let uiFeedback: Feedback = bind(presenter) { (presenter, state) in
             let subscriptions = [
-                state.map { $0.medium }.throttle(0.3, scheduler: MainScheduler.instance).bind(to: me.presenter.medium),
-                state.map { $0.saveComment.next.content }.bind(to: me.presenter.contentTextField.rx.text),
-                state.map { $0.shouldSendComment ? 1 : 0 }.bind(to: me.presenter.sendButton.rx.alpha),
-                me.presenter.hideCommentsContentView.rx.tapGesture().when(.recognized).mapToVoid().bind(to: me.rx.pop(animated: true)),
-                me.presenter.imageView.rx.tapGesture().when(.recognized).mapToVoid().bind(to: me.rx.pop(animated: true)),
-                me.presenter.tableViewBackgroundButton.rx.tap.bind(to: me.rx.pop(animated: true)),
-                me.presenter.sendButton.rx.tap.bind(to: me.presenter.contentTextField.rx.resignFirstResponder()),
-                state.map { [Section(model: "", items: $0.items)]  }.bind(to: me.presenter.items) ,
+                state.map { $0.medium }.throttle(0.3, scheduler: MainScheduler.instance).bind(to: presenter.medium),
+                state.map { $0.saveComment.next.content }.bind(to: presenter.contentTextField.rx.text),
+                state.map { $0.shouldSendComment ? 1 : 0 }.bind(to: presenter.sendButton.rx.alpha),
+                presenter.hideCommentsContentView.rx.tapGesture().when(.recognized).mapToVoid().bind(to: weakSelf!.rx.pop(animated: true)),
+                presenter.imageView.rx.tapGesture().when(.recognized).mapToVoid().bind(to: weakSelf!.rx.pop(animated: true)),
+                presenter.tableViewBackgroundButton.rx.tap.bind(to: weakSelf!.rx.pop(animated: true)),
+                presenter.sendButton.rx.tap.bind(to: presenter.contentTextField.rx.resignFirstResponder()),
+                state.map { [Section(model: "", items: $0.items)]  }.bind(to: presenter.items) ,
                 ]
             let events: [Observable<ImageCommentsState.Event>] = [
-                state.flatMapLatest { [tableView = me.presenter.tableView!] in
-                    $0.shouldQueryMore ? tableView.rx.isNearBottom.asObservable() : .empty()
+                state.flatMapLatest {
+                    $0.shouldQueryMore ? presenter.tableView.rx.isNearBottom.asObservable() : .empty()
                     }.map { .onTriggerGetMore },
-                state.flatMapLatest { [sendButton = me.presenter.sendButton!] in
-                    $0.shouldSendComment ? sendButton.rx.tap.asObservable() : .empty()
+                state.flatMapLatest {
+                    $0.shouldSendComment ? presenter.sendButton.rx.tap.asObservable() : .empty()
                     }.map { .saveComment(.trigger) },
-                me.presenter.contentTextField.rx.text.orEmpty.debounce(0.3, scheduler: MainScheduler.instance).distinctUntilChanged().map(ImageCommentsState.Event.onChangeCommentContent)
+                presenter.contentTextField.rx.text.orEmpty.debounce(0.3, scheduler: MainScheduler.instance).distinctUntilChanged().map(ImageCommentsState.Event.onChangeCommentContent)
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }

@@ -1,8 +1,8 @@
 //
-//  RankViewPresenter.swift
+//  MePresenter.swift
 //  Picroup-iOS
 //
-//  Created by luojie on 2018/4/16.
+//  Created by luojie on 2018/4/23.
 //  Copyright © 2018年 luojie. All rights reserved.
 //
 
@@ -12,36 +12,17 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class RankViewPresenter {
-    
-    var categoryButton: IconButton!
-    weak var collectionView: UICollectionView!
-    weak var navigationItem: UINavigationItem!
+class MePresenter: NSObject {
+    @IBOutlet weak var displaynameLabel: UILabel!
+    @IBOutlet weak var usernameLabel: UILabel!
 
-    init(collectionView: UICollectionView, navigationItem: UINavigationItem) {
-        self.collectionView = collectionView
-        self.navigationItem = navigationItem
-        self.setup()
-    }
+    @IBOutlet weak var reputationCountLabel: UILabel!
+    @IBOutlet weak var followersCountLabel: UILabel!
+    @IBOutlet weak var followingsCountLabel: UILabel!
     
-    private func setup() {
-        prepareCategoryButton()
-        prepareNavigationItem()
-    }
-    
-    fileprivate func prepareCategoryButton() {
-        categoryButton = IconButton(image: Icon.cm.arrowDownward, tintColor: .primaryText)
-        categoryButton.pulseColor = .white
-    }
-    
-    fileprivate func prepareNavigationItem() {
-        navigationItem.titleLabel.text = "全部"
-        navigationItem.titleLabel.textColor = .primaryText
-//        navigationItem.titleLabel.textAlignment = .left
-        navigationItem.rightViews = [categoryButton]
-    }
-    
-    typealias Section = AnimatableSectionModel<String, RankedMediaQuery.Data.RankedMedium.Item>
+    @IBOutlet weak var collectionView: UICollectionView!
+
+    typealias Section = AnimatableSectionModel<String, MyMediaQuery.Data.User.Medium.Item>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
     var items: (Observable<[Section]>) -> Disposable {
@@ -63,13 +44,28 @@ class RankViewPresenter {
     }
 }
 
-extension RankedMediaQuery.Data.RankedMedium.Item: IdentifiableType, Equatable {
+struct UserViewModel {
+    let username: String
+    let reputation: String
+    let followersCount: String
+    let followingsCount: String
+    
+    init(user: UserQuery.Data.User?) {
+        self.username = user.map { "@\($0.username)" } ?? " "
+        self.reputation = user?.reputation.description ?? "0"
+        self.followersCount = user?.followersCount.description ?? "0"
+        self.followingsCount = user?.followingsCount.description ?? "0"
+    }
+}
+
+
+extension MyMediaQuery.Data.User.Medium.Item: IdentifiableType, Equatable {
     
     public var identity: String {
         return id
     }
     
-    public static func ==(lhs: RankedMediaQuery.Data.RankedMedium.Item, rhs: RankedMediaQuery.Data.RankedMedium.Item) -> Bool {
+    public static func ==(lhs: MyMediaQuery.Data.User.Medium.Item, rhs: MyMediaQuery.Data.User.Medium.Item) -> Bool {
         return true
     }
 }

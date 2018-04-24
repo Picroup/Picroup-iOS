@@ -25,7 +25,7 @@ extension RouterService.Main {
             (title: "匹酷普", imageName: "ic_home", vc: homeMenuViewController()),
             (title: "排行榜", imageName: "ic_apps", vc: rankViewController()),
             (title: "通知", imageName: "ic_notifications", vc: NotificationsViewController()),
-            (title: "我", imageName: "ic_person", vc: MeViewController()),
+            (title: "我", imageName: "ic_person", vc: meViewController()),
             ]
         
         let viewControllers = infos.map { info -> UIViewController in
@@ -51,33 +51,16 @@ extension RouterService.Main {
         return BaseNavigationController(rootViewController: hmvc)
     }
     
-    static func createImageViewController(dependency: CreateImageViewController.Dependency) -> CreateImageViewController {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateImageViewController") as! CreateImageViewController
-        vc.dependency = dependency
-        return vc
-    }
-    
     static func rankViewController() -> UIViewController {
         let rvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RankViewController") as! RankViewController
         return BaseNavigationController(rootViewController: rvc)
     }
     
-    static func selectCategoryViewController(dependency: SelectCategoryViewController.Dependency) -> SelectCategoryViewController {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SelectCategoryViewController") as! SelectCategoryViewController
-        vc.dependency = dependency
-        return vc
-    }
-    
-    static func imageDetailViewController(dependency: ImageDetailViewController.Dependency) -> ImageDetailViewController {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageDetailViewController") as! ImageDetailViewController
-        vc.dependency = dependency
-        return vc
-    }
-    
-    static func imageCommentsViewController(dependency: ImageCommentsViewController.Dependency) -> ImageCommentsViewController {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageCommentsViewController") as! ImageCommentsViewController
-        vc.dependency = dependency
-        return vc
+    static func meViewController() -> UIViewController {
+        let mevc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MeViewController") as! MeViewController
+        let nvc = BaseNavigationController(rootViewController: mevc)
+        nvc.isNavigationBarHidden = true
+        return nvc
     }
     
 }

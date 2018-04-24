@@ -36,7 +36,7 @@ class ImageDetailViewController: HideNavigationBarViewController {
             let popTrigger = PublishRelay<Void>()
             weak var weakMe = me
             let showImageComments = { (state: ImageDetailState) in {
-                let vc = RouterService.Main.imageCommentsViewController(dependency: state.item)
+                let vc = RouterService.Image.imageCommentsViewController(dependency: state.item)
                 weakMe?.navigationController?.pushViewController(vc, animated: true)
                 }}
             let subscriptions = [
@@ -87,10 +87,6 @@ class ImageDetailViewController: HideNavigationBarViewController {
             .disposed(by: disposeBag)
         
         collectionView.rx.setDelegate(self).disposed(by: disposeBag)
-    }
-    
-    deinit {
-        print("ImageDetailViewController deinit")
     }
 }
 
