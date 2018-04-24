@@ -44,6 +44,21 @@ class MePresenter: NSObject {
     }
 }
 
+struct UserViewModel {
+    let username: String
+    let reputation: String
+    let followersCount: String
+    let followingsCount: String
+    
+    init(user: UserQuery.Data.User?) {
+        self.username = user.map { "@\($0.username)" } ?? " "
+        self.reputation = user?.reputation.description ?? "0"
+        self.followersCount = user?.followersCount.description ?? "0"
+        self.followingsCount = user?.followingsCount.description ?? "0"
+    }
+}
+
+
 extension MyMediaQuery.Data.User.Medium.Item: IdentifiableType, Equatable {
     
     public var identity: String {

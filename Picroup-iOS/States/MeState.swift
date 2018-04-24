@@ -9,9 +9,12 @@
 import Foundation
 
 struct MeState: Mutabled {
-    typealias Me = QueryState<UserQuery, UserQuery.Data.User>
     typealias Item = MyMediaQuery.Data.User.Medium.Item
-    var me: Me
+    
+    var nextMeQuery: UserQuery
+    var me: UserQuery.Data.User?
+    var meError: Error?
+    var triggerQueryMe: Bool
     
     var nextMyMediaQuery: MyMediaQuery
     var myMediaItems: [Item]
@@ -22,6 +25,9 @@ struct MeState: Mutabled {
 }
 
 extension MeState {
+    var meQuery: UserQuery? {
+        return triggerQueryMe ? nextMeQuery : nil
+    }
     var myMediaQuery: MyMediaQuery? {
         return triggerQueryMyMedia ? nextMyMediaQuery : nil
     }
@@ -43,10 +49,10 @@ extension MeState {
 extension MeState {
     static func empty(userId: String) -> MeState {
         return MeState(
-            me: Me(
-                next: UserQuery(userId: userId),
-                trigger: true
-            ),
+            nextMeQuery: UserQuery(userId: userId),
+            me: nil,
+            meError: nil,
+            triggerQueryMe: false,
             nextMyMediaQuery: MyMediaQuery(userId: userId),
             myMediaItems: [],
             myMediaError: nil,
@@ -59,7 +65,10 @@ extension MeState {
 extension MeState: IsFeedbackState {
     
     enum Event {
-        case me(Me.Event)
+        case onTriggerReloadMe
+        case onGetMeSuccess(UserQuery.Data.User)
+        case onGetMeError(Error)
+        
         case onTriggerReload
         case onTriggerGetMore
         case onGetSuccess(MyMediaQuery.Data.User.Medium)
@@ -73,9 +82,22 @@ extension MeState: IsFeedbackState {
 extension MeState {
     static func reduce(state: MeState, event: MeState.Event) -> MeState {
         switch event {
-        case .me(let event):
+        case .onTriggerReloadMe:
             return state.mutated {
-                $0.me -= event
+                $0.meError = nil
+                $0.triggerQueryMe = true
+            }
+        case .onGetMeSuccess(let data):
+            return state.mutated {
+                $0.me = data
+                $0.meError = nil
+                $0.triggerQueryMe = false
+            }
+        case .onGetMeError(let error):
+            return state.mutated {
+                $0.me = nil
+                $0.meError = error
+                $0.triggerQueryMe = false
             }
         case .onTriggerReload:
             return state.mutated {

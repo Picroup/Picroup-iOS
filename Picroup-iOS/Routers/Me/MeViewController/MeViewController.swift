@@ -28,6 +28,7 @@ class MeViewController: UIViewController {
         let queryMe = Feedback.queryMe(client: ApolloClient.shared)
         let queryMyMedia = Feedback.queryMyMedia(client: ApolloClient.shared)
         let showImageDetail = Feedback.showImageDetail(from: self)
+        let triggerReloadMe = Feedback.triggerReloadMe(from: self)
         
         let reduce = logger(identifier: "MeState")(MeState.reduce)
         
@@ -38,7 +39,8 @@ class MeViewController: UIViewController {
                 uiFeedback,
                 queryMe,
                 queryMyMedia,
-                showImageDetail
+                showImageDetail,
+                triggerReloadMe
             )
             .drive()
             .disposed(by: disposeBag)
@@ -50,11 +52,12 @@ extension MeViewController {
     fileprivate var uiFeedback: Feedback.Raw {
         typealias Section = MePresenter.Section
         return bind(presenter) { (presenter, state) -> Bindings<MeState.Event> in
+            let meViewModel = state.map { UserViewModel(user: $0.me) }
             let subscriptions: [Disposable] = [
-                state.map { $0.me.data?.username }.drive(presenter.usernameLabel.rx.text),
-                state.map { $0.me.data?.reputation.description }.drive(presenter.reputationCountLabel.rx.text),
-                state.map { $0.me.data?.followersCount.description }.drive(presenter.followersCountLabel.rx.text),
-                state.map { $0.me.data?.followingsCount.description }.drive(presenter.followingsCountLabel.rx.text),
+                meViewModel.map { $0.username }.drive(presenter.usernameLabel.rx.text),
+                meViewModel.map { $0.reputation }.drive(presenter.reputationCountLabel.rx.text),
+                meViewModel.map { $0.followersCount }.drive(presenter.followersCountLabel.rx.text),
+                meViewModel.map { $0.followingsCount }.drive(presenter.followingsCountLabel.rx.text),
                 state.map { [Section(model: "", items: $0.myMediaItems)] }.drive(presenter.items),
             ]
             let events: [Signal<MeState.Event>] = [

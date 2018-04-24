@@ -21,10 +21,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rYb-Fc-gKE">
-                                <rect key="frame" x="0.0" y="20" width="375" height="1"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="0.0"/>
                                 <color key="backgroundColor" red="0.18039215689999999" green="0.49019607840000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="9TV-Cy-7ZE"/>
+                                    <constraint firstAttribute="height" id="9TV-Cy-7ZE"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="motionIdentifier" value="userHeader"/>

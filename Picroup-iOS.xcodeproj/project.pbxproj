@@ -83,6 +83,7 @@
 		45A0393D2075D0E9007498DB /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A0393C2075D0E9007498DB /* User.graphql */; };
 		45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A61C0C2086356E00AE7D99 /* StarMedium.graphql */; };
 		45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */; };
+		45BA0D7A208EB7640002E1D5 /* MeState+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */; };
 		45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */; };
 		45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F71208790C700AC2226 /* TimeInterval+.swift */; };
 		45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */; };
@@ -185,6 +186,7 @@
 		45A0393C2075D0E9007498DB /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
 		45A61C0C2086356E00AE7D99 /* StarMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = StarMedium.graphql; sourceTree = "<group>"; };
 		45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PublishRelay+asBinder.swift"; sourceTree = "<group>"; };
+		45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeState+ViewController.swift"; sourceTree = "<group>"; };
 		45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailCell.swift; sourceTree = "<group>"; };
 		45D04F71208790C700AC2226 /* TimeInterval+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+.swift"; sourceTree = "<group>"; };
 		45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Operator.swift"; sourceTree = "<group>"; };
@@ -627,6 +629,7 @@
 			children = (
 				45D04F86208E111400AC2226 /* MeState+GraphQL.swift */,
 				45D04F88208E1F8F00AC2226 /* MeState+Route.swift */,
+				45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */,
 			);
 			path = MeState;
 			sourceTree = "<group>";
@@ -801,6 +804,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxFeedback/RxFeedback.framework",
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RxViewController/RxViewController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -816,6 +820,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxFeedback.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxViewController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -850,6 +855,7 @@
 				457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */,
 				451CD337207D0B9A0063A972 /* RankViewController.swift in Sources */,
 				45525D51208C552800EAF00D /* CreateImageState+LocalStorage.swift in Sources */,
+				45BA0D7A208EB7640002E1D5 /* MeState+ViewController.swift in Sources */,
 				4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
 				45D04F80208A06D300AC2226 /* HomeViewPresenter.swift in Sources */,

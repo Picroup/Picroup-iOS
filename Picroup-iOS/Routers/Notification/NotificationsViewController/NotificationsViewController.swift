@@ -20,6 +20,6 @@ class NotificationsViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        view.backgroundColor = .green
+        view.backgroundColor = .background
     }
 }

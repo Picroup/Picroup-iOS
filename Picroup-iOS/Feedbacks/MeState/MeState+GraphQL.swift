@@ -15,11 +15,11 @@ import Apollo
 extension DriverFeedback where State == MeState {
     
     static func queryMe(client: ApolloClient) -> Raw {
-        return react(query: { $0.me.query }) { query in
+        return react(query: { $0.meQuery }) { query in
             client.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user }.unwrap()
-                .map { .me(.onSuccess($0)) }
-                .asSignal(onErrorReturnJust: { .me(.onError($0)) })
+                .map(MeState.Event.onGetMeSuccess)
+                .asSignal(onErrorReturnJust: MeState.Event.onGetMeError)
         }
     }
     
