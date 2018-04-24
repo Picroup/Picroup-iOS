@@ -10,6 +10,7 @@ import UIKit
 import Apollo
 import RxSwift
 import RxCocoa
+import RxGesture
 import RxFeedback
 
 class MeViewController: UIViewController {
@@ -44,6 +45,14 @@ class MeViewController: UIViewController {
             )
             .drive()
             .disposed(by: disposeBag)
+        
+        presenter.reputationView.rx.tapGesture().when(.recognized).mapToVoid()
+            .subscribe(onNext: { [weak self] in
+                let vc = RouterService.Main.reputationsViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+
     }
 }
 

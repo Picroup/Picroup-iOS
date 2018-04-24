@@ -19,6 +19,7 @@ class MePresenter: NSObject {
     @IBOutlet weak var reputationCountLabel: UILabel!
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var followingsCountLabel: UILabel!
+    @IBOutlet weak var reputationView: UIStackView!
     
     @IBOutlet weak var collectionView: UICollectionView!
 
