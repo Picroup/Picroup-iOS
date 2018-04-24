@@ -22,6 +22,8 @@ struct MeState: Mutabled {
     var triggerQueryMyMedia: Bool
     
     var nextShowImageDetailIndex: Int?
+    
+    var triggerShowReputations: Bool
 }
 
 extension MeState {
@@ -44,6 +46,9 @@ extension MeState {
         guard let index = nextShowImageDetailIndex else { return nil }
         return myMediaItems[index]
     }
+    var showReputationsQuery: Int? {
+        return triggerShowReputations ? me?.reputation : nil
+    }
 }
 
 extension MeState {
@@ -57,7 +62,8 @@ extension MeState {
             myMediaItems: [],
             myMediaError: nil,
             triggerQueryMyMedia: true,
-            nextShowImageDetailIndex: nil
+            nextShowImageDetailIndex: nil,
+            triggerShowReputations: false
         )
     }
 }
@@ -76,6 +82,9 @@ extension MeState: IsFeedbackState {
         
         case onTriggerShowImageDetail(Int)
         case onShowImageDetailCompleted
+        
+        case onTriggerShowReputations
+        case onShowReputationsCompleted
     }
 }
 
@@ -131,6 +140,14 @@ extension MeState {
         case .onShowImageDetailCompleted:
             return state.mutated {
                 $0.nextShowImageDetailIndex = nil
+            }
+        case .onTriggerShowReputations:
+            return state.mutated {
+                $0.triggerShowReputations = true
+            }
+        case .onShowReputationsCompleted:
+            return state.mutated {
+                $0.triggerShowReputations = false
             }
         }
     }

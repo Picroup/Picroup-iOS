@@ -418,14 +418,30 @@
                                             </button>
                                         </subviews>
                                     </stackView>
+                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p6J-QI-gRW">
+                                        <rect key="frame" x="98" y="75" width="44" height="14"/>
+                                        <color key="backgroundColor" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                        <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                                        <state key="normal" title="+1000">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="7"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.18039215689999999" green="0.49019607840000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="wgK-VO-4AF" firstAttribute="leading" secondItem="ECa-vI-hBi" secondAttribute="leading" constant="16" id="0IM-wm-4bg"/>
+                                    <constraint firstItem="p6J-QI-gRW" firstAttribute="centerY" secondItem="jSq-np-gGw" secondAttribute="top" id="7Hu-JE-CQL"/>
                                     <constraint firstItem="J3S-TG-nE1" firstAttribute="leading" secondItem="ECa-vI-hBi" secondAttribute="leading" constant="16" id="DiF-FB-CMg"/>
                                     <constraint firstAttribute="trailing" secondItem="3cd-Zu-LkP" secondAttribute="trailing" id="Hrb-t5-USk"/>
                                     <constraint firstAttribute="bottom" secondItem="R7J-ix-0kj" secondAttribute="bottom" id="LDa-aT-bEs"/>
                                     <constraint firstItem="J3S-TG-nE1" firstAttribute="top" secondItem="ECa-vI-hBi" secondAttribute="top" constant="16" id="NSI-mC-dtX"/>
+                                    <constraint firstItem="p6J-QI-gRW" firstAttribute="centerX" secondItem="jSq-np-gGw" secondAttribute="trailing" id="QJj-kx-Xvt"/>
                                     <constraint firstAttribute="bottom" secondItem="3cd-Zu-LkP" secondAttribute="bottom" constant="8" id="S33-ic-G6O"/>
                                     <constraint firstItem="R7J-ix-0kj" firstAttribute="centerX" secondItem="ZAd-wP-qlF" secondAttribute="centerX" id="SJn-aG-7Vz"/>
                                     <constraint firstItem="R7J-ix-0kj" firstAttribute="width" secondItem="ZAd-wP-qlF" secondAttribute="width" id="Uhg-aA-z1y"/>
@@ -516,6 +532,7 @@
                         <outlet property="displaynameLabel" destination="9ww-Gw-D99" id="xRs-4r-ScO"/>
                         <outlet property="followersCountLabel" destination="412-mM-oDe" id="gZL-eb-blY"/>
                         <outlet property="followingsCountLabel" destination="O9R-ng-3fi" id="4cH-Rz-pMm"/>
+                        <outlet property="gainedReputationCountButton" destination="p6J-QI-gRW" id="17C-ej-byM"/>
                         <outlet property="reputationCountLabel" destination="jSq-np-gGw" id="Fia-DP-FfQ"/>
                         <outlet property="reputationView" destination="ZoO-wd-e2h" id="etw-yd-9kt"/>
                         <outlet property="usernameLabel" destination="zUN-Qh-WrL" id="S7W-30-WqT"/>
@@ -570,9 +587,14 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="motionIdentifier" value="userHeader"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="72" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5yz-zf-q2h">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="72" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5yz-zf-q2h">
                                 <rect key="frame" x="0.0" y="68" width="375" height="599"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="WhG-re-IYn">
+                                    <rect key="frame" x="0.0" y="100" width="375" height="36"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="7HR-i2-9O7">
                                         <rect key="frame" x="0.0" y="28" width="375" height="72"/>
@@ -582,7 +604,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beethoven" translatesAutoresizingMaskIntoConstraints="NO" id="c6m-Z2-zuX">
-                                                    <rect key="frame" x="55" y="16" width="40" height="40"/>
+                                                    <rect key="frame" x="63" y="16" width="40" height="40"/>
                                                     <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="c6m-Z2-zuX" secondAttribute="height" multiplier="1:1" id="Fei-z7-tgl"/>
@@ -608,7 +630,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="700" text="收藏了您的图片" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2I5-Ql-DgC">
-                                                    <rect key="frame" x="103" y="25.5" width="208" height="21"/>
+                                                    <rect key="frame" x="119" y="25.5" width="192" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -616,14 +638,14 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="FUb-oM-2GR" firstAttribute="trailing" secondItem="970-Ig-tWp" secondAttribute="leadingMargin" constant="32" id="H95-Ly-4bP"/>
-                                                <constraint firstItem="c6m-Z2-zuX" firstAttribute="leading" secondItem="FUb-oM-2GR" secondAttribute="trailing" constant="8" id="HbQ-of-Gww"/>
+                                                <constraint firstItem="c6m-Z2-zuX" firstAttribute="leading" secondItem="FUb-oM-2GR" secondAttribute="trailing" constant="16" id="HbQ-of-Gww"/>
                                                 <constraint firstItem="Umr-E3-bYk" firstAttribute="centerY" secondItem="2I5-Ql-DgC" secondAttribute="centerY" id="JsU-rN-COa"/>
                                                 <constraint firstItem="Umr-E3-bYk" firstAttribute="width" secondItem="Umr-E3-bYk" secondAttribute="height" multiplier="1:1" id="KzF-Q6-UPc"/>
                                                 <constraint firstItem="2I5-Ql-DgC" firstAttribute="centerY" secondItem="c6m-Z2-zuX" secondAttribute="centerY" id="W8E-YL-xhp"/>
                                                 <constraint firstItem="c6m-Z2-zuX" firstAttribute="top" secondItem="970-Ig-tWp" secondAttribute="top" constant="16" id="h0m-zB-oYg"/>
                                                 <constraint firstItem="FUb-oM-2GR" firstAttribute="centerY" secondItem="c6m-Z2-zuX" secondAttribute="centerY" id="hrz-Al-llA"/>
                                                 <constraint firstAttribute="trailing" secondItem="Umr-E3-bYk" secondAttribute="trailing" constant="16" id="nhM-bK-gIX"/>
-                                                <constraint firstItem="2I5-Ql-DgC" firstAttribute="leading" secondItem="c6m-Z2-zuX" secondAttribute="trailing" constant="8" id="u7Q-Jw-gRs"/>
+                                                <constraint firstItem="2I5-Ql-DgC" firstAttribute="leading" secondItem="c6m-Z2-zuX" secondAttribute="trailing" constant="16" id="u7Q-Jw-gRs"/>
                                                 <constraint firstItem="Umr-E3-bYk" firstAttribute="leading" secondItem="2I5-Ql-DgC" secondAttribute="trailing" constant="8" id="uqA-CF-ld1"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="c6m-Z2-zuX" secondAttribute="bottom" constant="16" id="ymn-zF-owM"/>
                                             </constraints>
@@ -645,10 +667,16 @@
                         <viewLayoutGuide key="safeArea" id="dyk-f4-ktQ"/>
                     </view>
                     <connections>
-                        <outlet property="tableView" destination="5yz-zf-q2h" id="2rl-q9-dm7"/>
+                        <outlet property="presenter" destination="rcJ-bd-wlG" id="p70-rA-6gf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kxs-o3-rna" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="rcJ-bd-wlG" customClass="ReputationsViewPresenter" customModule="Picroup_iOS" customModuleProvider="target">
+                    <connections>
+                        <outlet property="reputationCountLabel" destination="Tyc-XJ-1lD" id="k2S-XW-p2E"/>
+                        <outlet property="tableView" destination="5yz-zf-q2h" id="N2P-Tg-K2U"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="1660" y="402.54872563718146"/>
         </scene>

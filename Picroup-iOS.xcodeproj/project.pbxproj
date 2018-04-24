@@ -83,6 +83,7 @@
 		45A0393D2075D0E9007498DB /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A0393C2075D0E9007498DB /* User.graphql */; };
 		45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A61C0C2086356E00AE7D99 /* StarMedium.graphql */; };
 		45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */; };
+		45A84461208F67D600C75982 /* ReputationsState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A84460208F67D600C75982 /* ReputationsState+GraphQL.swift */; };
 		45BA0D7A208EB7640002E1D5 /* MeState+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */; };
 		45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */; };
 		45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */; };
@@ -98,6 +99,9 @@
 		45D04F84208E0EAA00AC2226 /* MePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F83208E0EAA00AC2226 /* MePresenter.swift */; };
 		45D04F87208E111400AC2226 /* MeState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F86208E111400AC2226 /* MeState+GraphQL.swift */; };
 		45D04F89208E1F8F00AC2226 /* MeState+Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F88208E1F8F00AC2226 /* MeState+Route.swift */; };
+		45D04F8B208F60A600AC2226 /* ReputationsViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F8A208F60A600AC2226 /* ReputationsViewPresenter.swift */; };
+		45D04F8D208F627D00AC2226 /* ReputationsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F8C208F627D00AC2226 /* ReputationsState.swift */; };
+		45D04F8F208F635C00AC2226 /* MyReputations.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D04F8E208F635C00AC2226 /* MyReputations.graphql */; };
 		45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */; };
 		45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */; };
 		45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */; };
@@ -187,6 +191,7 @@
 		45A0393C2075D0E9007498DB /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
 		45A61C0C2086356E00AE7D99 /* StarMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = StarMedium.graphql; sourceTree = "<group>"; };
 		45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PublishRelay+asBinder.swift"; sourceTree = "<group>"; };
+		45A84460208F67D600C75982 /* ReputationsState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReputationsState+GraphQL.swift"; sourceTree = "<group>"; };
 		45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeState+ViewController.swift"; sourceTree = "<group>"; };
 		45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsViewController.swift; sourceTree = "<group>"; };
 		45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailCell.swift; sourceTree = "<group>"; };
@@ -202,6 +207,9 @@
 		45D04F83208E0EAA00AC2226 /* MePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MePresenter.swift; sourceTree = "<group>"; };
 		45D04F86208E111400AC2226 /* MeState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeState+GraphQL.swift"; sourceTree = "<group>"; };
 		45D04F88208E1F8F00AC2226 /* MeState+Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeState+Route.swift"; sourceTree = "<group>"; };
+		45D04F8A208F60A600AC2226 /* ReputationsViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsViewPresenter.swift; sourceTree = "<group>"; };
+		45D04F8C208F627D00AC2226 /* ReputationsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsState.swift; sourceTree = "<group>"; };
+		45D04F8E208F635C00AC2226 /* MyReputations.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyReputations.graphql; sourceTree = "<group>"; };
 		45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageState.swift; sourceTree = "<group>"; };
 		45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RankedMedia.graphql; sourceTree = "<group>"; };
 		45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveImageMedium.graphql; sourceTree = "<group>"; };
@@ -531,6 +539,7 @@
 				45E240B620862AD7004B58EF /* ImageDetailState.swift */,
 				45D04F772088C81F00AC2226 /* ImageCommentsState.swift */,
 				45D04F81208E073700AC2226 /* MeState.swift */,
+				45D04F8C208F627D00AC2226 /* ReputationsState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -570,6 +579,7 @@
 				45525D52208C6F5400EAF00D /* HomeState */,
 				45525D4B208C44B800EAF00D /* CreateImageState */,
 				45D04F85208E10EB00AC2226 /* MeState */,
+				45A8445F208F67BE00C75982 /* ReputationsState */,
 			);
 			path = Feedbacks;
 			sourceTree = "<group>";
@@ -623,14 +633,24 @@
 				45D04F792088D57B00AC2226 /* SaveComment.graphql */,
 				45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */,
 				454F72A1208DD1AA00850471 /* MyMedia.graphql */,
+				45D04F8E208F635C00AC2226 /* MyReputations.graphql */,
 			);
 			path = GraphQL;
+			sourceTree = "<group>";
+		};
+		45A8445F208F67BE00C75982 /* ReputationsState */ = {
+			isa = PBXGroup;
+			children = (
+				45A84460208F67D600C75982 /* ReputationsState+GraphQL.swift */,
+			);
+			path = ReputationsState;
 			sourceTree = "<group>";
 		};
 		45BA0D7B208ED3980002E1D5 /* ReputationsViewController */ = {
 			isa = PBXGroup;
 			children = (
 				45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */,
+				45D04F8A208F60A600AC2226 /* ReputationsViewPresenter.swift */,
 			);
 			path = ReputationsViewController;
 			sourceTree = "<group>";
@@ -754,6 +774,7 @@
 				454F72A2208DD1AA00850471 /* MyMedia.graphql in Resources */,
 				45D04F7C2089FD0500AC2226 /* UserInterestedMedia.graphql in Resources */,
 				45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */,
+				45D04F8F208F635C00AC2226 /* MyReputations.graphql in Resources */,
 				45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */,
 				45A0393D2075D0E9007498DB /* User.graphql in Resources */,
 				451CD31F207A3B3A0063A972 /* Login.graphql in Resources */,
@@ -857,6 +878,7 @@
 				451DD4B9207E4880002C509A /* Client.swift in Sources */,
 				4595F2102079F6B60040E5FA /* LoginViewController.swift in Sources */,
 				454F72962089B44500850471 /* RxCollectionViewCell.swift in Sources */,
+				45D04F8B208F60A600AC2226 /* ReputationsViewPresenter.swift in Sources */,
 				4595F21B207C883F0040E5FA /* MainTabBarController.swift in Sources */,
 				451CD330207BB62D0063A972 /* HomeMenuPresenter.swift in Sources */,
 				45D04F82208E073700AC2226 /* MeState.swift in Sources */,
@@ -901,6 +923,7 @@
 				4595F225207D95360040E5FA /* HomeState.swift in Sources */,
 				45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */,
 				45525D54208C6F8000EAF00D /* HomeState+GraphQL.swift in Sources */,
+				45A84461208F67D600C75982 /* ReputationsState+GraphQL.swift in Sources */,
 				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
 				45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */,
 				454F72A0208DB90000850471 /* RouterService+Image.swift in Sources */,
@@ -920,6 +943,7 @@
 				45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */,
 				45E240B520862981004B58EF /* HideNavigationBarViewController.swift in Sources */,
 				45D04F782088C81F00AC2226 /* ImageCommentsState.swift in Sources */,
+				45D04F8D208F627D00AC2226 /* ReputationsState.swift in Sources */,
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
 				45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */,
 				45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */,

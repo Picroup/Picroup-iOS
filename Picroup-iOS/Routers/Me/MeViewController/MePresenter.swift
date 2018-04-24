@@ -17,6 +17,7 @@ class MePresenter: NSObject {
     @IBOutlet weak var usernameLabel: UILabel!
 
     @IBOutlet weak var reputationCountLabel: UILabel!
+    @IBOutlet weak var gainedReputationCountButton: UIButton!
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var followingsCountLabel: UILabel!
     @IBOutlet weak var reputationView: UIStackView!
@@ -50,12 +51,16 @@ struct UserViewModel {
     let reputation: String
     let followersCount: String
     let followingsCount: String
+    let gainedReputationCount: String
+    let isGainedReputationCountHidden: Bool
     
     init(user: UserQuery.Data.User?) {
         self.username = user.map { "@\($0.username)" } ?? " "
         self.reputation = user?.reputation.description ?? "0"
         self.followersCount = user?.followersCount.description ?? "0"
         self.followingsCount = user?.followingsCount.description ?? "0"
+        self.gainedReputationCount = user?.gainedReputation.description ?? "0"
+        self.isGainedReputationCountHidden = user == nil || user!.gainedReputation == 0
     }
 }
 

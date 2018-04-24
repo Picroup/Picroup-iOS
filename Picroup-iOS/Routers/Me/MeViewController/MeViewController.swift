@@ -29,7 +29,9 @@ class MeViewController: UIViewController {
         let queryMe = Feedback.queryMe(client: ApolloClient.shared)
         let queryMyMedia = Feedback.queryMyMedia(client: ApolloClient.shared)
         let showImageDetail = Feedback.showImageDetail(from: self)
+        let showReputations = Feedback.showReputations(from: self)
         let triggerReloadMe = Feedback.triggerReloadMe(from: self)
+        
         
         let reduce = logger(identifier: "MeState")(MeState.reduce)
         
@@ -41,16 +43,10 @@ class MeViewController: UIViewController {
                 queryMe,
                 queryMyMedia,
                 showImageDetail,
+                showReputations,
                 triggerReloadMe
             )
             .drive()
-            .disposed(by: disposeBag)
-        
-        presenter.reputationView.rx.tapGesture().when(.recognized).mapToVoid()
-            .subscribe(onNext: { [weak self] in
-                let vc = RouterService.Main.reputationsViewController()
-                self?.navigationController?.pushViewController(vc, animated: true)
-            })
             .disposed(by: disposeBag)
 
     }
@@ -67,13 +63,16 @@ extension MeViewController {
                 meViewModel.map { $0.reputation }.drive(presenter.reputationCountLabel.rx.text),
                 meViewModel.map { $0.followersCount }.drive(presenter.followersCountLabel.rx.text),
                 meViewModel.map { $0.followingsCount }.drive(presenter.followingsCountLabel.rx.text),
+                meViewModel.map { $0.gainedReputationCount }.drive(presenter.gainedReputationCountButton.rx.title()),
+                meViewModel.map { $0.isGainedReputationCountHidden }.drive(presenter.gainedReputationCountButton.rx.isHidden),
                 state.map { [Section(model: "", items: $0.myMediaItems)] }.drive(presenter.items),
             ]
             let events: [Signal<MeState.Event>] = [
                 state.flatMapLatest {
                     $0.shouldQueryMoreMyMedia ? presenter.collectionView.rx.isNearBottom.asSignal() : .empty()
                     }.map { .onTriggerGetMore },
-                presenter.collectionView.rx.itemSelected.asSignal().map { .onTriggerShowImageDetail($0.item) }
+                presenter.collectionView.rx.itemSelected.asSignal().map { .onTriggerShowImageDetail($0.item) },
+                presenter.reputationView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerShowReputations },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
 

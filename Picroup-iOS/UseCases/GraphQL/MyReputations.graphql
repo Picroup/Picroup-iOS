@@ -1,0 +1,18 @@
+query MyReputations($userId: ID!, $cursor: Float = null) {
+    user(userId: $userId) {
+        reputationLinks(cursor: $cursor) {
+            cursor
+            items {
+                _id
+                userId
+                toUserId
+                mediumId
+                createdAt
+                value
+                kind
+                viewed
+            }
+        }
+    }
+}
+
