@@ -17,6 +17,11 @@ struct ReputationsState: Mutabled {
     var items: [Item]
     var error: Error?
     var trigger: Bool
+    
+    var nextMark: MarkReputationLinksAsViewedQuery
+    var marked: MarkReputationLinksAsViewedQuery.Data.User.MarkReputationLinksAsViewed?
+    var markError: Error?
+    var markTrigger: Bool
 }
 
 extension ReputationsState {
@@ -32,6 +37,9 @@ extension ReputationsState {
     var hasMore: Bool {
         return next.cursor != nil
     }
+    public var markQuery: MarkReputationLinksAsViewedQuery? {
+        return markTrigger && !items.isEmpty ? nextMark : nil
+    }
 }
 
 extension ReputationsState {
@@ -41,7 +49,11 @@ extension ReputationsState {
             next: MyReputationsQuery(userId: userId),
             items: [],
             error: nil,
-            trigger: true
+            trigger: true,
+            nextMark: MarkReputationLinksAsViewedQuery(userId: userId),
+            marked: nil,
+            markError: nil,
+            markTrigger: true
         )
     }
 }
@@ -52,6 +64,8 @@ extension ReputationsState: IsFeedbackState {
         case onTriggerGetMore
         case onGetSuccess(MyReputationsQuery.Data.User.ReputationLink)
         case onGetError(Error)
+        case onMarkSuccess(MarkReputationLinksAsViewedQuery.Data.User.MarkReputationLinksAsViewed)
+        case onMarkError(Error)
     }
 }
 
@@ -83,6 +97,18 @@ extension ReputationsState {
             return state.mutated {
                 $0.error = error
                 $0.trigger = false
+            }
+        case .onMarkSuccess(let data):
+            return state.mutated {
+                $0.marked = data
+                $0.markError = nil
+                $0.markTrigger = false
+            }
+        case .onMarkError(let error):
+            return state.mutated {
+                $0.marked = nil
+                $0.markError = error
+                $0.markTrigger = false
             }
         }
     }

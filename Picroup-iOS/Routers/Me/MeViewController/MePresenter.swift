@@ -59,7 +59,7 @@ struct UserViewModel {
         self.reputation = user?.reputation.description ?? "0"
         self.followersCount = user?.followersCount.description ?? "0"
         self.followingsCount = user?.followingsCount.description ?? "0"
-        self.gainedReputationCount = user?.gainedReputation.description ?? "0"
+        self.gainedReputationCount = user.map { "+\($0.gainedReputation)" } ?? ""
         self.isGainedReputationCountHidden = user == nil || user!.gainedReputation == 0
     }
 }

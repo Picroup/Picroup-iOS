@@ -22,4 +22,13 @@ extension DriverFeedback where State == ReputationsState {
                 .asSignal(onErrorReturnJust: ReputationsState.Event.onGetError)
         }
     }
+    
+    static func queryMarkRepotationsAsViewed(client: ApolloClient) -> Raw {
+        return react(query: { $0.markQuery }) { query in
+            client.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                .map { $0?.data?.user?.markReputationLinksAsViewed }.unwrap()
+                .map(ReputationsState.Event.onMarkSuccess)
+                .asSignal(onErrorReturnJust: ReputationsState.Event.onMarkError)
+        }
+    }
 }

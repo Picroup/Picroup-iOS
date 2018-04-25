@@ -86,6 +86,7 @@
 		45A84461208F67D600C75982 /* ReputationsState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A84460208F67D600C75982 /* ReputationsState+GraphQL.swift */; };
 		45BA0D7A208EB7640002E1D5 /* MeState+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */; };
 		45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */; };
+		45BA0D7F209010670002E1D5 /* MarkReputationLinksAsViewed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */; };
 		45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */; };
 		45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F71208790C700AC2226 /* TimeInterval+.swift */; };
 		45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */; };
@@ -194,6 +195,7 @@
 		45A84460208F67D600C75982 /* ReputationsState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReputationsState+GraphQL.swift"; sourceTree = "<group>"; };
 		45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeState+ViewController.swift"; sourceTree = "<group>"; };
 		45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsViewController.swift; sourceTree = "<group>"; };
+		45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MarkReputationLinksAsViewed.graphql; sourceTree = "<group>"; };
 		45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailCell.swift; sourceTree = "<group>"; };
 		45D04F71208790C700AC2226 /* TimeInterval+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+.swift"; sourceTree = "<group>"; };
 		45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Operator.swift"; sourceTree = "<group>"; };
@@ -634,6 +636,7 @@
 				45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */,
 				454F72A1208DD1AA00850471 /* MyMedia.graphql */,
 				45D04F8E208F635C00AC2226 /* MyReputations.graphql */,
+				45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -763,6 +766,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				457B1B95205FEA1000BEDDF1 /* LaunchScreen.storyboard in Resources */,
+				45BA0D7F209010670002E1D5 /* MarkReputationLinksAsViewed.graphql in Resources */,
 				457B1B92205FEA1000BEDDF1 /* Assets.xcassets in Resources */,
 				454F729E208DB8D200850471 /* Image.storyboard in Resources */,
 				4595F20E2079F6780040E5FA /* Login.storyboard in Resources */,

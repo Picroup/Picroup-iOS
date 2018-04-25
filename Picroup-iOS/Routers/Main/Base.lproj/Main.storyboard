@@ -596,7 +596,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="7HR-i2-9O7">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReputationCell" id="7HR-i2-9O7" customClass="ReputationCell" customModule="Picroup_iOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7HR-i2-9O7" id="970-Ig-tWp">
@@ -618,7 +618,7 @@
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="Umr-E3-bYk">
                                                     <rect key="frame" x="319" y="16" width="40" height="40"/>
-                                                    <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="sVH-FC-kx4"/>
                                                     </constraints>
@@ -650,6 +650,11 @@
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="c6m-Z2-zuX" secondAttribute="bottom" constant="16" id="ymn-zF-owM"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="contentLabel" destination="2I5-Ql-DgC" id="Lvo-IF-JrD"/>
+                                            <outlet property="mediumImageView" destination="Umr-E3-bYk" id="sOJ-5z-bpJ"/>
+                                            <outlet property="valueLabel" destination="FUb-oM-2GR" id="42B-nm-HRG"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

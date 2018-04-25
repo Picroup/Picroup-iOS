@@ -31,7 +31,8 @@ class ReputationsViewController: UIViewController {
         
         let uiFeedback = self.uiFeedback
         let queryReputations = Feedback.queryReputations(client: ApolloClient.shared)
-        
+        let queryMarkRepotationsAsViewed = Feedback.queryMarkRepotationsAsViewed(client: ApolloClient.shared)
+
         Driver<Any>.system(
             initialState: ReputationsState.empty(
                 userId: Config.userId,
@@ -40,7 +41,8 @@ class ReputationsViewController: UIViewController {
             reduce: logger(identifier: "ReputationsState")(ReputationsState.reduce),
             feedback:
                 uiFeedback,
-                queryReputations
+                queryReputations,
+                queryMarkRepotationsAsViewed
             )
             .drive()
             .disposed(by: disposeBag)
