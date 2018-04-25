@@ -63,4 +63,9 @@ extension RouterService.Main {
         return nvc
     }
     
+    static func reputationsViewController(dependency: ReputationsViewController.Dependency) -> ReputationsViewController {
+        let rvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ReputationsViewController") as! ReputationsViewController
+        rvc.dependency = dependency
+        return rvc
+    }
 }
