@@ -685,6 +685,99 @@
             </objects>
             <point key="canvasLocation" x="1660" y="402.54872563718146"/>
         </scene>
+        <!--Notifications View Controller-->
+        <scene sceneID="1RJ-1g-EMh">
+            <objects>
+                <viewController storyboardIdentifier="NotificationsViewController" id="PZf-TC-kaL" customClass="NotificationsViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tzS-XG-3Of">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="72" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="My1-eZ-a6P">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="Dgx-vp-GV3">
+                                    <rect key="frame" x="0.0" y="100" width="375" height="36"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotificationCell" id="MwK-Or-tMu" customClass="NotificationCell" customModule="Picroup_iOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="72"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MwK-Or-tMu" id="zRZ-N8-S1G">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beethoven" translatesAutoresizingMaskIntoConstraints="NO" id="97V-yL-h01">
+                                                    <rect key="frame" x="16" y="16" width="40" height="40"/>
+                                                    <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="9jv-MY-avW"/>
+                                                        <constraint firstAttribute="width" secondItem="97V-yL-h01" secondAttribute="height" multiplier="1:1" id="Jpu-xh-F2t"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="20"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="ePh-Sx-SWX">
+                                                    <rect key="frame" x="319" y="16" width="40" height="40"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="pU3-EC-t7O"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="700" text="收藏了您的图片" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jlz-P6-d8a">
+                                                    <rect key="frame" x="72" y="25.5" width="239" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ePh-Sx-SWX" firstAttribute="leading" secondItem="Jlz-P6-d8a" secondAttribute="trailing" constant="8" id="4oi-gs-ANV"/>
+                                                <constraint firstItem="97V-yL-h01" firstAttribute="leading" secondItem="zRZ-N8-S1G" secondAttribute="leading" constant="16" id="9v8-sc-nX8"/>
+                                                <constraint firstItem="97V-yL-h01" firstAttribute="top" secondItem="zRZ-N8-S1G" secondAttribute="top" constant="16" id="DiV-Py-sMw"/>
+                                                <constraint firstItem="Jlz-P6-d8a" firstAttribute="centerY" secondItem="97V-yL-h01" secondAttribute="centerY" id="IU0-2v-Fnj"/>
+                                                <constraint firstItem="ePh-Sx-SWX" firstAttribute="centerY" secondItem="Jlz-P6-d8a" secondAttribute="centerY" id="Jpk-Zj-5Lm"/>
+                                                <constraint firstAttribute="trailing" secondItem="ePh-Sx-SWX" secondAttribute="trailing" constant="16" id="LXo-Zm-6nJ"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="97V-yL-h01" secondAttribute="bottom" constant="16" id="fcq-qH-Ffb"/>
+                                                <constraint firstItem="ePh-Sx-SWX" firstAttribute="width" secondItem="ePh-Sx-SWX" secondAttribute="height" multiplier="1:1" id="kdP-kq-8lI"/>
+                                                <constraint firstItem="Jlz-P6-d8a" firstAttribute="leading" secondItem="97V-yL-h01" secondAttribute="trailing" constant="16" id="uLN-9T-1mS"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="contentLabel" destination="Jlz-P6-d8a" id="FpM-1A-hWw"/>
+                                            <outlet property="mediumImageView" destination="ePh-Sx-SWX" id="Z9Z-0a-29a"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="My1-eZ-a6P" firstAttribute="leading" secondItem="9MS-kr-lqw" secondAttribute="leading" id="DOo-MP-2pa"/>
+                            <constraint firstItem="My1-eZ-a6P" firstAttribute="top" secondItem="9MS-kr-lqw" secondAttribute="top" id="UFr-Ld-92H"/>
+                            <constraint firstItem="My1-eZ-a6P" firstAttribute="trailing" secondItem="9MS-kr-lqw" secondAttribute="trailing" id="We3-mA-DGG"/>
+                            <constraint firstItem="My1-eZ-a6P" firstAttribute="bottom" secondItem="9MS-kr-lqw" secondAttribute="bottom" id="iLq-bx-69l"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="9MS-kr-lqw"/>
+                    </view>
+                    <connections>
+                        <outlet property="presenter" destination="cJa-20-xvH" id="wP6-5u-U6m"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H93-Wy-bKW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="cJa-20-xvH" customClass="NotificationsViewPresenter" customModule="Picroup_iOS" customModuleProvider="target">
+                    <connections>
+                        <outlet property="tableView" destination="My1-eZ-a6P" id="zJ4-RS-YRW"/>
+                    </connections>
+                </customObject>
+            </objects>
+            <point key="canvasLocation" x="2482" y="404"/>
+        </scene>
     </scenes>
     <resources>
         <image name="LaunchScreen" width="213" height="320"/>

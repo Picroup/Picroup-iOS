@@ -7,19 +7,67 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import Apollo
+import RxFeedback
 
 class NotificationsViewController: UIViewController {
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
+    @IBOutlet fileprivate var presenter: NotificationsViewPresenter! {
+        didSet { setupPresenter() }
+    }
+    typealias Feedback = DriverFeedback<NotificationsState>
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupRxFeedback()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    private func setupPresenter() {
+        presenter.setup(navigationItem: navigationItem)
     }
     
-    override func loadView() {
-        super.loadView()
-        view.backgroundColor = .background
+    private func setupRxFeedback() {
+        
+        let uiFeedback = self.uiFeedback
+        let queryNotifications = Feedback.queryNotifications(client: ApolloClient.shared)
+        let queryMarkNotificationsAsViewed = Feedback.queryMarkNotificationsAsViewed(client: ApolloClient.shared)
+        
+        
+        Driver<Any>.system(
+            initialState: NotificationsState.empty(
+                userId: Config.userId
+            ),
+            reduce: logger(identifier: "ReputationsState")(NotificationsState.reduce),
+            feedback:
+                uiFeedback,
+                queryNotifications,
+                queryMarkNotificationsAsViewed
+            )
+            .drive()
+            .disposed(by: disposeBag)
+        
     }
 }
+
+extension NotificationsViewController {
+    
+    fileprivate var uiFeedback: Feedback.Raw {
+        typealias Section = NotificationsViewPresenter.Section
+        
+        return bind(presenter) { (presenter, state) in
+            return Bindings(
+                subscriptions: [
+                    state.map { [Section(model: "", items: $0.items)] }.drive(presenter.items),
+                    ],
+                events: [
+                    state.flatMapLatest {
+                        $0.shouldQueryMore ? presenter.tableView.rx.isNearBottom.asSignal() : .empty()
+                        }.map { .onTriggerGetMore },
+                    ]
+            )
+        }
+    }
+}
+
