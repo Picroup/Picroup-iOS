@@ -28,7 +28,7 @@ extension DriverFeedback where State == MeState {
             client.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.media }.unwrap()
                 .map(MeState.Event.onGetSuccess)
-                .asSignal(onErrorReturnJust: { .onGetError($0) })
+                .asSignal(onErrorReturnJust: MeState.Event.onGetError)
         }
     }
 }

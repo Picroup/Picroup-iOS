@@ -24,7 +24,7 @@ extension DriverFeedback where State == CreateImageState {
                     case .completed(let medium):
                         return CreateImageState.Event.onSavedMedium(medium)
                     }
-                }.asSignal(onErrorRecover: { error in .just(.onError(error) )})
+                }.asSignal(onErrorReturnJust: CreateImageState.Event.onError)
         }
     }
 }

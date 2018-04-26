@@ -12,7 +12,6 @@ import RxSwift
 import RxCocoa
 import RxFeedback
 import RxViewController
-import Apollo
 
 extension DriverFeedback where State == MeState {
 

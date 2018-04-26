@@ -27,7 +27,6 @@ extension AppState {
             return AppState(user: user)
         case .logout:
             return AppState(user: nil)
-
         }
     }
 }

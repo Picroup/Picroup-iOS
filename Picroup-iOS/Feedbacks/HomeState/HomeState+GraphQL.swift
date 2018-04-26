@@ -19,7 +19,7 @@ extension DriverFeedback where State == HomeState {
             client.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user }.unwrap()
                 .map(HomeState.Event.onGetSuccess)
-                .asSignal(onErrorReturnJust: { .onGetError($0) })
+                .asSignal(onErrorReturnJust: HomeState.Event.onGetError)
         }
     }
 }
