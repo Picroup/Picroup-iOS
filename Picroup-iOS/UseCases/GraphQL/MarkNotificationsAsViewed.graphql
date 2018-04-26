@@ -1,0 +1,8 @@
+query MarkNotificationsAsViewed($userId: ID!) {
+    user(userId: $userId) {
+        markNotificationsAsViewed {
+            _id
+        }
+    }
+}
+

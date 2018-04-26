@@ -24,7 +24,7 @@ extension RouterService.Main {
         let infos: [(title: String, imageName: String, vc: UIViewController)] = [
             (title: "匹酷普", imageName: "ic_home", vc: homeMenuViewController()),
             (title: "排行榜", imageName: "ic_apps", vc: rankViewController()),
-            (title: "通知", imageName: "ic_notifications", vc: NotificationsViewController()),
+            (title: "通知", imageName: "ic_notifications", vc: notificationsViewController()),
             (title: "我", imageName: "ic_person", vc: meViewController()),
             ]
         
@@ -56,6 +56,11 @@ extension RouterService.Main {
         return BaseNavigationController(rootViewController: rvc)
     }
     
+    static func notificationsViewController() -> UIViewController {
+        let nvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NotificationsViewController") as! NotificationsViewController
+        return BaseNavigationController(rootViewController: nvc)
+    }
+    
     static func meViewController() -> UIViewController {
         let mevc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MeViewController") as! MeViewController
         let nvc = BaseNavigationController(rootViewController: mevc)
@@ -68,4 +73,6 @@ extension RouterService.Main {
         rvc.dependency = dependency
         return rvc
     }
+    
+    
 }

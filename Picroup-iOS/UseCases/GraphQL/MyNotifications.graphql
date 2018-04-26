@@ -1,0 +1,18 @@
+query MyNotifications($userId: ID!, $cursor: Float = null) {
+    user(userId: $userId) {
+        notifications(cursor: $cursor) {
+            cursor
+            items {
+                _id
+                userId
+                toUserId
+                mediumId
+                content
+                createdAt
+                kind
+                viewed
+            }
+        }
+    }
+}
+
