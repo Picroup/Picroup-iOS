@@ -48,6 +48,13 @@ class NotificationsViewController: UIViewController {
             .drive()
             .disposed(by: disposeBag)
         
+        
+        presenter.tableView.rx.willEndDragging.asSignal()
+            .map { $0.velocity.y >= 0 }
+            .emit(onNext: { [weak self] in
+                self?.navigationController?.setNavigationBarHidden($0, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
 }
 

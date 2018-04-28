@@ -48,6 +48,15 @@ class MeViewController: UIViewController {
             )
             .drive()
             .disposed(by: disposeBag)
+        
+        presenter.collectionView.rx.willEndDragging.asSignal()
+            .map { $0.velocity.y >= 0 }
+            .emit(onNext: { [weak presenter, weak self] in
+                presenter?.hideDetailLayoutConstraint.isActive = $0
+                presenter?.showDetailLayoutConstraint.isActive = !$0
+                UIView.animate(withDuration: 0.3) { self?.tabBarController?.view.layoutIfNeeded() }
+            })
+            .disposed(by: disposeBag)
 
     }
 }

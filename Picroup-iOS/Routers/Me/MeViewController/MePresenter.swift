@@ -24,6 +24,9 @@ class MePresenter: NSObject {
     
     @IBOutlet weak var collectionView: UICollectionView!
 
+    @IBOutlet weak var showDetailLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
+    
     typealias Section = AnimatableSectionModel<String, MyMediaQuery.Data.User.Medium.Item>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     

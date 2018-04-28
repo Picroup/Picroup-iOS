@@ -48,5 +48,12 @@ class HomeViewController: UIViewController {
         
         presenter.collectionView.rx.setDelegate(presenter)
             .disposed(by: disposeBag)
+        
+        presenter.collectionView.rx.willEndDragging.asSignal()
+            .map { $0.velocity.y >= 0 }
+            .emit(onNext: { [weak self] in
+                self?.navigationController?.setNavigationBarHidden($0, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
 }
