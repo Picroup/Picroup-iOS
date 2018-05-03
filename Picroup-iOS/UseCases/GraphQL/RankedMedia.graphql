@@ -1,5 +1,5 @@
-query RankedMedia($rankBy: RankBy, $cusor: Float) {
-    rankedMedia(rankBy: $rankBy, cursor: $cusor) {
+query RankedMedia($rankBy: RankBy, $cursor: Float) {
+    rankedMedia(rankBy: $rankBy, cursor: $cursor) {
         cursor
         items {
             _id
