@@ -11,6 +11,29 @@ query MyReputations($userId: ID!, $cursor: Float = null) {
                 value
                 kind
                 viewed
+                user {
+                    _id
+                    username
+                    avatarId
+                }
+                medium {
+                    _id
+                    userId
+                    createdAt
+                    endedAt
+                    kind
+                    detail {
+                        width
+                        aspectRatio
+                    }
+                    minioId
+                    commentsCount
+                    user {
+                        _id
+                        username
+                        avatarId
+                    }
+                }
             }
         }
     }

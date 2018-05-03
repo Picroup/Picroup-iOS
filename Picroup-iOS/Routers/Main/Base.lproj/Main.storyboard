@@ -70,7 +70,7 @@
                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="FLM-Jk-UxS">
                                                                     <rect key="frame" x="16" y="8" width="327" height="40"/>
                                                                     <subviews>
-                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beethoven" translatesAutoresizingMaskIntoConstraints="NO" id="bAs-Cx-fCL">
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beethoven" translatesAutoresizingMaskIntoConstraints="NO" id="bAs-Cx-fCL">
                                                                             <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                                             <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <constraints>
@@ -165,6 +165,8 @@
                                             <outlet property="lifeBar" destination="Cdy-2s-Er3" id="q6H-vK-zzT"/>
                                             <outlet property="lifeViewWidthConstraint" destination="E4A-O6-iJ5" id="76C-Bc-WuG"/>
                                             <outlet property="moreButton" destination="bXX-oB-Rlx" id="OQu-Id-9v6"/>
+                                            <outlet property="userAvatarImageView" destination="bAs-Cx-fCL" id="4rW-0e-e07"/>
+                                            <outlet property="usernameLabel" destination="ZXB-yu-7oq" id="lIA-wc-9uD"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -439,7 +441,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="J3S-TG-nE1">
                                         <rect key="frame" x="16" y="16" width="343" height="42"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beethoven" translatesAutoresizingMaskIntoConstraints="NO" id="h4f-qA-rMj">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beethoven" translatesAutoresizingMaskIntoConstraints="NO" id="h4f-qA-rMj">
                                                 <rect key="frame" x="0.0" y="1" width="40" height="40"/>
                                                 <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -621,7 +623,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beethoven" translatesAutoresizingMaskIntoConstraints="NO" id="c6m-Z2-zuX">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beethoven" translatesAutoresizingMaskIntoConstraints="NO" id="c6m-Z2-zuX">
                                                     <rect key="frame" x="63" y="16" width="40" height="40"/>
                                                     <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -634,12 +636,17 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="Umr-E3-bYk">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="Umr-E3-bYk">
                                                     <rect key="frame" x="319" y="16" width="40" height="40"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="sVH-FC-kx4"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="700" text="+100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FUb-oM-2GR">
                                                     <rect key="frame" x="18" y="28.5" width="29" height="15"/>
@@ -671,6 +678,7 @@
                                         <connections>
                                             <outlet property="contentLabel" destination="2I5-Ql-DgC" id="Lvo-IF-JrD"/>
                                             <outlet property="mediumImageView" destination="Umr-E3-bYk" id="sOJ-5z-bpJ"/>
+                                            <outlet property="userAvatarImageView" destination="c6m-Z2-zuX" id="XIf-4b-Yyi"/>
                                             <outlet property="valueLabel" destination="FUb-oM-2GR" id="42B-nm-HRG"/>
                                         </connections>
                                     </tableViewCell>
@@ -727,7 +735,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beethoven" translatesAutoresizingMaskIntoConstraints="NO" id="97V-yL-h01">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beethoven" translatesAutoresizingMaskIntoConstraints="NO" id="97V-yL-h01">
                                                     <rect key="frame" x="16" y="16" width="40" height="40"/>
                                                     <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -740,12 +748,17 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="ePh-Sx-SWX">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="ePh-Sx-SWX">
                                                     <rect key="frame" x="319" y="16" width="40" height="40"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="pU3-EC-t7O"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="700" text="收藏了您的图片" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jlz-P6-d8a">
                                                     <rect key="frame" x="72" y="25.5" width="239" height="21"/>
@@ -769,6 +782,7 @@
                                         <connections>
                                             <outlet property="contentLabel" destination="Jlz-P6-d8a" id="FpM-1A-hWw"/>
                                             <outlet property="mediumImageView" destination="ePh-Sx-SWX" id="Z9Z-0a-29a"/>
+                                            <outlet property="userAvatarImageView" destination="97V-yL-h01" id="seR-05-KxA"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

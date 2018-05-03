@@ -8,11 +8,16 @@ query RankedMedia($rankBy: RankBy, $cursor: Float) {
             endedAt
             kind
             detail {
-            width
-            aspectRatio
+                width
+                aspectRatio
             }
             minioId
             commentsCount
+            user {
+                _id
+                username
+                avatarId
+            }
         }
     }
 }

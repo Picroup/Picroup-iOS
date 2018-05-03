@@ -26,6 +26,8 @@ class HomeViewPresenter: NSObject {
                     cell.lifeViewWidthConstraint.constant = CGFloat(item.endedAt.sinceNow / 8.0.weeks) * cell.lifeBar.bounds.width
                     cell.imageView.motionIdentifier = item.id
                     cell.lifeBar.motionIdentifier = "lifeBar_\(item.id)"
+                    cell.userAvatarImageView.setImage(with: item.user.avatarId)
+                    cell.usernameLabel.text = item.user.username
                     cell.commentButton.setTitle("  \(item.commentsCount)", for: UIControlState.normal)
                     cell.commentButton.rx.tap
                         .subscribe(onNext: { _events.accept(.onTriggerShowComments(indexPath.row)) })

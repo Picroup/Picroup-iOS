@@ -40,7 +40,6 @@ class RankViewController: UIViewController {
         
         typealias Section = RankViewPresenter.Section
         
-        weak var weakSelf = self
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let subscriptions = [
                 state.map { [Section(model: "", items: $0.items)] }.drive(presenter.items),
