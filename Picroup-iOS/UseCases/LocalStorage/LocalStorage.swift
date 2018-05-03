@@ -20,30 +20,6 @@ class LocalStorage {
 extension LocalStorage {
     
     private struct Keys {
-        static let createImageSelectedCategory = "createImageSelectedCategory"
-        static let rankImageSelectedCategory = "rankImageSelectedCategory"
-    }
-    
-    var createImageSelectedCategory: MediumCategory {
-        get {
-            let rawValue = _userDefaults.value(forKey: Keys.createImageSelectedCategory) as? String
-            return rawValue.flatMap(MediumCategory.init(rawValue: )) ?? .popular
-        }
-        set {
-            let rawValue = newValue.rawValue
-            _userDefaults.set(rawValue, forKey: Keys.createImageSelectedCategory)
-        }
-    }
-    
-    var rankImageSelectedCategory: MediumCategory? {
-        get {
-            let rawValue = _userDefaults.value(forKey: Keys.rankImageSelectedCategory) as? String
-            return rawValue.flatMap(MediumCategory.init(rawValue: ))
-        }
-        set {
-            let rawValue = newValue?.rawValue
-            _userDefaults.set(rawValue, forKey: Keys.rankImageSelectedCategory)
-        }
     }
 }
 

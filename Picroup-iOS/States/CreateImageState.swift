@@ -11,10 +11,8 @@ import UIKit
 import RxAlamofire
 
 struct CreateImageState: Mutabled {
-    typealias Query = (userId: String, pickedImage: UIImage, selectedCategory: MediumCategory)
+    typealias Query = (userId: String, pickedImage: UIImage)
     typealias SaveImageMedium = SaveImageMediumMutation.Data.SaveImageMedium
-    
-    var selectedCategoryIndex: Int
     
     var progress: RxProgress?
     var error: Error?
@@ -23,24 +21,21 @@ struct CreateImageState: Mutabled {
     var triggerSave: Bool
     
     var triggerCancel: Void?
-    
 }
 
 extension CreateImageState {
     var query: Query? { return triggerSave ? next : nil }
-    var selectedCategory: MediumCategory { return MediumCategory.all[selectedCategoryIndex] }
     var shouldSaveImage: Bool { return !triggerSave && savedMedium == nil }
 }
 
 extension CreateImageState {
     
-    static func empty(userId: String = Config.userId, pickedImage: UIImage, selectedCategory: MediumCategory) -> CreateImageState {
+    static func empty(userId: String = Config.userId, pickedImage: UIImage) -> CreateImageState {
         return CreateImageState(
-            selectedCategoryIndex: MediumCategory.all.index(where: { $0 == selectedCategory }) ?? 0,
             progress: nil,
             error: nil,
             savedMedium: nil,
-            next: (userId, pickedImage, selectedCategory),
+            next: (userId, pickedImage),
             triggerSave: false,
             triggerCancel: nil
         )
@@ -49,7 +44,6 @@ extension CreateImageState {
 
 extension CreateImageState: IsFeedbackState {
     enum Event {
-        case onSelectedCategoryIndex(Int)
         case onProgress(RxProgress)
         case onError(Error)
         case onSavedMedium(SaveImageMediumMutation.Data.SaveImageMedium)
@@ -62,11 +56,6 @@ extension CreateImageState {
     
     static func reduce(state: CreateImageState, event: CreateImageState.Event) -> CreateImageState {
         switch event {
-        case .onSelectedCategoryIndex(let index):
-            return state.mutated {
-                $0.selectedCategoryIndex = index
-                $0.next.selectedCategory = $0.selectedCategory
-            }
         case .onProgress(let progress):
             return state.mutated {
                 $0.progress = progress
@@ -96,42 +85,3 @@ extension CreateImageState {
     }
 }
 
-extension MediumCategory {
-    
-    static var all: [MediumCategory] {
-        return [
-            .popular,
-            .laughing,
-            .beauty,
-            .handsom,
-            .animal,
-            .photography,
-            .design,
-        ]
-    }
-    
-    static var allCategories: [MediumCategory?] {
-        return [nil] + MediumCategory.all
-    }
-    
-    var name: String {
-        switch self {
-        case .popular:
-            return "流行"
-        case .laughing:
-            return "搞笑"
-        case .beauty:
-            return "美女"
-        case .handsom:
-            return "帅哥"
-        case .animal:
-            return "动物"
-        case .photography:
-            return "摄影"
-        case .design:
-            return "设计"
-        default:
-            return rawValue
-        }
-    }
-}

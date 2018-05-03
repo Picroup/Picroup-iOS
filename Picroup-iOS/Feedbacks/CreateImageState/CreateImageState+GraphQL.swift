@@ -16,7 +16,7 @@ extension DriverFeedback where State == CreateImageState {
     
     static func saveMedium(client: ApolloClient) -> Raw {
         return react(query: { $0.query }) { (query) in
-            return MediumService.saveMedium(client: client, userId: query.userId, pickedImage: query.pickedImage, category: query.selectedCategory)
+            return MediumService.saveMedium(client: client, userId: query.userId, pickedImage: query.pickedImage)
                 .map { result in
                     switch result {
                     case .progress(let progress):

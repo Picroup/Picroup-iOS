@@ -37,11 +37,9 @@ class CreateImageViewController: UIViewController {
         let syncState = self.syncState(savedMedium: _savedMedium)
         let uiFeedback = self.uiFeedback
         let saveMedium = Feedback.saveMedium(client: dependency.client)
-        let syncLocalStorage = Feedback.syncLocalStorage(LocalStorage.standard)
         
         let initialState = CreateImageState.empty(
-            pickedImage: dependency.image,
-            selectedCategory: LocalStorage.standard.createImageSelectedCategory
+            pickedImage: dependency.image
         )
         
         let reduce = logger(identifier: "CreateImageState")(CreateImageState.reduce)
@@ -52,8 +50,7 @@ class CreateImageViewController: UIViewController {
             feedback:
                 syncState,
                 uiFeedback,
-                saveMedium,
-                syncLocalStorage
+                saveMedium
             )
             .drive()
             .disposed(by: disposeBag)
@@ -82,7 +79,6 @@ extension CreateImageViewController {
             let subscriptions = [
                 state.map { $0.next.pickedImage }.drive(me.presenter.imageView.rx.image),
                 state.map { $0.progress?.completed ?? 0 }.distinctUntilChanged().drive(me.presenter.progressView.rx.progress),
-                state.map { $0.categoryViewModels }.drive(me.presenter.items(eventsTrigger)),
                 state.map { $0.shouldSaveImage }.distinctUntilChanged().drive(me.presenter.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 state.map { $0.triggerCancel }.distinctUnwrap().drive(me.rx.dismiss(animated: true)),
                 state.map { $0.savedMedium }.distinctUnwrap().map { _ in "已保存" }.drive(me.snackbarController!.rx.snackbarText),
@@ -97,14 +93,3 @@ extension CreateImageViewController {
         }
     }
 }
-
-extension CreateImageState {
-    
-    var categoryViewModels: [(category: MediumCategory, selected: Bool)] {
-        return MediumCategory.all.enumerated().map { index, category in
-            return (category, index == selectedCategoryIndex)
-        }
-    }
-}
-
-
