@@ -7,7 +7,6 @@ query MyMedia($userId: ID!, $cursor: Float = null) {
                 userId
                 createdAt
                 endedAt
-                category
                 kind
                 detail {
                     width

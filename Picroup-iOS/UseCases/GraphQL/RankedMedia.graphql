@@ -1,12 +1,11 @@
-query RankedMedia($category: MediumCategory, $rankBy: RankBy, $cusor: Float) {
-    rankedMedia(category: $category, rankBy: $rankBy, cursor: $cusor) {
+query RankedMedia($rankBy: RankBy, $cursor: Float) {
+    rankedMedia(rankBy: $rankBy, cursor: $cursor) {
         cursor
         items {
             _id
             userId
             createdAt
             endedAt
-            category
             kind
             detail {
             width

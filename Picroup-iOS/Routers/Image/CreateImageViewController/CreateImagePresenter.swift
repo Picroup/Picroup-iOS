@@ -19,16 +19,6 @@ class CreateImagePresenter: NSObject {
     @IBOutlet weak var cancelButton: RaisedButton!
     @IBOutlet weak var saveButton: RaisedButton!
     @IBOutlet weak var progressView: UIProgressView!
-    
-    var items: (PublishRelay<CreateImageState.Event>) -> (Observable<[(category: MediumCategory, selected: Bool)]>) -> Disposable {
-        return { eventsTrigger in { source in
-            self.collectionView.rx.items(cellIdentifier: "CategoryCell", cellType: CategoryCell.self)(source) ({ index, viewModel, cell in
-                cell.bind(name: viewModel.category.name, selected: viewModel.selected) {
-                    eventsTrigger.accept(.onSelectedCategoryIndex(index))
-                }
-            })
-            }}
-    }
 }
 
 class CategoryCell: RxCollectionViewCell {

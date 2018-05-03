@@ -20,20 +20,20 @@ extension RankState {
         return triggerQueryMedia ? nextRankedMediaQuery : nil
     }
     var shouldQueryMore: Bool {
-        return !triggerQueryMedia && nextRankedMediaQuery.cusor != nil
+        return !triggerQueryMedia && nextRankedMediaQuery.cursor != nil
     }
     var isItemsEmpty: Bool {
         return !triggerQueryMedia && error == nil && items.isEmpty
     }
     var hasMore: Bool {
-        return nextRankedMediaQuery.cusor != nil
+        return nextRankedMediaQuery.cursor != nil
     }
 }
 
 extension RankState {
-    static func empty(selectedCategory: MediumCategory?) -> RankState {
+    static func empty() -> RankState {
         return RankState(
-            nextRankedMediaQuery: RankedMediaQuery(category: selectedCategory),
+            nextRankedMediaQuery: RankedMediaQuery(rankBy: .thisMonth),
             items: [],
             error: nil,
             triggerQueryMedia: true
@@ -43,7 +43,6 @@ extension RankState {
 
 extension RankState: IsFeedbackState {
     enum Event {
-        case onChangeCategory(MediumCategory?)
         case onChangeRankBy(RankBy?)
         case onTriggerGetMore
         case onGetSuccess(RankedMediaQuery.Data.RankedMedium)
@@ -55,18 +54,10 @@ extension RankState {
     
     static func reduce(state: RankState, event: RankState.Event) -> RankState {
         switch event {
-        case .onChangeCategory(let category):
-            return state.mutated {
-                $0.nextRankedMediaQuery.category = category
-                $0.nextRankedMediaQuery.cusor = nil
-                $0.items = []
-                $0.error = nil
-                $0.triggerQueryMedia = true
-            }
         case .onChangeRankBy(let rankBy):
             return state.mutated {
                 $0.nextRankedMediaQuery.rankBy = rankBy
-                $0.nextRankedMediaQuery.cusor = nil
+                $0.nextRankedMediaQuery.cursor = nil
                 $0.items = []
                 $0.error = nil
                 $0.triggerQueryMedia = true
@@ -79,7 +70,7 @@ extension RankState {
             }
         case .onGetSuccess(let data):
             return state.mutated {
-                $0.nextRankedMediaQuery.cusor = data.cursor
+                $0.nextRankedMediaQuery.cursor = data.cursor
                 $0.items += data.items.flatMap { $0 }
                 $0.error = nil
                 $0.triggerQueryMedia = false
@@ -96,9 +87,8 @@ extension RankState {
 extension RankedMediaQuery: Equatable {
     
     public static func ==(lhs: RankedMediaQuery, rhs: RankedMediaQuery) -> Bool {
-        return lhs.category == rhs.category
-            && lhs.rankBy == rhs.rankBy
-            && lhs.cusor == rhs.cusor
+        return lhs.rankBy == rhs.rankBy
+            && lhs.cursor == rhs.cursor
     }
 }
 

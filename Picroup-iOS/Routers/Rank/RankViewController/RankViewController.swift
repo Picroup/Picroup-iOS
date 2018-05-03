@@ -44,23 +44,12 @@ class RankViewController: UIViewController {
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let subscriptions = [
                 state.map { [Section(model: "", items: $0.items)] }.drive(presenter.items),
-                state.map { $0.nextRankedMediaQuery.category }.map { $0?.name ?? "全部" }.drive(onNext: { titleLabel in { titleLabel.text = $0 }}(presenter.navigationItem.titleLabel)),
-//                state.map { $0.hasMore }.drive(Binder(me.collectionView) { collectionView, hasMore in
-//                    collectionView.contentInset.bottom = hasMore ? 64 : 2
-//                })
             ]
             let events: [Signal<RankState.Event>] = [
                 state.flatMapLatest {
                     $0.shouldQueryMore ? presenter.collectionView.rx.isNearBottom.asSignal() : .empty()
                     }.map { .onTriggerGetMore },
-                state.flatMapLatest { state in
-                    presenter.categoryButton.rx.tap.asSignal().flatMapLatest { _ in
-                        let selected = PublishRelay<MediumCategory?>()
-                        let vc = RouterService.Image.selectCategoryViewController(dependency: (state.nextRankedMediaQuery.category, selected.accept))
-                        weakSelf?.present(vc, animated: true)
-                        return selected.asSignal().map { RankState.Event.onChangeCategory($0) }
-                    }
-                },
+
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
@@ -71,20 +60,10 @@ class RankViewController: UIViewController {
                 .asSignal(onErrorRecover: { error in .just(.onGetError(error) )})
         }
         
-        let syncLocalStorage: Feedback = bind(LocalStorage.standard) { (localStorage, state) in
-            let subscriptions = [
-                state.map { $0.nextRankedMediaQuery.category }.drive(onNext: { localStorage.rankImageSelectedCategory = $0 })
-            ]
-            let events = [
-                Signal<RankState.Event>.never()
-            ]
-            return Bindings(subscriptions: subscriptions, events: events)
-        }
-        
         Driver<Any>.system(
-            initialState: RankState.empty(selectedCategory: LocalStorage.standard.rankImageSelectedCategory),
+            initialState: RankState.empty(),
             reduce: logger(identifier: "RankState")(RankState.reduce),
-            feedback: uiFeedback, queryMedia, syncLocalStorage
+            feedback: uiFeedback, queryMedia
         )
         .drive()
         .disposed(by: disposeBag)

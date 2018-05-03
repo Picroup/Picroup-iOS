@@ -24,12 +24,6 @@ extension RouterService.Image {
         return vc
     }
     
-    static func selectCategoryViewController(dependency: SelectCategoryViewController.Dependency) -> SelectCategoryViewController {
-        let vc = UIStoryboard(name: "Image", bundle: nil).instantiateViewController(withIdentifier: "SelectCategoryViewController") as! SelectCategoryViewController
-        vc.dependency = dependency
-        return vc
-    }
-    
     static func imageDetailViewController(dependency: ImageDetailViewController.Dependency) -> ImageDetailViewController {
         let vc = UIStoryboard(name: "Image", bundle: nil).instantiateViewController(withIdentifier: "ImageDetailViewController") as! ImageDetailViewController
         vc.dependency = dependency

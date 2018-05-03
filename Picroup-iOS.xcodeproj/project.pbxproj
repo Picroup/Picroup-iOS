@@ -57,13 +57,11 @@
 		455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */; };
 		455D69042080409A00C651A0 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69032080409A00C651A0 /* BaseNavigationController.swift */; };
 		455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69072080890B00C651A0 /* UIScrollView+Rx.swift */; };
-		455D690B208097EC00C651A0 /* SelectCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D690A208097EC00C651A0 /* SelectCategoryViewController.swift */; };
 		456C5E412061446C005F981B /* ImageUpoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C5E402061446C005F981B /* ImageUpoader.swift */; };
 		457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */; };
 		457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B8E205FEA1000BEDDF1 /* Main.storyboard */; };
 		457B1B92205FEA1000BEDDF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B91205FEA1000BEDDF1 /* Assets.xcassets */; };
 		457B1B95205FEA1000BEDDF1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B93205FEA1000BEDDF1 /* LaunchScreen.storyboard */; };
-		457B1B9F205FF24B00BEDDF1 /* ViewController.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */; };
 		457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1BA0205FF2A100BEDDF1 /* API.swift */; };
 		457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1BA2205FFE9D00BEDDF1 /* Config.swift */; };
 		458C106920849058005E94CD /* RankViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458C106820849058005E94CD /* RankViewPresenter.swift */; };
@@ -169,7 +167,6 @@
 		455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+RxMinioId.swift"; sourceTree = "<group>"; };
 		455D69032080409A00C651A0 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		455D69072080890B00C651A0 /* UIScrollView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx.swift"; sourceTree = "<group>"; };
-		455D690A208097EC00C651A0 /* SelectCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryViewController.swift; sourceTree = "<group>"; };
 		456C5E402061446C005F981B /* ImageUpoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUpoader.swift; sourceTree = "<group>"; };
 		457B1B87205FEA1000BEDDF1 /* Picroup-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Picroup-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -177,7 +174,6 @@
 		457B1B91205FEA1000BEDDF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		457B1B94205FEA1000BEDDF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		457B1B96205FEA1000BEDDF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ViewController.graphql; sourceTree = "<group>"; };
 		457B1BA0205FF2A100BEDDF1 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		457B1BA2205FFE9D00BEDDF1 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		458C106820849058005E94CD /* RankViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewPresenter.swift; sourceTree = "<group>"; };
@@ -428,17 +424,8 @@
 			isa = PBXGroup;
 			children = (
 				451CD333207D0B6F0063A972 /* RankViewController */,
-				455D6909208097CB00C651A0 /* SelectCategoryViewController */,
 			);
 			path = Rank;
-			sourceTree = "<group>";
-		};
-		455D6909208097CB00C651A0 /* SelectCategoryViewController */ = {
-			isa = PBXGroup;
-			children = (
-				455D690A208097EC00C651A0 /* SelectCategoryViewController.swift */,
-			);
-			path = SelectCategoryViewController;
 			sourceTree = "<group>";
 		};
 		457B1B7E205FEA1000BEDDF1 = {
@@ -638,7 +625,6 @@
 				457B1BA0205FF2A100BEDDF1 /* API.swift */,
 				451DD4B8207E4880002C509A /* Client.swift */,
 				45A0393C2075D0E9007498DB /* User.graphql */,
-				457B1B9E205FF24B00BEDDF1 /* ViewController.graphql */,
 				451CD31E207A3B3A0063A972 /* Login.graphql */,
 				45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */,
 				45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */,
@@ -793,7 +779,6 @@
 				457B1B92205FEA1000BEDDF1 /* Assets.xcassets in Resources */,
 				454F729E208DB8D200850471 /* Image.storyboard in Resources */,
 				4595F20E2079F6780040E5FA /* Login.storyboard in Resources */,
-				457B1B9F205FF24B00BEDDF1 /* ViewController.graphql in Resources */,
 				457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */,
 				45E240B920862CF6004B58EF /* Medium.graphql in Resources */,
 				45D04F762088C59100AC2226 /* MediumComments.graphql in Resources */,
@@ -937,7 +922,6 @@
 				45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */,
 				451CD322207A3C1D0063A972 /* ApolloClient+Rx.swift in Sources */,
 				451CD339207D0BAA0063A972 /* NotificationsViewController.swift in Sources */,
-				455D690B208097EC00C651A0 /* SelectCategoryViewController.swift in Sources */,
 				4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */,
 				45D04F7E208A040C00AC2226 /* HomeImageCell.swift in Sources */,
 				451DD4B7207E3EB5002C509A /* ErrorMessage.swift in Sources */,
