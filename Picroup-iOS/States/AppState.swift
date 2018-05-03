@@ -8,14 +8,22 @@
 
 import Foundation
 
-struct AppState {
-    var user: UserQuery.Data.User?
+struct AppState: Mutabled {
+    var currentUserState: CurrentUserState
 }
 
 extension AppState {
+    
+    static func empty() -> AppState {
+        return AppState(
+            currentUserState: CurrentUserState()
+        )
+    }
+}
+
+extension AppState: IsFeedbackState {
     enum Event {
-        case login(UserQuery.Data.User)
-        case logout
+        case currentUserEvent(CurrentUserState.Event)
     }
 }
 
@@ -23,10 +31,10 @@ extension AppState {
     
     static func reduce(state: AppState, event: Event) -> AppState {
         switch event {
-        case .login(let user):
-            return AppState(user: user)
-        case .logout:
-            return AppState(user: nil)
+        case .currentUserEvent(let event):
+            return state.mutated {
+                $0.currentUserState -= event
+            }
         }
     }
 }

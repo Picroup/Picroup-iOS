@@ -80,6 +80,9 @@
 		4595F227207D9CF90040E5FA /* logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F226207D9CF90040E5FA /* logger.swift */; };
 		45A0393D2075D0E9007498DB /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A0393C2075D0E9007498DB /* User.graphql */; };
 		45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A61C0C2086356E00AE7D99 /* StarMedium.graphql */; };
+		45A65F51209B055D00E7C677 /* CurrentUserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A65F50209B055D00E7C677 /* CurrentUserState.swift */; };
+		45A65F53209B064F00E7C677 /* IsUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A65F52209B064F00E7C677 /* IsUser.swift */; };
+		45A65F55209B0C4600E7C677 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A65F54209B0C4600E7C677 /* AppStore.swift */; };
 		45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */; };
 		45A84461208F67D600C75982 /* ReputationsState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A84460208F67D600C75982 /* ReputationsState+GraphQL.swift */; };
 		45BA0D7A208EB7640002E1D5 /* MeState+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */; };
@@ -192,6 +195,9 @@
 		4595F226207D9CF90040E5FA /* logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = logger.swift; sourceTree = "<group>"; };
 		45A0393C2075D0E9007498DB /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
 		45A61C0C2086356E00AE7D99 /* StarMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = StarMedium.graphql; sourceTree = "<group>"; };
+		45A65F50209B055D00E7C677 /* CurrentUserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserState.swift; sourceTree = "<group>"; };
+		45A65F52209B064F00E7C677 /* IsUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsUser.swift; sourceTree = "<group>"; };
+		45A65F54209B0C4600E7C677 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PublishRelay+asBinder.swift"; sourceTree = "<group>"; };
 		45A84460208F67D600C75982 /* ReputationsState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReputationsState+GraphQL.swift"; sourceTree = "<group>"; };
 		45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeState+ViewController.swift"; sourceTree = "<group>"; };
@@ -456,6 +462,7 @@
 				4595F215207A10520040E5FA /* States */,
 				4515A68C2079E3790039C383 /* Routers */,
 				457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */,
+				45A65F54209B0C4600E7C677 /* AppStore.swift */,
 				457B1BA2205FFE9D00BEDDF1 /* Config.swift */,
 				45A039332075C4C5007498DB /* SupportingFiles */,
 			);
@@ -532,6 +539,7 @@
 			isa = PBXGroup;
 			children = (
 				450C7E862075DD67009ABB1E /* AppState.swift */,
+				45A65F50209B055D00E7C677 /* CurrentUserState.swift */,
 				4595F216207A10B50040E5FA /* LoginState.swift */,
 				4595F224207D95360040E5FA /* HomeState.swift */,
 				45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */,
@@ -603,6 +611,7 @@
 		45A039372075C613007498DB /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				45A65F4F209B032400E7C677 /* Model */,
 				454F728D208822EC00850471 /* LocalStorage */,
 				4595F2092079F3630040E5FA /* Minio */,
 				4595F2042079EDE20040E5FA /* UIKit */,
@@ -640,6 +649,14 @@
 				45BA0D82209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql */,
 			);
 			path = GraphQL;
+			sourceTree = "<group>";
+		};
+		45A65F4F209B032400E7C677 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				45A65F52209B064F00E7C677 /* IsUser.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		45A8445F208F67BE00C75982 /* ReputationsState */ = {
@@ -931,6 +948,7 @@
 				4595F2082079EECF0040E5FA /* colors.swift in Sources */,
 				45525D4D208C44E300EAF00D /* CreateImageState+GraphQL.swift in Sources */,
 				451DD4BD207F8BC7002C509A /* RankState.swift in Sources */,
+				45A65F55209B0C4600E7C677 /* AppStore.swift in Sources */,
 				45BA0D8520903A020002E1D5 /* NotificationsState.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
 				454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */,
@@ -940,6 +958,7 @@
 				45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */,
 				45525D54208C6F8000EAF00D /* HomeState+GraphQL.swift in Sources */,
 				45A84461208F67D600C75982 /* ReputationsState+GraphQL.swift in Sources */,
+				45A65F53209B064F00E7C677 /* IsUser.swift in Sources */,
 				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
 				45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */,
 				454F72A0208DB90000850471 /* RouterService+Image.swift in Sources */,
@@ -964,6 +983,7 @@
 				45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */,
 				45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */,
 				454F728F2088230C00850471 /* LocalStorage.swift in Sources */,
+				45A65F51209B055D00E7C677 /* CurrentUserState.swift in Sources */,
 				451DD4BB207E558A002C509A /* RaisedButton+Rx.swift in Sources */,
 				4595F223207C97410040E5FA /* UIView+Motion+Rx.swift in Sources */,
 				451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */,
