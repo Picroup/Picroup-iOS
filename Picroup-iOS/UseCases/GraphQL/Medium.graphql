@@ -1,13 +1,12 @@
-query Medium($userId: ID!, $mediumId: ID!, $cursor: Float = null) {
+query Medium($userId: ID!, $mediumId: ID!) {
     medium(mediumId: $mediumId) {
         _id
         endedAt
         stared(userId: $userId)
-        comments(cursor: $cursor) {
-            cursor
-            items {
-                _id
-            }
+        user {
+            _id
+            username
+            avatarId
         }
     }
 }

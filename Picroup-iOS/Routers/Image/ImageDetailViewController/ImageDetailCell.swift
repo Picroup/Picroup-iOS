@@ -23,6 +23,9 @@ extension ImageDetailCell {
         let commentsCountLabelText: String?
         let stared: Bool?
         let animatedChangeProgress: Bool
+        
+        let username: String?
+        let avatarId: String?
     }
 }
 
@@ -43,6 +46,9 @@ extension ImageDetailCell.ViewModel {
         self.commentsCountLabelText = "\(item.commentsCount) 条"
         self.stared = (staredMedium != nil) ? true : meduim?.stared
         self.animatedChangeProgress = item.endedAt != endAt
+        
+        self.username = item.user.username
+        self.avatarId = item.user.avatarId
     }
 }
 
@@ -53,6 +59,8 @@ class ImageDetailCell: RxCollectionViewCell {
         didSet { starButton.image = Icon.favorite }
     }
     @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var userAvatarImageView: UIImageView!
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var remainTimeLabel: UILabel!
     @IBOutlet weak var commentsContentView: UIView!
     @IBOutlet weak var commentsCountLabel: UILabel!
@@ -63,6 +71,8 @@ class ImageDetailCell: RxCollectionViewCell {
         lifeBar.motionIdentifier = viewModel.lifeBarMotionIdentifier
         starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
         lifeViewWidthConstraint.constant = viewModel.progress * lifeBar.bounds.width
+        userAvatarImageView.setImage(with: viewModel.avatarId)
+        usernameLabel.text = viewModel.username
         remainTimeLabel.text = viewModel.remainTimeLabelText
         configureCommentsContentView(with: viewModel)
         configureStarButton(with: viewModel)

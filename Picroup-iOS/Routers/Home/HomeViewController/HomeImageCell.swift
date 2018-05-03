@@ -17,6 +17,8 @@ class HomeImageCell: RxCollectionViewCell {
     @IBOutlet weak var imageButton: UIButton!
     @IBOutlet weak var lifeBar: UIView!
     @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var userAvatarImageView: UIImageView!
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var commentButton: UIButton!
 }

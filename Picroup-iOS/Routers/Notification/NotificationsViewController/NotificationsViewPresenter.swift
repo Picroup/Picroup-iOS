@@ -42,9 +42,12 @@ class NotificationsViewPresenter: NSObject {
 class NotificationCell: RxTableViewCell {
     
     @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var mediumImageView: UIImageView!
     
     func configure(with item: MyNotificationsQuery.Data.User.Notification.Item) {
+        userAvatarImageView.setImage(with: item.user.avatarId)
+        mediumImageView.setImage(with: item.medium?.minioId)
         switch item.kind {
         case .commentMedium:
             contentLabel.text = "评论了你的图片"

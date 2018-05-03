@@ -95,7 +95,7 @@
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="dGa-pT-nFY">
                                                                     <rect key="frame" x="16" y="8" width="343" height="40"/>
                                                                     <subviews>
-                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beethoven" translatesAutoresizingMaskIntoConstraints="NO" id="LeU-Q8-Shs">
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beethoven" translatesAutoresizingMaskIntoConstraints="NO" id="LeU-Q8-Shs">
                                                                             <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                                             <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <constraints>
@@ -230,6 +230,8 @@
                                             <outlet property="lifeViewWidthConstraint" destination="VWK-RS-JN8" id="Avg-Fg-810"/>
                                             <outlet property="remainTimeLabel" destination="DaT-ce-JZD" id="wg1-9x-N3n"/>
                                             <outlet property="starButton" destination="6Xb-Fp-URK" id="p8d-Vq-hPD"/>
+                                            <outlet property="userAvatarImageView" destination="LeU-Q8-Shs" id="SYC-Uk-btj"/>
+                                            <outlet property="usernameLabel" destination="9HC-sR-eYS" id="7MK-E2-B20"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -433,7 +435,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beethoven" translatesAutoresizingMaskIntoConstraints="NO" id="mVA-1G-Ijp">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beethoven" translatesAutoresizingMaskIntoConstraints="NO" id="mVA-1G-Ijp">
                                                             <rect key="frame" x="16" y="16" width="40" height="40"/>
                                                             <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>

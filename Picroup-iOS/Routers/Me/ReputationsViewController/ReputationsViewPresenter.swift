@@ -32,11 +32,14 @@ class ReputationsViewPresenter: NSObject {
 class ReputationCell: RxTableViewCell {
     
     @IBOutlet weak var valueLabel: UILabel!
+    @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var mediumImageView: UIImageView!
     
     func configure(with item: MyReputationsQuery.Data.User.ReputationLink.Item) {
         valueLabel.text = "+\(item.value)"
+        userAvatarImageView.setImage(with: item.user.avatarId)
+        mediumImageView.setImage(with: item.medium?.minioId)
         switch item.kind {
         case .saveMedium:
             contentLabel.text = "分享了图片"

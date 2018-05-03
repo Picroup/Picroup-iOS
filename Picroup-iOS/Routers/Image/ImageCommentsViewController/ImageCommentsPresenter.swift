@@ -65,6 +65,7 @@ class CommentCell: RxTableViewCell {
     func configure(with item: MediumCommentsQuery.Data.Medium.Comment.Item) {
 //        userLabel?.text = item.userId
         contentLabel?.text = item.content
+        photoView.setImage(with: item.user.avatarId) // crash if user if create new comment
     }
 }
 
