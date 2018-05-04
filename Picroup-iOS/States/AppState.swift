@@ -13,10 +13,16 @@ struct AppState: Mutabled {
 }
 
 extension AppState {
+    var logoutQuery: Void? {
+        return currentUserState.user == nil ? () : nil
+    }
+}
+
+extension AppState {
     
-    static func empty() -> AppState {
+    static func empty(user: IsUser?) -> AppState {
         return AppState(
-            currentUserState: CurrentUserState()
+            currentUserState: CurrentUserState(user: user)
         )
     }
 }

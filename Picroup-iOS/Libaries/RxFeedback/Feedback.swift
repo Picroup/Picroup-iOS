@@ -15,8 +15,10 @@ import RxFeedback
 
 public struct DriverFeedback<State: IsFeedbackState> {
     typealias Raw = RxCocoa.Driver<Any>.Feedback<State, State.Event>
+    typealias Event = State.Event
 }
 
 public struct ObservableFeedback<State: IsFeedbackState> {
     typealias Raw = RxSwift.Observable<Any>.Feedback<State, State.Event>
+    typealias Event = State.Event
 }

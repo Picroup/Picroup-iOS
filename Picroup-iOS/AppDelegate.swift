@@ -17,18 +17,25 @@ import Apollo
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-    private let disposeBag = DisposeBag()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let window = UIWindow(frame: Screen.bounds)
-        window.tintColor = UIColor.primary
-        window.rootViewController = RouterService.Main.rootViewController()
-        window.makeKeyAndVisible()
-        self.window = window
+        prepareWindow()
+        setupRxfeedback()
         return true
     }
-
+    
+    private func prepareWindow() {
+        let window = UIWindow(frame: Screen.bounds)
+        window.tintColor = UIColor.primary
+        window.makeKeyAndVisible()
+        self.window = window
+    }
+    
+    private func setupRxfeedback() {
+        _ = DriverFeedback<AppState>.system(
+            window: window!,
+            store: AppStore.shared,
+            storage: LocalStorage.standard
+            )([])
+    }
 }
-
-

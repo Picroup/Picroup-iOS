@@ -8,8 +8,8 @@
 
 import Foundation
 
-private let minimalUsernameLength = 5
-private let minimalPasswordLength = 5
+private let minimalUsernameLength = 0
+private let minimalPasswordLength = 0
 
 struct LoginState: Mutabled {
     var username: String
@@ -28,7 +28,7 @@ extension LoginState {
 }
 
 extension LoginState {
-    static var empty: LoginState {
+    static func empty() -> LoginState {
         return LoginState(
             username: "",
             password: "",

@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxFeedback
 import Apollo
 
 extension RouterService {
@@ -18,9 +19,8 @@ extension RouterService {
 
 extension RouterService.Login {
     
-    static func loginViewController(client: ApolloClient, observer: @escaping (UserQuery.Data.User) -> Void) -> LoginViewController {
-        return LoginViewController(dependency: (client, observer))
+    static func loginViewController(client: ApolloClient, store: AppStore) -> LoginViewController {
+        let dependency = DriverFeedback<LoginState>.system(client: client, store: store)
+        return LoginViewController(dependency: dependency)
     }
-    
 }
-

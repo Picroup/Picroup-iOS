@@ -45,7 +45,8 @@ class LoginViewPresenter {
         usernameField.isClearIconButtonEnabled = true
         usernameField.placeholderActiveColor = .primary
         usernameField.dividerActiveColor = .primary
-        
+        usernameField.autocapitalizationType = .none
+
         view.layout(usernameField).center(offsetY: -raisedButton.bounds.height - passwordField.bounds.height - 120).width(300)
     }
     

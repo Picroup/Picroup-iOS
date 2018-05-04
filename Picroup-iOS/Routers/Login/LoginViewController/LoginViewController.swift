@@ -15,7 +15,7 @@ import Apollo
 
 class LoginViewController: UIViewController {
     
-    init(dependency: (ApolloClient, (UserQuery.Data.User) -> Void)) {
+    init(dependency: @escaping Dependency) {
         self.dependency = dependency
         super.init(nibName: nil, bundle: nil)
     }
@@ -24,22 +24,20 @@ class LoginViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    typealias Feedback = (Driver<LoginState>) -> Signal<LoginState.Event>
-    
-    let dependency: (ApolloClient, (UserQuery.Data.User) -> Void)
+    typealias Dependency = ([DriverFeedback<LoginState>.Raw]) -> Disposable
+    let dependency: Dependency
     
     fileprivate var loginViewPresenter: LoginViewPresenter!
-    private let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //        guard let (client, observer) = dependency else { return }
-        let (client, observer) = dependency
+//        guard let dependency = dependency else { return }
+//        let (client, observer) = dependency
         
         loginViewPresenter = LoginViewPresenter(view: view)
         
-        let uiFeedback: Feedback = bind(loginViewPresenter) { [snackbarController = snackbarController!] (presenter, state) in
+        let uiFeedback: DriverFeedback<LoginState>.Raw = bind(loginViewPresenter) { [snackbarController = snackbarController!] (presenter, state) in
             let subscriptions = [
                 state.map { $0.username }.distinctUntilChanged().drive(presenter.usernameField.rx.text),
                 state.map { $0.password }.distinctUntilChanged().drive(presenter.passwordField.rx.text),
@@ -50,7 +48,6 @@ class LoginViewController: UIViewController {
                 state.map { $0.triggerLogin }.distinctUnwrap().mapToVoid().drive(presenter.passwordField.rx.resignFirstResponder()),
                 state.map { $0.user }.distinctUnwrap().map { _ in "登录成功" }.drive(snackbarController.rx.snackbarText),
                 state.map { $0.error }.distinctUnwrap().map { $0.localizedDescription }.drive(snackbarController.rx.snackbarText),
-                state.map { $0.user }.distinctUnwrap().drive(onNext: observer),
             ]
             let events = [
                 presenter.usernameField.rx.text.orEmpty.map(LoginState.Event.onChangeUsername),
@@ -60,24 +57,7 @@ class LoginViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let loginAction: Feedback = react(query: { $0.triggerLogin }) { [client] param in
-            let (username, password) = param
-            return client.rx.fetch(query: LoginQuery(username: username, password: password))
-                .map { $0?.data?.login }.map {
-                    guard let snapshot = $0?.snapshot else { throw LoginError.usernameOrPasswordIncorrect }
-                    return UserQuery.Data.User(snapshot: snapshot)
-                }
-                .map(LoginState.Event.onSuccess)
-                .asSignal(onErrorRecover: { error in Signal.just(LoginState.Event.onError(error)) })
-        }
-        
-        Driver<Any>.system(
-            initialState: LoginState.empty,
-            reduce: logger(identifier: "LoginState")(LoginState.reduce),
-            feedback: uiFeedback, loginAction
-            )
-            .debug("LoginState")
-            .drive()
+        dependency([uiFeedback])
             .disposed(by: disposeBag)
     }
 }
