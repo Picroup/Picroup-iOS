@@ -9,8 +9,8 @@ query UserInterestedMedia($userId: ID!, $cursor: Float = null) {
                 endedAt
                 kind
                 detail {
-                width
-                aspectRatio
+                    width
+                    aspectRatio
                 }
                 minioId
                 commentsCount

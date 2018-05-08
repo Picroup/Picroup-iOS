@@ -4,6 +4,11 @@ mutation SaveComment($userId: ID!, $mediumId: ID!, $content: String!) {
         userId
         content
         createdAt
+        user {
+            _id
+            username
+            avatarId
+        }
     }
 }
 

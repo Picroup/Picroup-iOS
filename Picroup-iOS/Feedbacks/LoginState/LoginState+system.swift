@@ -14,7 +14,7 @@ import Apollo
 
 extension DriverFeedback where State == LoginState {
     
-    static func system(client: ApolloClient, store: AppStore) -> ([Raw]) -> Disposable {
+    static func system(client: ApolloClient, store: Store) -> ([Raw]) -> Disposable {
         
         return { feedbacks in
             let syncState = self.syncState(store: store)

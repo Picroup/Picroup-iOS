@@ -16,14 +16,6 @@ import Apollo
 
 class RankViewController: UIViewController {
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
     @IBOutlet weak var collectionView: UICollectionView!
     private var presenter: RankViewPresenter!
     
@@ -75,7 +67,8 @@ class RankViewController: UIViewController {
             .disposed(by: disposeBag)
         
         collectionView.rx.willEndDragging.asSignal()
-            .map { $0.velocity.y >= 0 }
+            .map { $0.velocity.y == 0 ? nil : $0.velocity.y > 0 }
+            .unwrap()
             .emit(onNext: { [weak self] in
                 self?.navigationController?.setNavigationBarHidden($0, animated: true)
             })

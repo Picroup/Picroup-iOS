@@ -14,10 +14,10 @@ import Apollo
 
 extension DriverFeedback where State == LoginState {
     
-    static func syncState(store: AppStore) -> Raw {
+    static func syncState(store: Store) -> Raw {
         return bind(store) { (store, state) in Bindings(
             subscriptions: [
-                state.map { $0.user }.unwrap().map { .currentUserEvent(.login($0)) }.drive(onNext: store.dispatch),
+                state.map { $0.user?.snapshot }.unwrap().drive(onNext: store.onLogin),
                 ],
             events: [
                 Signal.never()

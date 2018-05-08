@@ -28,14 +28,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow(frame: Screen.bounds)
         window.tintColor = UIColor.primary
         window.makeKeyAndVisible()
+        window.rootViewController = RouterService.Main.rootViewController()
         self.window = window
     }
     
     private func setupRxfeedback() {
-        _ = DriverFeedback<AppState>.system(
-            window: window!,
-            store: AppStore.shared,
-            storage: LocalStorage.standard
-            )([])
+        _ = store.state.debug("state").map { $0.currentUser != nil }.distinctUntilChanged().drive(Binder(window!) { (window, isLogin) in
+            let lvc = RouterService.Login.loginViewController(client: .shared, store: store)
+            let loginViewController = SnackbarController(rootViewController: lvc)
+            let rootViewController = RouterService.Main.rootViewController()
+            window.rootViewController = isLogin ? rootViewController : loginViewController
+        })
+        
     }
 }
