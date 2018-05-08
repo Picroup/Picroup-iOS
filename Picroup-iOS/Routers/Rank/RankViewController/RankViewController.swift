@@ -35,13 +35,29 @@ class RankViewController: UIViewController {
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let subscriptions = [
                 state.map { [Section(model: "", items: $0.items)] }.drive(presenter.items),
+                presenter.categoryButton.rx.tap.asSignal().emit(onNext: store.onLogout)
             ]
             let events: [Signal<RankState.Event>] = [
                 state.flatMapLatest {
                     $0.shouldQueryMore ? presenter.collectionView.rx.isNearBottom.asSignal() : .empty()
                     }.map { .onTriggerGetMore },
-
             ]
+            return Bindings(subscriptions: subscriptions, events: events)
+        }
+        
+        let vcFeedback: Feedback = bind(self) { (me, state)  in
+            let subscriptions = [
+                me.collectionView.rx.modelSelected(RankedMediaQuery.Data.RankedMedium.Item.self).asSignal().emit(to:
+                    Binder(me) { me, item in
+                        let vc = RouterService.Image.imageDetailViewController(dependency: item)
+                        me.navigationController?.pushViewController(vc, animated: true)
+                }),
+                me.collectionView.rx.shouldHideNavigationBar()
+                    .emit(to: me.rx.setNavigationBarHidden(animated: true))
+            ]
+            let events: [Signal<RankState.Event>] = [
+                .never(),
+                ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
@@ -54,25 +70,10 @@ class RankViewController: UIViewController {
         Driver<Any>.system(
             initialState: RankState.empty(),
             reduce: logger(identifier: "RankState")(RankState.reduce),
-            feedback: uiFeedback, queryMedia
+            feedback: uiFeedback, vcFeedback, queryMedia
         )
         .drive()
         .disposed(by: disposeBag)
-        
-        collectionView.rx.modelSelected(RankedMediaQuery.Data.RankedMedium.Item.self)
-            .subscribe(onNext: { [weak self] item in
-                let vc = RouterService.Image.imageDetailViewController(dependency: item)
-                self?.navigationController?.pushViewController(vc, animated: true)
-            })
-            .disposed(by: disposeBag)
-        
-        collectionView.rx.willEndDragging.asSignal()
-            .map { $0.velocity.y == 0 ? nil : $0.velocity.y > 0 }
-            .unwrap()
-            .emit(onNext: { [weak self] in
-                self?.navigationController?.setNavigationBarHidden($0, animated: true)
-            })
-            .disposed(by: disposeBag)
     }
 
 }

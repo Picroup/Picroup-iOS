@@ -32,7 +32,6 @@ class MeViewController: UIViewController {
         let showReputations = Feedback.showReputations(from: self)
         let triggerReloadMe = Feedback.triggerReloadMe(from: self)
         
-        
         let reduce = logger(identifier: "MeState")(MeState.reduce)
         
         Driver<Any>.system(
@@ -49,8 +48,7 @@ class MeViewController: UIViewController {
             .drive()
             .disposed(by: disposeBag)
         
-        presenter.collectionView.rx.willEndDragging.asSignal()
-            .map { $0.velocity.y >= 0 }
+        presenter.collectionView.rx.shouldHideNavigationBar()
             .emit(onNext: { [weak presenter, weak self] in
                 presenter?.hideDetailLayoutConstraint.isActive = $0
                 presenter?.showDetailLayoutConstraint.isActive = !$0

@@ -34,7 +34,6 @@ class NotificationsViewController: UIViewController {
         let queryNotifications = Feedback.queryNotifications(client: ApolloClient.shared)
         let queryMarkNotificationsAsViewed = Feedback.queryMarkNotificationsAsViewed(client: ApolloClient.shared)
         
-        
         Driver<Any>.system(
             initialState: NotificationsState.empty(
                 userId: Config.userId
@@ -48,12 +47,8 @@ class NotificationsViewController: UIViewController {
             .drive()
             .disposed(by: disposeBag)
         
-        
-        presenter.tableView.rx.willEndDragging.asSignal()
-            .map { $0.velocity.y >= 0 }
-            .emit(onNext: { [weak self] in
-                self?.navigationController?.setNavigationBarHidden($0, animated: true)
-            })
+        presenter.tableView.rx.shouldHideNavigationBar()
+            .emit(to: rx.setNavigationBarHidden(animated: true))
             .disposed(by: disposeBag)
     }
 }

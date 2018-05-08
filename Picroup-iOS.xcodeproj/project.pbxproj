@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0501F76BC004870A4FD7F133 /* Pods_Picroup_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */; };
-		450C7E872075DD67009ABB1E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450C7E862075DD67009ABB1E /* AppState.swift */; };
 		451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD313207910D10063A972 /* SharedSequence+unwrap.swift */; };
 		451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD31A207A38F20063A972 /* UIResponder+Rx.swift */; };
 		451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */; };
@@ -67,6 +66,8 @@
 		457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1BA0205FF2A100BEDDF1 /* API.swift */; };
 		457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1BA2205FFE9D00BEDDF1 /* Config.swift */; };
 		458006D620A137A5004BD982 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D520A137A5004BD982 /* AppStore.swift */; };
+		458006D820A17283004BD982 /* UIViewController+Rx+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */; };
+		458006DA20A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */; };
 		458C106920849058005E94CD /* RankViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458C106820849058005E94CD /* RankViewPresenter.swift */; };
 		4595F2082079EECF0040E5FA /* colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F2072079EECF0040E5FA /* colors.swift */; };
 		4595F20E2079F6780040E5FA /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4595F20D2079F6780040E5FA /* Login.storyboard */; };
@@ -127,7 +128,6 @@
 
 /* Begin PBXFileReference section */
 		0C1CA8B77EB5486794A21137 /* Pods-Picroup-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.release.xcconfig"; sourceTree = "<group>"; };
-		450C7E862075DD67009ABB1E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		451CD313207910D10063A972 /* SharedSequence+unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+unwrap.swift"; sourceTree = "<group>"; };
 		451CD31A207A38F20063A972 /* UIResponder+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Rx.swift"; sourceTree = "<group>"; };
 		451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+Operator.swift"; sourceTree = "<group>"; };
@@ -188,6 +188,8 @@
 		457B1BA0205FF2A100BEDDF1 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		457B1BA2205FFE9D00BEDDF1 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		458006D520A137A5004BD982 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+NavigationBar.swift"; sourceTree = "<group>"; };
+		458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx+shouldHideNavigationBar.swift"; sourceTree = "<group>"; };
 		458C106820849058005E94CD /* RankViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewPresenter.swift; sourceTree = "<group>"; };
 		4595F2072079EECF0040E5FA /* colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = colors.swift; sourceTree = "<group>"; };
 		4595F20D2079F6780040E5FA /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 				45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */,
 				45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */,
 				45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */,
+				458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */,
 				451CD31A207A38F20063A972 /* UIResponder+Rx.swift */,
 				455D69072080890B00C651A0 /* UIScrollView+Rx.swift */,
 				454F72952089B44500850471 /* RxCollectionViewCell.swift */,
@@ -406,7 +409,6 @@
 		454A4C3A209C0BA60063E829 /* AppState */ = {
 			isa = PBXGroup;
 			children = (
-				458006D520A137A5004BD982 /* AppStore.swift */,
 			);
 			path = AppState;
 			sourceTree = "<group>";
@@ -532,6 +534,7 @@
 				4595F2072079EECF0040E5FA /* colors.swift */,
 				4595F213207A0CA20040E5FA /* UIImage+Color.swift */,
 				455D69032080409A00C651A0 /* BaseNavigationController.swift */,
+				458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -558,7 +561,7 @@
 		4595F215207A10520040E5FA /* States */ = {
 			isa = PBXGroup;
 			children = (
-				450C7E862075DD67009ABB1E /* AppState.swift */,
+				458006D520A137A5004BD982 /* AppStore.swift */,
 				45A65F50209B055D00E7C677 /* CurrentUserState.swift */,
 				4595F216207A10B50040E5FA /* LoginState.swift */,
 				4595F224207D95360040E5FA /* HomeState.swift */,
@@ -958,10 +961,10 @@
 				45D04F82208E073700AC2226 /* MeState.swift in Sources */,
 				456C5E412061446C005F981B /* ImageUpoader.swift in Sources */,
 				458C106920849058005E94CD /* RankViewPresenter.swift in Sources */,
-				450C7E872075DD67009ABB1E /* AppState.swift in Sources */,
 				457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */,
 				451CD337207D0B9A0063A972 /* RankViewController.swift in Sources */,
 				45525D51208C552800EAF00D /* CreateImageState+LocalStorage.swift in Sources */,
+				458006DA20A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift in Sources */,
 				45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */,
 				45BA0D7A208EB7640002E1D5 /* MeState+ViewController.swift in Sources */,
 				4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */,
@@ -1006,6 +1009,7 @@
 				45A84461208F67D600C75982 /* ReputationsState+GraphQL.swift in Sources */,
 				45A65F53209B064F00E7C677 /* IsUser.swift in Sources */,
 				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
+				458006D820A17283004BD982 /* UIViewController+Rx+NavigationBar.swift in Sources */,
 				45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */,
 				454F72A0208DB90000850471 /* RouterService+Image.swift in Sources */,
 				451CD332207D0A910063A972 /* HomeViewController.swift in Sources */,

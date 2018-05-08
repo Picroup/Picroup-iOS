@@ -52,21 +52,21 @@ class Store {
     lazy var _state: AppStateObject = AppStateObject.shared
     
     func onLogin(_ value: [String: Any?]) {
-        updateState {
-            $0.currentUser = UserObject(value: value)
+        updateState { state, realm in
+            state.currentUser = realm.create(UserObject.self, value: value, update: true)
         }
     }
     
     func onLogout() {
-        updateState {
-            $0.currentUser = nil
+        updateState { state, realm in
+            state.currentUser = nil
         }
     }
     
-    private func updateState(_ mutation: (AppStateObject) -> ()) {
+    private func updateState(_ mutation: (AppStateObject, Realm) -> ()) {
         let realm = try! Realm()
         try! realm.write {
-            mutation(_state)
+            mutation(_state, realm)
             realm.add(_state, update: true)
         }
     }
