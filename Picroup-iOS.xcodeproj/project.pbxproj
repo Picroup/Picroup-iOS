@@ -82,6 +82,7 @@
 		4595F223207C97410040E5FA /* UIView+Motion+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F222207C97410040E5FA /* UIView+Motion+Rx.swift */; };
 		4595F225207D95360040E5FA /* HomeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F224207D95360040E5FA /* HomeState.swift */; };
 		4595F227207D9CF90040E5FA /* logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F226207D9CF90040E5FA /* logger.swift */; };
+		459F259920A28C13008B6C9B /* ObservableType+catchErrorRecover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459F259820A28C13008B6C9B /* ObservableType+catchErrorRecover.swift */; };
 		45A0393D2075D0E9007498DB /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A0393C2075D0E9007498DB /* User.graphql */; };
 		45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A61C0C2086356E00AE7D99 /* StarMedium.graphql */; };
 		45A65F51209B055D00E7C677 /* CurrentUserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A65F50209B055D00E7C677 /* CurrentUserState.swift */; };
@@ -204,6 +205,7 @@
 		4595F222207C97410040E5FA /* UIView+Motion+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Motion+Rx.swift"; sourceTree = "<group>"; };
 		4595F224207D95360040E5FA /* HomeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeState.swift; sourceTree = "<group>"; };
 		4595F226207D9CF90040E5FA /* logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = logger.swift; sourceTree = "<group>"; };
+		459F259820A28C13008B6C9B /* ObservableType+catchErrorRecover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+catchErrorRecover.swift"; sourceTree = "<group>"; };
 		45A0393C2075D0E9007498DB /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
 		45A61C0C2086356E00AE7D99 /* StarMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = StarMedium.graphql; sourceTree = "<group>"; };
 		45A65F50209B055D00E7C677 /* CurrentUserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserState.swift; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 			children = (
 				451CD323207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift */,
 				45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */,
+				459F259820A28C13008B6C9B /* ObservableType+catchErrorRecover.swift */,
 			);
 			path = RxSwift;
 			sourceTree = "<group>";
@@ -1000,6 +1003,7 @@
 				45BA0D8520903A020002E1D5 /* NotificationsState.swift in Sources */,
 				45A65F5E209BEEB600E7C677 /* LoginState+system.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
+				459F259920A28C13008B6C9B /* ObservableType+catchErrorRecover.swift in Sources */,
 				454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */,
 				454F729C208DAF0500850471 /* ObservableConvertibleType+asSignal.swift in Sources */,
 				455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */,

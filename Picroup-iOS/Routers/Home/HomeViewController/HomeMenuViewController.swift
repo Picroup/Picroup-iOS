@@ -69,7 +69,7 @@ extension HomeMenuViewController {
     
     fileprivate func injectDependncy(store: Store) -> Feedback.Raw {
         return { _ in
-            store.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map(HomeState.Event.onUpdateCurrentUser)
+            store.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map { .onUpdateCurrentUser($0) }
         }
     }
     

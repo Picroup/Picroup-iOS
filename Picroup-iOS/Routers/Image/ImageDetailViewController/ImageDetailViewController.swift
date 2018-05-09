@@ -30,9 +30,13 @@ class ImageDetailViewController: HideNavigationBarViewController {
         
         guard let dependency = dependency else { return }
         typealias Feedback = Observable<Any>.Feedback<ImageDetailState, ImageDetailState.Event>
+
+        let injectDependncy: Feedback = { _ in
+            store.state.map { $0.currentUser?.toUser() }.asObservable().map { .onUpdateCurrentUser($0) }
+        }
         
         let uiFeedback: Feedback = bind(self) { (me, state) in
-            let staredMediumTrigger = PublishRelay<Void>()
+            let starMediumTrigger = PublishRelay<Void>()
             let popTrigger = PublishRelay<Void>()
             weak var weakMe = me
             let showImageComments = { (state: ImageDetailState) in {
@@ -44,7 +48,7 @@ class ImageDetailViewController: HideNavigationBarViewController {
                     let viewModel = ImageDetailCell.ViewModel(imageDetailState: state)
                     cell.configure(
                         with: viewModel,
-                        onStarButtonTap: staredMediumTrigger.accept,
+                        onStarButtonTap: starMediumTrigger.accept,
                         onCommentsTap: showImageComments(state),
                         onImageViewTap: popTrigger.accept)
                 },
@@ -53,35 +57,37 @@ class ImageDetailViewController: HideNavigationBarViewController {
             ]
             let events = [
                 state.flatMapLatest { state -> Observable<ImageDetailState.Event>  in
-                    guard state.staredMedium.data == nil && !state.staredMedium.trigger else {
+                    guard state.shouldStarMedium else {
                         return .empty()
                     }
-                    return staredMediumTrigger.map { .staredMedium(.trigger) }
+                    return starMediumTrigger.map { .onTriggerStarMedium }
                 }
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryMedium: Feedback = react(query: { $0.meduim.query }) { query in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).asObservable().map { $0?.data?.medium }.unwrap()
-                .map { .meduim(.onSuccess($0)) }
-                .catchError  { error in .just(.meduim(.onError(error))) }
+        let queryMedium: Feedback = react(query: { $0.query }) { query in
+            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).asObservable()
+                .map { $0?.data?.medium }.unwrap()
+                .map { .onGetSuccess($0) }
+                .catchErrorRecover { .onGetError($0) }
         }
 
-        let starMedium: Feedback = react(query: { $0.staredMedium.query }) { query in
+        let starMedium: Feedback = react(query: { $0.starMediumQuery }) { query in
             ApolloClient.shared.rx.perform(mutation: query).asObservable().map { $0?.data?.starMedium }.unwrap()
-                .map { .staredMedium(.onSuccess($0)) }
-                .catchError  { error in .just(.staredMedium(.onError(error))) }
+                .map { .onStarMediumSuccess($0) }
+                .catchErrorRecover { .onStarMediumError($0) }
         }
         
         Observable<Any>.system(
-            initialState: ImageDetailState.empty(userId: Config.userId, item: dependency),
+            initialState: ImageDetailState.empty(item: dependency),
             reduce: logger(identifier: "ImageDetailState")(ImageDetailState.reduce),
             scheduler: MainScheduler.instance,
             scheduledFeedback:
-            uiFeedback,
-            queryMedium,
-            starMedium
+                injectDependncy,
+                uiFeedback,
+                queryMedium,
+                starMedium
         )
             .subscribe()
             .disposed(by: disposeBag)

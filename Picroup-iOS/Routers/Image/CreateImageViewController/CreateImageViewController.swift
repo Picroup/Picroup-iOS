@@ -34,6 +34,7 @@ class CreateImageViewController: UIViewController {
         
         guard let dependency = dependency else { return }
         
+        let injectDependncy = self.injectDependncy(store: store)
         let syncState = self.syncState(savedMedium: _savedMedium)
         let uiFeedback = self.uiFeedback
         let saveMedium = Feedback.saveMedium(client: dependency.client)
@@ -48,6 +49,7 @@ class CreateImageViewController: UIViewController {
             initialState: initialState,
             reduce: reduce,
             feedback:
+                injectDependncy,
                 syncState,
                 uiFeedback,
                 saveMedium
@@ -60,6 +62,12 @@ class CreateImageViewController: UIViewController {
 }
 
 extension CreateImageViewController {
+    
+    fileprivate func injectDependncy(store: Store) -> Feedback.Raw {
+        return { _ in
+            store.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map { .onUpdateCurrentUser($0) }
+        }
+    }
     
     fileprivate func syncState(savedMedium: PublishRelay<CreateImageState.SaveImageMedium>) -> Feedback.Raw {
         return  bind { (state) in

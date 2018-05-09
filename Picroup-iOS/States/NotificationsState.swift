@@ -11,6 +11,8 @@ import Foundation
 struct NotificationsState: Mutabled {
     typealias Item = MyNotificationsQuery.Data.User.Notification.Item
     
+    var currentUser: IsUser?
+    
     var next: MyNotificationsQuery
     var items: [Item]
     var error: Error?
@@ -24,6 +26,7 @@ struct NotificationsState: Mutabled {
 
 extension NotificationsState {
     public var query: MyNotificationsQuery? {
+        if (currentUser == nil) { return nil }
         return trigger ? next : nil
     }
     var shouldQueryMore: Bool {
@@ -36,6 +39,7 @@ extension NotificationsState {
         return next.cursor != nil
     }
     public var markQuery: MarkNotificationsAsViewedQuery? {
+        if (currentUser == nil) { return nil }
         return markTrigger && !items.isEmpty ? nextMark : nil
     }
 }
@@ -43,6 +47,7 @@ extension NotificationsState {
 extension NotificationsState {
     static func empty(userId: String) -> NotificationsState {
         return NotificationsState(
+            currentUser: nil,
             next: MyNotificationsQuery(userId: userId),
             items: [],
             error: nil,
@@ -58,6 +63,7 @@ extension NotificationsState {
 extension NotificationsState: IsFeedbackState {
     
     enum Event {
+        case onUpdateCurrentUser(IsUser?)
         case onTriggerReload
         case onTriggerGetMore
         case onGetSuccess(MyNotificationsQuery.Data.User.Notification)
@@ -71,6 +77,12 @@ extension NotificationsState {
     
     static func reduce(state: NotificationsState, event: NotificationsState.Event) -> NotificationsState {
         switch event {
+        case .onUpdateCurrentUser(let currentUser):
+            return state.mutated {
+                $0.currentUser = currentUser
+                $0.next.userId = currentUser?.id ?? ""
+                $0.nextMark.userId = currentUser?.id ?? ""
+            }
         case .onTriggerReload:
             return state.mutated {
                 $0.next.cursor = nil

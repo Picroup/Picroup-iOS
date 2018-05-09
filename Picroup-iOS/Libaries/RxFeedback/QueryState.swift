@@ -13,16 +13,19 @@ public struct QueryState<Query, Data>: Mutabled {
     public var data: Data?
     public var error: Error?
     public var trigger: Bool
+    private let shouldTrigger: (() -> Bool)?
 }
 
 extension QueryState {
     public var query: Query? {
+        if shouldTrigger?() == false { return nil }
         return trigger ? next : nil
     }
     
-    public init(next: Query, trigger: Bool = false) {
+    public init(next: Query, trigger: Bool = false, shouldTrigger: (() -> Bool)? = nil) {
         self.next = next
         self.trigger = trigger
+        self.shouldTrigger = shouldTrigger
     }
 }
 

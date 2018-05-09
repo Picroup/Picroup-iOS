@@ -30,6 +30,7 @@ class NotificationsViewController: UIViewController {
     
     private func setupRxFeedback() {
         
+        let injectDependncy = self.injectDependncy(store: store)
         let uiFeedback = self.uiFeedback
         let queryNotifications = Feedback.queryNotifications(client: ApolloClient.shared)
         let queryMarkNotificationsAsViewed = Feedback.queryMarkNotificationsAsViewed(client: ApolloClient.shared)
@@ -40,6 +41,7 @@ class NotificationsViewController: UIViewController {
             ),
             reduce: logger(identifier: "ReputationsState")(NotificationsState.reduce),
             feedback:
+                injectDependncy,
                 uiFeedback,
                 queryNotifications,
                 queryMarkNotificationsAsViewed
@@ -54,6 +56,12 @@ class NotificationsViewController: UIViewController {
 }
 
 extension NotificationsViewController {
+    
+    fileprivate func injectDependncy(store: Store) -> Feedback.Raw {
+        return { _ in
+            store.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map { .onUpdateCurrentUser($0) }
+        }
+    }
     
     fileprivate var uiFeedback: Feedback.Raw {
         typealias Section = NotificationsViewPresenter.Section
