@@ -52,7 +52,7 @@ class NotificationCell: RxTableViewCell {
         case .commentMedium:
             contentLabel.text = "评论了你的图片"
         case .starMedium:
-            contentLabel.text = "收藏了你的图片"
+            contentLabel.text = "给你的图片续命"
         case .followUser:
             contentLabel.text = "关注了你"
         default:
