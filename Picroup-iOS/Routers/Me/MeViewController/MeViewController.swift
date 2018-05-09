@@ -29,6 +29,7 @@ class MeViewController: UIViewController {
         let uiFeedback = self.uiFeedback
         let queryMe = Feedback.queryMe(client: ApolloClient.shared)
         let queryMyMedia = Feedback.queryMyMedia(client: ApolloClient.shared)
+        let queryMySatredMedia = Feedback.queryMySatredMedia(client: ApolloClient.shared)
         let showImageDetail = Feedback.showImageDetail(from: self)
         let showReputations = Feedback.showReputations(from: self)
         let triggerReloadMe = Feedback.triggerReloadMe(from: self)
@@ -43,6 +44,7 @@ class MeViewController: UIViewController {
                 uiFeedback,
                 queryMe,
                 queryMyMedia,
+                queryMySatredMedia,
                 showImageDetail,
                 showReputations,
                 triggerReloadMe
@@ -50,7 +52,10 @@ class MeViewController: UIViewController {
             .drive()
             .disposed(by: disposeBag)
         
-        presenter.collectionView.rx.shouldHideNavigationBar()
+        Signal.merge(
+            presenter.myMediaCollectionView.rx.shouldHideNavigationBar(),
+            presenter.myStardMediaCollectionView.rx.shouldHideNavigationBar()
+            )
             .emit(onNext: { [weak presenter, weak self] in
                 presenter?.hideDetailLayoutConstraint.isActive = $0
                 presenter?.showDetailLayoutConstraint.isActive = !$0
@@ -82,13 +87,18 @@ extension MeViewController {
                 meViewModel.map { $0.followingsCount }.drive(presenter.followingsCountLabel.rx.text),
                 meViewModel.map { $0.gainedReputationCount }.drive(presenter.gainedReputationCountButton.rx.title()),
                 meViewModel.map { $0.isGainedReputationCountHidden }.drive(presenter.gainedReputationCountButton.rx.isHidden),
-                state.map { [Section(model: "", items: $0.myMediaItems)] }.drive(presenter.items),
+                state.map { $0.selectedTab }.distinctUntilChanged().drive(presenter.selectedTab),
+                state.map { [Section(model: "", items: $0.myMediaItems)] }.drive(presenter.myMediaItems),
+                state.map { [Section(model: "", items: $0.myStaredMediaItems)] }.drive(presenter.myStaredMediaItems),
             ]
             let events: [Signal<MeState.Event>] = [
+                presenter.myMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myMedia) },
+                presenter.myStaredMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myStaredMedia) },
                 state.flatMapLatest {
-                    $0.shouldQueryMoreMyMedia ? presenter.collectionView.rx.isNearBottom.asSignal() : .empty()
-                    }.map { .onTriggerGetMore },
-                presenter.collectionView.rx.itemSelected.asSignal().map { .onTriggerShowImageDetail($0.item) },
+                    $0.shouldQueryMoreMyMedia ? presenter.myMediaCollectionView.rx.isNearBottom.asSignal() : .empty()
+                    }.map { .onTriggerGetMoreMyMedia },
+                presenter.myMediaCollectionView.rx.itemSelected.asSignal().map { .onTriggerShowImageDetail($0.item) },
+                presenter.myStardMediaCollectionView.rx.itemSelected.asSignal().map { .onTriggerShowImageDetail($0.item) },
                 presenter.reputationView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerShowReputations },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)

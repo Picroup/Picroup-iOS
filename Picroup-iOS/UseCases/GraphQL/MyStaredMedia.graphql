@@ -1,0 +1,27 @@
+query MyStaredMedia($userId: ID!, $cursor: Float = null) {
+    user(userId: $userId) {
+        staredMedia(cursor: $cursor) {
+            cursor
+            items {
+                _id
+                userId
+                createdAt
+                endedAt
+                kind
+                detail {
+                    width
+                    aspectRatio
+                }
+                minioId
+                commentsCount
+                user {
+                    _id
+                    username
+                    avatarId
+                }
+            }
+        }
+    }
+}
+
+

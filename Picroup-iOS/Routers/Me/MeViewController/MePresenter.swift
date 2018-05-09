@@ -13,6 +13,7 @@ import RxCocoa
 import RxDataSources
 
 class MePresenter: NSObject {
+    @IBOutlet weak var meBackgroundView: UIView!
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var displaynameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -23,16 +24,32 @@ class MePresenter: NSObject {
     @IBOutlet weak var followingsCountLabel: UILabel!
     @IBOutlet weak var reputationView: UIStackView!
     
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var myMediaButton: UIButton!
+    @IBOutlet weak var myStaredMediaButton: UIButton!
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var myMediaCollectionView: UICollectionView!
+    @IBOutlet weak var myStardMediaCollectionView: UICollectionView!
 
+    @IBOutlet weak var selectMyMediaLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var showDetailLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
     
     typealias Section = AnimatableSectionModel<String, MyMediaQuery.Data.User.Medium.Item>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
-    var items: (Observable<[Section]>) -> Disposable {
-        let dataSource = DataSource(
+    var selectedTab: Binder<MeState.Tab> {
+        return Binder(self) { me, tab in
+            let offsetX = CGFloat(tab.rawValue) * me.scrollView.frame.width
+            let offsetY = me.scrollView.contentOffset.y
+            me.scrollView.setContentOffset(CGPoint(x: offsetX, y: offsetY), animated: true)
+            me.selectMyMediaLayoutConstraint.isActive = tab == .myMedia
+            UIView.animate(withDuration: 0.3, animations: me.meBackgroundView.layoutIfNeeded)
+        }
+    }
+    
+    private var dataSource: DataSource {
+        return DataSource(
             configureCell: { dataSource, collectionView, indexPath, item in
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
                 cell.imageView.setImage(with: item.minioId)
@@ -46,7 +63,14 @@ class MePresenter: NSObject {
             configureSupplementaryView: { dataSource, collectionView, title, indexPath in
                 return UICollectionReusableView()
         })
-        return collectionView.rx.items(dataSource: dataSource)
+    }
+    
+    var myMediaItems: (Observable<[Section]>) -> Disposable {
+        return myMediaCollectionView.rx.items(dataSource: dataSource)
+    }
+    
+    var myStaredMediaItems: (Observable<[Section]>) -> Disposable {
+        return myStardMediaCollectionView.rx.items(dataSource: dataSource)
     }
 }
 
