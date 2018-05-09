@@ -27,8 +27,17 @@ extension DriverFeedback where State == MeState {
         return react(query: { $0.myMediaQuery }) { query in
             client.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.media }.unwrap()
-                .map(MeState.Event.onGetSuccess)
-                .asSignal(onErrorReturnJust: MeState.Event.onGetError)
+                .map(MeState.Event.onGetMyMediaSuccess)
+                .asSignal(onErrorReturnJust: MeState.Event.onGetMyMediaError)
+        }
+    }
+    
+    static func queryMySatredMedia(client: ApolloClient) -> Raw {
+        return react(query: { $0.myStaredMediaQuery }) { query in
+            client.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                .map { $0?.data?.user?.staredMedia }.unwrap()
+                .map(MeState.Event.onGetMyStaredMediaSuccess)
+                .asSignal(onErrorReturnJust: MeState.Event.onGetMyStaredMediaError)
         }
     }
 }

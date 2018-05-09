@@ -18,10 +18,17 @@ struct MeState: Mutabled {
     var meError: Error?
     var triggerQueryMe: Bool
     
+    var selectedTab: Tab
+    
     var nextMyMediaQuery: MyMediaQuery
     var myMediaItems: [Item]
     var myMediaError: Error?
     var triggerQueryMyMedia: Bool
+    
+    var nextMyStaredMediaQuery: MyStaredMediaQuery
+    var myStaredMediaItems: [Item]
+    var myStaredMediaError: Error?
+    var triggerQueryMyStaredMedia: Bool
     
     var nextShowImageDetailIndex: Int?
     
@@ -29,10 +36,19 @@ struct MeState: Mutabled {
 }
 
 extension MeState {
+
+    enum Tab: Int {
+        case myMedia
+        case myStaredMedia
+    }
+}
+
+extension MeState {
     var meQuery: UserQuery? {
         if (currentUser == nil) { return nil }
         return triggerQueryMe ? nextMeQuery : nil
     }
+    
     var myMediaQuery: MyMediaQuery? {
         if (currentUser == nil) { return nil }
         return triggerQueryMyMedia ? nextMyMediaQuery : nil
@@ -40,15 +56,30 @@ extension MeState {
     var shouldQueryMoreMyMedia: Bool {
         return !triggerQueryMyMedia && nextMyMediaQuery.cursor != nil
     }
-    var isItemsEmpty: Bool {
+    var isMyMediaItemsEmpty: Bool {
         return !triggerQueryMyMedia && myMediaError == nil && myMediaItems.isEmpty
     }
-    var hasMore: Bool {
+    var hasMoreMyMedia: Bool {
         return nextMyMediaQuery.cursor != nil
     }
+    
+    var myStaredMediaQuery: MyStaredMediaQuery? {
+        if (currentUser == nil) { return nil }
+        return triggerQueryMyStaredMedia ? nextMyStaredMediaQuery : nil
+    }
+    var shouldQueryMoreMyStaredMedia: Bool {
+        return !triggerQueryMyStaredMedia && nextMyStaredMediaQuery.cursor != nil
+    }
+    var isMyStaredMediaItemsEmpty: Bool {
+        return !triggerQueryMyStaredMedia && myStaredMediaError == nil && myStaredMediaItems.isEmpty
+    }
+    var hasMoreMStaredyMedia: Bool {
+        return nextMyStaredMediaQuery.cursor != nil
+    }
+    
     var showImageDetailQuery: Item? {
         guard let index = nextShowImageDetailIndex else { return nil }
-        return myMediaItems[index]
+        return selectedTab == .myMedia ? myMediaItems[index] : myStaredMediaItems[index]
     }
     var showReputationsQuery: Int? {
         return triggerShowReputations ? me?.reputation : nil
@@ -63,10 +94,17 @@ extension MeState {
             me: nil,
             meError: nil,
             triggerQueryMe: false,
+            selectedTab: .myMedia,
             nextMyMediaQuery: MyMediaQuery(userId: ""),
             myMediaItems: [],
             myMediaError: nil,
             triggerQueryMyMedia: true,
+            
+            nextMyStaredMediaQuery: MyStaredMediaQuery(userId: ""),
+            myStaredMediaItems: [],
+            myStaredMediaError: nil,
+            triggerQueryMyStaredMedia: true,
+            
             nextShowImageDetailIndex: nil,
             triggerShowReputations: false
         )
@@ -81,10 +119,17 @@ extension MeState: IsFeedbackState {
         case onGetMeSuccess(UserQuery.Data.User)
         case onGetMeError(Error)
         
-        case onTriggerReload
-        case onTriggerGetMore
-        case onGetSuccess(MyMediaQuery.Data.User.Medium)
-        case onGetError(Error)
+        case onChangeSelectedTab(Tab)
+        
+        case onTriggerReloadMyMedia
+        case onTriggerGetMoreMyMedia
+        case onGetMyMediaSuccess(MyMediaQuery.Data.User.Medium)
+        case onGetMyMediaError(Error)
+        
+        case onTriggerReloadMyStaredMedia
+        case onTriggerGetMoreMyStaredMedia
+        case onGetMyStaredMediaSuccess(MyStaredMediaQuery.Data.User.StaredMedium)
+        case onGetMyStaredMediaError(Error)
         
         case onTriggerShowImageDetail(Int)
         case onShowImageDetailCompleted
@@ -102,6 +147,7 @@ extension MeState {
                 $0.currentUser = currentUser
                 $0.nextMeQuery.userId = currentUser?.id ?? ""
                 $0.nextMyMediaQuery.userId = currentUser?.id ?? ""
+                $0.nextMyStaredMediaQuery.userId = currentUser?.id ?? ""
             }
         case .onTriggerReloadMe:
             return state.mutated {
@@ -120,31 +166,64 @@ extension MeState {
                 $0.meError = error
                 $0.triggerQueryMe = false
             }
-        case .onTriggerReload:
+            
+        case .onChangeSelectedTab(let tab):
+            return state.mutated {
+                $0.selectedTab = tab
+            }
+            
+        case .onTriggerReloadMyMedia:
             return state.mutated {
                 $0.nextMyMediaQuery.cursor = nil
                 $0.myMediaItems = []
                 $0.myMediaError = nil
                 $0.triggerQueryMyMedia = true
             }
-        case .onTriggerGetMore:
+        case .onTriggerGetMoreMyMedia:
             guard state.shouldQueryMoreMyMedia else { return state }
             return state.mutated {
                 $0.myMediaError = nil
                 $0.triggerQueryMyMedia = true
             }
-        case .onGetSuccess(let data):
+        case .onGetMyMediaSuccess(let data):
             return state.mutated {
                 $0.nextMyMediaQuery.cursor = data.cursor
                 $0.myMediaItems += data.items.flatMap { $0 }
                 $0.myMediaError = nil
                 $0.triggerQueryMyMedia = false
             }
-        case .onGetError(let error):
+        case .onGetMyMediaError(let error):
             return state.mutated {
                 $0.myMediaError = error
                 $0.triggerQueryMyMedia = false
             }
+            
+        case .onTriggerReloadMyStaredMedia:
+            return state.mutated {
+                $0.nextMyStaredMediaQuery.cursor = nil
+                $0.myStaredMediaItems = []
+                $0.myStaredMediaError = nil
+                $0.triggerQueryMyStaredMedia = true
+            }
+        case .onTriggerGetMoreMyStaredMedia:
+            guard state.shouldQueryMoreMyStaredMedia else { return state }
+            return state.mutated {
+                $0.myStaredMediaError = nil
+                $0.triggerQueryMyStaredMedia = true
+            }
+        case .onGetMyStaredMediaSuccess(let data):
+            return state.mutated {
+                $0.nextMyStaredMediaQuery.cursor = data.cursor
+                $0.myStaredMediaItems += data.items.flatMap { $0?.snapshot }.map(Item.init)
+                $0.myStaredMediaError = nil
+                $0.triggerQueryMyStaredMedia = false
+            }
+        case .onGetMyStaredMediaError(let error):
+            return state.mutated {
+                $0.myStaredMediaError = error
+                $0.triggerQueryMyStaredMedia = false
+            }
+            
         case .onTriggerShowImageDetail(let index):
             return state.mutated {
                 $0.nextShowImageDetailIndex = index
