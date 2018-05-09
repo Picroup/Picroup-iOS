@@ -63,9 +63,9 @@ class CommentCell: RxTableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     
     func configure(with item: MediumCommentsQuery.Data.Medium.Comment.Item) {
-//        userLabel?.text = item.userId
+        userLabel?.text = item.user.username
         contentLabel?.text = item.content
-        photoView.setImage(with: item.user.avatarId) // crash if user if create new comment
+        photoView.setImage(with: item.user.avatarId)
     }
 }
 

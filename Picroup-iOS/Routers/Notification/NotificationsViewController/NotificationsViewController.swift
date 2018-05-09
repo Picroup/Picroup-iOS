@@ -36,9 +36,7 @@ class NotificationsViewController: UIViewController {
         let queryMarkNotificationsAsViewed = Feedback.queryMarkNotificationsAsViewed(client: ApolloClient.shared)
         
         Driver<Any>.system(
-            initialState: NotificationsState.empty(
-                userId: Config.userId
-            ),
+            initialState: NotificationsState.empty(),
             reduce: logger(identifier: "ReputationsState")(NotificationsState.reduce),
             feedback:
                 injectDependncy,

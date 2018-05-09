@@ -45,14 +45,14 @@ extension NotificationsState {
 }
 
 extension NotificationsState {
-    static func empty(userId: String) -> NotificationsState {
+    static func empty() -> NotificationsState {
         return NotificationsState(
             currentUser: nil,
-            next: MyNotificationsQuery(userId: userId),
+            next: MyNotificationsQuery(userId: ""),
             items: [],
             error: nil,
             trigger: true,
-            nextMark: MarkNotificationsAsViewedQuery(userId: userId),
+            nextMark: MarkNotificationsAsViewedQuery(userId: ""),
             marked: nil,
             markError: nil,
             markTrigger: true

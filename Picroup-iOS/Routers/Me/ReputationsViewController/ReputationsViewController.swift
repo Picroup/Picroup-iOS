@@ -36,7 +36,6 @@ class ReputationsViewController: UIViewController {
 
         Driver<Any>.system(
             initialState: ReputationsState.empty(
-                userId: Config.userId,
                 reputation: reputation
             ),
             reduce: logger(identifier: "ReputationsState")(ReputationsState.reduce),

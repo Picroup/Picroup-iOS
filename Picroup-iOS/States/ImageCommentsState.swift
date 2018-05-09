@@ -11,15 +11,20 @@ import Foundation
 struct ImageCommentsState: Mutabled {
     typealias SaveComment = QueryState<SaveCommentMutation, SaveCommentMutation.Data.SaveComment>
     typealias Item = MediumCommentsQuery.Data.Medium.Comment.Item
+    
+    var currentUser: IsUser?
 
-    let userId: String
     var medium: RankedMediaQuery.Data.RankedMedium.Item
     var next: MediumCommentsQuery
     var items: [Item]
     var error: Error?
     var trigger: Bool
     
-    var saveComment: SaveComment
+    var nextSaveComment: SaveCommentMutation
+    var saveComment: SaveCommentMutation.Data.SaveComment?
+    var saveCommentError: Error?
+    var triggerSaveComment: Bool
+    
 }
 
 extension ImageCommentsState {
@@ -36,14 +41,19 @@ extension ImageCommentsState {
         return next.cursor != nil
     }
     var shouldSendComment: Bool {
-        return !saveComment.trigger && !saveComment.next.content.isEmpty
+        return !triggerSaveComment && !nextSaveComment.content.isEmpty
+    }
+    
+    public var saveCommentQuery: SaveCommentMutation? {
+        if (currentUser == nil) { return nil }
+        return triggerSaveComment ? nextSaveComment : nil
     }
 }
 
 extension ImageCommentsState {
-    static func empty(userId: String, medium: RankedMediaQuery.Data.RankedMedium.Item) -> ImageCommentsState {
+    static func empty(medium: RankedMediaQuery.Data.RankedMedium.Item) -> ImageCommentsState {
         return ImageCommentsState(
-            userId: userId,
+            currentUser: nil,
             medium: medium,
             next: MediumCommentsQuery(
                 mediumId: medium.id,
@@ -52,20 +62,24 @@ extension ImageCommentsState {
             items: [],
             error: nil,
             trigger: true,
-            saveComment: SaveComment(
-                next: SaveCommentMutation(userId: userId, mediumId: medium.id, content: "")
-            )
+            nextSaveComment: SaveCommentMutation(userId: "", mediumId: medium.id, content: ""),
+            saveComment: nil,
+            saveCommentError: nil,
+            triggerSaveComment: false
         )
     }
 }
 
 extension ImageCommentsState: IsFeedbackState {
     enum Event {
+        case onUpdateCurrentUser(IsUser?)
         case onTriggerReload
         case onTriggerGetMore
         case onGetSuccess(MediumCommentsQuery.Data.Medium)
         case onGetError(Error)
-        case saveComment(SaveComment.Event)
+        case onTriggerSaveComment
+        case onSaveCommentSuccess(SaveCommentMutation.Data.SaveComment)
+        case onSaveCommentError(Error)
         case onChangeCommentContent(String)
     }
 }
@@ -74,6 +88,11 @@ extension ImageCommentsState {
     
     static func reduce(state: ImageCommentsState, event: ImageCommentsState.Event) -> ImageCommentsState {
         switch event {
+        case .onUpdateCurrentUser(let currentUser):
+            return state.mutated {
+                $0.currentUser = currentUser
+                $0.nextSaveComment.userId = currentUser?.id ?? ""
+            }
         case .onTriggerReload:
             return state.mutated {
                 $0.next.cursor = nil
@@ -99,18 +118,31 @@ extension ImageCommentsState {
                 $0.error = error
                 $0.trigger = false
             }
-        case .saveComment(let event):
+        case .onTriggerSaveComment:
             return state.mutated {
-                $0.saveComment -= event
-                if case .onSuccess(let data) = event {
-                    $0.saveComment.next.content = ""
-                    let newCommet = Item(snapshot: data.snapshot)
-                    $0.items.insert(newCommet, at: 0)
-                }
+                $0.saveComment = nil
+                $0.saveCommentError = nil
+                $0.triggerSaveComment = true
+            }
+        case .onSaveCommentSuccess(let data):
+            return state.mutated {
+                $0.saveComment = data
+                $0.saveCommentError = nil
+                $0.triggerSaveComment = false
+                
+                $0.nextSaveComment.content = ""
+                let newCommet = Item(snapshot: data.snapshot)
+                $0.items.insert(newCommet, at: 0)
+            }
+        case .onSaveCommentError(let error):
+            return state.mutated {
+                $0.saveComment = nil
+                $0.saveCommentError = error
+                $0.triggerSaveComment = false
             }
         case .onChangeCommentContent(let content):
             return state.mutated {
-                $0.saveComment.next.content = content
+                $0.nextSaveComment.content = content
             }
         }
     }

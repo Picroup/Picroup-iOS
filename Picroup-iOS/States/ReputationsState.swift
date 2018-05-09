@@ -47,15 +47,15 @@ extension ReputationsState {
 }
 
 extension ReputationsState {
-    static func empty(userId: String, reputation: Int) -> ReputationsState {
+    static func empty(reputation: Int) -> ReputationsState {
         return ReputationsState(
             currentUser: nil,
             reputation: reputation,
-            next: MyReputationsQuery(userId: userId),
+            next: MyReputationsQuery(userId: ""),
             items: [],
             error: nil,
             trigger: true,
-            nextMark: MarkReputationLinksAsViewedQuery(userId: userId),
+            nextMark: MarkReputationLinksAsViewedQuery(userId: ""),
             marked: nil,
             markError: nil,
             markTrigger: true
