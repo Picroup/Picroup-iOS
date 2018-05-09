@@ -36,6 +36,7 @@ class HomeMenuViewController: FABMenuController {
         
         guard let dependency = dependency else { return }
         
+        let injectDependncy = self.injectDependncy(store: store)
         let syncState = self.syncState(dependency: dependency)
         let uiFeedback = self.uiFeedback
         let pickImage = Feedback.pickImage(from: self)
@@ -47,9 +48,10 @@ class HomeMenuViewController: FABMenuController {
         let reduce = logger(identifier: "HomeState")(HomeState.reduce)
         
         Driver<Any>.system(
-            initialState: HomeState.empty(userId: Config.userId),
+            initialState: HomeState.empty(),
             reduce: reduce,
             feedback:
+                injectDependncy,
                 syncState,
                 uiFeedback,
                 pickImage,
@@ -64,6 +66,12 @@ class HomeMenuViewController: FABMenuController {
     
 }
 extension HomeMenuViewController {
+    
+    fileprivate func injectDependncy(store: Store) -> Feedback.Raw {
+        return { _ in
+            store.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map(HomeState.Event.onUpdateCurrentUser)
+        }
+    }
     
     fileprivate func syncState(dependency: Dependency) -> Feedback.Raw {
         return  bind { state in
@@ -91,5 +99,22 @@ extension HomeMenuViewController {
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
+    }
+}
+
+extension UserObject {
+    
+    func toUser() -> IsUser {
+        let snapshot = dictionaryWithValues(forKeys: [
+            "_id",
+            "username",
+            "avatarId",
+            "followingsCount",
+            "followersCount",
+            "reputation",
+            "gainedReputation",
+            "notificationsCount",
+            ])
+        return UserQuery.Data.User(snapshot: snapshot)
     }
 }

@@ -15,7 +15,14 @@ import RxRealm
 
 class UserObject: Object {
     @objc dynamic var _id: String?
-    
+    @objc dynamic var username: String?
+    @objc dynamic var avatarId: String?
+    let followingsCount = RealmOptional<Int>()
+    let followersCount = RealmOptional<Int>()
+    let reputation = RealmOptional<Int>()
+    let gainedReputation = RealmOptional<Int>()
+    let notificationsCount = RealmOptional<Int>()
+
     override static func primaryKey() -> String {
         return "_id"
     }

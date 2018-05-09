@@ -555,6 +555,7 @@
                         <outlet property="reputationCountLabel" destination="jSq-np-gGw" id="Fia-DP-FfQ"/>
                         <outlet property="reputationView" destination="ZoO-wd-e2h" id="etw-yd-9kt"/>
                         <outlet property="showDetailLayoutConstraint" destination="NSI-mC-dtX" id="SU1-2c-RHh"/>
+                        <outlet property="userAvatarImageView" destination="h4f-qA-rMj" id="6og-95-mq8"/>
                         <outlet property="usernameLabel" destination="zUN-Qh-WrL" id="S7W-30-WqT"/>
                     </connections>
                 </customObject>
