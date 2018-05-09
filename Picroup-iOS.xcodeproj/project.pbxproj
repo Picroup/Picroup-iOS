@@ -70,6 +70,7 @@
 		458006DA20A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */; };
 		458C106920849058005E94CD /* RankViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458C106820849058005E94CD /* RankViewPresenter.swift */; };
 		4591AEDB20A2CF4D001EC384 /* MyStaredMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4591AEDA20A2CF4D001EC384 /* MyStaredMedia.graphql */; };
+		4591AEDD20A2F359001EC384 /* RecommendMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4591AEDC20A2F359001EC384 /* RecommendMedium.graphql */; };
 		4595F2082079EECF0040E5FA /* colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F2072079EECF0040E5FA /* colors.swift */; };
 		4595F20E2079F6780040E5FA /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4595F20D2079F6780040E5FA /* Login.storyboard */; };
 		4595F2102079F6B60040E5FA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F20F2079F6B60040E5FA /* LoginViewController.swift */; };
@@ -194,6 +195,7 @@
 		458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx+shouldHideNavigationBar.swift"; sourceTree = "<group>"; };
 		458C106820849058005E94CD /* RankViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewPresenter.swift; sourceTree = "<group>"; };
 		4591AEDA20A2CF4D001EC384 /* MyStaredMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyStaredMedia.graphql; sourceTree = "<group>"; };
+		4591AEDC20A2F359001EC384 /* RecommendMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RecommendMedium.graphql; sourceTree = "<group>"; };
 		4595F2072079EECF0040E5FA /* colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = colors.swift; sourceTree = "<group>"; };
 		4595F20D2079F6780040E5FA /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		4595F20F2079F6B60040E5FA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -678,6 +680,7 @@
 				45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */,
 				45BA0D802090391D0002E1D5 /* MyNotifications.graphql */,
 				45BA0D82209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql */,
+				4591AEDC20A2F359001EC384 /* RecommendMedium.graphql */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -847,6 +850,7 @@
 				45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */,
 				454F72A2208DD1AA00850471 /* MyMedia.graphql in Resources */,
 				45D04F7C2089FD0500AC2226 /* UserInterestedMedia.graphql in Resources */,
+				4591AEDD20A2F359001EC384 /* RecommendMedium.graphql in Resources */,
 				45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */,
 				45D04F8F208F635C00AC2226 /* MyReputations.graphql in Resources */,
 				45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */,

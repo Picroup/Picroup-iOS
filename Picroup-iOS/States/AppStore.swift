@@ -32,8 +32,26 @@ class AppStateObject: Object {
     @objc dynamic var _id: String?
     @objc dynamic var currentUser: UserObject?
     
+    @objc dynamic var previousMediumId: String?
+    @objc dynamic var currentMediumId: String?
+    @objc dynamic var triggerRecommendMedium = false
+
     override static func primaryKey() -> String {
         return "_id"
+    }
+}
+
+extension AppStateObject {
+    
+    var recommendMediumQuery: RecommendMediumMutation? {
+        guard
+            let previousMediumId = previousMediumId,
+            let currentMediumId = currentMediumId,
+            previousMediumId != currentMediumId  else {
+            return nil
+        }
+        let query = RecommendMediumMutation(mediumId: previousMediumId, recommendMediumId: currentMediumId)
+        return triggerRecommendMedium ? query : nil
     }
 }
 
@@ -67,6 +85,20 @@ class Store {
     func onLogout() {
         updateState { state, realm in
             state.currentUser = nil
+        }
+    }
+    
+    func onViewMedium(mediumId: String) {
+        updateState { state, realm in
+            state.previousMediumId = state.currentMediumId
+            state.currentMediumId = mediumId
+            state.triggerRecommendMedium = true
+        }
+    }
+    
+    func onRecommendMediumCompleted() {
+        updateState { state, realm in
+            state.triggerRecommendMedium = false
         }
     }
     
