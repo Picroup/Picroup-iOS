@@ -10,27 +10,52 @@ import Foundation
 
 struct ImageDetailState: Mutabled {
     typealias Meduim = QueryState<MediumQuery, MediumQuery.Data.Medium>
-    typealias StaredMedium = QueryState<StarMediumMutation, StarMediumMutation.Data.StarMedium>
+    typealias StarMedium = QueryState<StarMediumMutation, StarMediumMutation.Data.StarMedium>
     
-    let userId: String
+    var currentUser: IsUser?
+    
     var item: RankedMediaQuery.Data.RankedMedium.Item
-    var meduim: Meduim
-    var staredMedium: StaredMedium
+    
+    var next: MediumQuery
+    var meduim: MediumQuery.Data.Medium?
+    var error: Error?
+    var trigger: Bool
+    
+    var nextStarMedium: StarMediumMutation
+    var starMedium: StarMediumMutation.Data.StarMedium?
+    var starMediumError: Error?
+    var triggerStarMedium: Bool
 }
 
 extension ImageDetailState {
-    static func empty(userId: String, item: RankedMediaQuery.Data.RankedMedium.Item) -> ImageDetailState {
+    public var query: MediumQuery? {
+        if (currentUser == nil) { return nil }
+        return trigger ? next : nil
+    }
+    
+    public var shouldStarMedium: Bool {
+        return starMedium == nil && !triggerStarMedium
+    }
+    
+    public var starMediumQuery: StarMediumMutation? {
+        if (currentUser == nil) { return nil }
+        return triggerStarMedium ? nextStarMedium : nil
+    }
+}
+
+extension ImageDetailState {
+    static func empty(item: RankedMediaQuery.Data.RankedMedium.Item) -> ImageDetailState {
         return ImageDetailState(
-            userId: userId,
+            currentUser: nil,
             item: item,
-            meduim: QueryState(
-                next: MediumQuery(userId: userId, mediumId: item.id),
-                trigger: true
-            ),
-            staredMedium: QueryState(
-                next: StarMediumMutation(userId: userId, mediumId: item.id),
-                trigger: false
-            )
+            next: MediumQuery(userId: "", mediumId: item.id),
+            meduim: nil,
+            error: nil,
+            trigger: true,
+            nextStarMedium: StarMediumMutation(userId: "", mediumId: item.id),
+            starMedium: nil,
+            starMediumError: nil,
+            triggerStarMedium: false
         )
     }
 }
@@ -38,8 +63,13 @@ extension ImageDetailState {
 extension ImageDetailState: IsFeedbackState {
     
     enum Event {
-        case meduim(Meduim.Event)
-        case staredMedium(StaredMedium.Event)
+        case onUpdateCurrentUser(IsUser?)
+        case onTriggerGet
+        case onGetSuccess(MediumQuery.Data.Medium)
+        case onGetError(Error)
+        case onTriggerStarMedium
+        case onStarMediumSuccess(StarMediumMutation.Data.StarMedium)
+        case onStarMediumError(Error)
     }
 }
 
@@ -47,13 +77,47 @@ extension ImageDetailState {
     
     static func reduce(state: ImageDetailState, event: Event) -> ImageDetailState {
         switch event {
-        case .meduim(let event):
+        case .onUpdateCurrentUser(let currentUser):
             return state.mutated {
-                $0.meduim -= event
+                $0.currentUser = currentUser
+                $0.next.userId = currentUser?.id ?? ""
+                $0.nextStarMedium.userId = currentUser?.id ?? ""
             }
-        case .staredMedium(let event):
+        case .onTriggerGet:
             return state.mutated {
-                $0.staredMedium -= event
+                $0.meduim = nil
+                $0.error = nil
+                $0.trigger = true
+            }
+        case .onGetSuccess(let data):
+            return state.mutated {
+                $0.meduim = data
+                $0.error = nil
+                $0.trigger = false
+            }
+        case .onGetError(let error):
+            return state.mutated {
+                $0.meduim = nil
+                $0.error = error
+                $0.trigger = false
+            }
+        case .onTriggerStarMedium:
+            return state.mutated {
+                $0.starMedium = nil
+                $0.starMediumError = nil
+                $0.triggerStarMedium = true
+            }
+        case .onStarMediumSuccess(let data):
+            return state.mutated {
+                $0.starMedium = data
+                $0.starMediumError = nil
+                $0.triggerStarMedium = false
+            }
+        case .onStarMediumError(let error):
+            return state.mutated {
+                $0.starMedium = nil
+                $0.starMediumError = error
+                $0.triggerStarMedium = false
             }
         }
     }

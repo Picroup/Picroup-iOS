@@ -29,17 +29,18 @@ class ReputationsViewController: UIViewController {
         
         guard let reputation = dependency else { return }
         
+        let injectDependncy = self.injectDependncy(store: store)
         let uiFeedback = self.uiFeedback
         let queryReputations = Feedback.queryReputations(client: ApolloClient.shared)
         let queryMarkRepotationsAsViewed = Feedback.queryMarkRepotationsAsViewed(client: ApolloClient.shared)
 
         Driver<Any>.system(
             initialState: ReputationsState.empty(
-                userId: Config.userId,
                 reputation: reputation
             ),
             reduce: logger(identifier: "ReputationsState")(ReputationsState.reduce),
             feedback:
+                injectDependncy,
                 uiFeedback,
                 queryReputations,
                 queryMarkRepotationsAsViewed
@@ -55,6 +56,12 @@ class ReputationsViewController: UIViewController {
 }
 
 extension ReputationsViewController {
+    
+    fileprivate func injectDependncy(store: Store) -> Feedback.Raw {
+        return { _ in
+            store.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map { .onUpdateCurrentUser($0) }
+        }
+    }
     
     fileprivate var uiFeedback: Feedback.Raw {
         typealias Section = ReputationsViewPresenter.Section

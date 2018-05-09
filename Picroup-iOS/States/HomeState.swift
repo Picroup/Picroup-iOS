@@ -17,6 +17,8 @@ enum PickImageKind {
 struct HomeState: Mutabled {
     typealias Item = UserInterestedMediaQuery.Data.User.InterestedMedium.Item
     
+    var currentUser: IsUser?
+    
     var isFABMenuOpened: Bool
     var triggerFABMenuClose: Void?
     
@@ -35,6 +37,7 @@ struct HomeState: Mutabled {
 extension HomeState {
     var isPickingImage: Bool { return triggerPickImage != nil }
     var query: UserInterestedMediaQuery? {
+        if (currentUser == nil) { return nil }
         return trigger ? next : nil
     }
     var shouldQueryMore: Bool {
@@ -57,13 +60,14 @@ extension HomeState {
 }
 
 extension HomeState {
-    static func empty(userId: String) -> HomeState {
+    static func empty() -> HomeState {
         return HomeState(
+            currentUser: nil,
             isFABMenuOpened: false,
             triggerFABMenuClose: nil,
             triggerPickImage: nil,
             saveMediumQuery: nil,
-            next: UserInterestedMediaQuery(userId: userId),
+            next: UserInterestedMediaQuery(userId: ""),
             items: [],
             error: nil,
             trigger: true,
@@ -76,6 +80,7 @@ extension HomeState {
 extension HomeState: IsFeedbackState {
     
     enum Event {
+        case onUpdateCurrentUser(IsUser?)
         case fabMenuWillOpen
         case fabMenuWillClose
         case triggerFABMenuClose
@@ -103,6 +108,11 @@ extension HomeState {
     
     static func reduce(state: HomeState, event: Event) -> HomeState {
         switch event {
+        case .onUpdateCurrentUser(let currentUser):
+            return state.mutated {
+                $0.currentUser = currentUser
+                $0.next.userId = currentUser?.id ?? ""
+            }
         case .fabMenuWillOpen:
             return state.mutated {
                 $0.isFABMenuOpened = true

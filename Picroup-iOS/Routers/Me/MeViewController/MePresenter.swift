@@ -13,6 +13,7 @@ import RxCocoa
 import RxDataSources
 
 class MePresenter: NSObject {
+    @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var displaynameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
 
@@ -51,6 +52,7 @@ class MePresenter: NSObject {
 
 struct UserViewModel {
     let username: String
+    let avatarId: String?
     let reputation: String
     let followersCount: String
     let followingsCount: String
@@ -59,6 +61,7 @@ struct UserViewModel {
     
     init(user: UserQuery.Data.User?) {
         self.username = user.map { "@\($0.username)" } ?? " "
+        self.avatarId = user?.avatarId
         self.reputation = user?.reputation.description ?? "0"
         self.followersCount = user?.followersCount.description ?? "0"
         self.followingsCount = user?.followingsCount.description ?? "0"

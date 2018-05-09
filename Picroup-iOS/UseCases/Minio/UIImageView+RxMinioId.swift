@@ -13,7 +13,7 @@ import RxCocoa
 
 extension Reactive where Base: UIImageView {
     
-    var minioId: Binder<String?> {
+    var imageMinioId: Binder<String?> {
         return Binder(base) { imageView, minioId in
             let url = minioId
                 .map { "\(Config.baseURL)/s3?name=\($0)" }

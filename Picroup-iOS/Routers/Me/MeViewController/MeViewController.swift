@@ -25,6 +25,7 @@ class MeViewController: UIViewController {
     
     private func setupRxFeedback() {
         
+        let injectDependncy = self.injectDependncy(store: store)
         let uiFeedback = self.uiFeedback
         let queryMe = Feedback.queryMe(client: ApolloClient.shared)
         let queryMyMedia = Feedback.queryMyMedia(client: ApolloClient.shared)
@@ -32,13 +33,13 @@ class MeViewController: UIViewController {
         let showReputations = Feedback.showReputations(from: self)
         let triggerReloadMe = Feedback.triggerReloadMe(from: self)
         
-        
         let reduce = logger(identifier: "MeState")(MeState.reduce)
         
         Driver<Any>.system(
-            initialState: MeState.empty(userId: Config.userId),
+            initialState: MeState.empty(),
             reduce: reduce,
             feedback:
+                injectDependncy,
                 uiFeedback,
                 queryMe,
                 queryMyMedia,
@@ -49,8 +50,7 @@ class MeViewController: UIViewController {
             .drive()
             .disposed(by: disposeBag)
         
-        presenter.collectionView.rx.willEndDragging.asSignal()
-            .map { $0.velocity.y >= 0 }
+        presenter.collectionView.rx.shouldHideNavigationBar()
             .emit(onNext: { [weak presenter, weak self] in
                 presenter?.hideDetailLayoutConstraint.isActive = $0
                 presenter?.showDetailLayoutConstraint.isActive = !$0
@@ -63,11 +63,19 @@ class MeViewController: UIViewController {
 
 extension MeViewController {
     
+    fileprivate func injectDependncy(store: Store) -> Feedback.Raw {
+        return { _ in
+            store.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map { .onUpdateCurrentUser($0) }
+        }
+    }
+    
     fileprivate var uiFeedback: Feedback.Raw {
         typealias Section = MePresenter.Section
         return bind(presenter) { (presenter, state) -> Bindings<MeState.Event> in
             let meViewModel = state.map { UserViewModel(user: $0.me) }
             let subscriptions: [Disposable] = [
+                meViewModel.map { $0.avatarId }.drive(presenter.userAvatarImageView.rx.imageMinioId),
+                meViewModel.map { $0.username }.drive(presenter.displaynameLabel.rx.text),
                 meViewModel.map { $0.username }.drive(presenter.usernameLabel.rx.text),
                 meViewModel.map { $0.reputation }.drive(presenter.reputationCountLabel.rx.text),
                 meViewModel.map { $0.followersCount }.drive(presenter.followersCountLabel.rx.text),

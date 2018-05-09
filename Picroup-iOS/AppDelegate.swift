@@ -17,17 +17,28 @@ import Apollo
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-    private let disposeBag = DisposeBag()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let window = UIWindow(frame: Screen.bounds)
-        window.tintColor = UIColor.primary
-        window.rootViewController = RouterService.Main.rootViewController()
-        window.makeKeyAndVisible()
-        self.window = window
+        prepareWindow()
+        setupRxfeedback()
         return true
     }
-
+    
+    private func prepareWindow() {
+        let window = UIWindow(frame: Screen.bounds)
+        window.tintColor = UIColor.primary
+        window.makeKeyAndVisible()
+        window.rootViewController = RouterService.Main.rootViewController()
+        self.window = window
+    }
+    
+    private func setupRxfeedback() {
+        _ = store.state.debug("state").map { $0.currentUser != nil }.distinctUntilChanged().drive(Binder(window!) { (window, isLogin) in
+            let lvc = RouterService.Login.loginViewController(client: .shared, store: store)
+            let loginViewController = SnackbarController(rootViewController: lvc)
+            let rootViewController = RouterService.Main.rootViewController()
+            window.rootViewController = isLogin ? rootViewController : loginViewController
+        })
+        
+    }
 }
-

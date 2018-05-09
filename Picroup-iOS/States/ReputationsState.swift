@@ -11,6 +11,8 @@ import Foundation
 struct ReputationsState: Mutabled {
     typealias Item = MyReputationsQuery.Data.User.ReputationLink.Item
     
+    var currentUser: IsUser?
+    
     var reputation: Int
     
     var next: MyReputationsQuery
@@ -26,6 +28,7 @@ struct ReputationsState: Mutabled {
 
 extension ReputationsState {
     public var query: MyReputationsQuery? {
+        if (currentUser == nil) { return nil }
         return trigger ? next : nil
     }
     var shouldQueryMore: Bool {
@@ -38,19 +41,21 @@ extension ReputationsState {
         return next.cursor != nil
     }
     public var markQuery: MarkReputationLinksAsViewedQuery? {
+        if (currentUser == nil) { return nil }
         return markTrigger && !items.isEmpty ? nextMark : nil
     }
 }
 
 extension ReputationsState {
-    static func empty(userId: String, reputation: Int) -> ReputationsState {
+    static func empty(reputation: Int) -> ReputationsState {
         return ReputationsState(
+            currentUser: nil,
             reputation: reputation,
-            next: MyReputationsQuery(userId: userId),
+            next: MyReputationsQuery(userId: ""),
             items: [],
             error: nil,
             trigger: true,
-            nextMark: MarkReputationLinksAsViewedQuery(userId: userId),
+            nextMark: MarkReputationLinksAsViewedQuery(userId: ""),
             marked: nil,
             markError: nil,
             markTrigger: true
@@ -60,6 +65,7 @@ extension ReputationsState {
 
 extension ReputationsState: IsFeedbackState {
     enum Event {
+        case onUpdateCurrentUser(IsUser?)
         case onTriggerReload
         case onTriggerGetMore
         case onGetSuccess(MyReputationsQuery.Data.User.ReputationLink)
@@ -73,6 +79,12 @@ extension ReputationsState {
     
     static func reduce(state: ReputationsState, event: ReputationsState.Event) -> ReputationsState {
         switch event {
+        case .onUpdateCurrentUser(let currentUser):
+            return state.mutated {
+                $0.currentUser = currentUser
+                $0.next.userId = currentUser?.id ?? ""
+                $0.nextMark.userId = currentUser?.id ?? ""
+            }
         case .onTriggerReload:
             return state.mutated {
                 $0.next.cursor = nil

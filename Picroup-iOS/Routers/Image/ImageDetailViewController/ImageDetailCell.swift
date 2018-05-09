@@ -32,9 +32,9 @@ extension ImageDetailCell {
 extension ImageDetailCell.ViewModel {
     
     init(imageDetailState state: ImageDetailState) {
-        let (item, meduim, staredMedium) = (state.item, state.meduim.data, state.staredMedium.data)
+        let (item, meduim, starMedium) = (state.item, state.meduim, state.starMedium)
         
-        let endAt = staredMedium?.endedAt ?? meduim?.endedAt ?? item.endedAt
+        let endAt = starMedium?.endedAt ?? meduim?.endedAt ?? item.endedAt
         let remainTime = endAt.sinceNow
         
         self.imageViewMinioId = item.minioId
@@ -44,7 +44,7 @@ extension ImageDetailCell.ViewModel {
         self.starButtonMotionIdentifier = "starButton_\(item.id)"
         self.remainTimeLabelText = "\(Int(remainTime / 1.0.weeks)) 周"
         self.commentsCountLabelText = "\(item.commentsCount) 条"
-        self.stared = (staredMedium != nil) ? true : meduim?.stared
+        self.stared = (starMedium != nil) ? true : meduim?.stared
         self.animatedChangeProgress = item.endedAt != endAt
         
         self.username = item.user.username

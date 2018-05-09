@@ -2,6 +2,7 @@ query User($userId: ID!) {
     user(userId: $userId) {
         _id
         username
+        avatarId
         followingsCount
         followersCount
         reputation

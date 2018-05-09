@@ -11,6 +11,8 @@ import Foundation
 struct MeState: Mutabled {
     typealias Item = MyMediaQuery.Data.User.Medium.Item
     
+    var currentUser: IsUser?
+    
     var nextMeQuery: UserQuery
     var me: UserQuery.Data.User?
     var meError: Error?
@@ -28,9 +30,11 @@ struct MeState: Mutabled {
 
 extension MeState {
     var meQuery: UserQuery? {
+        if (currentUser == nil) { return nil }
         return triggerQueryMe ? nextMeQuery : nil
     }
     var myMediaQuery: MyMediaQuery? {
+        if (currentUser == nil) { return nil }
         return triggerQueryMyMedia ? nextMyMediaQuery : nil
     }
     var shouldQueryMoreMyMedia: Bool {
@@ -52,13 +56,14 @@ extension MeState {
 }
 
 extension MeState {
-    static func empty(userId: String) -> MeState {
+    static func empty() -> MeState {
         return MeState(
-            nextMeQuery: UserQuery(userId: userId),
+            currentUser: nil,
+            nextMeQuery: UserQuery(userId: ""),
             me: nil,
             meError: nil,
             triggerQueryMe: false,
-            nextMyMediaQuery: MyMediaQuery(userId: userId),
+            nextMyMediaQuery: MyMediaQuery(userId: ""),
             myMediaItems: [],
             myMediaError: nil,
             triggerQueryMyMedia: true,
@@ -71,6 +76,7 @@ extension MeState {
 extension MeState: IsFeedbackState {
     
     enum Event {
+        case onUpdateCurrentUser(IsUser?)
         case onTriggerReloadMe
         case onGetMeSuccess(UserQuery.Data.User)
         case onGetMeError(Error)
@@ -91,6 +97,12 @@ extension MeState: IsFeedbackState {
 extension MeState {
     static func reduce(state: MeState, event: MeState.Event) -> MeState {
         switch event {
+        case .onUpdateCurrentUser(let currentUser):
+            return state.mutated {
+                $0.currentUser = currentUser
+                $0.nextMeQuery.userId = currentUser?.id ?? ""
+                $0.nextMyMediaQuery.userId = currentUser?.id ?? ""
+            }
         case .onTriggerReloadMe:
             return state.mutated {
                 $0.meError = nil

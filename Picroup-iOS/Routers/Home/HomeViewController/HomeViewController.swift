@@ -42,18 +42,22 @@ class HomeViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        uiFeedback(state)
+        let vcFeedback: Feedback = bind(self) { (me, state)  in
+            let subscriptions = [
+                me.presenter.collectionView.rx.shouldHideNavigationBar()
+                    .emit(to: me.rx.setNavigationBarHidden(animated: true))
+            ]
+            let events: [Signal<HomeState.Event>] = [
+                .never(),
+                ]
+            return Bindings(subscriptions: subscriptions, events: events)
+        }
+        
+        Signal.merge(uiFeedback(state), vcFeedback(state))
             .emit(onNext: events)
             .disposed(by: disposeBag)
         
         presenter.collectionView.rx.setDelegate(presenter)
-            .disposed(by: disposeBag)
-        
-        presenter.collectionView.rx.willEndDragging.asSignal()
-            .map { $0.velocity.y >= 0 }
-            .emit(onNext: { [weak self] in
-                self?.navigationController?.setNavigationBarHidden($0, animated: true)
-            })
             .disposed(by: disposeBag)
     }
 }

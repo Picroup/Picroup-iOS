@@ -30,17 +30,16 @@ class NotificationsViewController: UIViewController {
     
     private func setupRxFeedback() {
         
+        let injectDependncy = self.injectDependncy(store: store)
         let uiFeedback = self.uiFeedback
         let queryNotifications = Feedback.queryNotifications(client: ApolloClient.shared)
         let queryMarkNotificationsAsViewed = Feedback.queryMarkNotificationsAsViewed(client: ApolloClient.shared)
         
-        
         Driver<Any>.system(
-            initialState: NotificationsState.empty(
-                userId: Config.userId
-            ),
+            initialState: NotificationsState.empty(),
             reduce: logger(identifier: "ReputationsState")(NotificationsState.reduce),
             feedback:
+                injectDependncy,
                 uiFeedback,
                 queryNotifications,
                 queryMarkNotificationsAsViewed
@@ -48,17 +47,19 @@ class NotificationsViewController: UIViewController {
             .drive()
             .disposed(by: disposeBag)
         
-        
-        presenter.tableView.rx.willEndDragging.asSignal()
-            .map { $0.velocity.y >= 0 }
-            .emit(onNext: { [weak self] in
-                self?.navigationController?.setNavigationBarHidden($0, animated: true)
-            })
+        presenter.tableView.rx.shouldHideNavigationBar()
+            .emit(to: rx.setNavigationBarHidden(animated: true))
             .disposed(by: disposeBag)
     }
 }
 
 extension NotificationsViewController {
+    
+    fileprivate func injectDependncy(store: Store) -> Feedback.Raw {
+        return { _ in
+            store.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map { .onUpdateCurrentUser($0) }
+        }
+    }
     
     fileprivate var uiFeedback: Feedback.Raw {
         typealias Section = NotificationsViewPresenter.Section

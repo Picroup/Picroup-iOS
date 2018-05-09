@@ -11,5 +11,10 @@ mutation SaveImageMedium($userId: ID!, $minioId: ID!, $width: Float!, $aspectRat
         }
         minioId
         commentsCount
+        user {
+            _id
+            username
+            avatarId
+        }
     }
 }

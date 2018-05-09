@@ -14,6 +14,8 @@ struct CreateImageState: Mutabled {
     typealias Query = (userId: String, pickedImage: UIImage)
     typealias SaveImageMedium = SaveImageMediumMutation.Data.SaveImageMedium
     
+    var currentUser: IsUser?
+    
     var progress: RxProgress?
     var error: Error?
     var savedMedium: SaveImageMedium?
@@ -24,18 +26,24 @@ struct CreateImageState: Mutabled {
 }
 
 extension CreateImageState {
-    var query: Query? { return triggerSave ? next : nil }
-    var shouldSaveImage: Bool { return !triggerSave && savedMedium == nil }
+    var query: Query? {
+        if (currentUser == nil) { return nil }
+        return triggerSave ? next : nil
+    }
+    var shouldSaveImage: Bool {
+        return !triggerSave && savedMedium == nil
+    }
 }
 
 extension CreateImageState {
     
-    static func empty(userId: String = Config.userId, pickedImage: UIImage) -> CreateImageState {
+    static func empty(pickedImage: UIImage) -> CreateImageState {
         return CreateImageState(
+            currentUser: nil,
             progress: nil,
             error: nil,
             savedMedium: nil,
-            next: (userId, pickedImage),
+            next: ("", pickedImage),
             triggerSave: false,
             triggerCancel: nil
         )
@@ -44,6 +52,7 @@ extension CreateImageState {
 
 extension CreateImageState: IsFeedbackState {
     enum Event {
+        case onUpdateCurrentUser(IsUser?)
         case onProgress(RxProgress)
         case onError(Error)
         case onSavedMedium(SaveImageMediumMutation.Data.SaveImageMedium)
@@ -56,6 +65,11 @@ extension CreateImageState {
     
     static func reduce(state: CreateImageState, event: CreateImageState.Event) -> CreateImageState {
         switch event {
+        case .onUpdateCurrentUser(let currentUser):
+            return state.mutated {
+                $0.currentUser = currentUser
+                $0.next.userId = currentUser?.id ?? ""
+            }
         case .onProgress(let progress):
             return state.mutated {
                 $0.progress = progress

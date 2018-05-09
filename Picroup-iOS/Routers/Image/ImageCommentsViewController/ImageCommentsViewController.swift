@@ -34,11 +34,15 @@ class ImageCommentsViewController: HideNavigationBarViewController {
         
         typealias Section = ImageCommentsPresenter.Section
         
+        let injectDependncy: Feedback = { _ in
+            store.state.map { $0.currentUser?.toUser() }.asObservable().map { .onUpdateCurrentUser($0) }
+        }
+        
         weak var weakSelf = self
         let uiFeedback: Feedback = bind(presenter) { (presenter, state) in
             let subscriptions = [
                 state.map { $0.medium }.throttle(0.3, scheduler: MainScheduler.instance).bind(to: presenter.medium),
-                state.map { $0.saveComment.next.content }.bind(to: presenter.contentTextField.rx.text),
+                state.map { $0.nextSaveComment.content }.bind(to: presenter.contentTextField.rx.text),
                 state.map { $0.shouldSendComment ? 1 : 0 }.bind(to: presenter.sendButton.rx.alpha),
                 presenter.hideCommentsContentView.rx.tapGesture().when(.recognized).mapToVoid().bind(to: weakSelf!.rx.pop(animated: true)),
                 presenter.imageView.rx.tapGesture().when(.recognized).mapToVoid().bind(to: weakSelf!.rx.pop(animated: true)),
@@ -52,7 +56,7 @@ class ImageCommentsViewController: HideNavigationBarViewController {
                     }.map { .onTriggerGetMore },
                 state.flatMapLatest {
                     $0.shouldSendComment ? presenter.sendButton.rx.tap.asObservable() : .empty()
-                    }.map { .saveComment(.trigger) },
+                    }.map { .onTriggerSaveComment },
                 presenter.contentTextField.rx.text.orEmpty.debounce(0.3, scheduler: MainScheduler.instance).distinctUntilChanged().map(ImageCommentsState.Event.onChangeCommentContent)
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
@@ -64,17 +68,21 @@ class ImageCommentsViewController: HideNavigationBarViewController {
                 .catchError { error in .just(.onGetError(error)) }
         }
         
-        let saveComment: Feedback = react(query: { $0.saveComment.query }) { query in
+        let saveComment: Feedback = react(query: { $0.saveCommentQuery }) { query in
             ApolloClient.shared.rx.perform(mutation: query).map { $0?.data?.saveComment }.unwrap().asObservable()
-                .map { ImageCommentsState.Event.saveComment(.onSuccess($0)) }
-                .catchError { .just(.saveComment(.onError($0))) }
+                .map { .onSaveCommentSuccess($0) }
+                .catchErrorRecover { .onSaveCommentError($0) }
         }
         
         Observable<Any>.system(
-            initialState: ImageCommentsState.empty(userId: Config.userId, medium: dependency),
+            initialState: ImageCommentsState.empty(medium: dependency),
             reduce: logger(identifier: "ImageCommentsState")(ImageCommentsState.reduce),
             scheduler: MainScheduler.instance,
-            scheduledFeedback: uiFeedback, queryMedia, saveComment
+            scheduledFeedback:
+                injectDependncy,
+                uiFeedback,
+                queryMedia,
+                saveComment
             )
             .subscribe()
             .disposed(by: disposeBag)
