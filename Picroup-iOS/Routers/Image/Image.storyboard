@@ -250,11 +250,16 @@
                         <viewLayoutGuide key="safeArea" id="vDe-ez-C2T"/>
                     </view>
                     <connections>
-                        <outlet property="backgroundButton" destination="ueA-Un-YhH" id="xWH-ey-Rjl"/>
-                        <outlet property="collectionView" destination="oWM-uy-VqI" id="iae-La-65r"/>
+                        <outlet property="presenter" destination="6ii-Hy-hTY" id="TGB-m3-i6s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YZn-2P-a31" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="6ii-Hy-hTY" customClass="ImageDetailPresenter" customModule="Picroup_iOS" customModuleProvider="target">
+                    <connections>
+                        <outlet property="backgroundButton" destination="ueA-Un-YhH" id="v5q-KA-t7h"/>
+                        <outlet property="collectionView" destination="oWM-uy-VqI" id="5UF-7U-V7j"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="1751" y="465"/>
         </scene>

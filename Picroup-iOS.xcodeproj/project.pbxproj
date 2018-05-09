@@ -95,6 +95,8 @@
 		45A65F5E209BEEB600E7C677 /* LoginState+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A65F5D209BEEB600E7C677 /* LoginState+system.swift */; };
 		45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */; };
 		45A84461208F67D600C75982 /* ReputationsState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A84460208F67D600C75982 /* ReputationsState+GraphQL.swift */; };
+		45AA3B4520A311BD0032A8CF /* ImageDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4420A311BD0032A8CF /* ImageDetailPresenter.swift */; };
+		45AA3B4820A346DB0032A8CF /* DispachQueue+realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */; };
 		45BA0D7A208EB7640002E1D5 /* MeState+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */; };
 		45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */; };
 		45BA0D7F209010670002E1D5 /* MarkReputationLinksAsViewed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */; };
@@ -220,6 +222,8 @@
 		45A65F5D209BEEB600E7C677 /* LoginState+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginState+system.swift"; sourceTree = "<group>"; };
 		45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PublishRelay+asBinder.swift"; sourceTree = "<group>"; };
 		45A84460208F67D600C75982 /* ReputationsState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReputationsState+GraphQL.swift"; sourceTree = "<group>"; };
+		45AA3B4420A311BD0032A8CF /* ImageDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailPresenter.swift; sourceTree = "<group>"; };
+		45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispachQueue+realm.swift"; sourceTree = "<group>"; };
 		45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeState+ViewController.swift"; sourceTree = "<group>"; };
 		45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsViewController.swift; sourceTree = "<group>"; };
 		45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MarkReputationLinksAsViewed.graphql; sourceTree = "<group>"; };
@@ -643,6 +647,7 @@
 		45A039372075C613007498DB /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				45AA3B4620A346C10032A8CF /* Realm */,
 				45A65F4F209B032400E7C677 /* Model */,
 				454F728D208822EC00850471 /* LocalStorage */,
 				4595F2092079F3630040E5FA /* Minio */,
@@ -713,6 +718,14 @@
 			path = ReputationsState;
 			sourceTree = "<group>";
 		};
+		45AA3B4620A346C10032A8CF /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
 		45BA0D7B208ED3980002E1D5 /* ReputationsViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -744,6 +757,7 @@
 			isa = PBXGroup;
 			children = (
 				45E240B12084D2CF004B58EF /* ImageDetailViewController.swift */,
+				45AA3B4420A311BD0032A8CF /* ImageDetailPresenter.swift */,
 				45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */,
 			);
 			path = ImageDetailViewController;
@@ -983,6 +997,7 @@
 				45D04F80208A06D300AC2226 /* HomeViewPresenter.swift in Sources */,
 				458006D620A137A5004BD982 /* AppStore.swift in Sources */,
 				451CD32D207BB5D90063A972 /* HomeMenuViewController.swift in Sources */,
+				45AA3B4820A346DB0032A8CF /* DispachQueue+realm.swift in Sources */,
 				451DD4C12083125A002C509A /* Objective.swift in Sources */,
 				4595F219207A15010040E5FA /* Mutabled.swift in Sources */,
 				45D04F89208E1F8F00AC2226 /* MeState+Route.swift in Sources */,
@@ -1010,6 +1025,7 @@
 				451DD4BD207F8BC7002C509A /* RankState.swift in Sources */,
 				45BA0D8520903A020002E1D5 /* NotificationsState.swift in Sources */,
 				45A65F5E209BEEB600E7C677 /* LoginState+system.swift in Sources */,
+				45AA3B4520A311BD0032A8CF /* ImageDetailPresenter.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
 				459F259920A28C13008B6C9B /* ObservableType+catchErrorRecover.swift in Sources */,
 				454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */,

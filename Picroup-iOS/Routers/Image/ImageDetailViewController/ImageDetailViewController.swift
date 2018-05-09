@@ -18,8 +18,7 @@ class ImageDetailViewController: HideNavigationBarViewController {
     typealias Dependency = RankedMediaQuery.Data.RankedMedium.Item
     var dependency: Dependency!
     
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var backgroundButton: UIButton!
+    @IBOutlet var presenter: ImageDetailPresenter!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,11 +30,14 @@ class ImageDetailViewController: HideNavigationBarViewController {
         guard let dependency = dependency else { return }
         typealias Feedback = Observable<Any>.Feedback<ImageDetailState, ImageDetailState.Event>
 
+        store.onViewMedium(mediumId: dependency.id)
+        
         let injectDependncy: Feedback = { _ in
             store.state.map { $0.currentUser?.toUser() }.asObservable().map { .onUpdateCurrentUser($0) }
         }
         
         let uiFeedback: Feedback = bind(self) { (me, state) in
+            let presenter = me.presenter!
             let starMediumTrigger = PublishRelay<Void>()
             let popTrigger = PublishRelay<Void>()
             weak var weakMe = me
@@ -44,7 +46,7 @@ class ImageDetailViewController: HideNavigationBarViewController {
                 weakMe?.navigationController?.pushViewController(vc, animated: true)
                 }}
             let subscriptions = [
-                state.map { [$0] }.throttle(1, scheduler: MainScheduler.instance).bind(to: me.collectionView .rx.items(cellIdentifier: "ImageDetailCell", cellType: ImageDetailCell.self)) { index, state, cell in
+                state.map { [$0] }.throttle(1, scheduler: MainScheduler.instance).bind(to: presenter.collectionView.rx.items(cellIdentifier: "ImageDetailCell", cellType: ImageDetailCell.self)) { index, state, cell in
                     let viewModel = ImageDetailCell.ViewModel(imageDetailState: state)
                     cell.configure(
                         with: viewModel,
@@ -52,7 +54,7 @@ class ImageDetailViewController: HideNavigationBarViewController {
                         onCommentsTap: showImageComments(state),
                         onImageViewTap: popTrigger.accept)
                 },
-                me.backgroundButton.rx.tap.bind(to: popTrigger),
+                presenter.backgroundButton.rx.tap.bind(to: popTrigger),
                 popTrigger.bind(to: me.rx.pop(animated: true)),
             ]
             let events = [
@@ -61,7 +63,10 @@ class ImageDetailViewController: HideNavigationBarViewController {
                         return .empty()
                     }
                     return starMediumTrigger.map { .onTriggerStarMedium }
-                }
+                },
+                state.flatMapLatest {
+                    $0.shouldQueryMore ? presenter.collectionView.rx.isNearBottom.asSignal() : .empty()
+                    }.map { .onTriggerGetMore },
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
@@ -92,7 +97,7 @@ class ImageDetailViewController: HideNavigationBarViewController {
             .subscribe()
             .disposed(by: disposeBag)
         
-        collectionView.rx.setDelegate(self).disposed(by: disposeBag)
+        presenter.collectionView.rx.setDelegate(self).disposed(by: disposeBag)
     }
 }
 
