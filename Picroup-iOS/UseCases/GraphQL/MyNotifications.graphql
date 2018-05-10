@@ -1,40 +1,7 @@
 query MyNotifications($userId: ID!, $cursor: Float = null) {
     user(userId: $userId) {
         notifications(cursor: $cursor) {
-            cursor
-            items {
-                _id
-                userId
-                toUserId
-                mediumId
-                content
-                createdAt
-                kind
-                viewed
-                user {
-                    _id
-                    username
-                    avatarId
-                }
-                medium {
-                    _id
-                    userId
-                    createdAt
-                    endedAt
-                    kind
-                    detail {
-                        width
-                        aspectRatio
-                    }
-                    minioId
-                    commentsCount
-                    user {
-                        _id
-                        username
-                        avatarId
-                    }
-                }
-            }
+            ...CursorNotoficationsFragment
         }
     }
 }

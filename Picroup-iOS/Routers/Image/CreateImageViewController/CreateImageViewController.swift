@@ -89,7 +89,7 @@ extension CreateImageViewController {
                 state.map { $0.progress?.completed ?? 0 }.distinctUntilChanged().drive(me.presenter.progressView.rx.progress),
                 state.map { $0.shouldSaveImage }.distinctUntilChanged().drive(me.presenter.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 state.map { $0.triggerCancel }.distinctUnwrap().drive(me.rx.dismiss(animated: true)),
-                state.map { $0.savedMedium }.distinctUnwrap().map { _ in "已保存" }.drive(me.snackbarController!.rx.snackbarText),
+                state.map { $0.savedMedium }.distinctUnwrap().map { _ in "已分享" }.drive(me.snackbarController!.rx.snackbarText),
                 state.map { $0.savedMedium }.distinctUnwrap().mapToVoid().delay(3.3).drive(me.rx.dismiss(animated: true)),
                 ]
             let events = [

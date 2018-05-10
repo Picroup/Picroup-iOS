@@ -1,0 +1,9 @@
+fragment CommentFragment on Comment {
+    _id
+    userId
+    content
+    createdAt
+    user { ...UserFragment }
+}
+
+

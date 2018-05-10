@@ -1,0 +1,15 @@
+fragment MediumFragment on Medium {
+    _id
+    userId
+    createdAt
+    endedAt
+    kind
+    detail {
+        width
+        aspectRatio
+    }
+    minioId
+    commentsCount
+    user { ...UserFragment }
+}
+

@@ -73,6 +73,7 @@
 		4591AEDD20A2F359001EC384 /* RecommendMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4591AEDC20A2F359001EC384 /* RecommendMedium.graphql */; };
 		4591AEDF20A3D70E001EC384 /* RankMediumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4591AEDE20A3D70E001EC384 /* RankMediumCell.swift */; };
 		4591AEE220A3E0CC001EC384 /* SectionedDataSource+indexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4591AEE120A3E0CC001EC384 /* SectionedDataSource+indexPath.swift */; };
+		4591AEE420A414C4001EC384 /* MediumFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4591AEE320A414C4001EC384 /* MediumFragment.graphql */; };
 		4595F2082079EECF0040E5FA /* colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F2072079EECF0040E5FA /* colors.swift */; };
 		4595F20E2079F6780040E5FA /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4595F20D2079F6780040E5FA /* Login.storyboard */; };
 		4595F2102079F6B60040E5FA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F20F2079F6B60040E5FA /* LoginViewController.swift */; };
@@ -131,6 +132,12 @@
 		45E240B720862AD7004B58EF /* ImageDetailState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E240B620862AD7004B58EF /* ImageDetailState.swift */; };
 		45E240B920862CF6004B58EF /* Medium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45E240B820862CF6004B58EF /* Medium.graphql */; };
 		45E6C24A20863AC3003D7AA8 /* QueryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6C24920863AC3003D7AA8 /* QueryState.swift */; };
+		45FC0BE220A41704006AAF3D /* UserFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45FC0BE120A41704006AAF3D /* UserFragment.graphql */; };
+		45FC0BE420A41813006AAF3D /* UserDetailFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45FC0BE320A41813006AAF3D /* UserDetailFragment.graphql */; };
+		45FC0BE620A418BF006AAF3D /* CommentFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45FC0BE520A418BF006AAF3D /* CommentFragment.graphql */; };
+		45FC0BEA20A419FE006AAF3D /* CursorItemsFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45FC0BE920A419FE006AAF3D /* CursorItemsFragment.graphql */; };
+		45FC0BEC20A41B0D006AAF3D /* NotificationFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45FC0BEB20A41B0D006AAF3D /* NotificationFragment.graphql */; };
+		45FC0BEE20A41BD2006AAF3D /* ReputationFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45FC0BED20A41BD2006AAF3D /* ReputationFragment.graphql */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -202,6 +209,7 @@
 		4591AEDC20A2F359001EC384 /* RecommendMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RecommendMedium.graphql; sourceTree = "<group>"; };
 		4591AEDE20A3D70E001EC384 /* RankMediumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankMediumCell.swift; sourceTree = "<group>"; };
 		4591AEE120A3E0CC001EC384 /* SectionedDataSource+indexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionedDataSource+indexPath.swift"; sourceTree = "<group>"; };
+		4591AEE320A414C4001EC384 /* MediumFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MediumFragment.graphql; sourceTree = "<group>"; };
 		4595F2072079EECF0040E5FA /* colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = colors.swift; sourceTree = "<group>"; };
 		4595F20D2079F6780040E5FA /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		4595F20F2079F6B60040E5FA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -260,6 +268,12 @@
 		45E240B620862AD7004B58EF /* ImageDetailState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailState.swift; sourceTree = "<group>"; };
 		45E240B820862CF6004B58EF /* Medium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Medium.graphql; sourceTree = "<group>"; };
 		45E6C24920863AC3003D7AA8 /* QueryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryState.swift; sourceTree = "<group>"; };
+		45FC0BE120A41704006AAF3D /* UserFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserFragment.graphql; sourceTree = "<group>"; };
+		45FC0BE320A41813006AAF3D /* UserDetailFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserDetailFragment.graphql; sourceTree = "<group>"; };
+		45FC0BE520A418BF006AAF3D /* CommentFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommentFragment.graphql; sourceTree = "<group>"; };
+		45FC0BE920A419FE006AAF3D /* CursorItemsFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CursorItemsFragment.graphql; sourceTree = "<group>"; };
+		45FC0BEB20A41B0D006AAF3D /* NotificationFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NotificationFragment.graphql; sourceTree = "<group>"; };
+		45FC0BED20A41BD2006AAF3D /* ReputationFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ReputationFragment.graphql; sourceTree = "<group>"; };
 		7A0DB2063FBD3CD08905936E /* Pods-Picroup-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Picroup_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -684,22 +698,29 @@
 			children = (
 				457B1BA0205FF2A100BEDDF1 /* API.swift */,
 				451DD4B8207E4880002C509A /* Client.swift */,
-				45A0393C2075D0E9007498DB /* User.graphql */,
+				45FC0BE520A418BF006AAF3D /* CommentFragment.graphql */,
+				45FC0BE920A419FE006AAF3D /* CursorItemsFragment.graphql */,
 				451CD31E207A3B3A0063A972 /* Login.graphql */,
-				45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */,
-				45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */,
+				45BA0D82209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql */,
+				45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */,
 				45E240B820862CF6004B58EF /* Medium.graphql */,
-				45A61C0C2086356E00AE7D99 /* StarMedium.graphql */,
 				45D04F752088C59100AC2226 /* MediumComments.graphql */,
-				45D04F792088D57B00AC2226 /* SaveComment.graphql */,
-				45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */,
+				4591AEE320A414C4001EC384 /* MediumFragment.graphql */,
 				454F72A1208DD1AA00850471 /* MyMedia.graphql */,
+				45BA0D802090391D0002E1D5 /* MyNotifications.graphql */,
 				4591AEDA20A2CF4D001EC384 /* MyStaredMedia.graphql */,
 				45D04F8E208F635C00AC2226 /* MyReputations.graphql */,
-				45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */,
-				45BA0D802090391D0002E1D5 /* MyNotifications.graphql */,
-				45BA0D82209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql */,
+				45FC0BEB20A41B0D006AAF3D /* NotificationFragment.graphql */,
+				45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */,
 				4591AEDC20A2F359001EC384 /* RecommendMedium.graphql */,
+				45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */,
+				45A61C0C2086356E00AE7D99 /* StarMedium.graphql */,
+				45D04F792088D57B00AC2226 /* SaveComment.graphql */,
+				45FC0BED20A41BD2006AAF3D /* ReputationFragment.graphql */,
+				45A0393C2075D0E9007498DB /* User.graphql */,
+				45FC0BE120A41704006AAF3D /* UserFragment.graphql */,
+				45FC0BE320A41813006AAF3D /* UserDetailFragment.graphql */,
+				45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -865,15 +886,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45FC0BEA20A419FE006AAF3D /* CursorItemsFragment.graphql in Resources */,
+				45FC0BEC20A41B0D006AAF3D /* NotificationFragment.graphql in Resources */,
+				4591AEE420A414C4001EC384 /* MediumFragment.graphql in Resources */,
 				457B1B95205FEA1000BEDDF1 /* LaunchScreen.storyboard in Resources */,
 				45BA0D7F209010670002E1D5 /* MarkReputationLinksAsViewed.graphql in Resources */,
 				457B1B92205FEA1000BEDDF1 /* Assets.xcassets in Resources */,
+				45FC0BEE20A41BD2006AAF3D /* ReputationFragment.graphql in Resources */,
 				4591AEDB20A2CF4D001EC384 /* MyStaredMedia.graphql in Resources */,
+				45FC0BE420A41813006AAF3D /* UserDetailFragment.graphql in Resources */,
 				454F729E208DB8D200850471 /* Image.storyboard in Resources */,
 				4595F20E2079F6780040E5FA /* Login.storyboard in Resources */,
+				45FC0BE220A41704006AAF3D /* UserFragment.graphql in Resources */,
 				457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */,
 				45E240B920862CF6004B58EF /* Medium.graphql in Resources */,
 				45D04F762088C59100AC2226 /* MediumComments.graphql in Resources */,
+				45FC0BE620A418BF006AAF3D /* CommentFragment.graphql in Resources */,
 				45BA0D83209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql in Resources */,
 				45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */,
 				454F72A2208DD1AA00850471 /* MyMedia.graphql in Resources */,

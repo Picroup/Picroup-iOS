@@ -3,31 +3,10 @@ query Medium($userId: ID!, $mediumId: ID! $cursor: Float) {
         _id
         endedAt
         stared(userId: $userId)
-        user {
-            _id
-            username
-            avatarId
-        }
+        user { ...UserFragment }
         recommendedMedia(cursor: $cursor) {
-            cursor
-            items {
-                _id
-                userId
-                createdAt
-                endedAt
-                kind
-                detail {
-                    width
-                    aspectRatio
-                }
-                minioId
-                commentsCount
-                user {
-                    _id
-                    username
-                    avatarId
-                }
-            }
+            ...CursorMediaFragment
         }
     }
 }
+

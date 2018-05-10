@@ -1,20 +1,5 @@
 mutation SaveImageMedium($userId: ID!, $minioId: ID!, $width: Float!, $aspectRatio: Float!){
     saveImageMedium(userId: $userId, minioId: $minioId, width: $width, aspectRatio: $aspectRatio) {
-        _id
-        userId
-        createdAt
-        endedAt
-        kind
-        detail {
-            width
-            aspectRatio
-        }
-        minioId
-        commentsCount
-        user {
-            _id
-            username
-            avatarId
-        }
+        ...MediumFragment
     }
 }

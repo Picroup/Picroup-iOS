@@ -1,0 +1,19 @@
+fragment CursorMediaFragment on CursorMedia {
+    cursor
+    items { ...MediumFragment }
+}
+
+fragment CursorCommentsFragment on CursorComments {
+    cursor
+    items { ...CommentFragment }
+}
+
+fragment CursorNotoficationsFragment on CursorNotofications {
+    cursor
+    items { ...NotificationFragment }
+}
+
+fragment CursorReputationLinksFragment on CursorReputationLinks {
+    cursor
+    items {  ...ReputationFragment }
+}

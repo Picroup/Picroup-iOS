@@ -1,18 +1,7 @@
 query MediumComments($mediumId: ID!, $cursor: Float) {
     medium(mediumId: $mediumId) {
         comments(cursor: $cursor) {
-            cursor
-            items {
-                _id
-                userId
-                content
-                createdAt
-                user {
-                    _id
-                    username
-                    avatarId
-                }
-            }
+            ...CursorCommentsFragment
         }
     }
 }
