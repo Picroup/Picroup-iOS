@@ -22,8 +22,8 @@ extension RouterService.Main {
     static func rootViewController() -> UIViewController {
         
         let infos: [(title: String, imageName: String, vc: UIViewController)] = [
-            (title: "匹酷普", imageName: "ic_home", vc: homeMenuViewController()),
-            (title: "排行榜", imageName: "ic_apps", vc: rankViewController()),
+            (title: "关注", imageName: "ic_home", vc: homeMenuViewController()),
+            (title: "热门", imageName: "ic_apps", vc: rankViewController()),
             (title: "通知", imageName: "ic_notifications", vc: notificationsViewController()),
             (title: "我", imageName: "ic_person", vc: meViewController()),
             ]

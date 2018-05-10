@@ -35,7 +35,7 @@ class RankViewPresenter {
     }
     
     fileprivate func prepareNavigationItem() {
-        navigationItem.titleLabel.text = "全部"
+        navigationItem.titleLabel.text = "热门"
         navigationItem.titleLabel.textColor = .primaryText
 //        navigationItem.titleLabel.textAlignment = .left
         navigationItem.rightViews = [categoryButton]

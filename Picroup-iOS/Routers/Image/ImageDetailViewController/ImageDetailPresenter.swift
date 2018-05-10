@@ -16,8 +16,8 @@ class ImageDetailPresenter: NSObject {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var backgroundButton: UIButton!
     
-    typealias Section = SectionModel<String, CellStyle>
-    typealias DataSource = RxCollectionViewSectionedReloadDataSource<Section>
+    typealias Section = AnimatableSectionModel<String, CellStyle>
+    typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
     var dataSource: DataSource?
     
@@ -85,5 +85,30 @@ extension ImageDetailPresenter {
         case imageDetail(ImageDetailState)
         case recommendMedium(ImageDetailState.Item)
     }
+}
+
+extension ImageDetailPresenter.CellStyle: IdentifiableType, Equatable {
+    typealias Identity = String
+    
+    var identity: String {
+        switch self {
+        case .imageDetail:
+            return "imageDetail"
+        case .recommendMedium(let medium):
+            return medium.id
+        }
+    }
+    
+    static func ==(lhs: ImageDetailPresenter.CellStyle, rhs: ImageDetailPresenter.CellStyle) -> Bool {
+        switch (lhs, rhs) {
+        case (.imageDetail, imageDetail):
+            return false
+        case (.recommendMedium(let lMedium), .recommendMedium(let rMedium)):
+            return lMedium.id == rMedium.id
+        default:
+            return false
+        }
+    }
+    
 }
 
