@@ -32,7 +32,6 @@ class MePresenter: NSObject {
     @IBOutlet weak var myStardMediaCollectionView: UICollectionView!
 
     @IBOutlet weak var selectMyMediaLayoutConstraint: NSLayoutConstraint!
-    @IBOutlet weak var showDetailLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
     
     typealias Section = AnimatableSectionModel<String, MyMediaQuery.Data.User.Medium.Item>
@@ -79,7 +78,7 @@ struct UserViewModel {
     let gainedReputationCount: String
     let isGainedReputationCountHidden: Bool
     
-    init(user: UserQuery.Data.User?) {
+    init(user: UserDetailFragment?) {
         self.username = user.map { "@\($0.username)" } ?? " "
         self.avatarId = user?.avatarId
         self.reputation = user?.reputation.description ?? "0"

@@ -104,7 +104,7 @@ extension HomeMenuViewController {
 
 extension UserObject {
     
-    func toUser() -> IsUser {
+    func toUser() -> UserDetailFragment {
         let snapshot = dictionaryWithValues(forKeys: [
             "_id",
             "username",
@@ -115,6 +115,6 @@ extension UserObject {
             "gainedReputation",
             "notificationsCount",
             ])
-        return UserQuery.Data.User(snapshot: snapshot)
+        return UserDetailFragment(snapshot: snapshot)
     }
 }

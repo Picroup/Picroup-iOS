@@ -12,7 +12,7 @@ struct ImageCommentsState: Mutabled {
     typealias SaveComment = QueryState<SaveCommentMutation, SaveCommentMutation.Data.SaveComment>
     typealias Item = MediumCommentsQuery.Data.Medium.Comment.Item
     
-    var currentUser: IsUser?
+    var currentUser: UserDetailFragment?
 
     var medium: RankedMediaQuery.Data.RankedMedium.Item
     var next: MediumCommentsQuery
@@ -72,7 +72,7 @@ extension ImageCommentsState {
 
 extension ImageCommentsState: IsFeedbackState {
     enum Event {
-        case onUpdateCurrentUser(IsUser?)
+        case onUpdateCurrentUser(UserDetailFragment?)
         case onTriggerReload
         case onTriggerGetMore
         case onGetSuccess(MediumCommentsQuery.Data.Medium)

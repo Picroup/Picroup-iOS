@@ -13,7 +13,7 @@ struct ImageDetailState: Mutabled {
     typealias StarMedium = QueryState<StarMediumMutation, StarMediumMutation.Data.StarMedium>
     typealias Item = MediumQuery.Data.Medium.RecommendedMedium.Item
     
-    var currentUser: IsUser?
+    var currentUser: UserDetailFragment?
     
     var item: RankedMediaQuery.Data.RankedMedium.Item
     
@@ -68,7 +68,7 @@ extension ImageDetailState {
 extension ImageDetailState: IsFeedbackState {
     
     enum Event {
-        case onUpdateCurrentUser(IsUser?)
+        case onUpdateCurrentUser(UserDetailFragment?)
         case onTriggerGet
         case onTriggerGetMore
         case onGetSuccess(MediumQuery.Data.Medium)

@@ -9,7 +9,7 @@
 import Foundation
 
 struct CurrentUserState: Mutabled {
-    var user: IsUser?
+    var user: UserDetailFragment?
 }
 
 extension CurrentUserState {
@@ -24,7 +24,7 @@ extension CurrentUserState {
 extension CurrentUserState: IsFeedbackState {
     
     enum Event {
-        case login(IsUser)
+        case login(UserDetailFragment)
         case logout
     }
 }

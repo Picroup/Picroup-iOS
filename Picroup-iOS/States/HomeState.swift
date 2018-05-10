@@ -17,7 +17,7 @@ enum PickImageKind {
 struct HomeState: Mutabled {
     typealias Item = UserInterestedMediaQuery.Data.User.InterestedMedium.Item
     
-    var currentUser: IsUser?
+    var currentUser: UserDetailFragment?
     
     var isFABMenuOpened: Bool
     var triggerFABMenuClose: Void?
@@ -80,7 +80,7 @@ extension HomeState {
 extension HomeState: IsFeedbackState {
     
     enum Event {
-        case onUpdateCurrentUser(IsUser?)
+        case onUpdateCurrentUser(UserDetailFragment?)
         case fabMenuWillOpen
         case fabMenuWillClose
         case triggerFABMenuClose

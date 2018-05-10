@@ -11,7 +11,7 @@ import Foundation
 struct NotificationsState: Mutabled {
     typealias Item = MyNotificationsQuery.Data.User.Notification.Item
     
-    var currentUser: IsUser?
+    var currentUser: UserDetailFragment?
     
     var next: MyNotificationsQuery
     var items: [Item]
@@ -63,7 +63,7 @@ extension NotificationsState {
 extension NotificationsState: IsFeedbackState {
     
     enum Event {
-        case onUpdateCurrentUser(IsUser?)
+        case onUpdateCurrentUser(UserDetailFragment?)
         case onTriggerReload
         case onTriggerGetMore
         case onGetSuccess(MyNotificationsQuery.Data.User.Notification)

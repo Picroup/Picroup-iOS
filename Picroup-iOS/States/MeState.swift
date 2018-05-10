@@ -11,10 +11,10 @@ import Foundation
 struct MeState: Mutabled {
     typealias Item = MyMediaQuery.Data.User.Medium.Item
     
-    var currentUser: IsUser?
+    var currentUser: UserDetailFragment?
     
     var nextMeQuery: UserQuery
-    var me: UserQuery.Data.User?
+    var me: UserDetailFragment?
     var meError: Error?
     var triggerQueryMe: Bool
     
@@ -114,9 +114,9 @@ extension MeState {
 extension MeState: IsFeedbackState {
     
     enum Event {
-        case onUpdateCurrentUser(IsUser?)
+        case onUpdateCurrentUser(UserDetailFragment?)
         case onTriggerReloadMe
-        case onGetMeSuccess(UserQuery.Data.User)
+        case onGetMeSuccess(UserDetailFragment)
         case onGetMeError(Error)
         
         case onChangeSelectedTab(Tab)

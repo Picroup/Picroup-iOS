@@ -11,7 +11,7 @@ import Foundation
 struct ReputationsState: Mutabled {
     typealias Item = MyReputationsQuery.Data.User.ReputationLink.Item
     
-    var currentUser: IsUser?
+    var currentUser: UserDetailFragment?
     
     var reputation: Int
     
@@ -65,7 +65,7 @@ extension ReputationsState {
 
 extension ReputationsState: IsFeedbackState {
     enum Event {
-        case onUpdateCurrentUser(IsUser?)
+        case onUpdateCurrentUser(UserDetailFragment?)
         case onTriggerReload
         case onTriggerGetMore
         case onGetSuccess(MyReputationsQuery.Data.User.ReputationLink)

@@ -17,7 +17,7 @@ extension DriverFeedback where State == MeState {
     static func queryMe(client: ApolloClient) -> Raw {
         return react(query: { $0.meQuery }) { query in
             client.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.user }.unwrap()
+                .map { $0?.data?.user?.fragments.userDetailFragment }.unwrap()
                 .map(MeState.Event.onGetMeSuccess)
                 .asSignal(onErrorReturnJust: MeState.Event.onGetMeError)
         }

@@ -14,7 +14,7 @@ struct CreateImageState: Mutabled {
     typealias Query = (userId: String, pickedImage: UIImage)
     typealias SaveImageMedium = SaveImageMediumMutation.Data.SaveImageMedium
     
-    var currentUser: IsUser?
+    var currentUser: UserDetailFragment?
     
     var progress: RxProgress?
     var error: Error?
@@ -52,7 +52,7 @@ extension CreateImageState {
 
 extension CreateImageState: IsFeedbackState {
     enum Event {
-        case onUpdateCurrentUser(IsUser?)
+        case onUpdateCurrentUser(UserDetailFragment?)
         case onProgress(RxProgress)
         case onError(Error)
         case onSavedMedium(SaveImageMediumMutation.Data.SaveImageMedium)
