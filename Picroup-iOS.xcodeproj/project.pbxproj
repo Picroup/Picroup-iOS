@@ -96,6 +96,7 @@
 		45A84461208F67D600C75982 /* ReputationsState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A84460208F67D600C75982 /* ReputationsState+GraphQL.swift */; };
 		45AA3B4520A311BD0032A8CF /* ImageDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4420A311BD0032A8CF /* ImageDetailPresenter.swift */; };
 		45AA3B4820A346DB0032A8CF /* DispachQueue+realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */; };
+		45AA3B4B20A475FF0032A8CF /* UserState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4A20A475FF0032A8CF /* UserState+GraphQL.swift */; };
 		45BA0D7A208EB7640002E1D5 /* MeState+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */; };
 		45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */; };
 		45BA0D7F209010670002E1D5 /* MarkReputationLinksAsViewed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */; };
@@ -231,6 +232,7 @@
 		45A84460208F67D600C75982 /* ReputationsState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReputationsState+GraphQL.swift"; sourceTree = "<group>"; };
 		45AA3B4420A311BD0032A8CF /* ImageDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailPresenter.swift; sourceTree = "<group>"; };
 		45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispachQueue+realm.swift"; sourceTree = "<group>"; };
+		45AA3B4A20A475FF0032A8CF /* UserState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserState+GraphQL.swift"; sourceTree = "<group>"; };
 		45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeState+ViewController.swift"; sourceTree = "<group>"; };
 		45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsViewController.swift; sourceTree = "<group>"; };
 		45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MarkReputationLinksAsViewed.graphql; sourceTree = "<group>"; };
@@ -652,6 +654,7 @@
 				45D04F85208E10EB00AC2226 /* MeState */,
 				45BA0D8620903AFC0002E1D5 /* NotificationsState */,
 				45A8445F208F67BE00C75982 /* ReputationsState */,
+				45AA3B4920A475E00032A8CF /* UserState */,
 			);
 			path = Feedbacks;
 			sourceTree = "<group>";
@@ -747,6 +750,14 @@
 				45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */,
 			);
 			path = Realm;
+			sourceTree = "<group>";
+		};
+		45AA3B4920A475E00032A8CF /* UserState */ = {
+			isa = PBXGroup;
+			children = (
+				45AA3B4A20A475FF0032A8CF /* UserState+GraphQL.swift */,
+			);
+			path = UserState;
 			sourceTree = "<group>";
 		};
 		45BA0D7B208ED3980002E1D5 /* ReputationsViewController */ = {
@@ -1076,6 +1087,7 @@
 				45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */,
 				45525D54208C6F8000EAF00D /* HomeState+GraphQL.swift in Sources */,
 				45A84461208F67D600C75982 /* ReputationsState+GraphQL.swift in Sources */,
+				45AA3B4B20A475FF0032A8CF /* UserState+GraphQL.swift in Sources */,
 				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
 				4591AEE220A3E0CC001EC384 /* SectionedDataSource+indexPath.swift in Sources */,
 				458006D820A17283004BD982 /* UIViewController+Rx+NavigationBar.swift in Sources */,

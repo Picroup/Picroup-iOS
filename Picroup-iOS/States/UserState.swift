@@ -32,7 +32,7 @@ extension UserState {
             nextUserQuery: UserQuery(userId: userId),
             user: nil,
             userError: nil,
-            triggerQueryUser: false
+            triggerQueryUser: true
         )
     }
 }

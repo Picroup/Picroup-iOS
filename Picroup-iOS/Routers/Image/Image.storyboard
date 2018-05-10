@@ -40,7 +40,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <view key="backgroundView" contentMode="scaleToFill" id="zQy-Dl-Mhy">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                    <rect key="frame" x="0.0" y="355" width="375" height="647"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ueA-Un-YhH">
@@ -231,6 +231,7 @@
                                             <outlet property="remainTimeLabel" destination="DaT-ce-JZD" id="wg1-9x-N3n"/>
                                             <outlet property="starButton" destination="6Xb-Fp-URK" id="p8d-Vq-hPD"/>
                                             <outlet property="userAvatarImageView" destination="LeU-Q8-Shs" id="SYC-Uk-btj"/>
+                                            <outlet property="userView" destination="wdI-lc-z1l" id="mQb-jI-AyO"/>
                                             <outlet property="usernameLabel" destination="9HC-sR-eYS" id="7MK-E2-B20"/>
                                         </connections>
                                     </collectionViewCell>
@@ -271,7 +272,7 @@
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="2"/>
+                                                <real key="value" value="5"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>

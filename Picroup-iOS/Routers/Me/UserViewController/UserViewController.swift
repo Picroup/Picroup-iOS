@@ -13,7 +13,7 @@ import RxCocoa
 import RxGesture
 import RxFeedback
 
-class UserViewController: UIViewController {
+class UserViewController: HideNavigationBarViewController {
 
     typealias Dependency = String
     var dependency: String!
@@ -31,13 +31,18 @@ class UserViewController: UIViewController {
         guard let userId = dependency else { return }
         
         let injectDependncy = self.injectDependncy(store: store)
+        let uiFeedback = self.uiFeedback
+        let queryUser = Feedback.queryUser(client: ApolloClient.shared)
+
         let reduce = logger(identifier: "UserState")(UserState.reduce)
 
         Driver<Any>.system(
             initialState: UserState.empty(userId: userId),
             reduce: reduce,
             feedback:
-                injectDependncy
+                injectDependncy,
+                uiFeedback,
+                queryUser
             )
             .drive()
             .disposed(by: disposeBag)
@@ -60,7 +65,6 @@ extension UserViewController {
     }
     
     fileprivate var uiFeedback: Feedback.Raw {
-        typealias Section = MePresenter.Section
         return bind(presenter) { (presenter, state) -> Bindings<UserState.Event> in
             let meViewModel = state.map { UserViewModel(user: $0.user) }
             let subscriptions: [Disposable] = [
@@ -70,9 +74,9 @@ extension UserViewController {
                 meViewModel.map { $0.reputation }.drive(presenter.reputationCountLabel.rx.text),
                 meViewModel.map { $0.followersCount }.drive(presenter.followersCountLabel.rx.text),
                 meViewModel.map { $0.followingsCount }.drive(presenter.followingsCountLabel.rx.text),
-                meViewModel.map { $0.isGainedReputationCountHidden }.drive(presenter.gainedReputationCountButton.rx.isHidden),
                 ]
             let events: [Signal<UserState.Event>] = [
+                .never()
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
             

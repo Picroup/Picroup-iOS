@@ -48,12 +48,17 @@ class ImageDetailViewController: HideNavigationBarViewController {
                 let vc = RouterService.Image.imageCommentsViewController(dependency: state.item)
                 weakMe?.navigationController?.pushViewController(vc, animated: true)
                 }}
+            let showUser = { (state: ImageDetailState) in {
+                let vc = RouterService.Main.userViewController(dependency: state.item.user.id)
+                weakMe?.navigationController?.pushViewController(vc, animated: true)
+                }}
             
             let subscriptions = [
                 state.map { $0.sections }.throttle(1, scheduler: MainScheduler.instance).bind(to: me.presenter.items(
                     onStarButtonTap: starMediumTrigger.accept,
                     showImageComments: showImageComments,
-                    onImageViewTap: popTrigger.accept
+                    onImageViewTap: popTrigger.accept,
+                    showUser: showUser
                 )),
                 presenter.backgroundButton.rx.tap.bind(to: popTrigger),
                 popTrigger.bind(to: me.rx.pop(animated: true)),

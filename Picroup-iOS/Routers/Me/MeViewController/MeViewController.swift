@@ -13,7 +13,7 @@ import RxCocoa
 import RxGesture
 import RxFeedback
 
-class MeViewController: UIViewController {
+class MeViewController: HideNavigationBarViewController {
     
     fileprivate typealias Feedback = DriverFeedback<MeState>
     @IBOutlet fileprivate var presenter: MePresenter!

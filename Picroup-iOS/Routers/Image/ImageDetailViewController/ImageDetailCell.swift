@@ -60,12 +60,19 @@ class ImageDetailCell: RxCollectionViewCell {
     }
     @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var userAvatarImageView: UIImageView!
+    @IBOutlet weak var userView: UIView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var remainTimeLabel: UILabel!
     @IBOutlet weak var commentsContentView: UIView!
     @IBOutlet weak var commentsCountLabel: UILabel!
     
-    func configure(with viewModel: ViewModel, onStarButtonTap: (() -> Void)?, onCommentsTap: (() -> Void)?, onImageViewTap: (() -> Void)?) {
+    func configure(
+        with viewModel: ViewModel,
+        onStarButtonTap: (() -> Void)?,
+        onCommentsTap: (() -> Void)?,
+        onImageViewTap: (() -> Void)?,
+        onUserTap: (() -> Void)?
+        ) {
         imageView.setImage(with: viewModel.imageViewMinioId!)
         imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
         lifeBar.motionIdentifier = viewModel.lifeBarMotionIdentifier
@@ -98,6 +105,13 @@ class ImageDetailCell: RxCollectionViewCell {
             imageView.rx.tapGesture().when(.recognized)
                 .mapToVoid()
                 .subscribe(onNext: onImageViewTap)
+                .disposed(by: disposeBag)
+        }
+        
+        if let onUserTap = onUserTap {
+            userView.rx.tapGesture().when(.recognized)
+                .mapToVoid()
+                .subscribe(onNext: onUserTap)
                 .disposed(by: disposeBag)
         }
     }
