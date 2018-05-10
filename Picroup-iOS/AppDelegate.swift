@@ -40,5 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window.rootViewController = isLogin ? rootViewController : loginViewController
         })
         
+        _ = store.state.map { $0.recommendMediumQuery }.distinctUnwrap().flatMapLatest {
+            ApolloClient.shared.rx.perform(mutation: $0)
+                .asSignal(onErrorJustReturn: nil)
+            }.mapToVoid()
+            .emit(onNext: store.onRecommendMediumCompleted)
     }
 }

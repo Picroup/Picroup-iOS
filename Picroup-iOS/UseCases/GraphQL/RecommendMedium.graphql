@@ -1,0 +1,5 @@
+mutation RecommendMedium($mediumId: ID!, $recommendMediumId: ID!) {
+    recommendMedium(mediumId: $mediumId, recommendMediumId: $recommendMediumId)
+}
+
+

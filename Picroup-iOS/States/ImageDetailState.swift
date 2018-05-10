@@ -11,6 +11,7 @@ import Foundation
 struct ImageDetailState: Mutabled {
     typealias Meduim = QueryState<MediumQuery, MediumQuery.Data.Medium>
     typealias StarMedium = QueryState<StarMediumMutation, StarMediumMutation.Data.StarMedium>
+    typealias Item = MediumQuery.Data.Medium.RecommendedMedium.Item
     
     var currentUser: IsUser?
     
@@ -18,6 +19,7 @@ struct ImageDetailState: Mutabled {
     
     var next: MediumQuery
     var meduim: MediumQuery.Data.Medium?
+    var items: [Item]
     var error: Error?
     var trigger: Bool
     
@@ -32,7 +34,9 @@ extension ImageDetailState {
         if (currentUser == nil) { return nil }
         return trigger ? next : nil
     }
-    
+    var shouldQueryMore: Bool {
+        return !trigger && next.cursor != nil
+    }
     public var shouldStarMedium: Bool {
         return starMedium == nil && !triggerStarMedium
     }
@@ -50,6 +54,7 @@ extension ImageDetailState {
             item: item,
             next: MediumQuery(userId: "", mediumId: item.id),
             meduim: nil,
+            items: [],
             error: nil,
             trigger: true,
             nextStarMedium: StarMediumMutation(userId: "", mediumId: item.id),
@@ -65,6 +70,7 @@ extension ImageDetailState: IsFeedbackState {
     enum Event {
         case onUpdateCurrentUser(IsUser?)
         case onTriggerGet
+        case onTriggerGetMore
         case onGetSuccess(MediumQuery.Data.Medium)
         case onGetError(Error)
         case onTriggerStarMedium
@@ -89,9 +95,17 @@ extension ImageDetailState {
                 $0.error = nil
                 $0.trigger = true
             }
+        case .onTriggerGetMore:
+            guard state.shouldQueryMore else { return state }
+            return state.mutated {
+                $0.error = nil
+                $0.trigger = true
+            }
         case .onGetSuccess(let data):
             return state.mutated {
+                $0.next.cursor = data.recommendedMedia.cursor
                 $0.meduim = data
+                $0.items += data.recommendedMedia.items.flatMap { $0 }
                 $0.error = nil
                 $0.trigger = false
             }

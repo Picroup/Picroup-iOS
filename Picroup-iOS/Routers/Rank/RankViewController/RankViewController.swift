@@ -77,10 +77,3 @@ class RankViewController: UIViewController {
     }
 
 }
-
-class RankMediumCell: RxCollectionViewCell {
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var progressView: UIProgressView!
-    @IBOutlet weak var starPlaceholderView: UIView!
-}
-

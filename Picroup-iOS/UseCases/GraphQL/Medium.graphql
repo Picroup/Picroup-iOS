@@ -1,4 +1,4 @@
-query Medium($userId: ID!, $mediumId: ID!) {
+query Medium($userId: ID!, $mediumId: ID! $cursor: Float) {
     medium(mediumId: $mediumId) {
         _id
         endedAt
@@ -7,6 +7,27 @@ query Medium($userId: ID!, $mediumId: ID!) {
             _id
             username
             avatarId
+        }
+        recommendedMedia(cursor: $cursor) {
+            cursor
+            items {
+                _id
+                userId
+                createdAt
+                endedAt
+                kind
+                detail {
+                    width
+                    aspectRatio
+                }
+                minioId
+                commentsCount
+                user {
+                    _id
+                    username
+                    avatarId
+                }
+            }
         }
     }
 }

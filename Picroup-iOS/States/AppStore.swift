@@ -32,13 +32,31 @@ class AppStateObject: Object {
     @objc dynamic var _id: String?
     @objc dynamic var currentUser: UserObject?
     
+    @objc dynamic var previousMediumId: String?
+    @objc dynamic var currentMediumId: String?
+    @objc dynamic var triggerRecommendMedium = false
+
     override static func primaryKey() -> String {
         return "_id"
     }
 }
 
 extension AppStateObject {
-    private static let appPrimaryKey = "current"
+    
+    var recommendMediumQuery: RecommendMediumMutation? {
+        guard
+            let previousMediumId = previousMediumId,
+            let currentMediumId = currentMediumId,
+            previousMediumId != currentMediumId  else {
+            return nil
+        }
+        let query = RecommendMediumMutation(mediumId: previousMediumId, recommendMediumId: currentMediumId)
+        return triggerRecommendMedium ? query : nil
+    }
+}
+
+extension AppStateObject {
+    fileprivate static let appPrimaryKey = "current"
     static let shared: AppStateObject = {
         let realm = try! Realm()
         if let result = realm.object(ofType: AppStateObject.self, forPrimaryKey: AppStateObject.appPrimaryKey) {
@@ -46,7 +64,7 @@ extension AppStateObject {
         }
         let result = AppStateObject()
         result._id = AppStateObject.appPrimaryKey
-        try! realm.write {
+        try? realm.write {
             realm.add(result, update: true)
         }
         return result
@@ -55,8 +73,7 @@ extension AppStateObject {
 
 class Store {
     
-    lazy var state = Observable.from(object: _state).asDriver(onErrorDriveWith: .empty())
-    lazy var _state: AppStateObject = AppStateObject.shared
+    lazy var state = Observable.from(object: AppStateObject.shared).asDriver(onErrorDriveWith: .empty())
     
     func onLogin(_ value: [String: Any?]) {
         updateState { state, realm in
@@ -70,11 +87,28 @@ class Store {
         }
     }
     
-    private func updateState(_ mutation: (AppStateObject, Realm) -> ()) {
-        let realm = try! Realm()
-        try! realm.write {
-            mutation(_state, realm)
-            realm.add(_state, update: true)
+    func onViewMedium(mediumId: String) {
+        updateState { state, realm in
+            state.previousMediumId = state.currentMediumId
+            state.currentMediumId = mediumId
+            state.triggerRecommendMedium = true
+        }
+    }
+    
+    func onRecommendMediumCompleted() {
+        updateState { state, realm in
+            state.triggerRecommendMedium = false
+        }
+    }
+    
+    private func updateState(_ mutation: @escaping (AppStateObject, Realm) -> ()) {
+        DispatchQueue.realm.async {
+            let realm = try! Realm()
+            guard let _state = realm.object(ofType: AppStateObject.self, forPrimaryKey: AppStateObject.appPrimaryKey) else { return }
+            try? realm.write {
+                mutation(_state, realm)
+                realm.add(_state, update: true)
+            }
         }
     }
 }
