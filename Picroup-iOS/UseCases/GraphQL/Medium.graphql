@@ -12,7 +12,16 @@ query Medium($userId: ID!, $mediumId: ID! $cursor: Float) {
             cursor
             items {
                 _id
+                userId
+                createdAt
                 endedAt
+                kind
+                detail {
+                    width
+                    aspectRatio
+                }
+                minioId
+                commentsCount
                 user {
                     _id
                     username

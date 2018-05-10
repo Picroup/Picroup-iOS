@@ -13,6 +13,9 @@ import RxCocoa
 import RxFeedback
 import Apollo
 
+fileprivate typealias Section = ImageDetailPresenter.Section
+fileprivate typealias CellStyle = ImageDetailPresenter.CellStyle
+
 class ImageDetailViewController: HideNavigationBarViewController {
     
     typealias Dependency = RankedMediaQuery.Data.RankedMedium.Item
@@ -45,15 +48,13 @@ class ImageDetailViewController: HideNavigationBarViewController {
                 let vc = RouterService.Image.imageCommentsViewController(dependency: state.item)
                 weakMe?.navigationController?.pushViewController(vc, animated: true)
                 }}
+            
             let subscriptions = [
-                state.map { [$0] }.throttle(1, scheduler: MainScheduler.instance).bind(to: presenter.collectionView.rx.items(cellIdentifier: "ImageDetailCell", cellType: ImageDetailCell.self)) { index, state, cell in
-                    let viewModel = ImageDetailCell.ViewModel(imageDetailState: state)
-                    cell.configure(
-                        with: viewModel,
-                        onStarButtonTap: starMediumTrigger.accept,
-                        onCommentsTap: showImageComments(state),
-                        onImageViewTap: popTrigger.accept)
-                },
+                state.map { $0.sections }.throttle(1, scheduler: MainScheduler.instance).bind(to: me.presenter.items(
+                    onStarButtonTap: starMediumTrigger.accept,
+                    showImageComments: showImageComments,
+                    onImageViewTap: popTrigger.accept
+                )),
                 presenter.backgroundButton.rx.tap.bind(to: popTrigger),
                 popTrigger.bind(to: me.rx.pop(animated: true)),
             ]
@@ -97,16 +98,33 @@ class ImageDetailViewController: HideNavigationBarViewController {
             .subscribe()
             .disposed(by: disposeBag)
         
-        presenter.collectionView.rx.setDelegate(self).disposed(by: disposeBag)
+        presenter.collectionView.rx.modelSelected(CellStyle.self).asSignal()
+            .emit(to: Binder(self) { me, cellStyle in
+                switch cellStyle {
+                case .recommendMedium(let medium):
+                    let dependency = ImageDetailViewController.Dependency(snapshot: medium.snapshot)
+                    let vc = RouterService.Image.imageDetailViewController(dependency: dependency)
+                    me.navigationController?.pushViewController(vc, animated: true)
+                default:
+                    break
+                }
+            })
+            .disposed(by: disposeBag)
+
+        presenter.collectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
     }
 }
 
-extension ImageDetailViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension ImageDetailState {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.bounds.width
-        let imageHeight = width / CGFloat(dependency.detail?.aspectRatio ?? 1)
-        let height = imageHeight + 8 + 56 + 48 + 48
-        return CGSize(width: width, height: height)
+    fileprivate var sections: [Section] {
+        let imageDetailItems = [CellStyle.imageDetail(self)]
+        let recommendMediaItems = items.map(CellStyle.recommendMedium)
+        let imageDetailSection = ImageDetailPresenter.Section(model: "imageDetail", items: imageDetailItems)
+        let recommendMediaSection = ImageDetailPresenter.Section(model: "recommendMedia", items: recommendMediaItems)
+        return [
+            imageDetailSection,
+            recommendMediaSection
+        ]
     }
 }

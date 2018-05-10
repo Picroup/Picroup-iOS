@@ -33,7 +33,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="oWM-uy-VqI">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gh8-6p-2Gk">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="gh8-6p-2Gk">
                                     <size key="itemSize" width="375" height="500"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -110,7 +110,7 @@
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="beeth0ven" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9HC-sR-eYS">
                                                                             <rect key="frame" x="56" y="0.0" width="287" height="40"/>
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
@@ -232,6 +232,52 @@
                                             <outlet property="starButton" destination="6Xb-Fp-URK" id="p8d-Vq-hPD"/>
                                             <outlet property="userAvatarImageView" destination="LeU-Q8-Shs" id="SYC-Uk-btj"/>
                                             <outlet property="usernameLabel" destination="9HC-sR-eYS" id="7MK-E2-B20"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RankMediumCell" id="wK0-hu-Ttb" customClass="RankMediumCell" customModule="Picroup_iOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="502" width="375" height="500"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="54c-Oz-3ae">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </imageView>
+                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="txq-1e-Xie">
+                                                    <rect key="frame" x="0.0" y="498" width="375" height="2"/>
+                                                </progressView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8OT-jh-fvH">
+                                                    <rect key="frame" x="366" y="499" width="1" height="1"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="LWJ-Ko-VPm"/>
+                                                        <constraint firstAttribute="width" constant="1" id="RvX-CN-6w9"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="54c-Oz-3ae" secondAttribute="trailing" id="AAz-F1-zeZ"/>
+                                            <constraint firstAttribute="trailing" secondItem="8OT-jh-fvH" secondAttribute="trailing" constant="8" id="C9F-fi-jpb"/>
+                                            <constraint firstAttribute="trailing" secondItem="txq-1e-Xie" secondAttribute="trailing" id="COO-kG-6lY"/>
+                                            <constraint firstAttribute="bottom" secondItem="8OT-jh-fvH" secondAttribute="bottom" id="FkA-Ag-An2"/>
+                                            <constraint firstAttribute="bottom" secondItem="txq-1e-Xie" secondAttribute="bottom" id="PDW-3q-nMh"/>
+                                            <constraint firstItem="54c-Oz-3ae" firstAttribute="top" secondItem="wK0-hu-Ttb" secondAttribute="top" id="VCW-bw-Qqn"/>
+                                            <constraint firstAttribute="bottom" secondItem="54c-Oz-3ae" secondAttribute="bottom" id="WRX-Lt-mBR"/>
+                                            <constraint firstItem="54c-Oz-3ae" firstAttribute="leading" secondItem="wK0-hu-Ttb" secondAttribute="leading" id="faD-F1-WeQ"/>
+                                            <constraint firstItem="txq-1e-Xie" firstAttribute="leading" secondItem="wK0-hu-Ttb" secondAttribute="leading" id="qjG-qi-XmO"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="2"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="imageView" destination="54c-Oz-3ae" id="tdq-AH-AvU"/>
+                                            <outlet property="progressView" destination="txq-1e-Xie" id="41y-Rw-HqB"/>
+                                            <outlet property="starPlaceholderView" destination="8OT-jh-fvH" id="bva-x7-dg6"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

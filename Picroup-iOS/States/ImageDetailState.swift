@@ -11,6 +11,7 @@ import Foundation
 struct ImageDetailState: Mutabled {
     typealias Meduim = QueryState<MediumQuery, MediumQuery.Data.Medium>
     typealias StarMedium = QueryState<StarMediumMutation, StarMediumMutation.Data.StarMedium>
+    typealias Item = MediumQuery.Data.Medium.RecommendedMedium.Item
     
     var currentUser: IsUser?
     
@@ -18,7 +19,7 @@ struct ImageDetailState: Mutabled {
     
     var next: MediumQuery
     var meduim: MediumQuery.Data.Medium?
-    var items: [MediumQuery.Data.Medium.RecommendedMedium.Item]
+    var items: [Item]
     var error: Error?
     var trigger: Bool
     

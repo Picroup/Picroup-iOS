@@ -52,12 +52,8 @@ class MePresenter: NSObject {
         return DataSource(
             configureCell: { dataSource, collectionView, indexPath, item in
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                cell.imageView.setImage(with: item.minioId)
-                cell.imageView.motionIdentifier = item.id
-                cell.transition(.fadeOut, .scale(0.75))
-                cell.progressView.progress = Float(item.endedAt.sinceNow / 8.0.weeks)
-                cell.progressView.motionIdentifier = "lifeBar_\(item.id)"
-                cell.starPlaceholderView.motionIdentifier = "starButton_\(item.id)"
+                let viewModel = RankMediumCell.ViewModel(item: item)
+                cell.configure(with: viewModel)
                 return cell
         },
             configureSupplementaryView: { dataSource, collectionView, title, indexPath in
