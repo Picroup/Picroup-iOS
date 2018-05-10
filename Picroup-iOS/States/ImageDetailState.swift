@@ -11,15 +11,14 @@ import Foundation
 struct ImageDetailState: Mutabled {
     typealias Meduim = QueryState<MediumQuery, MediumQuery.Data.Medium>
     typealias StarMedium = QueryState<StarMediumMutation, StarMediumMutation.Data.StarMedium>
-    typealias Item = MediumQuery.Data.Medium.RecommendedMedium.Item
     
     var currentUser: UserDetailFragment?
     
-    var item: RankedMediaQuery.Data.RankedMedium.Item
+    var item: MediumFragment
     
     var next: MediumQuery
     var meduim: MediumQuery.Data.Medium?
-    var items: [Item]
+    var items: [MediumFragment]
     var error: Error?
     var trigger: Bool
     
@@ -48,7 +47,7 @@ extension ImageDetailState {
 }
 
 extension ImageDetailState {
-    static func empty(item: RankedMediaQuery.Data.RankedMedium.Item) -> ImageDetailState {
+    static func empty(item: MediumFragment) -> ImageDetailState {
         return ImageDetailState(
             currentUser: nil,
             item: item,
@@ -105,7 +104,7 @@ extension ImageDetailState {
             return state.mutated {
                 $0.next.cursor = data.recommendedMedia.cursor
                 $0.meduim = data
-                $0.items += data.recommendedMedia.items.flatMap { $0 }
+                $0.items += data.recommendedMedia.fragments.cursorMediaFragment.items.flatMap { $0?.fragments.mediumFragment }
                 $0.error = nil
                 $0.trigger = false
             }

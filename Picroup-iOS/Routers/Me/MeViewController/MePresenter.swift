@@ -34,7 +34,7 @@ class MePresenter: NSObject {
     @IBOutlet weak var selectMyMediaLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
     
-    typealias Section = AnimatableSectionModel<String, MyMediaQuery.Data.User.Medium.Item>
+    typealias Section = AnimatableSectionModel<String, MediumFragment>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
     var selectedTab: Binder<MeState.Tab> {
@@ -90,13 +90,3 @@ struct UserViewModel {
 }
 
 
-extension MyMediaQuery.Data.User.Medium.Item: IdentifiableType, Equatable {
-    
-    public var identity: String {
-        return id
-    }
-    
-    public static func ==(lhs: MyMediaQuery.Data.User.Medium.Item, rhs: MyMediaQuery.Data.User.Medium.Item) -> Bool {
-        return true
-    }
-}

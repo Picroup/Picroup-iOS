@@ -12,13 +12,12 @@ import RxAlamofire
 
 struct CreateImageState: Mutabled {
     typealias Query = (userId: String, pickedImage: UIImage)
-    typealias SaveImageMedium = SaveImageMediumMutation.Data.SaveImageMedium
     
     var currentUser: UserDetailFragment?
     
     var progress: RxProgress?
     var error: Error?
-    var savedMedium: SaveImageMedium?
+    var savedMedium: MediumFragment?
     var next: Query
     var triggerSave: Bool
     
@@ -55,7 +54,7 @@ extension CreateImageState: IsFeedbackState {
         case onUpdateCurrentUser(UserDetailFragment?)
         case onProgress(RxProgress)
         case onError(Error)
-        case onSavedMedium(SaveImageMediumMutation.Data.SaveImageMedium)
+        case onSavedMedium(MediumFragment)
         case triggerSave
         case triggerCancel
     }

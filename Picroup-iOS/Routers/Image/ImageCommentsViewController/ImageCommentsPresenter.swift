@@ -32,7 +32,7 @@ class ImageCommentsPresenter: NSObject {
         hideCommentsIcon.image = Icon.cm.arrowDownward
     }
     
-    var medium: Binder<RankedMediaQuery.Data.RankedMedium.Item> {
+    var medium: Binder<MediumFragment> {
         return Binder(self) { me, medium in
             me.imageView.setImage(with: medium.minioId)
             me.imageView.motionIdentifier = medium.id
@@ -43,7 +43,7 @@ class ImageCommentsPresenter: NSObject {
         }
     }
     
-    typealias Section = AnimatableSectionModel<String, MediumCommentsQuery.Data.Medium.Comment.Item>
+    typealias Section = AnimatableSectionModel<String, CommentFragment>
     typealias DataSource = RxTableViewSectionedAnimatedDataSource<Section>
     
     var items: (Observable<[Section]>) -> Disposable {
@@ -62,21 +62,21 @@ class CommentCell: RxTableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
-    func configure(with item: MediumCommentsQuery.Data.Medium.Comment.Item) {
+    func configure(with item: CommentFragment) {
         userLabel?.text = item.user.username
         contentLabel?.text = item.content
         photoView.setImage(with: item.user.avatarId)
     }
 }
 
-extension MediumCommentsQuery.Data.Medium.Comment.Item: IdentifiableType, Equatable {
+extension CommentFragment: IdentifiableType, Equatable {
     
     public typealias Identity = String
     public var identity: String {
         return id
     }
     
-    public static func ==(lhs: MediumCommentsQuery.Data.Medium.Comment.Item, rhs: MediumCommentsQuery.Data.Medium.Comment.Item) -> Bool {
+    public static func ==(lhs: CommentFragment, rhs: CommentFragment) -> Bool {
         return true
     }
 }

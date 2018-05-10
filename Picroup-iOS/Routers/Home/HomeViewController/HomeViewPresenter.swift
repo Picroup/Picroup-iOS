@@ -14,7 +14,7 @@ import RxDataSources
 class HomeViewPresenter: NSObject {
     @IBOutlet weak var collectionView: UICollectionView!
     
-    typealias Section = AnimatableSectionModel<String, HomeState.Item>
+    typealias Section = AnimatableSectionModel<String, MediumFragment>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
     var items: (PublishRelay<HomeState.Event>) -> (Observable<[Section]>) -> Disposable {
@@ -55,13 +55,13 @@ extension HomeViewPresenter: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension UserInterestedMediaQuery.Data.User.InterestedMedium.Item: IdentifiableType, Equatable {
+extension MediumFragment: IdentifiableType, Equatable {
     public typealias Identity = String
     public var identity: String {
         return id
     }
     
-    public static func ==(lhs: UserInterestedMediaQuery.Data.User.InterestedMedium.Item, rhs: UserInterestedMediaQuery.Data.User.InterestedMedium.Item) -> Bool {
+    public static func ==(lhs: MediumFragment, rhs: MediumFragment) -> Bool {
         return true
     }
 }

@@ -10,18 +10,17 @@ import Foundation
 
 struct ImageCommentsState: Mutabled {
     typealias SaveComment = QueryState<SaveCommentMutation, SaveCommentMutation.Data.SaveComment>
-    typealias Item = MediumCommentsQuery.Data.Medium.Comment.Item
     
     var currentUser: UserDetailFragment?
 
-    var medium: RankedMediaQuery.Data.RankedMedium.Item
+    var medium: MediumFragment
     var next: MediumCommentsQuery
-    var items: [Item]
+    var items: [CommentFragment]
     var error: Error?
     var trigger: Bool
     
     var nextSaveComment: SaveCommentMutation
-    var saveComment: SaveCommentMutation.Data.SaveComment?
+    var saveComment: CommentFragment?
     var saveCommentError: Error?
     var triggerSaveComment: Bool
     
@@ -51,7 +50,7 @@ extension ImageCommentsState {
 }
 
 extension ImageCommentsState {
-    static func empty(medium: RankedMediaQuery.Data.RankedMedium.Item) -> ImageCommentsState {
+    static func empty(medium: MediumFragment) -> ImageCommentsState {
         return ImageCommentsState(
             currentUser: nil,
             medium: medium,
@@ -75,10 +74,10 @@ extension ImageCommentsState: IsFeedbackState {
         case onUpdateCurrentUser(UserDetailFragment?)
         case onTriggerReload
         case onTriggerGetMore
-        case onGetSuccess(MediumCommentsQuery.Data.Medium)
+        case onGetSuccess(CursorCommentsFragment)
         case onGetError(Error)
         case onTriggerSaveComment
-        case onSaveCommentSuccess(SaveCommentMutation.Data.SaveComment)
+        case onSaveCommentSuccess(CommentFragment)
         case onSaveCommentError(Error)
         case onChangeCommentContent(String)
     }
@@ -108,8 +107,8 @@ extension ImageCommentsState {
             }
         case .onGetSuccess(let data):
             return state.mutated {
-                $0.next.cursor = data.comments.cursor
-                $0.items += data.comments.items.flatMap { $0 }
+                $0.next.cursor = data.cursor
+                $0.items += data.items.flatMap { $0?.fragments.commentFragment }
                 $0.error = nil
                 $0.trigger = false
             }
@@ -131,8 +130,7 @@ extension ImageCommentsState {
                 $0.triggerSaveComment = false
                 
                 $0.nextSaveComment.content = ""
-                let newCommet = Item(snapshot: data.snapshot)
-                $0.items.insert(newCommet, at: 0)
+                $0.items.insert(data, at: 0)
             }
         case .onSaveCommentError(let error):
             return state.mutated {

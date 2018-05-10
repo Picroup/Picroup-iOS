@@ -83,7 +83,7 @@ extension ImageDetailPresenter {
     
     enum CellStyle {
         case imageDetail(ImageDetailState)
-        case recommendMedium(ImageDetailState.Item)
+        case recommendMedium(MediumFragment)
     }
 }
 

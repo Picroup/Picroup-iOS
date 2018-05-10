@@ -89,7 +89,6 @@
 		459F259920A28C13008B6C9B /* ObservableType+catchErrorRecover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459F259820A28C13008B6C9B /* ObservableType+catchErrorRecover.swift */; };
 		45A0393D2075D0E9007498DB /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A0393C2075D0E9007498DB /* User.graphql */; };
 		45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A61C0C2086356E00AE7D99 /* StarMedium.graphql */; };
-		45A65F51209B055D00E7C677 /* CurrentUserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A65F50209B055D00E7C677 /* CurrentUserState.swift */; };
 		45A65F5A209BEB8800E7C677 /* LoginState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A65F59209BEB8800E7C677 /* LoginState+GraphQL.swift */; };
 		45A65F5C209BEE3C00E7C677 /* LoginState+SyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A65F5B209BEE3C00E7C677 /* LoginState+SyncState.swift */; };
 		45A65F5E209BEEB600E7C677 /* LoginState+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A65F5D209BEEB600E7C677 /* LoginState+system.swift */; };
@@ -225,7 +224,6 @@
 		459F259820A28C13008B6C9B /* ObservableType+catchErrorRecover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+catchErrorRecover.swift"; sourceTree = "<group>"; };
 		45A0393C2075D0E9007498DB /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
 		45A61C0C2086356E00AE7D99 /* StarMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = StarMedium.graphql; sourceTree = "<group>"; };
-		45A65F50209B055D00E7C677 /* CurrentUserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserState.swift; sourceTree = "<group>"; };
 		45A65F59209BEB8800E7C677 /* LoginState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginState+GraphQL.swift"; sourceTree = "<group>"; };
 		45A65F5B209BEE3C00E7C677 /* LoginState+SyncState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginState+SyncState.swift"; sourceTree = "<group>"; };
 		45A65F5D209BEEB600E7C677 /* LoginState+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginState+system.swift"; sourceTree = "<group>"; };
@@ -601,7 +599,6 @@
 			isa = PBXGroup;
 			children = (
 				458006D520A137A5004BD982 /* AppStore.swift */,
-				45A65F50209B055D00E7C677 /* CurrentUserState.swift */,
 				45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */,
 				4595F224207D95360040E5FA /* HomeState.swift */,
 				45E240B620862AD7004B58EF /* ImageDetailState.swift */,
@@ -1105,7 +1102,6 @@
 				45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */,
 				45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */,
 				454F728F2088230C00850471 /* LocalStorage+Values.swift in Sources */,
-				45A65F51209B055D00E7C677 /* CurrentUserState.swift in Sources */,
 				451DD4BB207E558A002C509A /* RaisedButton+Rx.swift in Sources */,
 				4595F223207C97410040E5FA /* UIView+Motion+Rx.swift in Sources */,
 				451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */,

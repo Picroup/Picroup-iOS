@@ -9,7 +9,6 @@
 import Foundation
 
 struct MeState: Mutabled {
-    typealias Item = MyMediaQuery.Data.User.Medium.Item
     
     var currentUser: UserDetailFragment?
     
@@ -21,12 +20,12 @@ struct MeState: Mutabled {
     var selectedTab: Tab
     
     var nextMyMediaQuery: MyMediaQuery
-    var myMediaItems: [Item]
+    var myMediaItems: [MediumFragment]
     var myMediaError: Error?
     var triggerQueryMyMedia: Bool
     
     var nextMyStaredMediaQuery: MyStaredMediaQuery
-    var myStaredMediaItems: [Item]
+    var myStaredMediaItems: [MediumFragment]
     var myStaredMediaError: Error?
     var triggerQueryMyStaredMedia: Bool
     
@@ -77,7 +76,7 @@ extension MeState {
         return nextMyStaredMediaQuery.cursor != nil
     }
     
-    var showImageDetailQuery: Item? {
+    var showImageDetailQuery: MediumFragment? {
         guard let index = nextShowImageDetailIndex else { return nil }
         return selectedTab == .myMedia ? myMediaItems[index] : myStaredMediaItems[index]
     }
@@ -123,12 +122,12 @@ extension MeState: IsFeedbackState {
         
         case onTriggerReloadMyMedia
         case onTriggerGetMoreMyMedia
-        case onGetMyMediaSuccess(MyMediaQuery.Data.User.Medium)
+        case onGetMyMediaSuccess(CursorMediaFragment)
         case onGetMyMediaError(Error)
         
         case onTriggerReloadMyStaredMedia
         case onTriggerGetMoreMyStaredMedia
-        case onGetMyStaredMediaSuccess(MyStaredMediaQuery.Data.User.StaredMedium)
+        case onGetMyStaredMediaSuccess(CursorMediaFragment)
         case onGetMyStaredMediaError(Error)
         
         case onTriggerShowImageDetail(Int)
@@ -188,7 +187,7 @@ extension MeState {
         case .onGetMyMediaSuccess(let data):
             return state.mutated {
                 $0.nextMyMediaQuery.cursor = data.cursor
-                $0.myMediaItems += data.items.flatMap { $0 }
+                $0.myMediaItems += data.items.flatMap { $0?.fragments.mediumFragment }
                 $0.myMediaError = nil
                 $0.triggerQueryMyMedia = false
             }
@@ -214,7 +213,7 @@ extension MeState {
         case .onGetMyStaredMediaSuccess(let data):
             return state.mutated {
                 $0.nextMyStaredMediaQuery.cursor = data.cursor
-                $0.myStaredMediaItems += data.items.flatMap { $0?.snapshot }.map(Item.init)
+                $0.myStaredMediaItems += data.items.flatMap { $0?.fragments.mediumFragment }
                 $0.myStaredMediaError = nil
                 $0.triggerQueryMyStaredMedia = false
             }

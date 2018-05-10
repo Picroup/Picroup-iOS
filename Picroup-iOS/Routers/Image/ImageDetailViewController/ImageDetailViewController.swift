@@ -18,7 +18,7 @@ fileprivate typealias CellStyle = ImageDetailPresenter.CellStyle
 
 class ImageDetailViewController: HideNavigationBarViewController {
     
-    typealias Dependency = RankedMediaQuery.Data.RankedMedium.Item
+    typealias Dependency = MediumFragment
     var dependency: Dependency!
     
     @IBOutlet var presenter: ImageDetailPresenter!

@@ -17,20 +17,12 @@ extension RankMediumCell {
         let lifeBarMotionIdentifier: String?
         let starPlaceholderViewMotionIdentifier: String?
         
-        init(item: RankedMediaQuery.Data.RankedMedium.Item) {
+        init(item: MediumFragment) {
             self.imageViewMinioId = item.minioId
             self.imageViewMotionIdentifier = item.id
             self.progress = Float(item.endedAt.sinceNow / 8.0.weeks)
             self.lifeBarMotionIdentifier = "lifeBar_\(item.id)"
             self.starPlaceholderViewMotionIdentifier = "starButton_\(item.id)"
-        }
-        
-        init(item: MyMediaQuery.Data.User.Medium.Item) {
-            self.init(item: RankedMediaQuery.Data.RankedMedium.Item(snapshot: item.snapshot))
-        }
-        
-        init(item: ImageDetailState.Item) {
-            self.init(item: RankedMediaQuery.Data.RankedMedium.Item(snapshot: item.snapshot))
         }
     }
 }

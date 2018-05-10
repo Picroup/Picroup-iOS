@@ -15,7 +15,7 @@ class ReputationsViewPresenter: NSObject {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var reputationCountLabel: UILabel!
 
-    typealias Section = AnimatableSectionModel<String, MyReputationsQuery.Data.User.ReputationLink.Item>
+    typealias Section = AnimatableSectionModel<String, ReputationFragment>
     typealias DataSource = RxTableViewSectionedAnimatedDataSource<Section>
     
     var items: (Observable<[Section]>) -> Disposable {
@@ -36,7 +36,7 @@ class ReputationCell: RxTableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var mediumImageView: UIImageView!
     
-    func configure(with item: MyReputationsQuery.Data.User.ReputationLink.Item) {
+    func configure(with item: ReputationFragment) {
         valueLabel.text = "+\(item.value)"
         userAvatarImageView.setImage(with: item.user.avatarId)
         mediumImageView.setImage(with: item.medium?.minioId)
@@ -54,13 +54,13 @@ class ReputationCell: RxTableViewCell {
 }
 
 
-extension MyReputationsQuery.Data.User.ReputationLink.Item: IdentifiableType, Equatable {
+extension ReputationFragment: IdentifiableType, Equatable {
     
     public var identity: String {
         return id
     }
     
-    public static func ==(lhs: MyReputationsQuery.Data.User.ReputationLink.Item, rhs: MyReputationsQuery.Data.User.ReputationLink.Item) -> Bool {
+    public static func ==(lhs: ReputationFragment, rhs: ReputationFragment) -> Bool {
         return true
     }
 }

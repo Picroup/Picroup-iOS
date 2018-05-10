@@ -9,7 +9,6 @@
 import Foundation
 
 struct UserState: Mutabled {
-    typealias Item = MyMediaQuery.Data.User.Medium.Item
     
     var currentUser: UserDetailFragment?
     
