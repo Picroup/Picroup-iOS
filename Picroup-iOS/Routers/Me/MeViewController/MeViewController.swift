@@ -33,7 +33,8 @@ class MeViewController: UIViewController {
         let showImageDetail = Feedback.showImageDetail(from: self)
         let showReputations = Feedback.showReputations(from: self)
         let triggerReloadMe = Feedback.triggerReloadMe(from: self)
-        
+        let pop = Feedback.pop(from: self)
+
         let reduce = logger(identifier: "MeState")(MeState.reduce)
         
         Driver<Any>.system(
@@ -47,7 +48,8 @@ class MeViewController: UIViewController {
                 queryMySatredMedia,
                 showImageDetail,
                 showReputations,
-                triggerReloadMe
+                triggerReloadMe,
+                pop
             )
             .drive()
             .disposed(by: disposeBag)
@@ -90,6 +92,7 @@ extension MeViewController {
                 state.map { [Section(model: "", items: $0.myMediaItems)] }.drive(presenter.myMediaItems),
                 state.map { [Section(model: "", items: $0.myStaredMediaItems)] }.drive(presenter.myStaredMediaItems),
             ]
+            
             let events: [Signal<MeState.Event>] = [
                 presenter.myMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myMedia) },
                 presenter.myStaredMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myStaredMedia) },
@@ -98,7 +101,8 @@ extension MeViewController {
                     }.map { .onTriggerGetMoreMyMedia },
                 presenter.myMediaCollectionView.rx.itemSelected.asSignal().map { .onTriggerShowImageDetail($0.item) },
                 presenter.myStardMediaCollectionView.rx.itemSelected.asSignal().map { .onTriggerShowImageDetail($0.item) },
-                presenter.reputationView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerShowReputations },
+                presenter.reputationButton.rx.tap.asSignal().map { _ in .onTriggerShowReputations },
+                presenter.meBackgroundView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onPop }
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
 

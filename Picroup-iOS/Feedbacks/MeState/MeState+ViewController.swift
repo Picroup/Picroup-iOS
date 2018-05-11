@@ -21,4 +21,11 @@ extension DriverFeedback where State == MeState {
             return vc.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMe }
         }
     }
+    
+    static func pop(from vc: UIViewController) -> Raw {
+        return react(query: { $0.popQuery }) { [weak vc] _ in
+            vc?.navigationController?.popViewController(animated: true)
+            return .empty()
+        }
+    }
 }

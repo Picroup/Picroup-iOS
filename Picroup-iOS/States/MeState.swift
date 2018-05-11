@@ -32,6 +32,8 @@ struct MeState: Mutabled {
     var nextShowImageDetailIndex: Int?
     
     var triggerShowReputations: Bool
+    var popQuery: Void?
+
 }
 
 extension MeState {
@@ -106,7 +108,8 @@ extension MeState {
             triggerQueryMyStaredMedia: true,
             
             nextShowImageDetailIndex: nil,
-            triggerShowReputations: false
+            triggerShowReputations: false,
+            popQuery: nil
         )
     }
 }
@@ -136,6 +139,7 @@ extension MeState: IsFeedbackState {
         
         case onTriggerShowReputations
         case onShowReputationsCompleted
+        case onPop
     }
 }
 
@@ -239,6 +243,10 @@ extension MeState {
         case .onShowReputationsCompleted:
             return state.mutated {
                 $0.triggerShowReputations = false
+            }
+        case .onPop:
+            return state.mutated {
+                $0.popQuery = ()
             }
         }
     }

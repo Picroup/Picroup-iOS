@@ -26,6 +26,11 @@ struct ImageDetailState: Mutabled {
     var starMedium: StarMediumMutation.Data.StarMedium?
     var starMediumError: Error?
     var triggerStarMedium: Bool
+    
+    var triggerShowComments: Bool
+    var triggerShowUser: Bool
+    
+    var popQuery: Void?
 }
 
 extension ImageDetailState {
@@ -44,6 +49,17 @@ extension ImageDetailState {
         if (currentUser == nil) { return nil }
         return triggerStarMedium ? nextStarMedium : nil
     }
+    
+    public var showCommentsQuery: MediumFragment? {
+        return triggerShowComments ? item : nil
+    }
+    
+    public var showUserQuery: (isMe: Bool, user: UserFragment)? {
+        if !triggerShowUser { return nil }
+        let user = item.user.fragments.userFragment
+        let isMe = currentUser?.id == user.id
+        return (isMe, user)
+    }
 }
 
 extension ImageDetailState {
@@ -59,7 +75,10 @@ extension ImageDetailState {
             nextStarMedium: StarMediumMutation(userId: "", mediumId: item.id),
             starMedium: nil,
             starMediumError: nil,
-            triggerStarMedium: false
+            triggerStarMedium: false,
+            triggerShowComments: false,
+            triggerShowUser: false,
+            popQuery: nil
         )
     }
 }
@@ -75,6 +94,14 @@ extension ImageDetailState: IsFeedbackState {
         case onTriggerStarMedium
         case onStarMediumSuccess(StarMediumMutation.Data.StarMedium)
         case onStarMediumError(Error)
+        
+        case onTriggerShowComments
+        case onShowCommentsCompleted
+        
+        case onTriggerShowUser
+        case onShowUserCompleted
+        
+        case onPop
     }
 }
 
@@ -131,6 +158,26 @@ extension ImageDetailState {
                 $0.starMedium = nil
                 $0.starMediumError = error
                 $0.triggerStarMedium = false
+            }
+        case .onTriggerShowComments:
+            return state.mutated {
+                $0.triggerShowComments = true
+            }
+        case .onShowCommentsCompleted:
+            return state.mutated {
+                $0.triggerShowComments = false
+            }
+        case .onTriggerShowUser:
+            return state.mutated {
+                $0.triggerShowUser = true
+            }
+        case .onShowUserCompleted:
+            return state.mutated {
+                $0.triggerShowUser = false
+            }
+        case .onPop:
+            return state.mutated {
+                $0.popQuery = ()
             }
         }
     }

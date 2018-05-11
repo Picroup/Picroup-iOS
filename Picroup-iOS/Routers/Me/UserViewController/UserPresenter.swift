@@ -23,7 +23,6 @@ class UserPresenter: NSObject {
     @IBOutlet weak var gainedReputationCountButton: UIButton!
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var followingsCountLabel: UILabel!
-    @IBOutlet weak var reputationView: UIStackView!
     
 //    @IBOutlet weak var myStaredMediaButton: UIButton!
     @IBOutlet weak var myMediaCollectionView: UICollectionView!

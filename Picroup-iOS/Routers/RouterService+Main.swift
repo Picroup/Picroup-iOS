@@ -25,7 +25,7 @@ extension RouterService.Main {
             (title: "关注", imageName: "ic_home", vc: homeMenuViewController()),
             (title: "热门", imageName: "ic_apps", vc: rankViewController()),
             (title: "通知", imageName: "ic_notifications", vc: notificationsViewController()),
-            (title: "我", imageName: "ic_person", vc: meViewController()),
+            (title: "我", imageName: "ic_person", vc: meNavigationViewController()),
             ]
         
         let viewControllers = infos.map { info -> UIViewController in
@@ -62,11 +62,16 @@ extension RouterService.Main {
         return BaseNavigationController(rootViewController: nvc)
     }
     
-    static func meViewController() -> UIViewController {
-        let mevc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MeViewController") as! MeViewController
+    static func meNavigationViewController() -> UIViewController {
+        let mevc = meViewController()
         let nvc = BaseNavigationController(rootViewController: mevc)
         nvc.isNavigationBarHidden = true
         return nvc
+    }
+    
+    static func meViewController() -> MeViewController {
+        let mevc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MeViewController") as! MeViewController
+        return mevc
     }
     
     static func userViewController(dependency: UserViewController.Dependency) -> UserViewController {

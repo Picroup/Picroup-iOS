@@ -585,26 +585,34 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nVg-ZR-thn">
+                                        <rect key="frame" x="16" y="83" width="103.5" height="67.5"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.18039215689999999" green="0.49019607840000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="wgK-VO-4AF" firstAttribute="leading" secondItem="ECa-vI-hBi" secondAttribute="leading" constant="16" id="0IM-wm-4bg"/>
                                     <constraint firstItem="p6J-QI-gRW" firstAttribute="centerY" secondItem="jSq-np-gGw" secondAttribute="top" id="7Hu-JE-CQL"/>
+                                    <constraint firstItem="nVg-ZR-thn" firstAttribute="top" secondItem="ZoO-wd-e2h" secondAttribute="top" id="7p4-0H-rSn"/>
                                     <constraint firstItem="J3S-TG-nE1" firstAttribute="leading" secondItem="ECa-vI-hBi" secondAttribute="leading" constant="16" id="DiF-FB-CMg"/>
                                     <constraint firstAttribute="trailing" secondItem="3cd-Zu-LkP" secondAttribute="trailing" id="Hrb-t5-USk"/>
                                     <constraint firstAttribute="bottom" secondItem="R7J-ix-0kj" secondAttribute="bottom" id="LDa-aT-bEs"/>
                                     <constraint firstItem="J3S-TG-nE1" firstAttribute="top" secondItem="ECa-vI-hBi" secondAttribute="top" priority="750" constant="16" id="NSI-mC-dtX"/>
                                     <constraint firstItem="R7J-ix-0kj" firstAttribute="centerX" secondItem="LF8-f8-wj0" secondAttribute="centerX" priority="750" id="QAD-mV-290"/>
                                     <constraint firstItem="p6J-QI-gRW" firstAttribute="centerX" secondItem="jSq-np-gGw" secondAttribute="trailing" id="QJj-kx-Xvt"/>
+                                    <constraint firstItem="nVg-ZR-thn" firstAttribute="trailing" secondItem="ZoO-wd-e2h" secondAttribute="trailing" id="Qge-wM-Cb1"/>
                                     <constraint firstAttribute="bottom" secondItem="3cd-Zu-LkP" secondAttribute="bottom" constant="8" id="S33-ic-G6O"/>
                                     <constraint firstItem="R7J-ix-0kj" firstAttribute="centerX" secondItem="ZAd-wP-qlF" secondAttribute="centerX" id="SJn-aG-7Vz"/>
                                     <constraint firstItem="R7J-ix-0kj" firstAttribute="width" secondItem="ZAd-wP-qlF" secondAttribute="width" id="Uhg-aA-z1y"/>
                                     <constraint firstItem="3cd-Zu-LkP" firstAttribute="top" secondItem="ECa-vI-hBi" secondAttribute="top" constant="8" id="WQu-Oz-x0F"/>
+                                    <constraint firstItem="nVg-ZR-thn" firstAttribute="bottom" secondItem="ZoO-wd-e2h" secondAttribute="bottom" id="Xjd-dn-Wpx"/>
                                     <constraint firstItem="3cd-Zu-LkP" firstAttribute="leading" secondItem="ECa-vI-hBi" secondAttribute="leading" id="ZPR-OA-TGo"/>
                                     <constraint firstAttribute="trailing" secondItem="J3S-TG-nE1" secondAttribute="trailing" constant="16" id="dnv-lt-8n1"/>
                                     <constraint firstItem="wgK-VO-4AF" firstAttribute="top" secondItem="J3S-TG-nE1" secondAttribute="bottom" constant="24" id="exu-sl-ahi"/>
                                     <constraint firstAttribute="trailing" secondItem="wgK-VO-4AF" secondAttribute="trailing" constant="16" id="iJ5-gd-kXo"/>
                                     <constraint firstItem="3cd-Zu-LkP" firstAttribute="top" secondItem="wgK-VO-4AF" secondAttribute="bottom" constant="24" id="kYq-9t-eWI"/>
+                                    <constraint firstItem="nVg-ZR-thn" firstAttribute="leading" secondItem="ZoO-wd-e2h" secondAttribute="leading" id="q3w-P9-HAk"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="motionIdentifier" value="userHeader"/>
@@ -645,8 +653,8 @@
                         <outlet property="myMediaCollectionView" destination="cSn-4y-hl2" id="ZGX-lK-wGu"/>
                         <outlet property="myStardMediaCollectionView" destination="A1y-iW-m3E" id="bl7-zN-IMT"/>
                         <outlet property="myStaredMediaButton" destination="LF8-f8-wj0" id="ptN-uo-kud"/>
+                        <outlet property="reputationButton" destination="nVg-ZR-thn" id="lVq-Kp-hVs"/>
                         <outlet property="reputationCountLabel" destination="jSq-np-gGw" id="Fia-DP-FfQ"/>
-                        <outlet property="reputationView" destination="ZoO-wd-e2h" id="etw-yd-9kt"/>
                         <outlet property="scrollView" destination="tfU-cf-YZp" id="Cne-C5-nHY"/>
                         <outlet property="selectMyMediaLayoutConstraint" destination="SJn-aG-7Vz" id="7ik-jw-9Yc"/>
                         <outlet property="userAvatarImageView" destination="h4f-qA-rMj" id="6og-95-mq8"/>
@@ -922,7 +930,6 @@
                         <outlet property="meBackgroundView" destination="0sQ-ev-rPI" id="a9f-nU-4IC"/>
                         <outlet property="myMediaCollectionView" destination="y4H-DZ-8wj" id="qIq-pp-6xB"/>
                         <outlet property="reputationCountLabel" destination="uMI-aY-Uvk" id="Vtg-zM-Ti7"/>
-                        <outlet property="reputationView" destination="C91-fS-e2H" id="G8K-S4-alR"/>
                         <outlet property="userAvatarImageView" destination="9Xv-oc-69l" id="5dK-mg-76c"/>
                         <outlet property="usernameLabel" destination="yCN-ZI-uMt" id="bhs-27-FMH"/>
                     </connections>
