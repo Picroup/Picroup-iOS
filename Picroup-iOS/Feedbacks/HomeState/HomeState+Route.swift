@@ -72,6 +72,20 @@ extension DriverFeedback where State == HomeState {
                 .asSignalOnErrorRecoverEmpty()
         }
     }
+    
+    static func showUser(from vc: UIViewController) -> Raw {
+        return react(query: { $0.showUserQuery }) { [weak vc] query in
+            let (isMe, user) = query
+            let uvc = isMe
+                ? RouterService.Main.meViewController()
+                : RouterService.Main.userViewController(dependency: user.id)
+            vc?.navigationController?.pushViewController(uvc, animated: true)
+            return uvc.rx.deallocated.map { .onShowUserCompleted }
+                .take(1)
+                .asSignalOnErrorRecoverEmpty()
+        }
+    }
+
 }
 
 

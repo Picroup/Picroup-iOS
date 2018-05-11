@@ -31,6 +31,7 @@ struct HomeState: Mutabled {
     
     var nextShowCommentsIndex: Int?
     var nextShowImageDetailIndex: Int?
+    var nextShowUserIndex: Int?
 }
 
 extension HomeState {
@@ -56,6 +57,13 @@ extension HomeState {
         guard let index = nextShowImageDetailIndex else { return nil }
         return items[index]
     }
+    
+    public var showUserQuery: (isMe: Bool, user: UserFragment)? {
+        guard let index = nextShowUserIndex else { return nil }
+        let user = items[index].user.fragments.userFragment
+        let isMe = currentUser?.id == user.id
+        return (isMe, user)
+    }
 }
 
 extension HomeState {
@@ -71,7 +79,8 @@ extension HomeState {
             error: nil,
             trigger: true,
             nextShowCommentsIndex: nil,
-            nextShowImageDetailIndex: nil
+            nextShowImageDetailIndex: nil,
+            nextShowUserIndex: nil
         )
     }
 }
@@ -100,6 +109,9 @@ extension HomeState: IsFeedbackState {
         
         case onTriggerShowImageDetail(Int)
         case onShowImageDetailCompleted
+        
+        case onTriggerShowUser(Int)
+        case onShowUserCompleted
     }
 }
 
@@ -192,6 +204,14 @@ extension HomeState {
         case .onShowImageDetailCompleted:
             return state.mutated {
                 $0.nextShowImageDetailIndex = nil
+            }
+        case .onTriggerShowUser(let index):
+            return state.mutated {
+                $0.nextShowUserIndex = index
+            }
+        case .onShowUserCompleted:
+            return state.mutated {
+                $0.nextShowUserIndex = nil
             }
         }
     }

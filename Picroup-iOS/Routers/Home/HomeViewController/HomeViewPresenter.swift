@@ -22,19 +22,12 @@ class HomeViewPresenter: NSObject {
             let dataSource = DataSource(
                 configureCell: { dataSource, collectionView, indexPath, item in
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeImageCell", for: indexPath) as! HomeImageCell
-                    cell.imageView.setImage(with: item.minioId)
-                    cell.lifeViewWidthConstraint.constant = CGFloat(item.endedAt.sinceNow / 8.0.weeks) * cell.lifeBar.bounds.width
-                    cell.imageView.motionIdentifier = item.id
-                    cell.lifeBar.motionIdentifier = "lifeBar_\(item.id)"
-                    cell.userAvatarImageView.setImage(with: item.user.avatarId)
-                    cell.usernameLabel.text = item.user.username
-                    cell.commentButton.setTitle("  \(item.commentsCount)", for: UIControlState.normal)
-                    cell.commentButton.rx.tap
-                        .subscribe(onNext: { _events.accept(.onTriggerShowComments(indexPath.row)) })
-                        .disposed(by: cell.disposeBag)
-                    cell.imageButton.rx.tap
-                        .subscribe(onNext: { _events.accept(.onTriggerShowImageDetail(indexPath.row)) })
-                        .disposed(by: cell.disposeBag)
+                    cell.configure(
+                        with: item,
+                        onCommentsTap: { _events.accept(.onTriggerShowComments(indexPath.row)) },
+                        onImageViewTap: { _events.accept(.onTriggerShowImageDetail(indexPath.row)) },
+                        onUserTap: { _events.accept(.onTriggerShowUser(indexPath.row)) }
+                    )
                     return cell
             },
                 configureSupplementaryView: { dataSource, collectionView, title, indexPath in

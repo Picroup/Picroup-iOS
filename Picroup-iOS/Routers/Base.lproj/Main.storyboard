@@ -167,6 +167,7 @@
                                             <outlet property="lifeViewWidthConstraint" destination="E4A-O6-iJ5" id="76C-Bc-WuG"/>
                                             <outlet property="moreButton" destination="bXX-oB-Rlx" id="OQu-Id-9v6"/>
                                             <outlet property="userAvatarImageView" destination="bAs-Cx-fCL" id="4rW-0e-e07"/>
+                                            <outlet property="userView" destination="893-om-s6q" id="7qO-sA-N7e"/>
                                             <outlet property="usernameLabel" destination="ZXB-yu-7oq" id="lIA-wc-9uD"/>
                                         </connections>
                                     </collectionViewCell>
