@@ -36,6 +36,7 @@ extension RouterService.Main {
         
         let mvc = MainTabBarController()
         mvc.viewControllers = viewControllers
+        mvc.tabBar.isTranslucent = false
 //        mvc.selectedIndex = 1
         let svc = SnackbarController(rootViewController: mvc)
         return svc

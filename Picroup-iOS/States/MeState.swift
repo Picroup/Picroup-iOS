@@ -94,6 +94,7 @@ extension MeState {
             meError: nil,
             triggerQueryMe: false,
             selectedTab: .myMedia,
+            
             nextMyMediaQuery: MyMediaQuery(userId: ""),
             myMediaItems: [],
             myMediaError: nil,

@@ -138,6 +138,7 @@
 		45FC0BF020A429AB006AAF3D /* UserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC0BEF20A429AB006AAF3D /* UserState.swift */; };
 		45FC0BF320A42F26006AAF3D /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC0BF220A42F26006AAF3D /* UserViewController.swift */; };
 		45FC0BF520A42F4A006AAF3D /* UserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC0BF420A42F4A006AAF3D /* UserPresenter.swift */; };
+		45FC0BF720A52BD6006AAF3D /* UserState+Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC0BF620A52BD6006AAF3D /* UserState+Route.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -274,6 +275,7 @@
 		45FC0BEF20A429AB006AAF3D /* UserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserState.swift; sourceTree = "<group>"; };
 		45FC0BF220A42F26006AAF3D /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		45FC0BF420A42F4A006AAF3D /* UserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresenter.swift; sourceTree = "<group>"; };
+		45FC0BF620A52BD6006AAF3D /* UserState+Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserState+Route.swift"; sourceTree = "<group>"; };
 		7A0DB2063FBD3CD08905936E /* Pods-Picroup-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Picroup_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -293,7 +295,9 @@
 		4515A68C2079E3790039C383 /* Routers */ = {
 			isa = PBXGroup;
 			children = (
+				457B1B8E205FEA1000BEDDF1 /* Main.storyboard */,
 				451CD327207BA39E0063A972 /* RouterService.swift */,
+				451CD329207BA49B0063A972 /* RouterService+Main.swift */,
 				4515A68D2079E39F0039C383 /* Main */,
 				458C106D2084A0E7005E94CD /* Home */,
 				455D69002080402E00C651A0 /* Rank */,
@@ -308,8 +312,6 @@
 		4515A68D2079E39F0039C383 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				457B1B8E205FEA1000BEDDF1 /* Main.storyboard */,
-				451CD329207BA49B0063A972 /* RouterService+Main.swift */,
 				4595F21C207C88E00040E5FA /* MainTabBarController */,
 			);
 			path = Main;
@@ -756,6 +758,7 @@
 			isa = PBXGroup;
 			children = (
 				45AA3B4A20A475FF0032A8CF /* UserState+GraphQL.swift */,
+				45FC0BF620A52BD6006AAF3D /* UserState+Route.swift */,
 			);
 			path = UserState;
 			sourceTree = "<group>";
@@ -1057,6 +1060,7 @@
 				454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */,
 				45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */,
 				45FC0BF320A42F26006AAF3D /* UserViewController.swift in Sources */,
+				45FC0BF720A52BD6006AAF3D /* UserState+Route.swift in Sources */,
 				454A4C42209C2F160063E829 /* LocalStorage.swift in Sources */,
 				45525D56208C707C00EAF00D /* HomeState+Route.swift in Sources */,
 				454F729A2089BA1300850471 /* UIView+IBInspectable.swift in Sources */,

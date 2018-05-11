@@ -33,6 +33,9 @@ class UserViewController: HideNavigationBarViewController {
         let injectDependncy = self.injectDependncy(store: store)
         let uiFeedback = self.uiFeedback
         let queryUser = Feedback.queryUser(client: ApolloClient.shared)
+        let queryMyMedia = Feedback.queryMyMedia(client: ApolloClient.shared)
+        let showImageDetail = Feedback.showImageDetail(from: self)
+        let pop = Feedback.pop(from: self)
 
         let reduce = logger(identifier: "UserState")(UserState.reduce)
 
@@ -42,7 +45,10 @@ class UserViewController: HideNavigationBarViewController {
             feedback:
                 injectDependncy,
                 uiFeedback,
-                queryUser
+                queryUser,
+                queryMyMedia,
+                showImageDetail,
+                pop
             )
             .drive()
             .disposed(by: disposeBag)
@@ -65,6 +71,7 @@ extension UserViewController {
     }
     
     fileprivate var uiFeedback: Feedback.Raw {
+        typealias Section = UserPresenter.Section
         return bind(presenter) { (presenter, state) -> Bindings<UserState.Event> in
             let meViewModel = state.map { UserViewModel(user: $0.user) }
             let subscriptions: [Disposable] = [
@@ -74,9 +81,14 @@ extension UserViewController {
                 meViewModel.map { $0.reputation }.drive(presenter.reputationCountLabel.rx.text),
                 meViewModel.map { $0.followersCount }.drive(presenter.followersCountLabel.rx.text),
                 meViewModel.map { $0.followingsCount }.drive(presenter.followingsCountLabel.rx.text),
+                state.map { [Section(model: "", items: $0.myMediaItems)] }.drive(presenter.myMediaItems),
                 ]
             let events: [Signal<UserState.Event>] = [
-                .never()
+                state.flatMapLatest {
+                    $0.shouldQueryMoreMyMedia ? presenter.myMediaCollectionView.rx.isNearBottom.asSignal() : .empty()
+                    }.map { .onTriggerGetMoreMyMedia },
+                presenter.myMediaCollectionView.rx.itemSelected.asSignal().map { .onTriggerShowImageDetail($0.item) },
+                presenter.meBackgroundView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onPop }
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
             

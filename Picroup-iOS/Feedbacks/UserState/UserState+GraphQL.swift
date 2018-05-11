@@ -23,12 +23,12 @@ extension DriverFeedback where State == UserState {
         }
     }
     
-//    static func queryMyMedia(client: ApolloClient) -> Raw {
-//        return react(query: { $0.myMediaQuery }) { query in
-//            client.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-//                .map { $0?.data?.user?.media.fragments.cursorMediaFragment }.unwrap()
-//                .map(MeState.Event.onGetMyMediaSuccess)
-//                .asSignal(onErrorReturnJust: MeState.Event.onGetMyMediaError)
-//        }
-//    }
+    static func queryMyMedia(client: ApolloClient) -> Raw {
+        return react(query: { $0.myMediaQuery }) { query in
+            client.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                .map { $0?.data?.user?.media.fragments.cursorMediaFragment }.unwrap()
+                .map(UserState.Event.onGetMyMediaSuccess)
+                .asSignal(onErrorReturnJust: UserState.Event.onGetMyMediaError)
+        }
+    }
 }
