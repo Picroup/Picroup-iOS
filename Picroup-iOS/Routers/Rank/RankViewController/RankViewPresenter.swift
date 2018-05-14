@@ -15,6 +15,7 @@ import RxDataSources
 class RankViewPresenter {
     
     var categoryButton: IconButton!
+    var refreshControl: UIRefreshControl!
     weak var collectionView: UICollectionView!
     weak var navigationItem: UINavigationItem!
 
@@ -25,8 +26,15 @@ class RankViewPresenter {
     }
     
     private func setup() {
+        prepareRefreshControl()
         prepareCategoryButton()
         prepareNavigationItem()
+    }
+    
+    fileprivate func prepareRefreshControl() {
+        refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .primaryLight
+        collectionView.addSubview(refreshControl!)
     }
     
     fileprivate func prepareCategoryButton() {

@@ -14,7 +14,7 @@ import RxRealm
 
 class RankStateObject: PrimaryObject {
     
-    @objc dynamic var rankMedia: CursorMedia?
+    @objc dynamic var rankMedia: CursorMediaObject?
     @objc dynamic var rankedMediaError: String?
     @objc dynamic var triggerRankedMediaQuery: Bool = false
 }
@@ -34,6 +34,9 @@ extension RankStateObject {
     var hasMoreRankedMedia: Bool {
         return rankMedia?.cursor.value != nil
     }
+    var isReloading: Bool {
+        return rankMedia?.cursor.value == nil && triggerRankedMediaQuery
+    }
 }
 
 extension RankStateObject {
@@ -43,7 +46,7 @@ extension RankStateObject {
             let _id = Config.realmDefaultPrimaryKey
             let value: Any = [
                 "_id": _id,
-                "rankMedia": ["_id": _id]
+                "rankMedia": ["_id": "rankMedia"]
             ]
             return try realm.findOrCreate(RankStateObject.self, forPrimaryKey: _id, value: value)
         }
@@ -71,7 +74,6 @@ extension RankStateObject.Event {
 extension RankStateObject {
     
     func reduce(event: Event, realm: Realm) {
-        print("RankStateObject event", event)
         switch event {
         case .onTriggerReload:
             rankMedia?.cursor.value = nil
@@ -82,13 +84,11 @@ extension RankStateObject {
             rankedMediaError = nil
             triggerRankedMediaQuery = true
         case .onGetReloadData(let data):
-            rankMedia = realm.create(CursorMedia.self, value: data.snapshot, update: false)
+            rankMedia = CursorMediaObject.create(from: data, id: "rankMedia")(realm)
             rankedMediaError = nil
             triggerRankedMediaQuery = false
         case .onGetMoreData(let data):
-            let items = data.items.map { realm.create(MediumObject.self, value: $0.snapshot, update: true) }
-            rankMedia?.cursor.value = data.cursor
-            rankMedia?.items.append(objectsIn: items)
+            rankMedia?.merge(from: data)(realm)
             rankedMediaError = nil
             triggerRankedMediaQuery = false
         case .onGetError(let error):

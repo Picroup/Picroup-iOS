@@ -37,7 +37,8 @@ class RankViewController: UIViewController {
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let subscriptions = [
                 stateStore.rankMediaItems().map { [Section(model: "", items: $0.toArray())] }.drive(presenter.items),
-                presenter.categoryButton.rx.tap.asSignal().emit(onNext: store.onLogout)
+                state.map { $0.isReloading }.drive(presenter.refreshControl.rx.isRefreshing),
+                presenter.categoryButton.rx.tap.asSignal().emit(onNext: store.onLogout),
             ]
             let events: [Signal<RankStateObject.Event>] = [
                 state.flatMapLatest {
@@ -45,6 +46,7 @@ class RankViewController: UIViewController {
                         ? presenter.collectionView.rx.triggerGetMore.map { .onTriggerGetMore }
                         : .empty()
                 },
+                presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReload }
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
@@ -79,7 +81,7 @@ class RankViewController: UIViewController {
             uiFeedback(states),
             queryMedia(states)
             )
-            .debug("RankStateObject.Event")
+            .debug("RankStateObject.Event", trimOutput: true)
             .emit(onNext: stateStore.on)
             .disposed(by: disposeBag)
     }

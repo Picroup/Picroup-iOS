@@ -7,6 +7,7 @@
 //
 
 import RealmSwift
+import Apollo
 
 class MediumObject: PrimaryObject {
     
@@ -25,9 +26,14 @@ class MediumDetailObject: Object {
     let aspectRatio = RealmOptional<Double>()
 }
 
-class CursorMedia: Object {
+class CursorMediaObject: PrimaryObject {
     
     let cursor = RealmOptional<Double>()
     let items = List<MediumObject>()
 }
 
+extension CursorMediaObject: IsCursorItemsObject {
+    typealias CursorItemsFragment = CursorMediaFragment
+}
+
+extension CursorMediaFragment: IsCursorFragment {}

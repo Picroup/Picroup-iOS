@@ -19,26 +19,6 @@ extension UserSessionObject {
     }
 }
 
-class NotificationObject: PrimaryObject {
-    @objc dynamic var userId: String?
-    @objc dynamic var toUserId: String?
-    @objc dynamic var mediumId: String?
-    @objc dynamic var content: String?
-    
-    let createdAt = RealmOptional<Double>()
-    let endedAt = RealmOptional<Double>()
-    let viewed = RealmOptional<Bool>()
-    
-    @objc dynamic var user: UserObject?
-    @objc dynamic var medium: MediumObject?
-}
-
-class CursorNotifications: Object {
-    
-    let cursor = RealmOptional<Double>()
-    let items = List<NotificationObject>()
-}
-
 class NotificationsStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
@@ -106,7 +86,6 @@ extension NotificationsStateObject.Event {
 extension NotificationsStateObject {
     
     func reduce(event: Event, realm: Realm) {
-        print("NotificationsStateObject event", event)
         switch event {
         case .onTriggerReload:
             notifications?.cursor.value = nil
@@ -117,13 +96,11 @@ extension NotificationsStateObject {
             notificationsError = nil
             triggerNotificationsQuery = true
         case .onGetReloadData(let data):
-            notifications = realm.create(CursorNotifications.self, value: data.snapshot, update: true)
+            notifications = CursorNotifications.create(from: data, id: _id)(realm)
             notificationsError = nil
             triggerNotificationsQuery = false
         case .onGetMoreData(let data):
-            let items = data.items.map { realm.create(NotificationObject.self, value: $0.snapshot, update: true) }
-            notifications?.cursor.value = data.cursor
-            notifications?.items.append(objectsIn: items)
+            notifications?.merge(from: data)(realm)
             notificationsError = nil
             triggerNotificationsQuery = false
         case .onGetError(let error):
