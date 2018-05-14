@@ -12,29 +12,30 @@ private let minimalUsernameLength = 0
 private let minimalPasswordLength = 0
 
 struct LoginState: Mutabled {
-    var username: String
-    var password: String
-    var user: UserQuery.Data.User?
+    
+    var next: LoginQuery
+    var user: UserDetailFragment?
     var error: Error?
-    var triggerLogin: (String, String)?
+    var trigger: Bool
 }
 
 extension LoginState {
+    var query: LoginQuery? {
+        return trigger ? next : nil
+    }
     var logged: Bool { return user != nil }
-    var isExecuting: Bool { return triggerLogin != nil }
-    var isUsernameValid: Bool { return username.count > minimalUsernameLength }
-    var isPasswordValid: Bool { return password.count > minimalPasswordLength }
-    var shouldLogin: Bool { return isUsernameValid && isPasswordValid && !isExecuting }
+    var isUsernameValid: Bool { return next.username.count > minimalUsernameLength }
+    var isPasswordValid: Bool { return next.password.count > minimalPasswordLength }
+    var shouldLogin: Bool { return isUsernameValid && isPasswordValid && !trigger }
 }
 
 extension LoginState {
     static func empty() -> LoginState {
         return LoginState(
-            username: "",
-            password: "",
+            next: LoginQuery(username: "", password: ""),
             user: nil,
             error: nil,
-            triggerLogin: nil
+            trigger: false
         )
     }
 }
@@ -42,7 +43,7 @@ extension LoginState {
 extension LoginState: IsFeedbackState {
     
     enum Event {
-        case onSuccess(UserQuery.Data.User)
+        case onSuccess(UserDetailFragment)
         case onError(Error)
         case onTrigger
         case onChangeUsername(String)
@@ -58,28 +59,28 @@ extension LoginState {
             return state.mutated {
                 $0.user = user
                 $0.error = nil
-                $0.triggerLogin = nil
+                $0.trigger = false
             }
         case .onError(let error):
             return state.mutated {
                 $0.user = nil
                 $0.error = error
-                $0.triggerLogin = nil
+                $0.trigger = false
             }
         case .onTrigger:
             guard state.shouldLogin else { return state }
             return state.mutated {
                 $0.user = nil
                 $0.error = nil
-                $0.triggerLogin = (state.username, state.password)
+                $0.trigger = true
             }
         case .onChangeUsername(let username):
             return state.mutated {
-                $0.username = username
+                $0.next.username = username
             }
         case .onChangePassword(let password):
             return state.mutated {
-                $0.password = password
+                $0.next.password = password
             }
         }
     }

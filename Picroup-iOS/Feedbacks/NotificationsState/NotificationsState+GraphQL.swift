@@ -17,7 +17,7 @@ extension DriverFeedback where State == NotificationsState {
     static func queryNotifications(client: ApolloClient) -> Raw {
         return react(query: { $0.query }) { query in
             client.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.user?.notifications }.unwrap()
+                .map { $0?.data?.user?.notifications.fragments.cursorNotoficationsFragment }.unwrap()
                 .map(NotificationsState.Event.onGetSuccess)
                 .asSignal(onErrorReturnJust: NotificationsState.Event.onGetError)
         }

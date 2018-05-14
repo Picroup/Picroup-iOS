@@ -9,12 +9,11 @@
 import Foundation
 
 struct NotificationsState: Mutabled {
-    typealias Item = MyNotificationsQuery.Data.User.Notification.Item
     
-    var currentUser: IsUser?
+    var currentUser: UserDetailFragment?
     
     var next: MyNotificationsQuery
-    var items: [Item]
+    var items: [NotificationFragment]
     var error: Error?
     var trigger: Bool
     
@@ -63,10 +62,10 @@ extension NotificationsState {
 extension NotificationsState: IsFeedbackState {
     
     enum Event {
-        case onUpdateCurrentUser(IsUser?)
+        case onUpdateCurrentUser(UserDetailFragment?)
         case onTriggerReload
         case onTriggerGetMore
-        case onGetSuccess(MyNotificationsQuery.Data.User.Notification)
+        case onGetSuccess(CursorNotoficationsFragment)
         case onGetError(Error)
         case onMarkSuccess(MarkNotificationsAsViewedQuery.Data.User.MarkNotificationsAsViewed)
         case onMarkError(Error)
@@ -99,7 +98,7 @@ extension NotificationsState {
         case .onGetSuccess(let data):
             return state.mutated {
                 $0.next.cursor = data.cursor
-                $0.items += data.items.flatMap { $0 }
+                $0.items += data.items.flatMap { $0?.fragments.notificationFragment }
                 $0.error = nil
                 $0.trigger = false
             }

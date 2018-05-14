@@ -39,13 +39,13 @@ class LoginViewController: UIViewController {
         
         let uiFeedback: DriverFeedback<LoginState>.Raw = bind(loginViewPresenter) { [snackbarController = snackbarController!] (presenter, state) in
             let subscriptions = [
-                state.map { $0.username }.distinctUntilChanged().drive(presenter.usernameField.rx.text),
-                state.map { $0.password }.distinctUntilChanged().drive(presenter.passwordField.rx.text),
+                state.map { $0.next.username }.distinctUntilChanged().drive(presenter.usernameField.rx.text),
+                state.map { $0.next.password }.distinctUntilChanged().drive(presenter.passwordField.rx.text),
                 state.map { $0.shouldHideUseenameWarning }.distinctUntilChanged().drive(presenter.usernameField.detailLabel.rx.isHidden),
                 state.map { $0.shouldHidePasswordWarning }.distinctUntilChanged().drive(presenter.passwordField.detailLabel.rx.isHidden),
-                state.map { $0.shouldLogin }.distinctUntilChanged().drive(presenter.raisedButton.rx.isEnabledWithBackgroundColor(.secondary)),
-                state.map { $0.triggerLogin }.distinctUnwrap().mapToVoid().drive(presenter.usernameField.rx.resignFirstResponder()),
-                state.map { $0.triggerLogin }.distinctUnwrap().mapToVoid().drive(presenter.passwordField.rx.resignFirstResponder()),
+                state.map { $0.isLoginButtonEnabled }.distinctUntilChanged().drive(presenter.raisedButton.rx.isEnabledWithBackgroundColor(.secondary)),
+                state.map { $0.trigger }.distinctUntilChanged().mapToVoid().drive(presenter.usernameField.rx.resignFirstResponder()),
+                state.map { $0.trigger }.distinctUntilChanged().mapToVoid().drive(presenter.passwordField.rx.resignFirstResponder()),
                 state.map { $0.user }.distinctUnwrap().map { _ in "登录成功" }.drive(snackbarController.rx.snackbarText),
                 state.map { $0.error }.distinctUnwrap().map { $0.localizedDescription }.drive(snackbarController.rx.snackbarText),
             ]
@@ -64,11 +64,15 @@ class LoginViewController: UIViewController {
 
 private extension LoginState {
     var shouldHideUseenameWarning: Bool {
-        return username.isEmpty || isUsernameValid
+        return next.username.isEmpty || isUsernameValid
     }
     
     var shouldHidePasswordWarning: Bool {
-        return password.isEmpty || isPasswordValid
+        return next.password.isEmpty || isPasswordValid
+    }
+    
+    var isLoginButtonEnabled: Bool {
+        return shouldLogin && !trigger
     }
 }
 

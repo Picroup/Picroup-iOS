@@ -11,15 +11,14 @@ import Foundation
 struct ImageDetailState: Mutabled {
     typealias Meduim = QueryState<MediumQuery, MediumQuery.Data.Medium>
     typealias StarMedium = QueryState<StarMediumMutation, StarMediumMutation.Data.StarMedium>
-    typealias Item = MediumQuery.Data.Medium.RecommendedMedium.Item
     
-    var currentUser: IsUser?
+    var currentUser: UserDetailFragment?
     
-    var item: RankedMediaQuery.Data.RankedMedium.Item
+    var item: MediumFragment
     
     var next: MediumQuery
     var meduim: MediumQuery.Data.Medium?
-    var items: [Item]
+    var items: [MediumFragment]
     var error: Error?
     var trigger: Bool
     
@@ -27,6 +26,11 @@ struct ImageDetailState: Mutabled {
     var starMedium: StarMediumMutation.Data.StarMedium?
     var starMediumError: Error?
     var triggerStarMedium: Bool
+    
+    var triggerShowComments: Bool
+    var triggerShowUser: Bool
+    
+    var popQuery: Void?
 }
 
 extension ImageDetailState {
@@ -45,10 +49,21 @@ extension ImageDetailState {
         if (currentUser == nil) { return nil }
         return triggerStarMedium ? nextStarMedium : nil
     }
+    
+    public var showCommentsQuery: MediumFragment? {
+        return triggerShowComments ? item : nil
+    }
+    
+    public var showUserQuery: (isMe: Bool, user: UserFragment)? {
+        if !triggerShowUser { return nil }
+        let user = item.user.fragments.userFragment
+        let isMe = currentUser?.id == user.id
+        return (isMe, user)
+    }
 }
 
 extension ImageDetailState {
-    static func empty(item: RankedMediaQuery.Data.RankedMedium.Item) -> ImageDetailState {
+    static func empty(item: MediumFragment) -> ImageDetailState {
         return ImageDetailState(
             currentUser: nil,
             item: item,
@@ -60,7 +75,10 @@ extension ImageDetailState {
             nextStarMedium: StarMediumMutation(userId: "", mediumId: item.id),
             starMedium: nil,
             starMediumError: nil,
-            triggerStarMedium: false
+            triggerStarMedium: false,
+            triggerShowComments: false,
+            triggerShowUser: false,
+            popQuery: nil
         )
     }
 }
@@ -68,7 +86,7 @@ extension ImageDetailState {
 extension ImageDetailState: IsFeedbackState {
     
     enum Event {
-        case onUpdateCurrentUser(IsUser?)
+        case onUpdateCurrentUser(UserDetailFragment?)
         case onTriggerGet
         case onTriggerGetMore
         case onGetSuccess(MediumQuery.Data.Medium)
@@ -76,6 +94,14 @@ extension ImageDetailState: IsFeedbackState {
         case onTriggerStarMedium
         case onStarMediumSuccess(StarMediumMutation.Data.StarMedium)
         case onStarMediumError(Error)
+        
+        case onTriggerShowComments
+        case onShowCommentsCompleted
+        
+        case onTriggerShowUser
+        case onShowUserCompleted
+        
+        case onPop
     }
 }
 
@@ -105,7 +131,7 @@ extension ImageDetailState {
             return state.mutated {
                 $0.next.cursor = data.recommendedMedia.cursor
                 $0.meduim = data
-                $0.items += data.recommendedMedia.items.flatMap { $0 }
+                $0.items += data.recommendedMedia.fragments.cursorMediaFragment.items.flatMap { $0?.fragments.mediumFragment }
                 $0.error = nil
                 $0.trigger = false
             }
@@ -132,6 +158,26 @@ extension ImageDetailState {
                 $0.starMedium = nil
                 $0.starMediumError = error
                 $0.triggerStarMedium = false
+            }
+        case .onTriggerShowComments:
+            return state.mutated {
+                $0.triggerShowComments = true
+            }
+        case .onShowCommentsCompleted:
+            return state.mutated {
+                $0.triggerShowComments = false
+            }
+        case .onTriggerShowUser:
+            return state.mutated {
+                $0.triggerShowUser = true
+            }
+        case .onShowUserCompleted:
+            return state.mutated {
+                $0.triggerShowUser = false
+            }
+        case .onPop:
+            return state.mutated {
+                $0.popQuery = ()
             }
         }
     }

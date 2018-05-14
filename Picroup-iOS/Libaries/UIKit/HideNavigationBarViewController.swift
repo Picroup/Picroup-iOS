@@ -10,19 +10,21 @@ import UIKit
 
 class HideNavigationBarViewController: UIViewController {
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if navigationController?.isNavigationBarHidden == false {
+            navigationController?.setNavigationBarHidden(true, animated: true)
+        }
+    }
+}
+
+class ShowNavigationBarViewController: UIViewController {
+    
     private var previousNavigationBarHidden: Bool?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        previousNavigationBarHidden = navigationController?.isNavigationBarHidden
-        if previousNavigationBarHidden == false {
-            navigationController?.setNavigationBarHidden(true, animated: true)
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if previousNavigationBarHidden == false {
+        if navigationController?.isNavigationBarHidden == true {
             navigationController?.setNavigationBarHidden(false, animated: true)
         }
     }

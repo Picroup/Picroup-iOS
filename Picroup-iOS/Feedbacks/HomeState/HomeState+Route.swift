@@ -55,8 +55,7 @@ extension DriverFeedback where State == HomeState {
     
     static func showComments(from vc: UIViewController) -> Raw {
         return react(query: { $0.showCommentsQuery }) { [weak vc] item in
-            let dependency = ImageCommentsViewController.Dependency(snapshot: item.snapshot)
-            let icvc = RouterService.Image.imageCommentsViewController(dependency: dependency)
+            let icvc = RouterService.Image.imageCommentsViewController(dependency: item)
             vc?.navigationController?.pushViewController(icvc, animated: true)
             return icvc.rx.deallocated.map { HomeState.Event.onShowCommentsCompleted }
                 .take(1)
@@ -66,14 +65,27 @@ extension DriverFeedback where State == HomeState {
     
     static func showImageDetail(from vc: UIViewController) -> Raw {
         return react(query: { $0.showImageDetailQuery }) { [weak vc] item in
-            let dependency = ImageDetailViewController.Dependency(snapshot: item.snapshot)
-            let idvc = RouterService.Image.imageDetailViewController(dependency: dependency)
+            let idvc = RouterService.Image.imageDetailViewController(dependency: item)
             vc?.navigationController?.pushViewController(idvc, animated: true)
             return idvc.rx.deallocated.map { .onShowImageDetailCompleted }
                 .take(1)
                 .asSignalOnErrorRecoverEmpty()
         }
     }
+    
+    static func showUser(from vc: UIViewController) -> Raw {
+        return react(query: { $0.showUserQuery }) { [weak vc] query in
+            let (isMe, user) = query
+            let uvc = isMe
+                ? RouterService.Main.meViewController()
+                : RouterService.Main.userViewController(dependency: user.id)
+            vc?.navigationController?.pushViewController(uvc, animated: true)
+            return uvc.rx.deallocated.map { .onShowUserCompleted }
+                .take(1)
+                .asSignalOnErrorRecoverEmpty()
+        }
+    }
+
 }
 
 

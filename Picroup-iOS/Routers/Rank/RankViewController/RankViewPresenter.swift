@@ -41,7 +41,7 @@ class RankViewPresenter {
         navigationItem.rightViews = [categoryButton]
     }
     
-    typealias Section = AnimatableSectionModel<String, RankedMediaQuery.Data.RankedMedium.Item>
+    typealias Section = AnimatableSectionModel<String, MediumFragment>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
     var items: (Observable<[Section]>) -> Disposable {

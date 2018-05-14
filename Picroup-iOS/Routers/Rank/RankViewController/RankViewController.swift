@@ -47,7 +47,7 @@ class RankViewController: UIViewController {
         
         let vcFeedback: Feedback = bind(self) { (me, state)  in
             let subscriptions = [
-                me.collectionView.rx.modelSelected(RankedMediaQuery.Data.RankedMedium.Item.self).asSignal().emit(to:
+                me.collectionView.rx.modelSelected(MediumFragment.self).asSignal().emit(to:
                     Binder(me) { me, item in
                         let vc = RouterService.Image.imageDetailViewController(dependency: item)
                         me.navigationController?.pushViewController(vc, animated: true)
@@ -62,7 +62,7 @@ class RankViewController: UIViewController {
         }
         
         let queryMedia: Feedback = react(query: { $0.rankedMediaQuery }) { query in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.rankedMedia }.unwrap()
+            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.rankedMedia.fragments.cursorMediaFragment }.unwrap()
                 .map(RankState.Event.onGetSuccess)
                 .asSignal(onErrorRecover: { error in .just(.onGetError(error) )})
         }

@@ -17,7 +17,7 @@ extension DriverFeedback where State == HomeState {
     static func queryMedia(client: ApolloClient) -> Raw {
         return react(query: { $0.query }) { query in
             client.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.user }.unwrap()
+                .map { $0?.data?.user?.interestedMedia.fragments.cursorMediaFragment }.unwrap()
                 .map(HomeState.Event.onGetSuccess)
                 .asSignal(onErrorReturnJust: HomeState.Event.onGetError)
         }

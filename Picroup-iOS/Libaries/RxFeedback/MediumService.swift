@@ -15,7 +15,7 @@ struct MediumService {
     
     enum SaveMediumResult {
         case progress(RxProgress)
-        case completed(SaveImageMediumMutation.Data.SaveImageMedium)
+        case completed(MediumFragment)
     }
     
     static func saveMedium(client: ApolloClient, userId: String, pickedImage: UIImage) -> Observable<MediumService.SaveMediumResult> {
@@ -25,7 +25,7 @@ struct MediumService {
         
         let (width, aspectRatio) = (pickedImage.size.width, pickedImage.size.aspectRatio)
         let mutation = SaveImageMediumMutation(userId: userId, minioId: filename, width: Double(width), aspectRatio: Double(aspectRatio))
-        let rxCompleted = client.rx.perform(mutation: mutation).map { $0?.data?.saveImageMedium }.unwrap()
+        let rxCompleted = client.rx.perform(mutation: mutation).map { $0?.data?.saveImageMedium.fragments.mediumFragment }.unwrap()
             .map(SaveMediumResult.completed)
             
         return rxProgress.concat(rxCompleted)

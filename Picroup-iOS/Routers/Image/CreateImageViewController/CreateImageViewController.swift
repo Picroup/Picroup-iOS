@@ -17,13 +17,13 @@ class CreateImageViewController: UIViewController {
     
     typealias Dependency = (image: UIImage, client: ApolloClient)
     var dependency: Dependency?
-    var savedMedium: Signal<CreateImageState.SaveImageMedium> {
+    var savedMedium: Signal<MediumFragment> {
         return _savedMedium.asSignal()
     }
     
     fileprivate typealias Feedback = DriverFeedback<CreateImageState>
     @IBOutlet fileprivate var presenter: CreateImagePresenter!
-    fileprivate let _savedMedium = PublishRelay<CreateImageState.SaveImageMedium>()
+    fileprivate let _savedMedium = PublishRelay<MediumFragment>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +69,7 @@ extension CreateImageViewController {
         }
     }
     
-    fileprivate func syncState(savedMedium: PublishRelay<CreateImageState.SaveImageMedium>) -> Feedback.Raw {
+    fileprivate func syncState(savedMedium: PublishRelay<MediumFragment>) -> Feedback.Raw {
         return  bind { (state) in
             let subscriptions = [
                 state.map { $0.savedMedium }.asSignal(onErrorJustReturn: nil).unwrap().emit(to: savedMedium)

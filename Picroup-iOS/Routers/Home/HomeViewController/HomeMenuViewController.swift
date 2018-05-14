@@ -44,7 +44,8 @@ class HomeMenuViewController: FABMenuController {
         let queryMedia = Feedback.queryMedia(client: ApolloClient.shared)
         let showComments = Feedback.showComments(from: self)
         let showImageDetail = Feedback.showImageDetail(from: self)
-        
+        let showUser = Feedback.showUser(from: self)
+
         let reduce = logger(identifier: "HomeState")(HomeState.reduce)
         
         Driver<Any>.system(
@@ -58,7 +59,8 @@ class HomeMenuViewController: FABMenuController {
                 saveMedium,
                 queryMedia,
                 showComments,
-                showImageDetail
+                showImageDetail,
+                showUser
             )
             .drive()
             .disposed(by: disposeBag)
@@ -104,7 +106,7 @@ extension HomeMenuViewController {
 
 extension UserObject {
     
-    func toUser() -> IsUser {
+    func toUser() -> UserDetailFragment {
         let snapshot = dictionaryWithValues(forKeys: [
             "_id",
             "username",
@@ -115,6 +117,6 @@ extension UserObject {
             "gainedReputation",
             "notificationsCount",
             ])
-        return UserQuery.Data.User(snapshot: snapshot)
+        return UserDetailFragment(snapshot: snapshot)
     }
 }

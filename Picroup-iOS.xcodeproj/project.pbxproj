@@ -37,7 +37,6 @@
 		45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */; };
 		45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */; };
 		454A4C42209C2F160063E829 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454A4C41209C2F160063E829 /* LocalStorage.swift */; };
-		454A4C44209C35210063E829 /* HasSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454A4C43209C35210063E829 /* HasSnapshot.swift */; };
 		454F728F2088230C00850471 /* LocalStorage+Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F728E2088230C00850471 /* LocalStorage+Values.swift */; };
 		454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72912088716900850471 /* ImageCommentsViewController.swift */; };
 		454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72932089720C00850471 /* ImageCommentsPresenter.swift */; };
@@ -90,9 +89,6 @@
 		459F259920A28C13008B6C9B /* ObservableType+catchErrorRecover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459F259820A28C13008B6C9B /* ObservableType+catchErrorRecover.swift */; };
 		45A0393D2075D0E9007498DB /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A0393C2075D0E9007498DB /* User.graphql */; };
 		45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A61C0C2086356E00AE7D99 /* StarMedium.graphql */; };
-		45A65F51209B055D00E7C677 /* CurrentUserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A65F50209B055D00E7C677 /* CurrentUserState.swift */; };
-		45A65F53209B064F00E7C677 /* IsUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A65F52209B064F00E7C677 /* IsUser.swift */; };
-		45A65F57209BE58F00E7C677 /* GraphQL+IsUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A65F56209BE58F00E7C677 /* GraphQL+IsUser.swift */; };
 		45A65F5A209BEB8800E7C677 /* LoginState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A65F59209BEB8800E7C677 /* LoginState+GraphQL.swift */; };
 		45A65F5C209BEE3C00E7C677 /* LoginState+SyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A65F5B209BEE3C00E7C677 /* LoginState+SyncState.swift */; };
 		45A65F5E209BEEB600E7C677 /* LoginState+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A65F5D209BEEB600E7C677 /* LoginState+system.swift */; };
@@ -100,6 +96,7 @@
 		45A84461208F67D600C75982 /* ReputationsState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A84460208F67D600C75982 /* ReputationsState+GraphQL.swift */; };
 		45AA3B4520A311BD0032A8CF /* ImageDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4420A311BD0032A8CF /* ImageDetailPresenter.swift */; };
 		45AA3B4820A346DB0032A8CF /* DispachQueue+realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */; };
+		45AA3B4B20A475FF0032A8CF /* UserState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4A20A475FF0032A8CF /* UserState+GraphQL.swift */; };
 		45BA0D7A208EB7640002E1D5 /* MeState+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */; };
 		45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */; };
 		45BA0D7F209010670002E1D5 /* MarkReputationLinksAsViewed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */; };
@@ -138,6 +135,10 @@
 		45FC0BEA20A419FE006AAF3D /* CursorItemsFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45FC0BE920A419FE006AAF3D /* CursorItemsFragment.graphql */; };
 		45FC0BEC20A41B0D006AAF3D /* NotificationFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45FC0BEB20A41B0D006AAF3D /* NotificationFragment.graphql */; };
 		45FC0BEE20A41BD2006AAF3D /* ReputationFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45FC0BED20A41BD2006AAF3D /* ReputationFragment.graphql */; };
+		45FC0BF020A429AB006AAF3D /* UserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC0BEF20A429AB006AAF3D /* UserState.swift */; };
+		45FC0BF320A42F26006AAF3D /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC0BF220A42F26006AAF3D /* UserViewController.swift */; };
+		45FC0BF520A42F4A006AAF3D /* UserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC0BF420A42F4A006AAF3D /* UserPresenter.swift */; };
+		45FC0BF720A52BD6006AAF3D /* UserState+Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC0BF620A52BD6006AAF3D /* UserState+Route.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -171,7 +172,6 @@
 		45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageViewController.swift; sourceTree = "<group>"; };
 		45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+dismiss.swift"; sourceTree = "<group>"; };
 		454A4C41209C2F160063E829 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
-		454A4C43209C35210063E829 /* HasSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasSnapshot.swift; sourceTree = "<group>"; };
 		454F728E2088230C00850471 /* LocalStorage+Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalStorage+Values.swift"; sourceTree = "<group>"; };
 		454F72912088716900850471 /* ImageCommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsViewController.swift; sourceTree = "<group>"; };
 		454F72932089720C00850471 /* ImageCommentsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsPresenter.swift; sourceTree = "<group>"; };
@@ -226,9 +226,6 @@
 		459F259820A28C13008B6C9B /* ObservableType+catchErrorRecover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+catchErrorRecover.swift"; sourceTree = "<group>"; };
 		45A0393C2075D0E9007498DB /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
 		45A61C0C2086356E00AE7D99 /* StarMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = StarMedium.graphql; sourceTree = "<group>"; };
-		45A65F50209B055D00E7C677 /* CurrentUserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserState.swift; sourceTree = "<group>"; };
-		45A65F52209B064F00E7C677 /* IsUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsUser.swift; sourceTree = "<group>"; };
-		45A65F56209BE58F00E7C677 /* GraphQL+IsUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GraphQL+IsUser.swift"; sourceTree = "<group>"; };
 		45A65F59209BEB8800E7C677 /* LoginState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginState+GraphQL.swift"; sourceTree = "<group>"; };
 		45A65F5B209BEE3C00E7C677 /* LoginState+SyncState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginState+SyncState.swift"; sourceTree = "<group>"; };
 		45A65F5D209BEEB600E7C677 /* LoginState+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginState+system.swift"; sourceTree = "<group>"; };
@@ -236,6 +233,7 @@
 		45A84460208F67D600C75982 /* ReputationsState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReputationsState+GraphQL.swift"; sourceTree = "<group>"; };
 		45AA3B4420A311BD0032A8CF /* ImageDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailPresenter.swift; sourceTree = "<group>"; };
 		45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispachQueue+realm.swift"; sourceTree = "<group>"; };
+		45AA3B4A20A475FF0032A8CF /* UserState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserState+GraphQL.swift"; sourceTree = "<group>"; };
 		45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeState+ViewController.swift"; sourceTree = "<group>"; };
 		45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsViewController.swift; sourceTree = "<group>"; };
 		45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MarkReputationLinksAsViewed.graphql; sourceTree = "<group>"; };
@@ -274,6 +272,10 @@
 		45FC0BE920A419FE006AAF3D /* CursorItemsFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CursorItemsFragment.graphql; sourceTree = "<group>"; };
 		45FC0BEB20A41B0D006AAF3D /* NotificationFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NotificationFragment.graphql; sourceTree = "<group>"; };
 		45FC0BED20A41BD2006AAF3D /* ReputationFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ReputationFragment.graphql; sourceTree = "<group>"; };
+		45FC0BEF20A429AB006AAF3D /* UserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserState.swift; sourceTree = "<group>"; };
+		45FC0BF220A42F26006AAF3D /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		45FC0BF420A42F4A006AAF3D /* UserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresenter.swift; sourceTree = "<group>"; };
+		45FC0BF620A52BD6006AAF3D /* UserState+Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserState+Route.swift"; sourceTree = "<group>"; };
 		7A0DB2063FBD3CD08905936E /* Pods-Picroup-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Picroup_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -293,7 +295,9 @@
 		4515A68C2079E3790039C383 /* Routers */ = {
 			isa = PBXGroup;
 			children = (
+				457B1B8E205FEA1000BEDDF1 /* Main.storyboard */,
 				451CD327207BA39E0063A972 /* RouterService.swift */,
+				451CD329207BA49B0063A972 /* RouterService+Main.swift */,
 				4515A68D2079E39F0039C383 /* Main */,
 				458C106D2084A0E7005E94CD /* Home */,
 				455D69002080402E00C651A0 /* Rank */,
@@ -308,8 +312,6 @@
 		4515A68D2079E39F0039C383 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				457B1B8E205FEA1000BEDDF1 /* Main.storyboard */,
-				451CD329207BA49B0063A972 /* RouterService+Main.swift */,
 				4595F21C207C88E00040E5FA /* MainTabBarController */,
 			);
 			path = Main;
@@ -534,6 +536,7 @@
 			children = (
 				451CD335207D0B7F0063A972 /* MeViewController */,
 				45BA0D7B208ED3980002E1D5 /* ReputationsViewController */,
+				45FC0BF120A42F11006AAF3D /* UserViewController */,
 			);
 			path = Me;
 			sourceTree = "<group>";
@@ -600,16 +603,16 @@
 			isa = PBXGroup;
 			children = (
 				458006D520A137A5004BD982 /* AppStore.swift */,
-				45A65F50209B055D00E7C677 /* CurrentUserState.swift */,
-				4595F216207A10B50040E5FA /* LoginState.swift */,
-				4595F224207D95360040E5FA /* HomeState.swift */,
 				45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */,
-				451DD4BC207F8BC7002C509A /* RankState.swift */,
+				4595F224207D95360040E5FA /* HomeState.swift */,
 				45E240B620862AD7004B58EF /* ImageDetailState.swift */,
 				45D04F772088C81F00AC2226 /* ImageCommentsState.swift */,
+				4595F216207A10B50040E5FA /* LoginState.swift */,
 				45D04F81208E073700AC2226 /* MeState.swift */,
-				45D04F8C208F627D00AC2226 /* ReputationsState.swift */,
 				45BA0D8420903A020002E1D5 /* NotificationsState.swift */,
+				451DD4BC207F8BC7002C509A /* RankState.swift */,
+				45D04F8C208F627D00AC2226 /* ReputationsState.swift */,
+				45FC0BEF20A429AB006AAF3D /* UserState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -653,6 +656,7 @@
 				45D04F85208E10EB00AC2226 /* MeState */,
 				45BA0D8620903AFC0002E1D5 /* NotificationsState */,
 				45A8445F208F67BE00C75982 /* ReputationsState */,
+				45AA3B4920A475E00032A8CF /* UserState */,
 			);
 			path = Feedbacks;
 			sourceTree = "<group>";
@@ -676,7 +680,6 @@
 			isa = PBXGroup;
 			children = (
 				45AA3B4620A346C10032A8CF /* Realm */,
-				45A65F4F209B032400E7C677 /* Model */,
 				454F728D208822EC00850471 /* LocalStorage */,
 				4595F2092079F3630040E5FA /* Minio */,
 				4595F2042079EDE20040E5FA /* UIKit */,
@@ -725,16 +728,6 @@
 			path = GraphQL;
 			sourceTree = "<group>";
 		};
-		45A65F4F209B032400E7C677 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				454A4C43209C35210063E829 /* HasSnapshot.swift */,
-				45A65F52209B064F00E7C677 /* IsUser.swift */,
-				45A65F56209BE58F00E7C677 /* GraphQL+IsUser.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		45A65F58209BEB5F00E7C677 /* LoginState */ = {
 			isa = PBXGroup;
 			children = (
@@ -759,6 +752,15 @@
 				45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */,
 			);
 			path = Realm;
+			sourceTree = "<group>";
+		};
+		45AA3B4920A475E00032A8CF /* UserState */ = {
+			isa = PBXGroup;
+			children = (
+				45AA3B4A20A475FF0032A8CF /* UserState+GraphQL.swift */,
+				45FC0BF620A52BD6006AAF3D /* UserState+Route.swift */,
+			);
+			path = UserState;
 			sourceTree = "<group>";
 		};
 		45BA0D7B208ED3980002E1D5 /* ReputationsViewController */ = {
@@ -805,6 +807,15 @@
 				454F72992089BA1300850471 /* UIView+IBInspectable.swift */,
 			);
 			path = UIKit;
+			sourceTree = "<group>";
+		};
+		45FC0BF120A42F11006AAF3D /* UserViewController */ = {
+			isa = PBXGroup;
+			children = (
+				45FC0BF220A42F26006AAF3D /* UserViewController.swift */,
+				45FC0BF420A42F4A006AAF3D /* UserPresenter.swift */,
+			);
+			path = UserViewController;
 			sourceTree = "<group>";
 		};
 		7AFE53B525738F6B09EB9CDC /* Pods */ = {
@@ -1010,7 +1021,7 @@
 				45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */,
 				45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */,
 				45BA0D8820903B160002E1D5 /* NotificationsState+GraphQL.swift in Sources */,
-				45A65F57209BE58F00E7C677 /* GraphQL+IsUser.swift in Sources */,
+				45FC0BF520A42F4A006AAF3D /* UserPresenter.swift in Sources */,
 				45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */,
 				45D04F87208E111400AC2226 /* MeState+GraphQL.swift in Sources */,
 				451DD4BF208311DA002C509A /* HasDisposeBag.swift in Sources */,
@@ -1036,6 +1047,7 @@
 				45BA0D7A208EB7640002E1D5 /* MeState+ViewController.swift in Sources */,
 				4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
+				45FC0BF020A429AB006AAF3D /* UserState.swift in Sources */,
 				45D04F80208A06D300AC2226 /* HomeViewPresenter.swift in Sources */,
 				458006D620A137A5004BD982 /* AppStore.swift in Sources */,
 				451CD32D207BB5D90063A972 /* HomeMenuViewController.swift in Sources */,
@@ -1047,8 +1059,9 @@
 				451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */,
 				454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */,
 				45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */,
+				45FC0BF320A42F26006AAF3D /* UserViewController.swift in Sources */,
+				45FC0BF720A52BD6006AAF3D /* UserState+Route.swift in Sources */,
 				454A4C42209C2F160063E829 /* LocalStorage.swift in Sources */,
-				454A4C44209C35210063E829 /* HasSnapshot.swift in Sources */,
 				45525D56208C707C00EAF00D /* HomeState+Route.swift in Sources */,
 				454F729A2089BA1300850471 /* UIView+IBInspectable.swift in Sources */,
 				451CD32A207BA49B0063A972 /* RouterService+Main.swift in Sources */,
@@ -1078,7 +1091,7 @@
 				45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */,
 				45525D54208C6F8000EAF00D /* HomeState+GraphQL.swift in Sources */,
 				45A84461208F67D600C75982 /* ReputationsState+GraphQL.swift in Sources */,
-				45A65F53209B064F00E7C677 /* IsUser.swift in Sources */,
+				45AA3B4B20A475FF0032A8CF /* UserState+GraphQL.swift in Sources */,
 				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
 				4591AEE220A3E0CC001EC384 /* SectionedDataSource+indexPath.swift in Sources */,
 				458006D820A17283004BD982 /* UIViewController+Rx+NavigationBar.swift in Sources */,
@@ -1105,7 +1118,6 @@
 				45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */,
 				45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */,
 				454F728F2088230C00850471 /* LocalStorage+Values.swift in Sources */,
-				45A65F51209B055D00E7C677 /* CurrentUserState.swift in Sources */,
 				451DD4BB207E558A002C509A /* RaisedButton+Rx.swift in Sources */,
 				4595F223207C97410040E5FA /* UIView+Motion+Rx.swift in Sources */,
 				451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */,

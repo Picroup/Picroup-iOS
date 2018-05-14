@@ -15,9 +15,8 @@ enum PickImageKind {
 }
 
 struct HomeState: Mutabled {
-    typealias Item = UserInterestedMediaQuery.Data.User.InterestedMedium.Item
     
-    var currentUser: IsUser?
+    var currentUser: UserDetailFragment?
     
     var isFABMenuOpened: Bool
     var triggerFABMenuClose: Void?
@@ -26,12 +25,13 @@ struct HomeState: Mutabled {
     var saveMediumQuery: UIImage?
 
     var next: UserInterestedMediaQuery
-    var items: [Item]
+    var items: [MediumFragment]
     var error: Error?
     var trigger: Bool
     
     var nextShowCommentsIndex: Int?
     var nextShowImageDetailIndex: Int?
+    var nextShowUserIndex: Int?
 }
 
 extension HomeState {
@@ -49,13 +49,20 @@ extension HomeState {
     var hasMore: Bool {
         return next.cursor != nil
     }
-    var showCommentsQuery: Item? {
+    var showCommentsQuery: MediumFragment? {
         guard let index = nextShowCommentsIndex else { return nil }
         return items[index]
     }
-    var showImageDetailQuery: Item? {
+    var showImageDetailQuery: MediumFragment? {
         guard let index = nextShowImageDetailIndex else { return nil }
         return items[index]
+    }
+    
+    public var showUserQuery: (isMe: Bool, user: UserFragment)? {
+        guard let index = nextShowUserIndex else { return nil }
+        let user = items[index].user.fragments.userFragment
+        let isMe = currentUser?.id == user.id
+        return (isMe, user)
     }
 }
 
@@ -72,7 +79,8 @@ extension HomeState {
             error: nil,
             trigger: true,
             nextShowCommentsIndex: nil,
-            nextShowImageDetailIndex: nil
+            nextShowImageDetailIndex: nil,
+            nextShowUserIndex: nil
         )
     }
 }
@@ -80,7 +88,7 @@ extension HomeState {
 extension HomeState: IsFeedbackState {
     
     enum Event {
-        case onUpdateCurrentUser(IsUser?)
+        case onUpdateCurrentUser(UserDetailFragment?)
         case fabMenuWillOpen
         case fabMenuWillClose
         case triggerFABMenuClose
@@ -88,12 +96,12 @@ extension HomeState: IsFeedbackState {
         case triggerPickImage(UIImagePickerControllerSourceType)
         case pickedImage(UIImage)
         case pickeImageCancelled
-        case onSeveMediumSuccess(CreateImageState.SaveImageMedium)
+        case onSeveMediumSuccess(MediumFragment)
         case onSeveMediumCancelled
         
         case onTriggerReload
         case onTriggerGetMore
-        case onGetSuccess(UserInterestedMediaQuery.Data.User)
+        case onGetSuccess(CursorMediaFragment)
         case onGetError(Error)
         
         case onTriggerShowComments(Int)
@@ -101,6 +109,9 @@ extension HomeState: IsFeedbackState {
         
         case onTriggerShowImageDetail(Int)
         case onShowImageDetailCompleted
+        
+        case onTriggerShowUser(Int)
+        case onShowUserCompleted
     }
 }
 
@@ -146,8 +157,7 @@ extension HomeState {
             }
         case .onSeveMediumSuccess(let savedMedium):
             return state.mutated {
-                let item = Item(snapshot: savedMedium.snapshot)
-                $0.items.insert(item, at: 0)
+                $0.items.insert(savedMedium, at: 0)
                 $0.saveMediumQuery = nil
             }
         case .onSeveMediumCancelled:
@@ -169,8 +179,8 @@ extension HomeState {
             }
         case .onGetSuccess(let data):
             return state.mutated {
-                $0.next.cursor = data.interestedMedia.cursor
-                $0.items += data.interestedMedia.items.flatMap { $0 }
+                $0.next.cursor = data.cursor
+                $0.items += data.items.flatMap { $0?.fragments.mediumFragment }
                 $0.error = nil
                 $0.trigger = false
             }
@@ -194,6 +204,14 @@ extension HomeState {
         case .onShowImageDetailCompleted:
             return state.mutated {
                 $0.nextShowImageDetailIndex = nil
+            }
+        case .onTriggerShowUser(let index):
+            return state.mutated {
+                $0.nextShowUserIndex = index
+            }
+        case .onShowUserCompleted:
+            return state.mutated {
+                $0.nextShowUserIndex = nil
             }
         }
     }

@@ -9,14 +9,13 @@
 import Foundation
 
 struct ReputationsState: Mutabled {
-    typealias Item = MyReputationsQuery.Data.User.ReputationLink.Item
     
-    var currentUser: IsUser?
+    var currentUser: UserDetailFragment?
     
     var reputation: Int
     
     var next: MyReputationsQuery
-    var items: [Item]
+    var items: [ReputationFragment]
     var error: Error?
     var trigger: Bool
     
@@ -65,10 +64,10 @@ extension ReputationsState {
 
 extension ReputationsState: IsFeedbackState {
     enum Event {
-        case onUpdateCurrentUser(IsUser?)
+        case onUpdateCurrentUser(UserDetailFragment?)
         case onTriggerReload
         case onTriggerGetMore
-        case onGetSuccess(MyReputationsQuery.Data.User.ReputationLink)
+        case onGetSuccess(CursorReputationLinksFragment)
         case onGetError(Error)
         case onMarkSuccess(MarkReputationLinksAsViewedQuery.Data.User.MarkReputationLinksAsViewed)
         case onMarkError(Error)
@@ -101,7 +100,7 @@ extension ReputationsState {
         case .onGetSuccess(let data):
             return state.mutated {
                 $0.next.cursor = data.cursor
-                $0.items += data.items.flatMap { $0 }
+                $0.items += data.items.flatMap { $0?.fragments.reputationFragment }
                 $0.error = nil
                 $0.trigger = false
             }

@@ -1,8 +1,8 @@
 //
-//  MeViewController.swift
+//  UserViewController.swift
 //  Picroup-iOS
 //
-//  Created by luojie on 2018/4/10.
+//  Created by luojie on 2018/5/10.
 //  Copyright © 2018年 luojie. All rights reserved.
 //
 
@@ -13,10 +13,13 @@ import RxCocoa
 import RxGesture
 import RxFeedback
 
-class MeViewController: HideNavigationBarViewController {
+class UserViewController: HideNavigationBarViewController {
+
+    typealias Dependency = String
+    var dependency: String!
     
-    fileprivate typealias Feedback = DriverFeedback<MeState>
-    @IBOutlet fileprivate var presenter: MePresenter!
+    fileprivate typealias Feedback = DriverFeedback<UserState>
+    @IBOutlet fileprivate var presenter: UserPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,39 +28,32 @@ class MeViewController: HideNavigationBarViewController {
     
     private func setupRxFeedback() {
         
+        guard let userId = dependency else { return }
+        
         let injectDependncy = self.injectDependncy(store: store)
         let uiFeedback = self.uiFeedback
-        let queryMe = Feedback.queryMe(client: ApolloClient.shared)
+        let queryUser = Feedback.queryUser(client: ApolloClient.shared)
         let queryMyMedia = Feedback.queryMyMedia(client: ApolloClient.shared)
-        let queryMySatredMedia = Feedback.queryMySatredMedia(client: ApolloClient.shared)
         let showImageDetail = Feedback.showImageDetail(from: self)
-        let showReputations = Feedback.showReputations(from: self)
-        let triggerReloadMe = Feedback.triggerReloadMe(from: self)
         let pop = Feedback.pop(from: self)
 
-        let reduce = logger(identifier: "MeState")(MeState.reduce)
-        
+        let reduce = logger(identifier: "UserState")(UserState.reduce)
+
         Driver<Any>.system(
-            initialState: MeState.empty(),
+            initialState: UserState.empty(userId: userId),
             reduce: reduce,
             feedback:
                 injectDependncy,
                 uiFeedback,
-                queryMe,
+                queryUser,
                 queryMyMedia,
-                queryMySatredMedia,
                 showImageDetail,
-                showReputations,
-                triggerReloadMe,
                 pop
             )
             .drive()
             .disposed(by: disposeBag)
         
-        Signal.merge(
-            presenter.myMediaCollectionView.rx.shouldHideNavigationBar(),
-            presenter.myStardMediaCollectionView.rx.shouldHideNavigationBar()
-            )
+        presenter.myMediaCollectionView.rx.shouldHideNavigationBar()
             .emit(onNext: { [weak presenter, weak self] in
                 presenter?.hideDetailLayoutConstraint.isActive = $0
                 UIView.animate(withDuration: 0.3) { self?.view.layoutIfNeeded() }
@@ -66,8 +62,7 @@ class MeViewController: HideNavigationBarViewController {
 
     }
 }
-
-extension MeViewController {
+extension UserViewController {
     
     fileprivate func injectDependncy(store: Store) -> Feedback.Raw {
         return { _ in
@@ -76,9 +71,9 @@ extension MeViewController {
     }
     
     fileprivate var uiFeedback: Feedback.Raw {
-        typealias Section = MePresenter.Section
-        return bind(presenter) { (presenter, state) -> Bindings<MeState.Event> in
-            let meViewModel = state.map { UserViewModel(user: $0.me) }
+        typealias Section = UserPresenter.Section
+        return bind(presenter) { (presenter, state) -> Bindings<UserState.Event> in
+            let meViewModel = state.map { UserViewModel(user: $0.user) }
             let subscriptions: [Disposable] = [
                 meViewModel.map { $0.avatarId }.drive(presenter.userAvatarImageView.rx.imageMinioId),
                 meViewModel.map { $0.username }.drive(presenter.displaynameLabel.rx.text),
@@ -86,28 +81,17 @@ extension MeViewController {
                 meViewModel.map { $0.reputation }.drive(presenter.reputationCountLabel.rx.text),
                 meViewModel.map { $0.followersCount }.drive(presenter.followersCountLabel.rx.text),
                 meViewModel.map { $0.followingsCount }.drive(presenter.followingsCountLabel.rx.text),
-                meViewModel.map { $0.gainedReputationCount }.drive(presenter.gainedReputationCountButton.rx.title()),
-                meViewModel.map { $0.isGainedReputationCountHidden }.drive(presenter.gainedReputationCountButton.rx.isHidden),
-                state.map { $0.selectedTab }.distinctUntilChanged().drive(presenter.selectedTab),
                 state.map { [Section(model: "", items: $0.myMediaItems)] }.drive(presenter.myMediaItems),
-                state.map { [Section(model: "", items: $0.myStaredMediaItems)] }.drive(presenter.myStaredMediaItems),
-            ]
-            
-            let events: [Signal<MeState.Event>] = [
-                presenter.myMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myMedia) },
-                presenter.myStaredMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myStaredMedia) },
+                ]
+            let events: [Signal<UserState.Event>] = [
                 state.flatMapLatest {
                     $0.shouldQueryMoreMyMedia ? presenter.myMediaCollectionView.rx.isNearBottom.asSignal() : .empty()
                     }.map { .onTriggerGetMoreMyMedia },
                 presenter.myMediaCollectionView.rx.itemSelected.asSignal().map { .onTriggerShowImageDetail($0.item) },
-                presenter.myStardMediaCollectionView.rx.itemSelected.asSignal().map { .onTriggerShowImageDetail($0.item) },
-                presenter.reputationButton.rx.tap.asSignal().map { _ in .onTriggerShowReputations },
                 presenter.meBackgroundView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onPop }
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
-
+            
         }
     }
 }
-
-

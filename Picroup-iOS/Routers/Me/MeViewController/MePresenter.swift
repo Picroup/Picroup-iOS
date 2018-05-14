@@ -22,8 +22,8 @@ class MePresenter: NSObject {
     @IBOutlet weak var gainedReputationCountButton: UIButton!
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var followingsCountLabel: UILabel!
-    @IBOutlet weak var reputationView: UIStackView!
-    
+    @IBOutlet weak var reputationButton: UIButton!
+
     @IBOutlet weak var myMediaButton: UIButton!
     @IBOutlet weak var myStaredMediaButton: UIButton!
     
@@ -32,10 +32,9 @@ class MePresenter: NSObject {
     @IBOutlet weak var myStardMediaCollectionView: UICollectionView!
 
     @IBOutlet weak var selectMyMediaLayoutConstraint: NSLayoutConstraint!
-    @IBOutlet weak var showDetailLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
     
-    typealias Section = AnimatableSectionModel<String, MyMediaQuery.Data.User.Medium.Item>
+    typealias Section = AnimatableSectionModel<String, MediumFragment>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
     var selectedTab: Binder<MeState.Tab> {
@@ -79,7 +78,7 @@ struct UserViewModel {
     let gainedReputationCount: String
     let isGainedReputationCountHidden: Bool
     
-    init(user: UserQuery.Data.User?) {
+    init(user: UserDetailFragment?) {
         self.username = user.map { "@\($0.username)" } ?? " "
         self.avatarId = user?.avatarId
         self.reputation = user?.reputation.description ?? "0"
@@ -91,13 +90,3 @@ struct UserViewModel {
 }
 
 
-extension MyMediaQuery.Data.User.Medium.Item: IdentifiableType, Equatable {
-    
-    public var identity: String {
-        return id
-    }
-    
-    public static func ==(lhs: MyMediaQuery.Data.User.Medium.Item, rhs: MyMediaQuery.Data.User.Medium.Item) -> Bool {
-        return true
-    }
-}

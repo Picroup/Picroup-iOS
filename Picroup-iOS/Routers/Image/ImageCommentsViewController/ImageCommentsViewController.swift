@@ -16,7 +16,7 @@ import Apollo
 
 class ImageCommentsViewController: HideNavigationBarViewController {
     
-    typealias Dependency = RankedMediaQuery.Data.RankedMedium.Item
+    typealias Dependency = MediumFragment
     var dependency: Dependency!
     
     @IBOutlet private var presenter: ImageCommentsPresenter!
@@ -63,13 +63,15 @@ class ImageCommentsViewController: HideNavigationBarViewController {
         }
         
         let queryMedia: Feedback = react(query: { $0.query }) { (query) in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.medium }.unwrap().asObservable()
+            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                .map { $0?.data?.medium?.comments.fragments.cursorCommentsFragment }.unwrap().asObservable()
                 .map(ImageCommentsState.Event.onGetSuccess)
                 .catchError { error in .just(.onGetError(error)) }
         }
         
         let saveComment: Feedback = react(query: { $0.saveCommentQuery }) { query in
-            ApolloClient.shared.rx.perform(mutation: query).map { $0?.data?.saveComment }.unwrap().asObservable()
+            ApolloClient.shared.rx.perform(mutation: query)
+                .map { $0?.data?.saveComment.fragments.commentFragment }.unwrap().asObservable()
                 .map { .onSaveCommentSuccess($0) }
                 .catchErrorRecover { .onSaveCommentError($0) }
         }

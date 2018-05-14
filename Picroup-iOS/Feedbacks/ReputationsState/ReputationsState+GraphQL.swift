@@ -17,7 +17,7 @@ extension DriverFeedback where State == ReputationsState {
     static func queryReputations(client: ApolloClient) -> Raw {
         return react(query: { $0.query }) { query in
             client.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.user?.reputationLinks }.unwrap()
+                .map { $0?.data?.user?.reputationLinks.fragments.cursorReputationLinksFragment }.unwrap()
                 .map(ReputationsState.Event.onGetSuccess)
                 .asSignal(onErrorReturnJust: ReputationsState.Event.onGetError)
         }

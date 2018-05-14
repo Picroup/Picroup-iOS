@@ -21,7 +21,7 @@ extension Reactive where Base: UIScrollView {
     
     public var isNearBottom: ControlEvent<Void> {
         let scrollView = base
-        let events = didEndDecelerating
+        let events = contentOffset
             .flatMap { _ -> Observable<Void> in
                 scrollView.isNearBottom ? .just(())  : .empty()
         }

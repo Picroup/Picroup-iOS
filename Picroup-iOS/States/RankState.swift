@@ -10,7 +10,7 @@ import Foundation
 
 struct RankState: Mutabled {
     var nextRankedMediaQuery: RankedMediaQuery
-    var items: [RankedMediaQuery.Data.RankedMedium.Item]
+    var items: [MediumFragment]
     var error: Error?
     var triggerQueryMedia: Bool
 }
@@ -45,7 +45,7 @@ extension RankState: IsFeedbackState {
     enum Event {
         case onChangeRankBy(RankBy?)
         case onTriggerGetMore
-        case onGetSuccess(RankedMediaQuery.Data.RankedMedium)
+        case onGetSuccess(CursorMediaFragment)
         case onGetError(Error)
     }
 }
@@ -71,7 +71,7 @@ extension RankState {
         case .onGetSuccess(let data):
             return state.mutated {
                 $0.nextRankedMediaQuery.cursor = data.cursor
-                $0.items += data.items.flatMap { $0 }
+                $0.items += data.items.flatMap { $0?.fragments.mediumFragment }
                 $0.error = nil
                 $0.triggerQueryMedia = false
             }
