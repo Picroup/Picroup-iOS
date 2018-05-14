@@ -25,7 +25,7 @@ extension RankStateObject {
         return triggerRankedMediaQuery ? next : nil
     }
     var shouldQueryMoreRankedMedia: Bool {
-        return !triggerRankedMediaQuery && rankMedia?.cursor.value != nil
+        return !triggerRankedMediaQuery && hasMoreRankedMedia
     }
     var isRankedMediaEmpty: Bool {
         guard let items = rankMedia?.items else { return false }
@@ -82,8 +82,7 @@ extension RankStateObject {
             rankedMediaError = nil
             triggerRankedMediaQuery = true
         case .onGetReloadData(let data):
-            let value = data.snapshot.merging(["_id": Config.realmDefaultPrimaryKey]) { $1 }
-            rankMedia = realm.create(CursorMedia.self, value: value, update: true)
+            rankMedia = realm.create(CursorMedia.self, value: data.snapshot, update: false)
             rankedMediaError = nil
             triggerRankedMediaQuery = false
         case .onGetMoreData(let data):

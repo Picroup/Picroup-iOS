@@ -42,7 +42,7 @@ class RankViewController: UIViewController {
             let events: [Signal<RankStateObject.Event>] = [
                 state.flatMapLatest {
                     $0.shouldQueryMoreRankedMedia
-                        ? presenter.collectionView.rx.isNearBottom.asSignal().throttle(1, latest: false).map { .onTriggerGetMore }
+                        ? presenter.collectionView.rx.triggerGetMore.map { .onTriggerGetMore }
                         : .empty()
                 },
             ]

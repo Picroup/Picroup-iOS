@@ -11,10 +11,10 @@ import RealmSwift
 class MediumObject: PrimaryObject {
     
     @objc dynamic var userId: String?
-    let createdAt = RealmOptional<Double>()
-    let endedAt = RealmOptional<Double>()
     @objc dynamic var detail: MediumDetailObject?
     @objc dynamic var minioId: String?
+    let createdAt = RealmOptional<Double>()
+    let endedAt = RealmOptional<Double>()
     let commentsCount = RealmOptional<Int>()
     
     @objc dynamic var user: UserObject?
@@ -25,7 +25,7 @@ class MediumDetailObject: Object {
     let aspectRatio = RealmOptional<Double>()
 }
 
-class CursorMedia: PrimaryObject {
+class CursorMedia: Object {
     
     let cursor = RealmOptional<Double>()
     let items = List<MediumObject>()

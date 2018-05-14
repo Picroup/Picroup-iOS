@@ -13,7 +13,7 @@ import RxCocoa
 extension UIScrollView {
     
     public var isNearBottom: Bool {
-        return (contentSize.height - (contentOffset.y + bounds.height)) < 1.5 * bounds.height
+        return (contentSize.height - (contentOffset.y + bounds.height)) < bounds.height
     }
 }
 

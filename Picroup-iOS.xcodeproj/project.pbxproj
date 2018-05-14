@@ -107,6 +107,8 @@
 		45BA0D8A20903C760002E1D5 /* NotificationsViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D8920903C760002E1D5 /* NotificationsViewPresenter.swift */; };
 		45C1994820A973DD001924B9 /* MediumObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994720A973DD001924B9 /* MediumObject.swift */; };
 		45C1994A20A97402001924B9 /* UserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994920A97402001924B9 /* UserObject.swift */; };
+		45C1994D20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994C20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift */; };
+		45C1994F20A986F5001924B9 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994E20A986F5001924B9 /* UserSession.swift */; };
 		45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */; };
 		45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F71208790C700AC2226 /* TimeInterval+.swift */; };
 		45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */; };
@@ -143,7 +145,6 @@
 		45FC0BF720A52BD6006AAF3D /* UserState+Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC0BF620A52BD6006AAF3D /* UserState+Route.swift */; };
 		45FC0BFB20A91541006AAF3D /* PrimaryObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC0BFA20A91541006AAF3D /* PrimaryObject.swift */; };
 		45FC0BFE20A94995006AAF3D /* Realm+findOrCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC0BFD20A94995006AAF3D /* Realm+findOrCreate.swift */; };
-		45FC0C0120A9527C006AAF3D /* GraphQL+IsUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC0C0020A9527C006AAF3D /* GraphQL+IsUser.swift */; };
 		45FC0C0320A95765006AAF3D /* Realm+background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC0C0220A95765006AAF3D /* Realm+background.swift */; };
 /* End PBXBuildFile section */
 
@@ -250,6 +251,8 @@
 		45BA0D8920903C760002E1D5 /* NotificationsViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewPresenter.swift; sourceTree = "<group>"; };
 		45C1994720A973DD001924B9 /* MediumObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumObject.swift; sourceTree = "<group>"; };
 		45C1994920A97402001924B9 /* UserObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserObject.swift; sourceTree = "<group>"; };
+		45C1994C20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx+triggerGetMore.swift"; sourceTree = "<group>"; };
+		45C1994E20A986F5001924B9 /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailCell.swift; sourceTree = "<group>"; };
 		45D04F71208790C700AC2226 /* TimeInterval+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+.swift"; sourceTree = "<group>"; };
 		45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Operator.swift"; sourceTree = "<group>"; };
@@ -286,7 +289,6 @@
 		45FC0BF620A52BD6006AAF3D /* UserState+Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserState+Route.swift"; sourceTree = "<group>"; };
 		45FC0BFA20A91541006AAF3D /* PrimaryObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryObject.swift; sourceTree = "<group>"; };
 		45FC0BFD20A94995006AAF3D /* Realm+findOrCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Realm+findOrCreate.swift"; sourceTree = "<group>"; };
-		45FC0C0020A9527C006AAF3D /* GraphQL+IsUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GraphQL+IsUser.swift"; sourceTree = "<group>"; };
 		45FC0C0220A95765006AAF3D /* Realm+background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Realm+background.swift"; sourceTree = "<group>"; };
 		7A0DB2063FBD3CD08905936E /* Pods-Picroup-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Picroup_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -625,6 +627,7 @@
 				451DD4BC207F8BC7002C509A /* RankState.swift */,
 				45D04F8C208F627D00AC2226 /* ReputationsState.swift */,
 				45FC0BEF20A429AB006AAF3D /* UserState.swift */,
+				45C1994E20A986F5001924B9 /* UserSession.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -695,6 +698,7 @@
 				45AA3B4620A346C10032A8CF /* Realm */,
 				454F728D208822EC00850471 /* LocalStorage */,
 				4595F2092079F3630040E5FA /* Minio */,
+				45C1994B20A983BC001924B9 /* RxCocoa */,
 				4595F2042079EDE20040E5FA /* UIKit */,
 				45A039392075C6F7007498DB /* GraphQL */,
 			);
@@ -796,6 +800,14 @@
 			path = NotificationsState;
 			sourceTree = "<group>";
 		};
+		45C1994B20A983BC001924B9 /* RxCocoa */ = {
+			isa = PBXGroup;
+			children = (
+				45C1994C20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift */,
+			);
+			path = RxCocoa;
+			sourceTree = "<group>";
+		};
 		45D04F85208E10EB00AC2226 /* MeState */ = {
 			isa = PBXGroup;
 			children = (
@@ -837,7 +849,6 @@
 		45FC0BFF20A94A03006AAF3D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				45FC0C0020A9527C006AAF3D /* GraphQL+IsUser.swift */,
 				45C1994720A973DD001924B9 /* MediumObject.swift */,
 				45C1994920A97402001924B9 /* UserObject.swift */,
 			);
@@ -1085,6 +1096,7 @@
 				455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */,
 				451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */,
 				454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */,
+				45C1994D20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift in Sources */,
 				45C1994820A973DD001924B9 /* MediumObject.swift in Sources */,
 				45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */,
 				45FC0BF320A42F26006AAF3D /* UserViewController.swift in Sources */,
@@ -1104,6 +1116,7 @@
 				45D04F84208E0EAA00AC2226 /* MePresenter.swift in Sources */,
 				45525D4F208C468500EAF00D /* Feedback.swift in Sources */,
 				45A65F5C209BEE3C00E7C677 /* LoginState+SyncState.swift in Sources */,
+				45C1994F20A986F5001924B9 /* UserSession.swift in Sources */,
 				45BA0D8A20903C760002E1D5 /* NotificationsViewPresenter.swift in Sources */,
 				4595F2082079EECF0040E5FA /* colors.swift in Sources */,
 				45525D4D208C44E300EAF00D /* CreateImageState+GraphQL.swift in Sources */,
@@ -1131,7 +1144,6 @@
 				4595F227207D9CF90040E5FA /* logger.swift in Sources */,
 				451DD4B5207E395F002C509A /* MediumService.swift in Sources */,
 				4595F217207A10B50040E5FA /* LoginState.swift in Sources */,
-				45FC0C0120A9527C006AAF3D /* GraphQL+IsUser.swift in Sources */,
 				451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */,
 				45E240B22084D2CF004B58EF /* ImageDetailViewController.swift in Sources */,
 				45FC0BFE20A94995006AAF3D /* Realm+findOrCreate.swift in Sources */,
