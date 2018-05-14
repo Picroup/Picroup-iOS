@@ -98,7 +98,7 @@ extension NotificationsState {
         case .onGetSuccess(let data):
             return state.mutated {
                 $0.next.cursor = data.cursor
-                $0.items += data.items.flatMap { $0?.fragments.notificationFragment }
+                $0.items += data.items.flatMap { $0.fragments.notificationFragment }
                 $0.error = nil
                 $0.trigger = false
             }

@@ -24,6 +24,14 @@ extension RankMediumCell {
             self.lifeBarMotionIdentifier = "lifeBar_\(item.id)"
             self.starPlaceholderViewMotionIdentifier = "starButton_\(item.id)"
         }
+        
+        init(item: MediumObject) {
+            self.imageViewMinioId = item.minioId
+            self.imageViewMotionIdentifier = item._id
+            self.progress = Float(item.endedAt.value?.sinceNow ?? 0 / 8.0.weeks)
+            self.lifeBarMotionIdentifier = "lifeBar_\(item._id)"
+            self.starPlaceholderViewMotionIdentifier = "starButton_\(item._id)"
+        }
     }
 }
 

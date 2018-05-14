@@ -20,60 +20,68 @@ class RankViewController: UIViewController {
     private var presenter: RankViewPresenter!
     
     private let disposeBag = DisposeBag()
-    typealias Feedback = (Driver<RankState>) -> Signal<RankState.Event>
+    typealias Feedback = (Driver<RankStateObject>) -> Signal<RankStateObject.Event>
     
-    override func didMove(toParentViewController parent: UIViewController?) {
-        super.didMove(toParentViewController: parent)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         presenter = RankViewPresenter(collectionView: collectionView, navigationItem: navigationItem)
         setupRxFeedback()
     }
     
     private func setupRxFeedback() {
         
+        guard let stateStore = try? RankStateStore() else { return }
+        
         typealias Section = RankViewPresenter.Section
         
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let subscriptions = [
-                state.map { [Section(model: "", items: $0.items)] }.drive(presenter.items),
+                stateStore.rankMediaItems().map { [Section(model: "", items: $0.toArray())] }.drive(presenter.items),
                 presenter.categoryButton.rx.tap.asSignal().emit(onNext: store.onLogout)
             ]
-            let events: [Signal<RankState.Event>] = [
+            let events: [Signal<RankStateObject.Event>] = [
                 state.flatMapLatest {
-                    $0.shouldQueryMore ? presenter.collectionView.rx.isNearBottom.asSignal() : .empty()
-                    }.map { .onTriggerGetMore },
+                    $0.shouldQueryMoreRankedMedia
+                        ? presenter.collectionView.rx.isNearBottom.asSignal().throttle(1, latest: false).map { .onTriggerGetMore }
+                        : .empty()
+                },
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
         let vcFeedback: Feedback = bind(self) { (me, state)  in
             let subscriptions = [
-                me.collectionView.rx.modelSelected(MediumFragment.self).asSignal().emit(to:
+                me.collectionView.rx.modelSelected(MediumObject.self).asSignal().emit(to:
                     Binder(me) { me, item in
-                        let vc = RouterService.Image.imageDetailViewController(dependency: item)
-                        me.navigationController?.pushViewController(vc, animated: true)
+//                        let vc = RouterService.Image.imageDetailViewController(dependency: item)
+//                        me.navigationController?.pushViewController(vc, animated: true)
                 }),
                 me.collectionView.rx.shouldHideNavigationBar()
                     .emit(to: me.rx.setNavigationBarHidden(animated: true))
             ]
-            let events: [Signal<RankState.Event>] = [
-                .never(),
+            let events: [Signal<RankStateObject.Event>] = [
+                Signal.just(RankStateObject.Event.onTriggerReload),
+                .never()
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
         let queryMedia: Feedback = react(query: { $0.rankedMediaQuery }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.rankedMedia.fragments.cursorMediaFragment }.unwrap()
-                .map(RankState.Event.onGetSuccess)
-                .asSignal(onErrorRecover: { error in .just(.onGetError(error) )})
+                .map(RankStateObject.Event.onGetData(isReload: query.cursor == nil))
+                .asSignal(onErrorReturnJust: RankStateObject.Event.onGetError)
         }
         
-        Driver<Any>.system(
-            initialState: RankState.empty(),
-            reduce: logger(identifier: "RankState")(RankState.reduce),
-            feedback: uiFeedback, vcFeedback, queryMedia
-        )
-        .drive()
-        .disposed(by: disposeBag)
+        let states = stateStore.states
+        
+        Signal.merge(
+            vcFeedback(states),
+            uiFeedback(states),
+            queryMedia(states)
+            )
+            .debug("RankStateObject.Event")
+            .emit(onNext: stateStore.on)
+            .disposed(by: disposeBag)
     }
 
 }

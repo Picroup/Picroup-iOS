@@ -192,7 +192,7 @@ extension MeState {
         case .onGetMyMediaSuccess(let data):
             return state.mutated {
                 $0.nextMyMediaQuery.cursor = data.cursor
-                $0.myMediaItems += data.items.flatMap { $0?.fragments.mediumFragment }
+                $0.myMediaItems += data.items.flatMap { $0.fragments.mediumFragment }
                 $0.myMediaError = nil
                 $0.triggerQueryMyMedia = false
             }
@@ -218,7 +218,7 @@ extension MeState {
         case .onGetMyStaredMediaSuccess(let data):
             return state.mutated {
                 $0.nextMyStaredMediaQuery.cursor = data.cursor
-                $0.myStaredMediaItems += data.items.flatMap { $0?.fragments.mediumFragment }
+                $0.myStaredMediaItems += data.items.flatMap { $0.fragments.mediumFragment }
                 $0.myStaredMediaError = nil
                 $0.triggerQueryMyStaredMedia = false
             }

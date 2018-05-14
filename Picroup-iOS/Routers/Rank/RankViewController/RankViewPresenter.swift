@@ -41,7 +41,7 @@ class RankViewPresenter {
         navigationItem.rightViews = [categoryButton]
     }
     
-    typealias Section = AnimatableSectionModel<String, MediumFragment>
+    typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
     var items: (Observable<[Section]>) -> Disposable {
@@ -59,13 +59,9 @@ class RankViewPresenter {
     }
 }
 
-extension RankedMediaQuery.Data.RankedMedium.Item: IdentifiableType, Equatable {
+extension MediumObject: IdentifiableType {
     
     public var identity: String {
-        return id
-    }
-    
-    public static func ==(lhs: RankedMediaQuery.Data.RankedMedium.Item, rhs: RankedMediaQuery.Data.RankedMedium.Item) -> Bool {
-        return true
+        return _id
     }
 }

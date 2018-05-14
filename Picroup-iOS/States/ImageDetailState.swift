@@ -131,7 +131,7 @@ extension ImageDetailState {
             return state.mutated {
                 $0.next.cursor = data.recommendedMedia.cursor
                 $0.meduim = data
-                $0.items += data.recommendedMedia.fragments.cursorMediaFragment.items.flatMap { $0?.fragments.mediumFragment }
+                $0.items += data.recommendedMedia.fragments.cursorMediaFragment.items.flatMap { $0.fragments.mediumFragment }
                 $0.error = nil
                 $0.trigger = false
             }

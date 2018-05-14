@@ -135,7 +135,7 @@ extension UserState {
         case .onGetMyMediaSuccess(let data):
             return state.mutated {
                 $0.nextMyMediaQuery.cursor = data.cursor
-                $0.myMediaItems += data.items.flatMap { $0?.fragments.mediumFragment }
+                $0.myMediaItems += data.items.flatMap { $0.fragments.mediumFragment }
                 $0.myMediaError = nil
                 $0.triggerQueryMyMedia = false
             }
