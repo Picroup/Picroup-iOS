@@ -29,7 +29,7 @@ class ReputationsViewController: UIViewController {
         
         guard let reputation = dependency else { return }
         
-        let injectDependncy = self.injectDependncy(store: store)
+        let injectDependncy = self.injectDependncy(appStore: appStore)
         let uiFeedback = self.uiFeedback
         let queryReputations = Feedback.queryReputations(client: ApolloClient.shared)
         let queryMarkRepotationsAsViewed = Feedback.queryMarkRepotationsAsViewed(client: ApolloClient.shared)
@@ -57,9 +57,9 @@ class ReputationsViewController: UIViewController {
 
 extension ReputationsViewController {
     
-    fileprivate func injectDependncy(store: Store) -> Feedback.Raw {
+    fileprivate func injectDependncy(appStore: AppStore) -> Feedback.Raw {
         return { _ in
-            store.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map { .onUpdateCurrentUser($0) }
+            appStore.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map { .onUpdateCurrentUser($0) }
         }
     }
     

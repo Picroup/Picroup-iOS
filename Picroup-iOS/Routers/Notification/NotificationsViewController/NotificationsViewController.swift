@@ -17,7 +17,7 @@ class NotificationsViewController: UIViewController {
     @IBOutlet fileprivate var presenter: NotificationsViewPresenter! {
         didSet { setupPresenter() }
     }
-    typealias Feedback = DriverFeedback<NotificationsState>
+    typealias Feedback = (Driver<NotificationsStateObject>) -> Signal<NotificationsStateObject.Event>
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,21 +30,47 @@ class NotificationsViewController: UIViewController {
     
     private func setupRxFeedback() {
         
-        let injectDependncy = self.injectDependncy(store: store)
-        let uiFeedback = self.uiFeedback
-        let queryNotifications = Feedback.queryNotifications(client: ApolloClient.shared)
-        let queryMarkNotificationsAsViewed = Feedback.queryMarkNotificationsAsViewed(client: ApolloClient.shared)
+        guard let store = try? NotificationsStateStore() else { return }
         
-        Driver<Any>.system(
-            initialState: NotificationsState.empty(),
-            reduce: logger(identifier: "ReputationsState")(NotificationsState.reduce),
-            feedback:
-                injectDependncy,
-                uiFeedback,
-                queryNotifications,
-                queryMarkNotificationsAsViewed
+        typealias Section = NotificationsViewPresenter.Section
+
+        let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
+            let subscriptions = [
+                store.notifications().map { [Section(model: "", items: $0)] }.drive(presenter.items),
+                ]
+            let events: [Signal<NotificationsStateObject.Event>] = [
+                state.flatMapLatest {
+                    $0.shouldQueryMoreNotifications
+                        ? presenter.tableView.rx.triggerGetMore
+                        : .empty()
+                }.map { .onTriggerGetMore },
+                Signal.just(NotificationsStateObject.Event.onTriggerReload),
+//                presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReload }
+            ]
+            return Bindings(subscriptions: subscriptions, events: events)
+        }
+        
+        let queryNotifacations: Feedback = react(query: { $0.notificationsQuery }) { query in
+            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.notifications.fragments.cursorNotoficationsFragment }.unwrap()
+                .map(NotificationsStateObject.Event.onGetData(isReload: query.cursor == nil))
+                .asSignal(onErrorReturnJust: NotificationsStateObject.Event.onGetError)
+        }
+        
+        let queryMark: Feedback = react(query: { $0.markQuery }) { query in
+            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.markNotificationsAsViewed.id }.unwrap()
+                .map(NotificationsStateObject.Event.onMarkSuccess)
+                .asSignal(onErrorReturnJust: NotificationsStateObject.Event.onMarkError)
+        }
+        
+        let states = store.states
+        
+        Signal.merge(
+            uiFeedback(states),
+            queryNotifacations(states),
+            queryMark(states)
             )
-            .drive()
+            .debug("NotificationsStateObject.Event", trimOutput: true)
+            .emit(onNext: store.on)
             .disposed(by: disposeBag)
         
         presenter.tableView.rx.shouldHideNavigationBar()
@@ -53,29 +79,4 @@ class NotificationsViewController: UIViewController {
     }
 }
 
-extension NotificationsViewController {
-    
-    fileprivate func injectDependncy(store: Store) -> Feedback.Raw {
-        return { _ in
-            store.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map { .onUpdateCurrentUser($0) }
-        }
-    }
-    
-    fileprivate var uiFeedback: Feedback.Raw {
-        typealias Section = NotificationsViewPresenter.Section
-        
-        return bind(presenter) { (presenter, state) in
-            return Bindings(
-                subscriptions: [
-                    state.map { [Section(model: "", items: $0.items)] }.drive(presenter.items),
-                    ],
-                events: [
-                    state.flatMapLatest {
-                        $0.shouldQueryMore ? presenter.tableView.rx.isNearBottom.asSignal() : .empty()
-                        }.map { .onTriggerGetMore },
-                    ]
-            )
-        }
-    }
-}
 

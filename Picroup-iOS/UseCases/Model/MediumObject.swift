@@ -9,7 +9,7 @@
 import RealmSwift
 import Apollo
 
-class MediumObject: PrimaryObject {
+final class MediumObject: PrimaryObject {
     
     @objc dynamic var userId: String?
     @objc dynamic var detail: MediumDetailObject?
@@ -21,12 +21,12 @@ class MediumObject: PrimaryObject {
     @objc dynamic var user: UserObject?
 }
 
-class MediumDetailObject: Object {
+final class MediumDetailObject: Object {
     let width = RealmOptional<Double>()
     let aspectRatio = RealmOptional<Double>()
 }
 
-class CursorMediaObject: PrimaryObject {
+final class CursorMediaObject: PrimaryObject {
     
     let cursor = RealmOptional<Double>()
     let items = List<MediumObject>()

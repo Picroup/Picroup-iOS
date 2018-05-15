@@ -33,17 +33,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func setupRxfeedback() {
-        _ = store.state.debug("state").map { $0.currentUser != nil }.distinctUntilChanged().drive(Binder(window!) { (window, isLogin) in
-            let lvc = RouterService.Login.loginViewController(client: .shared, store: store)
+        _ = appStore.state.debug("state").map { $0.currentUser != nil }.distinctUntilChanged().drive(Binder(window!) { (window, isLogin) in
+            let lvc = RouterService.Login.loginViewController(client: .shared, appStore: appStore)
             let loginViewController = SnackbarController(rootViewController: lvc)
             let rootViewController = RouterService.Main.rootViewController()
             window.rootViewController = isLogin ? rootViewController : loginViewController
         })
         
-        _ = store.state.map { $0.recommendMediumQuery }.distinctUnwrap().flatMapLatest {
+        _ = appStore.state.map { $0.recommendMediumQuery }.distinctUnwrap().flatMapLatest {
             ApolloClient.shared.rx.perform(mutation: $0)
                 .asSignal(onErrorJustReturn: nil)
             }.mapToVoid()
-            .emit(onNext: store.onRecommendMediumCompleted)
+            .emit(onNext: appStore.onRecommendMediumCompleted)
     }
 }

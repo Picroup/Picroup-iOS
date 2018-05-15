@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RxRealm
 
-class RankStateObject: PrimaryObject {
+final class RankStateObject: PrimaryObject {
     
     @objc dynamic var rankMedia: CursorMediaObject?
     @objc dynamic var rankedMediaError: String?
@@ -71,7 +71,7 @@ extension RankStateObject.Event {
     }
 }
 
-extension RankStateObject {
+extension RankStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
@@ -98,7 +98,7 @@ extension RankStateObject {
     }
 }
 
-class RankStateStore {
+final class RankStateStore {
     
     let states: Driver<RankStateObject>
     private let _state: RankStateObject
@@ -112,23 +112,15 @@ class RankStateStore {
         self.states = states
     }
     
-    func on(event: RankStateObject.Event) -> () {
-        Realm.background(updates: { realm in
-            guard let state = realm.object(ofType: RankStateObject.self, forPrimaryKey: Config.realmDefaultPrimaryKey) else {
-                print("error: RankStateObject is lost")
-                return
-            }
-            try realm.write {
-                state.reduce(event: event, realm: realm)
-            }
-        }, onError: { error in
-            print("realm error:", error)
-        })
+    func on(event: RankStateObject.Event) {
+        let id = Config.realmDefaultPrimaryKey
+        Realm.backgroundReduce(ofType: RankStateObject.self, forPrimaryKey: id, event: event)
     }
     
-    func rankMediaItems() -> Driver<List<MediumObject>> {
+    func rankMediaItems() -> Driver<[MediumObject]> {
         guard let items = _state.rankMedia?.items else { return .empty() }
         return Observable.collection(from: items).asDriver(onErrorDriveWith: .empty())
+            .map { $0.toArray() }
     }
 }
 

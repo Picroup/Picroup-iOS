@@ -22,13 +22,16 @@ protocol IsCursorItemsObject {
     
     var cursor: RealmOptional<Double> { get }
     var items: List<Item> { get }
+    
+    static func create(from fragment: CursorItemsFragment, id: String) -> (Realm) -> Self
+    func merge(from fragment: CursorItemsFragment) -> (Realm) -> Void
 }
 
 extension IsCursorItemsObject where Self: Object {
     
     static func create(from fragment: CursorItemsFragment, id: String) -> (Realm) -> Self {
         return { realm in
-            let value: Any = fragment.snapshot.merging(["_id": id]) { $1 }
+            let value: Snapshot = fragment.snapshot.merging(["_id": id]) { $1 }
             return realm.create(Self.self, value: value, update: true)
         }
     }

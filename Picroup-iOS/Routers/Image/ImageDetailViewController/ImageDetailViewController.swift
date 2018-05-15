@@ -33,10 +33,10 @@ class ImageDetailViewController: HideNavigationBarViewController {
         guard let dependency = dependency else { return }
         typealias Feedback = Observable<Any>.Feedback<ImageDetailState, ImageDetailState.Event>
 
-        store.onViewMedium(mediumId: dependency.id)
+        appStore.onViewMedium(mediumId: dependency.id)
         
         let injectDependncy: Feedback = { _ in
-            store.state.map { $0.currentUser?.toUser() }.asObservable().map { .onUpdateCurrentUser($0) }
+            appStore.state.map { $0.currentUser?.toUser() }.asObservable().map { .onUpdateCurrentUser($0) }
         }
         
         let uiFeedback: Feedback = bind(self) { (me, state) in

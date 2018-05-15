@@ -30,7 +30,7 @@ class UserViewController: HideNavigationBarViewController {
         
         guard let userId = dependency else { return }
         
-        let injectDependncy = self.injectDependncy(store: store)
+        let injectDependncy = self.injectDependncy(appStore: appStore)
         let uiFeedback = self.uiFeedback
         let queryUser = Feedback.queryUser(client: ApolloClient.shared)
         let queryMyMedia = Feedback.queryMyMedia(client: ApolloClient.shared)
@@ -64,9 +64,9 @@ class UserViewController: HideNavigationBarViewController {
 }
 extension UserViewController {
     
-    fileprivate func injectDependncy(store: Store) -> Feedback.Raw {
+    fileprivate func injectDependncy(appStore: AppStore) -> Feedback.Raw {
         return { _ in
-            store.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map { .onUpdateCurrentUser($0) }
+            appStore.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map { .onUpdateCurrentUser($0) }
         }
     }
     

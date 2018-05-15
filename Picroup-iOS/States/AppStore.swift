@@ -13,9 +13,11 @@ import RxFeedback
 import RealmSwift
 import RxRealm
 
-class AppStateObject: Object {
+final class AppStateObject: Object {
     @objc dynamic var _id: String?
     @objc dynamic var currentUser: UserObject?
+    
+    @objc dynamic var session: UserSessionObject?
     
     @objc dynamic var previousMediumId: String?
     @objc dynamic var currentMediumId: String?
@@ -51,24 +53,27 @@ extension AppStateObject {
         result._id = AppStateObject.appPrimaryKey
         try? realm.write {
             realm.add(result, update: true)
+            result.session = realm.create(UserSessionObject.self, value: ["_id": Config.realmDefaultPrimaryKey], update: true)
         }
         return result
     }()
 }
 
-class Store {
+final class AppStore {
     
     lazy var state = Observable.from(object: AppStateObject.shared).asDriver(onErrorDriveWith: .empty())
     
     func onLogin(_ value: [String: Any?]) {
         updateState { state, realm in
             state.currentUser = realm.create(UserObject.self, value: value, update: true)
+            state.session?.currentUser = state.currentUser
         }
     }
     
     func onLogout() {
         updateState { state, realm in
             state.currentUser = nil
+            state.session?.currentUser = state.currentUser
         }
     }
     
@@ -98,5 +103,5 @@ class Store {
     }
 }
 
-let store = Store()
+let appStore = AppStore()
 

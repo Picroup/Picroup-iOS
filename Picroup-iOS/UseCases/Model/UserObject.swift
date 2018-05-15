@@ -8,7 +8,7 @@
 
 import RealmSwift
 
-class UserObject: PrimaryObject {
+final class UserObject: PrimaryObject {
     @objc dynamic var username: String?
     @objc dynamic var avatarId: String?
     let followingsCount = RealmOptional<Int>()

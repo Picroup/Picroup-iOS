@@ -20,4 +20,19 @@ extension Realm {
             }
         }
     }
+    
+    static func backgroundReduce<StateObject, KeyType>(ofType type: StateObject.Type, forPrimaryKey key: KeyType, event: StateObject.Event)
+        where StateObject: Object, StateObject: IsFeedbackStateObject {
+        background(updates: { realm in
+            guard let state = realm.object(ofType: type, forPrimaryKey: key) else {
+                print("error: \(type) is lost")
+                return
+            }
+            try realm.write {
+                state.reduce(event: event, realm: realm)
+            }
+        }, onError: { error in
+            print("realm error:", error)
+        })
+    }
 }

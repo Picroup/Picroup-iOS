@@ -30,22 +30,22 @@ class RankViewController: UIViewController {
     
     private func setupRxFeedback() {
         
-        guard let stateStore = try? RankStateStore() else { return }
+        guard let store = try? RankStateStore() else { return }
         
         typealias Section = RankViewPresenter.Section
         
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let subscriptions = [
-                stateStore.rankMediaItems().map { [Section(model: "", items: $0.toArray())] }.drive(presenter.items),
+                store.rankMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items),
                 state.map { $0.isReloading }.drive(presenter.refreshControl.rx.isRefreshing),
-                presenter.categoryButton.rx.tap.asSignal().emit(onNext: store.onLogout),
+                presenter.categoryButton.rx.tap.asSignal().emit(onNext: appStore.onLogout),
             ]
             let events: [Signal<RankStateObject.Event>] = [
                 state.flatMapLatest {
                     $0.shouldQueryMoreRankedMedia
-                        ? presenter.collectionView.rx.triggerGetMore.map { .onTriggerGetMore }
+                        ? presenter.collectionView.rx.triggerGetMore
                         : .empty()
-                },
+                }.map { .onTriggerGetMore },
                 presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReload }
             ]
             return Bindings(subscriptions: subscriptions, events: events)
@@ -74,7 +74,7 @@ class RankViewController: UIViewController {
                 .asSignal(onErrorReturnJust: RankStateObject.Event.onGetError)
         }
         
-        let states = stateStore.states
+        let states = store.states
         
         Signal.merge(
             vcFeedback(states),
@@ -82,7 +82,7 @@ class RankViewController: UIViewController {
             queryMedia(states)
             )
             .debug("RankStateObject.Event", trimOutput: true)
-            .emit(onNext: stateStore.on)
+            .emit(onNext: store.on)
             .disposed(by: disposeBag)
     }
 

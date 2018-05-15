@@ -111,6 +111,7 @@
 		45C1994A20A97402001924B9 /* UserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994920A97402001924B9 /* UserObject.swift */; };
 		45C1994D20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994C20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift */; };
 		45C1994F20A986F5001924B9 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994E20A986F5001924B9 /* UserSession.swift */; };
+		45C1995220AA7AFF001924B9 /* IsFeedbackStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1995120AA7AFF001924B9 /* IsFeedbackStateObject.swift */; };
 		45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */; };
 		45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F71208790C700AC2226 /* TimeInterval+.swift */; };
 		45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */; };
@@ -257,6 +258,7 @@
 		45C1994920A97402001924B9 /* UserObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserObject.swift; sourceTree = "<group>"; };
 		45C1994C20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx+triggerGetMore.swift"; sourceTree = "<group>"; };
 		45C1994E20A986F5001924B9 /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
+		45C1995120AA7AFF001924B9 /* IsFeedbackStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackStateObject.swift; sourceTree = "<group>"; };
 		45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailCell.swift; sourceTree = "<group>"; };
 		45D04F71208790C700AC2226 /* TimeInterval+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+.swift"; sourceTree = "<group>"; };
 		45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Operator.swift"; sourceTree = "<group>"; };
@@ -689,6 +691,7 @@
 				451CD318207A38CF0063A972 /* RxCocoa */,
 				4591AEE020A3E0A5001EC384 /* RxDataSources */,
 				451CD30F207910370063A972 /* RxFeedback */,
+				45C1995020AA7AD5001924B9 /* RxFeedback+Realm */,
 				451CD312207910A10063A972 /* RxSwift */,
 				45E240B320862970004B58EF /* UIKit */,
 			);
@@ -811,6 +814,15 @@
 				45C1994C20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift */,
 			);
 			path = RxCocoa;
+			sourceTree = "<group>";
+		};
+		45C1995020AA7AD5001924B9 /* RxFeedback+Realm */ = {
+			isa = PBXGroup;
+			children = (
+				45C1995120AA7AFF001924B9 /* IsFeedbackStateObject.swift */,
+			);
+			name = "RxFeedback+Realm";
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		45D04F85208E10EB00AC2226 /* MeState */ = {
@@ -1121,6 +1133,7 @@
 				451DD4B7207E3EB5002C509A /* ErrorMessage.swift in Sources */,
 				45D04F84208E0EAA00AC2226 /* MePresenter.swift in Sources */,
 				45525D4F208C468500EAF00D /* Feedback.swift in Sources */,
+				45C1995220AA7AFF001924B9 /* IsFeedbackStateObject.swift in Sources */,
 				45A65F5C209BEE3C00E7C677 /* LoginState+SyncState.swift in Sources */,
 				45C1994F20A986F5001924B9 /* UserSession.swift in Sources */,
 				45BA0D8A20903C760002E1D5 /* NotificationsViewPresenter.swift in Sources */,

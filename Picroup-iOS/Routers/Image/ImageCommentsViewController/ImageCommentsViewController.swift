@@ -35,7 +35,7 @@ class ImageCommentsViewController: HideNavigationBarViewController {
         typealias Section = ImageCommentsPresenter.Section
         
         let injectDependncy: Feedback = { _ in
-            store.state.map { $0.currentUser?.toUser() }.asObservable().map { .onUpdateCurrentUser($0) }
+            appStore.state.map { $0.currentUser?.toUser() }.asObservable().map { .onUpdateCurrentUser($0) }
         }
         
         weak var weakSelf = self

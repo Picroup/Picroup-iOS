@@ -36,7 +36,7 @@ class HomeMenuViewController: FABMenuController {
         
         guard let dependency = dependency else { return }
         
-        let injectDependncy = self.injectDependncy(store: store)
+        let injectDependncy = self.injectDependncy(appStore: appStore)
         let syncState = self.syncState(dependency: dependency)
         let uiFeedback = self.uiFeedback
         let pickImage = Feedback.pickImage(from: self)
@@ -69,9 +69,9 @@ class HomeMenuViewController: FABMenuController {
 }
 extension HomeMenuViewController {
     
-    fileprivate func injectDependncy(store: Store) -> Feedback.Raw {
+    fileprivate func injectDependncy(appStore: AppStore) -> Feedback.Raw {
         return { _ in
-            store.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map { .onUpdateCurrentUser($0) }
+            appStore.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map { .onUpdateCurrentUser($0) }
         }
     }
     

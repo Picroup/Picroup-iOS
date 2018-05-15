@@ -25,7 +25,7 @@ class NotificationsViewPresenter: NSObject {
         navigationItem.titleLabel.textColor = .primaryText
     }
     
-    typealias Section = AnimatableSectionModel<String, NotificationFragment>
+    typealias Section = AnimatableSectionModel<String, NotificationObject>
     typealias DataSource = RxTableViewSectionedAnimatedDataSource<Section>
     
     var items: (Observable<[Section]>) -> Disposable {
@@ -45,15 +45,15 @@ class NotificationCell: RxTableViewCell {
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var mediumImageView: UIImageView!
     
-    func configure(with item: NotificationFragment) {
-        userAvatarImageView.setImage(with: item.user.avatarId)
+    func configure(with item: NotificationObject) {
+        userAvatarImageView.setImage(with: item.user?.avatarId)
         mediumImageView.setImage(with: item.medium?.minioId)
         switch item.kind {
-        case .commentMedium:
+        case "commentMedium"?:
             contentLabel.text = "评论了你的图片"
-        case .starMedium:
+        case "starMedium"?:
             contentLabel.text = "给你的图片续命"
-        case .followUser:
+        case "followUser"?:
             contentLabel.text = "关注了你"
         default:
             contentLabel.text = "  "
@@ -61,14 +61,10 @@ class NotificationCell: RxTableViewCell {
     }
 }
 
-extension NotificationFragment: IdentifiableType, Equatable {
+extension NotificationObject: IdentifiableType {
     
     public var identity: String {
-        return id
-    }
-    
-    public static func ==(lhs: NotificationFragment, rhs: NotificationFragment) -> Bool {
-        return true
+        return _id
     }
 }
 
