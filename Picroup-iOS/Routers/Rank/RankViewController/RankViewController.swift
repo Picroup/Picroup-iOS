@@ -62,14 +62,15 @@ class RankViewController: UIViewController {
                     .emit(to: me.rx.setNavigationBarHidden(animated: true))
             ]
             let events: [Signal<RankStateObject.Event>] = [
-                Signal.just(RankStateObject.Event.onTriggerReload),
+                .just(.onTriggerReload),
                 .never()
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
         let queryMedia: Feedback = react(query: { $0.rankedMediaQuery }) { query in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.rankedMedia.fragments.cursorMediaFragment }.unwrap()
+            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                .map { $0?.data?.rankedMedia.fragments.cursorMediaFragment }.unwrap()
                 .map(RankStateObject.Event.onGetData(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: RankStateObject.Event.onGetError)
         }

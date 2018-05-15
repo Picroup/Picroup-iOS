@@ -34,11 +34,12 @@ class MePresenter: NSObject {
     @IBOutlet weak var selectMyMediaLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
     
-    typealias Section = AnimatableSectionModel<String, MediumFragment>
+    typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
-    var selectedTab: Binder<MeState.Tab> {
-        return Binder(self) { me, tab in
+    var selectedTabIndex: Binder<Int> {
+        return Binder(self) { me, index in
+            guard let tab = MeStateObject.Tab(rawValue: index) else { return }
             let offsetX = CGFloat(tab.rawValue) * me.scrollView.frame.width
             let offsetY = me.scrollView.contentOffset.y
             me.scrollView.setContentOffset(CGPoint(x: offsetX, y: offsetY), animated: true)
@@ -86,6 +87,16 @@ struct UserViewModel {
         self.followingsCount = user?.followingsCount.description ?? "0"
         self.gainedReputationCount = user.map { "+\($0.gainedReputation)" } ?? ""
         self.isGainedReputationCountHidden = user == nil || user!.gainedReputation == 0
+    }
+    
+    init(user: UserObject?) {
+        self.username = user.map { "@\($0.username ?? "")" } ?? " "
+        self.avatarId = user?.avatarId
+        self.reputation = user?.reputation.value?.description ?? "0"
+        self.followersCount = user?.followersCount.value?.description ?? "0"
+        self.followingsCount = user?.followingsCount.value?.description ?? "0"
+        self.gainedReputationCount = user.map { "+\($0.gainedReputation.value ?? 0)" } ?? ""
+        self.isGainedReputationCountHidden = user == nil || user!.gainedReputation.value == 0
     }
 }
 

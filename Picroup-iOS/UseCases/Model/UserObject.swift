@@ -17,3 +17,14 @@ final class UserObject: PrimaryObject {
     let gainedReputation = RealmOptional<Int>()
     let notificationsCount = RealmOptional<Int>()
 }
+
+extension UserObject {
+    
+    static func create(from fragment: UserFragment) -> (Realm) -> UserObject {
+        return { realm in realm.create(UserObject.self, value: fragment.snapshot, update: true) }
+    }
+    
+    static func create(from fragment: UserDetailFragment) -> (Realm) -> UserObject {
+        return { realm in realm.create(UserObject.self, value: fragment.snapshot, update: true) }
+    }
+}
