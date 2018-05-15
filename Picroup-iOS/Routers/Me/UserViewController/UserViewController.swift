@@ -34,7 +34,7 @@ class UserViewController: HideNavigationBarViewController {
         let uiFeedback = self.uiFeedback
         let queryUser = Feedback.queryUser(client: ApolloClient.shared)
         let queryMyMedia = Feedback.queryMyMedia(client: ApolloClient.shared)
-        let showImageDetail = Feedback.showImageDetail(from: self)
+//        let showImageDetail = Feedback.showImageDetail(from: self)
         let pop = Feedback.pop(from: self)
 
         let reduce = logger(identifier: "UserState")(UserState.reduce)
@@ -47,7 +47,7 @@ class UserViewController: HideNavigationBarViewController {
                 uiFeedback,
                 queryUser,
                 queryMyMedia,
-                showImageDetail,
+//                showImageDetail,
                 pop
             )
             .drive()

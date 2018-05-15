@@ -17,10 +17,11 @@ import Apollo
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var router: Router?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         prepareWindow()
-        setupRxfeedback()
+        setupRouter()
         return true
     }
     
@@ -32,18 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = window
     }
     
-    private func setupRxfeedback() {
-        _ = appStore.state.debug("state").map { $0.currentUser != nil }.distinctUntilChanged().drive(Binder(window!) { (window, isLogin) in
-            let lvc = RouterService.Login.loginViewController(client: .shared, appStore: appStore)
-            let loginViewController = SnackbarController(rootViewController: lvc)
-            let rootViewController = RouterService.Main.rootViewController()
-            window.rootViewController = isLogin ? rootViewController : loginViewController
-        })
-        
-        _ = appStore.state.map { $0.recommendMediumQuery }.distinctUnwrap().flatMapLatest {
-            ApolloClient.shared.rx.perform(mutation: $0)
-                .asSignal(onErrorJustReturn: nil)
-            }.mapToVoid()
-            .emit(onNext: appStore.onRecommendMediumCompleted)
+    private func setupRouter() {
+        router = Router(window: window!)
+        router?.setupRxfeedback()
     }
 }

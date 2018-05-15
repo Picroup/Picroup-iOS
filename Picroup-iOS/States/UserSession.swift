@@ -39,6 +39,7 @@ final class MeStateObject: PrimaryObject {
     @objc dynamic var myStaredMediaError: String?
     @objc dynamic var triggerMyStaredMediaQuery: Bool = false
     
+    @objc dynamic var imageDetialRoute: ImageDetialRoute?
 }
 
 extension MeStateObject {
@@ -92,6 +93,7 @@ extension MeStateObject {
                 "session": ["_id": _id],
                 "myMedia": ["_id": "myMedia"],
                 "myStaredMedia": ["_id": "myStaredMedia"],
+                "imageDetialRoute": ["_id": _id],
                 ]
             return try realm.findOrCreate(MeStateObject.self, forPrimaryKey: _id, value: value)
         }
@@ -118,6 +120,8 @@ extension MeStateObject {
         case onGetReloadMyStaredMedia(CursorMediaFragment)
         case onGetMoreMyStaredMedia(CursorMediaFragment)
         case onGetMyStaredMediaError(Error)
+        
+        case onTriggerShowImage(String?)
     }
 }
 
@@ -189,6 +193,10 @@ extension MeStateObject: IsFeedbackStateObject {
         case .onGetMyStaredMediaError(let error):
             myStaredMediaError = error.localizedDescription
             triggerMyStaredMediaQuery = false
+            
+        case .onTriggerShowImage(let mediumId):
+            imageDetialRoute?.mediumId = mediumId
+            imageDetialRoute?.version = UUID().uuidString
         }
     }
 }

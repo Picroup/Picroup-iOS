@@ -63,15 +63,15 @@ extension DriverFeedback where State == HomeState {
         }
     }
     
-    static func showImageDetail(from vc: UIViewController) -> Raw {
-        return react(query: { $0.showImageDetailQuery }) { [weak vc] item in
-            let idvc = RouterService.Image.imageDetailViewController(dependency: item)
-            vc?.navigationController?.pushViewController(idvc, animated: true)
-            return idvc.rx.deallocated.map { .onShowImageDetailCompleted }
-                .take(1)
-                .asSignalOnErrorRecoverEmpty()
-        }
-    }
+//    static func showImageDetail(from vc: UIViewController) -> Raw {
+//        return react(query: { $0.showImageDetailQuery }) { [weak vc] item in
+//            let idvc = RouterService.Image.imageDetailViewController(dependency: item)
+//            vc?.navigationController?.pushViewController(idvc, animated: true)
+//            return idvc.rx.deallocated.map { .onShowImageDetailCompleted }
+//                .take(1)
+//                .asSignalOnErrorRecoverEmpty()
+//        }
+//    }
     
     static func showUser(from vc: UIViewController) -> Raw {
         return react(query: { $0.showUserQuery }) { [weak vc] query in

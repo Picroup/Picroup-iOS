@@ -46,18 +46,14 @@ class RankViewController: UIViewController {
                         ? presenter.collectionView.rx.triggerGetMore
                         : .empty()
                 }.map { .onTriggerGetMore },
-                presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReload }
+                presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReload },
+                presenter.collectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) }
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
         let vcFeedback: Feedback = bind(self) { (me, state)  in
             let subscriptions = [
-                me.collectionView.rx.modelSelected(MediumObject.self).asSignal().emit(to:
-                    Binder(me) { me, item in
-//                        let vc = RouterService.Image.imageDetailViewController(dependency: item)
-//                        me.navigationController?.pushViewController(vc, animated: true)
-                }),
                 me.collectionView.rx.shouldHideNavigationBar()
                     .emit(to: me.rx.setNavigationBarHidden(animated: true))
             ]

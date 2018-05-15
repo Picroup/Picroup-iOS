@@ -19,7 +19,7 @@ extension RouterService {
 
 extension RouterService.Main {
     
-    static func rootViewController() -> UIViewController {
+    static func rootViewController() -> MainTabBarController {
         
         let infos: [(title: String, imageName: String, vc: UIViewController)] = [
             (title: "关注", imageName: "ic_home", vc: homeMenuViewController()),
@@ -38,8 +38,7 @@ extension RouterService.Main {
         mvc.viewControllers = viewControllers
         mvc.tabBar.isTranslucent = false
 //        mvc.selectedIndex = 1
-        let svc = SnackbarController(rootViewController: mvc)
-        return svc
+        return mvc
     }
     
     static func homeMenuViewController() -> UIViewController {
