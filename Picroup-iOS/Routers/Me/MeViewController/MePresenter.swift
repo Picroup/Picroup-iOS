@@ -33,6 +33,7 @@ class MePresenter: NSObject {
 
     @IBOutlet weak var selectMyMediaLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
+    private var isFirstTimeSetSelectedTab = true
     
     typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
@@ -42,9 +43,11 @@ class MePresenter: NSObject {
             guard let tab = MeStateObject.Tab(rawValue: index) else { return }
             let offsetX = CGFloat(tab.rawValue) * me.scrollView.frame.width
             let offsetY = me.scrollView.contentOffset.y
-            me.scrollView.setContentOffset(CGPoint(x: offsetX, y: offsetY), animated: true)
+            let animated = !me.isFirstTimeSetSelectedTab
+            me.isFirstTimeSetSelectedTab = false
+            me.scrollView.setContentOffset(CGPoint(x: offsetX, y: offsetY), animated: animated)
             me.selectMyMediaLayoutConstraint.isActive = tab == .myMedia
-            UIView.animate(withDuration: 0.3, animations: me.meBackgroundView.layoutIfNeeded)
+            UIView.animate(withDuration: animated ? 0.3 : 0, animations: me.meBackgroundView.layoutIfNeeded)
         }
     }
     
