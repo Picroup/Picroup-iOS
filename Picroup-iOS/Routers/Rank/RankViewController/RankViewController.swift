@@ -54,8 +54,7 @@ class RankViewController: UIViewController {
         
         let vcFeedback: Feedback = bind(self) { (me, state)  in
             let subscriptions = [
-                me.collectionView.rx.shouldHideNavigationBar()
-                    .emit(to: me.rx.setNavigationBarHidden(animated: true))
+                me.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true))
             ]
             let events: [Signal<RankStateObject.Event>] = [
                 .just(.onTriggerReload),

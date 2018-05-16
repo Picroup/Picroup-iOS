@@ -17,7 +17,7 @@ class ImageDetailPresenter: NSObject {
     @IBOutlet weak var backgroundButton: UIButton!
     
     typealias Section = AnimatableSectionModel<String, CellStyle>
-    typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
+    typealias DataSource = RxCollectionViewSectionedReloadDataSource<Section>
     
     var dataSource: DataSource?
     
@@ -30,9 +30,9 @@ class ImageDetailPresenter: NSObject {
             dataSource = DataSource(
                 configureCell: { dataSource, collectionView, indexPath, cellStyle in
                     switch cellStyle {
-                    case .imageDetail(let state):
+                    case .imageDetail(let medium):
                         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageDetailCell", for: indexPath) as! ImageDetailCell
-                        let viewModel = ImageDetailCell.ViewModel(imageDetailState: state)
+                        let viewModel = ImageDetailCell.ViewModel(medium: medium)
                         cell.configure(
                             with: viewModel,
                             onStarButtonTap: onStarButtonTap,
@@ -60,9 +60,10 @@ extension ImageDetailPresenter: UICollectionViewDelegate, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let dataSource = dataSource else { return .zero }
         switch dataSource[indexPath] {
-        case .imageDetail(let state):
+        case .imageDetail(let medium):
+//            print("medium", medium)
             let width = collectionView.bounds.width
-            let imageHeight = width / CGFloat(state.item.detail?.aspectRatio ?? 1)
+            let imageHeight = width / CGFloat(medium.detail?.aspectRatio.value ?? 1)
             let height = imageHeight + 8 + 56 + 48 + 48
             return CGSize(width: width, height: height)
         case .recommendMedium:
@@ -84,8 +85,18 @@ extension ImageDetailPresenter: UICollectionViewDelegate, UICollectionViewDelega
 extension ImageDetailPresenter {
     
     enum CellStyle {
-        case imageDetail(ImageDetailState)
-        case recommendMedium(MediumFragment)
+        case imageDetail(MediumObject)
+        case recommendMedium(MediumObject)
+    }
+}
+
+extension ImageDetailPresenter.CellStyle {
+    
+    var recommendMediumId: String? {
+        if case .recommendMedium(let medium) = self {
+            return medium._id
+        }
+        return nil
     }
 }
 
@@ -97,7 +108,7 @@ extension ImageDetailPresenter.CellStyle: IdentifiableType, Equatable {
         case .imageDetail:
             return "imageDetail"
         case .recommendMedium(let medium):
-            return medium.id
+            return medium._id
         }
     }
     
@@ -106,7 +117,7 @@ extension ImageDetailPresenter.CellStyle: IdentifiableType, Equatable {
         case (.imageDetail, imageDetail):
             return false
         case (.recommendMedium(let lMedium), .recommendMedium(let rMedium)):
-            return lMedium.id == rMedium.id
+            return lMedium._id == rMedium._id
         default:
             return false
         }

@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import Material
+import Apollo
 
 final class Router {
     
@@ -39,6 +40,18 @@ final class Router {
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
+        _ = store.imageCommetsRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .map { $0.mediumId }.unwrap()
+            .drive(Binder(self) { (me, mediumId) in
+                let vc = RouterService.Image.imageCommentsViewController(dependency: mediumId)
+                me.currentNavigationController?.pushViewController(vc, animated: true)
+            })
+        
+        _ = store.popRoute().debug("popRoute").distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .drive(Binder(self) { (me, _) in
+                me.currentNavigationController?.popViewController(animated: true)
+            })
+        
 //        _ = states.map { $0.session?.isLogin ?? false }.distinctUntilChanged().drive(Binder(_window) { (window, isLogin) in
 //            let lvc = RouterService.Login.loginViewController(client: .shared, appStore: appStore)
 //            let loginViewController = SnackbarController(rootViewController: lvc)
@@ -57,12 +70,12 @@ final class Router {
                 me._window.rootViewController = loginViewController
             }
         })
-//
-//        _ = appStore.state.map { $0.recommendMediumQuery }.distinctUnwrap().flatMapLatest {
-//            ApolloClient.shared.rx.perform(mutation: $0)
-//                .asSignal(onErrorJustReturn: nil)
-//            }.mapToVoid()
-//            .emit(onNext: appStore.onRecommendMediumCompleted)
+
+        _ = appStore.state.map { $0.recommendMediumQuery }.distinctUnwrap().flatMapLatest {
+            ApolloClient.shared.rx.perform(mutation: $0)
+                .asSignal(onErrorJustReturn: nil)
+            }.mapToVoid()
+            .emit(onNext: appStore.onRecommendMediumCompleted)
         
     }
 }

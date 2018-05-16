@@ -37,6 +37,8 @@
 		45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */; };
 		45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */; };
 		454A4C42209C2F160063E829 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454A4C41209C2F160063E829 /* LocalStorage.swift */; };
+		454B4A4C20ABB73900990063 /* MeStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B4A4B20ABB73900990063 /* MeStateObject.swift */; };
+		454B4A4E20ABB78600990063 /* ImageDetailStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B4A4D20ABB78600990063 /* ImageDetailStateObject.swift */; };
 		454F728F2088230C00850471 /* LocalStorage+Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F728E2088230C00850471 /* LocalStorage+Values.swift */; };
 		454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72912088716900850471 /* ImageCommentsViewController.swift */; };
 		454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72932089720C00850471 /* ImageCommentsPresenter.swift */; };
@@ -101,6 +103,9 @@
 		45AA3B4520A311BD0032A8CF /* ImageDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4420A311BD0032A8CF /* ImageDetailPresenter.swift */; };
 		45AA3B4820A346DB0032A8CF /* DispachQueue+realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */; };
 		45AA3B4B20A475FF0032A8CF /* UserState+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4A20A475FF0032A8CF /* UserState+GraphQL.swift */; };
+		45B0204720AC0D7000BD5D8F /* ImageCommentsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0204620AC0D7000BD5D8F /* ImageCommentsStateObject.swift */; };
+		45B0204920AC0E8C00BD5D8F /* CommentObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0204820AC0E8C00BD5D8F /* CommentObject.swift */; };
+		45B0204B20AC14D700BD5D8F /* Int+increase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0204A20AC14D700BD5D8F /* Int+increase.swift */; };
 		45BA0D7A208EB7640002E1D5 /* MeState+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */; };
 		45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */; };
 		45BA0D7F209010670002E1D5 /* MarkReputationLinksAsViewed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */; };
@@ -184,6 +189,8 @@
 		45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageViewController.swift; sourceTree = "<group>"; };
 		45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+dismiss.swift"; sourceTree = "<group>"; };
 		454A4C41209C2F160063E829 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
+		454B4A4B20ABB73900990063 /* MeStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeStateObject.swift; sourceTree = "<group>"; };
+		454B4A4D20ABB78600990063 /* ImageDetailStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailStateObject.swift; sourceTree = "<group>"; };
 		454F728E2088230C00850471 /* LocalStorage+Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalStorage+Values.swift"; sourceTree = "<group>"; };
 		454F72912088716900850471 /* ImageCommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsViewController.swift; sourceTree = "<group>"; };
 		454F72932089720C00850471 /* ImageCommentsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsPresenter.swift; sourceTree = "<group>"; };
@@ -250,6 +257,9 @@
 		45AA3B4420A311BD0032A8CF /* ImageDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailPresenter.swift; sourceTree = "<group>"; };
 		45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispachQueue+realm.swift"; sourceTree = "<group>"; };
 		45AA3B4A20A475FF0032A8CF /* UserState+GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserState+GraphQL.swift"; sourceTree = "<group>"; };
+		45B0204620AC0D7000BD5D8F /* ImageCommentsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsStateObject.swift; sourceTree = "<group>"; };
+		45B0204820AC0E8C00BD5D8F /* CommentObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentObject.swift; sourceTree = "<group>"; };
+		45B0204A20AC14D700BD5D8F /* Int+increase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+increase.swift"; sourceTree = "<group>"; };
 		45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeState+ViewController.swift"; sourceTree = "<group>"; };
 		45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsViewController.swift; sourceTree = "<group>"; };
 		45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MarkReputationLinksAsViewed.graphql; sourceTree = "<group>"; };
@@ -367,6 +377,7 @@
 			isa = PBXGroup;
 			children = (
 				451DD4B6207E3EB5002C509A /* ErrorMessage.swift */,
+				45B0204A20AC14D700BD5D8F /* Int+increase.swift */,
 				4595F218207A15010040E5FA /* Mutabled.swift */,
 				451DD4C02083125A002C509A /* Objective.swift */,
 				451DD4C220831287002C509A /* NSObject+objc.swift */,
@@ -631,9 +642,12 @@
 				45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */,
 				4595F224207D95360040E5FA /* HomeState.swift */,
 				45E240B620862AD7004B58EF /* ImageDetailState.swift */,
+				454B4A4D20ABB78600990063 /* ImageDetailStateObject.swift */,
 				45D04F772088C81F00AC2226 /* ImageCommentsState.swift */,
+				45B0204620AC0D7000BD5D8F /* ImageCommentsStateObject.swift */,
 				4595F216207A10B50040E5FA /* LoginState.swift */,
 				45D04F81208E073700AC2226 /* MeState.swift */,
+				454B4A4B20ABB73900990063 /* MeStateObject.swift */,
 				45BA0D8420903A020002E1D5 /* NotificationsState.swift */,
 				451DD4BC207F8BC7002C509A /* RankState.swift */,
 				45D04F8C208F627D00AC2226 /* ReputationsState.swift */,
@@ -872,6 +886,7 @@
 		45FC0BFF20A94A03006AAF3D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				45B0204820AC0E8C00BD5D8F /* CommentObject.swift */,
 				45C1994720A973DD001924B9 /* MediumObject.swift */,
 				457BD98020A9D504007F0492 /* NotificationObject.swift */,
 				45C1994920A97402001924B9 /* UserObject.swift */,
@@ -1099,6 +1114,8 @@
 				451CD330207BB62D0063A972 /* HomeMenuPresenter.swift in Sources */,
 				45D04F82208E073700AC2226 /* MeState.swift in Sources */,
 				456C5E412061446C005F981B /* ImageUpoader.swift in Sources */,
+				454B4A4C20ABB73900990063 /* MeStateObject.swift in Sources */,
+				45B0204B20AC14D700BD5D8F /* Int+increase.swift in Sources */,
 				458C106920849058005E94CD /* RankViewPresenter.swift in Sources */,
 				457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */,
 				45C1994A20A97402001924B9 /* UserObject.swift in Sources */,
@@ -1124,6 +1141,7 @@
 				45C1994820A973DD001924B9 /* MediumObject.swift in Sources */,
 				45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */,
 				45FC0BF320A42F26006AAF3D /* UserViewController.swift in Sources */,
+				454B4A4E20ABB78600990063 /* ImageDetailStateObject.swift in Sources */,
 				45FC0BF720A52BD6006AAF3D /* UserState+Route.swift in Sources */,
 				454A4C42209C2F160063E829 /* LocalStorage.swift in Sources */,
 				45525D56208C707C00EAF00D /* HomeState+Route.swift in Sources */,
@@ -1151,12 +1169,14 @@
 				45BA0D8520903A020002E1D5 /* NotificationsState.swift in Sources */,
 				45A65F5E209BEEB600E7C677 /* LoginState+system.swift in Sources */,
 				45AA3B4520A311BD0032A8CF /* ImageDetailPresenter.swift in Sources */,
+				45B0204720AC0D7000BD5D8F /* ImageCommentsStateObject.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
 				459F259920A28C13008B6C9B /* ObservableType+catchErrorRecover.swift in Sources */,
 				454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */,
 				454F729C208DAF0500850471 /* ObservableConvertibleType+asSignal.swift in Sources */,
 				455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */,
 				4595F225207D95360040E5FA /* HomeState.swift in Sources */,
+				45B0204920AC0E8C00BD5D8F /* CommentObject.swift in Sources */,
 				45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */,
 				45525D54208C6F8000EAF00D /* HomeState+GraphQL.swift in Sources */,
 				45A84461208F67D600C75982 /* ReputationsState+GraphQL.swift in Sources */,

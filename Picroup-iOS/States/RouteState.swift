@@ -14,17 +14,24 @@ import RxRealm
 final class RouteStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
-    @objc dynamic var imageDetialRoute: ImageDetialRoute?
-    @objc dynamic var poplRoute: PopRoute?
+    @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
+    @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
+    @objc dynamic var popRoute: PopRouteObject?
 }
 
-final class ImageDetialRoute: PrimaryObject {
+final class ImageDetialRouteObject: PrimaryObject {
     
     @objc dynamic var mediumId: String?
     @objc dynamic var version: String?
 }
 
-final class PopRoute: PrimaryObject {
+final class ImageCommetsRouteObject: PrimaryObject {
+    
+    @objc dynamic var mediumId: String?
+    @objc dynamic var version: String?
+}
+
+final class PopRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
@@ -37,7 +44,8 @@ extension RouteStateObject {
                 "_id": _id,
                 "session": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
-                "poplRoute": ["_id": _id],
+                "imageCommetsRoute": ["_id": _id],
+                "popRoute": ["_id": _id],
                 ]
             return try realm.findOrCreate(RouteStateObject.self, forPrimaryKey: _id, value: value)
         }
@@ -58,13 +66,18 @@ final class RouteStateStore {
         self.states = states
     }
     
-    func imageDetialRoute() -> Driver<ImageDetialRoute> {
+    func imageDetialRoute() -> Driver<ImageDetialRouteObject> {
         guard let imageDetialRoute = _state.imageDetialRoute else { return .empty() }
         return Observable.from(object: imageDetialRoute).asDriver(onErrorDriveWith: .empty())
     }
     
-    func poplRoute() -> Driver<PopRoute> {
-        guard let poplRoute = _state.poplRoute else { return .empty() }
-        return Observable.from(object: poplRoute).asDriver(onErrorDriveWith: .empty())
+    func imageCommetsRoute() -> Driver<ImageCommetsRouteObject> {
+        guard let imageDetialRoute = _state.imageCommetsRoute else { return .empty() }
+        return Observable.from(object: imageDetialRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func popRoute() -> Driver<PopRouteObject> {
+        guard let popRoute = _state.popRoute else { return .empty() }
+        return Observable.from(object: popRoute).asDriver(onErrorDriveWith: .empty())
     }
 }

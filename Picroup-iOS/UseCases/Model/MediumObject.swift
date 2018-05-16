@@ -16,6 +16,7 @@ final class MediumObject: PrimaryObject {
     @objc dynamic var minioId: String?
     let createdAt = RealmOptional<Double>()
     let endedAt = RealmOptional<Double>()
+    let stared = RealmOptional<Bool>()
     let commentsCount = RealmOptional<Int>()
     
     @objc dynamic var user: UserObject?
@@ -37,3 +38,6 @@ extension CursorMediaObject: IsCursorItemsObject {
 }
 
 extension CursorMediaFragment: IsCursorFragment {}
+
+
+

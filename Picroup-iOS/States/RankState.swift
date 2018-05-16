@@ -18,7 +18,7 @@ final class RankStateObject: PrimaryObject {
     @objc dynamic var rankedMediaError: String?
     @objc dynamic var triggerRankedMediaQuery: Bool = false
     
-    @objc dynamic var imageDetialRoute: ImageDetialRoute?
+    @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
 }
 
 extension RankStateObject {
@@ -41,6 +41,8 @@ extension RankStateObject {
     }
 }
 
+private let rankMediaId = "rankState.rankMedia"
+
 extension RankStateObject {
     
     static func create() -> (Realm) throws -> RankStateObject {
@@ -48,7 +50,7 @@ extension RankStateObject {
             let _id = Config.realmDefaultPrimaryKey
             let value: Any = [
                 "_id": _id,
-                "rankMedia": ["_id": "rankMedia"],
+                "rankMedia": ["_id": rankMediaId],
                 "imageDetialRoute": ["_id": _id],
                 ]
             return try realm.findOrCreate(RankStateObject.self, forPrimaryKey: _id, value: value)
@@ -64,7 +66,7 @@ extension RankStateObject {
         case onGetReloadData(CursorMediaFragment)
         case onGetMoreData(CursorMediaFragment)
         case onGetError(Error)
-        case onTriggerShowImage(String?)
+        case onTriggerShowImage(String)
     }
 }
 
@@ -88,7 +90,7 @@ extension RankStateObject: IsFeedbackStateObject {
             rankedMediaError = nil
             triggerRankedMediaQuery = true
         case .onGetReloadData(let data):
-            rankMedia = CursorMediaObject.create(from: data, id: "rankMedia")(realm)
+            rankMedia = CursorMediaObject.create(from: data, id: rankMediaId)(realm)
             rankedMediaError = nil
             triggerRankedMediaQuery = false
         case .onGetMoreData(let data):
