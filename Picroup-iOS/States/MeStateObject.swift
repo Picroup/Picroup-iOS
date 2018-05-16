@@ -30,6 +30,7 @@ final class MeStateObject: PrimaryObject {
     @objc dynamic var triggerMyStaredMediaQuery: Bool = false
     
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
+    @objc dynamic var reputationsRoute: ReputationsRouteObject?
 }
 
 extension MeStateObject {
@@ -87,6 +88,7 @@ extension MeStateObject {
                 "myMedia": ["_id": myMediaId],
                 "myStaredMedia": ["_id": myStaredMediaId],
                 "imageDetialRoute": ["_id": _id],
+                "reputationsRoute": ["_id": _id],
                 ]
             return try realm.findOrCreate(MeStateObject.self, forPrimaryKey: _id, value: value)
         }
@@ -115,6 +117,7 @@ extension MeStateObject {
         case onGetMyStaredMediaError(Error)
         
         case onTriggerShowImage(String?)
+        case onTriggerShowReputations
     }
 }
 
@@ -190,6 +193,8 @@ extension MeStateObject: IsFeedbackStateObject {
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
             imageDetialRoute?.version = UUID().uuidString
+        case .onTriggerShowReputations:
+            reputationsRoute?.version = UUID().uuidString
         }
     }
 }

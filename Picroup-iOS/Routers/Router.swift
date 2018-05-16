@@ -47,7 +47,13 @@ final class Router {
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
-        _ = store.popRoute().debug("popRoute").distinctUntilChanged { $0.version ?? "" }.skip(1)
+        _ = store.reputationsRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .drive(Binder(self) { (me, _) in
+                let vc = RouterService.Main.reputationsViewController()
+                me.currentNavigationController?.pushViewController(vc, animated: true)
+            })
+        
+        _ = store.popRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .drive(Binder(self) { (me, _) in
                 me.currentNavigationController?.popViewController(animated: true)
             })

@@ -16,6 +16,7 @@ final class RouteStateObject: PrimaryObject {
     @objc dynamic var session: UserSessionObject?
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
+    @objc dynamic var reputationsRoute: ReputationsRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
 }
 
@@ -28,6 +29,10 @@ final class ImageDetialRouteObject: PrimaryObject {
 final class ImageCommetsRouteObject: PrimaryObject {
     
     @objc dynamic var mediumId: String?
+    @objc dynamic var version: String?
+}
+
+final class ReputationsRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
@@ -45,6 +50,7 @@ extension RouteStateObject {
                 "session": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
                 "imageCommetsRoute": ["_id": _id],
+                "reputationsRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
             return try realm.findOrCreate(RouteStateObject.self, forPrimaryKey: _id, value: value)
@@ -74,6 +80,11 @@ final class RouteStateStore {
     func imageCommetsRoute() -> Driver<ImageCommetsRouteObject> {
         guard let imageDetialRoute = _state.imageCommetsRoute else { return .empty() }
         return Observable.from(object: imageDetialRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func reputationsRoute() -> Driver<ReputationsRouteObject> {
+        guard let popRoute = _state.reputationsRoute else { return .empty() }
+        return Observable.from(object: popRoute).asDriver(onErrorDriveWith: .empty())
     }
     
     func popRoute() -> Driver<PopRouteObject> {

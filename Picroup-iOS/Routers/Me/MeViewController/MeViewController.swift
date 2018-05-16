@@ -63,6 +63,7 @@ class MeViewController: HideNavigationBarViewController {
                 .of(.onTriggerReloadMe, .onTriggerReloadMyMedia, .onTriggerReloadMyStaredMedia),
                 presenter.myMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
                 presenter.myStardMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
+                presenter.reputationButton.rx.tap.asSignal().map { _ in .onTriggerShowReputations },
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }

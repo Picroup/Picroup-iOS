@@ -15,7 +15,7 @@ class ReputationsViewPresenter: NSObject {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var reputationCountLabel: UILabel!
 
-    typealias Section = AnimatableSectionModel<String, ReputationFragment>
+    typealias Section = AnimatableSectionModel<String, ReputationObject>
     typealias DataSource = RxTableViewSectionedAnimatedDataSource<Section>
     
     var items: (Observable<[Section]>) -> Disposable {
@@ -36,16 +36,16 @@ class ReputationCell: RxTableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var mediumImageView: UIImageView!
     
-    func configure(with item: ReputationFragment) {
-        valueLabel.text = "+\(item.value)"
-        userAvatarImageView.setImage(with: item.user.avatarId)
+    func configure(with item: ReputationObject) {
+        valueLabel.text = "+\(item.value.value ?? 0)"
+        userAvatarImageView.setImage(with: item.user?.avatarId)
         mediumImageView.setImage(with: item.medium?.minioId)
         switch item.kind {
-        case .saveMedium:
+        case "saveMedium"?:
             contentLabel.text = "分享了图片"
-        case .starMedium:
+        case "starMedium"?:
             contentLabel.text = "给你的图片续命"
-        case .followUser:
+        case "followUser"?:
             contentLabel.text = "关注了你"
         default:
             contentLabel.text = "  "
@@ -54,13 +54,9 @@ class ReputationCell: RxTableViewCell {
 }
 
 
-extension ReputationFragment: IdentifiableType, Equatable {
+extension ReputationObject: IdentifiableType {
     
     public var identity: String {
-        return id
-    }
-    
-    public static func ==(lhs: ReputationFragment, rhs: ReputationFragment) -> Bool {
-        return true
+        return _id
     }
 }

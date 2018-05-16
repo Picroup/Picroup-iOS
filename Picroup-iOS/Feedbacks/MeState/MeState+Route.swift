@@ -25,15 +25,15 @@ extension DriverFeedback where State == MeState {
 //        }
 //    }
     
-    static func showReputations(from vc: UIViewController) -> Raw {
-        return react(query: { $0.showReputationsQuery }) { [weak vc] repuation in
-            let rvc = RouterService.Main.reputationsViewController(dependency: repuation)
-            vc?.navigationController?.pushViewController(rvc, animated: true)
-            return rvc.rx.deallocated.map { .onShowReputationsCompleted }
-                .take(1)
-                .asSignalOnErrorRecoverEmpty()
-        }
-    }
+//    static func showReputations(from vc: UIViewController) -> Raw {
+//        return react(query: { $0.showReputationsQuery }) { [weak vc] repuation in
+//            let rvc = RouterService.Main.reputationsViewController(dependency: repuation)
+//            vc?.navigationController?.pushViewController(rvc, animated: true)
+//            return rvc.rx.deallocated.map { .onShowReputationsCompleted }
+//                .take(1)
+//                .asSignalOnErrorRecoverEmpty()
+//        }
+//    }
 }
 
 

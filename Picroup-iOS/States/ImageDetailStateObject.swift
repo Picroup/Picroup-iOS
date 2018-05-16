@@ -25,6 +25,8 @@ final class ImageDetailStateObject: PrimaryObject {
     @objc dynamic var starMediumError: String?
     @objc dynamic var triggerStarMedium: Bool = false
 
+    @objc dynamic var myStaredMedia: CursorMediaObject?
+    
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
@@ -53,6 +55,7 @@ extension ImageDetailStateObject {
     }
 }
 
+private let myStaredMediaId = "meState.myStaredMedia"
 private let recommendMediaId: (String) -> String = { "imageDetailState.\($0).recommendMedia" }
 
 extension ImageDetailStateObject {
@@ -65,6 +68,7 @@ extension ImageDetailStateObject {
                 "session": ["_id": _id],
                 "medium": ["_id": mediumId],
                 "recommendMedia": ["_id": recommendMediaId(mediumId)],
+                "myStaredMedia": ["_id": myStaredMediaId],
                 "imageDetialRoute": ["_id": _id],
                 "imageCommetsRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
@@ -138,6 +142,8 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             starMediumVersion = UUID().uuidString
             starMediumError = nil
             triggerStarMedium = false
+            guard let medium = medium else { return }
+            myStaredMedia?.items.insert(medium, at: 0)
         case .onStarMediumError(let error):
             starMediumVersion = nil
             starMediumError = error.localizedDescription

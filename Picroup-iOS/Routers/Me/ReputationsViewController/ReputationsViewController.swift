@@ -13,13 +13,10 @@ import RxCocoa
 import RxFeedback
 
 class ReputationsViewController: UIViewController {
-
-    typealias Dependency = Int
-    var dependency: Dependency!
     
     @IBOutlet fileprivate var presenter: ReputationsViewPresenter!
-    typealias Feedback = DriverFeedback<ReputationsState>
-    
+    typealias Feedback = (Driver<ReputationsStateObject>) -> Signal<ReputationsStateObject.Event>
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupRxFeedback()
@@ -27,57 +24,101 @@ class ReputationsViewController: UIViewController {
     
     private func setupRxFeedback() {
         
-        guard let reputation = dependency else { return }
+        guard let store = try? ReputationsStateStore() else { return }
         
-        let injectDependncy = self.injectDependncy(appStore: appStore)
-        let uiFeedback = self.uiFeedback
-        let queryReputations = Feedback.queryReputations(client: ApolloClient.shared)
-        let queryMarkRepotationsAsViewed = Feedback.queryMarkRepotationsAsViewed(client: ApolloClient.shared)
-
-        Driver<Any>.system(
-            initialState: ReputationsState.empty(
-                reputation: reputation
-            ),
-            reduce: logger(identifier: "ReputationsState")(ReputationsState.reduce),
-            feedback:
-                injectDependncy,
-                uiFeedback,
-                queryReputations,
-                queryMarkRepotationsAsViewed
+        typealias Section = ReputationsViewPresenter.Section
+        
+        let view = self.view!
+        
+        let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
+            let subscriptions = [
+                state.map { $0.session?.currentUser?.reputation.value?.description ?? "0" }.drive(presenter.reputationCountLabel.rx.text),
+                store.reputations().map { [Section(model: "", items: $0)] }.drive(presenter.items),
+                ]
+            let events: [Signal<ReputationsStateObject.Event>] = [
+                state.flatMapLatest {
+                    $0.shouldQueryMoreReputations
+                        ? presenter.tableView.rx.triggerGetMore
+                        : .empty()
+                    }.map { .onTriggerGetMore },
+                .just(.onTriggerReload),
+                view.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
+                ]
+            return Bindings(subscriptions: subscriptions, events: events)
+        }
+        
+        let queryReputations: Feedback = react(query: { $0.reputationsQuery }) { query in
+            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.reputationLinks.fragments.cursorReputationLinksFragment }.unwrap()
+                .map(ReputationsStateObject.Event.onGetData(isReload: query.cursor == nil))
+                .asSignal(onErrorReturnJust: ReputationsStateObject.Event.onGetError)
+        }
+        
+        let queryMark: Feedback = react(query: { $0.markQuery }) { query in
+            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.markReputationLinksAsViewed.id }.unwrap()
+                .map(ReputationsStateObject.Event.onMarkSuccess)
+                .asSignal(onErrorReturnJust: ReputationsStateObject.Event.onMarkError)
+        }
+        
+        let states = store.states
+        
+        Signal.merge(
+            uiFeedback(states),
+            queryReputations(states),
+            queryMark(states)
             )
-            .drive()
+            .debug("ReputationsStateObject.Event", trimOutput: true)
+            .emit(onNext: store.on)
             .disposed(by: disposeBag)
         
-        view.rx.tapGesture().when(.recognized).mapToVoid()
-            .bind(to: rx.pop(animated: true))
-            .disposed(by: disposeBag)
+//        let injectDependncy = self.injectDependncy(appStore: appStore)
+//        let uiFeedback = self.uiFeedback
+//        let queryReputations = Feedback.queryReputations(client: ApolloClient.shared)
+//        let queryMarkRepotationsAsViewed = Feedback.queryMarkRepotationsAsViewed(client: ApolloClient.shared)
+//
+//        Driver<Any>.system(
+//            initialState: ReputationsState.empty(
+//                reputation: reputation
+//            ),
+//            reduce: logger(identifier: "ReputationsState")(ReputationsState.reduce),
+//            feedback:
+//                injectDependncy,
+//                uiFeedback,
+//                queryReputations,
+//                queryMarkRepotationsAsViewed
+//            )
+//            .drive()
+//            .disposed(by: disposeBag)
+//
+//        view.rx.tapGesture().when(.recognized).mapToVoid()
+//            .bind(to: rx.pop(animated: true))
+//            .disposed(by: disposeBag)
         
     }
 }
 
 extension ReputationsViewController {
     
-    fileprivate func injectDependncy(appStore: AppStore) -> Feedback.Raw {
-        return { _ in
-            appStore.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map { .onUpdateCurrentUser($0) }
-        }
-    }
-    
-    fileprivate var uiFeedback: Feedback.Raw {
-        typealias Section = ReputationsViewPresenter.Section
-        
-        return bind(presenter) { (presenter, state) in
-            return Bindings(
-                subscriptions: [
-                    state.map { $0.reputation.description }.drive(presenter.reputationCountLabel.rx.text),
-                    state.map { [Section(model: "", items: $0.items)] }.drive(presenter.items),
-                ],
-                events: [
-                    state.flatMapLatest {
-                        $0.shouldQueryMore ? presenter.tableView.rx.isNearBottom.asSignal() : .empty()
-                        }.map { .onTriggerGetMore },
-                ]
-            )
-        }
-    }
+//    fileprivate func injectDependncy(appStore: AppStore) -> Feedback.Raw {
+//        return { _ in
+//            appStore.state.map { $0.currentUser?.toUser() }.asSignal(onErrorJustReturn: nil).map { .onUpdateCurrentUser($0) }
+//        }
+//    }
+//
+//    fileprivate var uiFeedback: Feedback.Raw {
+//        typealias Section = ReputationsViewPresenter.Section
+//
+//        return bind(presenter) { (presenter, state) in
+//            return Bindings(
+//                subscriptions: [
+//                    state.map { $0.reputation.description }.drive(presenter.reputationCountLabel.rx.text),
+//                    state.map { [Section(model: "", items: $0.items)] }.drive(presenter.items),
+//                ],
+//                events: [
+//                    state.flatMapLatest {
+//                        $0.shouldQueryMore ? presenter.tableView.rx.isNearBottom.asSignal() : .empty()
+//                        }.map { .onTriggerGetMore },
+//                ]
+//            )
+//        }
+//    }
 }

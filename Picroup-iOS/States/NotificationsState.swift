@@ -16,7 +16,7 @@ final class NotificationsStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
     
-    @objc dynamic var notifications: CursorNotifications?
+    @objc dynamic var notifications: CursorNotificationsObject?
     @objc dynamic var notificationsError: String?
     @objc dynamic var triggerNotificationsQuery: Bool = false
     
@@ -98,7 +98,7 @@ extension NotificationsStateObject: IsFeedbackStateObject {
             notificationsError = nil
             triggerNotificationsQuery = true
         case .onGetReloadData(let data):
-            notifications = CursorNotifications.create(from: data, id: notificationsId)(realm)
+            notifications = CursorNotificationsObject.create(from: data, id: notificationsId)(realm)
             notificationsError = nil
             triggerNotificationsQuery = false
             
