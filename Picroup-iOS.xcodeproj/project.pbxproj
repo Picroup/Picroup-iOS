@@ -109,6 +109,8 @@
 		45B0204920AC0E8C00BD5D8F /* CommentObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0204820AC0E8C00BD5D8F /* CommentObject.swift */; };
 		45B0204B20AC14D700BD5D8F /* Int+increase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0204A20AC14D700BD5D8F /* Int+increase.swift */; };
 		45B0204D20AD143E00BD5D8F /* LoginStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0204C20AD143E00BD5D8F /* LoginStateObject.swift */; };
+		45B0204F20AD59CC00BD5D8F /* HomeStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0204E20AD59CC00BD5D8F /* HomeStateObject.swift */; };
+		45B0205320AD72D600BD5D8F /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0205220AD72D600BD5D8F /* ImagePickerController.swift */; };
 		45BA0D7A208EB7640002E1D5 /* MeState+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */; };
 		45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */; };
 		45BA0D7F209010670002E1D5 /* MarkReputationLinksAsViewed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */; };
@@ -266,6 +268,8 @@
 		45B0204820AC0E8C00BD5D8F /* CommentObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentObject.swift; sourceTree = "<group>"; };
 		45B0204A20AC14D700BD5D8F /* Int+increase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+increase.swift"; sourceTree = "<group>"; };
 		45B0204C20AD143E00BD5D8F /* LoginStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStateObject.swift; sourceTree = "<group>"; };
+		45B0204E20AD59CC00BD5D8F /* HomeStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStateObject.swift; sourceTree = "<group>"; };
+		45B0205220AD72D600BD5D8F /* ImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		45BA0D79208EB7640002E1D5 /* MeState+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeState+ViewController.swift"; sourceTree = "<group>"; };
 		45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsViewController.swift; sourceTree = "<group>"; };
 		45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MarkReputationLinksAsViewed.graphql; sourceTree = "<group>"; };
@@ -588,6 +592,7 @@
 			children = (
 				454F729D208DB8D200850471 /* Image.storyboard */,
 				454F729F208DB90000850471 /* RouterService+Image.swift */,
+				45B0205020AD72C300BD5D8F /* ImagePickerController */,
 				45384BBA207DEFBC00624A1B /* CreateImageViewController */,
 				45E240B02084D2B6004B58EF /* ImageDetailViewController */,
 				454F72902088714E00850471 /* ImageCommentsViewController */,
@@ -647,6 +652,7 @@
 				458006D520A137A5004BD982 /* AppStore.swift */,
 				45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */,
 				4595F224207D95360040E5FA /* HomeState.swift */,
+				45B0204E20AD59CC00BD5D8F /* HomeStateObject.swift */,
 				45E240B620862AD7004B58EF /* ImageDetailState.swift */,
 				454B4A4D20ABB78600990063 /* ImageDetailStateObject.swift */,
 				45D04F772088C81F00AC2226 /* ImageCommentsState.swift */,
@@ -817,6 +823,14 @@
 				45FC0BF620A52BD6006AAF3D /* UserState+Route.swift */,
 			);
 			path = UserState;
+			sourceTree = "<group>";
+		};
+		45B0205020AD72C300BD5D8F /* ImagePickerController */ = {
+			isa = PBXGroup;
+			children = (
+				45B0205220AD72D600BD5D8F /* ImagePickerController.swift */,
+			);
+			path = ImagePickerController;
 			sourceTree = "<group>";
 		};
 		45BA0D7B208ED3980002E1D5 /* ReputationsViewController */ = {
@@ -1122,6 +1136,7 @@
 				45A65F5A209BEB8800E7C677 /* LoginState+GraphQL.swift in Sources */,
 				45B0204D20AD143E00BD5D8F /* LoginStateObject.swift in Sources */,
 				4595F21B207C883F0040E5FA /* MainTabBarController.swift in Sources */,
+				45B0205320AD72D600BD5D8F /* ImagePickerController.swift in Sources */,
 				451CD330207BB62D0063A972 /* HomeMenuPresenter.swift in Sources */,
 				45D04F82208E073700AC2226 /* MeState.swift in Sources */,
 				456C5E412061446C005F981B /* ImageUpoader.swift in Sources */,
@@ -1148,6 +1163,7 @@
 				455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */,
 				451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */,
 				454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */,
+				45B0204F20AD59CC00BD5D8F /* HomeStateObject.swift in Sources */,
 				45C1994D20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift in Sources */,
 				45C1994820A973DD001924B9 /* MediumObject.swift in Sources */,
 				45D0E231207E2C4A00ECC2A3 /* CreateImageState.swift in Sources */,

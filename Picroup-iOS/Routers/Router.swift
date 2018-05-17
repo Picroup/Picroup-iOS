@@ -53,6 +53,20 @@ final class Router {
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
+        _ = store.pickImageRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .map { $0.sourceType.value }.unwrap()
+            .drive(Binder(self) { (me, sourceType) in
+                let vc = ImagePickerController()
+                vc.sourceType = UIImagePickerControllerSourceType(rawValue: sourceType)!
+                me.currentNavigationController?.present(vc, animated: true)
+            })
+        
+        _ = store.createImageRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .map { $0.imageKey }.unwrap()
+            .drive(Binder(self) { (me, imageKey) in
+                print("createImageRoute imageKey", imageKey)
+            })
+        
         _ = store.popRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .drive(Binder(self) { (me, _) in
                 me.currentNavigationController?.popViewController(animated: true)

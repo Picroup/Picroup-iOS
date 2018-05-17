@@ -17,6 +17,8 @@ final class RouteStateObject: PrimaryObject {
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
     @objc dynamic var reputationsRoute: ReputationsRouteObject?
+    @objc dynamic var pickImageRoute: PickImageRouteObject?
+    @objc dynamic var createImageRoute: CreateImageRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
 }
 
@@ -36,6 +38,16 @@ final class ReputationsRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
+final class PickImageRouteObject: PrimaryObject {
+    let sourceType = RealmOptional<Int>()
+    @objc dynamic var version: String?
+}
+
+final class CreateImageRouteObject: PrimaryObject {
+    @objc dynamic var imageKey: String?
+    @objc dynamic var version: String?
+}
+
 final class PopRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
@@ -51,6 +63,8 @@ extension RouteStateObject {
                 "imageDetialRoute": ["_id": _id],
                 "imageCommetsRoute": ["_id": _id],
                 "reputationsRoute": ["_id": _id],
+                "pickImageRoute": ["_id": _id],
+                "createImageRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
             return try realm.findOrCreate(RouteStateObject.self, forPrimaryKey: _id, value: value)
@@ -89,6 +103,16 @@ final class RouteStateStore {
     
     func reputationsRoute() -> Driver<ReputationsRouteObject> {
         guard let popRoute = _state.reputationsRoute else { return .empty() }
+        return Observable.from(object: popRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func pickImageRoute() -> Driver<PickImageRouteObject> {
+        guard let popRoute = _state.pickImageRoute else { return .empty() }
+        return Observable.from(object: popRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func createImageRoute() -> Driver<CreateImageRouteObject> {
+        guard let popRoute = _state.createImageRoute else { return .empty() }
         return Observable.from(object: popRoute).asDriver(onErrorDriveWith: .empty())
     }
     
