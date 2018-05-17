@@ -64,7 +64,8 @@ final class Router {
         _ = store.createImageRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .map { $0.imageKey }.unwrap()
             .drive(Binder(self) { (me, imageKey) in
-                print("createImageRoute imageKey", imageKey)
+                let vc = RouterService.Image.createImageViewController(dependency: imageKey)
+                me.currentViewController?.present(SnackbarController(rootViewController: vc), animated: true)
             })
         
         _ = store.popRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)

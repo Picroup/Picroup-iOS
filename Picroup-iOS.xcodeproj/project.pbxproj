@@ -72,6 +72,7 @@
 		457BD98520AB1521007F0492 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD98420AB1521007F0492 /* Router.swift */; };
 		457BD98720AC68EA007F0492 /* ReputationsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD98620AC68EA007F0492 /* ReputationsStateObject.swift */; };
 		457BD98920AC695A007F0492 /* ReputationObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD98820AC695A007F0492 /* ReputationObject.swift */; };
+		457BD98B20ADB55E007F0492 /* CreateImageStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD98A20ADB55E007F0492 /* CreateImageStateObject.swift */; };
 		458006D620A137A5004BD982 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D520A137A5004BD982 /* AppStore.swift */; };
 		458006D820A17283004BD982 /* UIViewController+Rx+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */; };
 		458006DA20A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */; };
@@ -231,6 +232,7 @@
 		457BD98420AB1521007F0492 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		457BD98620AC68EA007F0492 /* ReputationsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsStateObject.swift; sourceTree = "<group>"; };
 		457BD98820AC695A007F0492 /* ReputationObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationObject.swift; sourceTree = "<group>"; };
+		457BD98A20ADB55E007F0492 /* CreateImageStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageStateObject.swift; sourceTree = "<group>"; };
 		458006D520A137A5004BD982 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+NavigationBar.swift"; sourceTree = "<group>"; };
 		458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx+shouldHideNavigationBar.swift"; sourceTree = "<group>"; };
@@ -651,6 +653,7 @@
 			children = (
 				458006D520A137A5004BD982 /* AppStore.swift */,
 				45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */,
+				457BD98A20ADB55E007F0492 /* CreateImageStateObject.swift */,
 				4595F224207D95360040E5FA /* HomeState.swift */,
 				45B0204E20AD59CC00BD5D8F /* HomeStateObject.swift */,
 				45E240B620862AD7004B58EF /* ImageDetailState.swift */,
@@ -1221,6 +1224,7 @@
 				451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */,
 				45E240B22084D2CF004B58EF /* ImageDetailViewController.swift in Sources */,
 				45FC0BFE20A94995006AAF3D /* Realm+findOrCreate.swift in Sources */,
+				457BD98B20ADB55E007F0492 /* CreateImageStateObject.swift in Sources */,
 				454F72982089B46300850471 /* RxTableViewCell.swift in Sources */,
 				451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */,
 				455D69042080409A00C651A0 /* BaseNavigationController.swift in Sources */,

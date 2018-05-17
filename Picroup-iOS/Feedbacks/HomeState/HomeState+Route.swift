@@ -41,17 +41,17 @@ extension DriverFeedback where State == HomeState {
         }
     }
     
-    static func saveMedium(from vc: UIViewController) -> Raw {
-        return react(query: { $0.saveMediumQuery }) { [weak vc] image in
-            let civc = RouterService.Image.createImageViewController(dependency: (image, ApolloClient.shared))
-            vc?.present(SnackbarController(rootViewController: civc), animated: true, completion: nil)
-            let saved = civc.savedMedium.map(HomeState.Event.onSeveMediumSuccess).asObservable()
-            let canceled = civc.rx.deallocated.map { HomeState.Event.onSeveMediumCancelled }
-            return Observable.merge(saved, canceled)
-                .take(1)
-                .asSignalOnErrorRecoverEmpty()
-        }
-    }
+//    static func saveMedium(from vc: UIViewController) -> Raw {
+//        return react(query: { $0.saveMediumQuery }) { [weak vc] image in
+//            let civc = RouterService.Image.createImageViewController(dependency: (image, ApolloClient.shared))
+//            vc?.present(SnackbarController(rootViewController: civc), animated: true, completion: nil)
+//            let saved = civc.savedMedium.map(HomeState.Event.onSeveMediumSuccess).asObservable()
+//            let canceled = civc.rx.deallocated.map { HomeState.Event.onSeveMediumCancelled }
+//            return Observable.merge(saved, canceled)
+//                .take(1)
+//                .asSignalOnErrorRecoverEmpty()
+//        }
+//    }
     
 //    static func showComments(from vc: UIViewController) -> Raw {
 //        return react(query: { $0.showCommentsQuery }) { [weak vc] item in

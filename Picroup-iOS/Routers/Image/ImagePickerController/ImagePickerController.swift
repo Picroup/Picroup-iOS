@@ -45,8 +45,4 @@ final class ImagePickerController: UIImagePickerController {
             me.presentingViewController?.dismiss(animated: true)
         }
     }
-    
-    deinit {
-        print("ImagePickerController deinit")
-    }
 }
