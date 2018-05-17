@@ -147,7 +147,8 @@ final class NotificationsStateStore {
     
     func notifications() -> Driver<[NotificationObject]> {
         guard let items = _state.notifications?.items else { return .empty() }
-        return Observable.collection(from: items).asDriver(onErrorDriveWith: .empty())
+        return Observable.collection(from: items)
+            .asDriver(onErrorDriveWith: .empty())
             .map { $0.toArray() }
     }
 }

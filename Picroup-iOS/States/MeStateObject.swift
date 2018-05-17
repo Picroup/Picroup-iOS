@@ -220,13 +220,17 @@ final class MeStateStore {
     
     func myMediaItems() -> Driver<[MediumObject]> {
         guard let items = _state.myMedia?.items else { return .empty() }
-        return Observable.collection(from: items).asDriver(onErrorDriveWith: .empty())
+        return Observable.collection(from: items)
+            .delaySubscription(0.3, scheduler: MainScheduler.instance)
+            .asDriver(onErrorDriveWith: .empty())
             .map { $0.toArray() }
     }
     
     func myStaredMediaItems() -> Driver<[MediumObject]> {
         guard let items = _state.myStaredMedia?.items else { return .empty() }
-        return Observable.collection(from: items).asDriver(onErrorDriveWith: .empty())
+        return Observable.collection(from: items)
+            .delaySubscription(0.3, scheduler: MainScheduler.instance)
+            .asDriver(onErrorDriveWith: .empty())
             .map { $0.toArray() }
     }
 }

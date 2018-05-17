@@ -15,64 +15,105 @@ import Apollo
 
 class LoginViewController: UIViewController {
     
-    init(dependency: @escaping Dependency) {
-        self.dependency = dependency
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    typealias Dependency = ([DriverFeedback<LoginState>.Raw]) -> Disposable
-    let dependency: Dependency
+//    typealias Dependency = ([DriverFeedback<LoginState>.Raw]) -> Disposable
+//    let dependency: Dependency
     
     fileprivate var loginViewPresenter: LoginViewPresenter!
+    fileprivate typealias Feedback = (Driver<LoginStateObject>) -> Signal<LoginStateObject.Event>
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupRxFeedback()
+    }
+    
+    private func setupRxFeedback() {
         
-//        guard let dependency = dependency else { return }
-//        let (client, observer) = dependency
+        guard let store = try? LoginStateStore() else { return }
         
         loginViewPresenter = LoginViewPresenter(view: view)
         
-        let uiFeedback: DriverFeedback<LoginState>.Raw = bind(loginViewPresenter) { [snackbarController = snackbarController!] (presenter, state) in
+        let uiFeedback: Feedback = bind(loginViewPresenter) { [snackbarController = snackbarController!] (presenter, state) in
             let subscriptions = [
-                state.map { $0.next.username }.distinctUntilChanged().drive(presenter.usernameField.rx.text),
-                state.map { $0.next.password }.distinctUntilChanged().drive(presenter.passwordField.rx.text),
+                state.map { $0.username }.distinctUntilChanged().drive(presenter.usernameField.rx.text),
+                state.map { $0.password }.distinctUntilChanged().drive(presenter.passwordField.rx.text),
                 state.map { $0.shouldHideUseenameWarning }.distinctUntilChanged().drive(presenter.usernameField.detailLabel.rx.isHidden),
                 state.map { $0.shouldHidePasswordWarning }.distinctUntilChanged().drive(presenter.passwordField.detailLabel.rx.isHidden),
                 state.map { $0.isLoginButtonEnabled }.distinctUntilChanged().drive(presenter.raisedButton.rx.isEnabledWithBackgroundColor(.secondary)),
-                state.map { $0.trigger }.distinctUntilChanged().mapToVoid().drive(presenter.usernameField.rx.resignFirstResponder()),
-                state.map { $0.trigger }.distinctUntilChanged().mapToVoid().drive(presenter.passwordField.rx.resignFirstResponder()),
-                state.map { $0.user }.distinctUnwrap().map { _ in "登录成功" }.drive(snackbarController.rx.snackbarText),
-                state.map { $0.error }.distinctUnwrap().map { $0.localizedDescription }.drive(snackbarController.rx.snackbarText),
-            ]
-            let events = [
-                presenter.usernameField.rx.text.orEmpty.map(LoginState.Event.onChangeUsername),
-                presenter.passwordField.rx.text.orEmpty.map(LoginState.Event.onChangePassword),
-                presenter.raisedButton.rx.tap.map { LoginState.Event.onTrigger }
+                state.map { $0.triggerLoginQuery }.distinctUntilChanged().mapToVoid().drive(presenter.usernameField.rx.resignFirstResponder()),
+                state.map { $0.triggerLoginQuery }.distinctUntilChanged().mapToVoid().drive(presenter.passwordField.rx.resignFirstResponder()),
+                state.map { $0.session?.currentUser }.distinctUnwrap().map { _ in "登录成功" }.drive(snackbarController.rx.snackbarText),
+                state.map { $0.loginError }.distinctUnwrap().drive(snackbarController.rx.snackbarText),
+                ]
+            let events: [Signal<LoginStateObject.Event>] = [
+                presenter.usernameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangeUsername),
+                presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangePassword),
+                presenter.raisedButton.rx.tap.asSignal().map { LoginStateObject.Event.onTriggerLogin }
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        dependency([uiFeedback])
+        let queryLogin: Feedback = react(query: { $0.loginQuery }) { query in
+            return ApolloClient.shared.rx.fetch(query: query)
+                .map { $0?.data?.login?.fragments.userDetailFragment }.map {
+                    guard let userDetailFragment = $0 else { throw LoginError.usernameOrPasswordIncorrect }
+                    return userDetailFragment
+                }
+                .map(LoginStateObject.Event.onLoginSuccess)
+                .asSignal(onErrorReturnJust: LoginStateObject.Event.onLoginError)
+        }
+
+        let states = store.states
+        
+        Signal.merge(
+            uiFeedback(states),
+            queryLogin(states)
+            )
+            .debug("LoginStateObject.Event", trimOutput: true)
+            .emit(onNext: store.on)
             .disposed(by: disposeBag)
+        
+        //        guard let dependency = dependency else { return }
+        //        let (client, observer) = dependency
+        
+        //        loginViewPresenter = LoginViewPresenter(view: view)
+        //
+        //        let uiFeedback: DriverFeedback<LoginState>.Raw = bind(loginViewPresenter) { [snackbarController = snackbarController!] (presenter, state) in
+        //            let subscriptions = [
+        //                state.map { $0.next.username }.distinctUntilChanged().drive(presenter.usernameField.rx.text),
+        //                state.map { $0.next.password }.distinctUntilChanged().drive(presenter.passwordField.rx.text),
+        //                state.map { $0.shouldHideUseenameWarning }.distinctUntilChanged().drive(presenter.usernameField.detailLabel.rx.isHidden),
+        //                state.map { $0.shouldHidePasswordWarning }.distinctUntilChanged().drive(presenter.passwordField.detailLabel.rx.isHidden),
+        //                state.map { $0.isLoginButtonEnabled }.distinctUntilChanged().drive(presenter.raisedButton.rx.isEnabledWithBackgroundColor(.secondary)),
+        //                state.map { $0.trigger }.distinctUntilChanged().mapToVoid().drive(presenter.usernameField.rx.resignFirstResponder()),
+        //                state.map { $0.trigger }.distinctUntilChanged().mapToVoid().drive(presenter.passwordField.rx.resignFirstResponder()),
+        //                state.map { $0.user }.distinctUnwrap().map { _ in "登录成功" }.drive(snackbarController.rx.snackbarText),
+        //                state.map { $0.error }.distinctUnwrap().map { $0.localizedDescription }.drive(snackbarController.rx.snackbarText),
+        //            ]
+        //            let events = [
+        //                presenter.usernameField.rx.text.orEmpty.map(LoginState.Event.onChangeUsername),
+        //                presenter.passwordField.rx.text.orEmpty.map(LoginState.Event.onChangePassword),
+        //                presenter.raisedButton.rx.tap.map { LoginState.Event.onTrigger }
+        //            ]
+        //            return Bindings(subscriptions: subscriptions, events: events)
+        //        }
+        //
+        //        dependency([uiFeedback])
+        //            .disposed(by: disposeBag)
+        
     }
 }
 
-private extension LoginState {
+private extension LoginStateObject {
     var shouldHideUseenameWarning: Bool {
-        return next.username.isEmpty || isUsernameValid
+        return username.isEmpty || isUsernameValid
     }
     
     var shouldHidePasswordWarning: Bool {
-        return next.password.isEmpty || isPasswordValid
+        return password.isEmpty || isPasswordValid
     }
     
     var isLoginButtonEnabled: Bool {
-        return shouldLogin && !trigger
+        return shouldLogin && !triggerLoginQuery
     }
 }
 

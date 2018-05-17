@@ -187,7 +187,8 @@ final class ImageDetailStateStore {
     
     func recommendMediaItems() -> Driver<[MediumObject]> {
         guard let items = _state.recommendMedia?.items else { return .empty() }
-        return Observable.collection(from: items).asDriver(onErrorDriveWith: .empty())
+        return Observable.collection(from: items)
+            .asDriver(onErrorDriveWith: .empty())
             .map { $0.toArray() }
     }
     

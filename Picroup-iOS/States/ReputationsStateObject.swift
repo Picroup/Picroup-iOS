@@ -155,7 +155,8 @@ final class ReputationsStateStore {
     
     func reputations() -> Driver<[ReputationObject]> {
         guard let items = _state.reputations?.items else { return .empty() }
-        return Observable.collection(from: items).asDriver(onErrorDriveWith: .empty())
+        return Observable.collection(from: items)
+            .asDriver(onErrorDriveWith: .empty())
             .map { $0.toArray() }
     }
 }

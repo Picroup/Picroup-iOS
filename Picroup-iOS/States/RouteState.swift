@@ -72,6 +72,11 @@ final class RouteStateStore {
         self.states = states
     }
     
+    func session() -> Driver<UserSessionObject> {
+        guard let session = _state.session else { return .empty() }
+        return Observable.from(object: session).asDriver(onErrorDriveWith: .empty())
+    }
+    
     func imageDetialRoute() -> Driver<ImageDetialRouteObject> {
         guard let imageDetialRoute = _state.imageDetialRoute else { return .empty() }
         return Observable.from(object: imageDetialRoute).asDriver(onErrorDriveWith: .empty())

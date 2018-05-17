@@ -19,8 +19,7 @@ extension RouterService {
 
 extension RouterService.Login {
     
-    static func loginViewController(client: ApolloClient, appStore: AppStore) -> LoginViewController {
-        let dependency = DriverFeedback<LoginState>.system(client: client, appStore: appStore)
-        return LoginViewController(dependency: dependency)
+    static func loginViewController() -> LoginViewController {
+        return LoginViewController()
     }
 }

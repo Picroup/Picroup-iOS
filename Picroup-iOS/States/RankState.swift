@@ -128,7 +128,9 @@ final class RankStateStore {
     
     func rankMediaItems() -> Driver<[MediumObject]> {
         guard let items = _state.rankMedia?.items else { return .empty() }
-        return Observable.collection(from: items).asDriver(onErrorDriveWith: .empty())
+        return Observable.collection(from: items)
+            .delaySubscription(0.3, scheduler: MainScheduler.instance)
+            .asDriver(onErrorDriveWith: .empty())
             .map { $0.toArray() }
     }
 }
