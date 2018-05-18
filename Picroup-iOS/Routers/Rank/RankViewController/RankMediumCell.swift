@@ -24,6 +24,16 @@ extension RankMediumCell {
             self.lifeBarMotionIdentifier = "lifeBar_\(item.id)"
             self.starPlaceholderViewMotionIdentifier = "starButton_\(item.id)"
         }
+        
+        init(item: MediumObject) {
+            let remainTime = item.endedAt.value?.sinceNow ?? 0
+            
+            self.imageViewMinioId = item.minioId
+            self.imageViewMotionIdentifier = item._id
+            self.progress = Float(remainTime / 8.0.weeks)
+            self.lifeBarMotionIdentifier = "lifeBar_\(item._id)"
+            self.starPlaceholderViewMotionIdentifier = "starButton_\(item._id)"
+        }
     }
 }
 
@@ -35,7 +45,7 @@ class RankMediumCell: RxCollectionViewCell {
     func configure(with viewModel: ViewModel) {
         imageView.setImage(with: viewModel.imageViewMinioId)
         imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
-        transition(.fadeOut, .scale(0.75))
+//        transition(.fadeOut, .scale(0.75))
         progressView.progress = viewModel.progress
         progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
         starPlaceholderView.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier

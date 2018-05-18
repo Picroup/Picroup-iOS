@@ -1,95 +1,136 @@
 //
-//  RankState.swift
+//  RankStateService.swift
 //  Picroup-iOS
 //
-//  Created by luojie on 2018/4/12.
+//  Created by luojie on 2018/5/14.
 //  Copyright © 2018年 luojie. All rights reserved.
 //
 
 import Foundation
+import RealmSwift
+import RxSwift
+import RxCocoa
+import RxRealm
 
-struct RankState: Mutabled {
-    var nextRankedMediaQuery: RankedMediaQuery
-    var items: [MediumFragment]
-    var error: Error?
-    var triggerQueryMedia: Bool
-}
-
-extension RankState {
-    var rankedMediaQuery: RankedMediaQuery? {
-        return triggerQueryMedia ? nextRankedMediaQuery : nil
-    }
-    var shouldQueryMore: Bool {
-        return !triggerQueryMedia && nextRankedMediaQuery.cursor != nil
-    }
-    var isItemsEmpty: Bool {
-        return !triggerQueryMedia && error == nil && items.isEmpty
-    }
-    var hasMore: Bool {
-        return nextRankedMediaQuery.cursor != nil
-    }
-}
-
-extension RankState {
-    static func empty() -> RankState {
-        return RankState(
-            nextRankedMediaQuery: RankedMediaQuery(rankBy: .thisMonth),
-            items: [],
-            error: nil,
-            triggerQueryMedia: true
-        )
-    }
-}
-
-extension RankState: IsFeedbackState {
-    enum Event {
-        case onChangeRankBy(RankBy?)
-        case onTriggerGetMore
-        case onGetSuccess(CursorMediaFragment)
-        case onGetError(Error)
-    }
-}
-
-extension RankState {
+final class RankStateObject: PrimaryObject {
     
-    static func reduce(state: RankState, event: RankState.Event) -> RankState {
-        switch event {
-        case .onChangeRankBy(let rankBy):
-            return state.mutated {
-                $0.nextRankedMediaQuery.rankBy = rankBy
-                $0.nextRankedMediaQuery.cursor = nil
-                $0.items = []
-                $0.error = nil
-                $0.triggerQueryMedia = true
-            }
-        case .onTriggerGetMore:
-            guard state.shouldQueryMore else { return state }
-            return state.mutated {
-                $0.error = nil
-                $0.triggerQueryMedia = true
-            }
-        case .onGetSuccess(let data):
-            return state.mutated {
-                $0.nextRankedMediaQuery.cursor = data.cursor
-                $0.items += data.items.flatMap { $0?.fragments.mediumFragment }
-                $0.error = nil
-                $0.triggerQueryMedia = false
-            }
-        case .onGetError(let error):
-            return state.mutated {
-                $0.error = error
-                $0.triggerQueryMedia = false
-            }
+    @objc dynamic var rankMedia: CursorMediaObject?
+    @objc dynamic var rankedMediaError: String?
+    @objc dynamic var triggerRankedMediaQuery: Bool = false
+    
+    @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
+}
+
+extension RankStateObject {
+    var rankedMediaQuery: RankedMediaQuery? {
+        let next = RankedMediaQuery(rankBy: nil, cursor: rankMedia?.cursor.value)
+        return triggerRankedMediaQuery ? next : nil
+    }
+    var shouldQueryMoreRankedMedia: Bool {
+        return !triggerRankedMediaQuery && hasMoreRankedMedia
+    }
+    var isRankedMediaEmpty: Bool {
+        guard let items = rankMedia?.items else { return false }
+        return !triggerRankedMediaQuery && rankedMediaError == nil && items.isEmpty
+    }
+    var hasMoreRankedMedia: Bool {
+        return rankMedia?.cursor.value != nil
+    }
+    var isReloading: Bool {
+        return rankMedia?.cursor.value == nil && triggerRankedMediaQuery
+    }
+}
+
+extension RankStateObject {
+    
+    static func create() -> (Realm) throws -> RankStateObject {
+        let rankMediaId = PrimaryKey.rankMediaId
+        return { realm in
+            let _id = PrimaryKey.default
+            let value: Any = [
+                "_id": _id,
+                "rankMedia": ["_id": rankMediaId],
+                "imageDetialRoute": ["_id": _id],
+                ]
+            return try realm.findOrCreate(RankStateObject.self, forPrimaryKey: _id, value: value)
         }
     }
 }
 
-extension RankedMediaQuery: Equatable {
+extension RankStateObject {
     
-    public static func ==(lhs: RankedMediaQuery, rhs: RankedMediaQuery) -> Bool {
-        return lhs.rankBy == rhs.rankBy
-            && lhs.cursor == rhs.cursor
+    enum Event {
+        case onTriggerReload
+        case onTriggerGetMore
+        case onGetReloadData(CursorMediaFragment)
+        case onGetMoreData(CursorMediaFragment)
+        case onGetError(Error)
+        case onTriggerShowImage(String)
     }
 }
 
+extension RankStateObject.Event {
+    
+    static func onGetData(isReload: Bool) -> (CursorMediaFragment) -> RankStateObject.Event {
+        return { isReload ? .onGetReloadData($0) : .onGetMoreData($0) }
+    }
+}
+
+extension RankStateObject: IsFeedbackStateObject {
+    
+    func reduce(event: Event, realm: Realm) {
+        switch event {
+        case .onTriggerReload:
+            rankMedia?.cursor.value = nil
+            rankedMediaError = nil
+            triggerRankedMediaQuery = true
+        case .onTriggerGetMore:
+            guard shouldQueryMoreRankedMedia else { return }
+            rankedMediaError = nil
+            triggerRankedMediaQuery = true
+        case .onGetReloadData(let data):
+            rankMedia = CursorMediaObject.create(from: data, id: PrimaryKey.rankMediaId)(realm)
+            rankedMediaError = nil
+            triggerRankedMediaQuery = false
+        case .onGetMoreData(let data):
+            rankMedia?.merge(from: data)(realm)
+            rankedMediaError = nil
+            triggerRankedMediaQuery = false
+        case .onGetError(let error):
+            rankedMediaError = error.localizedDescription
+            triggerRankedMediaQuery = false
+        case .onTriggerShowImage(let mediumId):
+            imageDetialRoute?.mediumId = mediumId
+            imageDetialRoute?.version = UUID().uuidString 
+        }
+    }
+}
+
+final class RankStateStore {
+    
+    let states: Driver<RankStateObject>
+    private let _state: RankStateObject
+    
+    init() throws {
+        let realm = try Realm()
+        let _state = try RankStateObject.create()(realm)
+        let states = Observable.from(object: _state).asDriver(onErrorDriveWith: .empty())
+        
+        self._state = _state
+        self.states = states
+    }
+    
+    func on(event: RankStateObject.Event) {
+        let id = PrimaryKey.default
+        Realm.backgroundReduce(ofType: RankStateObject.self, forPrimaryKey: id, event: event)
+    }
+    
+    func rankMediaItems() -> Driver<[MediumObject]> {
+        guard let items = _state.rankMedia?.items else { return .empty() }
+        return Observable.collection(from: items)
+            .delaySubscription(0.3, scheduler: MainScheduler.instance)
+            .asDriver(onErrorDriveWith: .empty())
+            .map { $0.toArray() }
+    }
+}
 

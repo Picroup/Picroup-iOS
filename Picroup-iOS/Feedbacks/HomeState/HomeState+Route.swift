@@ -41,37 +41,37 @@ extension DriverFeedback where State == HomeState {
         }
     }
     
-    static func saveMedium(from vc: UIViewController) -> Raw {
-        return react(query: { $0.saveMediumQuery }) { [weak vc] image in
-            let civc = RouterService.Image.createImageViewController(dependency: (image, ApolloClient.shared))
-            vc?.present(SnackbarController(rootViewController: civc), animated: true, completion: nil)
-            let saved = civc.savedMedium.map(HomeState.Event.onSeveMediumSuccess).asObservable()
-            let canceled = civc.rx.deallocated.map { HomeState.Event.onSeveMediumCancelled }
-            return Observable.merge(saved, canceled)
-                .take(1)
-                .asSignalOnErrorRecoverEmpty()
-        }
-    }
+//    static func saveMedium(from vc: UIViewController) -> Raw {
+//        return react(query: { $0.saveMediumQuery }) { [weak vc] image in
+//            let civc = RouterService.Image.createImageViewController(dependency: (image, ApolloClient.shared))
+//            vc?.present(SnackbarController(rootViewController: civc), animated: true, completion: nil)
+//            let saved = civc.savedMedium.map(HomeState.Event.onSeveMediumSuccess).asObservable()
+//            let canceled = civc.rx.deallocated.map { HomeState.Event.onSeveMediumCancelled }
+//            return Observable.merge(saved, canceled)
+//                .take(1)
+//                .asSignalOnErrorRecoverEmpty()
+//        }
+//    }
     
-    static func showComments(from vc: UIViewController) -> Raw {
-        return react(query: { $0.showCommentsQuery }) { [weak vc] item in
-            let icvc = RouterService.Image.imageCommentsViewController(dependency: item)
-            vc?.navigationController?.pushViewController(icvc, animated: true)
-            return icvc.rx.deallocated.map { HomeState.Event.onShowCommentsCompleted }
-                .take(1)
-                .asSignalOnErrorRecoverEmpty()
-        }
-    }
+//    static func showComments(from vc: UIViewController) -> Raw {
+//        return react(query: { $0.showCommentsQuery }) { [weak vc] item in
+//            let icvc = RouterService.Image.imageCommentsViewController(dependency: item)
+//            vc?.navigationController?.pushViewController(icvc, animated: true)
+//            return icvc.rx.deallocated.map { HomeState.Event.onShowCommentsCompleted }
+//                .take(1)
+//                .asSignalOnErrorRecoverEmpty()
+//        }
+//    }
     
-    static func showImageDetail(from vc: UIViewController) -> Raw {
-        return react(query: { $0.showImageDetailQuery }) { [weak vc] item in
-            let idvc = RouterService.Image.imageDetailViewController(dependency: item)
-            vc?.navigationController?.pushViewController(idvc, animated: true)
-            return idvc.rx.deallocated.map { .onShowImageDetailCompleted }
-                .take(1)
-                .asSignalOnErrorRecoverEmpty()
-        }
-    }
+//    static func showImageDetail(from vc: UIViewController) -> Raw {
+//        return react(query: { $0.showImageDetailQuery }) { [weak vc] item in
+//            let idvc = RouterService.Image.imageDetailViewController(dependency: item)
+//            vc?.navigationController?.pushViewController(idvc, animated: true)
+//            return idvc.rx.deallocated.map { .onShowImageDetailCompleted }
+//                .take(1)
+//                .asSignalOnErrorRecoverEmpty()
+//        }
+//    }
     
     static func showUser(from vc: UIViewController) -> Raw {
         return react(query: { $0.showUserQuery }) { [weak vc] query in

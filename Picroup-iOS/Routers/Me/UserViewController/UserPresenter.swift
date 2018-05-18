@@ -29,7 +29,7 @@ class UserPresenter: NSObject {
     
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
     
-    typealias Section = AnimatableSectionModel<String, MediumFragment>
+    typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
     private var dataSource: DataSource {
@@ -50,3 +50,4 @@ class UserPresenter: NSObject {
     }
 
 }
+

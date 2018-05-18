@@ -12,15 +12,18 @@ import RxCocoa
 import RxFeedback
 import Material
 import Apollo
+import Kingfisher
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var router: Router?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        ImageCache.default.maxDiskCacheSize = 200 * 1024 * 1024
         prepareWindow()
-        setupRxfeedback()
+        setupRouter()
         return true
     }
     
@@ -28,22 +31,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow(frame: Screen.bounds)
         window.tintColor = UIColor.primary
         window.makeKeyAndVisible()
-        window.rootViewController = RouterService.Main.rootViewController()
         self.window = window
     }
     
-    private func setupRxfeedback() {
-        _ = store.state.debug("state").map { $0.currentUser != nil }.distinctUntilChanged().drive(Binder(window!) { (window, isLogin) in
-            let lvc = RouterService.Login.loginViewController(client: .shared, store: store)
-            let loginViewController = SnackbarController(rootViewController: lvc)
-            let rootViewController = RouterService.Main.rootViewController()
-            window.rootViewController = isLogin ? rootViewController : loginViewController
-        })
-        
-        _ = store.state.map { $0.recommendMediumQuery }.distinctUnwrap().flatMapLatest {
-            ApolloClient.shared.rx.perform(mutation: $0)
-                .asSignal(onErrorJustReturn: nil)
-            }.mapToVoid()
-            .emit(onNext: store.onRecommendMediumCompleted)
+    private func setupRouter() {
+        router = Router(window: window!)
+        router!.setupRxfeedback()
     }
 }

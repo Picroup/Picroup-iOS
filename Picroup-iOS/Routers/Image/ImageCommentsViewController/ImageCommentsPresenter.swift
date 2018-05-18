@@ -32,18 +32,19 @@ class ImageCommentsPresenter: NSObject {
         hideCommentsIcon.image = Icon.cm.arrowDownward
     }
     
-    var medium: Binder<MediumFragment> {
+    var medium: Binder<MediumObject> {
         return Binder(self) { me, medium in
+            let remainTime = medium.endedAt.value?.sinceNow ?? 0
             me.imageView.setImage(with: medium.minioId)
-            me.imageView.motionIdentifier = medium.id
-            me.lifeBar.motionIdentifier = "lifeBar_\(medium.id)"
-            me.sendButton.motionIdentifier = "starButton_\(medium.id)"
-            me.lifeViewWidthConstraint.constant = CGFloat(medium.endedAt.sinceNow / 8.0.weeks) * me.lifeBar.bounds.width
-            me.commentsCountLabel.text = "\(medium.commentsCount) 条"
+            me.imageView.motionIdentifier = medium._id
+            me.lifeBar.motionIdentifier = "lifeBar_\(medium._id)"
+            me.sendButton.motionIdentifier = "starButton_\(medium._id)"
+            me.lifeViewWidthConstraint.constant = CGFloat(remainTime / 8.0.weeks) * me.lifeBar.bounds.width
+            me.commentsCountLabel.text = "\(medium.commentsCount.value ?? 0) 条"
         }
     }
     
-    typealias Section = AnimatableSectionModel<String, CommentFragment>
+    typealias Section = AnimatableSectionModel<String, CommentObject>
     typealias DataSource = RxTableViewSectionedAnimatedDataSource<Section>
     
     var items: (Observable<[Section]>) -> Disposable {
@@ -62,21 +63,16 @@ class CommentCell: RxTableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
-    func configure(with item: CommentFragment) {
-        userLabel?.text = item.user.username
+    func configure(with item: CommentObject) {
+        userLabel?.text = item.user?.username
         contentLabel?.text = item.content
-        photoView.setImage(with: item.user.avatarId)
+        photoView.setImage(with: item.user?.avatarId)
     }
 }
 
-extension CommentFragment: IdentifiableType, Equatable {
+extension CommentObject: IdentifiableType {
     
-    public typealias Identity = String
     public var identity: String {
-        return id
-    }
-    
-    public static func ==(lhs: CommentFragment, rhs: CommentFragment) -> Bool {
-        return true
+        return _id
     }
 }

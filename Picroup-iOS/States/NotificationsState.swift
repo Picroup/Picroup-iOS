@@ -7,118 +7,148 @@
 //
 
 import Foundation
+import RealmSwift
+import RxSwift
+import RxCocoa
+import RxRealm
 
-struct NotificationsState: Mutabled {
+final class NotificationsStateObject: PrimaryObject {
     
-    var currentUser: UserDetailFragment?
+    @objc dynamic var session: UserSessionObject?
     
-    var next: MyNotificationsQuery
-    var items: [NotificationFragment]
-    var error: Error?
-    var trigger: Bool
+    @objc dynamic var notifications: CursorNotificationsObject?
+    @objc dynamic var notificationsError: String?
+    @objc dynamic var triggerNotificationsQuery: Bool = false
     
-    var nextMark: MarkNotificationsAsViewedQuery
-    var marked: MarkNotificationsAsViewedQuery.Data.User.MarkNotificationsAsViewed?
-    var markError: Error?
-    var markTrigger: Bool
+    @objc dynamic var marked: String?
+    @objc dynamic var markError: String?
+    @objc dynamic var triggerMarkQuery: Bool = false
 }
 
-extension NotificationsState {
-    public var query: MyNotificationsQuery? {
-        if (currentUser == nil) { return nil }
-        return trigger ? next : nil
+extension NotificationsStateObject {
+    public var notificationsQuery: MyNotificationsQuery? {
+        guard let userId = session?.currentUser?._id else { return nil }
+        let next = MyNotificationsQuery(userId: userId, cursor: notifications?.cursor.value)
+        return triggerNotificationsQuery ? next : nil
     }
-    var shouldQueryMore: Bool {
-        return !trigger && next.cursor != nil
+    var shouldQueryMoreNotifications: Bool {
+        return !triggerNotificationsQuery && hasMoreNotifications
     }
-    var isItemsEmpty: Bool {
-        return !trigger && error == nil && items.isEmpty
+    var isNotificationsEmpty: Bool {
+        guard let items = notifications?.items else { return false }
+        return !triggerNotificationsQuery && notificationsError == nil && items.isEmpty
     }
-    var hasMore: Bool {
-        return next.cursor != nil
+    var hasMoreNotifications: Bool {
+        return notifications?.cursor.value != nil
     }
     public var markQuery: MarkNotificationsAsViewedQuery? {
-        if (currentUser == nil) { return nil }
-        return markTrigger && !items.isEmpty ? nextMark : nil
+        guard let userId = session?.currentUser?._id else { return nil }
+        let next = MarkNotificationsAsViewedQuery(userId: userId)
+        return triggerMarkQuery && !isNotificationsEmpty ? next : nil
     }
 }
 
-extension NotificationsState {
-    static func empty() -> NotificationsState {
-        return NotificationsState(
-            currentUser: nil,
-            next: MyNotificationsQuery(userId: ""),
-            items: [],
-            error: nil,
-            trigger: true,
-            nextMark: MarkNotificationsAsViewedQuery(userId: ""),
-            marked: nil,
-            markError: nil,
-            markTrigger: true
-        )
+
+extension NotificationsStateObject {
+    
+    static func create() -> (Realm) throws -> NotificationsStateObject {
+        return { realm in
+            let _id = PrimaryKey.default
+            let value: Any = [
+                "_id": _id,
+                "session": ["_id": _id],
+                "notifications": ["_id": _id],
+                ]
+            return try realm.findOrCreate(NotificationsStateObject.self, forPrimaryKey: _id, value: value)
+        }
     }
 }
 
-extension NotificationsState: IsFeedbackState {
+extension NotificationsStateObject {
     
     enum Event {
-        case onUpdateCurrentUser(UserDetailFragment?)
         case onTriggerReload
         case onTriggerGetMore
-        case onGetSuccess(CursorNotoficationsFragment)
+        case onGetReloadData(CursorNotoficationsFragment)
+        case onGetMoreData(CursorNotoficationsFragment)
         case onGetError(Error)
-        case onMarkSuccess(MarkNotificationsAsViewedQuery.Data.User.MarkNotificationsAsViewed)
+        case onMarkSuccess(String)
         case onMarkError(Error)
     }
 }
 
-extension NotificationsState {
+extension NotificationsStateObject.Event {
     
-    static func reduce(state: NotificationsState, event: NotificationsState.Event) -> NotificationsState {
+    static func onGetData(isReload: Bool) -> (CursorNotoficationsFragment) -> NotificationsStateObject.Event {
+        return { isReload ? .onGetReloadData($0) : .onGetMoreData($0) }
+    }
+}
+
+extension NotificationsStateObject: IsFeedbackStateObject {
+    
+    func reduce(event: Event, realm: Realm) {
         switch event {
-        case .onUpdateCurrentUser(let currentUser):
-            return state.mutated {
-                $0.currentUser = currentUser
-                $0.next.userId = currentUser?.id ?? ""
-                $0.nextMark.userId = currentUser?.id ?? ""
-            }
         case .onTriggerReload:
-            return state.mutated {
-                $0.next.cursor = nil
-                $0.items = []
-                $0.error = nil
-                $0.trigger = true
-            }
+            notifications?.cursor.value = nil
+            notificationsError = nil
+            triggerNotificationsQuery = true
         case .onTriggerGetMore:
-            guard state.shouldQueryMore else { return state }
-            return state.mutated {
-                $0.error = nil
-                $0.trigger = true
-            }
-        case .onGetSuccess(let data):
-            return state.mutated {
-                $0.next.cursor = data.cursor
-                $0.items += data.items.flatMap { $0?.fragments.notificationFragment }
-                $0.error = nil
-                $0.trigger = false
-            }
+            guard shouldQueryMoreNotifications else { return }
+            notificationsError = nil
+            triggerNotificationsQuery = true
+        case .onGetReloadData(let data):
+            notifications = CursorNotificationsObject.create(from: data, id: PrimaryKey.default)(realm)
+            notificationsError = nil
+            triggerNotificationsQuery = false
+            
+            marked = nil
+            markError = nil
+            triggerMarkQuery = true
+        case .onGetMoreData(let data):
+            notifications?.merge(from: data)(realm)
+            notificationsError = nil
+            triggerNotificationsQuery = false
         case .onGetError(let error):
-            return state.mutated {
-                $0.error = error
-                $0.trigger = false
-            }
-        case .onMarkSuccess(let data):
-            return state.mutated {
-                $0.marked = data
-                $0.markError = nil
-                $0.markTrigger = false
-            }
+            notificationsError = error.localizedDescription
+            triggerNotificationsQuery = false
+            
+        case .onMarkSuccess(let id):
+            marked = id
+            markError = nil
+            triggerMarkQuery = false
         case .onMarkError(let error):
-            return state.mutated {
-                $0.marked = nil
-                $0.markError = error
-                $0.markTrigger = false
-            }
+            marked = nil
+            markError = error.localizedDescription
+            triggerMarkQuery = false
         }
     }
 }
+
+final class NotificationsStateStore {
+    
+    let states: Driver<NotificationsStateObject>
+    private let _state: NotificationsStateObject
+    
+    init() throws {
+        
+        let realm = try Realm()
+        let _state = try NotificationsStateObject.create()(realm)
+        let states = Observable.from(object: _state).asDriver(onErrorDriveWith: .empty())
+        
+        self._state = _state
+        self.states = states
+    }
+    
+    func on(event: NotificationsStateObject.Event) {
+        let id = PrimaryKey.default
+        Realm.backgroundReduce(ofType: NotificationsStateObject.self, forPrimaryKey: id, event: event)
+    }
+    
+    func notifications() -> Driver<[NotificationObject]> {
+        guard let items = _state.notifications?.items else { return .empty() }
+        return Observable.collection(from: items)
+            .asDriver(onErrorDriveWith: .empty())
+            .map { $0.toArray() }
+    }
+}
+

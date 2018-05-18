@@ -19,7 +19,7 @@ extension RouterService {
 
 extension RouterService.Main {
     
-    static func rootViewController() -> UIViewController {
+    static func rootViewController() -> MainTabBarController {
         
         let infos: [(title: String, imageName: String, vc: UIViewController)] = [
             (title: "关注", imageName: "ic_home", vc: homeMenuViewController()),
@@ -38,17 +38,12 @@ extension RouterService.Main {
         mvc.viewControllers = viewControllers
         mvc.tabBar.isTranslucent = false
 //        mvc.selectedIndex = 1
-        let svc = SnackbarController(rootViewController: mvc)
-        return svc
+        return mvc
     }
     
     static func homeMenuViewController() -> UIViewController {
-        let state = BehaviorRelay<HomeState>(value: .empty())
-        let events = PublishRelay<HomeState.Event>()
         let hvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-        hvc.dependency = (state.asDriver(), events.accept)
         let hmvc = HomeMenuViewController(rootViewController: hvc)
-        hmvc.dependency = (state.accept, events.asSignal())
         return BaseNavigationController(rootViewController: hmvc)
     }
     
@@ -80,9 +75,8 @@ extension RouterService.Main {
         return vc
     }
     
-    static func reputationsViewController(dependency: ReputationsViewController.Dependency) -> ReputationsViewController {
+    static func reputationsViewController() -> ReputationsViewController {
         let rvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ReputationsViewController") as! ReputationsViewController
-        rvc.dependency = dependency
         return rvc
     }
     

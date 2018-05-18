@@ -50,6 +50,23 @@ extension ImageDetailCell.ViewModel {
         self.username = item.user.username
         self.avatarId = item.user.avatarId
     }
+    
+    init(medium: MediumObject) {
+        let remainTime = medium.endedAt.value?.sinceNow ?? 0
+        
+        self.imageViewMinioId = medium.minioId
+        self.imageViewMotionIdentifier = medium._id
+        self.progress = CGFloat(remainTime / 8.0.weeks)
+        self.lifeBarMotionIdentifier = "lifeBar_\(medium._id)"
+        self.starButtonMotionIdentifier = "starButton_\(medium._id)"
+        self.remainTimeLabelText = "\(Int(remainTime / 1.0.weeks)) 周"
+        self.commentsCountLabelText = "\(medium.commentsCount.value ?? 0) 条"
+        self.stared = medium.stared.value
+        self.animatedChangeProgress = true
+        
+        self.username = medium.user?.username
+        self.avatarId = medium.user?.avatarId
+    }
 }
 
 class ImageDetailCell: RxCollectionViewCell {

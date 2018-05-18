@@ -10,5 +10,5 @@ import Foundation
 
 extension DispatchQueue {
     
-    static let realm = DispatchQueue(label: "com.picroup.Picroup-iOS.realm", qos: DispatchQoS.userInitiated)
+    static let realm = DispatchQueue(label: "com.picroup.Picroup-iOS.realm", qos: .userInteractive)
 }
