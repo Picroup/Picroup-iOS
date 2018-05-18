@@ -35,7 +35,7 @@ final class ImagePickerController: UIImagePickerController {
             ImageCache.default.store(image, forKey: key)
             
             Realm.background(updates: { (realm) in
-                guard let route = realm.object(ofType: CreateImageRouteObject.self, forPrimaryKey: Config.realmDefaultPrimaryKey) else { return }
+                guard let route = realm.object(ofType: CreateImageRouteObject.self, forPrimaryKey: PrimaryKey.default) else { return }
                 try realm.write {
                     route.imageKey = key
                     route.version = UUID().uuidString

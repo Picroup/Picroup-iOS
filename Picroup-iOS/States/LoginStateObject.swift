@@ -37,7 +37,7 @@ extension LoginStateObject {
     
     static func create() -> (Realm) throws -> LoginStateObject {
         return { realm in
-            let _id = Config.realmDefaultPrimaryKey
+            let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
                 "session": ["_id": _id],
@@ -100,7 +100,7 @@ final class LoginStateStore {
     }
     
     func on(event: LoginStateObject.Event) {
-        let id = Config.realmDefaultPrimaryKey
+        let id = PrimaryKey.default
         Realm.backgroundReduce(ofType: LoginStateObject.self, forPrimaryKey: id, event: event)
     }
 }

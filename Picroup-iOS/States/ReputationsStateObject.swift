@@ -51,17 +51,16 @@ extension ReputationsStateObject {
     }
 }
 
-private let reputationsId = "reputationsState.reputations"
 
 extension ReputationsStateObject {
     
     static func create() -> (Realm) throws -> ReputationsStateObject {
         return { realm in
-            let _id = Config.realmDefaultPrimaryKey
+            let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
                 "session": ["_id": _id],
-                "reputations": ["_id": reputationsId],
+                "reputations": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
             return try realm.findOrCreate(ReputationsStateObject.self, forPrimaryKey: _id, value: value)
@@ -103,7 +102,7 @@ extension ReputationsStateObject: IsFeedbackStateObject {
             reputationsError = nil
             triggerReputationsQuery = true
         case .onGetReloadData(let data):
-            reputations = CursorReputationsObject.create(from: data, id: reputationsId)(realm)
+            reputations = CursorReputationsObject.create(from: data, id: PrimaryKey.default)(realm)
             reputationsError = nil
             triggerReputationsQuery = false
             
@@ -149,7 +148,7 @@ final class ReputationsStateStore {
     }
     
     func on(event: ReputationsStateObject.Event) {
-        let id = Config.realmDefaultPrimaryKey
+        let id = PrimaryKey.default
         Realm.backgroundReduce(ofType: ReputationsStateObject.self, forPrimaryKey: id, event: event)
     }
     

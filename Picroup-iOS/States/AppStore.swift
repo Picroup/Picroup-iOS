@@ -53,7 +53,7 @@ extension AppStateObject {
         result._id = AppStateObject.appPrimaryKey
         try? realm.write {
             realm.add(result, update: true)
-            result.session = realm.create(UserSessionObject.self, value: ["_id": Config.realmDefaultPrimaryKey], update: true)
+            result.session = realm.create(UserSessionObject.self, value: ["_id": PrimaryKey.default], update: true)
         }
         return result
     }()

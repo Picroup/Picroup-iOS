@@ -41,13 +41,12 @@ extension RankStateObject {
     }
 }
 
-private let rankMediaId = "rankState.rankMedia"
-
 extension RankStateObject {
     
     static func create() -> (Realm) throws -> RankStateObject {
+        let rankMediaId = PrimaryKey.rankMediaId
         return { realm in
-            let _id = Config.realmDefaultPrimaryKey
+            let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
                 "rankMedia": ["_id": rankMediaId],
@@ -90,7 +89,7 @@ extension RankStateObject: IsFeedbackStateObject {
             rankedMediaError = nil
             triggerRankedMediaQuery = true
         case .onGetReloadData(let data):
-            rankMedia = CursorMediaObject.create(from: data, id: rankMediaId)(realm)
+            rankMedia = CursorMediaObject.create(from: data, id: PrimaryKey.rankMediaId)(realm)
             rankedMediaError = nil
             triggerRankedMediaQuery = false
         case .onGetMoreData(let data):
@@ -122,7 +121,7 @@ final class RankStateStore {
     }
     
     func on(event: RankStateObject.Event) {
-        let id = Config.realmDefaultPrimaryKey
+        let id = PrimaryKey.default
         Realm.backgroundReduce(ofType: RankStateObject.self, forPrimaryKey: id, event: event)
     }
     

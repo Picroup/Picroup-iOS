@@ -52,18 +52,16 @@ extension ImageCommentsStateObject {
     }
 }
 
-private let commentsId: (String) -> String = { "imageCommentsState.\($0).comments" }
-
 extension ImageCommentsStateObject {
     
     static func create(mediumId: String) -> (Realm) throws -> ImageCommentsStateObject {
         return { realm in
-            let _id = Config.realmDefaultPrimaryKey
+            let _id = PrimaryKey.default
             let value: Any = [
                 "_id": mediumId,
                 "session": ["_id": _id],
                 "medium": ["_id": mediumId],
-                "comments": ["_id": commentsId(mediumId)],
+                "comments": ["_id": PrimaryKey.commentsId(mediumId)],
                 "popRoute": ["_id": _id],
                 ]
             return try realm.findOrCreate(ImageCommentsStateObject.self, forPrimaryKey: mediumId, value: value)
@@ -110,7 +108,7 @@ extension ImageCommentsStateObject: IsFeedbackStateObject {
             commentsError = nil
             triggerCommentsQuery = true
         case .onGetReloadData(let data):
-            comments = CursorCommentsObject.create(from: data, id: commentsId(_id))(realm)
+            comments = CursorCommentsObject.create(from: data, id: PrimaryKey.commentsId(_id))(realm)
             commentsError = nil
             triggerCommentsQuery = false
         case .onGetMoreData(let data):

@@ -31,12 +31,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow(frame: Screen.bounds)
         window.tintColor = UIColor.primary
         window.makeKeyAndVisible()
-        window.rootViewController = RouterService.Main.rootViewController()
         self.window = window
     }
     
     private func setupRouter() {
         router = Router(window: window!)
-        router?.setupRxfeedback()
+        router!.setupRxfeedback()
     }
 }

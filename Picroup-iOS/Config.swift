@@ -8,5 +8,4 @@
 
 struct Config {
     static let baseURL = "http://home.picroup.com:3500"
-    static let realmDefaultPrimaryKey = "default"
 }

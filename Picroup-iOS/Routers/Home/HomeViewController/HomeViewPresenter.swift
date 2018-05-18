@@ -12,21 +12,33 @@ import RxCocoa
 import RxDataSources
 
 class HomeViewPresenter: NSObject {
-    @IBOutlet weak var collectionView: UICollectionView!
     
-    typealias Section = AnimatableSectionModel<String, MediumFragment>
+    var refreshControl: UIRefreshControl!
+    @IBOutlet weak var collectionView: UICollectionView! {
+        didSet { prepareRefreshControl() }
+    }
+    
+    fileprivate func prepareRefreshControl() {
+        refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .primaryLight
+        collectionView.addSubview(refreshControl!)
+    }
+    
+    typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
-    var items: (PublishRelay<HomeState.Event>) -> (Observable<[Section]>) -> Disposable {
+    var items: (PublishRelay<MyInterestedMediaStateObject.Event>) -> (Observable<[Section]>) -> Disposable {
         return { [collectionView] _events in
             let dataSource = DataSource(
                 configureCell: { dataSource, collectionView, indexPath, item in
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeImageCell", for: indexPath) as! HomeImageCell
                     cell.configure(
                         with: item,
-                        onCommentsTap: { _events.accept(.onTriggerShowComments(indexPath.row)) },
-                        onImageViewTap: { _events.accept(.onTriggerShowImageDetail(indexPath.row)) },
-                        onUserTap: { _events.accept(.onTriggerShowUser(indexPath.row)) }
+                        onCommentsTap: { _events.accept(.onTriggerShowComments(item._id)) },
+                        onImageViewTap: { _events.accept(.onTriggerShowImage(item._id)) },
+                        onUserTap: {
+//                            _events.accept(.onTriggerShowUser(indexPath.row))
+                    }
                     )
                     return cell
             },
@@ -48,13 +60,3 @@ extension HomeViewPresenter: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension MediumFragment: IdentifiableType, Equatable {
-    public typealias Identity = String
-    public var identity: String {
-        return id
-    }
-    
-    public static func ==(lhs: MediumFragment, rhs: MediumFragment) -> Bool {
-        return true
-    }
-}

@@ -55,20 +55,17 @@ extension ImageDetailStateObject {
     }
 }
 
-private let myStaredMediaId = "meState.myStaredMedia"
-private let recommendMediaId: (String) -> String = { "imageDetailState.\($0).recommendMedia" }
-
 extension ImageDetailStateObject {
     
     static func create(mediumId: String) -> (Realm) throws -> ImageDetailStateObject {
         return { realm in
-            let _id = Config.realmDefaultPrimaryKey
+            let _id = PrimaryKey.default
             let value: Any = [
                 "_id": mediumId,
                 "session": ["_id": _id],
                 "medium": ["_id": mediumId],
-                "recommendMedia": ["_id": recommendMediaId(mediumId)],
-                "myStaredMedia": ["_id": myStaredMediaId],
+                "recommendMedia": ["_id": PrimaryKey.recommendMediaId(mediumId)],
+                "myStaredMedia": ["_id": PrimaryKey.myStaredMediaId],
                 "imageDetialRoute": ["_id": _id],
                 "imageCommetsRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
@@ -119,7 +116,7 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
         case .onGetReloadData(let data):
             medium = realm.create(MediumObject.self, value: data.snapshot, update: true)
             let fragment = data.recommendedMedia.fragments.cursorMediaFragment
-            recommendMedia = CursorMediaObject.create(from: fragment, id: recommendMediaId(_id))(realm)
+            recommendMedia = CursorMediaObject.create(from: fragment, id: PrimaryKey.recommendMediaId(_id))(realm)
             mediumError = nil
             triggerMediumQuery = false
         case .onGetMoreData(let data):

@@ -50,3 +50,14 @@ class UserPresenter: NSObject {
     }
 
 }
+
+extension MediumFragment: IdentifiableType, Equatable {
+    public typealias Identity = String
+    public var identity: String {
+        return id
+    }
+    
+    public static func ==(lhs: MediumFragment, rhs: MediumFragment) -> Bool {
+        return true
+    }
+}

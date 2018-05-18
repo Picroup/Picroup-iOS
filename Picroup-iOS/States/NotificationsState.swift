@@ -48,17 +48,16 @@ extension NotificationsStateObject {
     }
 }
 
-private let notificationsId = "notificationsState.notifications"
 
 extension NotificationsStateObject {
     
     static func create() -> (Realm) throws -> NotificationsStateObject {
         return { realm in
-            let _id = Config.realmDefaultPrimaryKey
+            let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
                 "session": ["_id": _id],
-                "notifications": ["_id": notificationsId],
+                "notifications": ["_id": _id],
                 ]
             return try realm.findOrCreate(NotificationsStateObject.self, forPrimaryKey: _id, value: value)
         }
@@ -98,7 +97,7 @@ extension NotificationsStateObject: IsFeedbackStateObject {
             notificationsError = nil
             triggerNotificationsQuery = true
         case .onGetReloadData(let data):
-            notifications = CursorNotificationsObject.create(from: data, id: notificationsId)(realm)
+            notifications = CursorNotificationsObject.create(from: data, id: PrimaryKey.default)(realm)
             notificationsError = nil
             triggerNotificationsQuery = false
             
@@ -141,7 +140,7 @@ final class NotificationsStateStore {
     }
     
     func on(event: NotificationsStateObject.Event) {
-        let id = Config.realmDefaultPrimaryKey
+        let id = PrimaryKey.default
         Realm.backgroundReduce(ofType: NotificationsStateObject.self, forPrimaryKey: id, event: event)
     }
     

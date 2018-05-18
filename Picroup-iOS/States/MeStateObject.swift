@@ -74,19 +74,16 @@ extension MeStateObject {
     }
 }
 
-private let myMediaId = "meState.myMedia"
-private let myStaredMediaId = "meState.myStaredMedia"
-
 extension MeStateObject {
     
     static func create() -> (Realm) throws -> MeStateObject {
         return { realm in
-            let _id = Config.realmDefaultPrimaryKey
+            let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
                 "session": ["_id": _id],
-                "myMedia": ["_id": myMediaId],
-                "myStaredMedia": ["_id": myStaredMediaId],
+                "myMedia": ["_id": PrimaryKey.myMediaId],
+                "myStaredMedia": ["_id": PrimaryKey.myStaredMediaId],
                 "imageDetialRoute": ["_id": _id],
                 "reputationsRoute": ["_id": _id],
                 ]
@@ -116,7 +113,7 @@ extension MeStateObject {
         case onGetMoreMyStaredMedia(CursorMediaFragment)
         case onGetMyStaredMediaError(Error)
         
-        case onTriggerShowImage(String?)
+        case onTriggerShowImage(String)
         case onTriggerShowReputations
     }
 }
@@ -159,7 +156,7 @@ extension MeStateObject: IsFeedbackStateObject {
             myMediaError = nil
             triggerMyMediaQuery = true
         case .onGetReloadMyMedia(let data):
-            myMedia = CursorMediaObject.create(from: data, id: myMediaId)(realm)
+            myMedia = CursorMediaObject.create(from: data, id: PrimaryKey.myMediaId)(realm)
             myMediaError = nil
             triggerMyMediaQuery = false
         case .onGetMoreMyMedia(let data):
@@ -179,7 +176,7 @@ extension MeStateObject: IsFeedbackStateObject {
             myStaredMediaError = nil
             triggerMyStaredMediaQuery = true
         case .onGetReloadMyStaredMedia(let data):
-            myStaredMedia = CursorMediaObject.create(from: data, id: myStaredMediaId)(realm)
+            myStaredMedia = CursorMediaObject.create(from: data, id: PrimaryKey.myStaredMediaId)(realm)
             myStaredMediaError = nil
             triggerMyStaredMediaQuery = false
         case .onGetMoreMyStaredMedia(let data):
@@ -214,7 +211,7 @@ final class MeStateStore {
     }
     
     func on(event: MeStateObject.Event) {
-        let id = Config.realmDefaultPrimaryKey
+        let id = PrimaryKey.default
         Realm.backgroundReduce(ofType: MeStateObject.self, forPrimaryKey: id, event: event)
     }
     

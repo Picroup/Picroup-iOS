@@ -24,18 +24,20 @@ class HomeImageCell: RxCollectionViewCell {
     @IBOutlet weak var commentButton: UIButton!
     
     func configure(
-        with item: MediumFragment,
+        with item: MediumObject,
         onCommentsTap: (() -> Void)?,
         onImageViewTap: (() -> Void)?,
         onUserTap: (() -> Void)?
         ) {
+        let remainTime = item.endedAt.value?.sinceNow ?? 0
+        
         imageView.setImage(with: item.minioId)
-        lifeViewWidthConstraint.constant = CGFloat(item.endedAt.sinceNow / 8.0.weeks) * lifeBar.bounds.width
-        imageView.motionIdentifier = item.id
-        lifeBar.motionIdentifier = "lifeBar_\(item.id)"
-        userAvatarImageView.setImage(with: item.user.avatarId)
-        usernameLabel.text = item.user.username
-        commentButton.setTitle("  \(item.commentsCount)", for: UIControlState.normal)
+        lifeViewWidthConstraint.constant = CGFloat(remainTime / 8.0.weeks) * lifeBar.bounds.width
+        imageView.motionIdentifier = item._id
+        lifeBar.motionIdentifier = "lifeBar_\(item._id)"
+        userAvatarImageView.setImage(with: item.user?.avatarId)
+        usernameLabel.text = item.user?.username
+        commentButton.setTitle("  \(item.commentsCount.value ?? 0)", for: UIControlState.normal)
         
         if let onCommentsTap = onCommentsTap {
             commentButton.rx.tap

@@ -42,10 +42,7 @@ extension RouterService.Main {
     }
     
     static func homeMenuViewController() -> UIViewController {
-        let state = BehaviorRelay<HomeState>(value: .empty())
-        let events = PublishRelay<HomeState.Event>()
         let hvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-        hvc.dependency = (state.asDriver(), events.accept)
         let hmvc = HomeMenuViewController(rootViewController: hvc)
         return BaseNavigationController(rootViewController: hmvc)
     }

@@ -40,7 +40,7 @@ final class CreateImageStateObject: PrimaryObject {
     @objc dynamic var triggerSaveMediumQuery: Bool = false
 
     @objc dynamic var myMedia: CursorMediaObject?
-//    @objc dynamic var myInterestedMedia: CursorMediaObject?
+    @objc dynamic var myInterestedMedia: CursorMediaObject?
 
 }
 
@@ -55,18 +55,18 @@ extension CreateImageStateObject {
     }
 }
 
-private let myMediaId = "meState.myMedia"
 
 extension CreateImageStateObject {
     
     static func create(imageKey: String) -> (Realm) throws -> CreateImageStateObject {
         return { realm in
-            let _id = Config.realmDefaultPrimaryKey
+            let _id = PrimaryKey.default
             let value: Any = [
                 "_id": imageKey,
                 "session": ["_id": _id],
                 "progress": [:],
-                "myMedia": ["_id": myMediaId],
+                "myMedia": ["_id": PrimaryKey.myMediaId],
+                "myInterestedMedia": ["_id": PrimaryKey.myInterestedMediaId],
                 ]
             return try realm.findOrCreate(CreateImageStateObject.self, forPrimaryKey: imageKey, value: value)
         }
@@ -97,7 +97,7 @@ extension CreateImageStateObject: IsFeedbackStateObject {
             let mediumObject = realm.create(MediumObject.self, value: medium.snapshot, update: true)
             savedMedium = mediumObject
             myMedia?.items.insert(mediumObject, at: 0)
-//            myInterestedMedia?.items.insert(mediumObject, at: 0)
+            myInterestedMedia?.items.insert(mediumObject, at: 0)
             triggerSaveMediumQuery = false
         case .onSavedMediumError(let error):
             savedMedium = nil

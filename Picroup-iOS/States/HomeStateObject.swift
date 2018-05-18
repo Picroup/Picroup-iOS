@@ -24,7 +24,7 @@ extension HomeStateObject {
     
     static func create() -> (Realm) throws -> HomeStateObject {
         return { realm in
-            let _id = Config.realmDefaultPrimaryKey
+            let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
                 "session": ["_id": _id],
@@ -84,7 +84,7 @@ final class HomeStateStore {
     }
     
     func on(event: HomeStateObject.Event) {
-        let id = Config.realmDefaultPrimaryKey
+        let id = PrimaryKey.default
         Realm.backgroundReduce(ofType: HomeStateObject.self, forPrimaryKey: id, event: event)
     }
 }
