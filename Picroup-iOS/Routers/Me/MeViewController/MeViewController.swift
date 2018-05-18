@@ -60,11 +60,12 @@ class MeViewController: HideNavigationBarViewController {
                         : .empty()
                     }.map { .onTriggerGetMoreMyStaredMedia },
                 me?.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMe } ?? .never(),
-                .of(.onTriggerReloadMe, .onTriggerReloadMyMedia, .onTriggerReloadMyStaredMedia),
                 presenter.myMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
                 presenter.myStardMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
                 presenter.reputationButton.rx.tap.asSignal().map { _ in .onTriggerShowReputations },
-            ]
+                presenter.meBackgroundView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
+                .of(.onTriggerReloadMe, .onTriggerReloadMyMedia, .onTriggerReloadMyStaredMedia),
+                ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         

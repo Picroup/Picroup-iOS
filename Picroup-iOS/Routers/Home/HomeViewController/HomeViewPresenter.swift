@@ -37,9 +37,9 @@ class HomeViewPresenter: NSObject {
                         onCommentsTap: { _events.accept(.onTriggerShowComments(item._id)) },
                         onImageViewTap: { _events.accept(.onTriggerShowImage(item._id)) },
                         onUserTap: {
-//                            _events.accept(.onTriggerShowUser(indexPath.row))
-                    }
-                    )
+                            guard let userId = item.user?._id else { return }
+                            _events.accept(.onTriggerShowUser(userId))
+                    })
                     return cell
             },
                 configureSupplementaryView: { dataSource, collectionView, title, indexPath in

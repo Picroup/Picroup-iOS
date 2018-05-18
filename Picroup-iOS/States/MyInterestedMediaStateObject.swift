@@ -20,6 +20,7 @@ final class MyInterestedMediaStateObject: PrimaryObject {
     
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
+    @objc dynamic var userRoute: UserRouteObject?
 }
 
 extension MyInterestedMediaStateObject {
@@ -54,6 +55,7 @@ extension MyInterestedMediaStateObject {
                 "myInterestedMedia": ["_id": PrimaryKey.myInterestedMediaId],
                 "imageCommetsRoute": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
+                "userRoute": ["_id": _id],
                 ]
             return try realm.findOrCreate(MyInterestedMediaStateObject.self, forPrimaryKey: _id, value: value)
         }
@@ -72,6 +74,7 @@ extension MyInterestedMediaStateObject {
         
         case onTriggerShowImage(String)
         case onTriggerShowComments(String)
+        case onTriggerShowUser(String)
     }
 }
 
@@ -112,6 +115,9 @@ extension MyInterestedMediaStateObject: IsFeedbackStateObject {
         case .onTriggerShowComments(let mediumId):
             imageCommetsRoute?.mediumId = mediumId
             imageCommetsRoute?.version = UUID().uuidString
+        case .onTriggerShowUser(let userId):
+            userRoute?.userId = userId
+            userRoute?.version = UUID().uuidString
         }
     }
 }

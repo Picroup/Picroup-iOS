@@ -29,7 +29,7 @@ class UserPresenter: NSObject {
     
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
     
-    typealias Section = AnimatableSectionModel<String, MediumFragment>
+    typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
     private var dataSource: DataSource {
@@ -51,13 +51,3 @@ class UserPresenter: NSObject {
 
 }
 
-extension MediumFragment: IdentifiableType, Equatable {
-    public typealias Identity = String
-    public var identity: String {
-        return id
-    }
-    
-    public static func ==(lhs: MediumFragment, rhs: MediumFragment) -> Bool {
-        return true
-    }
-}

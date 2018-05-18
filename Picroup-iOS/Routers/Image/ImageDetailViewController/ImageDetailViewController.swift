@@ -50,10 +50,7 @@ class ImageDetailViewController: HideNavigationBarViewController {
                     onStarButtonTap: { _events.accept(.onTriggerStarMedium) },
                     onCommentsTap: { _events.accept(.onTriggerShowComments) },
                     onImageViewTap: { _events.accept(.onTriggerPop) } ,
-                    onUserTap: {
-                        //                        _events.accept(.onTriggerShowUser)
-                }
-                )),
+                    onUserTap: { _events.accept(.onTriggerShowUser) })),
                 presenter.backgroundButton.rx.tap.subscribe(onNext: { _events.accept(.onTriggerPop) }),
                 ]
             let events: [Signal<ImageDetailStateObject.Event>] = [

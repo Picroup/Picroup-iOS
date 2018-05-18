@@ -68,6 +68,23 @@ final class Router {
                 me.currentViewController?.present(SnackbarController(rootViewController: vc), animated: true)
             })
         
+        _ = store.userRoute().distinctUntilChanged { $0.0.version ?? "" }.skip(1)
+            .drive(Binder(self) { (me, userRouteInfo) in
+                let (userRoute, isCurrentUser) = userRouteInfo
+                let vc: UIViewController
+                switch (isCurrentUser, userRoute.userId) {
+                case (true, _):
+                    vc = RouterService.Main.meViewController()
+                    vc.hidesBottomBarWhenPushed = true
+                    me.currentNavigationController?.pushViewController(vc, animated: true)
+                case (false, let userId?):
+                    vc = RouterService.Main.userViewController(dependency: userId)
+                    me.currentNavigationController?.pushViewController(vc, animated: true)
+                default:
+                    break
+                }
+            })
+        
         _ = store.popRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .drive(Binder(self) { (me, _) in
                 me.currentNavigationController?.popViewController(animated: true)

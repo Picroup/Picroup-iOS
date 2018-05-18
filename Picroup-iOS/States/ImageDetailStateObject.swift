@@ -29,6 +29,7 @@ final class ImageDetailStateObject: PrimaryObject {
     
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
+    @objc dynamic var userRoute: UserRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
 }
 
@@ -68,6 +69,7 @@ extension ImageDetailStateObject {
                 "myStaredMedia": ["_id": PrimaryKey.myStaredMediaId],
                 "imageDetialRoute": ["_id": _id],
                 "imageCommetsRoute": ["_id": _id],
+                "userRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
             return try realm.findOrCreate(ImageDetailStateObject.self, forPrimaryKey: mediumId, value: value)
@@ -90,6 +92,7 @@ extension ImageDetailStateObject {
         
         case onTriggerShowImage(String)
         case onTriggerShowComments
+        case onTriggerShowUser
         case onTriggerPop
     }
 }
@@ -151,6 +154,9 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
         case .onTriggerShowComments:
             imageCommetsRoute?.mediumId = mediumId
             imageCommetsRoute?.version = UUID().uuidString
+        case .onTriggerShowUser:
+            userRoute?.userId = medium?.user?._id
+            userRoute?.version = UUID().uuidString
         case .onTriggerPop:
             popRoute?.version = UUID().uuidString
         }
