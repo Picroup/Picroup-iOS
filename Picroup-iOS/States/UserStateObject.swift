@@ -156,7 +156,7 @@ final class UserStateStore {
     func userMediaItems() -> Driver<[MediumObject]> {
         guard let items = _state.userMedia?.items else { return .empty() }
         return Observable.collection(from: items)
-//            .delaySubscription(0.3, scheduler: MainScheduler.instance)
+            .delaySubscription(0.3, scheduler: MainScheduler.instance)
             .asDriver(onErrorDriveWith: .empty())
             .map { $0.toArray() }
     }
