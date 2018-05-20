@@ -73,6 +73,8 @@
 		457BD98720AC68EA007F0492 /* ReputationsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD98620AC68EA007F0492 /* ReputationsStateObject.swift */; };
 		457BD98920AC695A007F0492 /* ReputationObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD98820AC695A007F0492 /* ReputationObject.swift */; };
 		457BD98B20ADB55E007F0492 /* CreateImageStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD98A20ADB55E007F0492 /* CreateImageStateObject.swift */; };
+		457BD98D20B135DF007F0492 /* AppStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD98C20B135DF007F0492 /* AppStateObject.swift */; };
+		457BD98F20B13B79007F0492 /* AppStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD98E20B13B79007F0492 /* AppStateService.swift */; };
 		458006D620A137A5004BD982 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D520A137A5004BD982 /* AppStore.swift */; };
 		458006D820A17283004BD982 /* UIViewController+Rx+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */; };
 		458006DA20A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */; };
@@ -236,6 +238,8 @@
 		457BD98620AC68EA007F0492 /* ReputationsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsStateObject.swift; sourceTree = "<group>"; };
 		457BD98820AC695A007F0492 /* ReputationObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationObject.swift; sourceTree = "<group>"; };
 		457BD98A20ADB55E007F0492 /* CreateImageStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageStateObject.swift; sourceTree = "<group>"; };
+		457BD98C20B135DF007F0492 /* AppStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateObject.swift; sourceTree = "<group>"; };
+		457BD98E20B13B79007F0492 /* AppStateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppStateService.swift; path = "Picroup-iOS/States/AppStateService.swift"; sourceTree = SOURCE_ROOT; };
 		458006D520A137A5004BD982 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+NavigationBar.swift"; sourceTree = "<group>"; };
 		458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx+shouldHideNavigationBar.swift"; sourceTree = "<group>"; };
@@ -658,6 +662,7 @@
 			isa = PBXGroup;
 			children = (
 				458006D520A137A5004BD982 /* AppStore.swift */,
+				457BD98C20B135DF007F0492 /* AppStateObject.swift */,
 				45D0E230207E2C4A00ECC2A3 /* CreateImageState.swift */,
 				457BD98A20ADB55E007F0492 /* CreateImageStateObject.swift */,
 				4595F224207D95360040E5FA /* HomeState.swift */,
@@ -762,6 +767,7 @@
 			isa = PBXGroup;
 			children = (
 				451DD4B4207E395F002C509A /* MediumService.swift */,
+				457BD98E20B13B79007F0492 /* AppStateService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1137,6 +1143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				457BD98F20B13B79007F0492 /* AppStateService.swift in Sources */,
 				45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */,
 				457BD98920AC695A007F0492 /* ReputationObject.swift in Sources */,
 				45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */,
@@ -1238,6 +1245,7 @@
 				454F72A0208DB90000850471 /* RouterService+Image.swift in Sources */,
 				451CD332207D0A910063A972 /* HomeViewController.swift in Sources */,
 				4595F227207D9CF90040E5FA /* logger.swift in Sources */,
+				457BD98D20B135DF007F0492 /* AppStateObject.swift in Sources */,
 				451DD4B5207E395F002C509A /* MediumService.swift in Sources */,
 				4595F217207A10B50040E5FA /* LoginState.swift in Sources */,
 				451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */,

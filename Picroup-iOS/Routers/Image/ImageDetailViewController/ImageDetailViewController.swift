@@ -38,7 +38,7 @@ class ImageDetailViewController: HideNavigationBarViewController {
                 return
         }
         
-        appStore.onViewMedium(mediumId: mediumId)
+        appStateService?.events.accept(.onViewMedium(mediumId))
 
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!

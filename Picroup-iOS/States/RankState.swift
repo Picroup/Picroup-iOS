@@ -14,6 +14,8 @@ import RxRealm
 
 final class RankStateObject: PrimaryObject {
     
+    @objc dynamic var session: UserSessionObject?
+
     @objc dynamic var rankMedia: CursorMediaObject?
     @objc dynamic var rankedMediaError: String?
     @objc dynamic var triggerRankedMediaQuery: Bool = false
@@ -49,6 +51,7 @@ extension RankStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
+                "session": ["_id": _id],
                 "rankMedia": ["_id": rankMediaId],
                 "imageDetialRoute": ["_id": _id],
                 ]
@@ -66,6 +69,7 @@ extension RankStateObject {
         case onGetMoreData(CursorMediaFragment)
         case onGetError(Error)
         case onTriggerShowImage(String)
+        case onLogout
     }
 }
 
@@ -101,7 +105,9 @@ extension RankStateObject: IsFeedbackStateObject {
             triggerRankedMediaQuery = false
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
-            imageDetialRoute?.version = UUID().uuidString 
+            imageDetialRoute?.version = UUID().uuidString
+        case .onLogout:
+            session?.currentUser = nil
         }
     }
 }

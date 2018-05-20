@@ -107,12 +107,6 @@ final class Router {
                 me._window.rootViewController = SnackbarController(rootViewController: lvc)
             }
         })
-
-        _ = appStore.state.map { $0.recommendMediumQuery }.distinctUnwrap().flatMapLatest {
-            ApolloClient.shared.rx.perform(mutation: $0)
-                .asSignal(onErrorJustReturn: nil)
-            }.mapToVoid()
-            .emit(onNext: appStore.onRecommendMediumCompleted)
         
     }
 }
