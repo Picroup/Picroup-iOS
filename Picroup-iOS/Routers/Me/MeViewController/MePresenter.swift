@@ -82,16 +82,6 @@ struct UserViewModel {
     let gainedReputationCount: String
     let isGainedReputationCountHidden: Bool
     
-    init(user: UserDetailFragment?) {
-        self.username = user.map { "@\($0.username)" } ?? " "
-        self.avatarId = user?.avatarId
-        self.reputation = user?.reputation.description ?? "0"
-        self.followersCount = user?.followersCount.description ?? "0"
-        self.followingsCount = user?.followingsCount.description ?? "0"
-        self.gainedReputationCount = user.map { "+\($0.gainedReputation)" } ?? ""
-        self.isGainedReputationCountHidden = user == nil || user!.gainedReputation == 0
-    }
-    
     init(user: UserObject?) {
         self.username = user.map { "@\($0.username ?? "")" } ?? " "
         self.avatarId = user?.avatarId

@@ -38,7 +38,6 @@ class RankViewController: UIViewController {
             let subscriptions = [
                 store.rankMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items),
                 state.map { $0.isReloading }.drive(presenter.refreshControl.rx.isRefreshing),
-                presenter.categoryButton.rx.tap.asSignal().emit(onNext: appStore.onLogout),
             ]
             let events: [Signal<RankStateObject.Event>] = [
                 state.flatMapLatest {
@@ -47,7 +46,8 @@ class RankViewController: UIViewController {
                         : .empty()
                 }.map { .onTriggerGetMore },
                 presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReload },
-                presenter.collectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) }
+                presenter.collectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
+                presenter.categoryButton.rx.tap.asSignal().map { .onLogout }
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }

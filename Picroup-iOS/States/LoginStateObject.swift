@@ -10,6 +10,19 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
+enum LoginError: LocalizedError {
+    case usernameOrPasswordIncorrect
+}
+
+extension LoginError {
+    
+    var errorDescription: String {
+        switch self {
+        case .usernameOrPasswordIncorrect: return "用户名或密码错误"
+        }
+    }
+}
+
 private let minimalUsernameLength = 0
 private let minimalPasswordLength = 0
 
