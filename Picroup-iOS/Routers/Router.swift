@@ -90,13 +90,6 @@ final class Router {
                 me.currentNavigationController?.popViewController(animated: true)
             })
         
-//        _ = states.map { $0.session?.isLogin ?? false }.distinctUntilChanged().drive(Binder(_window) { (window, isLogin) in
-//            let lvc = RouterService.Login.loginViewController(client: .shared, appStore: appStore)
-//            let loginViewController = SnackbarController(rootViewController: lvc)
-//            let rootViewController = RouterService.Main.rootViewController()
-//            window.rootViewController = isLogin ? rootViewController : loginViewController
-//        })
-        
         _ = store.session().debug("session").map { $0.isLogin }.distinctUntilChanged().drive(Binder(self) { (me, isLogin) in
             if isLogin {
                 let mainTabBarController = RouterService.Main.rootViewController()

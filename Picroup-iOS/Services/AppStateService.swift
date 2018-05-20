@@ -15,12 +15,12 @@ import Apollo
 
 final class AppStateService {
     
-    private let _appStore: AppStateStore0?
-    let events = PublishRelay<AppStateObject0.Event>()
-    fileprivate typealias Feedback = (Driver<AppStateObject0>) -> Signal<AppStateObject0.Event>
+    private let _appStore: AppStateStore?
+    let events = PublishRelay<AppStateObject.Event>()
+    fileprivate typealias Feedback = (Driver<AppStateObject>) -> Signal<AppStateObject.Event>
     
     init() {
-        _appStore = try? AppStateStore0()
+        _appStore = try? AppStateStore()
     }
     
     func setupRxfeedback() {
@@ -28,8 +28,8 @@ final class AppStateService {
         
         let queryRecommendMedium: Feedback = react(query: { $0.recommendMediumQuery }) { query in
             ApolloClient.shared.rx.perform(mutation: query)
-                .map { _ in AppStateObject0.Event.onRecommendMediumCompleted }
-                .asSignal(onErrorJustReturn: AppStateObject0.Event.onRecommendMediumCompleted)
+                .map { _ in AppStateObject.Event.onRecommendMediumCompleted }
+                .asSignal(onErrorJustReturn: AppStateObject.Event.onRecommendMediumCompleted)
         }
         
         let states = store.states
@@ -38,7 +38,7 @@ final class AppStateService {
             queryRecommendMedium(states),
             events.asSignal()
             )
-            .debug("AppStateObject0.Event", trimOutput: true)
+            .debug("AppStateObject.Event", trimOutput: true)
             .emit(onNext: store.on)
     }
 }

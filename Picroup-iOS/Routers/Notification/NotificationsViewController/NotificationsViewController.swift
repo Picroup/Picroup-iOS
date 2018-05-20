@@ -45,7 +45,6 @@ class NotificationsViewController: UIViewController {
                         : .empty()
                 }.map { .onTriggerGetMore },
                 Signal.just(NotificationsStateObject.Event.onTriggerReload),
-//                presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReload }
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }

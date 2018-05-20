@@ -13,7 +13,17 @@ import RxFeedback
 import RealmSwift
 import RxRealm
 
-final class AppStateObject0: PrimaryObject {
+final class UserSessionObject: PrimaryObject {
+    @objc dynamic var currentUser: UserObject?
+}
+
+extension UserSessionObject {
+    var isLogin: Bool {
+        return currentUser != nil
+    }
+}
+
+final class AppStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
     
@@ -22,7 +32,7 @@ final class AppStateObject0: PrimaryObject {
     @objc dynamic var triggerRecommendMedium = false
 }
 
-extension AppStateObject0 {
+extension AppStateObject {
     
     var recommendMediumQuery: RecommendMediumMutation? {
         guard
@@ -36,21 +46,21 @@ extension AppStateObject0 {
     }
 }
 
-extension AppStateObject0 {
+extension AppStateObject {
     
-    static func create() -> (Realm) throws -> AppStateObject0 {
+    static func create() -> (Realm) throws -> AppStateObject {
         return { realm in
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
                 "session": ["_id": _id],
                 ]
-            return try realm.findOrCreate(AppStateObject0.self, forPrimaryKey: _id, value: value)
+            return try realm.findOrCreate(AppStateObject.self, forPrimaryKey: _id, value: value)
         }
     }
 }
 
-extension AppStateObject0 {
+extension AppStateObject {
     
     enum Event {
         case onViewMedium(String)
@@ -58,7 +68,7 @@ extension AppStateObject0 {
     }
 }
 
-extension AppStateObject0: IsFeedbackStateObject {
+extension AppStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
@@ -72,23 +82,23 @@ extension AppStateObject0: IsFeedbackStateObject {
     }
 }
 
-final class AppStateStore0 {
+final class AppStateStore {
     
-    let states: Driver<AppStateObject0>
-    private let _state: AppStateObject0
+    let states: Driver<AppStateObject>
+    private let _state: AppStateObject
     
     init() throws {
         let realm = try Realm()
-        let _state = try AppStateObject0.create()(realm)
+        let _state = try AppStateObject.create()(realm)
         let states = Observable.from(object: _state).asDriver(onErrorDriveWith: .empty())
         
         self._state = _state
         self.states = states
     }
     
-    func on(event: AppStateObject0.Event) {
+    func on(event: AppStateObject.Event) {
         let _id = PrimaryKey.default
-        Realm.backgroundReduce(ofType: AppStateObject0.self, forPrimaryKey: _id, event: event)
+        Realm.backgroundReduce(ofType: AppStateObject.self, forPrimaryKey: _id, event: event)
     }
 }
 
