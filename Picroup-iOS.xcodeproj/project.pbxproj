@@ -71,6 +71,10 @@
 		457BD98D20B135DF007F0492 /* AppStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD98C20B135DF007F0492 /* AppStateObject.swift */; };
 		457BD99320B146CD007F0492 /* MediumService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD99120B146CD007F0492 /* MediumService.swift */; };
 		457BD99420B146CD007F0492 /* AppStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD99220B146CD007F0492 /* AppStateService.swift */; };
+		457BD99620B304F7007F0492 /* UserFollowings.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 457BD99520B304F7007F0492 /* UserFollowings.graphql */; };
+		457BD99820B30559007F0492 /* UserFollowers.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 457BD99720B30559007F0492 /* UserFollowers.graphql */; };
+		457BD99A20B306AA007F0492 /* UserFollowingsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD99920B306AA007F0492 /* UserFollowingsStateObject.swift */; };
+		457BD99D20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD99C20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift */; };
 		458006D820A17283004BD982 /* UIViewController+Rx+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */; };
 		458006DA20A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */; };
 		458C106920849058005E94CD /* RankViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458C106820849058005E94CD /* RankViewPresenter.swift */; };
@@ -214,6 +218,10 @@
 		457BD98C20B135DF007F0492 /* AppStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateObject.swift; sourceTree = "<group>"; };
 		457BD99120B146CD007F0492 /* MediumService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediumService.swift; sourceTree = "<group>"; };
 		457BD99220B146CD007F0492 /* AppStateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateService.swift; sourceTree = "<group>"; };
+		457BD99520B304F7007F0492 /* UserFollowings.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserFollowings.graphql; sourceTree = "<group>"; };
+		457BD99720B30559007F0492 /* UserFollowers.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserFollowers.graphql; sourceTree = "<group>"; };
+		457BD99920B306AA007F0492 /* UserFollowingsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFollowingsStateObject.swift; sourceTree = "<group>"; };
+		457BD99C20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrimaryObject+IdentifiableType.swift"; sourceTree = "<group>"; };
 		458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+NavigationBar.swift"; sourceTree = "<group>"; };
 		458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx+shouldHideNavigationBar.swift"; sourceTree = "<group>"; };
 		458C106820849058005E94CD /* RankViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewPresenter.swift; sourceTree = "<group>"; };
@@ -519,6 +527,14 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		457BD99B20B30D22007F0492 /* RxRealm */ = {
+			isa = PBXGroup;
+			children = (
+				457BD99C20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift */,
+			);
+			path = RxRealm;
+			sourceTree = "<group>";
+		};
 		458C106A2084A094005E94CD /* Notification */ = {
 			isa = PBXGroup;
 			children = (
@@ -612,6 +628,7 @@
 				451DD4BC207F8BC7002C509A /* RankStateObject.swift */,
 				457BD98620AC68EA007F0492 /* ReputationsStateObject.swift */,
 				45B0205920AEA35600BD5D8F /* UserStateObject.swift */,
+				457BD99920B306AA007F0492 /* UserFollowingsStateObject.swift */,
 				457BD98220AB12AD007F0492 /* RouteStateObject.swift */,
 			);
 			path = States;
@@ -668,6 +685,7 @@
 				45B0205620AE699000BD5D8F /* PrimaryKey */,
 				45FC0BFF20A94A03006AAF3D /* Model */,
 				45AA3B4620A346C10032A8CF /* Realm */,
+				457BD99B20B30D22007F0492 /* RxRealm */,
 				454F728D208822EC00850471 /* LocalStorage */,
 				4595F2092079F3630040E5FA /* Minio */,
 				45C1994B20A983BC001924B9 /* RxCocoa */,
@@ -703,6 +721,8 @@
 				45D04F792088D57B00AC2226 /* SaveComment.graphql */,
 				45FC0BED20A41BD2006AAF3D /* ReputationFragment.graphql */,
 				45A0393C2075D0E9007498DB /* User.graphql */,
+				457BD99520B304F7007F0492 /* UserFollowings.graphql */,
+				457BD99720B30559007F0492 /* UserFollowers.graphql */,
 				45FC0BE120A41704006AAF3D /* UserFragment.graphql */,
 				45FC0BE320A41813006AAF3D /* UserDetailFragment.graphql */,
 				45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */,
@@ -911,7 +931,9 @@
 				45BA0D83209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql in Resources */,
 				45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */,
 				454F72A2208DD1AA00850471 /* MyMedia.graphql in Resources */,
+				457BD99620B304F7007F0492 /* UserFollowings.graphql in Resources */,
 				45D04F7C2089FD0500AC2226 /* UserInterestedMedia.graphql in Resources */,
+				457BD99820B30559007F0492 /* UserFollowers.graphql in Resources */,
 				4591AEDD20A2F359001EC384 /* RecommendMedium.graphql in Resources */,
 				45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */,
 				45D04F8F208F635C00AC2226 /* MyReputations.graphql in Resources */,
@@ -1080,6 +1102,7 @@
 				45BA0D8520903A020002E1D5 /* NotificationsStateObject.swift in Sources */,
 				45AA3B4520A311BD0032A8CF /* ImageDetailPresenter.swift in Sources */,
 				45B0204720AC0D7000BD5D8F /* ImageCommentsStateObject.swift in Sources */,
+				457BD99D20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
 				459F259920A28C13008B6C9B /* ObservableType+catchErrorRecover.swift in Sources */,
 				454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */,
@@ -1103,6 +1126,7 @@
 				457BD99320B146CD007F0492 /* MediumService.swift in Sources */,
 				457BD98B20ADB55E007F0492 /* CreateImageStateObject.swift in Sources */,
 				454F72982089B46300850471 /* RxTableViewCell.swift in Sources */,
+				457BD99A20B306AA007F0492 /* UserFollowingsStateObject.swift in Sources */,
 				451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */,
 				455D69042080409A00C651A0 /* BaseNavigationController.swift in Sources */,
 				457BD98320AB12AD007F0492 /* RouteStateObject.swift in Sources */,

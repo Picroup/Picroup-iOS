@@ -593,9 +593,6 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JZZ-Vp-nQI">
                                         <rect key="frame" x="255.5" y="83" width="103.5" height="67.5"/>
                                         <state key="normal" title="Button"/>
-                                        <connections>
-                                            <segue destination="Whc-hQ-pBn" kind="show" id="Hx2-mK-InA"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.18039215689999999" green="0.49019607840000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
@@ -657,6 +654,7 @@
                     <connections>
                         <outlet property="displaynameLabel" destination="9ww-Gw-D99" id="xRs-4r-ScO"/>
                         <outlet property="followersCountLabel" destination="412-mM-oDe" id="gZL-eb-blY"/>
+                        <outlet property="followingsButton" destination="JZZ-Vp-nQI" id="hFb-ed-FYF"/>
                         <outlet property="followingsCountLabel" destination="O9R-ng-3fi" id="4cH-Rz-pMm"/>
                         <outlet property="gainedReputationCountButton" destination="p6J-QI-gRW" id="17C-ej-byM"/>
                         <outlet property="hideDetailLayoutConstraint" destination="WQu-Oz-x0F" id="Hq8-kZ-kpi"/>
@@ -1267,6 +1265,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Di3-Vy-r61" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="7U7-Gi-gwq" customClass="FollowingsPresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
+                        <outlet property="followingsCountLabel" destination="0va-MD-CkJ" id="Clo-yZ-iqJ"/>
                         <outlet property="tableView" destination="zqt-JH-DkY" id="JMj-gn-1ba"/>
                     </connections>
                 </customObject>

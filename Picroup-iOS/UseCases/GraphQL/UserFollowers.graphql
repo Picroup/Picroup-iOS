@@ -1,0 +1,11 @@
+query UserFollowers($userId: ID!, $followedByUserId: ID!, $cursor: Float = null) {
+    user(userId: $userId) {
+        followers(cursor: $cursor) {
+            cursor
+            items {
+                followed(byUserId: $followedByUserId)
+                ...UserFragment
+            }
+        }
+    }
+}

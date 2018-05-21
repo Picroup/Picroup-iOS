@@ -26,4 +26,8 @@ struct PrimaryKey {
     static func userMediaId(_ userId: String) -> String {
         return "user.\(userId).userMedia"
     }
+    
+    static func userFollowingsId(_ userId: String) -> String {
+        return "user.\(userId).userFollowings"
+    }
 }

@@ -80,5 +80,9 @@ extension RouterService.Main {
         return rvc
     }
     
-    
+    static func followingsViewController(dependency: FollowingsViewController.Dependency) -> FollowingsViewController {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FollowingsViewController") as! FollowingsViewController
+        vc.dependency = dependency
+        return vc
+    }
 }

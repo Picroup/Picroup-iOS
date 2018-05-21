@@ -67,9 +67,3 @@ class RankViewPresenter {
     }
 }
 
-extension MediumObject: IdentifiableType {
-    
-    public var identity: String {
-        return _id
-    }
-}

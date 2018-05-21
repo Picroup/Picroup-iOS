@@ -31,6 +31,7 @@ final class MeStateObject: PrimaryObject {
     
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var reputationsRoute: ReputationsRouteObject?
+    @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
 }
 
@@ -87,6 +88,7 @@ extension MeStateObject {
                 "myStaredMedia": ["_id": PrimaryKey.myStaredMediaId],
                 "imageDetialRoute": ["_id": _id],
                 "reputationsRoute": ["_id": _id],
+                "userFollowingsRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
             return try realm.findOrCreate(MeStateObject.self, forPrimaryKey: _id, value: value)
@@ -117,6 +119,7 @@ extension MeStateObject {
         
         case onTriggerShowImage(String)
         case onTriggerShowReputations
+        case onTriggerShowUserFollowings
         case onTriggerPop
     }
 }
@@ -195,6 +198,9 @@ extension MeStateObject: IsFeedbackStateObject {
             imageDetialRoute?.version = UUID().uuidString
         case .onTriggerShowReputations:
             reputationsRoute?.version = UUID().uuidString
+        case .onTriggerShowUserFollowings:
+            userFollowingsRoute?.userId = session?.currentUser?._id
+            userFollowingsRoute?.version = UUID().uuidString
         case .onTriggerPop:
             popRoute?.version = UUID().uuidString
         }

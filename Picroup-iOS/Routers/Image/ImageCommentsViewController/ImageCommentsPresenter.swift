@@ -70,9 +70,3 @@ class CommentCell: RxTableViewCell {
     }
 }
 
-extension CommentObject: IdentifiableType {
-    
-    public var identity: String {
-        return _id
-    }
-}

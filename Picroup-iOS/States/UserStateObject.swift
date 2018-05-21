@@ -169,7 +169,7 @@ extension UserStateObject: IsFeedbackStateObject {
             followUserError = nil
             triggerFollowUserQuery = true
         case .onFollowUserSuccess(let data):
-//            user = realm.create(UserObject.self, value: data.snapshot, update: true)
+            user = realm.create(UserObject.self, value: data.snapshot, update: true)
             user?.followed.value = true
             followUserVersion = UUID().uuidString
             followUserError = nil
@@ -187,7 +187,7 @@ extension UserStateObject: IsFeedbackStateObject {
             unfollowUserError = nil
             triggerUnfollowUserQuery = true
         case .onUnfollowUserSuccess(let data):
-//            user = realm.create(UserObject.self, value: data.snapshot, update: true)
+            user = realm.create(UserObject.self, value: data.snapshot, update: true)
             user?.followed.value = false
             unfollowUserVersion = UUID().uuidString
             unfollowUserError = nil

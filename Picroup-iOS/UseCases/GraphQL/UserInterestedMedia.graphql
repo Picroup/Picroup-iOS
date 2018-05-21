@@ -5,3 +5,5 @@ query UserInterestedMedia($userId: ID!, $cursor: Float = null) {
         }
     }
 }
+
+

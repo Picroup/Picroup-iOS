@@ -15,7 +15,7 @@ import RxFeedback
 class ReputationsViewController: UIViewController {
     
     @IBOutlet fileprivate var presenter: ReputationsViewPresenter!
-    typealias Feedback = (Driver<ReputationsStateObject>) -> Signal<ReputationsStateObject.Event>
+    fileprivate typealias Feedback = (Driver<ReputationsStateObject>) -> Signal<ReputationsStateObject.Event>
 
     override func viewDidLoad() {
         super.viewDidLoad()

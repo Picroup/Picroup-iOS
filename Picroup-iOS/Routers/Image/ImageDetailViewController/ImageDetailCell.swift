@@ -42,7 +42,7 @@ extension ImageDetailCell.ViewModel {
         self.remainTimeLabelText = "\(Int(remainTime / 1.0.weeks)) 周"
         self.commentsCountLabelText = "\(medium.commentsCount.value ?? 0) 条"
         self.stared = medium.stared.value
-        self.animatedChangeProgress = true
+        self.animatedChangeProgress = false
         
         self.username = medium.user?.username
         self.avatarId = medium.user?.avatarId

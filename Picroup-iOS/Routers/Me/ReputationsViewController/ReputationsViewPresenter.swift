@@ -53,10 +53,3 @@ class ReputationCell: RxTableViewCell {
     }
 }
 
-
-extension ReputationObject: IdentifiableType {
-    
-    public var identity: String {
-        return _id
-    }
-}

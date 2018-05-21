@@ -95,7 +95,7 @@ extension MyInterestedMediaStateObject: IsFeedbackStateObject {
             triggerMyInterestedMediaQuery = true
         case .onTriggerGetMoreMyInterestedMedia:
             guard shouldQueryMoreMyInterestedMedia else { return }
-            myInterestedMedia = nil
+            myInterestedMediaError = nil
             triggerMyInterestedMediaQuery = true
         case .onGetReloadMyInterestedMedia(let data):
             myInterestedMedia = CursorMediaObject.create(from: data, id: PrimaryKey.myInterestedMediaId)(realm)

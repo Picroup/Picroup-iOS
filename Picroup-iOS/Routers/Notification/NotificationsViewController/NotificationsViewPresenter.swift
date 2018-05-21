@@ -60,11 +60,3 @@ class NotificationCell: RxTableViewCell {
         }
     }
 }
-
-extension NotificationObject: IdentifiableType {
-    
-    public var identity: String {
-        return _id
-    }
-}
-

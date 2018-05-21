@@ -23,6 +23,7 @@ class MePresenter: NSObject {
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var followingsCountLabel: UILabel!
     @IBOutlet weak var reputationButton: UIButton!
+    @IBOutlet weak var followingsButton: UIButton!
 
     @IBOutlet weak var myMediaButton: UIButton!
     @IBOutlet weak var myStaredMediaButton: UIButton!
