@@ -1,5 +1,15 @@
-query User($userId: ID!) {
+query User($userId: ID!, $followedByUserId: ID!) {
+    user(userId: $userId) {
+        followed(byUserId: $followedByUserId)
+        ...UserDetailFragment
+    }
+}
+
+query Me($userId: ID!) {
     user(userId: $userId) {
         ...UserDetailFragment
     }
 }
+
+
+

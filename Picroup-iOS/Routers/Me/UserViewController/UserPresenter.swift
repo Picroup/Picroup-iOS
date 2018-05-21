@@ -24,8 +24,10 @@ class UserPresenter: NSObject {
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var followingsCountLabel: UILabel!
     
-//    @IBOutlet weak var myStaredMediaButton: UIButton!
     @IBOutlet weak var myMediaCollectionView: UICollectionView!
+    @IBOutlet weak var followButton: FABButton! {
+        didSet { followButton.image = Icon.favorite }
+    }
     
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
     

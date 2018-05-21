@@ -1,0 +1,13 @@
+mutation FollowUser($userId: ID!, $toUserId: ID!){
+    followUser(userId: $userId, toUserId: $toUserId) {
+        followed(byUserId: $userId)
+        ...UserDetailFragment
+    }
+}
+
+mutation UnfollowUser($userId: ID!, $toUserId: ID!){
+    unfollowUser(userId: $userId, toUserId: $toUserId) {
+        followed(byUserId: $userId)
+        ...UserDetailFragment
+    }
+}

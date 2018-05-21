@@ -24,6 +24,14 @@ final class UserStateObject: PrimaryObject {
     @objc dynamic var userMediaError: String?
     @objc dynamic var triggerUserMediaQuery: Bool = false
     
+    @objc dynamic var followUserVersion: String?
+    @objc dynamic var followUserError: String?
+    @objc dynamic var triggerFollowUserQuery: Bool = false
+    
+    @objc dynamic var unfollowUserVersion: String?
+    @objc dynamic var unfollowUserError: String?
+    @objc dynamic var triggerUnfollowUserQuery: Bool = false
+
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
 }
@@ -31,7 +39,8 @@ final class UserStateObject: PrimaryObject {
 extension UserStateObject {
     var userId: String { return _id }
     var userQuery: UserQuery? {
-        let next = UserQuery(userId: userId)
+        guard let followedByUserId = session?.currentUser?._id else { return nil }
+        let next = UserQuery(userId: userId, followedByUserId: followedByUserId)
         return triggerUserQuery ? next : nil
     }
     var userMediaQuery: MyMediaQuery? {
@@ -43,6 +52,28 @@ extension UserStateObject {
     }
     var hasMoreMyMedia: Bool {
         return userMedia?.cursor.value != nil
+    }
+    var shouldFollowUser: Bool {
+        return user?.followed.value == false && !triggerFollowUserQuery
+    }
+    var followUserQuery: FollowUserMutation? {
+        guard
+            let userId = session?.currentUser?._id,
+            let toUserId = user?._id else {
+                return nil
+        }
+        return triggerFollowUserQuery ? FollowUserMutation(userId: userId, toUserId: toUserId) : nil
+    }
+    var shouldUnfollowUser: Bool {
+        return user?.followed.value == true && !triggerUnfollowUserQuery
+    }
+    var unfollowUserQuery: UnfollowUserMutation? {
+        guard
+            let userId = session?.currentUser?._id,
+            let toUserId = user?._id else {
+                return nil
+        }
+        return triggerUnfollowUserQuery ? UnfollowUserMutation(userId: userId, toUserId: toUserId) : nil
     }
 }
 
@@ -68,7 +99,7 @@ extension UserStateObject {
     
     enum Event {
         case onTriggerReloadUser
-        case onGetUserSuccess(UserDetailFragment)
+        case onGetUserSuccess(UserQuery.Data.User)
         case onGetUserError(Error)
         
         case onTriggerReloadUserMedia
@@ -76,6 +107,14 @@ extension UserStateObject {
         case onGetReloadUserMedia(CursorMediaFragment)
         case onGetMoreUserMedia(CursorMediaFragment)
         case onGetUserMediaError(Error)
+        
+        case onTriggerFollowUser
+        case onFollowUserSuccess(FollowUserMutation.Data.FollowUser)
+        case onFollowUserError(Error)
+        
+        case onTriggerUnfollowUser
+        case onUnfollowUserSuccess(UnfollowUserMutation.Data.UnfollowUser)
+        case onUnfollowUserError(Error)
         
         case onTriggerShowImage(String)
         case onTriggerPop
@@ -97,7 +136,7 @@ extension UserStateObject: IsFeedbackStateObject {
             userError = nil
             triggerUserQuery = true
         case .onGetUserSuccess(let data):
-            user = UserObject.create(from: data)(realm)
+            user = realm.create(UserObject.self, value: data.snapshot, update: true)
             userError = nil
             triggerUserQuery = false
         case .onGetUserError(let error):
@@ -110,7 +149,7 @@ extension UserStateObject: IsFeedbackStateObject {
             triggerUserMediaQuery = true
         case .onTriggerGetMoreUserMedia:
             guard shouldQueryMoreUserMedia else { return }
-            userMedia = nil
+            userMediaError = nil
             triggerUserMediaQuery = true
         case .onGetReloadUserMedia(let data):
             userMedia = CursorMediaObject.create(from: data, id: PrimaryKey.userMediaId(userId))(realm)
@@ -123,6 +162,42 @@ extension UserStateObject: IsFeedbackStateObject {
         case .onGetUserMediaError(let error):
             userMediaError = error.localizedDescription
             triggerUserMediaQuery = false
+            
+        case .onTriggerFollowUser:
+            guard shouldFollowUser else { return }
+            followUserVersion = nil
+            followUserError = nil
+            triggerFollowUserQuery = true
+        case .onFollowUserSuccess(let data):
+//            user = realm.create(UserObject.self, value: data.snapshot, update: true)
+            user?.followed.value = true
+            followUserVersion = UUID().uuidString
+            followUserError = nil
+            triggerFollowUserQuery = false
+//            guard let medium = medium else { return }
+//            myStaredMedia?.items.insert(medium, at: 0)
+        case .onFollowUserError(let error):
+            followUserVersion = nil
+            followUserError = error.localizedDescription
+            triggerFollowUserQuery = false
+            
+        case .onTriggerUnfollowUser:
+            guard shouldUnfollowUser else { return }
+            unfollowUserVersion = nil
+            unfollowUserError = nil
+            triggerUnfollowUserQuery = true
+        case .onUnfollowUserSuccess(let data):
+//            user = realm.create(UserObject.self, value: data.snapshot, update: true)
+            user?.followed.value = false
+            unfollowUserVersion = UUID().uuidString
+            unfollowUserError = nil
+            triggerUnfollowUserQuery = false
+            //            guard let medium = medium else { return }
+        //            myStaredMedia?.items.insert(medium, at: 0)
+        case .onUnfollowUserError(let error):
+            unfollowUserVersion = nil
+            unfollowUserError = error.localizedDescription
+            triggerUnfollowUserQuery = false
             
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId

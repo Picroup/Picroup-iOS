@@ -877,6 +877,25 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d7m-7d-aqj" customClass="FABButton" customModule="Material">
+                                        <rect key="frame" x="295" y="184.5" width="56" height="56"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="56" id="Uth-tr-QfD"/>
+                                            <constraint firstAttribute="width" secondItem="d7m-7d-aqj" secondAttribute="height" multiplier="1:1" id="z6Y-3h-I1E"/>
+                                        </constraints>
+                                        <color key="tintColor" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="ic_favorite_white"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="image" keyPath="image" value="ic_favorite_white"/>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="pulseColor">
+                                                <color key="value" red="0.68888300660000001" green="0.71366006140000005" blue="0.73448425530000006" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.18039215689999999" green="0.49019607840000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -890,7 +909,9 @@
                                     <constraint firstItem="bd3-Zl-uAD" firstAttribute="centerY" secondItem="uMI-aY-Uvk" secondAttribute="top" id="lVA-dq-uv9"/>
                                     <constraint firstAttribute="trailing" secondItem="pih-tP-oZP" secondAttribute="trailing" id="mWk-hH-aef"/>
                                     <constraint firstAttribute="trailing" secondItem="9ph-vL-Nje" secondAttribute="trailing" constant="16" id="mml-3L-dZ5"/>
+                                    <constraint firstAttribute="trailing" secondItem="d7m-7d-aqj" secondAttribute="trailing" constant="24" id="mqN-iS-mRR"/>
                                     <constraint firstAttribute="trailing" secondItem="3OI-kS-uka" secondAttribute="trailing" constant="16" id="oLO-Dd-Qib"/>
+                                    <constraint firstAttribute="bottom" secondItem="d7m-7d-aqj" secondAttribute="centerY" id="oY0-YT-uSc"/>
                                     <constraint firstAttribute="bottom" secondItem="pih-tP-oZP" secondAttribute="bottom" constant="8" id="tiD-LD-TBa"/>
                                     <constraint firstItem="9ph-vL-Nje" firstAttribute="top" secondItem="0sQ-ev-rPI" secondAttribute="top" priority="750" constant="16" id="zEn-WC-QPg"/>
                                 </constraints>
@@ -924,6 +945,7 @@
                 <customObject id="63c-z1-c5E" customClass="UserPresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
                         <outlet property="displaynameLabel" destination="vHJ-EI-agS" id="4ca-PF-wun"/>
+                        <outlet property="followButton" destination="d7m-7d-aqj" id="vmp-z2-nwU"/>
                         <outlet property="followersCountLabel" destination="tzJ-iJ-8t2" id="5yF-b6-1AY"/>
                         <outlet property="followingsCountLabel" destination="Y9G-fx-bYL" id="fZs-qM-dVg"/>
                         <outlet property="gainedReputationCountButton" destination="bd3-Zl-uAD" id="CpH-7Q-0gQ"/>
@@ -1192,6 +1214,7 @@
         <image name="LaunchScreen" width="213" height="320"/>
         <image name="beethoven" width="369" height="369"/>
         <image name="ic_chat_bubble" width="24" height="24"/>
+        <image name="ic_favorite_white" width="24" height="24"/>
         <image name="ic_more_vert" width="24" height="24"/>
     </resources>
     <color key="tintColor" red="0.1803921568627451" green="0.49019607843137253" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>

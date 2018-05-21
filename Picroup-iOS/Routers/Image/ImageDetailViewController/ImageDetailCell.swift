@@ -119,22 +119,30 @@ class ImageDetailCell: RxCollectionViewCell {
     
     private func configureStarButton(with viewModel: ViewModel) {
         
-        self.starButton.isEnabled = viewModel.stared == false
-
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
-            self.starButton.alpha = viewModel.stared == nil ? 0 : 1
-            self.setStarButtonSelected(viewModel.stared == true)
-        })
-        
+        starButton.isEnabled = viewModel.stared == false
+        StarButtonPresenter.isSelected(base: starButton).onNext(viewModel.stared)
     }
+}
+
+struct StarButtonPresenter {
     
-    private func setStarButtonSelected(_ isSelected: Bool) {
-        if !isSelected {
-            starButton.backgroundColor = .primaryText
-            starButton.tintColor = .secondary
-        } else {
-            starButton.backgroundColor = .secondary
-            starButton.tintColor = .primaryText
+    static func isSelected(base: FABButton) -> Binder<Bool?> {
+        return Binder(base) { button, isSelected in
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
+                guard let isSelected = isSelected else {
+                    button.alpha = 0
+                    return
+                }
+                button.alpha =  1
+                if !isSelected {
+                    button.backgroundColor = .primaryText
+                    button.tintColor = .secondary
+                } else {
+                    button.backgroundColor = .secondary
+                    button.tintColor = .primaryText
+                }
+            })
         }
     }
 }
+

@@ -45,6 +45,7 @@ class UserViewController: HideNavigationBarViewController {
                 meViewModel.map { $0.reputation }.drive(presenter.reputationCountLabel.rx.text),
                 meViewModel.map { $0.followersCount }.drive(presenter.followersCountLabel.rx.text),
                 meViewModel.map { $0.followingsCount }.drive(presenter.followingsCountLabel.rx.text),
+                meViewModel.map { $0.followed }.drive(StarButtonPresenter.isSelected(base: presenter.followButton)),
                 store.userMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems),
                 ]
             let events: [Signal<UserStateObject.Event>] = [
@@ -53,9 +54,18 @@ class UserViewController: HideNavigationBarViewController {
                         ? presenter.myMediaCollectionView.rx.triggerGetMore
                         : .empty()
                     }.map { .onTriggerGetMoreUserMedia },
+                presenter.followButton.rx.tap.asSignal()
+                    .withLatestFrom(state)
+                    .flatMapLatest { state in
+                        switch state.user?.followed.value {
+                        case nil: return .empty()
+                        case false?: return .just(.onTriggerFollowUser)
+                        case true?: return .just(.onTriggerUnfollowUser)
+                        }
+                },
                 presenter.myMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
                 presenter.meBackgroundView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
-                    .of(.onTriggerReloadUser, .onTriggerReloadUserMedia),
+                .of(.onTriggerReloadUser, .onTriggerReloadUserMedia),
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
             
@@ -63,7 +73,7 @@ class UserViewController: HideNavigationBarViewController {
         
         let queryUser: Feedback = react(query: { $0.userQuery }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.user?.fragments.userDetailFragment }.unwrap()
+                .map { $0?.data?.user }.unwrap()
                 .map(UserStateObject.Event.onGetUserSuccess)
                 .asSignal(onErrorReturnJust: UserStateObject.Event.onGetUserError)
         }
@@ -75,12 +85,28 @@ class UserViewController: HideNavigationBarViewController {
                 .asSignal(onErrorReturnJust: UserStateObject.Event.onGetUserMediaError)
         }
         
+        let followUser: Feedback = react(query: { $0.followUserQuery }) { query in
+            ApolloClient.shared.rx.perform(mutation: query).asObservable()
+                .map { $0?.data?.followUser }.unwrap()
+                .map(UserStateObject.Event.onFollowUserSuccess)
+                .asSignal(onErrorReturnJust: UserStateObject.Event.onFollowUserError)
+        }
+        
+        let unfollowUser: Feedback = react(query: { $0.unfollowUserQuery }) { query in
+            ApolloClient.shared.rx.perform(mutation: query).asObservable()
+                .map { $0?.data?.unfollowUser }.unwrap()
+                .map(UserStateObject.Event.onUnfollowUserSuccess)
+                .asSignal(onErrorReturnJust: UserStateObject.Event.onUnfollowUserError)
+        }
+        
         let states = store.states
         
         Signal.merge(
             uiFeedback(states),
             queryUser(states),
-            queryUserMedia(states)
+            queryUserMedia(states),
+            followUser(states),
+            unfollowUser(states)
             )
             .debug("UserStateObject.Event", trimOutput: true)
             .emit(onNext: store.on)
