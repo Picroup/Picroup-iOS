@@ -22,6 +22,9 @@ final class RouteStateObject: PrimaryObject {
     @objc dynamic var userRoute: UserRouteObject?
     @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
+    
+    @objc dynamic var snackbar: SnackbarObject?
+
 }
 
 final class ImageDetialRouteObject: PrimaryObject {
@@ -66,6 +69,12 @@ final class PopRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
+final class SnackbarObject: PrimaryObject {
+    
+    @objc dynamic var message: String?
+    @objc dynamic var version: String?
+}
+
 extension RouteStateObject {
     
     static func create() -> (Realm) throws -> RouteStateObject {
@@ -82,6 +91,7 @@ extension RouteStateObject {
                 "userRoute": ["_id": _id],
                 "userFollowingsRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
+                "snackbar": ["_id": _id],
                 ]
             return try realm.findOrCreate(RouteStateObject.self, forPrimaryKey: _id, value: value)
         }
@@ -147,5 +157,10 @@ final class RouteStateStore {
     func popRoute() -> Driver<PopRouteObject> {
         guard let popRoute = _state.popRoute else { return .empty() }
         return Observable.from(object: popRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func snackbar() -> Driver<SnackbarObject> {
+        guard let snackbar = _state.snackbar else { return .empty() }
+        return Observable.from(object: snackbar).asDriver(onErrorDriveWith: .empty())
     }
 }

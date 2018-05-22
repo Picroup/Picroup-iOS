@@ -37,21 +37,22 @@ class FollowingsViewController: HideNavigationBarViewController {
         
         typealias Section = FollowingsPresenter.Section
         
-        let view = self.view!
-        
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
+            let _events = PublishRelay<UserFollowingsStateObject.Event>()
             let subscriptions = [
                 state.map { $0.user?.followingsCount.value?.description ?? "0" }.drive(presenter.followingsCountLabel.rx.text),
-                store.userFollowingsItems().map { [Section(model: "", items: $0)] }.drive(presenter.items),
+                store.userFollowingsItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events)),
                 ]
             let events: [Signal<UserFollowingsStateObject.Event>] = [
+                .just(.onTriggerReloadUserFollowings),
+                _events.asSignal(),
                 state.flatMapLatest {
                     $0.shouldQueryMoreUserFollowings
                         ? presenter.tableView.rx.triggerGetMore
                         : .empty()
                     }.map { .onTriggerGetMoreUserFollowings },
-                .just(.onTriggerReloadUserFollowings),
-                view.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
+                presenter.tableView.rx.modelSelected(UserObject.self).asSignal().map { .onTriggerShowUser($0._id) },
+                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
@@ -62,11 +63,27 @@ class FollowingsViewController: HideNavigationBarViewController {
                 .asSignal(onErrorReturnJust: UserFollowingsStateObject.Event.onGetUserFollowingsError)
         }
         
+        let followUser: Feedback = react(query: { $0.followUserQuery }) { query in
+            ApolloClient.shared.rx.perform(mutation: query).asObservable()
+                .map { $0?.data?.followUser }.unwrap()
+                .map(UserFollowingsStateObject.Event.onFollowUserSuccess)
+                .asSignal(onErrorReturnJust: UserFollowingsStateObject.Event.onFollowUserError)
+        }
+        
+        let unfollowUser: Feedback = react(query: { $0.unfollowUserQuery }) { query in
+            ApolloClient.shared.rx.perform(mutation: query).asObservable()
+                .map { $0?.data?.unfollowUser }.unwrap()
+                .map(UserFollowingsStateObject.Event.onUnfollowUserSuccess)
+                .asSignal(onErrorReturnJust: UserFollowingsStateObject.Event.onUnfollowUserError)
+        }
+        
         let states = store.states
         
         Signal.merge(
             uiFeedback(states),
-            queryUserFollowings(states)
+            queryUserFollowings(states),
+            followUser(states),
+            unfollowUser(states)
             )
             .debug("UserFollowingsStateObject.Event", trimOutput: true)
             .emit(onNext: store.on)
@@ -74,23 +91,3 @@ class FollowingsViewController: HideNavigationBarViewController {
         
     }
 }
-
-final class FollowingsPresenter: NSObject {
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var followingsCountLabel: UILabel!
-
-    typealias Section = AnimatableSectionModel<String, UserObject>
-    typealias DataSource = RxTableViewSectionedAnimatedDataSource<Section>
-    
-    var items: (Observable<[Section]>) -> Disposable {
-        let dataSource = DataSource(
-            configureCell: { dataSource, tableView, indexPath, item in
-                let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-//                cell.configure(with: item)
-                return cell
-        })
-        return tableView.rx.items(dataSource: dataSource)
-    }
-}
-
-

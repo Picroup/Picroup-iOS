@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Material
 import RxSwift
 import RxCocoa
 import Material
@@ -95,6 +96,14 @@ final class Router {
         _ = store.popRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .drive(Binder(self) { (me, _) in
                 me.currentNavigationController?.popViewController(animated: true)
+            })
+        
+        _ = store.snackbar().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .map { $0.message }.unwrap()
+            .drive(Binder(self) { (me, message) in
+                me.currentNavigationController?.snackbarController?.snackbar.text = message
+                me.currentNavigationController?.snackbarController?.animate(snackbar: .visible)
+                me.currentNavigationController?.snackbarController?.animate(snackbar: .hidden, delay: 3)
             })
         
         _ = store.session().debug("session").map { $0.isLogin }.distinctUntilChanged().drive(Binder(self) { (me, isLogin) in

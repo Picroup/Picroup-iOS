@@ -22,6 +22,15 @@ final class UserFollowingsStateObject: PrimaryObject {
     @objc dynamic var userFollowingsError: String?
     @objc dynamic var triggerUserFollowingsQuery: Bool = false
     
+    @objc dynamic var followToUserId: String?
+    @objc dynamic var followUserError: String?
+    @objc dynamic var triggerFollowUserQuery: Bool = false
+    
+    @objc dynamic var unfollowToUserId: String?
+    @objc dynamic var unfollowUserError: String?
+    @objc dynamic var triggerUnfollowUserQuery: Bool = false
+    
+    @objc dynamic var userRoute: UserRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
 }
 
@@ -40,6 +49,30 @@ extension UserFollowingsStateObject {
     var hasMoreUserFollowings: Bool {
         return userFollowings?.cursor.value != nil
     }
+    
+    var shouldFollowUser: Bool {
+        return !triggerFollowUserQuery
+    }
+    var followUserQuery: FollowUserMutation? {
+        guard
+            let userId = session?.currentUser?._id,
+            let toUserId = followToUserId else {
+                return nil
+        }
+        return triggerFollowUserQuery ? FollowUserMutation(userId: userId, toUserId: toUserId) : nil
+    }
+    
+    var shouldUnfollowUser: Bool {
+        return !triggerUnfollowUserQuery
+    }
+    var unfollowUserQuery: UnfollowUserMutation? {
+        guard
+            let userId = session?.currentUser?._id,
+            let toUserId = unfollowToUserId else {
+                return nil
+        }
+        return triggerUnfollowUserQuery ? UnfollowUserMutation(userId: userId, toUserId: toUserId) : nil
+    }
 }
 
 extension UserFollowingsStateObject {
@@ -52,6 +85,7 @@ extension UserFollowingsStateObject {
                 "session": ["_id": _id],
                 "user": ["_id": userId],
                 "userFollowings": ["_id": PrimaryKey.userFollowingsId(userId)],
+                "userRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
             return try realm.findOrCreate(UserFollowingsStateObject.self, forPrimaryKey: userId, value: value)
@@ -67,6 +101,16 @@ extension UserFollowingsStateObject {
         case onGetReloadUserFollowings(UserFollowingsQuery.Data.User.Following)
         case onGetMoreUserFollowings(UserFollowingsQuery.Data.User.Following)
         case onGetUserFollowingsError(Error)
+        
+        case onTriggerFollowUser(String)
+        case onFollowUserSuccess(FollowUserMutation.Data.FollowUser)
+        case onFollowUserError(Error)
+        
+        case onTriggerUnfollowUser(String)
+        case onUnfollowUserSuccess(UnfollowUserMutation.Data.UnfollowUser)
+        case onUnfollowUserError(Error)
+        
+        case onTriggerShowUser(String)
         case onTriggerPop
     }
 }
@@ -101,6 +145,42 @@ extension UserFollowingsStateObject: IsFeedbackStateObject {
         case .onGetUserFollowingsError(let error):
             userFollowingsError = error.localizedDescription
             triggerUserFollowingsQuery = false
+            
+        case .onTriggerFollowUser(let toUserId):
+            guard shouldFollowUser else { return }
+            followToUserId = toUserId
+            followUserError = nil
+            triggerFollowUserQuery = true
+        case .onFollowUserSuccess(let data):
+            realm.create(UserObject.self, value: data.snapshot, update: true)
+            followToUserId = nil
+            followUserError = nil
+            triggerFollowUserQuery = false
+            //            guard let medium = medium else { return }
+        //            myStaredMedia?.items.insert(medium, at: 0)
+        case .onFollowUserError(let error):
+            followUserError = error.localizedDescription
+            triggerFollowUserQuery = false
+            
+        case .onTriggerUnfollowUser(let toUserId):
+            guard shouldUnfollowUser else { return }
+            unfollowToUserId = toUserId
+            unfollowUserError = nil
+            triggerUnfollowUserQuery = true
+        case .onUnfollowUserSuccess(let data):
+            realm.create(UserObject.self, value: data.snapshot, update: true)
+            unfollowToUserId = nil
+            unfollowUserError = nil
+            triggerUnfollowUserQuery = false
+            //            guard let medium = medium else { return }
+        //            myStaredMedia?.items.insert(medium, at: 0)
+        case .onUnfollowUserError(let error):
+            unfollowUserError = error.localizedDescription
+            triggerUnfollowUserQuery = false
+            
+        case .onTriggerShowUser(let userId):
+            userRoute?.userId = userId
+            userRoute?.version = UUID().uuidString
         case .onTriggerPop:
             popRoute?.version = UUID().uuidString
         }

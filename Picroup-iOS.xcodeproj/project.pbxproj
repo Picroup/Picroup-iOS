@@ -111,6 +111,8 @@
 		45B0205A20AEA35600BD5D8F /* UserStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0205920AEA35600BD5D8F /* UserStateObject.swift */; };
 		45B0205C20B2A1D900BD5D8F /* FollowUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45B0205B20B2A1D900BD5D8F /* FollowUser.graphql */; };
 		45B0205F20B2BFDC00BD5D8F /* FollowingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0205E20B2BFDC00BD5D8F /* FollowingsViewController.swift */; };
+		45B0206120B3AB3700BD5D8F /* FollowingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0206020B3AB3700BD5D8F /* FollowingsPresenter.swift */; };
+		45B0206320B3F5AA00BD5D8F /* SnackbarObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0206220B3F5AA00BD5D8F /* SnackbarObject.swift */; };
 		45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */; };
 		45BA0D7F209010670002E1D5 /* MarkReputationLinksAsViewed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */; };
 		45BA0D812090391D0002E1D5 /* MyNotifications.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D802090391D0002E1D5 /* MyNotifications.graphql */; };
@@ -258,6 +260,8 @@
 		45B0205920AEA35600BD5D8F /* UserStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStateObject.swift; sourceTree = "<group>"; };
 		45B0205B20B2A1D900BD5D8F /* FollowUser.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = FollowUser.graphql; sourceTree = "<group>"; };
 		45B0205E20B2BFDC00BD5D8F /* FollowingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingsViewController.swift; sourceTree = "<group>"; };
+		45B0206020B3AB3700BD5D8F /* FollowingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingsPresenter.swift; sourceTree = "<group>"; };
+		45B0206220B3F5AA00BD5D8F /* SnackbarObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackbarObject.swift; sourceTree = "<group>"; };
 		45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsViewController.swift; sourceTree = "<group>"; };
 		45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MarkReputationLinksAsViewed.graphql; sourceTree = "<group>"; };
 		45BA0D802090391D0002E1D5 /* MyNotifications.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyNotifications.graphql; sourceTree = "<group>"; };
@@ -762,6 +766,7 @@
 			isa = PBXGroup;
 			children = (
 				45B0205E20B2BFDC00BD5D8F /* FollowingsViewController.swift */,
+				45B0206020B3AB3700BD5D8F /* FollowingsPresenter.swift */,
 			);
 			path = FollowingsViewController;
 			sourceTree = "<group>";
@@ -828,6 +833,7 @@
 				457BD98020A9D504007F0492 /* NotificationObject.swift */,
 				457BD98820AC695A007F0492 /* ReputationObject.swift */,
 				45C1994920A97402001924B9 /* UserObject.swift */,
+				45B0206220B3F5AA00BD5D8F /* SnackbarObject.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1062,6 +1068,7 @@
 				45C1994A20A97402001924B9 /* UserObject.swift in Sources */,
 				451CD337207D0B9A0063A972 /* RankViewController.swift in Sources */,
 				458006DA20A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift in Sources */,
+				45B0206320B3F5AA00BD5D8F /* SnackbarObject.swift in Sources */,
 				45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */,
 				4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
@@ -1074,6 +1081,7 @@
 				455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */,
 				451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */,
 				454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */,
+				45B0206120B3AB3700BD5D8F /* FollowingsPresenter.swift in Sources */,
 				45B0204F20AD59CC00BD5D8F /* HomeStateObject.swift in Sources */,
 				45C1994D20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift in Sources */,
 				45C1994820A973DD001924B9 /* MediumObject.swift in Sources */,

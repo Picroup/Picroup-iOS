@@ -12,6 +12,7 @@ import RxCocoa
 import RxDataSources
 
 class ReputationsViewPresenter: NSObject {
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var reputationCountLabel: UILabel!
 

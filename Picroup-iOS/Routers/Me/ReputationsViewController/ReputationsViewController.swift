@@ -28,7 +28,6 @@ class ReputationsViewController: UIViewController {
         
         typealias Section = ReputationsViewPresenter.Section
         
-        let view = self.view!
         
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let subscriptions = [
@@ -42,7 +41,7 @@ class ReputationsViewController: UIViewController {
                         : .empty()
                     }.map { .onTriggerGetMore },
                 .just(.onTriggerReload),
-                view.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
+                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }

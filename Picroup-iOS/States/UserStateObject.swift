@@ -34,6 +34,8 @@ final class UserStateObject: PrimaryObject {
 
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
+    
+    @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension UserStateObject {
@@ -89,6 +91,7 @@ extension UserStateObject {
                 "userMedia": ["_id": PrimaryKey.userMediaId(userId)],
                 "imageDetialRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
+                "snackbar": ["_id": _id],
                 ]
             return try realm.findOrCreate(UserStateObject.self, forPrimaryKey: userId, value: value)
         }
@@ -170,12 +173,13 @@ extension UserStateObject: IsFeedbackStateObject {
             triggerFollowUserQuery = true
         case .onFollowUserSuccess(let data):
             user = realm.create(UserObject.self, value: data.snapshot, update: true)
-            user?.followed.value = true
             followUserVersion = UUID().uuidString
             followUserError = nil
             triggerFollowUserQuery = false
 //            guard let medium = medium else { return }
 //            myStaredMedia?.items.insert(medium, at: 0)
+            snackbar?.message = "已关注 \(user?.username ?? "")"
+            snackbar?.version = UUID().uuidString
         case .onFollowUserError(let error):
             followUserVersion = nil
             followUserError = error.localizedDescription
@@ -188,12 +192,13 @@ extension UserStateObject: IsFeedbackStateObject {
             triggerUnfollowUserQuery = true
         case .onUnfollowUserSuccess(let data):
             user = realm.create(UserObject.self, value: data.snapshot, update: true)
-            user?.followed.value = false
             unfollowUserVersion = UUID().uuidString
             unfollowUserError = nil
             triggerUnfollowUserQuery = false
             //            guard let medium = medium else { return }
         //            myStaredMedia?.items.insert(medium, at: 0)
+            snackbar?.message = "已取消关注 \(user?.username ?? "")"
+            snackbar?.version = UUID().uuidString
         case .onUnfollowUserError(let error):
             unfollowUserVersion = nil
             unfollowUserError = error.localizedDescription
