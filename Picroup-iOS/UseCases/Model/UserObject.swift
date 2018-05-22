@@ -55,3 +55,22 @@ extension CursorUsersObject {
         }
     }
 }
+
+
+extension CursorUsersObject {
+    
+    static func create(from data: UserFollowersQuery.Data.User.Follower, id: String) -> (Realm) -> CursorUsersObject {
+        return { realm in
+            let value: Snapshot = data.snapshot.merging(["_id": id]) { $1 }
+            return realm.create(CursorUsersObject.self, value: value, update: true)
+        }
+    }
+    
+    func merge(from data: UserFollowersQuery.Data.User.Follower) -> (Realm) -> Void {
+        return { realm in
+            let items = data.items.map { realm.create(UserObject.self, value: $0.snapshot, update: true) }
+            self.cursor.value = data.cursor
+            self.items.append(objectsIn: items)
+        }
+    }
+}

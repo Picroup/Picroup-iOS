@@ -59,7 +59,6 @@ class UserCell: RxTableViewCell {
         displaynameLabel.text = viewModel.username
         usernameLabel.text = viewModel.username
         FollowButtonPresenter.isSelected(base: followButton).onNext(viewModel.followed)
-        
         if let onFollowButtonTap = onFollowButtonTap {
             followButton.rx.tap
                 .subscribe(onNext: onFollowButtonTap)

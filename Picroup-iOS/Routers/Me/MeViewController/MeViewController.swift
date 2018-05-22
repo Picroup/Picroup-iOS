@@ -48,6 +48,7 @@ class MeViewController: HideNavigationBarViewController {
                 ]
             
             let events: [Signal<MeStateObject.Event>] = [
+                .of(.onTriggerReloadMe, .onTriggerReloadMyMedia, .onTriggerReloadMyStaredMedia),
                 presenter.myMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myMedia) },
                 presenter.myStaredMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myStaredMedia) },
                 state.flatMapLatest {
@@ -64,9 +65,9 @@ class MeViewController: HideNavigationBarViewController {
                 presenter.myMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
                 presenter.myStardMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
                 presenter.reputationButton.rx.tap.asSignal().map { _ in .onTriggerShowReputations },
+                presenter.followersButton.rx.tap.asSignal().map { _ in .onTriggerShowUserFollowers },
                 presenter.followingsButton.rx.tap.asSignal().map { _ in .onTriggerShowUserFollowings },
                 presenter.meBackgroundView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
-                .of(.onTriggerReloadMe, .onTriggerReloadMyMedia, .onTriggerReloadMyStaredMedia),
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }

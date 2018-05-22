@@ -113,6 +113,9 @@
 		45B0205F20B2BFDC00BD5D8F /* FollowingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0205E20B2BFDC00BD5D8F /* FollowingsViewController.swift */; };
 		45B0206120B3AB3700BD5D8F /* FollowingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0206020B3AB3700BD5D8F /* FollowingsPresenter.swift */; };
 		45B0206320B3F5AA00BD5D8F /* SnackbarObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0206220B3F5AA00BD5D8F /* SnackbarObject.swift */; };
+		45B0206520B4012E00BD5D8F /* UserFollowersStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0206420B4012E00BD5D8F /* UserFollowersStateObject.swift */; };
+		45B0206820B4031100BD5D8F /* FollowersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0206720B4031100BD5D8F /* FollowersViewController.swift */; };
+		45B0206A20B4036100BD5D8F /* FollowersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0206920B4036100BD5D8F /* FollowersPresenter.swift */; };
 		45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */; };
 		45BA0D7F209010670002E1D5 /* MarkReputationLinksAsViewed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */; };
 		45BA0D812090391D0002E1D5 /* MyNotifications.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D802090391D0002E1D5 /* MyNotifications.graphql */; };
@@ -262,6 +265,9 @@
 		45B0205E20B2BFDC00BD5D8F /* FollowingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingsViewController.swift; sourceTree = "<group>"; };
 		45B0206020B3AB3700BD5D8F /* FollowingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingsPresenter.swift; sourceTree = "<group>"; };
 		45B0206220B3F5AA00BD5D8F /* SnackbarObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackbarObject.swift; sourceTree = "<group>"; };
+		45B0206420B4012E00BD5D8F /* UserFollowersStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFollowersStateObject.swift; sourceTree = "<group>"; };
+		45B0206720B4031100BD5D8F /* FollowersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersViewController.swift; sourceTree = "<group>"; };
+		45B0206920B4036100BD5D8F /* FollowersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersPresenter.swift; sourceTree = "<group>"; };
 		45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsViewController.swift; sourceTree = "<group>"; };
 		45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MarkReputationLinksAsViewed.graphql; sourceTree = "<group>"; };
 		45BA0D802090391D0002E1D5 /* MyNotifications.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyNotifications.graphql; sourceTree = "<group>"; };
@@ -554,6 +560,7 @@
 				45BA0D7B208ED3980002E1D5 /* ReputationsViewController */,
 				45FC0BF120A42F11006AAF3D /* UserViewController */,
 				45B0205D20B2BFC000BD5D8F /* FollowingsViewController */,
+				45B0206620B402E700BD5D8F /* FollowersViewController */,
 			);
 			path = Me;
 			sourceTree = "<group>";
@@ -633,6 +640,7 @@
 				457BD98620AC68EA007F0492 /* ReputationsStateObject.swift */,
 				45B0205920AEA35600BD5D8F /* UserStateObject.swift */,
 				457BD99920B306AA007F0492 /* UserFollowingsStateObject.swift */,
+				45B0206420B4012E00BD5D8F /* UserFollowersStateObject.swift */,
 				457BD98220AB12AD007F0492 /* RouteStateObject.swift */,
 			);
 			path = States;
@@ -769,6 +777,15 @@
 				45B0206020B3AB3700BD5D8F /* FollowingsPresenter.swift */,
 			);
 			path = FollowingsViewController;
+			sourceTree = "<group>";
+		};
+		45B0206620B402E700BD5D8F /* FollowersViewController */ = {
+			isa = PBXGroup;
+			children = (
+				45B0206720B4031100BD5D8F /* FollowersViewController.swift */,
+				45B0206920B4036100BD5D8F /* FollowersPresenter.swift */,
+			);
+			path = FollowersViewController;
 			sourceTree = "<group>";
 		};
 		45BA0D7B208ED3980002E1D5 /* ReputationsViewController */ = {
@@ -1050,6 +1067,7 @@
 				451DD4BF208311DA002C509A /* HasDisposeBag.swift in Sources */,
 				45525D4A208C3CB500EAF00D /* CreateImagePresenter.swift in Sources */,
 				451DD4C320831287002C509A /* NSObject+objc.swift in Sources */,
+				45B0206520B4012E00BD5D8F /* UserFollowersStateObject.swift in Sources */,
 				451CD326207B9E5B0063A972 /* RouterService+Login.swift in Sources */,
 				455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */,
 				451DD4B9207E4880002C509A /* Client.swift in Sources */,
@@ -1064,6 +1082,7 @@
 				454B4A4C20ABB73900990063 /* MeStateObject.swift in Sources */,
 				45B0204B20AC14D700BD5D8F /* Int+increase.swift in Sources */,
 				458C106920849058005E94CD /* RankViewPresenter.swift in Sources */,
+				45B0206820B4031100BD5D8F /* FollowersViewController.swift in Sources */,
 				457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */,
 				45C1994A20A97402001924B9 /* UserObject.swift in Sources */,
 				451CD337207D0B9A0063A972 /* RankViewController.swift in Sources */,
@@ -1108,6 +1127,7 @@
 				457BD98120A9D504007F0492 /* NotificationObject.swift in Sources */,
 				451DD4BD207F8BC7002C509A /* RankStateObject.swift in Sources */,
 				45BA0D8520903A020002E1D5 /* NotificationsStateObject.swift in Sources */,
+				45B0206A20B4036100BD5D8F /* FollowersPresenter.swift in Sources */,
 				45AA3B4520A311BD0032A8CF /* ImageDetailPresenter.swift in Sources */,
 				45B0204720AC0D7000BD5D8F /* ImageCommentsStateObject.swift in Sources */,
 				457BD99D20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift in Sources */,

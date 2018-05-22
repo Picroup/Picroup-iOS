@@ -33,6 +33,8 @@ final class UserStateObject: PrimaryObject {
     @objc dynamic var triggerUnfollowUserQuery: Bool = false
 
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
+    @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
+    @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
     
     @objc dynamic var snackbar: SnackbarObject?
@@ -90,6 +92,8 @@ extension UserStateObject {
                 "user": ["_id": userId],
                 "userMedia": ["_id": PrimaryKey.userMediaId(userId)],
                 "imageDetialRoute": ["_id": _id],
+                "userFollowingsRoute": ["_id": _id],
+                "userFollowersRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 "snackbar": ["_id": _id],
                 ]
@@ -120,6 +124,8 @@ extension UserStateObject {
         case onUnfollowUserError(Error)
         
         case onTriggerShowImage(String)
+        case onTriggerShowUserFollowings
+        case onTriggerShowUserFollowers
         case onTriggerPop
     }
 }
@@ -207,6 +213,12 @@ extension UserStateObject: IsFeedbackStateObject {
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
             imageDetialRoute?.version = UUID().uuidString
+        case .onTriggerShowUserFollowings:
+            userFollowingsRoute?.userId = user?._id
+            userFollowingsRoute?.version = UUID().uuidString
+        case .onTriggerShowUserFollowers:
+            userFollowersRoute?.userId = user?._id
+            userFollowersRoute?.version = UUID().uuidString
         case .onTriggerPop:
             popRoute?.version = UUID().uuidString
         }

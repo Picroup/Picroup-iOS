@@ -30,4 +30,8 @@ struct PrimaryKey {
     static func userFollowingsId(_ userId: String) -> String {
         return "user.\(userId).userFollowings"
     }
+    
+    static func userFollowersId(_ userId: String) -> String {
+        return "user.\(userId).userFollowers"
+    }
 }

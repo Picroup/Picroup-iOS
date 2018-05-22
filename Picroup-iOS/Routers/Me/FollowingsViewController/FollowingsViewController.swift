@@ -13,7 +13,6 @@ import RxCocoa
 import RxDataSources
 import RxFeedback
 
-
 class FollowingsViewController: HideNavigationBarViewController {
     
     typealias Dependency = String

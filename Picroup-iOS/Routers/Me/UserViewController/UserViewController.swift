@@ -49,6 +49,7 @@ class UserViewController: HideNavigationBarViewController {
                 store.userMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems),
                 ]
             let events: [Signal<UserStateObject.Event>] = [
+                .of(.onTriggerReloadUser, .onTriggerReloadUserMedia),
                 state.flatMapLatest {
                     $0.shouldQueryMoreUserMedia
                         ? presenter.myMediaCollectionView.rx.triggerGetMore
@@ -64,8 +65,9 @@ class UserViewController: HideNavigationBarViewController {
                         }
                 },
                 presenter.myMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
+                presenter.followersButton.rx.tap.asSignal().map { _ in .onTriggerShowUserFollowers },
+                presenter.followingsButton.rx.tap.asSignal().map { _ in .onTriggerShowUserFollowings },
                 presenter.meBackgroundView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
-                .of(.onTriggerReloadUser, .onTriggerReloadUserMedia),
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
             

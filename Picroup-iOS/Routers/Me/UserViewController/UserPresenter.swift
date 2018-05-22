@@ -12,7 +12,6 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-
 class UserPresenter: NSObject {
     @IBOutlet weak var meBackgroundView: UIView!
     @IBOutlet weak var userAvatarImageView: UIImageView!
@@ -23,6 +22,9 @@ class UserPresenter: NSObject {
     @IBOutlet weak var gainedReputationCountButton: UIButton!
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var followingsCountLabel: UILabel!
+    
+    @IBOutlet weak var followersButton: UIButton!
+    @IBOutlet weak var followingsButton: UIButton!
     
     @IBOutlet weak var myMediaCollectionView: UICollectionView!
     @IBOutlet weak var followButton: FABButton! {

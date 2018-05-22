@@ -93,6 +93,13 @@ final class Router {
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
+        _ = store.userFollowersRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .map { $0.userId }.unwrap()
+            .drive(Binder(self) { (me, userId) in
+                let vc = RouterService.Main.followersViewController(dependency: userId)
+                me.currentNavigationController?.pushViewController(vc, animated: true)
+            })
+        
         _ = store.popRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .drive(Binder(self) { (me, _) in
                 me.currentNavigationController?.popViewController(animated: true)
