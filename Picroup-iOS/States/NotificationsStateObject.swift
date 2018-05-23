@@ -23,6 +23,10 @@ final class NotificationsStateObject: PrimaryObject {
     @objc dynamic var marked: String?
     @objc dynamic var markError: String?
     @objc dynamic var triggerMarkQuery: Bool = false
+    
+    @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
+    @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
+    @objc dynamic var userRoute: UserRouteObject?
 }
 
 extension NotificationsStateObject {
@@ -58,6 +62,9 @@ extension NotificationsStateObject {
                 "_id": _id,
                 "session": ["_id": _id],
                 "notifications": ["_id": _id],
+                "imageDetialRoute": ["_id": _id],
+                "imageCommetsRoute": ["_id": _id],
+                "userRoute": ["_id": _id],
                 ]
             return try realm.findOrCreate(NotificationsStateObject.self, forPrimaryKey: _id, value: value)
         }
@@ -74,6 +81,10 @@ extension NotificationsStateObject {
         case onGetError(Error)
         case onMarkSuccess(String)
         case onMarkError(Error)
+        
+        case onTriggerShowImage(String)
+        case onTriggerShowComments(String)
+        case onTriggerShowUser(String)
     }
 }
 
@@ -120,6 +131,16 @@ extension NotificationsStateObject: IsFeedbackStateObject {
             marked = nil
             markError = error.localizedDescription
             triggerMarkQuery = false
+            
+        case .onTriggerShowImage(let mediumId):
+            imageDetialRoute?.mediumId = mediumId
+            imageDetialRoute?.version = UUID().uuidString
+        case .onTriggerShowComments(let mediumId):
+            imageCommetsRoute?.mediumId = mediumId
+            imageCommetsRoute?.version = UUID().uuidString
+        case .onTriggerShowUser(let userId):
+            userRoute?.userId = userId
+            userRoute?.version = UUID().uuidString
         }
     }
 }

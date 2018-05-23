@@ -24,6 +24,8 @@ final class ReputationsStateObject: PrimaryObject {
     @objc dynamic var markError: String?
     @objc dynamic var triggerMarkQuery: Bool = false
     
+    @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
+    @objc dynamic var userRoute: UserRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
 
 }
@@ -61,6 +63,8 @@ extension ReputationsStateObject {
                 "_id": _id,
                 "session": ["_id": _id],
                 "reputations": ["_id": _id],
+                "imageDetialRoute": ["_id": _id],
+                "userRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
             return try realm.findOrCreate(ReputationsStateObject.self, forPrimaryKey: _id, value: value)
@@ -78,6 +82,8 @@ extension ReputationsStateObject {
         case onGetError(Error)
         case onMarkSuccess(String)
         case onMarkError(Error)
+        case onTriggerShowImage(String)
+        case onTriggerShowUser(String)
         case onTriggerPop
     }
 }
@@ -125,6 +131,13 @@ extension ReputationsStateObject: IsFeedbackStateObject {
             marked = nil
             markError = error.localizedDescription
             triggerMarkQuery = false
+            
+        case .onTriggerShowImage(let mediumId):
+            imageDetialRoute?.mediumId = mediumId
+            imageDetialRoute?.version = UUID().uuidString
+        case .onTriggerShowUser(let userId):
+            userRoute?.userId = userId
+            userRoute?.version = UUID().uuidString
         case .onTriggerPop:
             popRoute?.version = UUID().uuidString
         }

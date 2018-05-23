@@ -39,12 +39,24 @@ class NotificationsViewController: UIViewController {
                 store.notifications().map { [Section(model: "", items: $0)] }.drive(presenter.items),
                 ]
             let events: [Signal<NotificationsStateObject.Event>] = [
+                .just(.onTriggerReload),
                 state.flatMapLatest {
                     $0.shouldQueryMoreNotifications
                         ? presenter.tableView.rx.triggerGetMore
                         : .empty()
                 }.map { .onTriggerGetMore },
-                Signal.just(NotificationsStateObject.Event.onTriggerReload),
+                presenter.tableView.rx.modelSelected(NotificationObject.self).asSignal().flatMap { notification in
+                    switch (notification.kind, notification.mediumId, notification.userId) {
+                    case ("commentMedium"?, let mediumId?, _):
+                        return .just(.onTriggerShowComments(mediumId))
+                    case ("starMedium"?, let mediumId?, _):
+                        return .just(.onTriggerShowImage(mediumId))
+                    case ("followUser"?, _, let userId?):
+                        return .just(.onTriggerShowUser(userId))
+                    default:
+                        return .empty()
+                    }
+                },
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }

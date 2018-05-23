@@ -35,13 +35,25 @@ class ReputationsViewController: UIViewController {
                 store.reputations().map { [Section(model: "", items: $0)] }.drive(presenter.items),
                 ]
             let events: [Signal<ReputationsStateObject.Event>] = [
+                .just(.onTriggerReload),
                 state.flatMapLatest {
                     $0.shouldQueryMoreReputations
                         ? presenter.tableView.rx.triggerGetMore
                         : .empty()
                     }.map { .onTriggerGetMore },
-                .just(.onTriggerReload),
                 presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
+                presenter.tableView.rx.modelSelected(ReputationObject.self).asSignal().flatMap { reputation in
+                    switch (reputation.kind, reputation.mediumId, reputation.userId) {
+                    case ("saveMedium"?, let mediumId?, _):
+                        return .just(.onTriggerShowImage(mediumId))
+                    case ("starMedium"?, let mediumId?, _):
+                        return .just(.onTriggerShowImage(mediumId))
+                    case ("followUser"?, _, let userId?):
+                        return .just(.onTriggerShowUser(userId))
+                    default:
+                        return .empty()
+                    }
+                },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
