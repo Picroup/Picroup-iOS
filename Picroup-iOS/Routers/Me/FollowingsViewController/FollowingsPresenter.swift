@@ -71,7 +71,7 @@ struct FollowButtonPresenter {
     
     static func isSelected(base: RaisedButton) -> Binder<Bool?> {
         return Binder(base) { button, isSelected in
-            UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut, animations: {
+//            UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut, animations: {
                 guard let isSelected = isSelected else {
                     button.alpha = 0
                     return
@@ -86,7 +86,7 @@ struct FollowButtonPresenter {
                     button.titleColor = .primaryText
                     button.setTitle("已关注", for: .normal)
                 }
-            })
+//            })
         }
     }
 }

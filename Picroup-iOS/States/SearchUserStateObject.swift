@@ -21,6 +21,14 @@ final class SearchUserStateObject: PrimaryObject {
     @objc dynamic var searchError: String?
     @objc dynamic var triggerSearchUserQuery: Bool = false
     
+    @objc dynamic var followToUserId: String?
+    @objc dynamic var followUserError: String?
+    @objc dynamic var triggerFollowUserQuery: Bool = false
+    
+    @objc dynamic var unfollowToUserId: String?
+    @objc dynamic var unfollowUserError: String?
+    @objc dynamic var triggerUnfollowUserQuery: Bool = false
+    
     @objc dynamic var userRoute: UserRouteObject?
 }
 
@@ -35,6 +43,30 @@ extension SearchUserStateObject {
             && !triggerSearchUserQuery
             && searchError == nil
             && user == nil
+    }
+    
+    var shouldFollowUser: Bool {
+        return !triggerFollowUserQuery
+    }
+    var followUserQuery: FollowUserMutation? {
+        guard
+            let userId = session?.currentUser?._id,
+            let toUserId = followToUserId else {
+                return nil
+        }
+        return triggerFollowUserQuery ? FollowUserMutation(userId: userId, toUserId: toUserId) : nil
+    }
+    
+    var shouldUnfollowUser: Bool {
+        return !triggerUnfollowUserQuery
+    }
+    var unfollowUserQuery: UnfollowUserMutation? {
+        guard
+            let userId = session?.currentUser?._id,
+            let toUserId = unfollowToUserId else {
+                return nil
+        }
+        return triggerUnfollowUserQuery ? UnfollowUserMutation(userId: userId, toUserId: toUserId) : nil
     }
 }
 
@@ -67,6 +99,14 @@ extension SearchUserStateObject {
         case onSearchUserSuccess(SearchUserQuery.Data.SearchUser?)
         case onSearchUserError(Error)
         
+        case onTriggerFollowUser(String)
+        case onFollowUserSuccess(FollowUserMutation.Data.FollowUser)
+        case onFollowUserError(Error)
+        
+        case onTriggerUnfollowUser(String)
+        case onUnfollowUserSuccess(UnfollowUserMutation.Data.UnfollowUser)
+        case onUnfollowUserError(Error)
+        
         case onTriggerShowUser(String)
     }
 }
@@ -78,7 +118,8 @@ extension SearchUserStateObject: IsFeedbackStateObject {
         case .onChangeSearchText(let searchText):
             self.searchText = searchText
             user = nil
-            triggerSearchUserQuery = true
+            let shouldQuery = !searchText.isEmpty
+            triggerSearchUserQuery = shouldQuery
         case .onSearchUserSuccess(let data):
             user = data.map { realm.create(UserObject.self, value: $0.snapshot, update: true) }
             searchError = nil
@@ -86,6 +127,38 @@ extension SearchUserStateObject: IsFeedbackStateObject {
         case .onSearchUserError(let error):
             searchError = error.localizedDescription
             triggerSearchUserQuery = false
+            
+        case .onTriggerFollowUser(let toUserId):
+            guard shouldFollowUser else { return }
+            followToUserId = toUserId
+            followUserError = nil
+            triggerFollowUserQuery = true
+        case .onFollowUserSuccess(let data):
+            realm.create(UserObject.self, value: data.snapshot, update: true)
+            followToUserId = nil
+            followUserError = nil
+            triggerFollowUserQuery = false
+            //            guard let medium = medium else { return }
+        //            myStaredMedia?.items.insert(medium, at: 0)
+        case .onFollowUserError(let error):
+            followUserError = error.localizedDescription
+            triggerFollowUserQuery = false
+            
+        case .onTriggerUnfollowUser(let toUserId):
+            guard shouldUnfollowUser else { return }
+            unfollowToUserId = toUserId
+            unfollowUserError = nil
+            triggerUnfollowUserQuery = true
+        case .onUnfollowUserSuccess(let data):
+            realm.create(UserObject.self, value: data.snapshot, update: true)
+            unfollowToUserId = nil
+            unfollowUserError = nil
+            triggerUnfollowUserQuery = false
+            //            guard let medium = medium else { return }
+        //            myStaredMedia?.items.insert(medium, at: 0)
+        case .onUnfollowUserError(let error):
+            unfollowUserError = error.localizedDescription
+            triggerUnfollowUserQuery = false
             
         case .onTriggerShowUser(let userId):
             userRoute?.userId = userId
@@ -114,7 +187,7 @@ final class SearchUserStateStore {
     
     func usersItems() -> Driver<[UserObject]> {
         return states.map {
-            guard $0.user == nil else { return [] }
+            guard $0.user != nil else { return [] }
             return [$0.user!]
         }
     }

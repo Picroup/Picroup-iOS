@@ -801,6 +801,7 @@
                 <customObject id="hD1-GR-XYW" customClass="SearchUserPresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
                         <outlet property="searchBar" destination="IqA-fr-ZnX" id="3Lp-zl-eXm"/>
+                        <outlet property="tableView" destination="yE8-Az-Lmk" id="JUR-Dp-UhG"/>
                     </connections>
                 </customObject>
             </objects>

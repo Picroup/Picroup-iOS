@@ -76,7 +76,7 @@ class FollowersViewController: HideNavigationBarViewController {
                 .asSignal(onErrorReturnJust: UserFollowersStateObject.Event.onUnfollowUserError)
         }
         
-        let states = store.states.debug("UserFollowersState")
+        let states = store.states
         
         Signal.merge(
             uiFeedback(states),
