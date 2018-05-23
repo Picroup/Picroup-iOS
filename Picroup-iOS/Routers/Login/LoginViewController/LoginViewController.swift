@@ -65,7 +65,7 @@ class LoginViewController: UIViewController {
             uiFeedback(states),
             queryLogin(states)
             )
-            .debug("LoginStateObject.Event", trimOutput: true)
+            .debug("LoginState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         

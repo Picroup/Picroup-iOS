@@ -22,6 +22,7 @@ final class RouteStateObject: PrimaryObject {
     @objc dynamic var userRoute: UserRouteObject?
     @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
     @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
+    @objc dynamic var searchUserRoute: SearchUserRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
     
     @objc dynamic var snackbar: SnackbarObject?
@@ -72,6 +73,10 @@ final class UserFollowersRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
+final class SearchUserRouteObject: PrimaryObject {
+    @objc dynamic var version: String?
+}
+
 final class PopRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
@@ -98,6 +103,7 @@ extension RouteStateObject {
                 "userRoute": ["_id": _id],
                 "userFollowingsRoute": ["_id": _id],
                 "userFollowersRoute": ["_id": _id],
+                "searchUserRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 "snackbar": ["_id": _id],
                 ]
@@ -165,6 +171,11 @@ final class RouteStateStore {
     func userFollowersRoute() -> Driver<UserFollowersRouteObject> {
         guard let userFollowersRoute = _state.userFollowersRoute else { return .empty() }
         return Observable.from(object: userFollowersRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func searchUserRoute() -> Driver<SearchUserRouteObject> {
+        guard let searchUserRoute = _state.searchUserRoute else { return .empty() }
+        return Observable.from(object: searchUserRoute).asDriver(onErrorDriveWith: .empty())
     }
     
     func popRoute() -> Driver<PopRouteObject> {

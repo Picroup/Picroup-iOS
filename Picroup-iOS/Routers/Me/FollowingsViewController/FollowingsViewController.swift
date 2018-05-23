@@ -84,7 +84,7 @@ class FollowingsViewController: HideNavigationBarViewController {
             followUser(states),
             unfollowUser(states)
             )
-            .debug("UserFollowingsStateObject.Event", trimOutput: true)
+            .debug("UserFollowingsState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         

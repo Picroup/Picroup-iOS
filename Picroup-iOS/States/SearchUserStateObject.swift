@@ -1,8 +1,8 @@
 //
-//  UserFollowingsStateObject.swift
+//  SearchUserStateObject.swift
 //  Picroup-iOS
 //
-//  Created by luojie on 2018/5/21.
+//  Created by luojie on 2018/5/23.
 //  Copyright © 2018年 luojie. All rights reserved.
 //
 
@@ -12,15 +12,14 @@ import RxSwift
 import RxCocoa
 import RxRealm
 
-final class UserFollowingsStateObject: PrimaryObject {
+final class SearchUserStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
     
+    @objc dynamic var searchText: String = ""
     @objc dynamic var user: UserObject?
-    
-    @objc dynamic var userFollowings: CursorUsersObject?
-    @objc dynamic var userFollowingsError: String?
-    @objc dynamic var triggerUserFollowingsQuery: Bool = false
+    @objc dynamic var searchError: String?
+    @objc dynamic var triggerSearchUserQuery: Bool = false
     
     @objc dynamic var followToUserId: String?
     @objc dynamic var followUserError: String?
@@ -31,21 +30,19 @@ final class UserFollowingsStateObject: PrimaryObject {
     @objc dynamic var triggerUnfollowUserQuery: Bool = false
     
     @objc dynamic var userRoute: UserRouteObject?
-    @objc dynamic var popRoute: PopRouteObject?
 }
 
-extension UserFollowingsStateObject {
-    var userId: String { return _id }
-    var userFollowingsQuery: UserFollowingsQuery? {
-        guard let byUserId = session?.currentUser?._id else { return nil }
-        let next = UserFollowingsQuery(userId: userId, followedByUserId: byUserId, cursor: userFollowings?.cursor.value)
-        return triggerUserFollowingsQuery ? next : nil
+extension SearchUserStateObject {
+    var searchUserQuery: SearchUserQuery? {
+        guard let byUserId = session?.currentUser?._id, !searchText.isEmpty else { return nil }
+        let next = SearchUserQuery(username: searchText, followedByUserId: byUserId)
+        return triggerSearchUserQuery ? next : nil
     }
-    var shouldQueryMoreUserFollowings: Bool {
-        return !triggerUserFollowingsQuery && hasMoreUserFollowings
-    }
-    var hasMoreUserFollowings: Bool {
-        return userFollowings?.cursor.value != nil
+    var userNotfound: Bool {
+        return !searchText.isEmpty
+            && !triggerSearchUserQuery
+            && searchError == nil
+            && user == nil
     }
     
     var shouldFollowUser: Bool {
@@ -73,32 +70,34 @@ extension UserFollowingsStateObject {
     }
 }
 
-extension UserFollowingsStateObject {
+extension SearchUserQuery: Equatable {
+    public static func ==(lhs: SearchUserQuery, rhs: SearchUserQuery) -> Bool {
+        return lhs.username == rhs.username
+            && lhs.followedByUserId == rhs.followedByUserId
+    }
+}
+
+extension SearchUserStateObject {
     
-    static func create(userId: String) -> (Realm) throws -> UserFollowingsStateObject {
+    static func create() -> (Realm) throws -> SearchUserStateObject {
         return { realm in
             let _id = PrimaryKey.default
             let value: Any = [
-                "_id": userId,
+                "_id": _id,
                 "session": ["_id": _id],
-                "user": ["_id": userId],
-                "userFollowings": ["_id": PrimaryKey.userFollowingsId(userId)],
                 "userRoute": ["_id": _id],
-                "popRoute": ["_id": _id],
                 ]
-            return try realm.findOrCreate(UserFollowingsStateObject.self, forPrimaryKey: userId, value: value)
+            return try realm.findOrCreate(SearchUserStateObject.self, forPrimaryKey: _id, value: value)
         }
     }
 }
 
-extension UserFollowingsStateObject {
+extension SearchUserStateObject {
     
     enum Event {
-        case onTriggerReloadUserFollowings
-        case onTriggerGetMoreUserFollowings
-        case onGetReloadUserFollowings(UserFollowingsQuery.Data.User.Following)
-        case onGetMoreUserFollowings(UserFollowingsQuery.Data.User.Following)
-        case onGetUserFollowingsError(Error)
+        case onChangeSearchText(String)
+        case onSearchUserSuccess(SearchUserQuery.Data.SearchUser?)
+        case onSearchUserError(Error)
         
         case onTriggerFollowUser(String)
         case onFollowUserSuccess(FollowUserMutation.Data.FollowUser)
@@ -109,40 +108,25 @@ extension UserFollowingsStateObject {
         case onUnfollowUserError(Error)
         
         case onTriggerShowUser(String)
-        case onTriggerPop
     }
 }
 
-extension UserFollowingsStateObject.Event {
-    
-    static func onGetUserFollowings(isReload: Bool) -> (UserFollowingsQuery.Data.User.Following) -> UserFollowingsStateObject.Event {
-        return { isReload ? .onGetReloadUserFollowings($0) : .onGetMoreUserFollowings($0) }
-    }
-}
-
-extension UserFollowingsStateObject: IsFeedbackStateObject {
+extension SearchUserStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
-        case .onTriggerReloadUserFollowings:
-            userFollowings?.cursor.value = nil
-            userFollowingsError = nil
-            triggerUserFollowingsQuery = true
-        case .onTriggerGetMoreUserFollowings:
-            guard shouldQueryMoreUserFollowings else { return }
-            userFollowingsError = nil
-            triggerUserFollowingsQuery = true
-        case .onGetReloadUserFollowings(let data):
-            userFollowings = CursorUsersObject.create(from: data, id: PrimaryKey.userFollowingsId(userId))(realm)
-            userFollowingsError = nil
-            triggerUserFollowingsQuery = false
-        case .onGetMoreUserFollowings(let data):
-            userFollowings?.merge(from: data)(realm)
-            userFollowingsError = nil
-            triggerUserFollowingsQuery = false
-        case .onGetUserFollowingsError(let error):
-            userFollowingsError = error.localizedDescription
-            triggerUserFollowingsQuery = false
+        case .onChangeSearchText(let searchText):
+            self.searchText = searchText
+            user = nil
+            let shouldQuery = !searchText.isEmpty
+            triggerSearchUserQuery = shouldQuery
+        case .onSearchUserSuccess(let data):
+            user = data.map { realm.create(UserObject.self, value: $0.snapshot, update: true) }
+            searchError = nil
+            triggerSearchUserQuery = false
+        case .onSearchUserError(let error):
+            searchError = error.localizedDescription
+            triggerSearchUserQuery = false
             
         case .onTriggerFollowUser(let toUserId):
             guard shouldFollowUser else { return }
@@ -179,38 +163,33 @@ extension UserFollowingsStateObject: IsFeedbackStateObject {
         case .onTriggerShowUser(let userId):
             userRoute?.userId = userId
             userRoute?.version = UUID().uuidString
-        case .onTriggerPop:
-            popRoute?.version = UUID().uuidString
         }
     }
 }
 
-final class UserFollowingsStateStore {
+final class SearchUserStateStore {
     
-    let states: Driver<UserFollowingsStateObject>
-    private let _state: UserFollowingsStateObject
-    private let userId: String
+    let states: Driver<SearchUserStateObject>
+    private let _state: SearchUserStateObject
     
-    init(userId: String) throws {
+    init() throws {
         let realm = try Realm()
-        let _state = try UserFollowingsStateObject.create(userId: userId)(realm)
+        let _state = try SearchUserStateObject.create()(realm)
         let states = Observable.from(object: _state).asDriver(onErrorDriveWith: .empty())
         
-        self.userId = userId
         self._state = _state
         self.states = states
     }
     
-    func on(event: UserFollowingsStateObject.Event) {
-        Realm.backgroundReduce(ofType: UserFollowingsStateObject.self, forPrimaryKey: userId, event: event)
+    func on(event: SearchUserStateObject.Event) {
+        Realm.backgroundReduce(ofType: SearchUserStateObject.self, forPrimaryKey: PrimaryKey.default, event: event)
     }
     
-    func userFollowingsItems() -> Driver<[UserObject]> {
-        guard let items = _state.userFollowings?.items else { return .empty() }
-        return Observable.collection(from: items)
-            .delaySubscription(0.3, scheduler: MainScheduler.instance)
-            .asDriver(onErrorDriveWith: .empty())
-            .map { $0.toArray() }
+    func usersItems() -> Driver<[UserObject]> {
+        return states.map {
+            guard $0.user != nil else { return [] }
+            return [$0.user!]
+        }
     }
 }
 

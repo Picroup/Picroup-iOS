@@ -86,7 +86,7 @@ class ImageCommentsViewController: HideNavigationBarViewController {
             queryComments(states),
             saveComment(states)
             )
-            .debug("ImageCommentsStateObject.Event", trimOutput: true)
+            .debug("ImageCommentsState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
     }
