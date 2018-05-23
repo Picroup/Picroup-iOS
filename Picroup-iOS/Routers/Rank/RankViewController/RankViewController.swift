@@ -77,7 +77,7 @@ class RankViewController: UIViewController {
             uiFeedback(states),
             queryMedia(states)
             )
-            .debug("RankStateObject.Event", trimOutput: true)
+            .debug("RankState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
     }

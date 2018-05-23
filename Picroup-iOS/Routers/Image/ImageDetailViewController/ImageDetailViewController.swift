@@ -94,7 +94,7 @@ class ImageDetailViewController: HideNavigationBarViewController {
             queryMedium(states),
             starMedium(states)
             )
-            .debug("ImageDetailStateObject.Event", trimOutput: true)
+            .debug("ImageDetailState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         

@@ -68,7 +68,7 @@ class NotificationsViewController: UIViewController {
             queryNotifacations(states),
             queryMark(states)
             )
-            .debug("NotificationsStateObject.Event", trimOutput: true)
+            .debug("NotificationsState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         

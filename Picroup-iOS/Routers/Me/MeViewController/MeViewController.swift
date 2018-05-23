@@ -100,7 +100,7 @@ class MeViewController: HideNavigationBarViewController {
             queryMyMedia(states),
             queryMyStaredMedia(states)
             )
-            .debug("MeStateObject.Event", trimOutput: true)
+            .debug("MeState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         

@@ -86,6 +86,11 @@ extension RouterService.Main {
         return vc
     }
     
+    static func searchUserViewController() -> SearchUserViewController {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchUserViewController") as! SearchUserViewController
+        return vc
+    }
+    
     static func followersViewController(dependency: FollowingsViewController.Dependency) -> FollowersViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FollowersViewController") as! FollowersViewController
         vc.dependency = dependency

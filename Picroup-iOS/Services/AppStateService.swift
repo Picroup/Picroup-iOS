@@ -38,7 +38,7 @@ final class AppStateService {
             queryRecommendMedium(states),
             events.asSignal()
             )
-            .debug("AppStateObject.Event", trimOutput: true)
+            .debug("AppState.Event", trimOutput: true)
             .emit(onNext: store.on)
     }
 }

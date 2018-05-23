@@ -39,12 +39,13 @@ class HomeMenuViewController: FABMenuController {
                 state.map { $0.triggerFABMenuCloseVersion }.distinctUnwrap().mapToVoid().drive(presenter.fabMenu.rx.close()),
                 ]
             let events: [Signal<HomeStateObject.Event>] = [
-                presenter.fabMenu.rx.fabMenuWillOpen.asSignal().map { HomeStateObject.Event.fabMenuWillOpen },
-                presenter.fabMenu.rx.fabMenuWillClose.asSignal().map { HomeStateObject.Event.fabMenuWillClose },
-                presenter.cameraFABMenuItem.fabButton.rx.tap.asSignal().map { HomeStateObject.Event.triggerFABMenuClose },
-                presenter.cameraFABMenuItem.fabButton.rx.tap.asSignal().map { HomeStateObject.Event.triggerPickImage(.camera) },
-                presenter.photoFABMenuItem.fabButton.rx.tap.asSignal().map { HomeStateObject.Event.triggerFABMenuClose },
-                presenter.photoFABMenuItem.fabButton.rx.tap.asSignal().map { HomeStateObject.Event.triggerPickImage(.photoLibrary) },
+                presenter.fabMenu.rx.fabMenuWillOpen.asSignal().map { .fabMenuWillOpen },
+                presenter.fabMenu.rx.fabMenuWillClose.asSignal().map { .fabMenuWillClose },
+                presenter.cameraFABMenuItem.fabButton.rx.tap.asSignal().map { .triggerFABMenuClose },
+                presenter.cameraFABMenuItem.fabButton.rx.tap.asSignal().map { .triggerPickImage(.camera) },
+                presenter.photoFABMenuItem.fabButton.rx.tap.asSignal().map { .triggerFABMenuClose },
+                presenter.photoFABMenuItem.fabButton.rx.tap.asSignal().map { .triggerPickImage(.photoLibrary) },
+                presenter.addUserButton.rx.tap.asSignal().map { .onTriggerSearchUser }
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
@@ -54,7 +55,7 @@ class HomeMenuViewController: FABMenuController {
         Signal.merge(
             uiFeedback(states)
             )
-            .debug("HomeStateObject.Event", trimOutput: true)
+            .debug("HomeState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
     }

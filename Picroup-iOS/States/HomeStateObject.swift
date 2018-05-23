@@ -18,6 +18,7 @@ final class HomeStateObject: PrimaryObject {
     @objc dynamic var triggerFABMenuCloseVersion: String?
     
     @objc dynamic var pickImageRoute: PickImageRouteObject?
+    @objc dynamic var searchUserRoute: SearchUserRouteObject?
 }
 
 extension HomeStateObject {
@@ -29,6 +30,7 @@ extension HomeStateObject {
                 "_id": _id,
                 "session": ["_id": _id],
                 "pickImageRoute": ["_id": _id],
+                "searchUserRoute": ["_id": _id],
                 ]
             let state = try realm.findOrCreate(HomeStateObject.self, forPrimaryKey: _id, value: value)
             try realm.write {
@@ -46,6 +48,7 @@ extension HomeStateObject {
         case fabMenuWillClose
         case triggerFABMenuClose
         case triggerPickImage(UIImagePickerControllerSourceType)
+        case onTriggerSearchUser
     }
 }
 
@@ -65,6 +68,8 @@ extension HomeStateObject: IsFeedbackStateObject {
         case .triggerPickImage(let sourceType):
             pickImageRoute?.sourceType.value = sourceType.rawValue
             pickImageRoute?.version = UUID().uuidString
+        case .onTriggerSearchUser:
+            searchUserRoute?.version = UUID().uuidString
         }
     }
 }

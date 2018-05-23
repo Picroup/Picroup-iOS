@@ -110,7 +110,7 @@ class UserViewController: HideNavigationBarViewController {
             followUser(states),
             unfollowUser(states)
             )
-            .debug("UserStateObject.Event", trimOutput: true)
+            .debug("UserState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
 

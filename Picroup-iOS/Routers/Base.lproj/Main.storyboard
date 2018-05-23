@@ -683,6 +683,129 @@
             </objects>
             <point key="canvasLocation" x="720.79999999999995" y="411.544227886057"/>
         </scene>
+        <!--Search User View Controller-->
+        <scene sceneID="xUF-WT-x6x">
+            <objects>
+                <viewController storyboardIdentifier="SearchUserViewController" hidesBottomBarWhenPushed="YES" id="Mcg-Ah-SQr" customClass="SearchUserViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eUC-r0-JKL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="72" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="yE8-Az-Lmk">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" text="" placeholder="用户名" id="IqA-fr-ZnX">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="twitter" textContentType="username"/>
+                                </searchBar>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="miA-r5-PUo">
+                                    <rect key="frame" x="0.0" y="667" width="375" height="36"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="UserCell" id="uAx-G2-A1q" customClass="UserCell" customModule="Picroup_iOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="84" width="375" height="72"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uAx-G2-A1q" id="Jb7-sL-VH8">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="EUt-WZ-Dmv">
+                                                    <rect key="frame" x="16" y="8" width="343" height="56"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beethoven" translatesAutoresizingMaskIntoConstraints="NO" id="S5M-A8-Pj4">
+                                                            <rect key="frame" x="0.0" y="8" width="40" height="40"/>
+                                                            <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="S5M-A8-Pj4" secondAttribute="height" multiplier="1:1" id="Cr7-Vm-TCr"/>
+                                                                <constraint firstAttribute="width" constant="40" id="auA-e8-uRd"/>
+                                                            </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                    <real key="value" value="20"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </imageView>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="200" horizontalCompressionResistancePriority="700" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lu4-a7-8zq">
+                                                            <rect key="frame" x="56" y="6.5" width="207" height="43"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="700" text="beeth0ven" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JcF-13-jaC">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="207" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="700" text="@luojie" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Umm-cB-mOe">
+                                                                    <rect key="frame" x="0.0" y="28.5" width="207" height="14.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l4r-js-Upp" customClass="RaisedButton" customModule="Material">
+                                                            <rect key="frame" x="279" y="13" width="64" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="64" id="jde-R3-HVg"/>
+                                                            </constraints>
+                                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <state key="normal" title="关注">
+                                                                <color key="titleColor" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
+                                                                    <color key="value" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="EUt-WZ-Dmv" secondAttribute="bottom" constant="8" id="Of4-1E-ejs"/>
+                                                <constraint firstAttribute="trailing" secondItem="EUt-WZ-Dmv" secondAttribute="trailing" constant="16" id="SLt-AO-i3T"/>
+                                                <constraint firstItem="EUt-WZ-Dmv" firstAttribute="top" secondItem="Jb7-sL-VH8" secondAttribute="top" constant="8" id="SrU-Xd-rPA"/>
+                                                <constraint firstItem="EUt-WZ-Dmv" firstAttribute="leading" secondItem="Jb7-sL-VH8" secondAttribute="leading" constant="16" id="quO-ce-Odh"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="displaynameLabel" destination="JcF-13-jaC" id="jBu-5c-wy0"/>
+                                            <outlet property="followButton" destination="l4r-js-Upp" id="sdm-SS-y6s"/>
+                                            <outlet property="userAvatarImageView" destination="S5M-A8-Pj4" id="LJJ-9W-F1B"/>
+                                            <outlet property="usernameLabel" destination="Umm-cB-mOe" id="AuD-M3-r7n"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="yE8-Az-Lmk" firstAttribute="leading" secondItem="utm-gc-h6R" secondAttribute="leading" id="a34-cK-lzp"/>
+                            <constraint firstItem="yE8-Az-Lmk" firstAttribute="top" secondItem="eUC-r0-JKL" secondAttribute="top" id="dEY-vw-8UD"/>
+                            <constraint firstItem="utm-gc-h6R" firstAttribute="bottom" secondItem="yE8-Az-Lmk" secondAttribute="bottom" id="hgC-sA-rCH"/>
+                            <constraint firstItem="yE8-Az-Lmk" firstAttribute="trailing" secondItem="utm-gc-h6R" secondAttribute="trailing" id="kXg-0S-gpp"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="utm-gc-h6R"/>
+                    </view>
+                    <connections>
+                        <outlet property="presenter" destination="hD1-GR-XYW" id="FGi-t8-5RB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lLT-Lt-jcm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="hD1-GR-XYW" customClass="SearchUserPresenter" customModule="Picroup_iOS" customModuleProvider="target">
+                    <connections>
+                        <outlet property="searchBar" destination="IqA-fr-ZnX" id="3Lp-zl-eXm"/>
+                    </connections>
+                </customObject>
+            </objects>
+            <point key="canvasLocation" x="7" y="1084"/>
+        </scene>
         <!--User View Controller-->
         <scene sceneID="cAT-8v-wls">
             <objects>
@@ -914,8 +1037,8 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OFX-fn-JiJ">
-                                        <rect key="frame" x="135" y="72" width="104.5" height="67.5"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OFX-fn-JiJ">
+                                        <rect key="frame" x="135" y="83" width="104.5" height="67.5"/>
                                         <state key="normal" title="Button"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UJm-fj-BMi">

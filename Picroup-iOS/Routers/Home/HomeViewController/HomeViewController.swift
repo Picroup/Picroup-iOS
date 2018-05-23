@@ -39,14 +39,14 @@ class HomeViewController: UIViewController {
                 presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true))
             ]
             let events: [Signal<MyInterestedMediaStateObject.Event>] = [
+                .just(.onTriggerReloadMyInterestedMedia),
+                _events.asSignal(),
                 state.flatMapLatest {
                     $0.shouldQueryMoreMyInterestedMedia
                         ? presenter.collectionView.rx.triggerGetMore
                         : .empty()
                     }.map { .onTriggerGetMoreMyInterestedMedia },
                 presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReloadMyInterestedMedia },
-                .just(.onTriggerReloadMyInterestedMedia),
-                _events.asSignal(),
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
@@ -64,7 +64,7 @@ class HomeViewController: UIViewController {
             uiFeedback(states),
             queryMyInterestedMedia(states)
             )
-            .debug("MyInterestedMediaStateObject.Event", trimOutput: true)
+            .debug("MyInterestedMediaState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         

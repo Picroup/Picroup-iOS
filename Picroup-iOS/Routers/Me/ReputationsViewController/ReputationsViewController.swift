@@ -65,7 +65,7 @@ class ReputationsViewController: UIViewController {
             queryReputations(states),
             queryMark(states)
             )
-            .debug("ReputationsStateObject.Event", trimOutput: true)
+            .debug("ReputationsState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         

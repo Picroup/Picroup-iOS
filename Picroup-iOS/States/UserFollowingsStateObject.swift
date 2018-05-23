@@ -37,9 +37,7 @@ final class UserFollowingsStateObject: PrimaryObject {
 extension UserFollowingsStateObject {
     var userId: String { return _id }
     var userFollowingsQuery: UserFollowingsQuery? {
-        guard let byUserId = session?.currentUser?._id else {
-            return nil
-        }
+        guard let byUserId = session?.currentUser?._id else { return nil }
         let next = UserFollowingsQuery(userId: userId, followedByUserId: byUserId, cursor: userFollowings?.cursor.value)
         return triggerUserFollowingsQuery ? next : nil
     }
