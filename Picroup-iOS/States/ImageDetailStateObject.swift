@@ -37,7 +37,7 @@ extension ImageDetailStateObject {
     var mediumId: String { return _id }
     var mediumQuery: MediumQuery? {
         guard let userId = session?.currentUser?._id else { return nil }
-        let next = MediumQuery(userId: userId, mediumId: mediumId, cursor: recommendMedia?.cursor.value)
+        let next = MediumQuery(userId: userId, mediumId: mediumId, cursor: recommendMedia?.cursor.value, withStared: false) // need update
         return triggerMediumQuery ? next : nil
     }
     var shouldQueryMoreRecommendMedia: Bool {

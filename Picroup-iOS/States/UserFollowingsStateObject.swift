@@ -38,7 +38,7 @@ extension UserFollowingsStateObject {
     var userId: String { return _id }
     var userFollowingsQuery: UserFollowingsQuery? {
         guard let byUserId = session?.currentUser?._id else { return nil }
-        let next = UserFollowingsQuery(userId: userId, followedByUserId: byUserId, cursor: userFollowings?.cursor.value)
+        let next = UserFollowingsQuery(userId: userId, followedByUserId: byUserId, cursor: userFollowings?.cursor.value, withFollowed: false) // need update
         return triggerUserFollowingsQuery ? next : nil
     }
     var shouldQueryMoreUserFollowings: Bool {

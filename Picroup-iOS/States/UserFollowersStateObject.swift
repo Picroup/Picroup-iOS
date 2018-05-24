@@ -40,7 +40,7 @@ extension UserFollowersStateObject {
         guard let byUserId = session?.currentUser?._id else {
             return nil
         }
-        let next = UserFollowersQuery(userId: userId, followedByUserId: byUserId, cursor: userFollowers?.cursor.value)
+        let next = UserFollowersQuery(userId: userId, followedByUserId: byUserId, cursor: userFollowers?.cursor.value, withFollowed: false) // need update
         return triggerUserFollowersQuery ? next : nil
     }
     var shouldQueryMoreUserFollowers: Bool {

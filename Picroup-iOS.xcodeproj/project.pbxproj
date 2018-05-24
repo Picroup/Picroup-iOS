@@ -120,6 +120,7 @@
 		45B0206F20B5153100BD5D8F /* SearchUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45B0206E20B5153100BD5D8F /* SearchUser.graphql */; };
 		45B0207120B5168E00BD5D8F /* SearchUserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0207020B5168E00BD5D8F /* SearchUserPresenter.swift */; };
 		45B0207320B5182300BD5D8F /* SearchUserStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0207220B5182300BD5D8F /* SearchUserStateObject.swift */; };
+		45B0207520B6B0D500BD5D8F /* MainStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0207420B6B0D500BD5D8F /* MainStateObject.swift */; };
 		45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */; };
 		45BA0D7F209010670002E1D5 /* MarkReputationLinksAsViewed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */; };
 		45BA0D812090391D0002E1D5 /* MyNotifications.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D802090391D0002E1D5 /* MyNotifications.graphql */; };
@@ -276,6 +277,7 @@
 		45B0206E20B5153100BD5D8F /* SearchUser.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SearchUser.graphql; sourceTree = "<group>"; };
 		45B0207020B5168E00BD5D8F /* SearchUserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserPresenter.swift; sourceTree = "<group>"; };
 		45B0207220B5182300BD5D8F /* SearchUserStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserStateObject.swift; sourceTree = "<group>"; };
+		45B0207420B6B0D500BD5D8F /* MainStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStateObject.swift; sourceTree = "<group>"; };
 		45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsViewController.swift; sourceTree = "<group>"; };
 		45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MarkReputationLinksAsViewed.graphql; sourceTree = "<group>"; };
 		45BA0D802090391D0002E1D5 /* MyNotifications.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyNotifications.graphql; sourceTree = "<group>"; };
@@ -642,6 +644,7 @@
 				454B4A4D20ABB78600990063 /* ImageDetailStateObject.swift */,
 				45B0204620AC0D7000BD5D8F /* ImageCommentsStateObject.swift */,
 				45B0204C20AD143E00BD5D8F /* LoginStateObject.swift */,
+				45B0207420B6B0D500BD5D8F /* MainStateObject.swift */,
 				454B4A4B20ABB73900990063 /* MeStateObject.swift */,
 				45B0205420AE680E00BD5D8F /* MyInterestedMediaStateObject.swift */,
 				45BA0D8420903A020002E1D5 /* NotificationsStateObject.swift */,
@@ -1153,6 +1156,7 @@
 				45AA3B4520A311BD0032A8CF /* ImageDetailPresenter.swift in Sources */,
 				45B0204720AC0D7000BD5D8F /* ImageCommentsStateObject.swift in Sources */,
 				457BD99D20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift in Sources */,
+				45B0207520B6B0D500BD5D8F /* MainStateObject.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
 				459F259920A28C13008B6C9B /* ObservableType+catchErrorRecover.swift in Sources */,
 				454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */,

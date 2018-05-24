@@ -44,7 +44,7 @@ extension UserStateObject {
     var userId: String { return _id }
     var userQuery: UserQuery? {
         guard let followedByUserId = session?.currentUser?._id else { return nil }
-        let next = UserQuery(userId: userId, followedByUserId: followedByUserId)
+        let next = UserQuery(userId: userId, followedByUserId: followedByUserId, withFollowed: false)  // need update
         return triggerUserQuery ? next : nil
     }
     var userMediaQuery: MyMediaQuery? {
