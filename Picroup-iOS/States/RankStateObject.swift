@@ -25,7 +25,7 @@ final class RankStateObject: PrimaryObject {
 
 extension RankStateObject {
     var rankedMediaQuery: RankedMediaQuery? {
-        let next = RankedMediaQuery(rankBy: nil, cursor: rankMedia?.cursor.value)
+        let next = RankedMediaQuery(rankBy: .thisWeek, cursor: rankMedia?.cursor.value)
         return triggerRankedMediaQuery ? next : nil
     }
     var shouldQueryMoreRankedMedia: Bool {

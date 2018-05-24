@@ -39,7 +39,7 @@ class ImageCommentsPresenter: NSObject {
             me.imageView.motionIdentifier = medium._id
             me.lifeBar.motionIdentifier = "lifeBar_\(medium._id)"
             me.sendButton.motionIdentifier = "starButton_\(medium._id)"
-            me.lifeViewWidthConstraint.constant = CGFloat(remainTime / 8.0.weeks) * me.lifeBar.bounds.width
+            me.lifeViewWidthConstraint.constant = CGFloat(remainTime / 12.0.weeks) * me.lifeBar.bounds.width
             me.commentsCountLabel.text = "\(medium.commentsCount.value ?? 0) 条"
         }
     }

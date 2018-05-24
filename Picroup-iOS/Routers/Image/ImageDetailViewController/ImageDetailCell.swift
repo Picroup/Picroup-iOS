@@ -36,7 +36,7 @@ extension ImageDetailCell.ViewModel {
         
         self.imageViewMinioId = medium.minioId
         self.imageViewMotionIdentifier = medium._id
-        self.progress = CGFloat(remainTime / 8.0.weeks)
+        self.progress = CGFloat(remainTime / 12.0.weeks)
         self.lifeBarMotionIdentifier = "lifeBar_\(medium._id)"
         self.starButtonMotionIdentifier = "starButton_\(medium._id)"
         self.remainTimeLabelText = "\(Int(remainTime / 1.0.weeks)) 周"

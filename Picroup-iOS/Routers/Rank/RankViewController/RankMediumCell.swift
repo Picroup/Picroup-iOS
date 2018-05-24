@@ -20,7 +20,7 @@ extension RankMediumCell {
         init(item: MediumFragment) {
             self.imageViewMinioId = item.minioId
             self.imageViewMotionIdentifier = item.id
-            self.progress = Float(item.endedAt.sinceNow / 8.0.weeks)
+            self.progress = Float(item.endedAt.sinceNow / 12.0.weeks)
             self.lifeBarMotionIdentifier = "lifeBar_\(item.id)"
             self.starPlaceholderViewMotionIdentifier = "starButton_\(item.id)"
         }
@@ -30,7 +30,7 @@ extension RankMediumCell {
             
             self.imageViewMinioId = item.minioId
             self.imageViewMotionIdentifier = item._id
-            self.progress = Float(remainTime / 8.0.weeks)
+            self.progress = Float(remainTime / 12.0.weeks)
             self.lifeBarMotionIdentifier = "lifeBar_\(item._id)"
             self.starPlaceholderViewMotionIdentifier = "starButton_\(item._id)"
         }
