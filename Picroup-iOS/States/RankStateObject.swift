@@ -20,6 +20,7 @@ final class RankStateObject: PrimaryObject {
     @objc dynamic var rankedMediaError: String?
     @objc dynamic var triggerRankedMediaQuery: Bool = false
     
+    @objc dynamic var loginRoute: LoginRouteObject?
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
 }
 
@@ -53,6 +54,7 @@ extension RankStateObject {
                 "_id": _id,
                 "session": ["_id": _id],
                 "rankMedia": ["_id": rankMediaId],
+                "loginRoute": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
                 ]
             return try realm.findOrCreate(RankStateObject.self, forPrimaryKey: _id, value: value)
@@ -68,6 +70,7 @@ extension RankStateObject {
         case onGetReloadData(CursorMediaFragment)
         case onGetMoreData(CursorMediaFragment)
         case onGetError(Error)
+        case onTriggerLogin
         case onTriggerShowImage(String)
         case onLogout
     }
@@ -103,6 +106,8 @@ extension RankStateObject: IsFeedbackStateObject {
         case .onGetError(let error):
             rankedMediaError = error.localizedDescription
             triggerRankedMediaQuery = false
+        case .onTriggerLogin:
+            loginRoute?.version = UUID().uuidString
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
             imageDetialRoute?.version = UUID().uuidString

@@ -47,7 +47,9 @@ class RankViewController: UIViewController {
                 }.map { .onTriggerGetMore },
                 presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReload },
                 presenter.collectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
-                presenter.categoryButton.rx.tap.asSignal().map { .onLogout }
+                presenter.categoryButton.rx.tap.asSignal().withLatestFrom(state)
+                    .map { $0.session?.isLogin ?? false }
+                    .map { isLogin in isLogin ? .onLogout : .onTriggerLogin },
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }

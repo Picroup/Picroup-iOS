@@ -47,7 +47,7 @@ extension MeStateObject {
 extension MeStateObject {
     var meQuery: UserQuery? {
         guard let userId = session?.currentUser?._id else { return nil }
-        let next = UserQuery(userId: userId, followedByUserId: "", withFollowed: false) // need update
+        let next = UserQuery(userId: userId, followedByUserId: "", withFollowed: false)
         return triggerMeQuery ? next : nil
     }
     var me: UserObject? {

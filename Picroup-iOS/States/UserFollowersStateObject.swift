@@ -37,10 +37,10 @@ final class UserFollowersStateObject: PrimaryObject {
 extension UserFollowersStateObject {
     var userId: String { return _id }
     var userFollowersQuery: UserFollowersQuery? {
-        guard let byUserId = session?.currentUser?._id else {
-            return nil
-        }
-        let next = UserFollowersQuery(userId: userId, followedByUserId: byUserId, cursor: userFollowers?.cursor.value, withFollowed: false) // need update
+        let (byUserId, withFollowed) = session?.currentUser?._id == nil
+            ? ("", false)
+            : (session!.currentUser!._id, true)
+        let next = UserFollowersQuery(userId: userId, followedByUserId: byUserId, cursor: userFollowers?.cursor.value, withFollowed: withFollowed)
         return triggerUserFollowersQuery ? next : nil
     }
     var shouldQueryMoreUserFollowers: Bool {

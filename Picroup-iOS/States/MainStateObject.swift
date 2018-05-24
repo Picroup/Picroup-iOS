@@ -15,6 +15,7 @@ import RxRealm
 final class MainStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
+    
 }
 
 extension MainStateObject {
@@ -34,17 +35,13 @@ extension MainStateObject {
 extension MainStateObject {
     
     enum Event {
-        case onTriggerLogin
     }
 }
 
 extension MainStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
-        switch event {
-        case .onTriggerLogin:
-            ()
-        }
+
     }
 }
 

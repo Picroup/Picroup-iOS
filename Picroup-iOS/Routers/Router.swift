@@ -106,6 +106,13 @@ final class Router {
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
+        _ = store.loginRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .drive(Binder(self) { (me, _) in
+                let vc = RouterService.Login.loginViewController()
+                let sc = SnackbarController(rootViewController: vc)
+                me.currentNavigationController?.present(sc, animated: true)
+            })
+        
         _ = store.popRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .drive(Binder(self) { (me, _) in
                 me.currentNavigationController?.popViewController(animated: true)
@@ -119,14 +126,43 @@ final class Router {
                 me.currentNavigationController?.snackbarController?.animate(snackbar: .hidden, delay: 3)
             })
         
+        
         _ = store.session().debug("session").map { $0.isLogin }.distinctUntilChanged().drive(Binder(self) { (me, isLogin) in
-            if isLogin {
-                let mainTabBarController = RouterService.Main.rootViewController()
-                me.mainTabBarController = mainTabBarController
-                me._window.rootViewController = SnackbarController(rootViewController: mainTabBarController)
-            } else {
-                let lvc = RouterService.Login.loginViewController()
-                me._window.rootViewController = SnackbarController(rootViewController: lvc)
+            switch (isLogin, me.mainTabBarController) {
+            case (false, nil):
+                let mtvc: MainTabBarController = {
+                    let result = RouterService.Main.mainTabBarController()
+                    result.viewControllers = [
+                        RouterService.Main.rankViewController(),
+                    ]
+                    return result
+                }()
+                me.mainTabBarController = mtvc
+                me._window.rootViewController = mtvc
+            case (true, nil):
+                let mtvc: MainTabBarController = {
+                    let result = RouterService.Main.mainTabBarController()
+                    result.viewControllers = [
+                        RouterService.Main.homeMenuViewController(),
+                        RouterService.Main.rankViewController(),
+                        RouterService.Main.notificationsViewController(),
+                        RouterService.Main.meNavigationViewController(),
+                    ]
+                    return result
+                }()
+                me.mainTabBarController = mtvc
+                me._window.rootViewController = mtvc
+            case (false, let mainTabBarController?):
+                let rvc = mainTabBarController.viewControllers?[1]
+                mainTabBarController.viewControllers = rvc.map { [$0] } ?? []
+            case (true, let mainTabBarController?):
+                mainTabBarController.viewControllers = [
+                    RouterService.Main.homeMenuViewController(),
+                    RouterService.Main.rankViewController(),
+                    RouterService.Main.notificationsViewController(),
+                    RouterService.Main.meNavigationViewController(),
+                    ]
+                
             }
         })
         

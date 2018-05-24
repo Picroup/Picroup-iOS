@@ -15,7 +15,7 @@ import Apollo
 
 class LoginViewController: UIViewController {
     
-    fileprivate var loginViewPresenter: LoginViewPresenter!
+    fileprivate var presenter: LoginViewPresenter!
     fileprivate typealias Feedback = (Driver<LoginStateObject>) -> Signal<LoginStateObject.Event>
 
     override func viewDidLoad() {
@@ -27,9 +27,10 @@ class LoginViewController: UIViewController {
         
         guard let store = try? LoginStateStore() else { return }
         
-        loginViewPresenter = LoginViewPresenter(view: view)
+        presenter = LoginViewPresenter(view: view)
         
-        let uiFeedback: Feedback = bind(loginViewPresenter) { [snackbarController = snackbarController!] (presenter, state) in
+        let uiFeedback: Feedback = bind(self) { [snackbarController = snackbarController!] (me, state) in
+            let presenter = me.presenter!
             let subscriptions = [
                 state.map { $0.username }.distinctUntilChanged().drive(presenter.usernameField.rx.text),
                 state.map { $0.password }.distinctUntilChanged().drive(presenter.passwordField.rx.text),
@@ -40,6 +41,8 @@ class LoginViewController: UIViewController {
                 state.map { $0.triggerLoginQuery }.distinctUntilChanged().mapToVoid().drive(presenter.passwordField.rx.resignFirstResponder()),
                 state.map { $0.session?.currentUser }.distinctUnwrap().map { _ in "登录成功" }.drive(snackbarController.rx.snackbarText),
                 state.map { $0.loginError }.distinctUnwrap().drive(snackbarController.rx.snackbarText),
+                state.map { $0.session?.currentUser }.distinctUnwrap().mapToVoid().delay(2.3).drive(me.rx.dismiss(animated: true)),
+                presenter.closeButton.rx.tap.bind(to: me.rx.dismiss(animated: true))
                 ]
             let events: [Signal<LoginStateObject.Event>] = [
                 presenter.usernameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangeUsername),
@@ -95,7 +98,7 @@ extension Reactive where Base: SnackbarController {
 //            snackbarController.snackbar.rightViews = [undoButton]
             snackbarController.snackbar.text = text
             snackbarController.animate(snackbar: .visible)
-            snackbarController.animate(snackbar: .hidden, delay: 3)
+            snackbarController.animate(snackbar: .hidden, delay: 2)
         }
     }
 }

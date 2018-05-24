@@ -43,8 +43,10 @@ final class UserStateObject: PrimaryObject {
 extension UserStateObject {
     var userId: String { return _id }
     var userQuery: UserQuery? {
-        guard let followedByUserId = session?.currentUser?._id else { return nil }
-        let next = UserQuery(userId: userId, followedByUserId: followedByUserId, withFollowed: false)  // need update
+        let (byUserId, withFollowed) = session?.currentUser?._id == nil
+            ? ("", false)
+            : (session!.currentUser!._id, true)
+        let next = UserQuery(userId: userId, followedByUserId: byUserId, withFollowed: withFollowed)
         return triggerUserQuery ? next : nil
     }
     var userMediaQuery: MyMediaQuery? {

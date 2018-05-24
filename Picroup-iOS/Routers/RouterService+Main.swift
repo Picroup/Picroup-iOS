@@ -21,47 +21,54 @@ extension RouterService.Main {
     
     static func rootViewController() -> MainTabBarController {
         
-        let infos: [(title: String, imageName: String, vc: UIViewController)] = [
-            (title: "关注", imageName: "ic_home", vc: homeMenuViewController()),
-            (title: "热门", imageName: "ic_apps", vc: rankViewController()),
-            (title: "通知", imageName: "ic_notifications", vc: notificationsViewController()),
-            (title: "我", imageName: "ic_person", vc: meNavigationViewController()),
-            ]
-        
-        let viewControllers = infos.map { info -> UIViewController in
-            let vc = info.vc
-            vc.tabBarItem = UITabBarItem(title: info.title, image: UIImage(named: info.imageName), selectedImage: nil)
-            return vc
-        }
-        
         let mvc = MainTabBarController()
-        mvc.viewControllers = viewControllers
+        mvc.viewControllers = [
+            homeMenuViewController(),
+            rankViewController(),
+            notificationsViewController(),
+            meNavigationViewController(),
+        ]
         mvc.tabBar.isTranslucent = false
 //        mvc.selectedIndex = 1
         return mvc
     }
     
+    static func mainTabBarController() -> MainTabBarController {
+        let mvc = MainTabBarController()
+        mvc.tabBar.isTranslucent = false
+        //        mvc.selectedIndex = 1
+        return mvc
+        
+    }
+    
     static func homeMenuViewController() -> UIViewController {
         let hvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
         let hmvc = HomeMenuViewController(rootViewController: hvc)
-        return BaseNavigationController(rootViewController: hmvc)
+        let bnvc = BaseNavigationController(rootViewController: hmvc)
+        bnvc.tabBarItem = UITabBarItem(title: "关注", image: UIImage(named: "ic_home"), selectedImage: nil)
+        return bnvc
     }
     
     static func rankViewController() -> UIViewController {
         let rvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RankViewController") as! RankViewController
-        return BaseNavigationController(rootViewController: rvc)
+        let bnvc = BaseNavigationController(rootViewController: rvc)
+        bnvc.tabBarItem = UITabBarItem(title: "热门", image: UIImage(named: "ic_apps"), selectedImage: nil)
+        return bnvc
     }
     
     static func notificationsViewController() -> UIViewController {
         let nvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NotificationsViewController") as! NotificationsViewController
-        return BaseNavigationController(rootViewController: nvc)
+        let bnvc = BaseNavigationController(rootViewController: nvc)
+        bnvc.tabBarItem = UITabBarItem(title: "通知", image: UIImage(named: "ic_notifications"), selectedImage: nil)
+        return bnvc
     }
     
     static func meNavigationViewController() -> UIViewController {
         let mevc = meViewController()
-        let nvc = BaseNavigationController(rootViewController: mevc)
-        nvc.isNavigationBarHidden = true
-        return nvc
+        let bnvc = BaseNavigationController(rootViewController: mevc)
+        bnvc.isNavigationBarHidden = true
+        bnvc.tabBarItem = UITabBarItem(title: "我", image: UIImage(named: "ic_person"), selectedImage: nil)
+        return bnvc
     }
     
     static func meViewController() -> MeViewController {
