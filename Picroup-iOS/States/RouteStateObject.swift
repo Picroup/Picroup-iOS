@@ -47,12 +47,11 @@ final class ReputationsRouteObject: PrimaryObject {
 }
 
 final class PickImageRouteObject: PrimaryObject {
-    let sourceType = RealmOptional<Int>()
     @objc dynamic var version: String?
 }
 
 final class CreateImageRouteObject: PrimaryObject {
-    @objc dynamic var imageKey: String?
+    let imageKeys = List<String>()
     @objc dynamic var version: String?
 }
 

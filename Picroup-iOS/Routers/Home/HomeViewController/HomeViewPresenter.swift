@@ -1,21 +1,54 @@
 //
-//  HomeViewPresenter.swift
+//  HomePresenter.swift
 //  Picroup-iOS
 //
-//  Created by luojie on 2018/4/20.
+//  Created by luojie on 2018/4/9.
 //  Copyright © 2018年 luojie. All rights reserved.
 //
 
 import UIKit
+import Material
 import RxSwift
 import RxCocoa
 import RxDataSources
 
-class HomeViewPresenter: NSObject {
+fileprivate let fabMenuSize = CGSize(width: 56, height: 56)
+fileprivate let bottomInset: CGFloat = 24
+fileprivate let rightInset: CGFloat = 24
+
+final class HomeViewPresenter: NSObject {
     
+    @IBOutlet weak var view: UIView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    var fabButton: FABButton!
+    var addUserButton: IconButton!
     var refreshControl: UIRefreshControl!
-    @IBOutlet weak var collectionView: UICollectionView! {
-        didSet { prepareRefreshControl() }
+    weak var navigationItem: UINavigationItem!
+
+    func setup(navigationItem: UINavigationItem) {
+        self.navigationItem = navigationItem
+        prepareFABButton()
+        prepareNavigationItem()
+        prepareRefreshControl()
+    }
+    
+    fileprivate func prepareFABButton() {
+        fabButton = FABButton(image: Icon.cm.add, tintColor: .white)
+        fabButton.pulseColor = .white
+        fabButton.backgroundColor = .secondary
+        
+        view.layout(fabButton)
+            .bottom(bottomInset)
+            .right(rightInset)
+            .size(fabMenuSize)
+    }
+    
+    fileprivate func prepareNavigationItem() {
+        navigationItem.titleLabel.text = "关注"
+        navigationItem.titleLabel.textColor = .primaryText
+        addUserButton = IconButton(image: UIImage(named: "ic_person_add"), tintColor: .primaryText)
+        addUserButton.pulseColor = .white
+        navigationItem.rightViews = [addUserButton]
     }
     
     fileprivate func prepareRefreshControl() {
@@ -27,7 +60,7 @@ class HomeViewPresenter: NSObject {
     typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
-    var items: (PublishRelay<MyInterestedMediaStateObject.Event>) -> (Observable<[Section]>) -> Disposable {
+    var items: (PublishRelay<HomeStateObject.Event>) -> (Observable<[Section]>) -> Disposable {
         return { [collectionView] _events in
             let dataSource = DataSource(
                 configureCell: { dataSource, collectionView, indexPath, item in

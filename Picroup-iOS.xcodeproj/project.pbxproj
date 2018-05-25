@@ -17,9 +17,8 @@
 		451CD326207B9E5B0063A972 /* RouterService+Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD325207B9E5B0063A972 /* RouterService+Login.swift */; };
 		451CD328207BA39E0063A972 /* RouterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD327207BA39E0063A972 /* RouterService.swift */; };
 		451CD32A207BA49B0063A972 /* RouterService+Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD329207BA49B0063A972 /* RouterService+Main.swift */; };
-		451CD32D207BB5D90063A972 /* HomeMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD32C207BB5D90063A972 /* HomeMenuViewController.swift */; };
-		451CD330207BB62D0063A972 /* HomeMenuPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD32F207BB62D0063A972 /* HomeMenuPresenter.swift */; };
-		451CD332207D0A910063A972 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD331207D0A910063A972 /* HomeViewController.swift */; };
+		451CD32D207BB5D90063A972 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD32C207BB5D90063A972 /* HomeViewController.swift */; };
+		451CD330207BB62D0063A972 /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD32F207BB62D0063A972 /* HomeViewPresenter.swift */; };
 		451CD337207D0B9A0063A972 /* RankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD336207D0B9A0063A972 /* RankViewController.swift */; };
 		451CD339207D0BAA0063A972 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD338207D0BAA0063A972 /* NotificationsViewController.swift */; };
 		451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD33A207D0BB60063A972 /* MeViewController.swift */; };
@@ -105,8 +104,7 @@
 		45B0204B20AC14D700BD5D8F /* Int+increase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0204A20AC14D700BD5D8F /* Int+increase.swift */; };
 		45B0204D20AD143E00BD5D8F /* LoginStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0204C20AD143E00BD5D8F /* LoginStateObject.swift */; };
 		45B0204F20AD59CC00BD5D8F /* HomeStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0204E20AD59CC00BD5D8F /* HomeStateObject.swift */; };
-		45B0205320AD72D600BD5D8F /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0205220AD72D600BD5D8F /* ImagePickerController.swift */; };
-		45B0205520AE680E00BD5D8F /* MyInterestedMediaStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0205420AE680E00BD5D8F /* MyInterestedMediaStateObject.swift */; };
+		45B0205320AD72D600BD5D8F /* PhotoPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0205220AD72D600BD5D8F /* PhotoPickerController.swift */; };
 		45B0205820AE69A000BD5D8F /* PrimaryKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0205720AE69A000BD5D8F /* PrimaryKey.swift */; };
 		45B0205A20AEA35600BD5D8F /* UserStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0205920AEA35600BD5D8F /* UserStateObject.swift */; };
 		45B0205C20B2A1D900BD5D8F /* FollowUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45B0205B20B2A1D900BD5D8F /* FollowUser.graphql */; };
@@ -138,7 +136,6 @@
 		45D04F7A2088D57B00AC2226 /* SaveComment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D04F792088D57B00AC2226 /* SaveComment.graphql */; };
 		45D04F7C2089FD0500AC2226 /* UserInterestedMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */; };
 		45D04F7E208A040C00AC2226 /* HomeImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F7D208A040C00AC2226 /* HomeImageCell.swift */; };
-		45D04F80208A06D300AC2226 /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F7F208A06D300AC2226 /* HomeViewPresenter.swift */; };
 		45D04F84208E0EAA00AC2226 /* MePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F83208E0EAA00AC2226 /* MePresenter.swift */; };
 		45D04F8B208F60A600AC2226 /* ReputationsViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F8A208F60A600AC2226 /* ReputationsViewPresenter.swift */; };
 		45D04F8F208F635C00AC2226 /* MyReputations.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45D04F8E208F635C00AC2226 /* MyReputations.graphql */; };
@@ -172,9 +169,8 @@
 		451CD325207B9E5B0063A972 /* RouterService+Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouterService+Login.swift"; sourceTree = "<group>"; };
 		451CD327207BA39E0063A972 /* RouterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterService.swift; sourceTree = "<group>"; };
 		451CD329207BA49B0063A972 /* RouterService+Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouterService+Main.swift"; sourceTree = "<group>"; };
-		451CD32C207BB5D90063A972 /* HomeMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenuViewController.swift; sourceTree = "<group>"; };
-		451CD32F207BB62D0063A972 /* HomeMenuPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenuPresenter.swift; sourceTree = "<group>"; };
-		451CD331207D0A910063A972 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		451CD32C207BB5D90063A972 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		451CD32F207BB62D0063A972 /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
 		451CD336207D0B9A0063A972 /* RankViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewController.swift; sourceTree = "<group>"; };
 		451CD338207D0BAA0063A972 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		451CD33A207D0BB60063A972 /* MeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
@@ -262,8 +258,7 @@
 		45B0204A20AC14D700BD5D8F /* Int+increase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+increase.swift"; sourceTree = "<group>"; };
 		45B0204C20AD143E00BD5D8F /* LoginStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStateObject.swift; sourceTree = "<group>"; };
 		45B0204E20AD59CC00BD5D8F /* HomeStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStateObject.swift; sourceTree = "<group>"; };
-		45B0205220AD72D600BD5D8F /* ImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
-		45B0205420AE680E00BD5D8F /* MyInterestedMediaStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInterestedMediaStateObject.swift; sourceTree = "<group>"; };
+		45B0205220AD72D600BD5D8F /* PhotoPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerController.swift; sourceTree = "<group>"; };
 		45B0205720AE69A000BD5D8F /* PrimaryKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryKey.swift; sourceTree = "<group>"; };
 		45B0205920AEA35600BD5D8F /* UserStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStateObject.swift; sourceTree = "<group>"; };
 		45B0205B20B2A1D900BD5D8F /* FollowUser.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = FollowUser.graphql; sourceTree = "<group>"; };
@@ -295,7 +290,6 @@
 		45D04F792088D57B00AC2226 /* SaveComment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveComment.graphql; sourceTree = "<group>"; };
 		45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserInterestedMedia.graphql; sourceTree = "<group>"; };
 		45D04F7D208A040C00AC2226 /* HomeImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeImageCell.swift; sourceTree = "<group>"; };
-		45D04F7F208A06D300AC2226 /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
 		45D04F83208E0EAA00AC2226 /* MePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MePresenter.swift; sourceTree = "<group>"; };
 		45D04F8A208F60A600AC2226 /* ReputationsViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsViewPresenter.swift; sourceTree = "<group>"; };
 		45D04F8E208F635C00AC2226 /* MyReputations.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyReputations.graphql; sourceTree = "<group>"; };
@@ -434,10 +428,8 @@
 		451CD32E207BB60B0063A972 /* HomeViewController */ = {
 			isa = PBXGroup;
 			children = (
-				451CD32C207BB5D90063A972 /* HomeMenuViewController.swift */,
-				451CD32F207BB62D0063A972 /* HomeMenuPresenter.swift */,
-				451CD331207D0A910063A972 /* HomeViewController.swift */,
-				45D04F7F208A06D300AC2226 /* HomeViewPresenter.swift */,
+				451CD32C207BB5D90063A972 /* HomeViewController.swift */,
+				451CD32F207BB62D0063A972 /* HomeViewPresenter.swift */,
 				45D04F7D208A040C00AC2226 /* HomeImageCell.swift */,
 			);
 			path = HomeViewController;
@@ -581,7 +573,7 @@
 			children = (
 				454F729D208DB8D200850471 /* Image.storyboard */,
 				454F729F208DB90000850471 /* RouterService+Image.swift */,
-				45B0205020AD72C300BD5D8F /* ImagePickerController */,
+				45B0205020AD72C300BD5D8F /* PhotoPickerController */,
 				45384BBA207DEFBC00624A1B /* CreateImageViewController */,
 				45E240B02084D2B6004B58EF /* ImageDetailViewController */,
 				454F72902088714E00850471 /* ImageCommentsViewController */,
@@ -646,7 +638,6 @@
 				45B0204C20AD143E00BD5D8F /* LoginStateObject.swift */,
 				45B0207420B6B0D500BD5D8F /* MainStateObject.swift */,
 				454B4A4B20ABB73900990063 /* MeStateObject.swift */,
-				45B0205420AE680E00BD5D8F /* MyInterestedMediaStateObject.swift */,
 				45BA0D8420903A020002E1D5 /* NotificationsStateObject.swift */,
 				451DD4BC207F8BC7002C509A /* RankStateObject.swift */,
 				457BD98620AC68EA007F0492 /* ReputationsStateObject.swift */,
@@ -768,12 +759,12 @@
 			path = Realm;
 			sourceTree = "<group>";
 		};
-		45B0205020AD72C300BD5D8F /* ImagePickerController */ = {
+		45B0205020AD72C300BD5D8F /* PhotoPickerController */ = {
 			isa = PBXGroup;
 			children = (
-				45B0205220AD72D600BD5D8F /* ImagePickerController.swift */,
+				45B0205220AD72D600BD5D8F /* PhotoPickerController.swift */,
 			);
-			path = ImagePickerController;
+			path = PhotoPickerController;
 			sourceTree = "<group>";
 		};
 		45B0205620AE699000BD5D8F /* PrimaryKey */ = {
@@ -1037,6 +1028,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Apollo/Apollo.framework",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
+				"${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Material/Material.framework",
 				"${BUILT_PRODUCTS_DIR}/Motion/Motion.framework",
@@ -1056,6 +1048,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImagePicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Material.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Motion.framework",
@@ -1101,8 +1094,8 @@
 				45D04F8B208F60A600AC2226 /* ReputationsViewPresenter.swift in Sources */,
 				45B0204D20AD143E00BD5D8F /* LoginStateObject.swift in Sources */,
 				4595F21B207C883F0040E5FA /* MainTabBarController.swift in Sources */,
-				45B0205320AD72D600BD5D8F /* ImagePickerController.swift in Sources */,
-				451CD330207BB62D0063A972 /* HomeMenuPresenter.swift in Sources */,
+				45B0205320AD72D600BD5D8F /* PhotoPickerController.swift in Sources */,
+				451CD330207BB62D0063A972 /* HomeViewPresenter.swift in Sources */,
 				456C5E412061446C005F981B /* ImageUpoader.swift in Sources */,
 				454B4A4C20ABB73900990063 /* MeStateObject.swift in Sources */,
 				45B0204B20AC14D700BD5D8F /* Int+increase.swift in Sources */,
@@ -1116,10 +1109,8 @@
 				45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */,
 				4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
-				45D04F80208A06D300AC2226 /* HomeViewPresenter.swift in Sources */,
-				451CD32D207BB5D90063A972 /* HomeMenuViewController.swift in Sources */,
+				451CD32D207BB5D90063A972 /* HomeViewController.swift in Sources */,
 				45AA3B4820A346DB0032A8CF /* DispachQueue+realm.swift in Sources */,
-				45B0205520AE680E00BD5D8F /* MyInterestedMediaStateObject.swift in Sources */,
 				451DD4C12083125A002C509A /* Objective.swift in Sources */,
 				4595F219207A15010040E5FA /* Mutabled.swift in Sources */,
 				455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */,
@@ -1170,7 +1161,6 @@
 				458006D820A17283004BD982 /* UIViewController+Rx+NavigationBar.swift in Sources */,
 				45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */,
 				454F72A0208DB90000850471 /* RouterService+Image.swift in Sources */,
-				451CD332207D0A910063A972 /* HomeViewController.swift in Sources */,
 				4595F227207D9CF90040E5FA /* logger.swift in Sources */,
 				457BD98D20B135DF007F0492 /* AppStateObject.swift in Sources */,
 				451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */,

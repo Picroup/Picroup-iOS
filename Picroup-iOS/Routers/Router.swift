@@ -55,17 +55,16 @@ final class Router {
             })
         
         _ = store.pickImageRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
-            .map { $0.sourceType.value }.unwrap()
-            .drive(Binder(self) { (me, sourceType) in
-                let vc = ImagePickerController()
-                vc.sourceType = UIImagePickerControllerSourceType(rawValue: sourceType)!
+            .drive(Binder(self) { (me, _) in
+                let vc = RouterService.Image.photoPickerController()
                 me.currentNavigationController?.present(vc, animated: true)
             })
         
         _ = store.createImageRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
-            .map { $0.imageKey }.unwrap()
-            .drive(Binder(self) { (me, imageKey) in
-                let vc = RouterService.Image.createImageViewController(dependency: imageKey)
+            .map { $0.imageKeys.toArray() }.filter { !$0.isEmpty }
+            .drive(Binder(self) { (me, imageKeys) in
+                print(imageKeys)
+                let vc = RouterService.Image.createImageViewController(dependency: imageKeys)
                 me.currentViewController?.present(SnackbarController(rootViewController: vc), animated: true)
             })
         

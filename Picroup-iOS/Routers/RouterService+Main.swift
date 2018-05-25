@@ -42,8 +42,7 @@ extension RouterService.Main {
     }
     
     static func homeMenuViewController() -> UIViewController {
-        let hvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-        let hmvc = HomeMenuViewController(rootViewController: hvc)
+        let hmvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
         let bnvc = BaseNavigationController(rootViewController: hmvc)
         bnvc.tabBarItem = UITabBarItem(title: "关注", image: UIImage(named: "ic_home"), selectedImage: nil)
         return bnvc
