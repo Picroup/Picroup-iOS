@@ -153,15 +153,16 @@ final class Router {
                 me.mainTabBarController = mtvc
                 me._window.rootViewController = mtvc
             case (false, let mainTabBarController?):
-                let rvc = mainTabBarController.viewControllers?[1]
-                mainTabBarController.viewControllers = rvc.map { [$0] } ?? []
+                mainTabBarController.viewControllers = [
+                    RouterService.Main.rankViewController(),
+                ]
             case (true, let mainTabBarController?):
                 mainTabBarController.viewControllers = [
                     RouterService.Main.homeMenuViewController(),
                     RouterService.Main.rankViewController(),
                     RouterService.Main.notificationsViewController(),
                     RouterService.Main.meNavigationViewController(),
-                    ]
+                ]
                 
             }
         })

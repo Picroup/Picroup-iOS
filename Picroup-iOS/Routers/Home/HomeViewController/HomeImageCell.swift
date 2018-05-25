@@ -29,6 +29,8 @@ class HomeImageCell: RxCollectionViewCell {
         onImageViewTap: (() -> Void)?,
         onUserTap: (() -> Void)?
         ) {
+        guard !item.isInvalidated else { return  }
+        
         let remainTime = item.endedAt.value?.sinceNow ?? 0
         
         imageView.setImage(with: item.minioId)

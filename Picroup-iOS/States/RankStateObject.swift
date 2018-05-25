@@ -113,6 +113,10 @@ extension RankStateObject: IsFeedbackStateObject {
             imageDetialRoute?.version = UUID().uuidString
         case .onLogout:
             session?.currentUser = nil
+            realm.delete(realm.objects(UserObject.self))
+            realm.delete(realm.objects(MediumObject.self))
+            realm.delete(realm.objects(NotificationObject.self))
+            realm.delete(realm.objects(ReputationObject.self))
         }
     }
 }

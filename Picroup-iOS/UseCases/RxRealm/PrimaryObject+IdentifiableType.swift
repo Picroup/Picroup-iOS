@@ -12,6 +12,6 @@ import RxDataSources
 extension PrimaryObject: IdentifiableType {
     
     public var identity: String {
-        return _id
+        return isInvalidated ? UUID().uuidString : _id
     }
 }

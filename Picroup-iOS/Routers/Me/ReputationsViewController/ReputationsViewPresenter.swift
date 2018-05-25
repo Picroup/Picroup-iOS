@@ -38,6 +38,8 @@ class ReputationCell: RxTableViewCell {
     @IBOutlet weak var mediumImageView: UIImageView!
     
     func configure(with item: ReputationObject) {
+        guard !item.isInvalidated else { return }
+        
         valueLabel.text = "+\(item.value.value ?? 0)"
         userAvatarImageView.setImage(with: item.user?.avatarId)
         mediumImageView.setImage(with: item.medium?.minioId)

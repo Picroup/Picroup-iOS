@@ -32,6 +32,20 @@ extension ImageDetailCell {
 extension ImageDetailCell.ViewModel {
     
     init(medium: MediumObject) {
+        guard !medium.isInvalidated else {
+            self.imageViewMinioId = nil
+            self.imageViewMotionIdentifier = nil
+            self.progress = 0
+            self.lifeBarMotionIdentifier = nil
+            self.starButtonMotionIdentifier = nil
+            self.remainTimeLabelText = "\(0) 周"
+            self.commentsCountLabelText = "\(0) 条"
+            self.stared = nil
+            self.animatedChangeProgress = false
+            self.username = nil
+            self.avatarId = nil
+            return
+        }
         let remainTime = medium.endedAt.value?.sinceNow ?? 0
         
         self.imageViewMinioId = medium.minioId
