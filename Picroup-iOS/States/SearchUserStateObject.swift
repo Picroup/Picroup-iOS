@@ -87,7 +87,7 @@ extension SearchUserStateObject {
                 "session": ["_id": _id],
                 "userRoute": ["_id": _id],
                 ]
-            return try realm.findOrCreate(SearchUserStateObject.self, forPrimaryKey: _id, value: value)
+            return try realm.update(SearchUserStateObject.self, value: value)
         }
     }
 }

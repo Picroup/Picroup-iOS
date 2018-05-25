@@ -55,7 +55,7 @@ extension AppStateObject {
                 "_id": _id,
                 "session": ["_id": _id],
                 ]
-            return try realm.findOrCreate(AppStateObject.self, forPrimaryKey: _id, value: value)
+            return try realm.update(AppStateObject.self, value: value)
         }
     }
 }

@@ -1,9 +1,9 @@
-query UserFollowings($userId: ID!, $followedByUserId: ID!, $cursor: Float = null) {
+query UserFollowings($userId: ID!, $followedByUserId: ID!, $cursor: Float = null, $withFollowed: Boolean!) {
     user(userId: $userId) {
         followings(cursor: $cursor) {
             cursor
             items {
-                followed(byUserId: $followedByUserId)
+                followed(byUserId: $followedByUserId) @include(if: $withFollowed)
                 ...UserFragment
             }
         }

@@ -23,6 +23,7 @@ final class RouteStateObject: PrimaryObject {
     @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
     @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
     @objc dynamic var searchUserRoute: SearchUserRouteObject?
+    @objc dynamic var loginRoute: LoginRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
     
     @objc dynamic var snackbar: SnackbarObject?
@@ -77,6 +78,10 @@ final class SearchUserRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
+final class LoginRouteObject: PrimaryObject {
+    @objc dynamic var version: String?
+}
+
 final class PopRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
@@ -104,10 +109,11 @@ extension RouteStateObject {
                 "userFollowingsRoute": ["_id": _id],
                 "userFollowersRoute": ["_id": _id],
                 "searchUserRoute": ["_id": _id],
+                "loginRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 "snackbar": ["_id": _id],
                 ]
-            return try realm.findOrCreate(RouteStateObject.self, forPrimaryKey: _id, value: value)
+            return try realm.update(RouteStateObject.self, value: value)
         }
     }
 }
@@ -176,6 +182,11 @@ final class RouteStateStore {
     func searchUserRoute() -> Driver<SearchUserRouteObject> {
         guard let searchUserRoute = _state.searchUserRoute else { return .empty() }
         return Observable.from(object: searchUserRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func loginRoute() -> Driver<LoginRouteObject> {
+        guard let loginRoute = _state.loginRoute else { return .empty() }
+        return Observable.from(object: loginRoute).asDriver(onErrorDriveWith: .empty())
     }
     
     func popRoute() -> Driver<PopRouteObject> {

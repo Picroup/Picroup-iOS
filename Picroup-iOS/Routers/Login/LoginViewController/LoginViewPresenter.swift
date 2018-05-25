@@ -12,6 +12,7 @@ import RxCocoa
 
 class LoginViewPresenter {
     
+    var closeButton: IconButton!
     var usernameField: ErrorTextField!
     var passwordField: TextField!
     var raisedButton: RaisedButton!
@@ -26,9 +27,15 @@ class LoginViewPresenter {
     
     private func setup() {
         view.backgroundColor = Color.grey.lighten5
+        prepareCloseButton()
         prepareResignResponderButton()
         preparePasswordField()
         prepareUsernameField()
+    }
+    
+    fileprivate func prepareCloseButton() {
+        closeButton = IconButton(image: UIImage(named: "baseline_close_black_24pt"), tintColor: .primaryLight)
+        view.layout(closeButton).topLeft(top: 24, left: 24)
     }
     
     fileprivate func prepareResignResponderButton() {

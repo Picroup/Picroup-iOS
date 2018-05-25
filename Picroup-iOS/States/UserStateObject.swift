@@ -43,8 +43,10 @@ final class UserStateObject: PrimaryObject {
 extension UserStateObject {
     var userId: String { return _id }
     var userQuery: UserQuery? {
-        guard let followedByUserId = session?.currentUser?._id else { return nil }
-        let next = UserQuery(userId: userId, followedByUserId: followedByUserId)
+        let (byUserId, withFollowed) = session?.currentUser?._id == nil
+            ? ("", false)
+            : (session!.currentUser!._id, true)
+        let next = UserQuery(userId: userId, followedByUserId: byUserId, withFollowed: withFollowed)
         return triggerUserQuery ? next : nil
     }
     var userMediaQuery: MyMediaQuery? {
@@ -97,7 +99,7 @@ extension UserStateObject {
                 "popRoute": ["_id": _id],
                 "snackbar": ["_id": _id],
                 ]
-            return try realm.findOrCreate(UserStateObject.self, forPrimaryKey: userId, value: value)
+            return try realm.update(UserStateObject.self, value: value)
         }
     }
 }

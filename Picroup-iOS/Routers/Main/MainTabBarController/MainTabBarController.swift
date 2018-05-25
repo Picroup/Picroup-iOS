@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import Apollo
+import RxSwift
+import RxCocoa
+import RxDataSources
+import RxFeedback
 
-class MainTabBarController: UITabBarController {
+final class MainTabBarController: UITabBarController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -23,6 +28,6 @@ class MainTabBarController: UITabBarController {
     private func setup() {
         tabBar.isTranslucent = false
 //        hidesBottomBarWhenPushed = true
-        
     }
 }
+

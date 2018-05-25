@@ -32,7 +32,7 @@ extension HomeStateObject {
                 "pickImageRoute": ["_id": _id],
                 "searchUserRoute": ["_id": _id],
                 ]
-            let state = try realm.findOrCreate(HomeStateObject.self, forPrimaryKey: _id, value: value)
+            let state = try realm.update(HomeStateObject.self, value: value)
             try realm.write {
                 state.isFABMenuOpened = false
             }

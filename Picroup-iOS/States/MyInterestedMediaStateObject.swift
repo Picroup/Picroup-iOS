@@ -57,7 +57,7 @@ extension MyInterestedMediaStateObject {
                 "imageDetialRoute": ["_id": _id],
                 "userRoute": ["_id": _id],
                 ]
-            return try realm.findOrCreate(MyInterestedMediaStateObject.self, forPrimaryKey: _id, value: value)
+            return try realm.update(MyInterestedMediaStateObject.self, value: value)
         }
     }
 }

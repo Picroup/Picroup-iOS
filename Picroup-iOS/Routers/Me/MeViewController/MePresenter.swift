@@ -87,6 +87,17 @@ struct UserViewModel {
     let followed: Bool?
     
     init(user: UserObject?) {
+        guard user?.isInvalidated == false else {
+            self.username = " "
+            self.avatarId = nil
+            self.reputation = "0"
+            self.followersCount = "0"
+            self.followingsCount = "0"
+            self.gainedReputationCount = ""
+            self.isGainedReputationCountHidden = true
+            self.followed = nil
+            return
+        }
         self.username = user.map { "@\($0.username ?? "")" } ?? " "
         self.avatarId = user?.avatarId
         self.reputation = user?.reputation.value?.description ?? "0"

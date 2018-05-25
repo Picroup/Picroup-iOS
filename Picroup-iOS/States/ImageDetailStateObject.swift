@@ -36,8 +36,10 @@ final class ImageDetailStateObject: PrimaryObject {
 extension ImageDetailStateObject {
     var mediumId: String { return _id }
     var mediumQuery: MediumQuery? {
-        guard let userId = session?.currentUser?._id else { return nil }
-        let next = MediumQuery(userId: userId, mediumId: mediumId, cursor: recommendMedia?.cursor.value)
+        let (userId, withStared) = session?.currentUser?._id == nil
+            ? ("", false)
+            : (session!.currentUser!._id, true)
+        let next = MediumQuery(userId: userId, mediumId: mediumId, cursor: recommendMedia?.cursor.value, withStared: withStared)
         return triggerMediumQuery ? next : nil
     }
     var shouldQueryMoreRecommendMedia: Bool {
@@ -72,7 +74,7 @@ extension ImageDetailStateObject {
                 "userRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
-            return try realm.findOrCreate(ImageDetailStateObject.self, forPrimaryKey: mediumId, value: value)
+            return try realm.update(ImageDetailStateObject.self, value: value)
         }
     }
 }

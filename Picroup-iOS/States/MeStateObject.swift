@@ -45,9 +45,9 @@ extension MeStateObject {
 }
 
 extension MeStateObject {
-    var meQuery: MeQuery? {
+    var meQuery: UserQuery? {
         guard let userId = session?.currentUser?._id else { return nil }
-        let next = MeQuery(userId: userId)
+        let next = UserQuery(userId: userId, followedByUserId: "", withFollowed: false)
         return triggerMeQuery ? next : nil
     }
     var me: UserObject? {
@@ -93,7 +93,7 @@ extension MeStateObject {
                 "userFollowersRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
-            return try realm.findOrCreate(MeStateObject.self, forPrimaryKey: _id, value: value)
+            return try realm.update(MeStateObject.self, value: value)
         }
     }
 }

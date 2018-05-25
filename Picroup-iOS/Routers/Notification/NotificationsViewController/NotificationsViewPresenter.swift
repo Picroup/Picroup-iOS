@@ -46,6 +46,8 @@ class NotificationCell: RxTableViewCell {
     @IBOutlet weak var mediumImageView: UIImageView!
     
     func configure(with item: NotificationObject) {
+        guard !item.isInvalidated else { return }
+        
         userAvatarImageView.setImage(with: item.user?.avatarId)
         mediumImageView.setImage(with: item.medium?.minioId)
         switch item.kind {

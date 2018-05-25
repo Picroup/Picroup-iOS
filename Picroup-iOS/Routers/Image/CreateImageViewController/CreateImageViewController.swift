@@ -44,7 +44,7 @@ class CreateImageViewController: UIViewController {
                 state.map { $0.shouldSaveMedium }.distinctUntilChanged().drive(me.presenter.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 me.presenter.cancelButton.rx.tap.asSignal().emit(to: me.rx.dismiss(animated: true)),
                 state.map { $0.savedMedium }.distinctUnwrap().map { _ in "已分享" }.drive(me.snackbarController!.rx.snackbarText),
-                state.map { $0.savedMedium }.distinctUnwrap().mapToVoid().delay(3.3).drive(me.rx.dismiss(animated: true)),
+                state.map { $0.savedMedium }.distinctUnwrap().mapToVoid().delay(2.3).drive(me.rx.dismiss(animated: true)),
                 ]
             let events: [Signal<CreateImageStateObject.Event>] = [
                 me.presenter.saveButton.rx.tap.asSignal().map { CreateImageStateObject.Event.onTriggerSaveMedium }

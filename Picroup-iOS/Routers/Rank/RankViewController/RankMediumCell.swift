@@ -17,15 +17,16 @@ extension RankMediumCell {
         let lifeBarMotionIdentifier: String?
         let starPlaceholderViewMotionIdentifier: String?
         
-        init(item: MediumFragment) {
-            self.imageViewMinioId = item.minioId
-            self.imageViewMotionIdentifier = item.id
-            self.progress = Float(item.endedAt.sinceNow / 12.0.weeks)
-            self.lifeBarMotionIdentifier = "lifeBar_\(item.id)"
-            self.starPlaceholderViewMotionIdentifier = "starButton_\(item.id)"
-        }
-        
         init(item: MediumObject) {
+            guard !item.isInvalidated else {
+                self.imageViewMinioId = nil
+                self.imageViewMotionIdentifier = nil
+                self.progress = 0
+                self.lifeBarMotionIdentifier = nil
+                self.starPlaceholderViewMotionIdentifier = nil
+                return
+            }
+            
             let remainTime = item.endedAt.value?.sinceNow ?? 0
             
             self.imageViewMinioId = item.minioId
