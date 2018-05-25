@@ -15,5 +15,6 @@ target 'Picroup-iOS' do
   pod 'RxRealm', '~> 0.7'
   pod 'Kingfisher', '~> 4.0'
   pod 'Material', '~> 2.14'
-  
+  pod 'ImagePicker', '~> 3.0'
+
 end

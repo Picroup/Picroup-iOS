@@ -29,14 +29,22 @@ extension RxProgressObject {
     }
 }
 
-final class CreateImageStateObject: PrimaryObject {
-    typealias Query = (userId: String, imageKey: String)
-
-    @objc dynamic var session: UserSessionObject?
+final class SaveMediumStateObject: PrimaryObject {
     
     @objc dynamic var progress: RxProgressObject?
     @objc dynamic var savedMedium: MediumObject?
     @objc dynamic var savedError: String?
+}
+
+final class CreateImageStateObject: PrimaryObject {
+    typealias Query = (userId: String, imageKeys: [String])
+
+    @objc dynamic var session: UserSessionObject?
+    
+    let imageKeys = List<String>()
+    let saveMediumStates = List<SaveMediumStateObject>()
+    @objc dynamic var finished: Int = 0
+
     @objc dynamic var triggerSaveMediumQuery: Bool = false
 
     @objc dynamic var myMedia: CursorMediaObject?
@@ -45,26 +53,32 @@ final class CreateImageStateObject: PrimaryObject {
 }
 
 extension CreateImageStateObject {
-    var imageKey: String { return _id }
     var saveQuery: Query? {
         guard let userId = session?.currentUser?._id else { return nil }
-        return triggerSaveMediumQuery ? (userId: userId, imageKey: _id) : nil
+        return triggerSaveMediumQuery ? (userId: userId, imageKeys: imageKeys.toArray()) : nil
     }
     var shouldSaveMedium: Bool {
-        return !triggerSaveMediumQuery && savedMedium == nil
+        return !triggerSaveMediumQuery
+    }
+    var allFinished: Bool { return finished == imageKeys.count }
+    var allSuccess: Void? {
+        let failState = saveMediumStates.first(where: { $0.savedError != nil })
+        return (allFinished && failState == nil) ? () : nil
     }
 }
 
 
 extension CreateImageStateObject {
     
-    static func create(imageKey: String) -> (Realm) throws -> CreateImageStateObject {
+    static func create(imageKeys: [String]) -> (Realm) throws -> CreateImageStateObject {
         return { realm in
             let _id = PrimaryKey.default
             let value: Any = [
-                "_id": imageKey,
+                "_id": _id,
                 "session": ["_id": _id],
-                "progress": [:],
+                "imageKeys": imageKeys,
+                "saveMediumStates": imageKeys.map { ["_id": $0, "progress": [:]] },
+                "finished": 0,
                 "myMedia": ["_id": PrimaryKey.myMediaId],
                 "myInterestedMedia": ["_id": PrimaryKey.myInterestedMediaId],
                 ]
@@ -76,9 +90,9 @@ extension CreateImageStateObject {
 extension CreateImageStateObject {
     enum Event {
         case onTriggerSaveMedium
-        case onProgress(RxProgress)
-        case onSavedMediumSuccess(MediumFragment)
-        case onSavedMediumError(Error)
+        case onProgress(RxProgress, Int)
+        case onSavedMediumSuccess(MediumFragment, Int)
+        case onSavedMediumError(Error, Int)
 //        case triggerCancel
     }
 }
@@ -90,19 +104,25 @@ extension CreateImageStateObject: IsFeedbackStateObject {
         case .onTriggerSaveMedium:
             guard shouldSaveMedium else { return }
             triggerSaveMediumQuery = true
-        case .onProgress(let progress):
-            self.progress?.bytesWritten = Int(progress.bytesWritten)
-            self.progress?.totalBytes = Int(progress.totalBytes)
-        case .onSavedMediumSuccess(let medium):
+        case .onProgress(let progress, let index):
+            saveMediumStates[index].progress?.bytesWritten = Int(progress.bytesWritten)
+            saveMediumStates[index].progress?.totalBytes = Int(progress.totalBytes)
+        case .onSavedMediumSuccess(let medium, let index):
             let mediumObject = realm.create(MediumObject.self, value: medium.snapshot, update: true)
-            savedMedium = mediumObject
+            saveMediumStates[index].savedMedium = mediumObject
             myMedia?.items.insert(mediumObject, at: 0)
             myInterestedMedia?.items.insert(mediumObject, at: 0)
-            triggerSaveMediumQuery = false
-        case .onSavedMediumError(let error):
-            savedMedium = nil
-            savedError = error.localizedDescription
-            triggerSaveMediumQuery = false
+            finished += 1
+            if allFinished {
+                triggerSaveMediumQuery = false
+            }
+        case .onSavedMediumError(let error, let index):
+            saveMediumStates[index].savedMedium = nil
+            saveMediumStates[index].savedError = error.localizedDescription
+            finished += 1
+            if allFinished {
+                triggerSaveMediumQuery = false
+            }
         }
     }
 }
@@ -111,19 +131,23 @@ final class CreateImageStateStore {
     
     let states: Driver<CreateImageStateObject>
     private let _state: CreateImageStateObject
-    private let imageKey: String
     
-    init(imageKey: String) throws {
+    init(imageKeys: [String]) throws {
         let realm = try Realm()
-        let _state = try CreateImageStateObject.create(imageKey: imageKey)(realm)
+        let _state = try CreateImageStateObject.create(imageKeys: imageKeys)(realm)
         let states = Observable.from(object: _state).asDriver(onErrorDriveWith: .empty())
         
-        self.imageKey = imageKey
         self._state = _state
         self.states = states
     }
     
     func on(event: CreateImageStateObject.Event) {
-        Realm.backgroundReduce(ofType: CreateImageStateObject.self, forPrimaryKey: imageKey, event: event)
+        Realm.backgroundReduce(ofType: CreateImageStateObject.self, forPrimaryKey: PrimaryKey.default, event: event)
+    }
+    
+    func saveMediumStates() -> Driver<[SaveMediumStateObject]> {
+        return Observable.collection(from: _state.saveMediumStates)
+            .asDriver(onErrorDriveWith: .empty())
+            .map { $0.toArray() }
     }
 }
