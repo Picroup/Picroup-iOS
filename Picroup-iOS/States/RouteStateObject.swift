@@ -113,7 +113,7 @@ extension RouteStateObject {
                 "popRoute": ["_id": _id],
                 "snackbar": ["_id": _id],
                 ]
-            return try realm.findOrCreate(RouteStateObject.self, forPrimaryKey: _id, value: value)
+            return try realm.update(RouteStateObject.self, value: value)
         }
     }
 }

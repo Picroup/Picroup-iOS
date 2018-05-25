@@ -74,7 +74,7 @@ extension ImageDetailStateObject {
                 "userRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
-            return try realm.findOrCreate(ImageDetailStateObject.self, forPrimaryKey: mediumId, value: value)
+            return try realm.update(ImageDetailStateObject.self, value: value)
         }
     }
 }

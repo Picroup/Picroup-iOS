@@ -88,7 +88,7 @@ extension UserFollowingsStateObject {
                 "userRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
-            return try realm.findOrCreate(UserFollowingsStateObject.self, forPrimaryKey: userId, value: value)
+            return try realm.update(UserFollowingsStateObject.self, value: value)
         }
     }
 }

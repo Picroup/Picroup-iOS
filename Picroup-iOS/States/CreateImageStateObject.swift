@@ -68,7 +68,7 @@ extension CreateImageStateObject {
                 "myMedia": ["_id": PrimaryKey.myMediaId],
                 "myInterestedMedia": ["_id": PrimaryKey.myInterestedMediaId],
                 ]
-            return try realm.findOrCreate(CreateImageStateObject.self, forPrimaryKey: imageKey, value: value)
+            return try realm.update(CreateImageStateObject.self, value: value)
         }
     }
 }

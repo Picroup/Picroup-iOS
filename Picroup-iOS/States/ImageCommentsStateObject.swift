@@ -64,7 +64,7 @@ extension ImageCommentsStateObject {
                 "comments": ["_id": PrimaryKey.commentsId(mediumId)],
                 "popRoute": ["_id": _id],
                 ]
-            return try realm.findOrCreate(ImageCommentsStateObject.self, forPrimaryKey: mediumId, value: value)
+            return try realm.update(ImageCommentsStateObject.self, value: value)
         }
     }
 }

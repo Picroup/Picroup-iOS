@@ -93,7 +93,7 @@ extension MeStateObject {
                 "userFollowersRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
-            return try realm.findOrCreate(MeStateObject.self, forPrimaryKey: _id, value: value)
+            return try realm.update(MeStateObject.self, value: value)
         }
     }
 }

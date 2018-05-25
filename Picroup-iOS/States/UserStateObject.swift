@@ -99,7 +99,7 @@ extension UserStateObject {
                 "popRoute": ["_id": _id],
                 "snackbar": ["_id": _id],
                 ]
-            return try realm.findOrCreate(UserStateObject.self, forPrimaryKey: userId, value: value)
+            return try realm.update(UserStateObject.self, value: value)
         }
     }
 }

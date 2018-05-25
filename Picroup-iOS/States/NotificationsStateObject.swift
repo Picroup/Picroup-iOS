@@ -66,7 +66,7 @@ extension NotificationsStateObject {
                 "imageCommetsRoute": ["_id": _id],
                 "userRoute": ["_id": _id],
                 ]
-            return try realm.findOrCreate(NotificationsStateObject.self, forPrimaryKey: _id, value: value)
+            return try realm.update(NotificationsStateObject.self, value: value)
         }
     }
 }

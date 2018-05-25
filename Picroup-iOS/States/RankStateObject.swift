@@ -57,7 +57,7 @@ extension RankStateObject {
                 "loginRoute": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
                 ]
-            return try realm.findOrCreate(RankStateObject.self, forPrimaryKey: _id, value: value)
+            return try realm.update(RankStateObject.self, value: value)
         }
     }
 }

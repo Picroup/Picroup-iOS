@@ -10,10 +10,18 @@ import RealmSwift
 
 extension Realm {
     
-    public func findOrCreate<Element, KeyType>(_ type: Element.Type, forPrimaryKey key: KeyType, value: Any) throws -> Element where Element : Object {
-        if let element = object(ofType: type, forPrimaryKey: key) {
-            return element
-        }
+//    public func findOrCreate<Element, KeyType>(_ type: Element.Type, forPrimaryKey key: KeyType, value: Any) throws -> Element where Element : Object {
+//        if let element = object(ofType: type, forPrimaryKey: key) {
+//            return element
+//        }
+//        var element: Element?
+//        try write {
+//            element = create(type, value: value, update: true)
+//        }
+//        return element!
+//    }
+    
+    public func update<Element>(_ type: Element.Type, value: Any) throws -> Element where Element : Object {
         var element: Element?
         try write {
             element = create(type, value: value, update: true)

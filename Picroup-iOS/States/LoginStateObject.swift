@@ -55,7 +55,7 @@ extension LoginStateObject {
                 "_id": _id,
                 "session": ["_id": _id],
             ]
-            return try realm.findOrCreate(LoginStateObject.self, forPrimaryKey: _id, value: value)
+            return try realm.update(LoginStateObject.self, value: value)
         }
     }
 }

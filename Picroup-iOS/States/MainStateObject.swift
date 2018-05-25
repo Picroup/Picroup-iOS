@@ -27,7 +27,7 @@ extension MainStateObject {
                 "_id": _id,
                 "session": ["_id": _id],
                 ]
-            return try realm.findOrCreate(MainStateObject.self, forPrimaryKey: _id, value: value)
+            return try realm.update(MainStateObject.self, value: value)
         }
     }
 }

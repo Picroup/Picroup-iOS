@@ -67,7 +67,7 @@ extension ReputationsStateObject {
                 "userRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
-            return try realm.findOrCreate(ReputationsStateObject.self, forPrimaryKey: _id, value: value)
+            return try realm.update(ReputationsStateObject.self, value: value)
         }
     }
 }
