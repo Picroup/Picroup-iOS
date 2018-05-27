@@ -1,0 +1,12 @@
+fragment ReputationFragment on ReputationLink {
+    _id
+    userId
+    toUserId
+    mediumId
+    createdAt
+    value
+    kind
+    viewed
+    user { ...UserFragment }
+    medium { ...MediumFragment }
+}

@@ -10,5 +10,9 @@ import Apollo
 
 extension ApolloClient {
     
-    static let shared = ApolloClient(url: URL(string: "\(Config.baseURL)/graphql")!)
+    static let shared: ApolloClient = {
+        let client = ApolloClient(url: URL(string: "\(Config.baseURL)/graphql")!)
+        client.cacheKeyForObject = { $0["id"] }
+        return client
+    }()
 }

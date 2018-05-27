@@ -1,0 +1,9 @@
+query MyStaredMedia($userId: ID!, $cursor: Float = null) {
+    user(userId: $userId) {
+        staredMedia(cursor: $cursor) {
+            ...CursorMediaFragment
+        }
+    }
+}
+
+

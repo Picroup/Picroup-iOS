@@ -1,0 +1,8 @@
+query MyReputations($userId: ID!, $cursor: Float = null) {
+    user(userId: $userId) {
+        reputationLinks(cursor: $cursor) {
+            ...CursorReputationLinksFragment
+        }
+    }
+}
+

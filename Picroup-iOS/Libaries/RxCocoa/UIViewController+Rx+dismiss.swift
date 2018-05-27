@@ -17,4 +17,10 @@ extension Reactive where Base: UIViewController {
             vc.dismiss(animated: flag, completion: completion)
         }
     }
+    
+    public func pop(animated flag: Bool, completion: (() -> Swift.Void)? = nil) -> Binder<Void> {
+        return Binder(base) { vc, _ in
+            vc.navigationController?.popViewController(animated: flag)
+        }
+    }
 }

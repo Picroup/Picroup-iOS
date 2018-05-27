@@ -1,0 +1,5 @@
+mutation SaveComment($userId: ID!, $mediumId: ID!, $content: String!) {
+    saveComment(userId: $userId, mediumId: $mediumId, content: $content) {
+        ...CommentFragment
+    }
+}

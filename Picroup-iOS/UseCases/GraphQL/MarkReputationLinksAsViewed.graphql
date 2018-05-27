@@ -1,0 +1,7 @@
+query MarkReputationLinksAsViewed($userId: ID!) {
+    user(userId: $userId) {
+        markReputationLinksAsViewed {
+            _id
+        }
+    }
+}

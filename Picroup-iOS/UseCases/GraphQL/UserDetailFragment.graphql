@@ -1,0 +1,12 @@
+fragment UserDetailFragment on User {
+    _id
+    username
+    avatarId
+    followingsCount
+    followersCount
+    reputation
+    gainedReputation
+    notificationsCount
+}
+
+

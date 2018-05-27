@@ -1,0 +1,6 @@
+query SearchUser($username: String!, $followedByUserId: ID!) {
+    searchUser(username: $username) {
+        followed(byUserId: $followedByUserId)
+        ...UserFragment
+    }
+}

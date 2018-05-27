@@ -1,0 +1,8 @@
+query MyNotifications($userId: ID!, $cursor: Float = null) {
+    user(userId: $userId) {
+        notifications(cursor: $cursor) {
+            ...CursorNotoficationsFragment
+        }
+    }
+}
+

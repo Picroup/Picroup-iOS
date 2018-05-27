@@ -1,0 +1,8 @@
+query MediumComments($mediumId: ID!, $cursor: Float) {
+    medium(mediumId: $mediumId) {
+        comments(cursor: $cursor) {
+            ...CursorCommentsFragment
+        }
+    }
+}
+

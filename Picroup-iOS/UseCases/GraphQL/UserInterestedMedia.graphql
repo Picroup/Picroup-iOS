@@ -1,0 +1,9 @@
+query UserInterestedMedia($userId: ID!, $cursor: Float = null) {
+    user(userId: $userId) {
+        interestedMedia(cursor: $cursor) {
+            ...CursorMediaFragment
+        }
+    }
+}
+
+

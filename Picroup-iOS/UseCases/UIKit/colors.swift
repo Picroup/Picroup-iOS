@@ -10,4 +10,5 @@ extension UIColor {
     static let secondaryLight = UIColor(red: 1.00, green: 0.47, blue: 0.69, alpha: 1.0);
     static let secondaryDark = UIColor(red: 0.78, green: 0.00, blue: 0.33, alpha: 1.0);
     static let secondaryText = UIColor(red: 0.00, green: 0.00, blue: 0.00, alpha: 1.0);
+    static let background = UIColor(red: 250 / 255, green: 250 / 255, blue: 250 / 255, alpha: 1.0);
 }

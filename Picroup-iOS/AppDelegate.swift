@@ -12,26 +12,38 @@ import RxCocoa
 import RxFeedback
 import Material
 import Apollo
+import Kingfisher
+
+var appStateService: AppStateService?
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var router: Router?
 
-    private let disposeBag = DisposeBag()
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let window = UIWindow(frame: Screen.bounds)
-        window.tintColor = UIColor.primary
-//        let relay = PublishRelay<UserQuery.Data.User>()
-//        let rootViewController = LoginViewController(dependency: (client, relay.accept))
-//        RouterService.Login.loginViewController(client: client, observer: relay.accept)
-//        let rootViewController = RouterService.Main.mainViewController()
-        window.rootViewController = SnackbarController(rootViewController: MainTabBarController())
-        window.makeKeyAndVisible()
-        self.window = window
+        ImageCache.default.maxDiskCacheSize = 200 * 1024 * 1024
+        prepareWindow()
+        setupRouter()
+        setupAppStateService()
         return true
     }
-
+    
+    private func prepareWindow() {
+        let window = UIWindow(frame: Screen.bounds)
+        window.tintColor = UIColor.primary
+        window.makeKeyAndVisible()
+        self.window = window
+    }
+    
+    private func setupRouter() {
+        router = Router(window: window!)
+        router!.setupRxfeedback()
+    }
+    
+    private func setupAppStateService() {
+        appStateService = AppStateService()
+        appStateService!.setupRxfeedback()
+    }
 }
-

@@ -1,0 +1,12 @@
+fragment NotificationFragment on Notification {
+    _id
+    userId
+    toUserId
+    mediumId
+    content
+    createdAt
+    kind
+    viewed
+    user { ...UserFragment }
+    medium { ...MediumFragment }
+}
