@@ -34,6 +34,8 @@ final class LoginStateObject: PrimaryObject {
     @objc dynamic var password: String = ""
     @objc dynamic var loginError: String?
     @objc dynamic var triggerLoginQuery: Bool = false
+    
+    @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension LoginStateObject {
@@ -54,7 +56,8 @@ extension LoginStateObject {
             let value: Any = [
                 "_id": _id,
                 "session": ["_id": _id],
-            ]
+                "snackbar": ["_id": _id],
+                ]
             return try realm.update(LoginStateObject.self, value: value)
         }
     }
@@ -84,10 +87,14 @@ extension LoginStateObject: IsFeedbackStateObject {
             session?.currentUser = UserObject.create(from: data)(realm)
             loginError = nil
             triggerLoginQuery = false
+            snackbar?.message = "登录成功"
+            snackbar?.version = UUID().uuidString
         case .onLoginError(let error):
             session?.currentUser = nil
             loginError = error.localizedDescription
             triggerLoginQuery = false
+            snackbar?.message = loginError
+            snackbar?.version = UUID().uuidString
         case .onChangeUsername(let username):
             self.username = username
         case .onChangePassword(let password):

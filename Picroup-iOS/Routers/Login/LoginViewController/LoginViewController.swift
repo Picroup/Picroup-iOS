@@ -27,27 +27,24 @@ class LoginViewController: UIViewController {
         
         guard let store = try? LoginStateStore() else { return }
         
-        presenter = LoginViewPresenter(view: view)
+        presenter = LoginViewPresenter()
+        presenter.setup(view: view, navigationItem: navigationItem)
         
-        let uiFeedback: Feedback = bind(self) { [snackbarController = snackbarController!] (me, state) in
+        let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
                 state.map { $0.username }.distinctUntilChanged().drive(presenter.usernameField.rx.text),
                 state.map { $0.password }.distinctUntilChanged().drive(presenter.passwordField.rx.text),
                 state.map { $0.shouldHideUseenameWarning }.distinctUntilChanged().drive(presenter.usernameField.detailLabel.rx.isHidden),
                 state.map { $0.shouldHidePasswordWarning }.distinctUntilChanged().drive(presenter.passwordField.detailLabel.rx.isHidden),
-                state.map { $0.isLoginButtonEnabled }.distinctUntilChanged().drive(presenter.raisedButton.rx.isEnabledWithBackgroundColor(.secondary)),
+                state.map { $0.isLoginButtonEnabled }.distinctUntilChanged().drive(presenter.loginButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 state.map { $0.triggerLoginQuery }.distinctUntilChanged().mapToVoid().drive(presenter.usernameField.rx.resignFirstResponder()),
                 state.map { $0.triggerLoginQuery }.distinctUntilChanged().mapToVoid().drive(presenter.passwordField.rx.resignFirstResponder()),
-                state.map { $0.session?.currentUser }.distinctUnwrap().map { _ in "登录成功" }.drive(snackbarController.rx.snackbarText),
-                state.map { $0.loginError }.distinctUnwrap().drive(snackbarController.rx.snackbarText),
-                state.map { $0.session?.currentUser }.distinctUnwrap().mapToVoid().delay(2.3).drive(me.rx.dismiss(animated: true)),
-                presenter.closeButton.rx.tap.bind(to: me.rx.dismiss(animated: true))
                 ]
             let events: [Signal<LoginStateObject.Event>] = [
                 presenter.usernameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangeUsername),
                 presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangePassword),
-                presenter.raisedButton.rx.tap.asSignal().map { LoginStateObject.Event.onTriggerLogin }
+                presenter.loginButton.rx.tap.asSignal().map { LoginStateObject.Event.onTriggerLogin },
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
@@ -89,16 +86,17 @@ private extension LoginStateObject {
     }
 }
 
-extension Reactive where Base: SnackbarController {
-    var snackbarText: Binder<String> {
-        return Binder(base) { snackbarController, text in
-//            let undoButton = FlatButton(title: "Undo", titleColor: Color.yellow.base)
-//            undoButton.pulseAnimation = .backing
-//            undoButton.titleLabel?.font = snackbarController.snackbar.textLabel.font
-//            snackbarController.snackbar.rightViews = [undoButton]
-            snackbarController.snackbar.text = text
-            snackbarController.animate(snackbar: .visible)
-            snackbarController.animate(snackbar: .hidden, delay: 2)
-        }
-    }
-}
+//extension Reactive where Base: SnackbarController {
+//    var snackbarText: Binder<String> {
+//        return Binder(base) { snackbarController, text in
+////            let undoButton = FlatButton(title: "Undo", titleColor: Color.yellow.base)
+////            undoButton.pulseAnimation = .backing
+////            undoButton.titleLabel?.font = snackbarController.snackbar.textLabel.font
+////            snackbarController.snackbar.rightViews = [undoButton]
+//            snackbarController.snackbar.text = text
+//            snackbarController.animate(snackbar: .visible)
+//            snackbarController.animate(snackbar: .hidden, delay: 2)
+//        }
+//    }
+//}
+

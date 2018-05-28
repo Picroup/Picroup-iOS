@@ -65,7 +65,9 @@ final class Router {
             .drive(Binder(self) { (me, imageKeys) in
                 print(imageKeys)
                 let vc = RouterService.Image.createImageViewController(dependency: imageKeys)
-                me.currentViewController?.present(SnackbarController(rootViewController: vc), animated: true)
+                vc.hidesBottomBarWhenPushed = true
+                me.currentNavigationController?.pushViewController(vc, animated: true)
+//                me.currentViewController?.present(SnackbarController(rootViewController: vc), animated: true)
             })
         
         _ = store.userRoute().distinctUntilChanged { $0.0.version ?? "" }.skip(1)
@@ -108,8 +110,8 @@ final class Router {
         _ = store.loginRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .drive(Binder(self) { (me, _) in
                 let vc = RouterService.Login.loginViewController()
-                let sc = SnackbarController(rootViewController: vc)
-                me.currentNavigationController?.present(sc, animated: true)
+                vc.hidesBottomBarWhenPushed = true
+                me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
         _ = store.popRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
@@ -125,7 +127,6 @@ final class Router {
                 me.currentNavigationController?.snackbarController?.animate(snackbar: .hidden, delay: 3)
             })
         
-        
         _ = store.session().debug("session").map { $0.isLogin }.distinctUntilChanged().drive(Binder(self) { (me, isLogin) in
             switch (isLogin, me.mainTabBarController) {
             case (false, nil):
@@ -137,7 +138,7 @@ final class Router {
                     return result
                 }()
                 me.mainTabBarController = mtvc
-                me._window.rootViewController = mtvc
+                me._window.rootViewController = SnackbarController(rootViewController: mtvc)
             case (true, nil):
                 let mtvc: MainTabBarController = {
                     let result = RouterService.Main.mainTabBarController()
@@ -150,7 +151,7 @@ final class Router {
                     return result
                 }()
                 me.mainTabBarController = mtvc
-                me._window.rootViewController = mtvc
+                me._window.rootViewController = SnackbarController(rootViewController: mtvc)
             case (false, let mainTabBarController?):
                 mainTabBarController.viewControllers = [
                     RouterService.Main.rankViewController(),
