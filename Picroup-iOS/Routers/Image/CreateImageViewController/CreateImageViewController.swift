@@ -36,6 +36,9 @@ class CreateImageViewController: UIViewController {
                 return
         }
         
+        navigationItem.titleLabel.text = "共 \(imageKeys.count) 张" 
+        navigationItem.titleLabel.textColor = .primaryText
+
         let uiFeedback: Feedback =  bind(self) { (me, state) in
             let subscriptions = [
                 store.saveMediumStates().drive(me.presenter.collectionView.rx.items(cellIdentifier: "RankMediumCell", cellType: RankMediumCell.self)) { index, item, cell in

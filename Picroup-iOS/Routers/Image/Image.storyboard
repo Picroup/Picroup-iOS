@@ -616,7 +616,7 @@
                                     <size key="itemSize" width="184" height="184"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="64"/>
+                                    <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="2"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RankMediumCell" id="4gk-Vb-EMd" customClass="RankMediumCell" customModule="Picroup_iOS" customModuleProvider="target">
@@ -668,7 +668,7 @@
                                 </cells>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="N4H-1N-oyF" firstAttribute="bottom" secondItem="cM7-DR-10O" secondAttribute="bottom" constant="24" id="9U4-8N-9Ft"/>
                             <constraint firstItem="cM7-DR-10O" firstAttribute="top" secondItem="vyu-uI-IIy" secondAttribute="bottom" constant="24" id="Kio-76-KQw"/>
