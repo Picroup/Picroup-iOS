@@ -15,7 +15,6 @@ import Material
 class CreateImagePresenter: NSObject {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var cancelButton: RaisedButton!
     @IBOutlet weak var saveButton: RaisedButton!
 }
 

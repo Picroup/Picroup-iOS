@@ -36,6 +36,9 @@ class CreateImageViewController: UIViewController {
                 return
         }
         
+        navigationItem.titleLabel.text = "共 \(imageKeys.count) 张" 
+        navigationItem.titleLabel.textColor = .primaryText
+
         let uiFeedback: Feedback =  bind(self) { (me, state) in
             let subscriptions = [
                 store.saveMediumStates().drive(me.presenter.collectionView.rx.items(cellIdentifier: "RankMediumCell", cellType: RankMediumCell.self)) { index, item, cell in
@@ -44,9 +47,6 @@ class CreateImageViewController: UIViewController {
                     cell.progressView.progress = item.progress?.completed ?? 0
                 },
                 state.map { $0.shouldSaveMedium }.distinctUntilChanged().drive(me.presenter.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
-                me.presenter.cancelButton.rx.tap.asSignal().emit(to: me.rx.dismiss(animated: true)),
-                state.map { $0.allSuccess }.distinctUnwrap().map { _ in "已分享" }.drive(me.snackbarController!.rx.snackbarText),
-                state.map { $0.allSuccess }.distinctUnwrap().mapToVoid().delay(2.3).drive(me.rx.dismiss(animated: true)),
                 ]
             let events: [Signal<CreateImageStateObject.Event>] = [
                 me.presenter.saveButton.rx.tap.asSignal().map { CreateImageStateObject.Event.onTriggerSaveMedium }
@@ -77,7 +77,7 @@ class CreateImageViewController: UIViewController {
             uiFeedback(states),
             saveMediums(states)
             )
-            .debug("CreateImageStateObject", trimOutput: true)
+            .debug("CreateImageState", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
     

@@ -12,37 +12,37 @@ import RxCocoa
 
 class LoginViewPresenter {
     
-    var closeButton: IconButton!
     var usernameField: ErrorTextField!
     var passwordField: TextField!
-    var raisedButton: RaisedButton!
-    let view: UIView
+    var loginButton: RaisedButton!
+    var registerButton: FlatButton!
+    weak var view: UIView!
+    weak var navigationItem: UINavigationItem!
 
     fileprivate let constant: CGFloat = 32
     
-    init(view: UIView) {
+    func setup(view: UIView, navigationItem: UINavigationItem) {
+        self.navigationItem = navigationItem
         self.view = view
-        self.setup()
-    }
-    
-    private func setup() {
         view.backgroundColor = Color.grey.lighten5
-        prepareCloseButton()
+        prepareNavigationItem()
         prepareResignResponderButton()
         preparePasswordField()
         prepareUsernameField()
     }
     
-    fileprivate func prepareCloseButton() {
-        closeButton = IconButton(image: UIImage(named: "baseline_close_black_24pt"), tintColor: .primaryLight)
-        view.layout(closeButton).topLeft(top: 24, left: 24)
+    fileprivate func prepareNavigationItem() {
+//        navigationItem.titleLabel.text = "登录"
+//        navigationItem.titleLabel.textColor = .primaryText
+        registerButton = FlatButton(title: "注册", titleColor: .primaryText)
+        navigationItem.rightViews = [registerButton]
     }
     
     fileprivate func prepareResignResponderButton() {
-        raisedButton = RaisedButton(title: "登录", titleColor: .primaryText)
-        raisedButton.backgroundColor = .secondary
-        raisedButton.isEnabled = true
-        view.layout(raisedButton).center(offsetX: 100).width(100).height(constant)
+        loginButton = RaisedButton(title: "登录", titleColor: .primaryText)
+        loginButton.backgroundColor = .secondary
+        loginButton.isEnabled = true
+        view.layout(loginButton).center(offsetX: 100).width(100).height(constant)
     }
     
     fileprivate func prepareUsernameField() {
@@ -54,7 +54,7 @@ class LoginViewPresenter {
         usernameField.dividerActiveColor = .primary
         usernameField.autocapitalizationType = .none
         
-        view.layout(usernameField).center(offsetY: -raisedButton.bounds.height - passwordField.bounds.height - 120).width(300)
+        view.layout(usernameField).center(offsetY: -loginButton.bounds.height - passwordField.bounds.height - 120).width(300)
     }
     
     fileprivate func preparePasswordField() {
@@ -71,7 +71,7 @@ class LoginViewPresenter {
         // Setting the visibilityIconButton color.
         passwordField.visibilityIconButton?.tintColor = .primary
         
-        view.layout(passwordField).center(offsetY: -raisedButton.bounds.height - 60).width(300)
+        view.layout(passwordField).center(offsetY: -loginButton.bounds.height - 60).width(300)
     }
     
 

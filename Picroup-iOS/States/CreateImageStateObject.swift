@@ -44,12 +44,14 @@ final class CreateImageStateObject: PrimaryObject {
     let imageKeys = List<String>()
     let saveMediumStates = List<SaveMediumStateObject>()
     @objc dynamic var finished: Int = 0
-
     @objc dynamic var triggerSaveMediumQuery: Bool = false
 
     @objc dynamic var myMedia: CursorMediaObject?
     @objc dynamic var myInterestedMedia: CursorMediaObject?
 
+    @objc dynamic var popRoute: PopRouteObject?
+    
+    @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension CreateImageStateObject {
@@ -61,12 +63,7 @@ extension CreateImageStateObject {
         return !triggerSaveMediumQuery
     }
     var allFinished: Bool { return finished == imageKeys.count }
-    var allSuccess: Void? {
-        let failState = saveMediumStates.first(where: { $0.savedError != nil })
-        return (allFinished && failState == nil) ? () : nil
-    }
 }
-
 
 extension CreateImageStateObject {
     
@@ -81,6 +78,8 @@ extension CreateImageStateObject {
                 "finished": 0,
                 "myMedia": ["_id": PrimaryKey.myMediaId],
                 "myInterestedMedia": ["_id": PrimaryKey.myInterestedMediaId],
+                "popRoute": ["_id": _id],
+                "snackbar": ["_id": _id],
                 ]
             return try realm.update(CreateImageStateObject.self, value: value)
         }
@@ -115,6 +114,13 @@ extension CreateImageStateObject: IsFeedbackStateObject {
             finished += 1
             if allFinished {
                 triggerSaveMediumQuery = false
+                let failState = saveMediumStates.first(where: { $0.savedError != nil })
+                let allSuccess = failState == nil
+                if allSuccess {
+                    snackbar?.message = "已分享"
+                    snackbar?.version = UUID().uuidString
+                    popRoute?.version = UUID().uuidString
+                }
             }
         case .onSavedMediumError(let error, let index):
             saveMediumStates[index].savedMedium = nil
