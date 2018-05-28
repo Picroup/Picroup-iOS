@@ -15,6 +15,7 @@ class ReputationsViewPresenter: NSObject {
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var reputationCountLabel: UILabel!
+    @IBOutlet weak var loadFooterView: LoadFooterView!
 
     typealias Section = AnimatableSectionModel<String, ReputationObject>
     typealias DataSource = RxTableViewSectionedAnimatedDataSource<Section>

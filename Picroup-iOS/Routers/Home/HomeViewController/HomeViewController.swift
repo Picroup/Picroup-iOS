@@ -33,10 +33,12 @@ class HomeViewController: UIViewController {
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
             let _events = PublishRelay<HomeStateObject.Event>()
+            let footerState = PublishRelay<LoadFooterViewState>()
             let subscriptions = [
-                store.myInterestedMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events)),
+                store.myInterestedMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events, footerState.asSignal())),
                 state.map { $0.isReloading }.drive(presenter.refreshControl.rx.isRefreshing),
-                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true))
+                state.map { $0.footerState }.asSignalOnErrorRecoverEmpty().emit(to: footerState),
+                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
             ]
             let events: [Signal<HomeStateObject.Event>] = [
                 .just(.onTriggerReloadMyInterestedMedia),
@@ -74,5 +76,13 @@ class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
+}
+
+extension HomeStateObject {
+    
+    var footerState: LoadFooterViewState {
+        let (cursor, trigger, error) = (myInterestedMedia?.cursor.value, triggerMyInterestedMediaQuery, myInterestedMediaError)
+        return LoadFooterViewState.create(cursor: cursor, trigger: trigger, error: error)
+    }
 }
 

@@ -14,6 +14,7 @@ import RxDataSources
 class NotificationsViewPresenter: NSObject {
     @IBOutlet weak var tableView: UITableView!
     weak var navigationItem: UINavigationItem!
+    @IBOutlet weak var loadFooterView: LoadFooterView!
     
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem

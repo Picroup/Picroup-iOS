@@ -34,6 +34,9 @@
 		45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */; };
 		45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */; };
 		45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */; };
+		4543ECE520BC38FA002F7C18 /* LoadFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4543ECE420BC38FA002F7C18 /* LoadFooterView.xib */; };
+		4543ECE720BC39DC002F7C18 /* LoadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ECE620BC39DC002F7C18 /* LoadFooterView.swift */; };
+		4543ECE920BC4121002F7C18 /* RxCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ECE820BC4121002F7C18 /* RxCollectionReusableView.swift */; };
 		454A4C42209C2F160063E829 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454A4C41209C2F160063E829 /* LocalStorage.swift */; };
 		454B4A4C20ABB73900990063 /* MeStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B4A4B20ABB73900990063 /* MeStateObject.swift */; };
 		454B4A4E20ABB78600990063 /* ImageDetailStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B4A4D20ABB78600990063 /* ImageDetailStateObject.swift */; };
@@ -186,6 +189,9 @@
 		45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
 		45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageViewController.swift; sourceTree = "<group>"; };
 		45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+dismiss.swift"; sourceTree = "<group>"; };
+		4543ECE420BC38FA002F7C18 /* LoadFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadFooterView.xib; sourceTree = "<group>"; };
+		4543ECE620BC39DC002F7C18 /* LoadFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFooterView.swift; sourceTree = "<group>"; };
+		4543ECE820BC4121002F7C18 /* RxCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCollectionReusableView.swift; sourceTree = "<group>"; };
 		454A4C41209C2F160063E829 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		454B4A4B20ABB73900990063 /* MeStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeStateObject.swift; sourceTree = "<group>"; };
 		454B4A4D20ABB78600990063 /* ImageDetailStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailStateObject.swift; sourceTree = "<group>"; };
@@ -402,6 +408,7 @@
 				451CD31A207A38F20063A972 /* UIResponder+Rx.swift */,
 				455D69072080890B00C651A0 /* UIScrollView+Rx.swift */,
 				454F72952089B44500850471 /* RxCollectionViewCell.swift */,
+				4543ECE820BC4121002F7C18 /* RxCollectionReusableView.swift */,
 				45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */,
 				454F72972089B46300850471 /* RxTableViewCell.swift */,
 			);
@@ -470,6 +477,15 @@
 				45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */,
 			);
 			path = CreateImageViewController;
+			sourceTree = "<group>";
+		};
+		4543ECE320BC38D1002F7C18 /* LoadFooterView */ = {
+			isa = PBXGroup;
+			children = (
+				4543ECE420BC38FA002F7C18 /* LoadFooterView.xib */,
+				4543ECE620BC39DC002F7C18 /* LoadFooterView.swift */,
+			);
+			path = LoadFooterView;
 			sourceTree = "<group>";
 		};
 		454F728D208822EC00850471 /* LocalStorage */ = {
@@ -841,6 +857,7 @@
 		45E240B320862970004B58EF /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				4543ECE320BC38D1002F7C18 /* LoadFooterView */,
 				45E240B420862981004B58EF /* HideNavigationBarViewController.swift */,
 				454F72992089BA1300850471 /* UIView+IBInspectable.swift */,
 			);
@@ -968,6 +985,7 @@
 				45FC0BE620A418BF006AAF3D /* CommentFragment.graphql in Resources */,
 				45BA0D83209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql in Resources */,
 				45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */,
+				4543ECE520BC38FA002F7C18 /* LoadFooterView.xib in Resources */,
 				454F72A2208DD1AA00850471 /* MyMedia.graphql in Resources */,
 				457BD99620B304F7007F0492 /* UserFollowings.graphql in Resources */,
 				45D04F7C2089FD0500AC2226 /* UserInterestedMedia.graphql in Resources */,
@@ -1122,6 +1140,7 @@
 				45C1994820A973DD001924B9 /* MediumObject.swift in Sources */,
 				45B0205A20AEA35600BD5D8F /* UserStateObject.swift in Sources */,
 				45FC0BF320A42F26006AAF3D /* UserViewController.swift in Sources */,
+				4543ECE720BC39DC002F7C18 /* LoadFooterView.swift in Sources */,
 				454B4A4E20ABB78600990063 /* ImageDetailStateObject.swift in Sources */,
 				454A4C42209C2F160063E829 /* LocalStorage.swift in Sources */,
 				454F729A2089BA1300850471 /* UIView+IBInspectable.swift in Sources */,
@@ -1179,6 +1198,7 @@
 				457BD97F20A9C7B5007F0492 /* IsCursorItemsObject.swift in Sources */,
 				4595F212207A000C0040E5FA /* LoginViewPresenter.swift in Sources */,
 				45E6C24A20863AC3003D7AA8 /* QueryState.swift in Sources */,
+				4543ECE920BC4121002F7C18 /* RxCollectionReusableView.swift in Sources */,
 				45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */,
 				457BD98720AC68EA007F0492 /* ReputationsStateObject.swift in Sources */,
 				45E240B520862981004B58EF /* HideNavigationBarViewController.swift in Sources */,

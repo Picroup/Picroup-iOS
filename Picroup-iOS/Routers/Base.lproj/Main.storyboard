@@ -28,8 +28,8 @@
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="gxS-p4-IkQ">
                                     <size key="itemSize" width="184" height="184"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="64"/>
+                                    <size key="footerReferenceSize" width="50" height="80"/>
+                                    <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="2"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RankMediumCell" id="ase-f4-Gzo" customClass="RankMediumCell" customModule="Picroup_iOS" customModuleProvider="target">
@@ -79,6 +79,25 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CollectionLoadFooterView" id="fXF-p0-iDP" customClass="CollectionLoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="188" width="375" height="80"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wKq-Rl-3Hn" customClass="LoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="wKq-Rl-3Hn" secondAttribute="trailing" id="Ksf-OY-fVE"/>
+                                        <constraint firstItem="wKq-Rl-3Hn" firstAttribute="leading" secondItem="fXF-p0-iDP" secondAttribute="leading" id="cU2-ho-5gq"/>
+                                        <constraint firstItem="wKq-Rl-3Hn" firstAttribute="top" secondItem="fXF-p0-iDP" secondAttribute="top" id="fwH-8u-Dds"/>
+                                        <constraint firstAttribute="bottom" secondItem="wKq-Rl-3Hn" secondAttribute="bottom" id="ufm-xv-tvV"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="contentView" destination="wKq-Rl-3Hn" id="pbp-0D-zXM"/>
+                                    </connections>
+                                </collectionReusableView>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -118,8 +137,8 @@
                                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="YjU-AH-ekw">
                                                     <size key="itemSize" width="184" height="184"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                    <inset key="sectionInset" minX="2" minY="216" maxX="2" maxY="64"/>
+                                                    <size key="footerReferenceSize" width="50" height="80"/>
+                                                    <inset key="sectionInset" minX="2" minY="216" maxX="2" maxY="2"/>
                                                 </collectionViewFlowLayout>
                                                 <cells>
                                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RankMediumCell" id="NAU-ef-bCv" customClass="RankMediumCell" customModule="Picroup_iOS" customModuleProvider="target">
@@ -169,6 +188,25 @@
                                                         </connections>
                                                     </collectionViewCell>
                                                 </cells>
+                                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CollectionLoadFooterView" id="rG5-63-4HS" customClass="CollectionLoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="402" width="375" height="80"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Co6-t1-lL0" customClass="LoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </view>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="Co6-t1-lL0" secondAttribute="trailing" id="bdZ-Lg-heJ"/>
+                                                        <constraint firstItem="Co6-t1-lL0" firstAttribute="leading" secondItem="rG5-63-4HS" secondAttribute="leading" id="mJR-Uw-Bqg"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Co6-t1-lL0" secondAttribute="bottom" id="pjb-uS-bGe"/>
+                                                        <constraint firstItem="Co6-t1-lL0" firstAttribute="top" secondItem="rG5-63-4HS" secondAttribute="top" id="xPI-XN-O3h"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <outlet property="contentView" destination="Co6-t1-lL0" id="09R-u3-Lj0"/>
+                                                    </connections>
+                                                </collectionReusableView>
                                             </collectionView>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="A1y-iW-m3E">
                                                 <rect key="frame" x="375" y="0.0" width="375" height="667"/>
@@ -176,8 +214,8 @@
                                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="yGX-Mx-P6p">
                                                     <size key="itemSize" width="184" height="184"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                    <inset key="sectionInset" minX="2" minY="216" maxX="2" maxY="64"/>
+                                                    <size key="footerReferenceSize" width="50" height="80"/>
+                                                    <inset key="sectionInset" minX="2" minY="216" maxX="2" maxY="2"/>
                                                 </collectionViewFlowLayout>
                                                 <cells>
                                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RankMediumCell" id="aKe-hg-wjL" customClass="RankMediumCell" customModule="Picroup_iOS" customModuleProvider="target">
@@ -227,6 +265,25 @@
                                                         </connections>
                                                     </collectionViewCell>
                                                 </cells>
+                                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CollectionLoadFooterView" id="cgH-4n-H2q" customClass="CollectionLoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="402" width="375" height="80"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1GG-1A-MRR" customClass="LoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </view>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="1GG-1A-MRR" secondAttribute="trailing" id="5YI-g3-aXq"/>
+                                                        <constraint firstItem="1GG-1A-MRR" firstAttribute="leading" secondItem="cgH-4n-H2q" secondAttribute="leading" id="NqP-WX-FdO"/>
+                                                        <constraint firstItem="1GG-1A-MRR" firstAttribute="top" secondItem="cgH-4n-H2q" secondAttribute="top" id="jMD-bh-Ohf"/>
+                                                        <constraint firstAttribute="bottom" secondItem="1GG-1A-MRR" secondAttribute="bottom" id="s8o-Y3-NAp"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <outlet property="contentView" destination="1GG-1A-MRR" id="1zA-qx-HyG"/>
+                                                    </connections>
+                                                </collectionReusableView>
                                             </collectionView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -515,8 +572,8 @@
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="16" minimumInteritemSpacing="16" id="UTw-C0-LFh">
                                     <size key="itemSize" width="359" height="400"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="8" minY="8" maxX="8" maxY="200"/>
+                                    <size key="footerReferenceSize" width="50" height="80"/>
+                                    <inset key="sectionInset" minX="8" minY="8" maxX="8" maxY="8"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HomeImageCell" id="t4L-jO-2IB" customClass="HomeImageCell" customModule="Picroup_iOS" customModuleProvider="target">
@@ -659,6 +716,25 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CollectionLoadFooterView" id="12i-ZY-4nK" customClass="CollectionLoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="416" width="375" height="80"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sNR-0u-b8L" customClass="LoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="sNR-0u-b8L" secondAttribute="bottom" id="4Pu-uf-DT4"/>
+                                        <constraint firstAttribute="trailing" secondItem="sNR-0u-b8L" secondAttribute="trailing" id="KN5-lq-Qjw"/>
+                                        <constraint firstItem="sNR-0u-b8L" firstAttribute="top" secondItem="12i-ZY-4nK" secondAttribute="top" id="udv-yq-c7b"/>
+                                        <constraint firstItem="sNR-0u-b8L" firstAttribute="leading" secondItem="12i-ZY-4nK" secondAttribute="leading" id="yd4-9U-Bkp"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="contentView" destination="sNR-0u-b8L" id="G89-lx-cqk"/>
+                                    </connections>
+                                </collectionReusableView>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1170,10 +1246,10 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="72" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5yz-zf-q2h">
                                 <rect key="frame" x="0.0" y="68" width="375" height="599"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="WhG-re-IYn">
-                                    <rect key="frame" x="0.0" y="100" width="375" height="36"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="kUJ-Jq-VOJ" customClass="LoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="100" width="375" height="80"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReputationCell" id="7HR-i2-9O7" customClass="ReputationCell" customModule="Picroup_iOS" customModuleProvider="target">
@@ -1265,6 +1341,7 @@
                 <customObject id="rcJ-bd-wlG" customClass="ReputationsViewPresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
                         <outlet property="headerView" destination="2gT-xs-y2B" id="kyI-wX-W94"/>
+                        <outlet property="loadFooterView" destination="kUJ-Jq-VOJ" id="d3Y-vE-5P9"/>
                         <outlet property="reputationCountLabel" destination="Tyc-XJ-1lD" id="k2S-XW-p2E"/>
                         <outlet property="tableView" destination="5yz-zf-q2h" id="N2P-Tg-K2U"/>
                     </connections>
@@ -1603,10 +1680,10 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="72" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="My1-eZ-a6P">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="Dgx-vp-GV3">
-                                    <rect key="frame" x="0.0" y="100" width="375" height="36"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="Dgx-vp-GV3" customClass="LoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="100" width="375" height="80"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="NotificationCell" id="MwK-Or-tMu" customClass="NotificationCell" customModule="Picroup_iOS" customModuleProvider="target">
@@ -1685,6 +1762,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H93-Wy-bKW" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="cJa-20-xvH" customClass="NotificationsViewPresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
+                        <outlet property="loadFooterView" destination="Dgx-vp-GV3" id="OEh-0H-3CY"/>
                         <outlet property="tableView" destination="My1-eZ-a6P" id="zJ4-RS-YRW"/>
                     </connections>
                 </customObject>

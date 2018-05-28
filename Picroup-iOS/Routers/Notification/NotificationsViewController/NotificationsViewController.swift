@@ -37,7 +37,8 @@ class NotificationsViewController: UIViewController {
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let subscriptions = [
                 store.notifications().map { [Section(model: "", items: $0)] }.drive(presenter.items),
-                ]
+                state.map { $0.footerState }.asSignalOnErrorRecoverEmpty().emit(onNext: presenter.loadFooterView.on),
+            ]
             let events: [Signal<NotificationsStateObject.Event>] = [
                 .just(.onTriggerReload),
                 state.flatMapLatest {
@@ -87,6 +88,14 @@ class NotificationsViewController: UIViewController {
         presenter.tableView.rx.shouldHideNavigationBar()
             .emit(to: rx.setNavigationBarHidden(animated: true))
             .disposed(by: disposeBag)
+    }
+}
+
+extension NotificationsStateObject {
+    
+    var footerState: LoadFooterViewState {
+        let (cursor, trigger, error) = (notifications?.cursor.value, triggerNotificationsQuery, notificationsError)
+        return LoadFooterViewState.create(cursor: cursor, trigger: trigger, error: error)
     }
 }
 

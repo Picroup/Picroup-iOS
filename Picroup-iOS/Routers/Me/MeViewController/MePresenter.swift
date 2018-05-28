@@ -54,25 +54,33 @@ class MePresenter: NSObject {
         }
     }
     
-    private var dataSource: DataSource {
-        return DataSource(
-            configureCell: { dataSource, collectionView, indexPath, item in
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                let viewModel = RankMediumCell.ViewModel(item: item)
-                cell.configure(with: viewModel)
-                return cell
-        },
-            configureSupplementaryView: { dataSource, collectionView, title, indexPath in
-                return UICollectionReusableView()
-        })
+    private var dataSource: (Signal<LoadFooterViewState>) -> DataSource {
+        return { loadState in
+            return DataSource(
+                configureCell: { dataSource, collectionView, indexPath, item in
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
+                    let viewModel = RankMediumCell.ViewModel(item: item)
+                    cell.configure(with: viewModel)
+                    return cell
+            },
+                configureSupplementaryView: { dataSource, collectionView, title, indexPath in
+                    let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "CollectionLoadFooterView", for: indexPath) as! CollectionLoadFooterView
+                    loadState.emit(onNext: footer.contentView.on).disposed(by: footer.disposeBag)
+                    return footer
+            })
+        }
     }
     
-    var myMediaItems: (Observable<[Section]>) -> Disposable {
-        return myMediaCollectionView.rx.items(dataSource: dataSource)
+    var myMediaItems: (Signal<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
+        return { [myMediaCollectionView] loadState in
+            return myMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
+        }
     }
     
-    var myStaredMediaItems: (Observable<[Section]>) -> Disposable {
-        return myStardMediaCollectionView.rx.items(dataSource: dataSource)
+    var myStaredMediaItems: (Signal<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
+        return { [myStardMediaCollectionView] loadState in
+            return myStardMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
+        }
     }
 }
 

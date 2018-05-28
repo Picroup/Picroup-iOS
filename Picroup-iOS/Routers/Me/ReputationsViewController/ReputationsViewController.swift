@@ -28,11 +28,11 @@ class ReputationsViewController: UIViewController {
         
         typealias Section = ReputationsViewPresenter.Section
         
-        
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let subscriptions = [
                 state.map { $0.session?.currentUser?.reputation.value?.description ?? "0" }.drive(presenter.reputationCountLabel.rx.text),
                 store.reputations().map { [Section(model: "", items: $0)] }.drive(presenter.items),
+                state.map { $0.footerState }.asSignalOnErrorRecoverEmpty().emit(onNext: presenter.loadFooterView.on),
                 ]
             let events: [Signal<ReputationsStateObject.Event>] = [
                 .just(.onTriggerReload),
@@ -81,5 +81,13 @@ class ReputationsViewController: UIViewController {
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         
+    }
+}
+
+extension ReputationsStateObject {
+    
+    var footerState: LoadFooterViewState {
+        let (cursor, trigger, error) = (reputations?.cursor.value, triggerReputationsQuery, reputationsError)
+        return LoadFooterViewState.create(cursor: cursor, trigger: trigger, error: error)
     }
 }
