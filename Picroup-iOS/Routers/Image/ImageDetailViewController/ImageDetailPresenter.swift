@@ -64,7 +64,7 @@ extension ImageDetailPresenter: UICollectionViewDelegate, UICollectionViewDelega
 //            print("medium", medium)
             let width = collectionView.bounds.width
             let imageHeight = width / CGFloat(medium.detail?.aspectRatio.value ?? 1)
-            let height = imageHeight + 8 + 56 + 48 + 48
+            let height = imageHeight + 8 + 56 + 48 + 1 + 48
             return CGSize(width: width, height: height)
         case .recommendMedium:
             return CGSize(width: 184, height: 184)

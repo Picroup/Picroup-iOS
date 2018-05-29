@@ -58,6 +58,8 @@
 		45517D4A20BCDD8000F2D7DE /* CollectionLoadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4920BCDD8000F2D7DE /* CollectionLoadFooterView.swift */; };
 		45517D4C20BCE9BC00F2D7DE /* LoadFooterViewState+create.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4B20BCE9BC00F2D7DE /* LoadFooterViewState+create.swift */; };
 		45517D4E20BCEDE100F2D7DE /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4D20BCEDE100F2D7DE /* UserCell.swift */; };
+		45517D5020BCFF4C00F2D7DE /* UIView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4F20BCFF4C00F2D7DE /* UIView+Rx.swift */; };
+		45517D5220BD3EB400F2D7DE /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D5120BD3EB400F2D7DE /* Wireframe.swift */; };
 		45525D4A208C3CB500EAF00D /* CreateImagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */; };
 		45525D4F208C468500EAF00D /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D4E208C468500EAF00D /* Feedback.swift */; };
 		455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455414B2207E315900296FDE /* IsFeedbackState.swift */; };
@@ -221,6 +223,8 @@
 		45517D4920BCDD8000F2D7DE /* CollectionLoadFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionLoadFooterView.swift; sourceTree = "<group>"; };
 		45517D4B20BCE9BC00F2D7DE /* LoadFooterViewState+create.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoadFooterViewState+create.swift"; sourceTree = "<group>"; };
 		45517D4D20BCEDE100F2D7DE /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		45517D4F20BCFF4C00F2D7DE /* UIView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Rx.swift"; sourceTree = "<group>"; };
+		45517D5120BD3EB400F2D7DE /* Wireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wireframe.swift; sourceTree = "<group>"; };
 		45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImagePresenter.swift; sourceTree = "<group>"; };
 		45525D4E208C468500EAF00D /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
 		455414B2207E315900296FDE /* IsFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackState.swift; sourceTree = "<group>"; };
@@ -420,6 +424,7 @@
 				45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */,
 				45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */,
 				45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */,
+				45517D4F20BCFF4C00F2D7DE /* UIView+Rx.swift */,
 				458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */,
 				451CD31A207A38F20063A972 /* UIResponder+Rx.swift */,
 				455D69072080890B00C651A0 /* UIScrollView+Rx.swift */,
@@ -641,6 +646,7 @@
 				45517D4B20BCE9BC00F2D7DE /* LoadFooterViewState+create.swift */,
 				4595F213207A0CA20040E5FA /* UIImage+Color.swift */,
 				458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */,
+				45517D5120BD3EB400F2D7DE /* Wireframe.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -1129,6 +1135,7 @@
 				451DD4C320831287002C509A /* NSObject+objc.swift in Sources */,
 				45B0206520B4012E00BD5D8F /* UserFollowersStateObject.swift in Sources */,
 				451CD326207B9E5B0063A972 /* RouterService+Login.swift in Sources */,
+				45517D5220BD3EB400F2D7DE /* Wireframe.swift in Sources */,
 				455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */,
 				451DD4B9207E4880002C509A /* Client.swift in Sources */,
 				4595F2102079F6B60040E5FA /* LoginViewController.swift in Sources */,
@@ -1224,6 +1231,7 @@
 				45517D4E20BCEDE100F2D7DE /* UserCell.swift in Sources */,
 				455D69042080409A00C651A0 /* BaseNavigationController.swift in Sources */,
 				457BD98320AB12AD007F0492 /* RouteStateObject.swift in Sources */,
+				45517D5020BCFF4C00F2D7DE /* UIView+Rx.swift in Sources */,
 				45B0207120B5168E00BD5D8F /* SearchUserPresenter.swift in Sources */,
 				451CD328207BA39E0063A972 /* RouterService.swift in Sources */,
 				457BD97F20A9C7B5007F0492 /* IsCursorItemsObject.swift in Sources */,

@@ -37,6 +37,7 @@ class UserViewController: HideNavigationBarViewController {
         typealias Section = UserPresenter.Section
         
         let uiFeedback: Feedback = bind(presenter) { (presenter, state) -> Bindings<UserStateObject.Event> in
+            let myMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let meViewModel = state.map { UserViewModel(user: $0.user) }
             let subscriptions: [Disposable] = [
                 meViewModel.map { $0.avatarId }.drive(presenter.userAvatarImageView.rx.imageMinioId),
@@ -46,7 +47,8 @@ class UserViewController: HideNavigationBarViewController {
                 meViewModel.map { $0.followersCount }.drive(presenter.followersCountLabel.rx.text),
                 meViewModel.map { $0.followingsCount }.drive(presenter.followingsCountLabel.rx.text),
                 meViewModel.map { $0.followed }.drive(StarButtonPresenter.isSelected(base: presenter.followButton)),
-                store.userMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems),
+                store.userMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems(myMediaFooterState.asDriver())),
+                state.map { $0.myMediaFooterState }.drive(myMediaFooterState),
                 ]
             let events: [Signal<UserStateObject.Event>] = [
                 .of(.onTriggerReloadUser, .onTriggerReloadUserMedia),
@@ -121,5 +123,13 @@ class UserViewController: HideNavigationBarViewController {
             })
             .disposed(by: disposeBag)
 
+    }
+}
+
+extension UserStateObject {
+    
+    var myMediaFooterState: LoadFooterViewState {
+        let (cursor, trigger, error) = (userMedia?.cursor.value, triggerUserMediaQuery, userMediaError)
+        return LoadFooterViewState.create(cursor: cursor, trigger: trigger, error: error)
     }
 }

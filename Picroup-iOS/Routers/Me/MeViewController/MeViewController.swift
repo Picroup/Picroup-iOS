@@ -53,6 +53,9 @@ class MeViewController: HideNavigationBarViewController {
             
             let events: [Signal<MeStateObject.Event>] = [
                 .of(.onTriggerReloadMe, .onTriggerReloadMyMedia, .onTriggerReloadMyStaredMedia),
+                presenter.moreButton.rx.tap.asSignal().flatMap { _ in
+                    DefaultWireframe.shared.promptFor(cancelAction: "取消", actions: ["更新用户信息", "举报"]).asSignalOnErrorRecoverEmpty() }
+                    .flatMap { _ in .empty() },
                 presenter.myMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myMedia) },
                 presenter.myStaredMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myStaredMedia) },
                 state.flatMapLatest {

@@ -17,7 +17,8 @@ class MePresenter: NSObject {
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var displaynameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
-
+    @IBOutlet weak var moreButton: UIButton!
+    
     @IBOutlet weak var reputationCountLabel: UILabel!
     @IBOutlet weak var gainedReputationCountButton: UIButton!
     @IBOutlet weak var followersCountLabel: UILabel!

@@ -31,6 +31,8 @@ final class ImageDetailStateObject: PrimaryObject {
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
     @objc dynamic var userRoute: UserRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
+    
+    @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension ImageDetailStateObject {
@@ -73,6 +75,7 @@ extension ImageDetailStateObject {
                 "imageCommetsRoute": ["_id": _id],
                 "userRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
+                "snackbar": ["_id": _id],
                 ]
             return try realm.update(ImageDetailStateObject.self, value: value)
         }
@@ -144,6 +147,10 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             starMediumVersion = UUID().uuidString
             starMediumError = nil
             triggerStarMedium = false
+            
+            snackbar?.message = "感谢你给图片续命一周"
+            snackbar?.version = UUID().uuidString
+            
             guard let medium = medium else { return }
             myStaredMedia?.items.insert(medium, at: 0)
         case .onStarMediumError(let error):
