@@ -193,7 +193,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Co6-t1-lL0" customClass="LoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </view>
                                                     </subviews>
@@ -270,7 +270,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1GG-1A-MRR" customClass="LoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </view>
                                                     </subviews>
@@ -777,10 +777,10 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <textInputTraits key="textInputTraits" keyboardType="twitter" textContentType="username"/>
                                 </searchBar>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="miA-r5-PUo">
-                                    <rect key="frame" x="0.0" y="667" width="375" height="36"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="UBO-qN-Lkc" customClass="LoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="623" width="375" height="80"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="UserCell" id="uAx-G2-A1q" customClass="UserCell" customModule="Picroup_iOS" customModuleProvider="target">
@@ -877,6 +877,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lLT-Lt-jcm" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="hD1-GR-XYW" customClass="SearchUserPresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
+                        <outlet property="loadFooterView" destination="UBO-qN-Lkc" id="1Tf-zl-iUb"/>
                         <outlet property="searchBar" destination="IqA-fr-ZnX" id="3Lp-zl-eXm"/>
                         <outlet property="tableView" destination="yE8-Az-Lmk" id="JUR-Dp-UhG"/>
                     </connections>
@@ -1398,10 +1399,10 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="72" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zqt-JH-DkY">
                                 <rect key="frame" x="0.0" y="56" width="375" height="611"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="CLn-Ys-D2P">
-                                    <rect key="frame" x="0.0" y="100" width="375" height="36"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="8A1-00-5Rc" customClass="LoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="100" width="375" height="80"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="UserCell" id="fHw-ol-vGT" customClass="UserCell" customModule="Picroup_iOS" customModuleProvider="target">
@@ -1503,6 +1504,7 @@
                     <connections>
                         <outlet property="followingsCountLabel" destination="0va-MD-CkJ" id="Clo-yZ-iqJ"/>
                         <outlet property="headerView" destination="bdV-n3-btg" id="Rmp-nK-dS7"/>
+                        <outlet property="loadFooterView" destination="8A1-00-5Rc" id="TjC-zp-Uul"/>
                         <outlet property="tableView" destination="zqt-JH-DkY" id="JMj-gn-1ba"/>
                     </connections>
                 </customObject>
@@ -1558,10 +1560,10 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="72" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3mj-Dp-OmC">
                                 <rect key="frame" x="0.0" y="56" width="375" height="611"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="6Ec-WP-fdM">
-                                    <rect key="frame" x="0.0" y="100" width="375" height="36"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="C2O-YE-JDc" customClass="LoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="100" width="375" height="80"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="UserCell" id="CBq-6Q-e0B" customClass="UserCell" customModule="Picroup_iOS" customModuleProvider="target">
@@ -1663,6 +1665,7 @@
                     <connections>
                         <outlet property="followersCountLabel" destination="ZCh-yC-FLi" id="YZZ-jW-n60"/>
                         <outlet property="headerView" destination="GHE-7j-MEi" id="NX4-up-Uyz"/>
+                        <outlet property="loadFooterView" destination="C2O-YE-JDc" id="QIm-26-4v0"/>
                         <outlet property="tableView" destination="3mj-Dp-OmC" id="ylI-f0-ka1"/>
                     </connections>
                 </customObject>

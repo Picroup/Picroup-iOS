@@ -26,7 +26,8 @@ final class FollowersPresenter: NSObject {
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var followersCountLabel: UILabel!
-    
+    @IBOutlet weak var loadFooterView: LoadFooterView!
+
     typealias Section = SectionModel<String, UserObject>
     typealias DataSource = RxTableViewSectionedReloadDataSource<Section>
     

@@ -210,7 +210,7 @@ final class UserFollowersStateStore {
     func userFollowersItems() -> Driver<[UserObject]> {
         guard let items = _state.userFollowers?.items else { return .empty() }
         return Observable.collection(from: items)
-            .delaySubscription(0.3, scheduler: MainScheduler.instance)
+//            .delaySubscription(0.3, scheduler: MainScheduler.instance)
             .asDriver(onErrorDriveWith: .empty())
             .map { $0.toArray() }
     }

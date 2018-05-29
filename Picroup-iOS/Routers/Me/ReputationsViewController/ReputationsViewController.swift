@@ -32,7 +32,7 @@ class ReputationsViewController: UIViewController {
             let subscriptions = [
                 state.map { $0.session?.currentUser?.reputation.value?.description ?? "0" }.drive(presenter.reputationCountLabel.rx.text),
                 store.reputations().map { [Section(model: "", items: $0)] }.drive(presenter.items),
-                state.map { $0.footerState }.asSignalOnErrorRecoverEmpty().emit(onNext: presenter.loadFooterView.on),
+                state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
                 ]
             let events: [Signal<ReputationsStateObject.Event>] = [
                 .just(.onTriggerReload),

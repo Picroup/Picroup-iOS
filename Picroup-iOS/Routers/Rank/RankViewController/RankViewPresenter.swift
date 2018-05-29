@@ -38,7 +38,7 @@ class RankViewPresenter {
     }
     
     fileprivate func prepareCategoryButton() {
-        categoryButton = IconButton(image: Icon.cm.arrowDownward, tintColor: .primaryText)
+        categoryButton = IconButton(image: UIImage(named: "baseline_account_circle_black_24pt"), tintColor: .primaryText)
         categoryButton.pulseColor = .white
     }
     
@@ -52,7 +52,7 @@ class RankViewPresenter {
     typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
-    var items: (Signal<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
+    var items: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [collectionView] loadState in
             let dataSource = DataSource(
                 configureCell: { dataSource, collectionView, indexPath, item in
@@ -63,15 +63,11 @@ class RankViewPresenter {
             },
                 configureSupplementaryView: { dataSource, collectionView, title, indexPath in
                     let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "CollectionLoadFooterView", for: indexPath) as! CollectionLoadFooterView
-                    loadState.emit(onNext: footer.contentView.on).disposed(by: footer.disposeBag)
+                    loadState.drive(onNext: footer.contentView.on).disposed(by: footer.disposeBag)
                     return footer
             })
             return collectionView!.rx.items(dataSource: dataSource)
         }
     }
-}
-
-final class CollectionLoadFooterView: RxCollectionReusableView {
-    @IBOutlet weak var contentView: LoadFooterView!
 }
 

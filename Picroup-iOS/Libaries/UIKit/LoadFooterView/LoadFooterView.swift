@@ -11,8 +11,7 @@ import UIKit
 public enum LoadFooterViewState {
     case empty
     case loading
-    case error(String)
-    case loadedAll
+    case message(String)
 }
 
 public final class LoadFooterView: UIView {
@@ -46,13 +45,9 @@ public final class LoadFooterView: UIView {
         case .loading:
             label.isHidden = true
             spinner.startAnimating()
-        case .error(let message):
+        case .message(let message):
             label.isHidden = false
             label.text = message
-            spinner.stopAnimating()
-        case .loadedAll:
-            label.isHidden = false
-            label.text = "已全部加载"
             spinner.stopAnimating()
         }
     }

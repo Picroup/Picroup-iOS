@@ -27,6 +27,7 @@ final class SearchUserPresenter: NSObject {
     weak var navigationItem: UINavigationItem!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var loadFooterView: LoadFooterView!
 
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem

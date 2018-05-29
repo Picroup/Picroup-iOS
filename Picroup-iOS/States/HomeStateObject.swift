@@ -158,7 +158,7 @@ final class HomeStateStore {
     func myInterestedMediaItems() -> Driver<[MediumObject]> {
         guard let items = _state.myInterestedMedia?.items else { return .empty() }
         return Observable.collection(from: items)
-            .delaySubscription(0.3, scheduler: MainScheduler.instance)
+//            .delaySubscription(0.3, scheduler: MainScheduler.instance)
             .asDriver(onErrorDriveWith: .empty())
             .map { $0.toArray() }
     }

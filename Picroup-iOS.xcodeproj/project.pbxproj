@@ -50,6 +50,14 @@
 		454F729E208DB8D200850471 /* Image.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 454F729D208DB8D200850471 /* Image.storyboard */; };
 		454F72A0208DB90000850471 /* RouterService+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F729F208DB90000850471 /* RouterService+Image.swift */; };
 		454F72A2208DD1AA00850471 /* MyMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 454F72A1208DD1AA00850471 /* MyMedia.graphql */; };
+		45517D4020BCDCA800F2D7DE /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D3F20BCDCA800F2D7DE /* NotificationCell.swift */; };
+		45517D4220BCDCC500F2D7DE /* ReputationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4120BCDCC500F2D7DE /* ReputationCell.swift */; };
+		45517D4420BCDCD900F2D7DE /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4320BCDCD900F2D7DE /* UserViewModel.swift */; };
+		45517D4620BCDCF900F2D7DE /* FollowButtonPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4520BCDCF900F2D7DE /* FollowButtonPresenter.swift */; };
+		45517D4820BCDD3E00F2D7DE /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4720BCDD3E00F2D7DE /* CommentCell.swift */; };
+		45517D4A20BCDD8000F2D7DE /* CollectionLoadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4920BCDD8000F2D7DE /* CollectionLoadFooterView.swift */; };
+		45517D4C20BCE9BC00F2D7DE /* LoadFooterViewState+create.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4B20BCE9BC00F2D7DE /* LoadFooterViewState+create.swift */; };
+		45517D4E20BCEDE100F2D7DE /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4D20BCEDE100F2D7DE /* UserCell.swift */; };
 		45525D4A208C3CB500EAF00D /* CreateImagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */; };
 		45525D4F208C468500EAF00D /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D4E208C468500EAF00D /* Feedback.swift */; };
 		455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455414B2207E315900296FDE /* IsFeedbackState.swift */; };
@@ -205,6 +213,14 @@
 		454F729D208DB8D200850471 /* Image.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Image.storyboard; sourceTree = "<group>"; };
 		454F729F208DB90000850471 /* RouterService+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouterService+Image.swift"; sourceTree = "<group>"; };
 		454F72A1208DD1AA00850471 /* MyMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyMedia.graphql; sourceTree = "<group>"; };
+		45517D3F20BCDCA800F2D7DE /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
+		45517D4120BCDCC500F2D7DE /* ReputationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationCell.swift; sourceTree = "<group>"; };
+		45517D4320BCDCD900F2D7DE /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		45517D4520BCDCF900F2D7DE /* FollowButtonPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowButtonPresenter.swift; sourceTree = "<group>"; };
+		45517D4720BCDD3E00F2D7DE /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		45517D4920BCDD8000F2D7DE /* CollectionLoadFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionLoadFooterView.swift; sourceTree = "<group>"; };
+		45517D4B20BCE9BC00F2D7DE /* LoadFooterViewState+create.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoadFooterViewState+create.swift"; sourceTree = "<group>"; };
+		45517D4D20BCEDE100F2D7DE /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImagePresenter.swift; sourceTree = "<group>"; };
 		45525D4E208C468500EAF00D /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
 		455414B2207E315900296FDE /* IsFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackState.swift; sourceTree = "<group>"; };
@@ -457,6 +473,7 @@
 			children = (
 				451CD338207D0BAA0063A972 /* NotificationsViewController.swift */,
 				45BA0D8920903C760002E1D5 /* NotificationsViewPresenter.swift */,
+				45517D3F20BCDCA800F2D7DE /* NotificationCell.swift */,
 			);
 			path = NotificationsViewController;
 			sourceTree = "<group>";
@@ -466,6 +483,7 @@
 			children = (
 				451CD33A207D0BB60063A972 /* MeViewController.swift */,
 				45D04F83208E0EAA00AC2226 /* MePresenter.swift */,
+				45517D4320BCDCD900F2D7DE /* UserViewModel.swift */,
 			);
 			path = MeViewController;
 			sourceTree = "<group>";
@@ -501,6 +519,7 @@
 			children = (
 				454F72912088716900850471 /* ImageCommentsViewController.swift */,
 				454F72932089720C00850471 /* ImageCommentsPresenter.swift */,
+				45517D4720BCDD3E00F2D7DE /* CommentCell.swift */,
 			);
 			path = ImageCommentsViewController;
 			sourceTree = "<group>";
@@ -616,9 +635,11 @@
 		4595F2042079EDE20040E5FA /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
-				4595F2072079EECF0040E5FA /* colors.swift */,
-				4595F213207A0CA20040E5FA /* UIImage+Color.swift */,
 				455D69032080409A00C651A0 /* BaseNavigationController.swift */,
+				4595F2072079EECF0040E5FA /* colors.swift */,
+				45517D4920BCDD8000F2D7DE /* CollectionLoadFooterView.swift */,
+				45517D4B20BCE9BC00F2D7DE /* LoadFooterViewState+create.swift */,
+				4595F213207A0CA20040E5FA /* UIImage+Color.swift */,
 				458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */,
 			);
 			path = UIKit;
@@ -796,6 +817,8 @@
 			children = (
 				45B0205E20B2BFDC00BD5D8F /* FollowingsViewController.swift */,
 				45B0206020B3AB3700BD5D8F /* FollowingsPresenter.swift */,
+				45517D4520BCDCF900F2D7DE /* FollowButtonPresenter.swift */,
+				45517D4D20BCEDE100F2D7DE /* UserCell.swift */,
 			);
 			path = FollowingsViewController;
 			sourceTree = "<group>";
@@ -823,6 +846,7 @@
 			children = (
 				45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */,
 				45D04F8A208F60A600AC2226 /* ReputationsViewPresenter.swift */,
+				45517D4120BCDCC500F2D7DE /* ReputationCell.swift */,
 			);
 			path = ReputationsViewController;
 			sourceTree = "<group>";
@@ -1127,14 +1151,17 @@
 				45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */,
 				4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
+				45517D4420BCDCD900F2D7DE /* UserViewModel.swift in Sources */,
 				451CD32D207BB5D90063A972 /* HomeViewController.swift in Sources */,
 				45AA3B4820A346DB0032A8CF /* DispachQueue+realm.swift in Sources */,
 				451DD4C12083125A002C509A /* Objective.swift in Sources */,
 				4595F219207A15010040E5FA /* Mutabled.swift in Sources */,
+				45517D4620BCDCF900F2D7DE /* FollowButtonPresenter.swift in Sources */,
 				455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */,
 				451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */,
 				454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */,
 				45B0206120B3AB3700BD5D8F /* FollowingsPresenter.swift in Sources */,
+				45517D4220BCDCC500F2D7DE /* ReputationCell.swift in Sources */,
 				45B0204F20AD59CC00BD5D8F /* HomeStateObject.swift in Sources */,
 				45C1994D20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift in Sources */,
 				45C1994820A973DD001924B9 /* MediumObject.swift in Sources */,
@@ -1145,7 +1172,9 @@
 				454A4C42209C2F160063E829 /* LocalStorage.swift in Sources */,
 				454F729A2089BA1300850471 /* UIView+IBInspectable.swift in Sources */,
 				451CD32A207BA49B0063A972 /* RouterService+Main.swift in Sources */,
+				45517D4A20BCDD8000F2D7DE /* CollectionLoadFooterView.swift in Sources */,
 				45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */,
+				45517D4820BCDD3E00F2D7DE /* CommentCell.swift in Sources */,
 				451CD322207A3C1D0063A972 /* ApolloClient+Rx.swift in Sources */,
 				451CD339207D0BAA0063A972 /* NotificationsViewController.swift in Sources */,
 				4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */,
@@ -1169,6 +1198,7 @@
 				45B0207520B6B0D500BD5D8F /* MainStateObject.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
 				459F259920A28C13008B6C9B /* ObservableType+catchErrorRecover.swift in Sources */,
+				45517D4C20BCE9BC00F2D7DE /* LoadFooterViewState+create.swift in Sources */,
 				454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */,
 				454F729C208DAF0500850471 /* ObservableConvertibleType+asSignal.swift in Sources */,
 				455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */,
@@ -1191,6 +1221,7 @@
 				454F72982089B46300850471 /* RxTableViewCell.swift in Sources */,
 				457BD99A20B306AA007F0492 /* UserFollowingsStateObject.swift in Sources */,
 				451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */,
+				45517D4E20BCEDE100F2D7DE /* UserCell.swift in Sources */,
 				455D69042080409A00C651A0 /* BaseNavigationController.swift in Sources */,
 				457BD98320AB12AD007F0492 /* RouteStateObject.swift in Sources */,
 				45B0207120B5168E00BD5D8F /* SearchUserPresenter.swift in Sources */,
@@ -1211,6 +1242,7 @@
 				45B0206D20B508C200BD5D8F /* SearchUserViewController.swift in Sources */,
 				4595F223207C97410040E5FA /* UIView+Motion+Rx.swift in Sources */,
 				451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */,
+				45517D4020BCDCA800F2D7DE /* NotificationCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

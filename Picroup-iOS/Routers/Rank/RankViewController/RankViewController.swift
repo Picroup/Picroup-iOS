@@ -35,11 +35,11 @@ class RankViewController: UIViewController {
         typealias Section = RankViewPresenter.Section
         
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
-            let footerState = PublishRelay<LoadFooterViewState>()
+            let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions = [
-                store.rankMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState.asSignal())),
+                store.rankMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState.asDriver())),
                 state.map { $0.isReloading }.drive(presenter.refreshControl.rx.isRefreshing),
-                state.map { $0.footerState }.asSignalOnErrorRecoverEmpty().emit(to: footerState),
+                state.map { $0.footerState }.drive(footerState),
             ]
             let events: [Signal<RankStateObject.Event>] = [
                 state.flatMapLatest {

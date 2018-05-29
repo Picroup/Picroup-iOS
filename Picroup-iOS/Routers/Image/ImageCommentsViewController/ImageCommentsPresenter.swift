@@ -57,17 +57,3 @@ class ImageCommentsPresenter: NSObject {
     }
 }
 
-class CommentCell: RxTableViewCell {
-    @IBOutlet weak var photoView: UIImageView!
-    @IBOutlet weak var userLabel: UILabel!
-    @IBOutlet weak var contentLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
-    
-    func configure(with item: CommentObject) {
-        guard !item.isInvalidated else { return }
-        userLabel?.text = item.user?.username
-        contentLabel?.text = item.content
-        photoView.setImage(with: item.user?.avatarId)
-    }
-}
-

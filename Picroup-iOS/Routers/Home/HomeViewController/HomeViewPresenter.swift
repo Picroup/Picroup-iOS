@@ -60,7 +60,7 @@ final class HomeViewPresenter: NSObject {
     typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
-    var items: (PublishRelay<HomeStateObject.Event>, Signal<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
+    var items: (PublishRelay<HomeStateObject.Event>, Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [collectionView] _events, loadState in
             let dataSource = DataSource(
                 configureCell: { dataSource, collectionView, indexPath, item in
@@ -77,7 +77,7 @@ final class HomeViewPresenter: NSObject {
             },
                 configureSupplementaryView: { dataSource, collectionView, title, indexPath in
                     let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "CollectionLoadFooterView", for: indexPath) as! CollectionLoadFooterView
-                    loadState.emit(onNext: footer.contentView.on).disposed(by: footer.disposeBag)
+                    loadState.drive(onNext: footer.contentView.on).disposed(by: footer.disposeBag)
                     return footer
             })
             return collectionView!.rx.items(dataSource: dataSource)

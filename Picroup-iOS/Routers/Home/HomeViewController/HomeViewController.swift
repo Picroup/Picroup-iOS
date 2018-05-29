@@ -33,11 +33,12 @@ class HomeViewController: UIViewController {
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
             let _events = PublishRelay<HomeStateObject.Event>()
-            let footerState = PublishRelay<LoadFooterViewState>()
+            let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions = [
-                store.myInterestedMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events, footerState.asSignal())),
+                store.myInterestedMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events, footerState.asDriver())),
                 state.map { $0.isReloading }.drive(presenter.refreshControl.rx.isRefreshing),
-                state.map { $0.footerState }.asSignalOnErrorRecoverEmpty().emit(to: footerState),
+                state.map { $0.footerState }.drive(footerState),
+                presenter.fabButton.rx.tap.asSignal().map { false }.emit(to: me.rx.setNavigationBarHidden(animated: true)),
                 presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
             ]
             let events: [Signal<HomeStateObject.Event>] = [

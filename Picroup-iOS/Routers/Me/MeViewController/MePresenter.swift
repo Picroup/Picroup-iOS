@@ -54,7 +54,7 @@ class MePresenter: NSObject {
         }
     }
     
-    private var dataSource: (Signal<LoadFooterViewState>) -> DataSource {
+    private var dataSource: (Driver<LoadFooterViewState>) -> DataSource {
         return { loadState in
             return DataSource(
                 configureCell: { dataSource, collectionView, indexPath, item in
@@ -65,56 +65,21 @@ class MePresenter: NSObject {
             },
                 configureSupplementaryView: { dataSource, collectionView, title, indexPath in
                     let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "CollectionLoadFooterView", for: indexPath) as! CollectionLoadFooterView
-                    loadState.emit(onNext: footer.contentView.on).disposed(by: footer.disposeBag)
+                    loadState.drive(onNext: footer.contentView.on).disposed(by: footer.disposeBag)
                     return footer
             })
         }
     }
     
-    var myMediaItems: (Signal<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
+    var myMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [myMediaCollectionView] loadState in
             return myMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
         }
     }
     
-    var myStaredMediaItems: (Signal<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
+    var myStaredMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [myStardMediaCollectionView] loadState in
             return myStardMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
         }
     }
 }
-
-struct UserViewModel {
-    let username: String
-    let avatarId: String?
-    let reputation: String
-    let followersCount: String
-    let followingsCount: String
-    let gainedReputationCount: String
-    let isGainedReputationCountHidden: Bool
-    let followed: Bool?
-    
-    init(user: UserObject?) {
-        guard user?.isInvalidated == false else {
-            self.username = " "
-            self.avatarId = nil
-            self.reputation = "0"
-            self.followersCount = "0"
-            self.followingsCount = "0"
-            self.gainedReputationCount = ""
-            self.isGainedReputationCountHidden = true
-            self.followed = nil
-            return
-        }
-        self.username = user.map { "@\($0.username ?? "")" } ?? " "
-        self.avatarId = user?.avatarId
-        self.reputation = user?.reputation.value?.description ?? "0"
-        self.followersCount = user?.followersCount.value?.description ?? "0"
-        self.followingsCount = user?.followingsCount.value?.description ?? "0"
-        self.gainedReputationCount = user.map { "+\($0.gainedReputation.value ?? 0)" } ?? ""
-        self.isGainedReputationCountHidden = user == nil || user?.gainedReputation.value == 0
-        self.followed = user?.followed.value
-    }
-}
-
-
