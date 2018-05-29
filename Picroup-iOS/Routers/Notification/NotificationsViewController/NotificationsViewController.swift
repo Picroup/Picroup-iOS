@@ -37,7 +37,7 @@ class NotificationsViewController: UIViewController {
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let subscriptions = [
                 store.notifications().map { [Section(model: "", items: $0)] }.drive(presenter.items),
-                state.map { $0.footerState }.asSignalOnErrorRecoverEmpty().emit(onNext: presenter.loadFooterView.on),
+                state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
             ]
             let events: [Signal<NotificationsStateObject.Event>] = [
                 .just(.onTriggerReload),

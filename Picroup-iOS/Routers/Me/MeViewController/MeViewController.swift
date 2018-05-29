@@ -32,8 +32,8 @@ class MeViewController: HideNavigationBarViewController {
 
         weak var me = self
         let uiFeedback: Feedback = bind(presenter) { (presenter, state) -> Bindings<MeStateObject.Event> in
-            let myMediaFooterState = PublishRelay<LoadFooterViewState>()
-            let myStaredMediaFooterState = PublishRelay<LoadFooterViewState>()
+            let myMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
+            let myStaredMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let meViewModel = state.map { UserViewModel(user: $0.me) }
             let subscriptions: [Disposable] = [
                 meViewModel.map { $0.avatarId }.drive(presenter.userAvatarImageView.rx.imageMinioId),
@@ -45,10 +45,10 @@ class MeViewController: HideNavigationBarViewController {
                 meViewModel.map { $0.gainedReputationCount }.drive(presenter.gainedReputationCountButton.rx.title()),
                 meViewModel.map { $0.isGainedReputationCountHidden }.drive(presenter.gainedReputationCountButton.rx.isHidden),
                 state.map { $0.selectedTabIndex }.distinctUntilChanged().drive(presenter.selectedTabIndex),
-                store.myMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems(myMediaFooterState.asSignal())),
-                store.myStaredMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myStaredMediaItems(myStaredMediaFooterState.asSignal())),
-                state.map { $0.myMediaFooterState }.asSignalOnErrorRecoverEmpty().emit(to: myMediaFooterState),
-                state.map { $0.myStaredMediaFooterState }.asSignalOnErrorRecoverEmpty().emit(to: myStaredMediaFooterState),
+                store.myMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems(myMediaFooterState.asDriver())),
+                store.myStaredMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myStaredMediaItems(myStaredMediaFooterState.asDriver())),
+                state.map { $0.myMediaFooterState }.drive(myMediaFooterState),
+                state.map { $0.myStaredMediaFooterState }.drive(myStaredMediaFooterState),
                 ]
             
             let events: [Signal<MeStateObject.Event>] = [
@@ -132,25 +132,6 @@ extension MeStateObject {
     var myStaredMediaFooterState: LoadFooterViewState {
         let (cursor, trigger, error) = (myStaredMedia?.cursor.value, triggerMyStaredMediaQuery, myStaredMediaError)
         return LoadFooterViewState.create(cursor: cursor, trigger: trigger, error: error)
-    }
-}
-
-extension LoadFooterViewState {
-    
-    static func create(cursor: Double?, trigger: Bool, error: String?) -> LoadFooterViewState {
-        if cursor == nil && trigger {
-            return .empty
-        }
-        if error != nil {
-            return .error(error!)
-        }
-        if cursor != nil && trigger {
-            return .loading
-        }
-        if cursor == nil && !trigger {
-            return .loadedAll
-        }
-        return .empty
     }
 }
 

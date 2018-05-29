@@ -40,6 +40,7 @@ final class SearchUserViewController: ShowNavigationBarViewController {
             let subscriptions = [
                 state.map { $0.searchText }.drive(presenter.searchBar.rx.text),
                 store.usersItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events)),
+                state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
                 ]
             let events: [Signal<SearchUserStateObject.Event>] = [
                 _events.asSignal(),
@@ -81,5 +82,12 @@ final class SearchUserViewController: ShowNavigationBarViewController {
             .debug("SearchUserState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
+    }
+}
+
+extension SearchUserStateObject {
+    
+    var footerState: LoadFooterViewState {
+        return LoadFooterViewState.create(searchUser: self)
     }
 }

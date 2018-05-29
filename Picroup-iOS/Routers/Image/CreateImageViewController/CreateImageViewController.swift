@@ -14,7 +14,7 @@ import RxFeedback
 import Apollo
 import Kingfisher
 
-class CreateImageViewController: UIViewController {
+class CreateImageViewController: ShowNavigationBarViewController {
     
     typealias Dependency = [String]
     var dependency: Dependency?
