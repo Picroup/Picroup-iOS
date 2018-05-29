@@ -64,11 +64,8 @@ class MePresenter: NSObject {
                     cell.configure(with: viewModel)
                     return cell
             },
-                configureSupplementaryView: { dataSource, collectionView, title, indexPath in
-                    let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "CollectionLoadFooterView", for: indexPath) as! CollectionLoadFooterView
-                    loadState.drive(onNext: footer.contentView.on).disposed(by: footer.disposeBag)
-                    return footer
-            })
+                configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
+            )
         }
     }
     
