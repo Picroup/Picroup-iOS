@@ -17,7 +17,8 @@ class MePresenter: NSObject {
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var displaynameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
-
+    @IBOutlet weak var moreButton: UIButton!
+    
     @IBOutlet weak var reputationCountLabel: UILabel!
     @IBOutlet weak var gainedReputationCountButton: UIButton!
     @IBOutlet weak var followersCountLabel: UILabel!
@@ -63,11 +64,8 @@ class MePresenter: NSObject {
                     cell.configure(with: viewModel)
                     return cell
             },
-                configureSupplementaryView: { dataSource, collectionView, title, indexPath in
-                    let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "CollectionLoadFooterView", for: indexPath) as! CollectionLoadFooterView
-                    loadState.drive(onNext: footer.contentView.on).disposed(by: footer.disposeBag)
-                    return footer
-            })
+                configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
+            )
         }
     }
     

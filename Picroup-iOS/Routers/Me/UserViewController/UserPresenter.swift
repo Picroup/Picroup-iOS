@@ -36,21 +36,24 @@ class UserPresenter: NSObject {
     typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
-    private var dataSource: DataSource {
-        return DataSource(
-            configureCell: { dataSource, collectionView, indexPath, item in
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                let viewModel = RankMediumCell.ViewModel(item: item)
-                cell.configure(with: viewModel)
-                return cell
-        },
-            configureSupplementaryView: { dataSource, collectionView, title, indexPath in
-                return UICollectionReusableView()
-        })
+    private var dataSource: (Driver<LoadFooterViewState>) -> DataSource {
+        return { loadState in
+            return DataSource(
+                configureCell: { dataSource, collectionView, indexPath, item in
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
+                    let viewModel = RankMediumCell.ViewModel(item: item)
+                    cell.configure(with: viewModel)
+                    return cell
+            },
+                configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
+            )
+        }
     }
     
-    var myMediaItems: (Observable<[Section]>) -> Disposable {
-        return myMediaCollectionView.rx.items(dataSource: dataSource)
+    var myMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
+        return { [myMediaCollectionView] loadState in
+            return myMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
+        }
     }
 
 }

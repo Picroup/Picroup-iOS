@@ -34,6 +34,8 @@ class RankViewController: UIViewController {
         
         typealias Section = RankViewPresenter.Section
         
+        presenter.collectionView.dataSource = nil
+        
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions = [

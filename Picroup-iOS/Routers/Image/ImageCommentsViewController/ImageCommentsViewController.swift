@@ -43,10 +43,12 @@ class ImageCommentsViewController: HideNavigationBarViewController {
             
             let subscriptions = [
                 store.medium().drive(presenter.medium),
+                state.map { $0.session?.isLogin ?? false }.drive(presenter.sendCommentContentView.rx.isShowed),
                 state.map { $0.saveCommentContent }.drive(presenter.contentTextField.rx.text),
                 state.map { $0.shouldSendComment ? 1 : 0 }.drive(presenter.sendButton.rx.alpha),
                 presenter.sendButton.rx.tap.bind(to: presenter.contentTextField.rx.resignFirstResponder()),
                 store.commentsItems().map { [Section(model: "", items: $0)]  }.drive(presenter.items),
+                state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
                 ]
             let events: [Signal<ImageCommentsStateObject.Event>] = [
                 .just(.onTriggerReloadData),
@@ -89,6 +91,14 @@ class ImageCommentsViewController: HideNavigationBarViewController {
             .debug("ImageCommentsState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
+    }
+}
+
+extension ImageCommentsStateObject {
+    
+    var footerState: LoadFooterViewState {
+        let (cursor, trigger, error) = (comments?.cursor.value, triggerCommentsQuery, commentsError)
+        return LoadFooterViewState.create(cursor: cursor, trigger: trigger, error: error)
     }
 }
 

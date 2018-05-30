@@ -18,13 +18,15 @@ class ImageCommentsPresenter: NSObject {
     @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var commentsCountLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var loadFooterView: LoadFooterView!
     @IBOutlet weak var starPlaceholderView: UIView!
     @IBOutlet weak var contentTextField: UITextField!
     @IBOutlet weak var sendButton: FlatButton!
+    @IBOutlet weak var sendCommentContentView: UIView!
     @IBOutlet weak var hideCommentsIcon: UIImageView!
     @IBOutlet weak var hideCommentsContentView: UIView!
     @IBOutlet weak var tableViewBackgroundButton: UIButton!
-    
+
     func setup() {
         tableView.backgroundView = tableViewBackgroundButton
         tableView.estimatedRowHeight = tableView.rowHeight
