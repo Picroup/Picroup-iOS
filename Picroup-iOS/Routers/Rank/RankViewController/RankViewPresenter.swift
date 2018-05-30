@@ -61,9 +61,7 @@ class RankViewPresenter {
                     cell.configure(with: viewModel)
                     return cell
             },
-                configureSupplementaryView: { dataSource, collectionView, title, indexPath in
-                    return UICollectionReusableView()
-            }
+                configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
             )
             return collectionView!.rx.items(dataSource: dataSource)
         }
