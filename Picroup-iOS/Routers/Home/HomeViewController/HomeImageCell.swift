@@ -19,7 +19,7 @@ class HomeImageCell: RxCollectionViewCell {
     @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var userView: UIView!
-    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var displayNameLabel: UILabel!
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var commentButton: UIButton!
     
@@ -38,7 +38,7 @@ class HomeImageCell: RxCollectionViewCell {
         imageView.motionIdentifier = item._id
         lifeBar.motionIdentifier = "lifeBar_\(item._id)"
         userAvatarImageView.setImage(with: item.user?.avatarId)
-        usernameLabel.text = item.user?.username
+        displayNameLabel.text = item.user?.displayName
         commentButton.setTitle("  \(item.commentsCount.value ?? 0)", for: UIControlState.normal)
         
         if let onCommentsTap = onCommentsTap {

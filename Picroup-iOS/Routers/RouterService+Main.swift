@@ -81,6 +81,11 @@ extension RouterService.Main {
         return vc
     }
     
+    static func updateUserViewController() -> UpdateUserViewController {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UpdateUserViewController") as! UpdateUserViewController
+        return vc
+    }
+    
     static func reputationsViewController() -> ReputationsViewController {
         let rvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ReputationsViewController") as! ReputationsViewController
         return rvc

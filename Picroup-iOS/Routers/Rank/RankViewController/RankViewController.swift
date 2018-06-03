@@ -33,15 +33,14 @@ class RankViewController: UIViewController {
         guard let store = try? RankStateStore() else { return }
         
         typealias Section = RankViewPresenter.Section
-        
-        presenter.collectionView.dataSource = nil
-        
+                
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions = [
                 store.rankMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState.asDriver())),
                 state.map { $0.isReloading }.drive(presenter.refreshControl.rx.isRefreshing),
                 state.map { $0.footerState }.drive(footerState),
+                state.map { $0.session?.isLogin ?? false }.drive(presenter.userButton.rx.isHidden),
             ]
             let events: [Signal<RankStateObject.Event>] = [
                 state.flatMapLatest {
@@ -51,9 +50,7 @@ class RankViewController: UIViewController {
                 }.map { .onTriggerGetMore },
                 presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReload },
                 presenter.collectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
-                presenter.categoryButton.rx.tap.asSignal().withLatestFrom(state)
-                    .map { $0.session?.isLogin ?? false }
-                    .map { isLogin in isLogin ? .onLogout : .onTriggerLogin },
+                presenter.userButton.rx.tap.asSignal().map { .onTriggerLogin },
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }

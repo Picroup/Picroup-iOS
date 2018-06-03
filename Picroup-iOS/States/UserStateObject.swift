@@ -186,7 +186,7 @@ extension UserStateObject: IsFeedbackStateObject {
             triggerFollowUserQuery = false
 //            guard let medium = medium else { return }
 //            myStaredMedia?.items.insert(medium, at: 0)
-            snackbar?.message = "已关注 \(user?.username ?? "")"
+            snackbar?.message = "已关注 @\(user?.username ?? "")"
             snackbar?.version = UUID().uuidString
         case .onFollowUserError(let error):
             followUserVersion = nil
@@ -205,7 +205,7 @@ extension UserStateObject: IsFeedbackStateObject {
             triggerUnfollowUserQuery = false
             //            guard let medium = medium else { return }
         //            myStaredMedia?.items.insert(medium, at: 0)
-            snackbar?.message = "已取消关注 \(user?.username ?? "")"
+            snackbar?.message = "已取消关注 @\(user?.username ?? "")"
             snackbar?.version = UUID().uuidString
         case .onUnfollowUserError(let error):
             unfollowUserVersion = nil

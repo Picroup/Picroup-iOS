@@ -10,6 +10,7 @@ import Foundation
 
 struct UserViewModel {
     let username: String
+    let displayName: String
     let avatarId: String?
     let reputation: String
     let followersCount: String
@@ -21,6 +22,7 @@ struct UserViewModel {
     init(user: UserObject?) {
         guard user?.isInvalidated == false else {
             self.username = " "
+            self.displayName = " "
             self.avatarId = nil
             self.reputation = "0"
             self.followersCount = "0"
@@ -31,6 +33,7 @@ struct UserViewModel {
             return
         }
         self.username = user.map { "@\($0.username ?? "")" } ?? " "
+        self.displayName = user?.displayName ?? " "
         self.avatarId = user?.avatarId
         self.reputation = user?.reputation.value?.description ?? "0"
         self.followersCount = user?.followersCount.value?.description ?? "0"

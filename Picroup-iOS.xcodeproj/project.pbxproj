@@ -142,6 +142,7 @@
 		45C1994A20A97402001924B9 /* UserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994920A97402001924B9 /* UserObject.swift */; };
 		45C1994D20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994C20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift */; };
 		45C1995220AA7AFF001924B9 /* IsFeedbackStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1995120AA7AFF001924B9 /* IsFeedbackStateObject.swift */; };
+		45C392F620C3D88400F4A69A /* UpdateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C392F520C3D88400F4A69A /* UpdateUserViewController.swift */; };
 		45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */; };
 		45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F71208790C700AC2226 /* TimeInterval+.swift */; };
 		45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */; };
@@ -309,6 +310,7 @@
 		45C1994920A97402001924B9 /* UserObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserObject.swift; sourceTree = "<group>"; };
 		45C1994C20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx+triggerGetMore.swift"; sourceTree = "<group>"; };
 		45C1995120AA7AFF001924B9 /* IsFeedbackStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackStateObject.swift; sourceTree = "<group>"; };
+		45C392F520C3D88400F4A69A /* UpdateUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserViewController.swift; sourceTree = "<group>"; };
 		45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailCell.swift; sourceTree = "<group>"; };
 		45D04F71208790C700AC2226 /* TimeInterval+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+.swift"; sourceTree = "<group>"; };
 		45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Operator.swift"; sourceTree = "<group>"; };
@@ -601,6 +603,7 @@
 				451CD335207D0B7F0063A972 /* MeViewController */,
 				45BA0D7B208ED3980002E1D5 /* ReputationsViewController */,
 				45FC0BF120A42F11006AAF3D /* UserViewController */,
+				45C392F420C3D86200F4A69A /* UpdateUserViewController */,
 				45B0205D20B2BFC000BD5D8F /* FollowingsViewController */,
 				45B0206620B402E700BD5D8F /* FollowersViewController */,
 				45B0206B20B5089B00BD5D8F /* SearchUserViewController */,
@@ -874,6 +877,14 @@
 			path = "New Group";
 			sourceTree = "<group>";
 		};
+		45C392F420C3D86200F4A69A /* UpdateUserViewController */ = {
+			isa = PBXGroup;
+			children = (
+				45C392F520C3D88400F4A69A /* UpdateUserViewController.swift */,
+			);
+			path = UpdateUserViewController;
+			sourceTree = "<group>";
+		};
 		45E240B02084D2B6004B58EF /* ImageDetailViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1126,6 +1137,7 @@
 				45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */,
 				457BD98920AC695A007F0492 /* ReputationObject.swift in Sources */,
 				45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */,
+				45C392F620C3D88400F4A69A /* UpdateUserViewController.swift in Sources */,
 				45B0207320B5182300BD5D8F /* SearchUserStateObject.swift in Sources */,
 				457BD99420B146CD007F0492 /* AppStateService.swift in Sources */,
 				45FC0BF520A42F4A006AAF3D /* UserPresenter.swift in Sources */,

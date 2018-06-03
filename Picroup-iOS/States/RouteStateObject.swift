@@ -20,6 +20,8 @@ final class RouteStateObject: PrimaryObject {
     @objc dynamic var pickImageRoute: PickImageRouteObject?
     @objc dynamic var createImageRoute: CreateImageRouteObject?
     @objc dynamic var userRoute: UserRouteObject?
+    @objc dynamic var updateUserRoute: UpdateUserRouteObject?
+    
     @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
     @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
     @objc dynamic var searchUserRoute: SearchUserRouteObject?
@@ -61,6 +63,14 @@ final class UserRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
+final class UpdateUserRouteObject: PrimaryObject {
+    @objc dynamic var version: String?
+}
+
+final class SearchUserRouteObject: PrimaryObject {
+    @objc dynamic var version: String?
+}
+
 final class UserFollowingsRouteObject: PrimaryObject {
     
     @objc dynamic var userId: String?
@@ -70,10 +80,6 @@ final class UserFollowingsRouteObject: PrimaryObject {
 final class UserFollowersRouteObject: PrimaryObject {
     
     @objc dynamic var userId: String?
-    @objc dynamic var version: String?
-}
-
-final class SearchUserRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
@@ -105,6 +111,7 @@ extension RouteStateObject {
                 "pickImageRoute": ["_id": _id],
                 "createImageRoute": ["_id": _id],
                 "userRoute": ["_id": _id],
+                "updateUserRoute": ["_id": _id],
                 "userFollowingsRoute": ["_id": _id],
                 "userFollowersRoute": ["_id": _id],
                 "searchUserRoute": ["_id": _id],
@@ -166,6 +173,11 @@ final class RouteStateStore {
         return Observable.from(object: userRoute)
             .map { ($0, self._state.session?.currentUser?._id == $0.userId) }
             .asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func updateUserRoute() -> Driver<UpdateUserRouteObject> {
+        guard let updateUserRoute = _state.updateUserRoute else { return .empty() }
+        return Observable.from(object: updateUserRoute).asDriver(onErrorDriveWith: .empty())
     }
     
     func userFollowingsRoute() -> Driver<UserFollowingsRouteObject> {

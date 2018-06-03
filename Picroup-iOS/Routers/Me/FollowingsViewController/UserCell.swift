@@ -18,7 +18,7 @@ class UserCell: RxTableViewCell {
     
     func configure(with viewModel: UserViewModel, onFollowButtonTap: (()-> Void)?) {
         userAvatarImageView.setImage(with: viewModel.avatarId!)
-        displaynameLabel.text = viewModel.username
+        displaynameLabel.text = viewModel.displayName
         usernameLabel.text = viewModel.username
         FollowButtonPresenter.isSelected(base: followButton).onNext(viewModel.followed)
         if let onFollowButtonTap = onFollowButtonTap {
