@@ -14,12 +14,13 @@ final class HomeStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
     
-    @objc dynamic var pickImageRoute: PickImageRouteObject?
-    @objc dynamic var searchUserRoute: SearchUserRouteObject?
-    
     @objc dynamic var myInterestedMedia: CursorMediaObject?
     @objc dynamic var myInterestedMediaError: String?
     @objc dynamic var triggerMyInterestedMediaQuery: Bool = false
+    
+    //    @objc dynamic var pickImageRoute: PickImageRouteObject?
+    @objc dynamic var createImageRoute: CreateImageRouteObject?
+    @objc dynamic var searchUserRoute: SearchUserRouteObject?
     
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
@@ -56,11 +57,12 @@ extension HomeStateObject {
                 "_id": _id,
                 "session": ["_id": _id],
                 "myInterestedMedia": ["_id": PrimaryKey.myInterestedMediaId],
-                "imageCommetsRoute": ["_id": _id],
-                "imageDetialRoute": ["_id": _id],
-                "userRoute": ["_id": _id],
-                "pickImageRoute": ["_id": _id],
+//                "pickImageRoute": ["_id": _id],
+                "createImageRoute": ["_id": _id],
                 "searchUserRoute": ["_id": _id],
+                "imageDetialRoute": ["_id": _id],
+                "imageCommetsRoute": ["_id": _id],
+                "userRoute": ["_id": _id],
                 ]
             let state = try realm.update(HomeStateObject.self, value: value)
             return state
@@ -82,7 +84,7 @@ extension HomeStateObject {
         case onTriggerShowComments(String)
         case onTriggerShowUser(String)
         
-        case onTriggerPickImage
+        case onTriggerCreateImage([String])
         case onTriggerSearchUser
     }
 }
@@ -128,8 +130,11 @@ extension HomeStateObject: IsFeedbackStateObject {
             userRoute?.userId = userId
             userRoute?.version = UUID().uuidString
             
-        case .onTriggerPickImage:
-            pickImageRoute?.version = UUID().uuidString
+        case .onTriggerCreateImage(let imageKeys):
+            createImageRoute?.imageKeys.removeAll()
+            createImageRoute?.imageKeys.append(objectsIn: imageKeys)
+            createImageRoute?.version = UUID().uuidString
+//            pickImageRoute?.version = UUID().uuidString
         case .onTriggerSearchUser:
             searchUserRoute?.version = UUID().uuidString
         }

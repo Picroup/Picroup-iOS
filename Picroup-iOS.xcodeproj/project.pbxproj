@@ -34,6 +34,10 @@
 		45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */; };
 		45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */; };
 		45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */; };
+		453B95B620C4CEF50043D915 /* UpdateUserStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B95B520C4CEF50043D915 /* UpdateUserStateObject.swift */; };
+		453B95B820C4D18A0043D915 /* UserSetDisplayName.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 453B95B720C4D18A0043D915 /* UserSetDisplayName.graphql */; };
+		453B95BA20C4D1A80043D915 /* UserSetAvatarId.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 453B95B920C4D1A80043D915 /* UserSetAvatarId.graphql */; };
+		453B95BC20C4D7090043D915 /* UpdateUserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B95BB20C4D7090043D915 /* UpdateUserPresenter.swift */; };
 		4543ECE520BC38FA002F7C18 /* LoadFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4543ECE420BC38FA002F7C18 /* LoadFooterView.xib */; };
 		4543ECE720BC39DC002F7C18 /* LoadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ECE620BC39DC002F7C18 /* LoadFooterView.swift */; };
 		4543ECE920BC4121002F7C18 /* RxCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ECE820BC4121002F7C18 /* RxCollectionReusableView.swift */; };
@@ -200,6 +204,10 @@
 		45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
 		45384BBB207DEFFA00624A1B /* CreateImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageViewController.swift; sourceTree = "<group>"; };
 		45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+dismiss.swift"; sourceTree = "<group>"; };
+		453B95B520C4CEF50043D915 /* UpdateUserStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserStateObject.swift; sourceTree = "<group>"; };
+		453B95B720C4D18A0043D915 /* UserSetDisplayName.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserSetDisplayName.graphql; sourceTree = "<group>"; };
+		453B95B920C4D1A80043D915 /* UserSetAvatarId.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserSetAvatarId.graphql; sourceTree = "<group>"; };
+		453B95BB20C4D7090043D915 /* UpdateUserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserPresenter.swift; sourceTree = "<group>"; };
 		4543ECE420BC38FA002F7C18 /* LoadFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadFooterView.xib; sourceTree = "<group>"; };
 		4543ECE620BC39DC002F7C18 /* LoadFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFooterView.swift; sourceTree = "<group>"; };
 		4543ECE820BC4121002F7C18 /* RxCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -692,6 +700,7 @@
 				45B0205920AEA35600BD5D8F /* UserStateObject.swift */,
 				457BD99920B306AA007F0492 /* UserFollowingsStateObject.swift */,
 				45B0206420B4012E00BD5D8F /* UserFollowersStateObject.swift */,
+				453B95B520C4CEF50043D915 /* UpdateUserStateObject.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -789,6 +798,8 @@
 				45FC0BE120A41704006AAF3D /* UserFragment.graphql */,
 				45FC0BE320A41813006AAF3D /* UserDetailFragment.graphql */,
 				45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */,
+				453B95B920C4D1A80043D915 /* UserSetAvatarId.graphql */,
+				453B95B720C4D18A0043D915 /* UserSetDisplayName.graphql */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -881,6 +892,7 @@
 			isa = PBXGroup;
 			children = (
 				45C392F520C3D88400F4A69A /* UpdateUserViewController.swift */,
+				453B95BB20C4D7090043D915 /* UpdateUserPresenter.swift */,
 			);
 			path = UpdateUserViewController;
 			sourceTree = "<group>";
@@ -1026,6 +1038,7 @@
 				45FC0BE620A418BF006AAF3D /* CommentFragment.graphql in Resources */,
 				45BA0D83209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql in Resources */,
 				45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */,
+				453B95BA20C4D1A80043D915 /* UserSetAvatarId.graphql in Resources */,
 				4543ECE520BC38FA002F7C18 /* LoadFooterView.xib in Resources */,
 				454F72A2208DD1AA00850471 /* MyMedia.graphql in Resources */,
 				457BD99620B304F7007F0492 /* UserFollowings.graphql in Resources */,
@@ -1033,6 +1046,7 @@
 				457BD99820B30559007F0492 /* UserFollowers.graphql in Resources */,
 				4591AEDD20A2F359001EC384 /* RecommendMedium.graphql in Resources */,
 				45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */,
+				453B95B820C4D18A0043D915 /* UserSetDisplayName.graphql in Resources */,
 				45D04F8F208F635C00AC2226 /* MyReputations.graphql in Resources */,
 				45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */,
 				45BA0D812090391D0002E1D5 /* MyNotifications.graphql in Resources */,
@@ -1150,6 +1164,7 @@
 				45517D5220BD3EB400F2D7DE /* Wireframe.swift in Sources */,
 				455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */,
 				451DD4B9207E4880002C509A /* Client.swift in Sources */,
+				453B95B620C4CEF50043D915 /* UpdateUserStateObject.swift in Sources */,
 				4595F2102079F6B60040E5FA /* LoginViewController.swift in Sources */,
 				454F72962089B44500850471 /* RxCollectionViewCell.swift in Sources */,
 				45D04F8B208F60A600AC2226 /* ReputationsViewPresenter.swift in Sources */,
@@ -1169,6 +1184,7 @@
 				45B0206320B3F5AA00BD5D8F /* SnackbarObject.swift in Sources */,
 				45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */,
 				4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */,
+				453B95BC20C4D7090043D915 /* UpdateUserPresenter.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
 				45517D4420BCDCD900F2D7DE /* UserViewModel.swift in Sources */,
 				451CD32D207BB5D90063A972 /* HomeViewController.swift in Sources */,

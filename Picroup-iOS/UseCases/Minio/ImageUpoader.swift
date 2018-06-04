@@ -9,6 +9,7 @@
 import Alamofire
 import RxSwift
 import RxAlamofire
+import Kingfisher
 
 struct ImageUpoader {
     
@@ -20,6 +21,7 @@ struct ImageUpoader {
     
     static func uploadImage(_ image: UIImage) -> (progress: Observable<RxProgress>, filename: String) {
         let filename = "\(UUID().uuidString).jpg"
+        let cacheKey = URL(string: "\(Config.baseURL)/s3?name=\(filename)")!.cacheKey
         let progress = json(.get, "\(Config.baseURL)/signed?name=\(filename)")
             .map { json in (json as? [String: String])?["signedURL"] }
             .flatMap { url -> Observable<RxProgress> in
@@ -29,6 +31,7 @@ struct ImageUpoader {
                 return upload(imageData, to: url, method: .put, headers: ["Content-Type":"image/jpeg"])
                     .rx.progress()
         }
+            .do(onCompleted: { ImageCache.default.store(image, forKey: cacheKey) })
         return (progress, filename)
     }
     

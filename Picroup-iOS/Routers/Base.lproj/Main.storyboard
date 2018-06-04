@@ -1766,7 +1766,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="259" height="29"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                                                <textInputTraits key="textInputTraits"/>
+                                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                             </textField>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="700" text="@luojie" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEu-Sp-rr0">
                                                                 <rect key="frame" x="0.0" y="37" width="259" height="21.5"/>
@@ -1816,13 +1816,18 @@
                                     </view>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="AFs-cs-MlI">
+                                <rect key="frame" x="36" y="96" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="AFs-cs-MlI" firstAttribute="centerY" secondItem="rCi-dB-uJa" secondAttribute="centerY" id="AYl-Xp-rs5"/>
                             <constraint firstItem="gt8-3d-Qit" firstAttribute="trailing" secondItem="qTn-vf-6kw" secondAttribute="trailing" id="BCJ-4C-Oob"/>
                             <constraint firstItem="gt8-3d-Qit" firstAttribute="leading" secondItem="qTn-vf-6kw" secondAttribute="leading" id="ED8-cj-dUP"/>
                             <constraint firstItem="qTn-vf-6kw" firstAttribute="trailing" secondItem="QuH-9F-yuV" secondAttribute="trailing" id="FYN-lx-Ecn"/>
                             <constraint firstItem="ROJ-wY-d9z" firstAttribute="top" secondItem="Q0Z-lk-nXP" secondAttribute="top" id="OG5-4E-gdO"/>
+                            <constraint firstItem="AFs-cs-MlI" firstAttribute="centerX" secondItem="rCi-dB-uJa" secondAttribute="centerX" id="QcC-3q-IcM"/>
                             <constraint firstItem="QuH-9F-yuV" firstAttribute="leading" secondItem="qTn-vf-6kw" secondAttribute="leading" id="T6K-Eb-qCw"/>
                             <constraint firstItem="gt8-3d-Qit" firstAttribute="top" secondItem="QuH-9F-yuV" secondAttribute="bottom" constant="24" id="Xn2-4w-zyS"/>
                             <constraint firstItem="ROJ-wY-d9z" firstAttribute="trailing" secondItem="qTn-vf-6kw" secondAttribute="trailing" id="YS1-uS-ujS"/>
@@ -1831,8 +1836,20 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qTn-vf-6kw"/>
                     </view>
+                    <connections>
+                        <outlet property="presenter" destination="NZk-Qi-mDe" id="v2a-yX-nN6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rAh-4M-TqU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="NZk-Qi-mDe" customClass="UpdateUserPresenter" customModule="Picroup_iOS" customModuleProvider="target">
+                    <connections>
+                        <outlet property="displaynameField" destination="QWG-dt-Pxw" id="9dc-dj-P7u"/>
+                        <outlet property="headerView" destination="ROJ-wY-d9z" id="ERe-T2-f30"/>
+                        <outlet property="userAvatarImageView" destination="rCi-dB-uJa" id="UfG-T8-hUl"/>
+                        <outlet property="userAvatarSpinner" destination="AFs-cs-MlI" id="e9d-5m-RE1"/>
+                        <outlet property="usernameLabel" destination="JEu-Sp-rr0" id="Jqb-b5-7Qt"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="1469.5999999999999" y="1759.9700149925038"/>
         </scene>

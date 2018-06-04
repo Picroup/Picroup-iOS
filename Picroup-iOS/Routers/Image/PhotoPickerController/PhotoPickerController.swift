@@ -13,7 +13,30 @@ import RealmSwift
 import Kingfisher
 import ImagePicker
 
+extension PhotoPickerController {
+    
+    static func pickImages(from vc: UIViewController?, imageLimit: Int = 0) -> Signal<[String]> {
+        guard let vc = vc else { return .empty() }
+        var configuration = Configuration()
+        configuration.managesAudioSession = false
+        configuration.OKButtonTitle = "好"
+        configuration.cancelButtonTitle = "取消"
+        configuration.doneButtonTitle = "下一步"
+        configuration.noImagesTitle = "无图片"
+        configuration.noCameraTitle = "相机不可用"
+        configuration.settingsTitle = "设置"
+        configuration.requestPermissionTitle = "无访问权限"
+        configuration.requestPermissionMessage = "请允许应用读取图片库"
+        let photoPickerController = PhotoPickerController(configuration: configuration)
+        photoPickerController.imageLimit = imageLimit
+        vc.present(photoPickerController, animated: true)
+        return photoPickerController.pickedImageKeys.asSignal()
+    }
+}
+
 final class PhotoPickerController: ImagePickerController {
+    
+    fileprivate let pickedImageKeys = PublishRelay<[String]>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,15 +56,16 @@ extension PhotoPickerController: ImagePickerDelegate {
         
         let imageKeys = (0..<images.count).map { _ in UUID().uuidString }
         zip(images, imageKeys).forEach { image, key in ImageCache.default.store(image, forKey: key) }
+        pickedImageKeys.accept(imageKeys)
         
-        Realm.background(updates: { (realm) in
-            guard let route = realm.object(ofType: CreateImageRouteObject.self, forPrimaryKey: PrimaryKey.default) else { return }
-            try realm.write {
-                route.imageKeys.removeAll()
-                route.imageKeys.append(objectsIn: imageKeys)
-                route.version = UUID().uuidString
-            }
-        }, onError: { print($0) })
+//        Realm.background(updates: { (realm) in
+//            guard let route = realm.object(ofType: CreateImageRouteObject.self, forPrimaryKey: PrimaryKey.default) else { return }
+//            try realm.write {
+//                route.imageKeys.removeAll()
+//                route.imageKeys.append(objectsIn: imageKeys)
+//                route.version = UUID().uuidString
+//            }
+//        }, onError: { print($0) })
         
         imagePicker.dismiss(animated: true)
     }

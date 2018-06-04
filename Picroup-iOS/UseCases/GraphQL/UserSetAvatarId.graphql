@@ -1,0 +1,8 @@
+query UserSetAvatarId($userId: ID!, $avatarId: String!) {
+    user(userId: $userId) {
+        setAvatarId(avatarId: $avatarId) {
+            ...UserFragment
+        }
+    }
+}
+

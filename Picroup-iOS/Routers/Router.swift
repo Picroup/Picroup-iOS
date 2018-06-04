@@ -54,11 +54,11 @@ final class Router {
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
-        _ = store.pickImageRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
-            .drive(Binder(self) { (me, _) in
-                let vc = RouterService.Image.photoPickerController()
-                me.currentNavigationController?.present(vc, animated: true)
-            })
+//        _ = store.pickImageRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+//            .drive(Binder(self) { (me, _) in
+//                let vc = RouterService.Image.photoPickerController()
+//                me.currentNavigationController?.present(vc, animated: true)
+//            })
         
         _ = store.createImageRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .map { $0.imageKeys.toArray() }.filter { !$0.isEmpty }

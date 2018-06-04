@@ -15,10 +15,7 @@ extension Reactive where Base: UIImageView {
     
     var imageMinioId: Binder<String?> {
         return Binder(base) { imageView, minioId in
-            let url = minioId
-                .map { "\(Config.baseURL)/s3?name=\($0)" }
-                .flatMap(URL.init(string: ))
-            imageView.kf.setImage(with: url, options: [.transition(.fade(0.2))])
+            imageView.setImage(with: minioId)
         }
     }
 }

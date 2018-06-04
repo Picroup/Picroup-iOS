@@ -17,7 +17,7 @@ final class RouteStateObject: PrimaryObject {
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
     @objc dynamic var reputationsRoute: ReputationsRouteObject?
-    @objc dynamic var pickImageRoute: PickImageRouteObject?
+//    @objc dynamic var pickImageRoute: PickImageRouteObject?
     @objc dynamic var createImageRoute: CreateImageRouteObject?
     @objc dynamic var userRoute: UserRouteObject?
     @objc dynamic var updateUserRoute: UpdateUserRouteObject?
@@ -48,9 +48,9 @@ final class ReputationsRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
-final class PickImageRouteObject: PrimaryObject {
-    @objc dynamic var version: String?
-}
+//final class PickImageRouteObject: PrimaryObject {
+//    @objc dynamic var version: String?
+//}
 
 final class CreateImageRouteObject: PrimaryObject {
     let imageKeys = List<String>()
@@ -108,7 +108,7 @@ extension RouteStateObject {
                 "imageDetialRoute": ["_id": _id],
                 "imageCommetsRoute": ["_id": _id],
                 "reputationsRoute": ["_id": _id],
-                "pickImageRoute": ["_id": _id],
+//                "pickImageRoute": ["_id": _id],
                 "createImageRoute": ["_id": _id],
                 "userRoute": ["_id": _id],
                 "updateUserRoute": ["_id": _id],
@@ -158,10 +158,10 @@ final class RouteStateStore {
         return Observable.from(object: popRoute).asDriver(onErrorDriveWith: .empty())
     }
     
-    func pickImageRoute() -> Driver<PickImageRouteObject> {
-        guard let popRoute = _state.pickImageRoute else { return .empty() }
-        return Observable.from(object: popRoute).asDriver(onErrorDriveWith: .empty())
-    }
+//    func pickImageRoute() -> Driver<PickImageRouteObject> {
+//        guard let popRoute = _state.pickImageRoute else { return .empty() }
+//        return Observable.from(object: popRoute).asDriver(onErrorDriveWith: .empty())
+//    }
     
     func createImageRoute() -> Driver<CreateImageRouteObject> {
         guard let popRoute = _state.createImageRoute else { return .empty() }
