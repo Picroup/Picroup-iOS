@@ -72,7 +72,6 @@ extension RankStateObject {
         case onGetError(Error)
         case onTriggerLogin
         case onTriggerShowImage(String)
-        case onLogout
     }
 }
 
@@ -111,12 +110,6 @@ extension RankStateObject: IsFeedbackStateObject {
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
             imageDetialRoute?.version = UUID().uuidString
-        case .onLogout:
-            session?.currentUser = nil
-            realm.delete(realm.objects(UserObject.self))
-            realm.delete(realm.objects(MediumObject.self))
-            realm.delete(realm.objects(NotificationObject.self))
-            realm.delete(realm.objects(ReputationObject.self))
         }
     }
 }

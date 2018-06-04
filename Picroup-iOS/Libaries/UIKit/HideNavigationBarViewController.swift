@@ -16,6 +16,8 @@ class HideNavigationBarViewController: UIViewController {
             navigationController?.setNavigationBarHidden(true, animated: true)
         }
     }
+    
+    
 }
 
 class ShowNavigationBarViewController: UIViewController {

@@ -228,6 +228,7 @@
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="commentButton" destination="vfJ-qw-iju" id="2sv-P0-nuf"/>
+                                            <outlet property="displayNameLabel" destination="9HC-sR-eYS" id="7MK-E2-B20"/>
                                             <outlet property="imageView" destination="v1U-Sh-Zer" id="IAK-2f-dl3"/>
                                             <outlet property="lifeBar" destination="TpI-pU-q6i" id="n05-IG-1yW"/>
                                             <outlet property="lifeViewWidthConstraint" destination="VWK-RS-JN8" id="Avg-Fg-810"/>
@@ -236,7 +237,6 @@
                                             <outlet property="starButton" destination="6Xb-Fp-URK" id="p8d-Vq-hPD"/>
                                             <outlet property="userAvatarImageView" destination="LeU-Q8-Shs" id="SYC-Uk-btj"/>
                                             <outlet property="userView" destination="wdI-lc-z1l" id="mQb-jI-AyO"/>
-                                            <outlet property="usernameLabel" destination="9HC-sR-eYS" id="7MK-E2-B20"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RankMediumCell" id="wK0-hu-Ttb" customClass="RankMediumCell" customModule="Picroup_iOS" customModuleProvider="target">

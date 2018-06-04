@@ -30,6 +30,7 @@ class HomeViewController: UIViewController {
 
         guard let store = try? HomeStateStore() else { return }
         
+        weak var weakSelf = self
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
             let _events = PublishRelay<HomeStateObject.Event>()
@@ -50,7 +51,7 @@ class HomeViewController: UIViewController {
                         : .empty()
                     }.map { .onTriggerGetMoreMyInterestedMedia },
                 presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReloadMyInterestedMedia },
-                presenter.fabButton.rx.tap.asSignal().map { .onTriggerPickImage },
+                presenter.fabButton.rx.tap.asSignal().flatMapLatest { PhotoPickerController.pickImages(from: weakSelf, imageLimit: 10) } .map(HomeStateObject.Event.onTriggerCreateImage),
                 presenter.addUserButton.rx.tap.asSignal().map { .onTriggerSearchUser },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)

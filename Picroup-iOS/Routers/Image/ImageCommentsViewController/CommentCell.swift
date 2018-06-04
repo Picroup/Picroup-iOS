@@ -16,7 +16,7 @@ class CommentCell: RxTableViewCell {
     
     func configure(with item: CommentObject) {
         guard !item.isInvalidated else { return }
-        userLabel?.text = item.user?.username
+        userLabel?.text = item.user?.displayName
         contentLabel?.text = item.content
         photoView.setImage(with: item.user?.avatarId)
     }

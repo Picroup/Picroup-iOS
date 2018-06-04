@@ -14,6 +14,19 @@ import RxGesture
 import RxFeedback
 import RxViewController
 
+private func mapMoreButtonTapToEvent() -> Signal<MeStateObject.Event> {
+    return DefaultWireframe.shared
+        .promptFor(cancelAction: "取消", actions: ["更新个人信息", "退出登录"])
+        .asSignalOnErrorRecoverEmpty()
+        .flatMap { action in
+            switch action {
+            case "更新个人信息":  return .just(.onTriggerUpdateUser)
+            case "退出登录":     return .just(.onLogout)
+            default:            return .empty()
+            }
+    }
+}
+
 class MeViewController: HideNavigationBarViewController {
     
     fileprivate typealias Feedback = (Driver<MeStateObject>) -> Signal<MeStateObject.Event>
@@ -37,7 +50,7 @@ class MeViewController: HideNavigationBarViewController {
             let meViewModel = state.map { UserViewModel(user: $0.me) }
             let subscriptions: [Disposable] = [
                 meViewModel.map { $0.avatarId }.drive(presenter.userAvatarImageView.rx.imageMinioId),
-                meViewModel.map { $0.username }.drive(presenter.displaynameLabel.rx.text),
+                meViewModel.map { $0.displayName }.drive(presenter.displaynameLabel.rx.text),
                 meViewModel.map { $0.username }.drive(presenter.usernameLabel.rx.text),
                 meViewModel.map { $0.reputation }.drive(presenter.reputationCountLabel.rx.text),
                 meViewModel.map { $0.followersCount }.drive(presenter.followersCountLabel.rx.text),
@@ -53,9 +66,7 @@ class MeViewController: HideNavigationBarViewController {
             
             let events: [Signal<MeStateObject.Event>] = [
                 .of(.onTriggerReloadMe, .onTriggerReloadMyMedia, .onTriggerReloadMyStaredMedia),
-                presenter.moreButton.rx.tap.asSignal().flatMap { _ in
-                    DefaultWireframe.shared.promptFor(cancelAction: "取消", actions: ["更新用户信息", "举报"]).asSignalOnErrorRecoverEmpty() }
-                    .flatMap { _ in .empty() },
+                presenter.moreButton.rx.tap.asSignal().flatMapLatest(mapMoreButtonTapToEvent),
                 presenter.myMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myMedia) },
                 presenter.myStaredMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myStaredMedia) },
                 state.flatMapLatest {
@@ -100,7 +111,8 @@ class MeViewController: HideNavigationBarViewController {
         }
         
         let states = store.states
-        
+//            .debug("MeState", trimOutput: true)
+
         Signal.merge(
             uiFeedback(states),
             queryMe(states),

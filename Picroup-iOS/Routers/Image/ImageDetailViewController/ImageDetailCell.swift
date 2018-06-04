@@ -24,7 +24,7 @@ extension ImageDetailCell {
         let stared: Bool?
         let animatedChangeProgress: Bool
         
-        let username: String?
+        let displayName: String?
         let avatarId: String?
     }
 }
@@ -42,7 +42,7 @@ extension ImageDetailCell.ViewModel {
             self.commentsCountText = "\(0)"
             self.stared = nil
             self.animatedChangeProgress = false
-            self.username = nil
+            self.displayName = nil
             self.avatarId = nil
             return
         }
@@ -58,7 +58,7 @@ extension ImageDetailCell.ViewModel {
         self.stared = medium.stared.value
         self.animatedChangeProgress = false
         
-        self.username = medium.user?.username
+        self.displayName = medium.user?.displayName
         self.avatarId = medium.user?.avatarId
     }
 }
@@ -72,7 +72,7 @@ class ImageDetailCell: RxCollectionViewCell {
     @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var userView: UIView!
-    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var displayNameLabel: UILabel!
     @IBOutlet weak var remainTimeLabel: UILabel!
     @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
@@ -90,7 +90,7 @@ class ImageDetailCell: RxCollectionViewCell {
         starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
         lifeViewWidthConstraint.constant = viewModel.progress * lifeBar.bounds.width
         userAvatarImageView.setImage(with: viewModel.avatarId)
-        usernameLabel.text = viewModel.username
+        displayNameLabel.text = viewModel.displayName
         remainTimeLabel.text = viewModel.remainTimeLabelText
         commentButton.setTitle(viewModel.commentsCountText, for: .normal)
         configureStarButton(with: viewModel)

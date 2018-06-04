@@ -14,7 +14,7 @@ import RxDataSources
 
 class RankViewPresenter {
     
-    var categoryButton: IconButton!
+    var userButton: IconButton!
     var refreshControl: UIRefreshControl!
     weak var collectionView: UICollectionView!
     weak var navigationItem: UINavigationItem!
@@ -27,7 +27,7 @@ class RankViewPresenter {
     
     private func setup() {
         prepareRefreshControl()
-        prepareCategoryButton()
+        prepareUserButton()
         prepareNavigationItem()
     }
     
@@ -37,16 +37,17 @@ class RankViewPresenter {
         collectionView.addSubview(refreshControl!)
     }
     
-    fileprivate func prepareCategoryButton() {
-        categoryButton = IconButton(image: UIImage(named: "baseline_account_circle_black_24pt"), tintColor: .primaryText)
-        categoryButton.pulseColor = .white
+    fileprivate func prepareUserButton() {
+        userButton = IconButton(image: UIImage(named: "baseline_account_circle_black_24pt"), tintColor: .primaryText)
+        userButton.pulseColor = .white
+        userButton.isHidden = true
     }
     
     fileprivate func prepareNavigationItem() {
         navigationItem.titleLabel.text = "热门"
         navigationItem.titleLabel.textColor = .primaryText
 //        navigationItem.titleLabel.textAlignment = .left
-        navigationItem.rightViews = [categoryButton]
+        navigationItem.rightViews = [userButton]
     }
     
     typealias Section = AnimatableSectionModel<String, MediumObject>
