@@ -38,6 +38,8 @@
 		453B95B820C4D18A0043D915 /* UserSetDisplayName.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 453B95B720C4D18A0043D915 /* UserSetDisplayName.graphql */; };
 		453B95BA20C4D1A80043D915 /* UserSetAvatarId.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 453B95B920C4D1A80043D915 /* UserSetAvatarId.graphql */; };
 		453B95BC20C4D7090043D915 /* UpdateUserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B95BB20C4D7090043D915 /* UpdateUserPresenter.swift */; };
+		453B95BE20C523990043D915 /* Me.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 453B95BD20C523990043D915 /* Me.storyboard */; };
+		453B95C020C523DD0043D915 /* RouterService+Me.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B95BF20C523DD0043D915 /* RouterService+Me.swift */; };
 		4543ECE520BC38FA002F7C18 /* LoadFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4543ECE420BC38FA002F7C18 /* LoadFooterView.xib */; };
 		4543ECE720BC39DC002F7C18 /* LoadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ECE620BC39DC002F7C18 /* LoadFooterView.swift */; };
 		4543ECE920BC4121002F7C18 /* RxCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ECE820BC4121002F7C18 /* RxCollectionReusableView.swift */; };
@@ -208,6 +210,8 @@
 		453B95B720C4D18A0043D915 /* UserSetDisplayName.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserSetDisplayName.graphql; sourceTree = "<group>"; };
 		453B95B920C4D1A80043D915 /* UserSetAvatarId.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserSetAvatarId.graphql; sourceTree = "<group>"; };
 		453B95BB20C4D7090043D915 /* UpdateUserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserPresenter.swift; sourceTree = "<group>"; };
+		453B95BD20C523990043D915 /* Me.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Me.storyboard; sourceTree = "<group>"; };
+		453B95BF20C523DD0043D915 /* RouterService+Me.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouterService+Me.swift"; sourceTree = "<group>"; };
 		4543ECE420BC38FA002F7C18 /* LoadFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadFooterView.xib; sourceTree = "<group>"; };
 		4543ECE620BC39DC002F7C18 /* LoadFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFooterView.swift; sourceTree = "<group>"; };
 		4543ECE820BC4121002F7C18 /* RxCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -608,6 +612,8 @@
 		458C106B2084A09F005E94CD /* Me */ = {
 			isa = PBXGroup;
 			children = (
+				453B95BD20C523990043D915 /* Me.storyboard */,
+				453B95BF20C523DD0043D915 /* RouterService+Me.swift */,
 				451CD335207D0B7F0063A972 /* MeViewController */,
 				45BA0D7B208ED3980002E1D5 /* ReputationsViewController */,
 				45FC0BF120A42F11006AAF3D /* UserViewController */,
@@ -1032,6 +1038,7 @@
 				454F729E208DB8D200850471 /* Image.storyboard in Resources */,
 				4595F20E2079F6780040E5FA /* Login.storyboard in Resources */,
 				45FC0BE220A41704006AAF3D /* UserFragment.graphql in Resources */,
+				453B95BE20C523990043D915 /* Me.storyboard in Resources */,
 				457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */,
 				45E240B920862CF6004B58EF /* Medium.graphql in Resources */,
 				45D04F762088C59100AC2226 /* MediumComments.graphql in Resources */,
@@ -1152,6 +1159,7 @@
 				457BD98920AC695A007F0492 /* ReputationObject.swift in Sources */,
 				45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */,
 				45C392F620C3D88400F4A69A /* UpdateUserViewController.swift in Sources */,
+				453B95C020C523DD0043D915 /* RouterService+Me.swift in Sources */,
 				45B0207320B5182300BD5D8F /* SearchUserStateObject.swift in Sources */,
 				457BD99420B146CD007F0492 /* AppStateService.swift in Sources */,
 				45FC0BF520A42F4A006AAF3D /* UserPresenter.swift in Sources */,
