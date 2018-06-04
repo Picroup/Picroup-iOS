@@ -55,8 +55,9 @@ extension RouterService.Main {
         return bnvc
     }
     
-    static func feedbackViewController() -> UIViewController {
+    static func feedbackViewController(dependency: FeedbackViewController.Dependency) -> FeedbackViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FeedbackViewController") as! FeedbackViewController
+        vc.dependency = dependency
         return vc
     }
     

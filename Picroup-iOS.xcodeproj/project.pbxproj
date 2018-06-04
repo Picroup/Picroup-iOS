@@ -150,6 +150,9 @@
 		45C1994D20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994C20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift */; };
 		45C1995220AA7AFF001924B9 /* IsFeedbackStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1995120AA7AFF001924B9 /* IsFeedbackStateObject.swift */; };
 		45C392F620C3D88400F4A69A /* UpdateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C392F520C3D88400F4A69A /* UpdateUserViewController.swift */; };
+		45C3930020C5875D00F4A69A /* SaveAppFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C392FD20C5875D00F4A69A /* SaveAppFeedback.graphql */; };
+		45C3930120C5875D00F4A69A /* SaveUserFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C392FE20C5875D00F4A69A /* SaveUserFeedback.graphql */; };
+		45C3930220C5875D00F4A69A /* SaveMediumFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C392FF20C5875D00F4A69A /* SaveMediumFeedback.graphql */; };
 		45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */; };
 		45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F71208790C700AC2226 /* TimeInterval+.swift */; };
 		45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */; };
@@ -325,6 +328,9 @@
 		45C1994C20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx+triggerGetMore.swift"; sourceTree = "<group>"; };
 		45C1995120AA7AFF001924B9 /* IsFeedbackStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackStateObject.swift; sourceTree = "<group>"; };
 		45C392F520C3D88400F4A69A /* UpdateUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserViewController.swift; sourceTree = "<group>"; };
+		45C392FD20C5875D00F4A69A /* SaveAppFeedback.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SaveAppFeedback.graphql; sourceTree = "<group>"; };
+		45C392FE20C5875D00F4A69A /* SaveUserFeedback.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SaveUserFeedback.graphql; sourceTree = "<group>"; };
+		45C392FF20C5875D00F4A69A /* SaveMediumFeedback.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SaveMediumFeedback.graphql; sourceTree = "<group>"; };
 		45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailCell.swift; sourceTree = "<group>"; };
 		45D04F71208790C700AC2226 /* TimeInterval+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+.swift"; sourceTree = "<group>"; };
 		45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Operator.swift"; sourceTree = "<group>"; };
@@ -389,8 +395,8 @@
 		4515A68D2079E39F0039C383 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				453B95C120C52E850043D915 /* FeedbackViewController */,
 				4595F21C207C88E00040E5FA /* MainTabBarController */,
+				453B95C120C52E850043D915 /* FeedbackViewController */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -804,6 +810,9 @@
 				45FC0BEB20A41B0D006AAF3D /* NotificationFragment.graphql */,
 				45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */,
 				4591AEDC20A2F359001EC384 /* RecommendMedium.graphql */,
+				45C392FD20C5875D00F4A69A /* SaveAppFeedback.graphql */,
+				45C392FE20C5875D00F4A69A /* SaveUserFeedback.graphql */,
+				45C392FF20C5875D00F4A69A /* SaveMediumFeedback.graphql */,
 				45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */,
 				45A61C0C2086356E00AE7D99 /* StarMedium.graphql */,
 				45D04F792088D57B00AC2226 /* SaveComment.graphql */,
@@ -1049,6 +1058,8 @@
 				454F729E208DB8D200850471 /* Image.storyboard in Resources */,
 				4595F20E2079F6780040E5FA /* Login.storyboard in Resources */,
 				45FC0BE220A41704006AAF3D /* UserFragment.graphql in Resources */,
+				45C3930120C5875D00F4A69A /* SaveUserFeedback.graphql in Resources */,
+				45C3930220C5875D00F4A69A /* SaveMediumFeedback.graphql in Resources */,
 				453B95BE20C523990043D915 /* Me.storyboard in Resources */,
 				457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */,
 				45E240B920862CF6004B58EF /* Medium.graphql in Resources */,
@@ -1057,6 +1068,7 @@
 				45BA0D83209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql in Resources */,
 				45D0E237207E2ED100ECC2A3 /* SaveImageMedium.graphql in Resources */,
 				453B95BA20C4D1A80043D915 /* UserSetAvatarId.graphql in Resources */,
+				45C3930020C5875D00F4A69A /* SaveAppFeedback.graphql in Resources */,
 				4543ECE520BC38FA002F7C18 /* LoadFooterView.xib in Resources */,
 				454F72A2208DD1AA00850471 /* MyMedia.graphql in Resources */,
 				457BD99620B304F7007F0492 /* UserFollowings.graphql in Resources */,

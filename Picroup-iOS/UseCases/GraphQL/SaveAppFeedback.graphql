@@ -1,0 +1,10 @@
+mutation SaveAppFeedback($userId: ID!, $content: String!) {
+    saveAppFeedback(userId: $userId, content: $content) {
+        _id
+        kind
+    }
+}
+
+
+
+

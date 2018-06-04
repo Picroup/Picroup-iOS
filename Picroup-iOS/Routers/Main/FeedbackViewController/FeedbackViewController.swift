@@ -10,8 +10,10 @@ import UIKit
 
 final class FeedbackViewController: HideNavigationBarViewController {
     
+    typealias Dependency = (kind: String?, toUserId: String?, mediumId: String?)
+    var dependency: Dependency!
+    
     @IBOutlet weak var textView: UITextView! {
         didSet { textView.becomeFirstResponder() }
     }
-    
 }

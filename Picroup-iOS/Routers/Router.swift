@@ -114,8 +114,9 @@ final class Router {
             })
         
         _ = store.feedbackRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
-            .drive(Binder(self) { (me, _) in
-                let vc = RouterService.Main.feedbackViewController()
+            .drive(Binder(self) { (me, route) in
+                let dependency = (route.kind, route.toUserId, route.mediumId)
+                let vc = RouterService.Main.feedbackViewController(dependency: dependency)
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
@@ -171,6 +172,6 @@ final class Router {
                 
             }
         })
-        
     }
 }
+

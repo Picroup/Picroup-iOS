@@ -1,0 +1,6 @@
+mutation SaveMediumFeedback($userId: ID!, $mediumId: ID!, $content: String!) {
+    saveMediumFeedback(userId: $userId, mediumId: $mediumId, content: $content) {
+        _id
+        kind
+    }
+}
