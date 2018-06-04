@@ -40,6 +40,7 @@
 		453B95BC20C4D7090043D915 /* UpdateUserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B95BB20C4D7090043D915 /* UpdateUserPresenter.swift */; };
 		453B95BE20C523990043D915 /* Me.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 453B95BD20C523990043D915 /* Me.storyboard */; };
 		453B95C020C523DD0043D915 /* RouterService+Me.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B95BF20C523DD0043D915 /* RouterService+Me.swift */; };
+		453B95C320C52E990043D915 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B95C220C52E990043D915 /* FeedbackViewController.swift */; };
 		4543ECE520BC38FA002F7C18 /* LoadFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4543ECE420BC38FA002F7C18 /* LoadFooterView.xib */; };
 		4543ECE720BC39DC002F7C18 /* LoadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ECE620BC39DC002F7C18 /* LoadFooterView.swift */; };
 		4543ECE920BC4121002F7C18 /* RxCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ECE820BC4121002F7C18 /* RxCollectionReusableView.swift */; };
@@ -212,6 +213,7 @@
 		453B95BB20C4D7090043D915 /* UpdateUserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserPresenter.swift; sourceTree = "<group>"; };
 		453B95BD20C523990043D915 /* Me.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Me.storyboard; sourceTree = "<group>"; };
 		453B95BF20C523DD0043D915 /* RouterService+Me.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouterService+Me.swift"; sourceTree = "<group>"; };
+		453B95C220C52E990043D915 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		4543ECE420BC38FA002F7C18 /* LoadFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadFooterView.xib; sourceTree = "<group>"; };
 		4543ECE620BC39DC002F7C18 /* LoadFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFooterView.swift; sourceTree = "<group>"; };
 		4543ECE820BC4121002F7C18 /* RxCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -387,6 +389,7 @@
 		4515A68D2079E39F0039C383 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				453B95C120C52E850043D915 /* FeedbackViewController */,
 				4595F21C207C88E00040E5FA /* MainTabBarController */,
 			);
 			path = Main;
@@ -514,6 +517,14 @@
 				45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */,
 			);
 			path = CreateImageViewController;
+			sourceTree = "<group>";
+		};
+		453B95C120C52E850043D915 /* FeedbackViewController */ = {
+			isa = PBXGroup;
+			children = (
+				453B95C220C52E990043D915 /* FeedbackViewController.swift */,
+			);
+			path = FeedbackViewController;
 			sourceTree = "<group>";
 		};
 		4543ECE320BC38D1002F7C18 /* LoadFooterView */ = {
@@ -1158,6 +1169,7 @@
 				45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */,
 				457BD98920AC695A007F0492 /* ReputationObject.swift in Sources */,
 				45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */,
+				453B95C320C52E990043D915 /* FeedbackViewController.swift in Sources */,
 				45C392F620C3D88400F4A69A /* UpdateUserViewController.swift in Sources */,
 				453B95C020C523DD0043D915 /* RouterService+Me.swift in Sources */,
 				45B0207320B5182300BD5D8F /* SearchUserStateObject.swift in Sources */,

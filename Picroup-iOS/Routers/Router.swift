@@ -54,12 +54,6 @@ final class Router {
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
-//        _ = store.pickImageRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
-//            .drive(Binder(self) { (me, _) in
-//                let vc = RouterService.Image.photoPickerController()
-//                me.currentNavigationController?.present(vc, animated: true)
-//            })
-        
         _ = store.createImageRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .map { $0.imageKeys.toArray() }.filter { !$0.isEmpty }
             .drive(Binder(self) { (me, imageKeys) in
@@ -67,7 +61,6 @@ final class Router {
                 let vc = RouterService.Image.createImageViewController(dependency: imageKeys)
                 vc.hidesBottomBarWhenPushed = true
                 me.currentNavigationController?.pushViewController(vc, animated: true)
-//                me.currentViewController?.present(SnackbarController(rootViewController: vc), animated: true)
             })
         
         _ = store.userRoute().distinctUntilChanged { $0.0.version ?? "" }.skip(1)
@@ -117,6 +110,12 @@ final class Router {
             .drive(Binder(self) { (me, _) in
                 let vc = RouterService.Login.loginViewController()
                 vc.hidesBottomBarWhenPushed = true
+                me.currentNavigationController?.pushViewController(vc, animated: true)
+            })
+        
+        _ = store.feedbackRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .drive(Binder(self) { (me, _) in
+                let vc = RouterService.Main.feedbackViewController()
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
