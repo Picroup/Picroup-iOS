@@ -34,4 +34,17 @@ struct PrimaryKey {
     static func userFollowersId(_ userId: String) -> String {
         return "user.\(userId).userFollowers"
     }
+    
+    static func feedbackId(kind: String?, toUserId: String?, mediumId: String?) -> String {
+        switch (kind, toUserId, mediumId) {
+        case (FeedbackKind.app.rawValue?, _, _):
+            return "\(kind!)"
+        case (FeedbackKind.user.rawValue?, let toUserId?, _):
+            return "\(kind!).\(toUserId)"
+        case (FeedbackKind.medium.rawValue?, _, let mediumId?):
+            return "\(kind!).\(mediumId)"
+        default:
+            return UUID().uuidString
+        }
+    }
 }

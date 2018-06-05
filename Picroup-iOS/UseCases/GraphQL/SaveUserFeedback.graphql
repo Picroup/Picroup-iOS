@@ -1,0 +1,6 @@
+mutation SaveUserFeedback($userId: ID!, $toUserId: ID!, $content: String!) {
+    saveUserFeedback(userId: $userId, toUserId: $toUserId, content: $content) {
+        _id
+        kind
+    }
+}

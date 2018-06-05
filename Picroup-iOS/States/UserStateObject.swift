@@ -35,6 +35,7 @@ final class UserStateObject: PrimaryObject {
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
     @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
+    @objc dynamic var feedbackRoute: FeedbackRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
     
     @objc dynamic var snackbar: SnackbarObject?
@@ -96,6 +97,7 @@ extension UserStateObject {
                 "imageDetialRoute": ["_id": _id],
                 "userFollowingsRoute": ["_id": _id],
                 "userFollowersRoute": ["_id": _id],
+                "feedbackRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 "snackbar": ["_id": _id],
                 ]
@@ -128,6 +130,7 @@ extension UserStateObject {
         case onTriggerShowImage(String)
         case onTriggerShowUserFollowings
         case onTriggerShowUserFollowers
+        case onTriggerUserFeedback
         case onTriggerPop
     }
 }
@@ -221,6 +224,8 @@ extension UserStateObject: IsFeedbackStateObject {
         case .onTriggerShowUserFollowers:
             userFollowersRoute?.userId = user?._id
             userFollowersRoute?.version = UUID().uuidString
+        case .onTriggerUserFeedback:
+            feedbackRoute?.triggerUser(toUserId: userId)
         case .onTriggerPop:
             popRoute?.version = UUID().uuidString
         }

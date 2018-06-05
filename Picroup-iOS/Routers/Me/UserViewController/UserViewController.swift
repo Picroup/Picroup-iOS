@@ -13,6 +13,18 @@ import RxCocoa
 import RxGesture
 import RxFeedback
 
+private func mapMoreButtonTapToEvent() -> Signal<UserStateObject.Event> {
+    return DefaultWireframe.shared
+        .promptFor(cancelAction: "取消", actions: ["举报"])
+        .asSignalOnErrorRecoverEmpty()
+        .flatMap { action in
+            switch action {
+            case "举报":     return .just(.onTriggerUserFeedback)
+            default:        return .empty()
+            }
+    }
+}
+
 class UserViewController: HideNavigationBarViewController {
 
     typealias Dependency = String
@@ -52,6 +64,7 @@ class UserViewController: HideNavigationBarViewController {
                 ]
             let events: [Signal<UserStateObject.Event>] = [
                 .of(.onTriggerReloadUser, .onTriggerReloadUserMedia),
+                presenter.moreButton.rx.tap.asSignal().flatMapLatest(mapMoreButtonTapToEvent),
                 state.flatMapLatest {
                     $0.shouldQueryMoreUserMedia
                         ? presenter.myMediaCollectionView.rx.triggerGetMore

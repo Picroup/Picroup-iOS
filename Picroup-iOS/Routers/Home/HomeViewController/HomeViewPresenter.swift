@@ -87,7 +87,7 @@ extension HomeViewPresenter: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width - 16
         let imageHeight = width
-        let height = imageHeight + 8 + 56 + 1 + 48
+        let height = imageHeight + 8 + 56
         return CGSize(width: width, height: height)
     }
 }

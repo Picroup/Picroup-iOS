@@ -34,6 +34,7 @@ final class MeStateObject: PrimaryObject {
     @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
     @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
     @objc dynamic var updateUserRoute: UpdateUserRouteObject?
+    @objc dynamic var feedbackRoute: FeedbackRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
 }
 
@@ -93,6 +94,7 @@ extension MeStateObject {
                 "userFollowingsRoute": ["_id": _id],
                 "userFollowersRoute": ["_id": _id],
                 "updateUserRoute": ["_id": _id],
+                "feedbackRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
             return try realm.update(MeStateObject.self, value: value)
@@ -126,6 +128,7 @@ extension MeStateObject {
         case onTriggerShowUserFollowings
         case onTriggerShowUserFollowers
         case onTriggerUpdateUser
+        case onTriggerAppFeedback
         case onTriggerPop
         case onLogout
     }
@@ -213,6 +216,8 @@ extension MeStateObject: IsFeedbackStateObject {
             userFollowersRoute?.version = UUID().uuidString
         case .onTriggerUpdateUser:
             updateUserRoute?.version = UUID().uuidString
+        case .onTriggerAppFeedback:
+            feedbackRoute?.triggerApp()
         case .onTriggerPop:
             popRoute?.version = UUID().uuidString
         case .onLogout:

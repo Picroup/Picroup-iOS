@@ -20,7 +20,6 @@ class HomeImageCell: RxCollectionViewCell {
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var userView: UIView!
     @IBOutlet weak var displayNameLabel: UILabel!
-    @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var commentButton: UIButton!
     
     func configure(

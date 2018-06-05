@@ -16,11 +16,12 @@ import RxViewController
 
 private func mapMoreButtonTapToEvent() -> Signal<MeStateObject.Event> {
     return DefaultWireframe.shared
-        .promptFor(cancelAction: "取消", actions: ["更新个人信息", "退出登录"])
+        .promptFor(cancelAction: "取消", actions: ["更新个人信息", "应用反馈", "退出登录"])
         .asSignalOnErrorRecoverEmpty()
         .flatMap { action in
             switch action {
             case "更新个人信息":  return .just(.onTriggerUpdateUser)
+            case "应用反馈":     return .just(.onTriggerAppFeedback)
             case "退出登录":     return .just(.onLogout)
             default:            return .empty()
             }
