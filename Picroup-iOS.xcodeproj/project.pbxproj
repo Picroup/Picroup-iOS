@@ -171,6 +171,9 @@
 		45E240B520862981004B58EF /* HideNavigationBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E240B420862981004B58EF /* HideNavigationBarViewController.swift */; };
 		45E240B920862CF6004B58EF /* Medium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45E240B820862CF6004B58EF /* Medium.graphql */; };
 		45E6C24A20863AC3003D7AA8 /* QueryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6C24920863AC3003D7AA8 /* QueryState.swift */; };
+		45F0A7C820C65E8E0085F978 /* DeleteMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45F0A7C720C65E8E0085F978 /* DeleteMedium.graphql */; };
+		45F0A7CA20C65EC30085F978 /* DeleteComment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45F0A7C920C65EC30085F978 /* DeleteComment.graphql */; };
+		45F0A7CD20C662F10085F978 /* Object+Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F0A7CC20C662F10085F978 /* Object+Delete.swift */; };
 		45FC0BE220A41704006AAF3D /* UserFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45FC0BE120A41704006AAF3D /* UserFragment.graphql */; };
 		45FC0BE420A41813006AAF3D /* UserDetailFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45FC0BE320A41813006AAF3D /* UserDetailFragment.graphql */; };
 		45FC0BE620A418BF006AAF3D /* CommentFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45FC0BE520A418BF006AAF3D /* CommentFragment.graphql */; };
@@ -351,6 +354,9 @@
 		45E240B420862981004B58EF /* HideNavigationBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideNavigationBarViewController.swift; sourceTree = "<group>"; };
 		45E240B820862CF6004B58EF /* Medium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Medium.graphql; sourceTree = "<group>"; };
 		45E6C24920863AC3003D7AA8 /* QueryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryState.swift; sourceTree = "<group>"; };
+		45F0A7C720C65E8E0085F978 /* DeleteMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = DeleteMedium.graphql; sourceTree = "<group>"; };
+		45F0A7C920C65EC30085F978 /* DeleteComment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = DeleteComment.graphql; sourceTree = "<group>"; };
+		45F0A7CC20C662F10085F978 /* Object+Delete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Object+Delete.swift"; sourceTree = "<group>"; };
 		45FC0BE120A41704006AAF3D /* UserFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserFragment.graphql; sourceTree = "<group>"; };
 		45FC0BE320A41813006AAF3D /* UserDetailFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserDetailFragment.graphql; sourceTree = "<group>"; };
 		45FC0BE520A418BF006AAF3D /* CommentFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommentFragment.graphql; sourceTree = "<group>"; };
@@ -768,6 +774,7 @@
 			children = (
 				451CD3152079140E0063A972 /* Foundation */,
 				4595F21D207C96280040E5FA /* Material+Rx */,
+				45F0A7CB20C662B30085F978 /* Realm */,
 				451CD320207A3BF70063A972 /* RxApollo */,
 				451CD318207A38CF0063A972 /* RxCocoa */,
 				4591AEE020A3E0A5001EC384 /* RxDataSources */,
@@ -802,6 +809,8 @@
 				451DD4B8207E4880002C509A /* Client.swift */,
 				45FC0BE520A418BF006AAF3D /* CommentFragment.graphql */,
 				45FC0BE920A419FE006AAF3D /* CursorItemsFragment.graphql */,
+				45F0A7C920C65EC30085F978 /* DeleteComment.graphql */,
+				45F0A7C720C65E8E0085F978 /* DeleteMedium.graphql */,
 				45B0205B20B2A1D900BD5D8F /* FollowUser.graphql */,
 				451CD31E207A3B3A0063A972 /* Login.graphql */,
 				45BA0D82209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql */,
@@ -949,6 +958,14 @@
 			path = UIKit;
 			sourceTree = "<group>";
 		};
+		45F0A7CB20C662B30085F978 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				45F0A7CC20C662F10085F978 /* Object+Delete.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
 		45FC0BF120A42F11006AAF3D /* UserViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1084,9 +1101,11 @@
 				45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */,
 				453B95B820C4D18A0043D915 /* UserSetDisplayName.graphql in Resources */,
 				45D04F8F208F635C00AC2226 /* MyReputations.graphql in Resources */,
+				45F0A7CA20C65EC30085F978 /* DeleteComment.graphql in Resources */,
 				45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */,
 				45BA0D812090391D0002E1D5 /* MyNotifications.graphql in Resources */,
 				45A0393D2075D0E9007498DB /* User.graphql in Resources */,
+				45F0A7C820C65E8E0085F978 /* DeleteMedium.graphql in Resources */,
 				451CD31F207A3B3A0063A972 /* Login.graphql in Resources */,
 				45D04F7A2088D57B00AC2226 /* SaveComment.graphql in Resources */,
 			);
@@ -1187,6 +1206,7 @@
 				45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */,
 				457BD98920AC695A007F0492 /* ReputationObject.swift in Sources */,
 				45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */,
+				45F0A7CD20C662F10085F978 /* Object+Delete.swift in Sources */,
 				453B95C320C52E990043D915 /* FeedbackViewController.swift in Sources */,
 				45C392F620C3D88400F4A69A /* UpdateUserViewController.swift in Sources */,
 				453B95C020C523DD0043D915 /* RouterService+Me.swift in Sources */,

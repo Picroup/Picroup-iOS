@@ -48,6 +48,7 @@ class ImageCommentsViewController: HideNavigationBarViewController {
                 state.map { $0.shouldSendComment ? 1 : 0 }.drive(presenter.sendButton.rx.alpha),
                 presenter.sendButton.rx.tap.bind(to: presenter.contentTextField.rx.resignFirstResponder()),
                 store.commentsItems().map { [Section(model: "", items: $0)]  }.drive(presenter.items),
+                state.map { $0.isMediumDeleted }.drive(presenter.deleteAlertView.rx.isShowed),
                 state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
                 ]
             let events: [Signal<ImageCommentsStateObject.Event>] = [
@@ -63,13 +64,14 @@ class ImageCommentsViewController: HideNavigationBarViewController {
                 presenter.hideCommentsContentView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 presenter.imageView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 presenter.tableViewBackgroundButton.rx.tap.asSignal().map { _ in .onTriggerPop },
-            ]
+                presenter.deleteAlertView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
+                ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
         let queryComments: Feedback = react(query: { $0.commentsQuery }) { (query) in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.medium?.comments.fragments.cursorCommentsFragment }.unwrap()
+                .map { $0?.data?.medium?.comments.fragments.cursorCommentsFragment }
                 .map(ImageCommentsStateObject.Event.onGetData(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: ImageCommentsStateObject.Event.onGetDataError)
         }

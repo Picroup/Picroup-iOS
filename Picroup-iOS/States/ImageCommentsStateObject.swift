@@ -15,7 +15,8 @@ import RxRealm
 final class ImageCommentsStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
-    
+    @objc dynamic var isMediumDeleted: Bool = false
+
     @objc dynamic var medium: MediumObject?
     
     @objc dynamic var comments: CursorCommentsObject?
@@ -74,8 +75,8 @@ extension ImageCommentsStateObject {
     enum Event {
         case onTriggerReloadData
         case onTriggerGetMoreData
-        case onGetReloadData(CursorCommentsFragment)
-        case onGetMoreData(CursorCommentsFragment)
+        case onGetReloadData(CursorCommentsFragment?)
+        case onGetMoreData(CursorCommentsFragment?)
         case onGetDataError(Error)
         
         case onTriggerSaveComment
@@ -90,7 +91,7 @@ extension ImageCommentsStateObject {
 
 extension ImageCommentsStateObject.Event {
     
-    static func onGetData(isReload: Bool) -> (CursorCommentsFragment) -> ImageCommentsStateObject.Event {
+    static func onGetData(isReload: Bool) -> (CursorCommentsFragment?) -> ImageCommentsStateObject.Event {
         return { isReload ? .onGetReloadData($0) : .onGetMoreData($0) }
     }
 }
@@ -108,11 +109,21 @@ extension ImageCommentsStateObject: IsFeedbackStateObject {
             commentsError = nil
             triggerCommentsQuery = true
         case .onGetReloadData(let data):
-            comments = CursorCommentsObject.create(from: data, id: PrimaryKey.commentsId(_id))(realm)
+            if let data = data {
+                comments = CursorCommentsObject.create(from: data, id: PrimaryKey.commentsId(_id))(realm)
+            } else {
+                medium?.delete()
+                isMediumDeleted = true
+            }
             commentsError = nil
             triggerCommentsQuery = false
         case .onGetMoreData(let data):
-            comments?.merge(from: data)(realm)
+            if let data = data {
+                comments?.merge(from: data)(realm)
+            } else {
+                medium?.delete()
+                isMediumDeleted = true
+            }
             commentsError = nil
             triggerCommentsQuery = false
         case .onGetDataError(let error):

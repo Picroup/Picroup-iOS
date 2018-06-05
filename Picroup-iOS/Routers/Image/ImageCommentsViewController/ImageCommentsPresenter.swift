@@ -26,6 +26,7 @@ class ImageCommentsPresenter: NSObject {
     @IBOutlet weak var hideCommentsIcon: UIImageView!
     @IBOutlet weak var hideCommentsContentView: UIView!
     @IBOutlet weak var tableViewBackgroundButton: UIButton!
+    @IBOutlet weak var deleteAlertView: UIView!
 
     func setup() {
         tableView.backgroundView = tableViewBackgroundButton

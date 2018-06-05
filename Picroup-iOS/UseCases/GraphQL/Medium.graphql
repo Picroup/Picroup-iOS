@@ -9,4 +9,3 @@ query Medium($userId: ID!, $mediumId: ID! $cursor: Float, $withStared: Boolean!)
         }
     }
 }
-

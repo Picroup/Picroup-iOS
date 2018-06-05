@@ -309,8 +309,33 @@
                     <connections>
                         <outlet property="backgroundButton" destination="ueA-Un-YhH" id="v5q-KA-t7h"/>
                         <outlet property="collectionView" destination="oWM-uy-VqI" id="5UF-7U-V7j"/>
+                        <outlet property="deleteAlertView" destination="4i3-Br-ILy" id="5nf-hG-xjX"/>
                     </connections>
                 </customObject>
+                <view contentMode="scaleToFill" id="4i3-Br-ILy">
+                    <rect key="frame" x="0.0" y="0.0" width="381" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Yse-L6-3eO">
+                            <rect key="frame" x="16" y="54" width="349" height="20.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="该图片已经到期，或者已经被删除" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="349-AT-ZgJ">
+                                    <rect key="frame" x="44.5" y="0.0" width="260" height="20.5"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Yse-L6-3eO" firstAttribute="centerY" secondItem="Rxx-Jm-kFH" secondAttribute="centerY" id="V5e-ST-jrE"/>
+                        <constraint firstItem="Yse-L6-3eO" firstAttribute="leading" secondItem="Rxx-Jm-kFH" secondAttribute="leading" constant="16" id="hh0-vP-e5T"/>
+                        <constraint firstItem="Rxx-Jm-kFH" firstAttribute="trailing" secondItem="Yse-L6-3eO" secondAttribute="trailing" constant="16" id="xhC-mR-VMu"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="Rxx-Jm-kFH"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="1751" y="465"/>
         </scene>
@@ -551,12 +576,39 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </stackView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ybv-PL-JfV">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="MPX-yP-buG">
+                                        <rect key="frame" x="16" y="333.5" width="343" height="20.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="该图片已经到期，或者已经被删除" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h47-bq-XGs">
+                                                <rect key="frame" x="41.5" y="0.0" width="260" height="20.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="MPX-yP-buG" firstAttribute="centerY" secondItem="P50-Nl-ngo" secondAttribute="centerY" id="Npf-5F-gGj"/>
+                                    <constraint firstItem="MPX-yP-buG" firstAttribute="leading" secondItem="P50-Nl-ngo" secondAttribute="leading" constant="16" id="WTQ-hN-epz"/>
+                                    <constraint firstItem="P50-Nl-ngo" firstAttribute="trailing" secondItem="MPX-yP-buG" secondAttribute="trailing" constant="16" id="hLg-b7-8QM"/>
+                                </constraints>
+                                <viewLayoutGuide key="safeArea" id="P50-Nl-ngo"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="9t0-4n-bvI" firstAttribute="leading" secondItem="Cdv-Wl-VWT" secondAttribute="leading" id="5uq-yy-0dQ"/>
                             <constraint firstItem="Cdv-Wl-VWT" firstAttribute="trailing" secondItem="9t0-4n-bvI" secondAttribute="trailing" id="9D6-Om-6aM"/>
+                            <constraint firstItem="Cdv-Wl-VWT" firstAttribute="leading" secondItem="ybv-PL-JfV" secondAttribute="leading" id="FJx-fg-6hu"/>
+                            <constraint firstItem="Cdv-Wl-VWT" firstAttribute="bottom" secondItem="ybv-PL-JfV" secondAttribute="bottom" id="ICF-H4-3hl"/>
                             <constraint firstItem="9t0-4n-bvI" firstAttribute="top" secondItem="nTe-oh-wv9" secondAttribute="top" id="JwA-3L-SBi"/>
+                            <constraint firstItem="ybv-PL-JfV" firstAttribute="trailing" secondItem="Cdv-Wl-VWT" secondAttribute="trailing" id="Ndq-Ry-uRB"/>
+                            <constraint firstAttribute="top" secondItem="ybv-PL-JfV" secondAttribute="top" id="Scv-d1-2yv"/>
                             <constraint firstItem="Cdv-Wl-VWT" firstAttribute="bottom" secondItem="9t0-4n-bvI" secondAttribute="bottom" id="eOo-PI-h7c"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Cdv-Wl-VWT"/>
@@ -570,6 +622,7 @@
                     <connections>
                         <outlet property="commentsCountLabel" destination="AbJ-n1-pIc" id="dwV-Cm-HMh"/>
                         <outlet property="contentTextField" destination="nsx-N0-WLp" id="joX-VJ-YfV"/>
+                        <outlet property="deleteAlertView" destination="ybv-PL-JfV" id="UtW-Fj-mHx"/>
                         <outlet property="hideCommentsContentView" destination="ssH-eR-rCu" id="xaw-A2-4iO"/>
                         <outlet property="hideCommentsIcon" destination="AZY-MU-RJY" id="Jzn-vN-9xy"/>
                         <outlet property="imageView" destination="qLT-qA-HqQ" id="BE5-vw-UJl"/>

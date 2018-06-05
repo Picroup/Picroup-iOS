@@ -85,7 +85,7 @@ class ImageDetailCell: RxCollectionViewCell {
         onUserTap: (() -> Void)?,
         onMoreTap: (() -> Void)?
         ) {
-        imageView.setImage(with: viewModel.imageViewMinioId!)
+        imageView.setImage(with: viewModel.imageViewMinioId)
         imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
         lifeBar.motionIdentifier = viewModel.lifeBarMotionIdentifier
         starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
