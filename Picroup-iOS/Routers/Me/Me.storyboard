@@ -776,6 +776,7 @@
                         <outlet property="gainedReputationCountButton" destination="q5W-2i-0B7" id="ay1-oX-Qya"/>
                         <outlet property="hideDetailLayoutConstraint" destination="H3Q-Fv-8vX" id="8wT-aC-6Ac"/>
                         <outlet property="meBackgroundView" destination="8Kv-gb-uhr" id="Okl-kB-yfU"/>
+                        <outlet property="moreButton" destination="A3p-Dr-6aY" id="ASX-Np-eoV"/>
                         <outlet property="myMediaCollectionView" destination="4Hm-fO-o6u" id="1QQ-I2-OOS"/>
                         <outlet property="reputationCountLabel" destination="qeA-x5-1al" id="o0Q-dm-fBW"/>
                         <outlet property="userAvatarImageView" destination="5e8-ag-Al4" id="rIr-qV-yG7"/>

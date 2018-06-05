@@ -350,6 +350,9 @@
                                                     <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
                                                         <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="pulseColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                         </subviews>
@@ -383,10 +386,18 @@
                         <viewLayoutGuide key="safeArea" id="kfJ-Lz-ef1"/>
                     </view>
                     <connections>
-                        <outlet property="textView" destination="7Cw-US-dbw" id="Ggq-lQ-t2b"/>
+                        <outlet property="presenter" destination="732-Gx-udP" id="6oA-mg-l2d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kYC-sn-pLr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="732-Gx-udP" customClass="FeedbackPresenter" customModule="Picroup_iOS" customModuleProvider="target">
+                    <connections>
+                        <outlet property="headerView" destination="3JT-1Y-3Xj" id="xaY-FP-Gne"/>
+                        <outlet property="saveButton" destination="7yx-Z7-1qw" id="p52-4E-MPi"/>
+                        <outlet property="textView" destination="7Cw-US-dbw" id="yro-X1-nIs"/>
+                        <outlet property="titleLabel" destination="wvT-u3-2lm" id="gzS-bn-yt5"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="873" y="410"/>
         </scene>

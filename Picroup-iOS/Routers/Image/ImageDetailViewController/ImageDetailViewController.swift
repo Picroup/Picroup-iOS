@@ -13,6 +13,21 @@ import RxCocoa
 import RxFeedback
 import Apollo
 
+private func mapMoreButtonTapToEvent(state: ImageDetailStateObject) -> Signal<ImageDetailStateObject.Event> {
+    let isMyMedium = state.medium?.userId == state.session?.currentUser?._id
+    let actions = isMyMedium ? ["删除"] : ["举报"]
+    return DefaultWireframe.shared
+        .promptFor(cancelAction: "取消", actions: actions)
+        .asSignalOnErrorRecoverEmpty()
+        .flatMap { action in
+            switch action {
+            case "举报":     return .just(.onTriggerMediumFeedback)
+            case "删除":     return .empty()
+            default:        return .empty()
+            }
+    }
+}
+
 fileprivate typealias Section = ImageDetailPresenter.Section
 fileprivate typealias CellStyle = ImageDetailPresenter.CellStyle
 
@@ -44,23 +59,26 @@ class ImageDetailViewController: HideNavigationBarViewController {
             let presenter = me.presenter!
             
             let _events = PublishRelay<ImageDetailStateObject.Event>()
-            
+            let _moreButtonTap = PublishRelay<Void>()
+
             let subscriptions = [
                 store.sections.drive(me.presenter.items(
                     onStarButtonTap: { _events.accept(.onTriggerStarMedium) },
                     onCommentsTap: { _events.accept(.onTriggerShowComments) },
                     onImageViewTap: { _events.accept(.onTriggerPop) } ,
-                    onUserTap: { _events.accept(.onTriggerShowUser) })),
+                    onUserTap: { _events.accept(.onTriggerShowUser) },
+                    onMoreTap: { _moreButtonTap.accept(()) })),
                 presenter.backgroundButton.rx.tap.subscribe(onNext: { _events.accept(.onTriggerPop) }),
-                ]
+            ]
             let events: [Signal<ImageDetailStateObject.Event>] = [
+                .just(.onTriggerReloadData),
+                _events.asSignal(),
+                _moreButtonTap.asSignal().withLatestFrom(state).flatMapLatest(mapMoreButtonTapToEvent),
                 state.flatMapLatest {
                     $0.shouldQueryMoreRecommendMedia
                         ? presenter.collectionView.rx.triggerGetMore
                         : .empty()
                     }.map { .onTriggerGetMoreData },
-                .just(.onTriggerReloadData),
-                _events.asSignal(),
                 me.presenter.collectionView.rx.modelSelected(ImageDetailPresenter.CellStyle.self).asSignal()
                     .flatMapLatest { cellStyle -> Signal<ImageDetailStateObject.Event> in
                     if case .recommendMedium(let medium) = cellStyle {

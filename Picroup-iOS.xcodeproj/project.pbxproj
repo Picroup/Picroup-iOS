@@ -41,6 +41,8 @@
 		453B95BE20C523990043D915 /* Me.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 453B95BD20C523990043D915 /* Me.storyboard */; };
 		453B95C020C523DD0043D915 /* RouterService+Me.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B95BF20C523DD0043D915 /* RouterService+Me.swift */; };
 		453B95C320C52E990043D915 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B95C220C52E990043D915 /* FeedbackViewController.swift */; };
+		453B95C520C619AD0043D915 /* FeedbackStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B95C420C619AD0043D915 /* FeedbackStateObject.swift */; };
+		453B95C720C622320043D915 /* FeedbackPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B95C620C622320043D915 /* FeedbackPresenter.swift */; };
 		4543ECE520BC38FA002F7C18 /* LoadFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4543ECE420BC38FA002F7C18 /* LoadFooterView.xib */; };
 		4543ECE720BC39DC002F7C18 /* LoadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ECE620BC39DC002F7C18 /* LoadFooterView.swift */; };
 		4543ECE920BC4121002F7C18 /* RxCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ECE820BC4121002F7C18 /* RxCollectionReusableView.swift */; };
@@ -217,6 +219,8 @@
 		453B95BD20C523990043D915 /* Me.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Me.storyboard; sourceTree = "<group>"; };
 		453B95BF20C523DD0043D915 /* RouterService+Me.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouterService+Me.swift"; sourceTree = "<group>"; };
 		453B95C220C52E990043D915 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
+		453B95C420C619AD0043D915 /* FeedbackStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackStateObject.swift; sourceTree = "<group>"; };
+		453B95C620C622320043D915 /* FeedbackPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPresenter.swift; sourceTree = "<group>"; };
 		4543ECE420BC38FA002F7C18 /* LoadFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadFooterView.xib; sourceTree = "<group>"; };
 		4543ECE620BC39DC002F7C18 /* LoadFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFooterView.swift; sourceTree = "<group>"; };
 		4543ECE820BC4121002F7C18 /* RxCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -529,6 +533,7 @@
 			isa = PBXGroup;
 			children = (
 				453B95C220C52E990043D915 /* FeedbackViewController.swift */,
+				453B95C620C622320043D915 /* FeedbackPresenter.swift */,
 			);
 			path = FeedbackViewController;
 			sourceTree = "<group>";
@@ -709,6 +714,7 @@
 			children = (
 				457BD98C20B135DF007F0492 /* AppStateObject.swift */,
 				457BD98A20ADB55E007F0492 /* CreateImageStateObject.swift */,
+				453B95C420C619AD0043D915 /* FeedbackStateObject.swift */,
 				45B0204E20AD59CC00BD5D8F /* HomeStateObject.swift */,
 				454B4A4D20ABB78600990063 /* ImageDetailStateObject.swift */,
 				45B0204620AC0D7000BD5D8F /* ImageCommentsStateObject.swift */,
@@ -1281,9 +1287,11 @@
 				457BD98D20B135DF007F0492 /* AppStateObject.swift in Sources */,
 				451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */,
 				45B0205F20B2BFDC00BD5D8F /* FollowingsViewController.swift in Sources */,
+				453B95C520C619AD0043D915 /* FeedbackStateObject.swift in Sources */,
 				45E240B22084D2CF004B58EF /* ImageDetailViewController.swift in Sources */,
 				45FC0BFE20A94995006AAF3D /* Realm+findOrCreate.swift in Sources */,
 				457BD99320B146CD007F0492 /* MediumService.swift in Sources */,
+				453B95C720C622320043D915 /* FeedbackPresenter.swift in Sources */,
 				457BD98B20ADB55E007F0492 /* CreateImageStateObject.swift in Sources */,
 				454F72982089B46300850471 /* RxTableViewCell.swift in Sources */,
 				457BD99A20B306AA007F0492 /* UserFollowingsStateObject.swift in Sources */,

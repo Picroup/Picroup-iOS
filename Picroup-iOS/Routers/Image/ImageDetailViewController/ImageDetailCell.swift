@@ -82,7 +82,8 @@ class ImageDetailCell: RxCollectionViewCell {
         onStarButtonTap: (() -> Void)?,
         onCommentsTap: (() -> Void)?,
         onImageViewTap: (() -> Void)?,
-        onUserTap: (() -> Void)?
+        onUserTap: (() -> Void)?,
+        onMoreTap: (() -> Void)?
         ) {
         imageView.setImage(with: viewModel.imageViewMinioId!)
         imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
@@ -123,6 +124,12 @@ class ImageDetailCell: RxCollectionViewCell {
             userView.rx.tapGesture().when(.recognized)
                 .mapToVoid()
                 .subscribe(onNext: onUserTap)
+                .disposed(by: disposeBag)
+        }
+        
+        if let onMoreTap = onMoreTap {
+            moreButton.rx.tap
+                .subscribe(onNext: onMoreTap)
                 .disposed(by: disposeBag)
         }
     }

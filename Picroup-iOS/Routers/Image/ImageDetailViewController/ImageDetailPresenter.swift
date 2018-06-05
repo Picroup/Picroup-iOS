@@ -25,7 +25,8 @@ class ImageDetailPresenter: NSObject {
         onStarButtonTap: (() -> Void)?,
         onCommentsTap: (() -> Void)?,
         onImageViewTap: (() -> Void)?,
-        onUserTap: (() -> Void)?
+        onUserTap: (() -> Void)?,
+        onMoreTap: (() -> Void)?
         ) -> (Observable<[Section]>) -> Disposable {
             dataSource = DataSource(
                 configureCell: { dataSource, collectionView, indexPath, cellStyle in
@@ -38,7 +39,8 @@ class ImageDetailPresenter: NSObject {
                             onStarButtonTap: onStarButtonTap,
                             onCommentsTap: onCommentsTap,
                             onImageViewTap: onImageViewTap,
-                            onUserTap: onUserTap
+                            onUserTap: onUserTap,
+                            onMoreTap: onMoreTap
                         )
                         return cell
                     case .recommendMedium(let item):

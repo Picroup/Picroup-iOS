@@ -18,7 +18,6 @@ final class HomeStateObject: PrimaryObject {
     @objc dynamic var myInterestedMediaError: String?
     @objc dynamic var triggerMyInterestedMediaQuery: Bool = false
     
-    //    @objc dynamic var pickImageRoute: PickImageRouteObject?
     @objc dynamic var createImageRoute: CreateImageRouteObject?
     @objc dynamic var searchUserRoute: SearchUserRouteObject?
     
@@ -57,7 +56,6 @@ extension HomeStateObject {
                 "_id": _id,
                 "session": ["_id": _id],
                 "myInterestedMedia": ["_id": PrimaryKey.myInterestedMediaId],
-//                "pickImageRoute": ["_id": _id],
                 "createImageRoute": ["_id": _id],
                 "searchUserRoute": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
@@ -134,7 +132,6 @@ extension HomeStateObject: IsFeedbackStateObject {
             createImageRoute?.imageKeys.removeAll()
             createImageRoute?.imageKeys.append(objectsIn: imageKeys)
             createImageRoute?.version = UUID().uuidString
-//            pickImageRoute?.version = UUID().uuidString
         case .onTriggerSearchUser:
             searchUserRoute?.version = UUID().uuidString
         }
