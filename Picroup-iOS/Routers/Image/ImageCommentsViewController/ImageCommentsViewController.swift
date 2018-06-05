@@ -48,7 +48,7 @@ class ImageCommentsViewController: HideNavigationBarViewController {
                 state.map { $0.shouldSendComment ? 1 : 0 }.drive(presenter.sendButton.rx.alpha),
                 presenter.sendButton.rx.tap.bind(to: presenter.contentTextField.rx.resignFirstResponder()),
                 store.commentsItems().map { [Section(model: "", items: $0)]  }.drive(presenter.items),
-                state.map { $0.isMediumDeleted }.drive(presenter.deleteAlertView.rx.isShowed),
+                state.map { $0.isMediumDeleted ? 1 : 0 }.drive(presenter.deleteAlertView.rx.alpha),
                 state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
                 ]
             let events: [Signal<ImageCommentsStateObject.Event>] = [
