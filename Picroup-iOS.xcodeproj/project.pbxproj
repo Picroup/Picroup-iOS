@@ -49,6 +49,7 @@
 		454A4C42209C2F160063E829 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454A4C41209C2F160063E829 /* LocalStorage.swift */; };
 		454B4A4C20ABB73900990063 /* MeStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B4A4B20ABB73900990063 /* MeStateObject.swift */; };
 		454B4A4E20ABB78600990063 /* ImageDetailStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B4A4D20ABB78600990063 /* ImageDetailStateObject.swift */; };
+		454CD57320C6D4470087C634 /* SaveCommentFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 454CD57220C6D4470087C634 /* SaveCommentFeedback.graphql */; };
 		454F728F2088230C00850471 /* LocalStorage+Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F728E2088230C00850471 /* LocalStorage+Values.swift */; };
 		454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72912088716900850471 /* ImageCommentsViewController.swift */; };
 		454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72932089720C00850471 /* ImageCommentsPresenter.swift */; };
@@ -230,6 +231,7 @@
 		454A4C41209C2F160063E829 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		454B4A4B20ABB73900990063 /* MeStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeStateObject.swift; sourceTree = "<group>"; };
 		454B4A4D20ABB78600990063 /* ImageDetailStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailStateObject.swift; sourceTree = "<group>"; };
+		454CD57220C6D4470087C634 /* SaveCommentFeedback.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveCommentFeedback.graphql; sourceTree = "<group>"; };
 		454F728E2088230C00850471 /* LocalStorage+Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalStorage+Values.swift"; sourceTree = "<group>"; };
 		454F72912088716900850471 /* ImageCommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsViewController.swift; sourceTree = "<group>"; };
 		454F72932089720C00850471 /* ImageCommentsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsPresenter.swift; sourceTree = "<group>"; };
@@ -825,9 +827,10 @@
 				45FC0BEB20A41B0D006AAF3D /* NotificationFragment.graphql */,
 				45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */,
 				4591AEDC20A2F359001EC384 /* RecommendMedium.graphql */,
-				45C392FD20C5875D00F4A69A /* SaveAppFeedback.graphql */,
 				45C392FE20C5875D00F4A69A /* SaveUserFeedback.graphql */,
 				45C392FF20C5875D00F4A69A /* SaveMediumFeedback.graphql */,
+				454CD57220C6D4470087C634 /* SaveCommentFeedback.graphql */,
+				45C392FD20C5875D00F4A69A /* SaveAppFeedback.graphql */,
 				45D0E236207E2ED100ECC2A3 /* SaveImageMedium.graphql */,
 				45A61C0C2086356E00AE7D99 /* StarMedium.graphql */,
 				45D04F792088D57B00AC2226 /* SaveComment.graphql */,
@@ -1106,6 +1109,7 @@
 				45BA0D812090391D0002E1D5 /* MyNotifications.graphql in Resources */,
 				45A0393D2075D0E9007498DB /* User.graphql in Resources */,
 				45F0A7C820C65E8E0085F978 /* DeleteMedium.graphql in Resources */,
+				454CD57320C6D4470087C634 /* SaveCommentFeedback.graphql in Resources */,
 				451CD31F207A3B3A0063A972 /* Login.graphql in Resources */,
 				45D04F7A2088D57B00AC2226 /* SaveComment.graphql in Resources */,
 			);

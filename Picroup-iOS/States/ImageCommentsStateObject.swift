@@ -28,7 +28,14 @@ final class ImageCommentsStateObject: PrimaryObject {
     @objc dynamic var saveCommentError: String?
     @objc dynamic var triggerSaveComment: Bool = false
     
+    @objc dynamic var deleteComment: CommentObject?
+    @objc dynamic var deleteCommentError: String?
+    @objc dynamic var triggerDeleteComment: Bool = false
+    
+    @objc dynamic var feedbackRoute: FeedbackRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
+    
+    @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension ImageCommentsStateObject {
@@ -51,6 +58,12 @@ extension ImageCommentsStateObject {
         let next = SaveCommentMutation(userId: userId, mediumId: mediumId, content: saveCommentContent)
         return triggerSaveComment ? next : nil
     }
+    public var deleteCommentQuery: DeleteCommentMutation? {
+        guard deleteComment?.userId == session?.currentUser?._id,
+            let commentId = deleteComment?._id else { return nil }
+        let next = DeleteCommentMutation(commentId: commentId)
+        return triggerDeleteComment ? next : nil
+    }
 }
 
 extension ImageCommentsStateObject {
@@ -63,7 +76,9 @@ extension ImageCommentsStateObject {
                 "session": ["_id": _id],
                 "medium": ["_id": mediumId],
                 "comments": ["_id": PrimaryKey.commentsId(mediumId)],
+                "feedbackRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
+                "snackbar": ["_id": _id],
                 ]
             return try realm.update(ImageCommentsStateObject.self, value: value)
         }
@@ -84,7 +99,12 @@ extension ImageCommentsStateObject {
         case onSaveCommentError(Error)
         
         case onChangeCommentContent(String)
+        
+        case onTriggerDeleteComment(String)
+        case onDeleteCommentSuccess(String)
+        case onDeleteCommentError(Error)
 
+        case onTriggerCommentFeedback(String)
         case onTriggerPop
     }
 }
@@ -148,6 +168,25 @@ extension ImageCommentsStateObject: IsFeedbackStateObject {
             triggerSaveComment = false
         case .onChangeCommentContent(let content):
             saveCommentContent = content
+            
+        case .onTriggerDeleteComment(let commentId):
+            guard !triggerDeleteComment else { return }
+            deleteComment = realm.object(ofType: CommentObject.self, forPrimaryKey: commentId)
+            deleteCommentError = nil
+            triggerDeleteComment = true
+        case .onDeleteCommentSuccess(let commentId):
+            realm.object(ofType: CommentObject.self, forPrimaryKey: commentId)?.delete()
+            medium?.commentsCount.value?.increase(-1)
+            deleteCommentError = nil
+            triggerDeleteComment = false
+        case .onDeleteCommentError(let error):
+            deleteCommentError = error.localizedDescription
+            triggerDeleteComment = false
+            snackbar?.message = error.localizedDescription
+            snackbar?.version = UUID().uuidString
+            
+        case .onTriggerCommentFeedback(let commentId):
+            feedbackRoute?.triggerComment(commentId: commentId)
         case .onTriggerPop:
             popRoute?.version = UUID().uuidString
         }

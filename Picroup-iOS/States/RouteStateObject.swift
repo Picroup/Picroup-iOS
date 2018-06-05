@@ -86,6 +86,7 @@ final class LoginRouteObject: PrimaryObject {
 final class FeedbackRouteObject: PrimaryObject {
     @objc dynamic var mediumId: String?
     @objc dynamic var toUserId: String?
+    @objc dynamic var commentId: String?
     @objc dynamic var kind: String?
     @objc dynamic var version: String?
 }
@@ -95,6 +96,7 @@ extension FeedbackRouteObject {
         self.kind = FeedbackKind.app.rawValue
         self.mediumId = nil
         self.toUserId = nil
+        self.commentId = nil
         self.version = UUID().uuidString
     }
     func triggerMedium(mediumId: String) {
@@ -107,6 +109,14 @@ extension FeedbackRouteObject {
         self.kind = FeedbackKind.user.rawValue
         self.mediumId = nil
         self.toUserId = toUserId
+        self.commentId = nil
+        self.version = UUID().uuidString
+    }
+    func triggerComment(commentId: String) {
+        self.kind = FeedbackKind.comment.rawValue
+        self.mediumId = nil
+        self.toUserId = nil
+        self.commentId = commentId
         self.version = UUID().uuidString
     }
 }

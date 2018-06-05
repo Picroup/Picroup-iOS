@@ -531,19 +531,19 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="700" text="beeth0ven" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O8B-jP-95p">
-                                                            <rect key="frame" x="72" y="16" width="257" height="20"/>
+                                                            <rect key="frame" x="72" y="16" width="250" height="20"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="700" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W18-OK-sOk">
-                                                            <rect key="frame" x="72" y="44" width="257" height="20"/>
+                                                            <rect key="frame" x="72" y="44" width="250" height="20"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OOv-TJ-xiN">
-                                                            <rect key="frame" x="337" y="11" width="30" height="30"/>
+                                                            <rect key="frame" x="330" y="11" width="30" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="30" id="3FW-oY-Fy4"/>
                                                                 <constraint firstAttribute="width" secondItem="OOv-TJ-xiN" secondAttribute="height" multiplier="1:1" id="rOm-az-Bf1"/>
@@ -571,6 +571,7 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <connections>
                                                     <outlet property="contentLabel" destination="W18-OK-sOk" id="gif-a9-tBK"/>
+                                                    <outlet property="moreButton" destination="OOv-TJ-xiN" id="cT9-Ld-PJG"/>
                                                     <outlet property="photoView" destination="mVA-1G-Ijp" id="vgq-ya-RU7"/>
                                                     <outlet property="userLabel" destination="O8B-jP-95p" id="xwf-Wr-JLt"/>
                                                 </connections>

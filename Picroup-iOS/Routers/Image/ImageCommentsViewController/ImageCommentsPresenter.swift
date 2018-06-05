@@ -50,13 +50,16 @@ class ImageCommentsPresenter: NSObject {
     typealias Section = AnimatableSectionModel<String, CommentObject>
     typealias DataSource = RxTableViewSectionedAnimatedDataSource<Section>
     
-    var items: (Observable<[Section]>) -> Disposable {
+    func items(onMoreButtonTap: @escaping (CommentObject) -> Void) -> (Observable<[Section]>) -> Disposable {
         let dataSource = DataSource(configureCell: { (dataSource, tableView, indexPath, item) in
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-            cell.configure(with: item)
+            cell.configure(
+                with: item,
+                onMoreButtonTap: { onMoreButtonTap(item) }
+            )
             return cell
         })
-        return tableView.rx.items(dataSource: dataSource)
+        return tableView!.rx.items(dataSource: dataSource)
     }
 }
 

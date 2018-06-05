@@ -12,12 +12,18 @@ class CommentCell: RxTableViewCell {
     @IBOutlet weak var photoView: UIImageView!
     @IBOutlet weak var userLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
-    
-    func configure(with item: CommentObject) {
+    @IBOutlet weak var moreButton: UIButton!
+
+    func configure(with item: CommentObject, onMoreButtonTap: (() -> Void)?) {
         guard !item.isInvalidated else { return }
         userLabel?.text = item.user?.displayName
         contentLabel?.text = item.content
         photoView.setImage(with: item.user?.avatarId)
+        
+        if let onMoreButtonTap = onMoreButtonTap {
+            moreButton.rx.tap
+                .subscribe(onNext: onMoreButtonTap)
+                .disposed(by: disposeBag)
+        }
     }
 }
