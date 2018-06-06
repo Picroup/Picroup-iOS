@@ -24,7 +24,7 @@ final class FeedbackViewController: HideNavigationBarViewController {
     
     @IBOutlet var presenter: FeedbackPresenter!
     fileprivate typealias Feedback = (Driver<FeedbackStateObject>) -> Signal<FeedbackStateObject.Event>
-    typealias Dependency = (kind: String?, toUserId: String?, mediumId: String?)
+    typealias Dependency = (kind: String?, toUserId: String?, mediumId: String?, commentId: String?)
     var dependency: Dependency!
     
     
@@ -35,8 +35,8 @@ final class FeedbackViewController: HideNavigationBarViewController {
     
     private func setupRxFeedback() {
         
-        guard let store = try? FeedbackStateStore(kind: dependency.kind, toUserId: dependency.toUserId, mediumId: dependency.mediumId) else { return }
-        
+        guard let store = try? FeedbackStateStore(kind: dependency.kind, toUserId: dependency.toUserId, mediumId: dependency.mediumId, commentId: dependency.commentId) else { return }
+
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
@@ -74,12 +74,20 @@ final class FeedbackViewController: HideNavigationBarViewController {
                 .asSignal(onErrorReturnJust: FeedbackStateObject.Event.onSaveFeedbackError)
         }
         
+        let saveCommentFeedback: Feedback = react(query: { $0.saveCommentFeedbackQuery }) { query in
+            ApolloClient.shared.rx.perform(mutation: query)
+                .map { $0?.data?.saveCommentFeedback.id }.unwrap()
+                .map(FeedbackStateObject.Event.onSaveFeedbackSuccess)
+                .asSignal(onErrorReturnJust: FeedbackStateObject.Event.onSaveFeedbackError)
+        }
+        
         let states = store.states
         
         Signal.merge(
             uiFeedback(states),
             saveAppFeedback(states),
             saveUserFeedback(states),
+            saveCommentFeedback(states),
             saveMediumFeedback(states)
             )
             .debug("FeedbackState.Event", trimOutput: true)

@@ -22,7 +22,19 @@ private func mapMoreButtonTapToEvent(state: ImageDetailStateObject) -> Signal<Im
         .flatMap { action in
             switch action {
             case "举报":     return .just(.onTriggerMediumFeedback)
-            case "删除":     return .empty()
+            case "删除":     return comfirmDelete()
+            default:        return .empty()
+            }
+    }
+}
+
+private func comfirmDelete() -> Signal<ImageDetailStateObject.Event> {
+    return DefaultWireframe.shared
+        .promptFor(message: "确定要删除它吗？", preferredStyle: .alert, cancelAction: "取消", actions: ["删除"])
+        .asSignalOnErrorRecoverEmpty()
+        .flatMap { action in
+            switch action {
+            case "删除":     return .just(.onTriggerDeleteMedium)
             default:        return .empty()
             }
     }
@@ -62,12 +74,14 @@ class ImageDetailViewController: HideNavigationBarViewController {
             let _moreButtonTap = PublishRelay<Void>()
 
             let subscriptions = [
-                store.sections.drive(me.presenter.items(
-                    onStarButtonTap: { _events.accept(.onTriggerStarMedium) },
-                    onCommentsTap: { _events.accept(.onTriggerShowComments) },
-                    onImageViewTap: { _events.accept(.onTriggerPop) } ,
-                    onUserTap: { _events.accept(.onTriggerShowUser) },
-                    onMoreTap: { _moreButtonTap.accept(()) })),
+                state.flatMapLatest { $0.isMediumDeleted ? .just([]) : store.sections }
+                    .drive(me.presenter.items(
+                        onStarButtonTap: { _events.accept(.onTriggerStarMedium) },
+                        onCommentsTap: { _events.accept(.onTriggerShowComments) },
+                        onImageViewTap: { _events.accept(.onTriggerPop) } ,
+                        onUserTap: { _events.accept(.onTriggerShowUser) },
+                        onMoreTap: { _moreButtonTap.accept(()) })),
+                state.map { $0.isMediumDeleted }.drive(onNext: { presenter.collectionView.backgroundView = $0 ? presenter.deleteAlertView : nil }),
                 presenter.backgroundButton.rx.tap.subscribe(onNext: { _events.accept(.onTriggerPop) }),
             ]
             let events: [Signal<ImageDetailStateObject.Event>] = [
@@ -85,24 +99,32 @@ class ImageDetailViewController: HideNavigationBarViewController {
                         return .just(.onTriggerShowImage(medium._id))
                     }
                     return .empty()
-                }
+                },
+                presenter.deleteAlertView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
         let queryMedium: Feedback = react(query: { $0.mediumQuery }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.medium }.unwrap()
+                .map { $0?.data?.medium }
                 .map(ImageDetailStateObject.Event.onGetData(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onGetError)
-                .delay(1)
+                .delay(0.4)
         }
         
         let starMedium: Feedback = react(query: { $0.starMediumQuery }) { query in
-            ApolloClient.shared.rx.perform(mutation: query).asObservable()
+            ApolloClient.shared.rx.perform(mutation: query)
                 .map { $0?.data?.starMedium }.unwrap()
                 .map(ImageDetailStateObject.Event.onStarMediumSuccess)
                 .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onStarMediumError)
+        }
+        
+        let deleteMedium: Feedback = react(query: { $0.deleteMediumQuery }) { query in
+            ApolloClient.shared.rx.perform(mutation: query)
+                .map { $0?.data?.deleteMedium }.unwrap()
+                .map(ImageDetailStateObject.Event.onDeleteMediumSuccess)
+                .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onDeleteMediumError)
         }
         
         let states = store.states
@@ -110,7 +132,8 @@ class ImageDetailViewController: HideNavigationBarViewController {
         Signal.merge(
             uiFeedback(states),
             queryMedium(states),
-            starMedium(states)
+            starMedium(states),
+            deleteMedium(states)
             )
             .debug("ImageDetailState.Event", trimOutput: true)
             .emit(onNext: store.on)

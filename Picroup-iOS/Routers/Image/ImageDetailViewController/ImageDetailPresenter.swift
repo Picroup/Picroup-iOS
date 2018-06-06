@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import Material
 import RxSwift
 import RxCocoa
 import RxDataSources
 
 class ImageDetailPresenter: NSObject {
     
+    @IBOutlet weak var deleteAlertView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var backgroundButton: UIButton!
     

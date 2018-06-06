@@ -8,6 +8,8 @@
 
 import Apollo
 
+// apollo-codegen download-schema http://home.picroup.com:3500/graphql --output schema.json
+
 extension ApolloClient {
     
     static let shared: ApolloClient = {

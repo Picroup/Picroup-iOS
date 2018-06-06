@@ -4,3 +4,5 @@ mutation SaveMediumFeedback($userId: ID!, $mediumId: ID!, $content: String!) {
         kind
     }
 }
+
+

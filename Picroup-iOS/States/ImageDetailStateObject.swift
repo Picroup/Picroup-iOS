@@ -15,6 +15,7 @@ import RxRealm
 final class ImageDetailStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
+    @objc dynamic var isMediumDeleted: Bool = false
 
     @objc dynamic var medium: MediumObject?
     @objc dynamic var recommendMedia: CursorMediaObject?
@@ -26,6 +27,9 @@ final class ImageDetailStateObject: PrimaryObject {
     @objc dynamic var triggerStarMedium: Bool = false
 
     @objc dynamic var myStaredMedia: CursorMediaObject?
+    
+    @objc dynamic var deleteMediumError: String?
+    @objc dynamic var triggerDeleteMedium: Bool = false
     
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
@@ -59,6 +63,13 @@ extension ImageDetailStateObject {
         let next = StarMediumMutation(userId: userId, mediumId: mediumId)
         return triggerStarMedium ? next : nil
     }
+    var deleteMediumQuery: DeleteMediumMutation? {
+        let next = DeleteMediumMutation(mediumId: mediumId)
+        return triggerDeleteMedium ? next : nil
+    }
+    public var shouldDeleteMedium: Bool {
+        return !triggerDeleteMedium
+    }
 }
 
 extension ImageDetailStateObject {
@@ -89,13 +100,17 @@ extension ImageDetailStateObject {
     enum Event {
         case onTriggerReloadData
         case onTriggerGetMoreData
-        case onGetReloadData(MediumQuery.Data.Medium)
-        case onGetMoreData(MediumQuery.Data.Medium)
+        case onGetReloadData(MediumQuery.Data.Medium?)
+        case onGetMoreData(MediumQuery.Data.Medium?)
         case onGetError(Error)
         
         case onTriggerStarMedium
         case onStarMediumSuccess(StarMediumMutation.Data.StarMedium)
         case onStarMediumError(Error)
+        
+        case onTriggerDeleteMedium
+        case onDeleteMediumSuccess(String)
+        case onDeleteMediumError(Error)
         
         case onTriggerShowImage(String)
         case onTriggerShowComments
@@ -107,7 +122,7 @@ extension ImageDetailStateObject {
 
 extension ImageDetailStateObject.Event {
     
-    static func onGetData(isReload: Bool) -> (MediumQuery.Data.Medium) -> ImageDetailStateObject.Event {
+    static func onGetData(isReload: Bool) -> (MediumQuery.Data.Medium?) -> ImageDetailStateObject.Event {
         return { isReload ? .onGetReloadData($0) : .onGetMoreData($0) }
     }
 }
@@ -125,15 +140,25 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             mediumError = nil
             triggerMediumQuery = true
         case .onGetReloadData(let data):
-            medium = realm.create(MediumObject.self, value: data.snapshot, update: true)
-            let fragment = data.recommendedMedia.fragments.cursorMediaFragment
-            recommendMedia = CursorMediaObject.create(from: fragment, id: PrimaryKey.recommendMediaId(_id))(realm)
+            if let data = data {
+                medium = realm.create(MediumObject.self, value: data.snapshot, update: true)
+                let fragment = data.recommendedMedia.fragments.cursorMediaFragment
+                recommendMedia = CursorMediaObject.create(from: fragment, id: PrimaryKey.recommendMediaId(_id))(realm)
+            } else {
+                medium?.delete()
+                isMediumDeleted = true
+            }
             mediumError = nil
             triggerMediumQuery = false
         case .onGetMoreData(let data):
-            medium = realm.create(MediumObject.self, value: data.snapshot, update: true)
-            let fragment = data.recommendedMedia.fragments.cursorMediaFragment
-            recommendMedia?.merge(from: fragment)(realm)
+            if let data = data {
+                medium = realm.create(MediumObject.self, value: data.snapshot, update: true)
+                let fragment = data.recommendedMedia.fragments.cursorMediaFragment
+                recommendMedia?.merge(from: fragment)(realm)
+            } else {
+                medium?.delete()
+                isMediumDeleted = true
+            }
             mediumError = nil
             triggerMediumQuery = false
         case .onGetError(let error):
@@ -160,6 +185,24 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             starMediumVersion = nil
             starMediumError = error.localizedDescription
             triggerStarMedium = false
+            
+        case .onTriggerDeleteMedium:
+            guard shouldDeleteMedium else { return }
+            deleteMediumError = nil
+            triggerDeleteMedium = true
+        case .onDeleteMediumSuccess:
+            medium?.delete()
+            deleteMediumError = nil
+            triggerDeleteMedium = false
+            snackbar?.message = "已删除"
+            snackbar?.version = UUID().uuidString
+            popRoute?.version = UUID().uuidString
+        case .onDeleteMediumError(let error):
+            deleteMediumError = error.localizedDescription
+            triggerDeleteMedium = false
+            snackbar?.message = error.localizedDescription
+            snackbar?.version = UUID().uuidString
+            
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
             imageDetialRoute?.version = UUID().uuidString

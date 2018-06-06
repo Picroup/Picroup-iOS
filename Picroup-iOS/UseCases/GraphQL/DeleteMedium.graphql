@@ -1,0 +1,3 @@
+mutation DeleteMedium($mediumId: ID!) {
+    deleteMedium(mediumId: $mediumId)
+}

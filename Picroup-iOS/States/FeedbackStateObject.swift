@@ -17,6 +17,7 @@ final class FeedbackStateObject: PrimaryObject {
     
     @objc dynamic var mediumId: String?
     @objc dynamic var toUserId: String?
+    @objc dynamic var commentId: String?
     @objc dynamic var kind: String?
     @objc dynamic var content: String = ""
     
@@ -55,6 +56,15 @@ extension FeedbackStateObject {
         let next = SaveMediumFeedbackMutation(userId: userId, mediumId: mediumId, content: content)
         return triggerSaveFeedback ? next : nil
     }
+    var saveCommentFeedbackQuery: SaveCommentFeedbackMutation? {
+        guard kind == FeedbackKind.comment.rawValue,
+            !content.isEmpty,
+            let userId = session?.currentUser?._id,
+            let commentId = commentId
+            else { return nil }
+        let next = SaveCommentFeedbackMutation(userId: userId, commentId: commentId, content: content)
+        return triggerSaveFeedback ? next : nil
+    }
     var shouldSaveFeedback: Bool {
         return !triggerSaveFeedback && !content.isEmpty
     }
@@ -62,16 +72,17 @@ extension FeedbackStateObject {
 
 extension FeedbackStateObject {
     
-    static func create(kind: String?, toUserId: String?, mediumId: String?) -> (Realm) throws -> FeedbackStateObject {
+    static func create(kind: String?, toUserId: String?, mediumId: String?, commentId: String?) -> (Realm) throws -> FeedbackStateObject {
         return { realm in
             let _id = PrimaryKey.default
-            let feedbackId = PrimaryKey.feedbackId(kind: kind, toUserId: toUserId, mediumId: mediumId)
+            let feedbackId = PrimaryKey.feedbackId(kind: kind, toUserId: toUserId, mediumId: mediumId, commentId: commentId)
             let value: Snapshot = [
                 "_id": feedbackId,
                 "session": ["_id": _id],
                 "kind": kind,
                 "toUserId": toUserId,
                 "mediumId": mediumId,
+                "commentId": commentId,
                 "popRoute": ["_id": _id],
                 "snackbar": ["_id": _id],
                 ]
@@ -134,21 +145,23 @@ final class FeedbackStateStore {
     private let kind: String?
     private let toUserId: String?
     private let mediumId: String?
+    private let commentId: String?
 
-    init(kind: String?, toUserId: String?, mediumId: String?) throws {
+    init(kind: String?, toUserId: String?, mediumId: String?, commentId: String?) throws {
         let realm = try Realm()
-        let _state = try FeedbackStateObject.create(kind: kind, toUserId: toUserId, mediumId: mediumId)(realm)
+        let _state = try FeedbackStateObject.create(kind: kind, toUserId: toUserId, mediumId: mediumId, commentId: commentId)(realm)
         let states = Observable.from(object: _state).asDriver(onErrorDriveWith: .empty())
         
         self.kind = kind
         self.toUserId = toUserId
         self.mediumId = mediumId
+        self.commentId = commentId
         self._state = _state
         self.states = states
     }
     
     func on(event: FeedbackStateObject.Event) {
-        let feedbackId = PrimaryKey.feedbackId(kind: kind, toUserId: toUserId, mediumId: mediumId)
+        let feedbackId = PrimaryKey.feedbackId(kind: kind, toUserId: toUserId, mediumId: mediumId, commentId: commentId)
         Realm.backgroundReduce(ofType: FeedbackStateObject.self, forPrimaryKey: feedbackId, event: event)
     }
 }
