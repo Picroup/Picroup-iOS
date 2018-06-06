@@ -23,4 +23,9 @@ extension RouterService.Login {
         let vc = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         return vc
     }
+    
+    static func registerUsernameViewController() -> RegisterUsernameViewController {
+        let vc = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "RegisterUsernameViewController") as! RegisterUsernameViewController
+        return vc
+    }
 }

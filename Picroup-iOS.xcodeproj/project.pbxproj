@@ -50,6 +50,8 @@
 		454B4A4C20ABB73900990063 /* MeStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B4A4B20ABB73900990063 /* MeStateObject.swift */; };
 		454B4A4E20ABB78600990063 /* ImageDetailStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B4A4D20ABB78600990063 /* ImageDetailStateObject.swift */; };
 		454CD57320C6D4470087C634 /* SaveCommentFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 454CD57220C6D4470087C634 /* SaveCommentFeedback.graphql */; };
+		454CD57520C80EB60087C634 /* RegisterPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CD57420C80EB60087C634 /* RegisterPasswordViewController.swift */; };
+		454CD57720C810BD0087C634 /* RegisterPasswordStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CD57620C810BD0087C634 /* RegisterPasswordStateObject.swift */; };
 		454F728F2088230C00850471 /* LocalStorage+Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F728E2088230C00850471 /* LocalStorage+Values.swift */; };
 		454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72912088716900850471 /* ImageCommentsViewController.swift */; };
 		454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72932089720C00850471 /* ImageCommentsPresenter.swift */; };
@@ -241,6 +243,8 @@
 		454B4A4B20ABB73900990063 /* MeStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeStateObject.swift; sourceTree = "<group>"; };
 		454B4A4D20ABB78600990063 /* ImageDetailStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailStateObject.swift; sourceTree = "<group>"; };
 		454CD57220C6D4470087C634 /* SaveCommentFeedback.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveCommentFeedback.graphql; sourceTree = "<group>"; };
+		454CD57420C80EB60087C634 /* RegisterPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPasswordViewController.swift; sourceTree = "<group>"; };
+		454CD57620C810BD0087C634 /* RegisterPasswordStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPasswordStateObject.swift; sourceTree = "<group>"; };
 		454F728E2088230C00850471 /* LocalStorage+Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalStorage+Values.swift"; sourceTree = "<group>"; };
 		454F72912088716900850471 /* ImageCommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsViewController.swift; sourceTree = "<group>"; };
 		454F72932089720C00850471 /* ImageCommentsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsPresenter.swift; sourceTree = "<group>"; };
@@ -751,6 +755,7 @@
 				45BA0D8420903A020002E1D5 /* NotificationsStateObject.swift */,
 				451DD4BC207F8BC7002C509A /* RankStateObject.swift */,
 				45F0A7CE20C7AEDF0085F978 /* RegisterUsernameStateObject.swift */,
+				454CD57620C810BD0087C634 /* RegisterPasswordStateObject.swift */,
 				45F0A7D720C7BE7F0085F978 /* RegisterPhoneStateObject.swift */,
 				45F0A7DB20C7CA610085F978 /* RegisterCodeStateObject.swift */,
 				457BD98620AC68EA007F0492 /* ReputationsStateObject.swift */,
@@ -998,6 +1003,7 @@
 			isa = PBXGroup;
 			children = (
 				45F0A7D320C7B32B0085F978 /* RegisterUsernameViewController.swift */,
+				454CD57420C80EB60087C634 /* RegisterPasswordViewController.swift */,
 				45F0A7D520C7BD330085F978 /* RegisterPhoneViewController.swift */,
 				45F0A7D920C7C4720085F978 /* RegisterCodeViewController.swift */,
 			);
@@ -1249,6 +1255,7 @@
 				457BD98920AC695A007F0492 /* ReputationObject.swift in Sources */,
 				45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */,
 				45F0A7CD20C662F10085F978 /* Object+Delete.swift in Sources */,
+				454CD57720C810BD0087C634 /* RegisterPasswordStateObject.swift in Sources */,
 				45F0A7CF20C7AEDF0085F978 /* RegisterUsernameStateObject.swift in Sources */,
 				453B95C320C52E990043D915 /* FeedbackViewController.swift in Sources */,
 				45C392F620C3D88400F4A69A /* UpdateUserViewController.swift in Sources */,
@@ -1317,6 +1324,7 @@
 				45517D4820BCDD3E00F2D7DE /* CommentCell.swift in Sources */,
 				451CD322207A3C1D0063A972 /* ApolloClient+Rx.swift in Sources */,
 				451CD339207D0BAA0063A972 /* NotificationsViewController.swift in Sources */,
+				454CD57520C80EB60087C634 /* RegisterPasswordViewController.swift in Sources */,
 				4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */,
 				45FC0BFB20A91541006AAF3D /* PrimaryObject.swift in Sources */,
 				4591AEDF20A3D70E001EC384 /* RankMediumCell.swift in Sources */,

@@ -57,9 +57,9 @@ final class RegisterUsernameViewController: UIViewController {
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
-                state.map { $0.registerParam?.username ?? "" }.distinctUntilChanged().drive(presenter.usernameField.rx.text),
+                state.map { $0.registerParam?.username ?? "" }.asObservable().take(1).bind(to: presenter.usernameField.rx.text),
                 state.map { $0.isUsernameAvaliable }.distinctUntilChanged().drive(presenter.nextButton.rx.isEnabledWithBackgroundColor(.secondary)),
-                state.map { $0.detail }.drive(presenter.usernameField.rx.detail),
+                state.map { $0.detail }.debounce(0.5).drive(presenter.usernameField.rx.detail),
                 ]
             let events: [Signal<RegisterUsernameStateObject.Event>] = [
                 presenter.usernameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).map(RegisterUsernameStateObject.Event.onChangeUsername),

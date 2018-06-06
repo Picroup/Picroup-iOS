@@ -62,7 +62,7 @@ final class RegisterCodeViewController: UIViewController {
                 presenter.validButton.rx.tap.asSignal().emit(to: presenter.codeField.rx.resignFirstResponder()),
                 ]
             let events: [Signal<RegisterCodeStateObject.Event>] = [
-//                .just(.onTriggerGetVerifyCode),
+                .just(.onTriggerGetVerifyCode),
                 presenter.codeField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).map(RegisterCodeStateObject.Event.onChangeCode),
                 presenter.validButton.rx.tap.asSignal().map { RegisterCodeStateObject.Event.onTriggerRegister },
                 ]
@@ -104,6 +104,6 @@ extension RegisterCodeStateObject {
     }
     
     fileprivate var detail: String {
-        return phoneNumber != nil ? "已发送 6 位数验证码" : ""
+        return phoneNumber != nil ? "已发送 6 位数验证码" : " "
     }
 }

@@ -65,40 +65,14 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q7B-kT-H1y" customClass="RaisedButton" customModule="Material">
-                                <rect key="frame" x="260" y="274" width="78" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="l6y-Ve-LzR"/>
-                                </constraints>
-                                <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
-                                <state key="normal" title="下一步">
-                                    <color key="titleColor" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                        <color key="value" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
-                                        <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="pulseColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="Nw7-Xc-XGj" kind="show" id="7gU-fb-bJx"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="VBj-v4-bWL" firstAttribute="centerX" secondItem="Sl3-b1-eud" secondAttribute="centerX" id="5dm-kR-6rv"/>
                             <constraint firstItem="ub2-DN-A2k" firstAttribute="trailing" secondItem="FK7-hu-ilN" secondAttribute="trailing" id="8mb-1g-Jmh"/>
                             <constraint firstItem="ub2-DN-A2k" firstAttribute="top" secondItem="FK7-hu-ilN" secondAttribute="bottom" constant="48" id="CPE-Ub-ZNy"/>
-                            <constraint firstItem="q7B-kT-H1y" firstAttribute="trailing" secondItem="ub2-DN-A2k" secondAttribute="trailing" id="WcF-aa-WIO"/>
                             <constraint firstItem="VBj-v4-bWL" firstAttribute="top" secondItem="Sl3-b1-eud" secondAttribute="top" constant="64" id="diE-xC-uvA"/>
                             <constraint firstItem="FK7-hu-ilN" firstAttribute="top" secondItem="VBj-v4-bWL" secondAttribute="bottom" constant="64" id="gOw-ic-Rjv"/>
-                            <constraint firstItem="q7B-kT-H1y" firstAttribute="top" secondItem="ub2-DN-A2k" secondAttribute="bottom" constant="8" id="me3-hS-84M"/>
                             <constraint firstItem="FK7-hu-ilN" firstAttribute="centerX" secondItem="VBj-v4-bWL" secondAttribute="centerX" id="ztV-y4-Ycd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Sl3-b1-eud"/>
@@ -160,7 +134,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="flt-Gl-B3i" kind="show" id="t8q-Rf-kou"/>
+                                    <segue destination="eSW-N8-ja3" kind="show" id="sOL-QX-ubB"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -186,6 +160,75 @@
                 </customObject>
             </objects>
             <point key="canvasLocation" x="950" y="107"/>
+        </scene>
+        <!--Register Password View Controller-->
+        <scene sceneID="vXg-mr-zeL">
+            <objects>
+                <viewController storyboardIdentifier="RegisterPasswordViewController" id="eSW-N8-ja3" customClass="RegisterPasswordViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xbE-5D-ZLB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z8x-iR-5NS" customClass="TextField" customModule="Material">
+                                <rect key="frame" x="37" y="116" width="300" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="8Gv-SG-Zfb"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="密码"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value="至少需要 5 个字"/>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QYY-Tz-PSW" customClass="RaisedButton" customModule="Material">
+                                <rect key="frame" x="259" y="181" width="78" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="8j2-GY-cYD"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
+                                <state key="normal" title="下一步">
+                                    <color key="titleColor" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                        <color key="value" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="pulseColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="flt-Gl-B3i" kind="show" id="K0t-n5-Vfj"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Z8x-iR-5NS" firstAttribute="top" secondItem="YtS-Tt-Vt8" secondAttribute="top" constant="96" id="4Gu-Yk-8u6"/>
+                            <constraint firstItem="QYY-Tz-PSW" firstAttribute="trailing" secondItem="Z8x-iR-5NS" secondAttribute="trailing" id="Ehz-dM-tTW"/>
+                            <constraint firstItem="Z8x-iR-5NS" firstAttribute="centerX" secondItem="YtS-Tt-Vt8" secondAttribute="centerX" id="Kii-Ci-eCU"/>
+                            <constraint firstItem="QYY-Tz-PSW" firstAttribute="top" secondItem="Z8x-iR-5NS" secondAttribute="bottom" constant="48" id="QgY-37-iWv"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="YtS-Tt-Vt8"/>
+                    </view>
+                    <connections>
+                        <outlet property="presenter" destination="cKl-rx-e18" id="xnl-0Q-dwH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="16l-Zl-VSJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="cKl-rx-e18" customClass="RegisterPasswordPresenter" customModule="Picroup_iOS" customModuleProvider="target">
+                    <connections>
+                        <outlet property="nextButton" destination="QYY-Tz-PSW" id="glU-no-eXn"/>
+                        <outlet property="passwordField" destination="Z8x-iR-5NS" id="TQZ-tN-Pn5"/>
+                    </connections>
+                </customObject>
+            </objects>
+            <point key="canvasLocation" x="1678" y="107"/>
         </scene>
         <!--Register Phone View Controller-->
         <scene sceneID="Tnx-4x-rop">
@@ -253,7 +296,7 @@
                     </connections>
                 </customObject>
             </objects>
-            <point key="canvasLocation" x="1726" y="107"/>
+            <point key="canvasLocation" x="2410" y="107"/>
         </scene>
         <!--Register Code View Controller-->
         <scene sceneID="PWb-cU-aA4">
@@ -319,7 +362,7 @@
                     </connections>
                 </customObject>
             </objects>
-            <point key="canvasLocation" x="2562" y="107"/>
+            <point key="canvasLocation" x="3215" y="107"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.1803921568627451" green="0.49019607843137253" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>

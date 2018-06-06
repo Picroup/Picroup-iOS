@@ -29,16 +29,21 @@ class LoginViewController: UIViewController {
         
         presenter.setup(view: view, navigationItem: navigationItem)
         
+        weak var weakSelf = self
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
-                state.map { $0.username }.distinctUntilChanged().drive(presenter.usernameField.rx.text),
-                state.map { $0.password }.distinctUntilChanged().drive(presenter.passwordField.rx.text),
+                state.map { $0.username }.asObservable().take(1).bind(to: presenter.usernameField.rx.text),
+                state.map { $0.password }.asObservable().take(1).bind(to: presenter.passwordField.rx.text),
                 state.map { $0.shouldHideUseenameWarning }.distinctUntilChanged().drive(presenter.usernameField.detailLabel.rx.isHidden),
                 state.map { $0.shouldHidePasswordWarning }.distinctUntilChanged().drive(presenter.passwordField.detailLabel.rx.isHidden),
                 state.map { $0.isLoginButtonEnabled }.distinctUntilChanged().drive(presenter.loginButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 presenter.loginButton.rx.tap.asSignal().emit(to: presenter.usernameField.rx.resignFirstResponder()),
                 presenter.loginButton.rx.tap.asSignal().emit(to: presenter.passwordField.rx.resignFirstResponder()),
+                presenter.registerButton.rx.tap.asSignal().emit(onNext: {
+                    let vc = RouterService.Login.registerUsernameViewController()
+                    weakSelf?.navigationController?.pushViewController(vc, animated: true)
+                })
                 ]
             let events: [Signal<LoginStateObject.Event>] = [
                 presenter.usernameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangeUsername),
