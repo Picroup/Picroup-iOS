@@ -4,3 +4,4 @@ query User($userId: ID!, $followedByUserId: ID!, $withFollowed: Boolean!) {
         ...UserDetailFragment
     }
 }
+

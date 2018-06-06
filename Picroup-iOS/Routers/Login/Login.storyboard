@@ -10,29 +10,316 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="aq0-Ax-yzd">
             <objects>
-                <viewController id="YG5-po-3yM" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="YG5-po-3yM" customClass="LoginViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LFY-om-QE3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6xt-n1-pub">
-                                <rect key="frame" x="129" y="349" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VBj-v4-bWL" customClass="TextField" customModule="Material">
+                                <rect key="frame" x="38" y="84" width="300" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="UR8-df-538"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="用户名"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value="至少需要 3 个字"/>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FK7-hu-ilN" customClass="TextField" customModule="Material">
+                                <rect key="frame" x="38" y="165" width="300" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="3s9-uN-ESM"/>
+                                </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="密码"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value="至少需要 5 个字"/>
+                                </userDefinedRuntimeAttributes>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ub2-DN-A2k" customClass="RaisedButton" customModule="Material">
+                                <rect key="frame" x="275" y="230" width="63" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="eNI-02-Clg"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
+                                <state key="normal" title="登录">
+                                    <color key="titleColor" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                        <color key="value" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="pulseColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q7B-kT-H1y" customClass="RaisedButton" customModule="Material">
+                                <rect key="frame" x="260" y="274" width="78" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="l6y-Ve-LzR"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
+                                <state key="normal" title="下一步">
+                                    <color key="titleColor" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                        <color key="value" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="pulseColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="Nw7-Xc-XGj" kind="show" id="7gU-fb-bJx"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="VBj-v4-bWL" firstAttribute="centerX" secondItem="Sl3-b1-eud" secondAttribute="centerX" id="5dm-kR-6rv"/>
+                            <constraint firstItem="ub2-DN-A2k" firstAttribute="trailing" secondItem="FK7-hu-ilN" secondAttribute="trailing" id="8mb-1g-Jmh"/>
+                            <constraint firstItem="ub2-DN-A2k" firstAttribute="top" secondItem="FK7-hu-ilN" secondAttribute="bottom" constant="48" id="CPE-Ub-ZNy"/>
+                            <constraint firstItem="q7B-kT-H1y" firstAttribute="trailing" secondItem="ub2-DN-A2k" secondAttribute="trailing" id="WcF-aa-WIO"/>
+                            <constraint firstItem="VBj-v4-bWL" firstAttribute="top" secondItem="Sl3-b1-eud" secondAttribute="top" constant="64" id="diE-xC-uvA"/>
+                            <constraint firstItem="FK7-hu-ilN" firstAttribute="top" secondItem="VBj-v4-bWL" secondAttribute="bottom" constant="64" id="gOw-ic-Rjv"/>
+                            <constraint firstItem="q7B-kT-H1y" firstAttribute="top" secondItem="ub2-DN-A2k" secondAttribute="bottom" constant="8" id="me3-hS-84M"/>
+                            <constraint firstItem="FK7-hu-ilN" firstAttribute="centerX" secondItem="VBj-v4-bWL" secondAttribute="centerX" id="ztV-y4-Ycd"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Sl3-b1-eud"/>
                     </view>
+                    <connections>
+                        <outlet property="presenter" destination="e3A-DR-k2R" id="t7w-Wn-rb6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pyk-ej-1IG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="e3A-DR-k2R" customClass="LoginViewPresenter" customModule="Picroup_iOS" customModuleProvider="target">
+                    <connections>
+                        <outlet property="loginButton" destination="ub2-DN-A2k" id="11J-Od-OCx"/>
+                        <outlet property="passwordField" destination="FK7-hu-ilN" id="QJM-7m-1zU"/>
+                        <outlet property="usernameField" destination="VBj-v4-bWL" id="6AF-Z8-QPy"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="141.59999999999999" y="107.49625187406298"/>
+        </scene>
+        <!--Register Username View Controller-->
+        <scene sceneID="04i-cz-5HK">
+            <objects>
+                <viewController storyboardIdentifier="RegisterUsernameViewController" id="Nw7-Xc-XGj" customClass="RegisterUsernameViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qW8-UB-Ovv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kxd-sp-wqt" customClass="TextField" customModule="Material">
+                                <rect key="frame" x="37" y="116" width="300" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="Scc-yT-AdR"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="用户名"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value="至少需要 3 个字"/>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FBB-50-cMn" customClass="RaisedButton" customModule="Material">
+                                <rect key="frame" x="259" y="181" width="78" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="rRi-4r-guI"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
+                                <state key="normal" title="下一步">
+                                    <color key="titleColor" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                        <color key="value" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="pulseColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="flt-Gl-B3i" kind="show" id="t8q-Rf-kou"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="FBB-50-cMn" firstAttribute="trailing" secondItem="kxd-sp-wqt" secondAttribute="trailing" id="5o9-lL-eV5"/>
+                            <constraint firstItem="kxd-sp-wqt" firstAttribute="top" secondItem="1Av-NX-cPC" secondAttribute="top" constant="96" id="baP-rx-zYJ"/>
+                            <constraint firstItem="FBB-50-cMn" firstAttribute="top" secondItem="kxd-sp-wqt" secondAttribute="bottom" constant="48" id="dmD-97-2P5"/>
+                            <constraint firstItem="kxd-sp-wqt" firstAttribute="centerX" secondItem="1Av-NX-cPC" secondAttribute="centerX" id="ue9-4X-jbZ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="1Av-NX-cPC"/>
+                    </view>
+                    <connections>
+                        <outlet property="presenter" destination="Uzi-ek-uje" id="75P-oR-WO2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jw9-JD-cVx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="Uzi-ek-uje" customClass="RegisterUsernamePresenter" customModule="Picroup_iOS" customModuleProvider="target">
+                    <connections>
+                        <outlet property="nextButton" destination="FBB-50-cMn" id="gqQ-2P-oKD"/>
+                        <outlet property="usernameField" destination="kxd-sp-wqt" id="HJI-G3-bBh"/>
+                    </connections>
+                </customObject>
+            </objects>
+            <point key="canvasLocation" x="950" y="107"/>
+        </scene>
+        <!--Register Phone View Controller-->
+        <scene sceneID="Tnx-4x-rop">
+            <objects>
+                <viewController storyboardIdentifier="RegisterPhoneViewController" id="flt-Gl-B3i" customClass="RegisterPhoneViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iWK-si-6jF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NyV-JX-W1c" customClass="TextField" customModule="Material">
+                                <rect key="frame" x="37" y="116" width="300" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="C11-bD-R7u"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="phonePad" textContentType="tel"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="手机号"/>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qKh-tZ-kSB" customClass="RaisedButton" customModule="Material">
+                                <rect key="frame" x="259" y="181" width="78" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="NCQ-iZ-oDu"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
+                                <state key="normal" title="下一步">
+                                    <color key="titleColor" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                        <color key="value" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="pulseColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="EwF-WV-Vd7" kind="show" id="rcP-LC-mQD"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="NyV-JX-W1c" firstAttribute="top" secondItem="Bsu-Vu-EdX" secondAttribute="top" constant="96" id="DAT-22-WPn"/>
+                            <constraint firstItem="qKh-tZ-kSB" firstAttribute="top" secondItem="NyV-JX-W1c" secondAttribute="bottom" constant="48" id="Mfl-g6-Mr5"/>
+                            <constraint firstItem="NyV-JX-W1c" firstAttribute="centerX" secondItem="Bsu-Vu-EdX" secondAttribute="centerX" id="gZp-a7-Oez"/>
+                            <constraint firstItem="qKh-tZ-kSB" firstAttribute="trailing" secondItem="NyV-JX-W1c" secondAttribute="trailing" id="lwK-vD-7Gm"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Bsu-Vu-EdX"/>
+                    </view>
+                    <connections>
+                        <outlet property="presenter" destination="XqI-2X-u1E" id="LC4-Ot-R1n"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gPe-Fw-QwV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="XqI-2X-u1E" customClass="RegisterPhonePresenter" customModule="Picroup_iOS" customModuleProvider="target">
+                    <connections>
+                        <outlet property="nextButton" destination="qKh-tZ-kSB" id="2Os-32-Fi7"/>
+                        <outlet property="phoneField" destination="NyV-JX-W1c" id="F07-l7-ShS"/>
+                    </connections>
+                </customObject>
+            </objects>
+            <point key="canvasLocation" x="1726" y="107"/>
+        </scene>
+        <!--Register Code View Controller-->
+        <scene sceneID="PWb-cU-aA4">
+            <objects>
+                <viewController storyboardIdentifier="RegisterCodeViewController" id="EwF-WV-Vd7" customClass="RegisterCodeViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cq6-Fe-dTI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MOd-C7-PYu" customClass="TextField" customModule="Material">
+                                <rect key="frame" x="37" y="116" width="300" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="CBp-nT-fwR"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="验证码"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value="6 位数验证码"/>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VPi-9u-INB" customClass="RaisedButton" customModule="Material">
+                                <rect key="frame" x="274" y="181" width="63" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="KvV-x0-Z0S"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
+                                <state key="normal" title="验证">
+                                    <color key="titleColor" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                        <color key="value" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="pulseColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="VPi-9u-INB" firstAttribute="trailing" secondItem="MOd-C7-PYu" secondAttribute="trailing" id="Gsr-i1-BC4"/>
+                            <constraint firstItem="MOd-C7-PYu" firstAttribute="top" secondItem="BpZ-CU-AaU" secondAttribute="top" constant="96" id="Nns-z6-Wig"/>
+                            <constraint firstItem="VPi-9u-INB" firstAttribute="top" secondItem="MOd-C7-PYu" secondAttribute="bottom" constant="48" id="eV8-b0-Lpe"/>
+                            <constraint firstItem="MOd-C7-PYu" firstAttribute="centerX" secondItem="BpZ-CU-AaU" secondAttribute="centerX" id="tZx-Ws-h9h"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="BpZ-CU-AaU"/>
+                    </view>
+                    <connections>
+                        <outlet property="presenter" destination="ZXl-8W-DrD" id="pOA-g3-9NQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6J8-Fb-Bby" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="ZXl-8W-DrD" customClass="RegisterCodePresenter" customModule="Picroup_iOS" customModuleProvider="target">
+                    <connections>
+                        <outlet property="codeField" destination="MOd-C7-PYu" id="uox-uS-scr"/>
+                        <outlet property="validButton" destination="VPi-9u-INB" id="oSv-Du-5YD"/>
+                    </connections>
+                </customObject>
+            </objects>
+            <point key="canvasLocation" x="2562" y="107"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.1803921568627451" green="0.49019607843137253" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>

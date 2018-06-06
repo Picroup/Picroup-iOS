@@ -23,8 +23,8 @@ extension LoginError {
     }
 }
 
-private let minimalUsernameLength = 0
-private let minimalPasswordLength = 0
+let minimalUsernameLength = 3
+let minimalPasswordLength = 5
 
 final class LoginStateObject: PrimaryObject {
     
@@ -43,8 +43,8 @@ extension LoginStateObject {
         let next = LoginQuery(username: username, password: password)
         return triggerLoginQuery ? next : nil
     }
-    var isUsernameValid: Bool { return username.count > minimalUsernameLength }
-    var isPasswordValid: Bool { return password.count > minimalPasswordLength }
+    var isUsernameValid: Bool { return username.count >= minimalUsernameLength }
+    var isPasswordValid: Bool { return password.count >= minimalPasswordLength }
     var shouldLogin: Bool { return isUsernameValid && isPasswordValid && !triggerLoginQuery }
 }
 
@@ -102,7 +102,6 @@ extension LoginStateObject: IsFeedbackStateObject {
         }
     }
 }
-
 
 final class LoginStateStore {
     

@@ -15,7 +15,7 @@ import Apollo
 
 class LoginViewController: UIViewController {
     
-    fileprivate var presenter: LoginViewPresenter!
+    @IBOutlet fileprivate var presenter: LoginViewPresenter!
     fileprivate typealias Feedback = (Driver<LoginStateObject>) -> Signal<LoginStateObject.Event>
 
     override func viewDidLoad() {
@@ -27,7 +27,6 @@ class LoginViewController: UIViewController {
         
         guard let store = try? LoginStateStore() else { return }
         
-        presenter = LoginViewPresenter()
         presenter.setup(view: view, navigationItem: navigationItem)
         
         let uiFeedback: Feedback = bind(self) { (me, state) in
@@ -38,8 +37,8 @@ class LoginViewController: UIViewController {
                 state.map { $0.shouldHideUseenameWarning }.distinctUntilChanged().drive(presenter.usernameField.detailLabel.rx.isHidden),
                 state.map { $0.shouldHidePasswordWarning }.distinctUntilChanged().drive(presenter.passwordField.detailLabel.rx.isHidden),
                 state.map { $0.isLoginButtonEnabled }.distinctUntilChanged().drive(presenter.loginButton.rx.isEnabledWithBackgroundColor(.secondary)),
-                state.map { $0.triggerLoginQuery }.distinctUntilChanged().mapToVoid().drive(presenter.usernameField.rx.resignFirstResponder()),
-                state.map { $0.triggerLoginQuery }.distinctUntilChanged().mapToVoid().drive(presenter.passwordField.rx.resignFirstResponder()),
+                presenter.loginButton.rx.tap.asSignal().emit(to: presenter.usernameField.rx.resignFirstResponder()),
+                presenter.loginButton.rx.tap.asSignal().emit(to: presenter.passwordField.rx.resignFirstResponder()),
                 ]
             let events: [Signal<LoginStateObject.Event>] = [
                 presenter.usernameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangeUsername),

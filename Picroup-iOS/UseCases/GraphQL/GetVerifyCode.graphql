@@ -1,0 +1,3 @@
+mutation GetVerifyCode($phoneNumber: String!){
+    getVerifyCode(phoneNumber: $phoneNumber)
+}

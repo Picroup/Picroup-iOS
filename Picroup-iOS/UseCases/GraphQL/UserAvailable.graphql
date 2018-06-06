@@ -1,0 +1,5 @@
+query UserAvailable($username: String!) {
+    searchUser(username: $username) {
+        username
+    }
+}

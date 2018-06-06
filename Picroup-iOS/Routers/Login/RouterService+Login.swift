@@ -20,6 +20,7 @@ extension RouterService {
 extension RouterService.Login {
     
     static func loginViewController() -> LoginViewController {
-        return LoginViewController()
+        let vc = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        return vc
     }
 }
