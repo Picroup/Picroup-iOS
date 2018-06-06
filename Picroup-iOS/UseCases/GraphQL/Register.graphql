@@ -1,0 +1,5 @@
+mutation Register($username: String!, $password: String!, $phoneNumber: String!, $code: Float!){
+    register(username: $username, password: $password, phoneNumber: $phoneNumber, code: $code) {
+        ...UserDetailFragment
+    }
+}
