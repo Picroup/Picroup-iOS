@@ -42,6 +42,10 @@ final class PhotoPickerController: ImagePickerController {
         super.viewDidLoad()
         delegate = self
     }
+    
+    deinit {
+        print("PhotoPickerController deinit")
+    }
 }
 
 extension PhotoPickerController: ImagePickerDelegate {
@@ -55,18 +59,12 @@ extension PhotoPickerController: ImagePickerDelegate {
     func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
         
         let imageKeys = (0..<images.count).map { _ in UUID().uuidString }
-        zip(images, imageKeys).forEach { image, key in ImageCache.default.store(image, forKey: key) }
-        pickedImageKeys.accept(imageKeys)
-        
-//        Realm.background(updates: { (realm) in
-//            guard let route = realm.object(ofType: CreateImageRouteObject.self, forPrimaryKey: PrimaryKey.default) else { return }
-//            try realm.write {
-//                route.imageKeys.removeAll()
-//                route.imageKeys.append(objectsIn: imageKeys)
-//                route.version = UUID().uuidString
-//            }
-//        }, onError: { print($0) })
+        let tasks = zip(images, imageKeys).map { image, key in ImageCache.default.rx.store(image, forKey: key, toDisk: false) }
+        _ = Completable.merge(tasks)
+            .subscribe(onCompleted: { self.pickedImageKeys.accept(imageKeys) })
         
         imagePicker.dismiss(animated: true)
     }
 }
+
+

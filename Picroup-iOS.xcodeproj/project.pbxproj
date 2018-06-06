@@ -52,6 +52,7 @@
 		454CD57320C6D4470087C634 /* SaveCommentFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 454CD57220C6D4470087C634 /* SaveCommentFeedback.graphql */; };
 		454CD57520C80EB60087C634 /* RegisterPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CD57420C80EB60087C634 /* RegisterPasswordViewController.swift */; };
 		454CD57720C810BD0087C634 /* RegisterPasswordStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CD57620C810BD0087C634 /* RegisterPasswordStateObject.swift */; };
+		454CD57A20C821A00087C634 /* ImageCache+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CD57920C821A00087C634 /* ImageCache+Rx.swift */; };
 		454F728F2088230C00850471 /* LocalStorage+Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F728E2088230C00850471 /* LocalStorage+Values.swift */; };
 		454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72912088716900850471 /* ImageCommentsViewController.swift */; };
 		454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F72932089720C00850471 /* ImageCommentsPresenter.swift */; };
@@ -245,6 +246,7 @@
 		454CD57220C6D4470087C634 /* SaveCommentFeedback.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveCommentFeedback.graphql; sourceTree = "<group>"; };
 		454CD57420C80EB60087C634 /* RegisterPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPasswordViewController.swift; sourceTree = "<group>"; };
 		454CD57620C810BD0087C634 /* RegisterPasswordStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPasswordStateObject.swift; sourceTree = "<group>"; };
+		454CD57920C821A00087C634 /* ImageCache+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCache+Rx.swift"; sourceTree = "<group>"; };
 		454F728E2088230C00850471 /* LocalStorage+Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalStorage+Values.swift"; sourceTree = "<group>"; };
 		454F72912088716900850471 /* ImageCommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsViewController.swift; sourceTree = "<group>"; };
 		454F72932089720C00850471 /* ImageCommentsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsPresenter.swift; sourceTree = "<group>"; };
@@ -577,6 +579,14 @@
 			path = LoadFooterView;
 			sourceTree = "<group>";
 		};
+		454CD57820C821800087C634 /* RxKingfisher */ = {
+			isa = PBXGroup;
+			children = (
+				454CD57920C821A00087C634 /* ImageCache+Rx.swift */,
+			);
+			path = RxKingfisher;
+			sourceTree = "<group>";
+		};
 		454F728D208822EC00850471 /* LocalStorage */ = {
 			isa = PBXGroup;
 			children = (
@@ -809,6 +819,7 @@
 				4591AEE020A3E0A5001EC384 /* RxDataSources */,
 				451CD30F207910370063A972 /* RxFeedback */,
 				45C1995020AA7AD5001924B9 /* RxFeedback+Realm */,
+				454CD57820C821800087C634 /* RxKingfisher */,
 				451CD312207910A10063A972 /* RxSwift */,
 				45E240B320862970004B58EF /* UIKit */,
 			);
@@ -1390,6 +1401,7 @@
 				45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */,
 				45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */,
 				454F728F2088230C00850471 /* LocalStorage+Values.swift in Sources */,
+				454CD57A20C821A00087C634 /* ImageCache+Rx.swift in Sources */,
 				451DD4BB207E558A002C509A /* RaisedButton+Rx.swift in Sources */,
 				45B0206D20B508C200BD5D8F /* SearchUserViewController.swift in Sources */,
 				4595F223207C97410040E5FA /* UIView+Motion+Rx.swift in Sources */,
