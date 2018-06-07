@@ -51,7 +51,7 @@ extension ImageCommentsStateObject {
         return comments?.cursor.value != nil
     }
     var shouldSendComment: Bool {
-        return !triggerSaveComment && !saveCommentContent.isEmpty
+        return !triggerSaveComment && saveCommentContent.matchExpression(RegularPattern.default)
     }
     public var saveCommentQuery: SaveCommentMutation? {
         guard let userId = session?.currentUser?._id else { return nil }

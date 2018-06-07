@@ -28,7 +28,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="用户名"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value="至少需要 3 个字"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value="字母加数字，至少需要 4 个字"/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FK7-hu-ilN" customClass="TextField" customModule="Material">
@@ -41,7 +41,7 @@
                                 <textInputTraits key="textInputTraits"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="密码"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value="至少需要 5 个字"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value="大小写字母加数字，至少需要 8 个字"/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ub2-DN-A2k" customClass="RaisedButton" customModule="Material">
@@ -110,7 +110,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="用户名"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value="至少需要 3 个字"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value="字母加数字，至少需要 4 个字"/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FBB-50-cMn" customClass="RaisedButton" customModule="Material">
@@ -179,7 +179,7 @@
                                 <textInputTraits key="textInputTraits"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="密码"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value="至少需要 5 个字"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value="大小写字母加数字，至少需要 8 个字"/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QYY-Tz-PSW" customClass="RaisedButton" customModule="Material">

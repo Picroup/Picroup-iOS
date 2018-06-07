@@ -66,7 +66,7 @@ extension FeedbackStateObject {
         return triggerSaveFeedback ? next : nil
     }
     var shouldSaveFeedback: Bool {
-        return !triggerSaveFeedback && !content.isEmpty
+        return !triggerSaveFeedback && content.matchExpression(RegularPattern.default)
     }
 }
 

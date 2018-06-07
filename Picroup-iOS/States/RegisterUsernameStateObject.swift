@@ -34,7 +34,8 @@ extension RegisterUsernameStateObject {
         return triggerValidUsernameQuery ? next : nil
     }
     var shouldValidUsername: Bool {
-        return registerParam?.username.count ?? 0 >= minimalUsernameLength
+        guard let username = registerParam?.username else { return false }
+        return username.matchExpression(RegularPattern.username) 
     }
 }
 

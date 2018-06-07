@@ -23,9 +23,6 @@ extension LoginError {
     }
 }
 
-let minimalUsernameLength = 3
-let minimalPasswordLength = 5
-
 final class LoginStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
@@ -43,8 +40,8 @@ extension LoginStateObject {
         let next = LoginQuery(username: username, password: password)
         return triggerLoginQuery ? next : nil
     }
-    var isUsernameValid: Bool { return username.count >= minimalUsernameLength }
-    var isPasswordValid: Bool { return password.count >= minimalPasswordLength }
+    var isUsernameValid: Bool { return username.matchExpression(RegularPattern.username) }
+    var isPasswordValid: Bool { return password.matchExpression(RegularPattern.password) }
     var shouldLogin: Bool { return isUsernameValid && isPasswordValid && !triggerLoginQuery }
 }
 

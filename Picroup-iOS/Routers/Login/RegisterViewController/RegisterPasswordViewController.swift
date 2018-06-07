@@ -82,7 +82,7 @@ extension RegisterPasswordStateObject {
     
     var detail: String {
         if !isPasswordValid {
-            return "至少需要 5 个字"
+            return "大小写字母加数字，至少需要 8 个字"
         }
         return " "
     }
