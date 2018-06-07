@@ -43,7 +43,8 @@ class RankMediumCell: RxCollectionViewCell {
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var starPlaceholderView: UIView!
     
-    func configure(with viewModel: ViewModel) {
+    func configure(with item: MediumObject) {
+        let viewModel = ViewModel(item: item)
         imageView.setImage(with: viewModel.imageViewMinioId)
         imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
 //        transition(.fadeOut, .scale(0.75))

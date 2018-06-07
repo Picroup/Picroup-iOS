@@ -33,11 +33,10 @@ class ImageDetailPresenter: NSObject {
             dataSource = DataSource(
                 configureCell: { dataSource, collectionView, indexPath, cellStyle in
                     switch cellStyle {
-                    case .imageDetail(let medium):
+                    case .imageDetail(let item):
                         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageDetailCell", for: indexPath) as! ImageDetailCell
-                        let viewModel = ImageDetailCell.ViewModel(medium: medium)
                         cell.configure(
-                            with: viewModel,
+                            with: item,
                             onStarButtonTap: onStarButtonTap,
                             onCommentsTap: onCommentsTap,
                             onImageViewTap: onImageViewTap,
@@ -47,8 +46,7 @@ class ImageDetailPresenter: NSObject {
                         return cell
                     case .recommendMedium(let item):
                         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                        let viewModel = RankMediumCell.ViewModel(item: item)
-                        cell.configure(with: viewModel)
+                        cell.configure(with: item)
                         return cell
                     }
             },

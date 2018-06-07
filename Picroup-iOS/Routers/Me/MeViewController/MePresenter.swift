@@ -39,6 +39,21 @@ class MePresenter: NSObject {
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
     private var isFirstTimeSetSelectedTab = true
     
+    var me: Binder<UserObject?> {
+        return Binder(self) { presenter, me in
+            let viewModel = UserViewModel(user: me)
+            presenter.userAvatarImageView.setUserAvatar(with: me)
+            presenter.displaynameLabel.text = viewModel.displayName
+            presenter.usernameLabel.text = viewModel.username
+            presenter.reputationCountLabel.text = viewModel.reputation
+            presenter.displaynameLabel.text = viewModel.displayName
+            presenter.followersCountLabel.text = viewModel.followersCount
+            presenter.followingsCountLabel.text = viewModel.followingsCount
+            presenter.gainedReputationCountButton.setTitle(viewModel.gainedReputationCount, for: .normal)
+            presenter.gainedReputationCountButton.isHidden = viewModel.isGainedReputationCountHidden
+        }
+    }
+    
     typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
@@ -60,8 +75,7 @@ class MePresenter: NSObject {
             return DataSource(
                 configureCell: { dataSource, collectionView, indexPath, item in
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                    let viewModel = RankMediumCell.ViewModel(item: item)
-                    cell.configure(with: viewModel)
+                    cell.configure(with: item)
                     return cell
             },
                 configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)

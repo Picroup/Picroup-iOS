@@ -34,6 +34,19 @@ class UserPresenter: NSObject {
     
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
     
+    var user: Binder<UserObject?> {
+        return Binder(self) { presenter, user in
+            let viewModel = UserViewModel(user: user)
+            presenter.userAvatarImageView.setUserAvatar(with: user)
+            presenter.displaynameLabel.text = viewModel.displayName
+            presenter.usernameLabel.text = viewModel.username
+            presenter.reputationCountLabel.text = viewModel.reputation
+            presenter.followersCountLabel.text = viewModel.followersCount
+            presenter.followingsCountLabel.text = viewModel.followingsCount
+            StarButtonPresenter.isSelected(base: presenter.followButton).onNext(viewModel.followed)
+        }
+    }
+    
     typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
@@ -42,8 +55,7 @@ class UserPresenter: NSObject {
             return DataSource(
                 configureCell: { dataSource, collectionView, indexPath, item in
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                    let viewModel = RankMediumCell.ViewModel(item: item)
-                    cell.configure(with: viewModel)
+                    cell.configure(with: item)
                     return cell
             },
                 configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)

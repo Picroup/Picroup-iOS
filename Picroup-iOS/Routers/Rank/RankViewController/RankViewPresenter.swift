@@ -58,8 +58,7 @@ class RankViewPresenter {
             let dataSource = DataSource(
                 configureCell: { dataSource, collectionView, indexPath, item in
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                    let viewModel = RankMediumCell.ViewModel(item: item)
-                    cell.configure(with: viewModel)
+                    cell.configure(with: item)
                     return cell
             },
                 configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)

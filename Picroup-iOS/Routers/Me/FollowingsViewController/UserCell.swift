@@ -16,8 +16,9 @@ class UserCell: RxTableViewCell {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var followButton: RaisedButton!
     
-    func configure(with viewModel: UserViewModel, onFollowButtonTap: (()-> Void)?) {
-        userAvatarImageView.setUserAvatar(with: viewModel.user)
+    func configure(with item: UserObject?, onFollowButtonTap: (()-> Void)?) {
+        let viewModel = UserViewModel(user: item)
+        userAvatarImageView.setUserAvatar(with: item)
         displaynameLabel.text = viewModel.displayName
         usernameLabel.text = viewModel.username
         FollowButtonPresenter.isSelected(base: followButton).onNext(viewModel.followed)

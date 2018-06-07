@@ -50,15 +50,8 @@ class UserViewController: HideNavigationBarViewController {
         
         let uiFeedback: Feedback = bind(presenter) { (presenter, state) -> Bindings<UserStateObject.Event> in
             let myMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
-            let meViewModel = state.map { UserViewModel(user: $0.user) }
             let subscriptions: [Disposable] = [
-                state.map { $0.user }.drive(presenter.userAvatarImageView.rx.userAvatar),
-                meViewModel.map { $0.displayName }.drive(presenter.displaynameLabel.rx.text),
-                meViewModel.map { $0.username }.drive(presenter.usernameLabel.rx.text),
-                meViewModel.map { $0.reputation }.drive(presenter.reputationCountLabel.rx.text),
-                meViewModel.map { $0.followersCount }.drive(presenter.followersCountLabel.rx.text),
-                meViewModel.map { $0.followingsCount }.drive(presenter.followingsCountLabel.rx.text),
-                meViewModel.map { $0.followed }.drive(StarButtonPresenter.isSelected(base: presenter.followButton)),
+                state.map { $0.user }.drive(presenter.user),
                 store.userMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems(myMediaFooterState.asDriver())),
                 state.map { $0.myMediaFooterState }.drive(myMediaFooterState),
                 ]

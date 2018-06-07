@@ -36,9 +36,8 @@ final class FollowingsPresenter: NSObject {
             let dataSource = DataSource(
                 configureCell: { dataSource, tableView, indexPath, item in
                     let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
-                    let viewModel = UserViewModel(user: item)
                     cell.configure(
-                        with: viewModel,
+                        with: item,
                         onFollowButtonTap: onFollowButtonTap(_events: _events, item: item)
                     )
                     return cell

@@ -48,16 +48,8 @@ class MeViewController: HideNavigationBarViewController {
         let uiFeedback: Feedback = bind(presenter) { (presenter, state) -> Bindings<MeStateObject.Event> in
             let myMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let myStaredMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
-            let meViewModel = state.map { UserViewModel(user: $0.me) }
             let subscriptions: [Disposable] = [
-                meViewModel.map { $0.user }.drive(presenter.userAvatarImageView.rx.userAvatar),
-                meViewModel.map { $0.displayName }.drive(presenter.displaynameLabel.rx.text),
-                meViewModel.map { $0.username }.drive(presenter.usernameLabel.rx.text),
-                meViewModel.map { $0.reputation }.drive(presenter.reputationCountLabel.rx.text),
-                meViewModel.map { $0.followersCount }.drive(presenter.followersCountLabel.rx.text),
-                meViewModel.map { $0.followingsCount }.drive(presenter.followingsCountLabel.rx.text),
-                meViewModel.map { $0.gainedReputationCount }.drive(presenter.gainedReputationCountButton.rx.title()),
-                meViewModel.map { $0.isGainedReputationCountHidden }.drive(presenter.gainedReputationCountButton.rx.isHidden),
+                state.map { $0.me }.drive(presenter.me),
                 state.map { $0.selectedTabIndex }.distinctUntilChanged().drive(presenter.selectedTabIndex),
                 store.myMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems(myMediaFooterState.asDriver())),
                 store.myStaredMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myStaredMediaItems(myStaredMediaFooterState.asDriver())),
