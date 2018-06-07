@@ -102,6 +102,7 @@
 		457BD99D20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD99C20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift */; };
 		458006D820A17283004BD982 /* UIViewController+Rx+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */; };
 		458006DA20A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */; };
+		458C050520C91C07004EB2D8 /* ImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458C050420C91C07004EB2D8 /* ImageGenerator.swift */; };
 		458C106920849058005E94CD /* RankViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458C106820849058005E94CD /* RankViewPresenter.swift */; };
 		4591AEDB20A2CF4D001EC384 /* MyStaredMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4591AEDA20A2CF4D001EC384 /* MyStaredMedia.graphql */; };
 		4591AEDD20A2F359001EC384 /* RecommendMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4591AEDC20A2F359001EC384 /* RecommendMedium.graphql */; };
@@ -303,6 +304,7 @@
 		457BD99C20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrimaryObject+IdentifiableType.swift"; sourceTree = "<group>"; };
 		458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+NavigationBar.swift"; sourceTree = "<group>"; };
 		458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx+shouldHideNavigationBar.swift"; sourceTree = "<group>"; };
+		458C050420C91C07004EB2D8 /* ImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGenerator.swift; sourceTree = "<group>"; };
 		458C106820849058005E94CD /* RankViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewPresenter.swift; sourceTree = "<group>"; };
 		4591AEDA20A2CF4D001EC384 /* MyStaredMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyStaredMedia.graphql; sourceTree = "<group>"; };
 		4591AEDC20A2F359001EC384 /* RecommendMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RecommendMedium.graphql; sourceTree = "<group>"; };
@@ -1021,6 +1023,7 @@
 				45E240B420862981004B58EF /* HideNavigationBarViewController.swift */,
 				45B5E27520C8D2D7005E2E58 /* PlaceholderTextView.swift */,
 				454F72992089BA1300850471 /* UIView+IBInspectable.swift */,
+				458C050420C91C07004EB2D8 /* ImageGenerator.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -1347,6 +1350,7 @@
 				45B0204F20AD59CC00BD5D8F /* HomeStateObject.swift in Sources */,
 				45C1994D20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift in Sources */,
 				45C1994820A973DD001924B9 /* MediumObject.swift in Sources */,
+				458C050520C91C07004EB2D8 /* ImageGenerator.swift in Sources */,
 				45B0205A20AEA35600BD5D8F /* UserStateObject.swift in Sources */,
 				45FC0BF320A42F26006AAF3D /* UserViewController.swift in Sources */,
 				4543ECE720BC39DC002F7C18 /* LoadFooterView.swift in Sources */,

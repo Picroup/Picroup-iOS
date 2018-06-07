@@ -17,7 +17,7 @@ final class NotificationCell: RxTableViewCell {
     func configure(with item: NotificationObject) {
         guard !item.isInvalidated else { return }
         
-        userAvatarImageView.setImage(with: item.user?.avatarId)
+        userAvatarImageView.setUserAvatar(with: item.user)
         mediumImageView.setImage(with: item.medium?.minioId)
         switch item.kind {
         case "commentMedium"?:

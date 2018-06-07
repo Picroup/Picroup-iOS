@@ -19,7 +19,7 @@ class ReputationCell: RxTableViewCell {
         guard !item.isInvalidated else { return }
         
         valueLabel.text = "+\(item.value.value ?? 0)"
-        userAvatarImageView.setImage(with: item.user?.avatarId)
+        userAvatarImageView.setUserAvatar(with: item.user)
         mediumImageView.setImage(with: item.medium?.minioId)
         switch item.kind {
         case "saveMedium"?:

@@ -32,7 +32,7 @@ final class UpdateUserViewController: HideNavigationBarViewController {
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
-                state.map { $0.session?.currentUser?.avatarId }.drive(presenter.userAvatarImageView.rx.imageMinioId),
+                state.map { $0.session?.currentUser }.drive(presenter.userAvatarImageView.rx.userAvatar),
                 state.map { $0.triggerSetAvatarIdQuery }.drive(presenter.userAvatarSpinner.rx.isAnimating),
                 state.map { $0.displayName }.distinctUntilChanged().drive(presenter.displaynameField.rx.text),
                 state.map { $0.session?.currentUser?.username.map { "@\($0)" } ?? " " }.drive(presenter.usernameLabel.rx.text),
