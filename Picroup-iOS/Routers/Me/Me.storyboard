@@ -1369,15 +1369,25 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                             </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qej-lR-lCA">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                                <connections>
+                                                    <segue destination="DK2-cd-UtE" kind="show" id="ppX-gX-cun"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="hex-Pn-yY5" firstAttribute="baseline" secondItem="Na1-Yu-juG" secondAttribute="baseline" id="32l-HB-VWR"/>
+                                            <constraint firstAttribute="bottom" secondItem="qej-lR-lCA" secondAttribute="bottom" id="5BW-CA-Gtb"/>
                                             <constraint firstAttribute="trailing" secondItem="hex-Pn-yY5" secondAttribute="trailing" constant="16" id="AOk-jg-634"/>
                                             <constraint firstItem="Na1-Yu-juG" firstAttribute="top" secondItem="ftt-in-h7J" secondAttribute="top" constant="16" id="VH1-NE-E4r"/>
                                             <constraint firstItem="Na1-Yu-juG" firstAttribute="leading" secondItem="ftt-in-h7J" secondAttribute="leading" constant="16" id="Z4s-6K-Jtx"/>
+                                            <constraint firstItem="qej-lR-lCA" firstAttribute="top" secondItem="ftt-in-h7J" secondAttribute="top" id="hJc-Wv-IEy"/>
+                                            <constraint firstAttribute="trailing" secondItem="qej-lR-lCA" secondAttribute="trailing" id="jkq-Q6-2YJ"/>
                                             <constraint firstItem="hex-Pn-yY5" firstAttribute="leading" secondItem="Na1-Yu-juG" secondAttribute="trailing" constant="8" id="sMA-lj-151"/>
                                             <constraint firstAttribute="bottom" secondItem="Na1-Yu-juG" secondAttribute="bottom" constant="16" id="svb-La-dJi"/>
+                                            <constraint firstItem="qej-lR-lCA" firstAttribute="leading" secondItem="ftt-in-h7J" secondAttribute="leading" id="wGl-SV-pZP"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -1418,6 +1428,14 @@
                 </customObject>
             </objects>
             <point key="canvasLocation" x="1469.5999999999999" y="1759.9700149925038"/>
+        </scene>
+        <!--UpdatePasswordViewController-->
+        <scene sceneID="xO8-3o-wt2">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Login" referencedIdentifier="UpdatePasswordViewController" id="DK2-cd-UtE" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bRW-R6-z6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2161" y="1760"/>
         </scene>
         <!--Notifications View Controller-->
         <scene sceneID="aJ0-Uf-U71">

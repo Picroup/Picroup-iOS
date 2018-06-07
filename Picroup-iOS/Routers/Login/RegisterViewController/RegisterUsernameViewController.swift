@@ -89,6 +89,9 @@ final class RegisterUsernameViewController: UIViewController {
 extension RegisterUsernameStateObject {
     
     var detail: String {
+        if registerParam?.username.isEmpty == true {
+            return " "
+        }
         if !shouldValidUsername {
             return "字母加数字，至少需要 4 个字"
         }

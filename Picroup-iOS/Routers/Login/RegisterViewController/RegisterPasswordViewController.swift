@@ -81,6 +81,9 @@ final class RegisterPasswordViewController: UIViewController {
 extension RegisterPasswordStateObject {
     
     var detail: String {
+        if registerParam?.password.isEmpty == true {
+            return " "
+        }
         if !isPasswordValid {
             return "大小写字母加数字，至少需要 8 个字"
         }

@@ -48,13 +48,13 @@ class LoginViewController: UIViewController {
             let events: [Signal<LoginStateObject.Event>] = [
                 presenter.usernameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangeUsername),
                 presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangePassword),
-                presenter.loginButton.rx.tap.asSignal().map { LoginStateObject.Event.onTriggerLogin },
+                presenter.loginButton.rx.tap.asSignal().map { .onTriggerLogin },
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
         let queryLogin: Feedback = react(query: { $0.loginQuery }) { query in
-            return ApolloClient.shared.rx.fetch(query: query)
+            return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.login?.fragments.userDetailFragment }.map {
                     guard let userDetailFragment = $0 else { throw LoginError.usernameOrPasswordIncorrect }
                     return userDetailFragment

@@ -146,6 +146,9 @@
 		45B0207320B5182300BD5D8F /* SearchUserStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0207220B5182300BD5D8F /* SearchUserStateObject.swift */; };
 		45B0207520B6B0D500BD5D8F /* MainStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0207420B6B0D500BD5D8F /* MainStateObject.swift */; };
 		45B5E27620C8D2D7005E2E58 /* PlaceholderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E27520C8D2D7005E2E58 /* PlaceholderTextView.swift */; };
+		45B5E27920C8D8A2005E2E58 /* UpdatePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E27820C8D8A2005E2E58 /* UpdatePasswordViewController.swift */; };
+		45B5E27B20C8DFF5005E2E58 /* UpdatePasswordStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E27A20C8DFF5005E2E58 /* UpdatePasswordStateObject.swift */; };
+		45B5E27D20C9008D005E2E58 /* UserSetPassword.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45B5E27C20C9008D005E2E58 /* UserSetPassword.graphql */; };
 		45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */; };
 		45BA0D7F209010670002E1D5 /* MarkReputationLinksAsViewed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */; };
 		45BA0D812090391D0002E1D5 /* MyNotifications.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D802090391D0002E1D5 /* MyNotifications.graphql */; };
@@ -344,6 +347,9 @@
 		45B0207220B5182300BD5D8F /* SearchUserStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserStateObject.swift; sourceTree = "<group>"; };
 		45B0207420B6B0D500BD5D8F /* MainStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStateObject.swift; sourceTree = "<group>"; };
 		45B5E27520C8D2D7005E2E58 /* PlaceholderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderTextView.swift; sourceTree = "<group>"; };
+		45B5E27820C8D8A2005E2E58 /* UpdatePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordViewController.swift; sourceTree = "<group>"; };
+		45B5E27A20C8DFF5005E2E58 /* UpdatePasswordStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordStateObject.swift; sourceTree = "<group>"; };
+		45B5E27C20C9008D005E2E58 /* UserSetPassword.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserSetPassword.graphql; sourceTree = "<group>"; };
 		45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsViewController.swift; sourceTree = "<group>"; };
 		45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MarkReputationLinksAsViewed.graphql; sourceTree = "<group>"; };
 		45BA0D802090391D0002E1D5 /* MyNotifications.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyNotifications.graphql; sourceTree = "<group>"; };
@@ -751,6 +757,7 @@
 				451CD325207B9E5B0063A972 /* RouterService+Login.swift */,
 				451CD32B207BA5880063A972 /* LoginViewController */,
 				45F0A7D220C7B3110085F978 /* RegisterViewController */,
+				45B5E27720C8D882005E2E58 /* UpdatePasswordViewController */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -780,6 +787,7 @@
 				457BD99920B306AA007F0492 /* UserFollowingsStateObject.swift */,
 				45B0206420B4012E00BD5D8F /* UserFollowersStateObject.swift */,
 				453B95B520C4CEF50043D915 /* UpdateUserStateObject.swift */,
+				45B5E27A20C8DFF5005E2E58 /* UpdatePasswordStateObject.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -890,6 +898,7 @@
 				45D04F7B2089FD0500AC2226 /* UserInterestedMedia.graphql */,
 				453B95B920C4D1A80043D915 /* UserSetAvatarId.graphql */,
 				453B95B720C4D18A0043D915 /* UserSetDisplayName.graphql */,
+				45B5E27C20C9008D005E2E58 /* UserSetPassword.graphql */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -949,6 +958,14 @@
 				45B0207020B5168E00BD5D8F /* SearchUserPresenter.swift */,
 			);
 			path = SearchUserViewController;
+			sourceTree = "<group>";
+		};
+		45B5E27720C8D882005E2E58 /* UpdatePasswordViewController */ = {
+			isa = PBXGroup;
+			children = (
+				45B5E27820C8D8A2005E2E58 /* UpdatePasswordViewController.swift */,
+			);
+			path = UpdatePasswordViewController;
 			sourceTree = "<group>";
 		};
 		45BA0D7B208ED3980002E1D5 /* ReputationsViewController */ = {
@@ -1144,6 +1161,7 @@
 				4595F20E2079F6780040E5FA /* Login.storyboard in Resources */,
 				45FC0BE220A41704006AAF3D /* UserFragment.graphql in Resources */,
 				45C3930120C5875D00F4A69A /* SaveUserFeedback.graphql in Resources */,
+				45B5E27D20C9008D005E2E58 /* UserSetPassword.graphql in Resources */,
 				45C3930220C5875D00F4A69A /* SaveMediumFeedback.graphql in Resources */,
 				453B95BE20C523990043D915 /* Me.storyboard in Resources */,
 				45F0A7E020C7D2B80085F978 /* GetVerifyCode.graphql in Resources */,
@@ -1342,6 +1360,7 @@
 				45517D4820BCDD3E00F2D7DE /* CommentCell.swift in Sources */,
 				451CD322207A3C1D0063A972 /* ApolloClient+Rx.swift in Sources */,
 				451CD339207D0BAA0063A972 /* NotificationsViewController.swift in Sources */,
+				45B5E27920C8D8A2005E2E58 /* UpdatePasswordViewController.swift in Sources */,
 				454CD57520C80EB60087C634 /* RegisterPasswordViewController.swift in Sources */,
 				4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */,
 				45FC0BFB20A91541006AAF3D /* PrimaryObject.swift in Sources */,
@@ -1368,6 +1387,7 @@
 				45517D4C20BCE9BC00F2D7DE /* LoadFooterViewState+create.swift in Sources */,
 				454F72922088716900850471 /* ImageCommentsViewController.swift in Sources */,
 				454F729C208DAF0500850471 /* ObservableConvertibleType+asSignal.swift in Sources */,
+				45B5E27B20C8DFF5005E2E58 /* UpdatePasswordStateObject.swift in Sources */,
 				455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */,
 				45B0204920AC0E8C00BD5D8F /* CommentObject.swift in Sources */,
 				45F0A7D820C7BE7F0085F978 /* RegisterPhoneStateObject.swift in Sources */,
