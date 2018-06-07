@@ -14,6 +14,7 @@ import RxCocoa
 extension ImageDetailCell {
     
     struct ViewModel {
+        let medium: MediumObject
         let imageViewMinioId: String?
         let imageViewMotionIdentifier: String?
         let progress: CGFloat
@@ -32,6 +33,7 @@ extension ImageDetailCell {
 extension ImageDetailCell.ViewModel {
     
     init(medium: MediumObject) {
+        self.medium = medium
         guard !medium.isInvalidated else {
             self.imageViewMinioId = nil
             self.imageViewMotionIdentifier = nil
@@ -90,7 +92,7 @@ class ImageDetailCell: RxCollectionViewCell {
         lifeBar.motionIdentifier = viewModel.lifeBarMotionIdentifier
         starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
         lifeViewWidthConstraint.constant = viewModel.progress * lifeBar.bounds.width
-        userAvatarImageView.setImage(with: viewModel.avatarId)
+        userAvatarImageView.setUserAvatar(with: viewModel.medium.user)
         displayNameLabel.text = viewModel.displayName
         remainTimeLabel.text = viewModel.remainTimeLabelText
         commentButton.setTitle(viewModel.commentsCountText, for: .normal)

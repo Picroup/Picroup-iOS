@@ -9,6 +9,7 @@
 import Foundation
 
 struct UserViewModel {
+    let user: UserObject?
     let username: String
     let displayName: String
     let avatarId: String?
@@ -20,6 +21,7 @@ struct UserViewModel {
     let followed: Bool?
     
     init(user: UserObject?) {
+        self.user = user
         guard user?.isInvalidated == false else {
             self.username = " "
             self.displayName = " "

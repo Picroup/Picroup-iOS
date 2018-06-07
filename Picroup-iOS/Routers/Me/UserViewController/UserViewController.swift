@@ -52,7 +52,7 @@ class UserViewController: HideNavigationBarViewController {
             let myMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let meViewModel = state.map { UserViewModel(user: $0.user) }
             let subscriptions: [Disposable] = [
-                meViewModel.map { $0.avatarId }.drive(presenter.userAvatarImageView.rx.imageMinioId),
+                state.map { $0.user }.drive(presenter.userAvatarImageView.rx.userAvatar),
                 meViewModel.map { $0.displayName }.drive(presenter.displaynameLabel.rx.text),
                 meViewModel.map { $0.username }.drive(presenter.usernameLabel.rx.text),
                 meViewModel.map { $0.reputation }.drive(presenter.reputationCountLabel.rx.text),

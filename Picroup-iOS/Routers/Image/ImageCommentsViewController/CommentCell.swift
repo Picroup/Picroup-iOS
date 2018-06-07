@@ -18,7 +18,7 @@ class CommentCell: RxTableViewCell {
         guard !item.isInvalidated else { return }
         userLabel?.text = item.user?.displayName
         contentLabel?.text = item.content
-        photoView.setImage(with: item.user?.avatarId)
+        photoView.setUserAvatar(with: item.user)
         
         if let onMoreButtonTap = onMoreButtonTap {
             moreButton.rx.tap

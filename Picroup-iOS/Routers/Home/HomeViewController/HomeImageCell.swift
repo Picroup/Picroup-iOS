@@ -36,7 +36,7 @@ class HomeImageCell: RxCollectionViewCell {
         lifeViewWidthConstraint.constant = CGFloat(remainTime / 12.0.weeks) * lifeBar.bounds.width
         imageView.motionIdentifier = item._id
         lifeBar.motionIdentifier = "lifeBar_\(item._id)"
-        userAvatarImageView.setImage(with: item.user?.avatarId)
+        userAvatarImageView.setUserAvatar(with: item.user)
         displayNameLabel.text = item.user?.displayName
         commentButton.setTitle("  \(item.commentsCount.value ?? 0)", for: UIControlState.normal)
         
