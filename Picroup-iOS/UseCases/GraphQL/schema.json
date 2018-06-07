@@ -120,6 +120,22 @@
               "deprecationReason": null
             },
             {
+              "name": "hotMedia",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "CursorMedia",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "medium",
               "description": "",
               "args": [

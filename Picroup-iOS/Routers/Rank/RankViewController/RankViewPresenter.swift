@@ -50,8 +50,8 @@ class RankViewPresenter {
         navigationItem.rightViews = [userButton]
     }
     
-    typealias Section = AnimatableSectionModel<String, MediumObject>
-    typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
+    typealias Section = SectionModel<String, MediumObject>
+    typealias DataSource = RxCollectionViewSectionedReloadDataSource<Section>
     
     var items: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [collectionView] loadState in

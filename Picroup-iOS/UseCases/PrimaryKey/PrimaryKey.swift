@@ -10,7 +10,8 @@ import Foundation
 
 struct PrimaryKey {
     static let `default` = "default"
-    static let rankMediaId = "currentDevice.rankMedia"
+//    static let rankMediaId = "currentDevice.rankMedia"
+    static let hotMediaId = "currentDevice.hotMedia"
     static let myMediaId = "currentUser.myMedia"
     static let myStaredMediaId = "currentUser.myStaredMedia"
     static let myInterestedMediaId = "currentUser.myInterestedMediaId"

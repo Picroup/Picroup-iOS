@@ -3,3 +3,9 @@ query RankedMedia($rankBy: RankBy, $cursor: Float) {
         ...CursorMediaFragment
     }
 }
+
+query HotMedia {
+    hotMedia {
+        ...CursorMediaFragment
+    }
+}

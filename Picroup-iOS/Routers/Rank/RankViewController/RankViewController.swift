@@ -37,14 +37,15 @@ class RankViewController: UIViewController {
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions = [
-                store.rankMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState.asDriver())),
-                state.map { $0.isReloading }.drive(presenter.refreshControl.rx.isRefreshing),
+//                store.rankMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState.asDriver())),
+                store.hotMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState.asDriver())),
+                state.map { $0.isReloadHotMedia }.drive(presenter.refreshControl.rx.isRefreshing),
                 state.map { $0.footerState }.drive(footerState),
                 state.map { $0.session?.isLogin ?? false }.drive(presenter.userButton.rx.isHidden),
             ]
             let events: [Signal<RankStateObject.Event>] = [
                 state.flatMapLatest {
-                    $0.shouldQueryMoreRankedMedia
+                    $0.shouldQueryMoreHotMedia
                         ? presenter.collectionView.rx.triggerGetMore
                         : .empty()
                 }.map { .onTriggerGetMore },
@@ -66,10 +67,10 @@ class RankViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryMedia: Feedback = react(query: { $0.rankedMediaQuery }) { query in
+        let queryMedia: Feedback = react(query: { $0.hotMediaQuery }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.rankedMedia.fragments.cursorMediaFragment }.unwrap()
-                .map(RankStateObject.Event.onGetData(isReload: query.cursor == nil))
+                .map { $0?.data?.hotMedia.fragments.cursorMediaFragment }.unwrap()
+                .map(RankStateObject.Event.onGetData)
                 .asSignal(onErrorReturnJust: RankStateObject.Event.onGetError)
         }
         
@@ -89,7 +90,15 @@ class RankViewController: UIViewController {
 extension RankStateObject {
     
     var footerState: LoadFooterViewState {
-        let (cursor, trigger, error) = (rankMedia?.cursor.value, triggerRankedMediaQuery, rankedMediaError)
-        return LoadFooterViewState.create(cursor: cursor, trigger: trigger, error: error)
+        if isReloadHotMedia {
+            return .empty
+        }
+        if !isReloadHotMedia && triggerHotMediaQuery {
+            return .loading
+        }
+        if hotMediaError != nil {
+            return .message("💁🏻‍♀️ 加载失败，请重试")
+        }
+        return .empty
     }
 }
