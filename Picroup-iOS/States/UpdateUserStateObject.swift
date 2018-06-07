@@ -44,7 +44,7 @@ extension UpdateUserStateObject {
         return triggerSetDisplayNameQuery ? next : nil
     }
     var shouldSetDisplay: Bool {
-        return !displayName.isEmpty
+        return displayName.matchExpression(RegularPattern.displayName)
     }
 }
 

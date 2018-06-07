@@ -86,7 +86,7 @@ extension RegisterCodeStateObject: IsFeedbackStateObject {
         case .onChangeCode(let codeText):
             let code = Double(codeText) ?? 0
             self.registerParam?.code = code
-            self.isCodeAvaliable = 100000 < code && code < 1000000
+            self.isCodeAvaliable = codeText.matchExpression(RegularPattern.code6)
             
         case .onTriggerRegister:
             guard !triggerRegisterQuery else { return }

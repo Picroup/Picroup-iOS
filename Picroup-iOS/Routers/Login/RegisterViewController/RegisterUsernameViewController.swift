@@ -90,7 +90,7 @@ extension RegisterUsernameStateObject {
     
     var detail: String {
         if !shouldValidUsername {
-            return "至少需要 3 个字"
+            return "字母加数字，至少需要 4 个字"
         }
         if triggerValidUsernameQuery {
             return "正在验证..."

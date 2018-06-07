@@ -44,7 +44,7 @@ extension RegisterPasswordStateObject: IsFeedbackStateObject {
         switch event {
         case .onChangePassword(let password):
             self.registerParam?.password = password
-            self.isPasswordValid = password.count >= minimalPasswordLength
+            self.isPasswordValid = password.matchExpression(RegularPattern.password)
         }
     }
 }

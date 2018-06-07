@@ -43,7 +43,7 @@ extension RegisterPhoneStateObject: IsFeedbackStateObject {
         switch event {
         case .onChangePhoneNumber(let phoneNumber):
             self.registerParam?.phoneNumber = phoneNumber
-            self.isPhoneNumberValid = phoneNumber.count == 11
+            self.isPhoneNumberValid = phoneNumber.matchExpression(RegularPattern.chinesePhone)
         }
     }
 }

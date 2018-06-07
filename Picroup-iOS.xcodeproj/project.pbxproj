@@ -145,6 +145,7 @@
 		45B0207120B5168E00BD5D8F /* SearchUserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0207020B5168E00BD5D8F /* SearchUserPresenter.swift */; };
 		45B0207320B5182300BD5D8F /* SearchUserStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0207220B5182300BD5D8F /* SearchUserStateObject.swift */; };
 		45B0207520B6B0D500BD5D8F /* MainStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0207420B6B0D500BD5D8F /* MainStateObject.swift */; };
+		45B5E27620C8D2D7005E2E58 /* PlaceholderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E27520C8D2D7005E2E58 /* PlaceholderTextView.swift */; };
 		45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */; };
 		45BA0D7F209010670002E1D5 /* MarkReputationLinksAsViewed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */; };
 		45BA0D812090391D0002E1D5 /* MyNotifications.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D802090391D0002E1D5 /* MyNotifications.graphql */; };
@@ -187,6 +188,7 @@
 		45F0A7DC20C7CA610085F978 /* RegisterCodeStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F0A7DB20C7CA610085F978 /* RegisterCodeStateObject.swift */; };
 		45F0A7DE20C7CC510085F978 /* Register.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45F0A7DD20C7CC510085F978 /* Register.graphql */; };
 		45F0A7E020C7D2B80085F978 /* GetVerifyCode.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45F0A7DF20C7D2B80085F978 /* GetVerifyCode.graphql */; };
+		45F0A7E220C8C6E60085F978 /* RegularPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F0A7E120C8C6E60085F978 /* RegularPattern.swift */; };
 		45FC0BE220A41704006AAF3D /* UserFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45FC0BE120A41704006AAF3D /* UserFragment.graphql */; };
 		45FC0BE420A41813006AAF3D /* UserDetailFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45FC0BE320A41813006AAF3D /* UserDetailFragment.graphql */; };
 		45FC0BE620A418BF006AAF3D /* CommentFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45FC0BE520A418BF006AAF3D /* CommentFragment.graphql */; };
@@ -341,6 +343,7 @@
 		45B0207020B5168E00BD5D8F /* SearchUserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserPresenter.swift; sourceTree = "<group>"; };
 		45B0207220B5182300BD5D8F /* SearchUserStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserStateObject.swift; sourceTree = "<group>"; };
 		45B0207420B6B0D500BD5D8F /* MainStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStateObject.swift; sourceTree = "<group>"; };
+		45B5E27520C8D2D7005E2E58 /* PlaceholderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderTextView.swift; sourceTree = "<group>"; };
 		45BA0D7C208ED3B30002E1D5 /* ReputationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationsViewController.swift; sourceTree = "<group>"; };
 		45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MarkReputationLinksAsViewed.graphql; sourceTree = "<group>"; };
 		45BA0D802090391D0002E1D5 /* MyNotifications.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyNotifications.graphql; sourceTree = "<group>"; };
@@ -383,6 +386,7 @@
 		45F0A7DB20C7CA610085F978 /* RegisterCodeStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCodeStateObject.swift; sourceTree = "<group>"; };
 		45F0A7DD20C7CC510085F978 /* Register.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Register.graphql; sourceTree = "<group>"; };
 		45F0A7DF20C7D2B80085F978 /* GetVerifyCode.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GetVerifyCode.graphql; sourceTree = "<group>"; };
+		45F0A7E120C8C6E60085F978 /* RegularPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularPattern.swift; sourceTree = "<group>"; };
 		45FC0BE120A41704006AAF3D /* UserFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserFragment.graphql; sourceTree = "<group>"; };
 		45FC0BE320A41813006AAF3D /* UserDetailFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserDetailFragment.graphql; sourceTree = "<group>"; };
 		45FC0BE520A418BF006AAF3D /* CommentFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommentFragment.graphql; sourceTree = "<group>"; };
@@ -468,6 +472,7 @@
 				451DD4C220831287002C509A /* NSObject+objc.swift */,
 				45D04F71208790C700AC2226 /* TimeInterval+.swift */,
 				454A4C41209C2F160063E829 /* LocalStorage.swift */,
+				45F0A7E120C8C6E60085F978 /* RegularPattern.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -997,6 +1002,7 @@
 			children = (
 				4543ECE320BC38D1002F7C18 /* LoadFooterView */,
 				45E240B420862981004B58EF /* HideNavigationBarViewController.swift */,
+				45B5E27520C8D2D7005E2E58 /* PlaceholderTextView.swift */,
 				454F72992089BA1300850471 /* UIView+IBInspectable.swift */,
 			);
 			path = UIKit;
@@ -1289,6 +1295,7 @@
 				4595F2102079F6B60040E5FA /* LoginViewController.swift in Sources */,
 				454F72962089B44500850471 /* RxCollectionViewCell.swift in Sources */,
 				45D04F8B208F60A600AC2226 /* ReputationsViewPresenter.swift in Sources */,
+				45B5E27620C8D2D7005E2E58 /* PlaceholderTextView.swift in Sources */,
 				45F0A7DA20C7C4720085F978 /* RegisterCodeViewController.swift in Sources */,
 				45B0204D20AD143E00BD5D8F /* LoginStateObject.swift in Sources */,
 				4595F21B207C883F0040E5FA /* MainTabBarController.swift in Sources */,
@@ -1341,6 +1348,7 @@
 				4591AEDF20A3D70E001EC384 /* RankMediumCell.swift in Sources */,
 				45D04F7E208A040C00AC2226 /* HomeImageCell.swift in Sources */,
 				451DD4B7207E3EB5002C509A /* ErrorMessage.swift in Sources */,
+				45F0A7E220C8C6E60085F978 /* RegularPattern.swift in Sources */,
 				45D04F84208E0EAA00AC2226 /* MePresenter.swift in Sources */,
 				45525D4F208C468500EAF00D /* Feedback.swift in Sources */,
 				45C1995220AA7AFF001924B9 /* IsFeedbackStateObject.swift in Sources */,
