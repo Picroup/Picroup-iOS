@@ -29,6 +29,8 @@ final class MeStateObject: PrimaryObject {
     @objc dynamic var myStaredMediaError: String?
     @objc dynamic var triggerMyStaredMediaQuery: Bool = false
     
+    @objc dynamic var needUpdate: NeedUpdateStateObject?
+    
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var reputationsRoute: ReputationsRouteObject?
     @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
@@ -89,6 +91,7 @@ extension MeStateObject {
                 "session": ["_id": _id],
                 "myMedia": ["_id": PrimaryKey.myMediaId],
                 "myStaredMedia": ["_id": PrimaryKey.myStaredMediaId],
+                "needUpdate": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
                 "reputationsRoute": ["_id": _id],
                 "userFollowingsRoute": ["_id": _id],
@@ -112,12 +115,14 @@ extension MeStateObject {
         case onChangeSelectedTab(Tab)
         
         case onTriggerReloadMyMedia
+        case onTriggerReloadMyMediaIfNeeded
         case onTriggerGetMoreMyMedia
         case onGetReloadMyMedia(CursorMediaFragment)
         case onGetMoreMyMedia(CursorMediaFragment)
         case onGetMyMediaError(Error)
         
         case onTriggerReloadMyStaredMedia
+        case onTriggerReloadMyStaredMediaIfNeeded
         case onTriggerGetMoreMyStaredMedia
         case onGetReloadMyStaredMedia(CursorMediaFragment)
         case onGetMoreMyStaredMedia(CursorMediaFragment)
@@ -167,6 +172,11 @@ extension MeStateObject: IsFeedbackStateObject {
             myMedia?.cursor.value = nil
             myMediaError = nil
             triggerMyMediaQuery = true
+        case .onTriggerReloadMyMediaIfNeeded:
+            guard needUpdate?.myMedia == true else { return }
+            myMedia?.cursor.value = nil
+            myMediaError = nil
+            triggerMyMediaQuery = true
         case .onTriggerGetMoreMyMedia:
             guard shouldQueryMoreMyMedia else { return }
             myMediaError = nil
@@ -175,6 +185,7 @@ extension MeStateObject: IsFeedbackStateObject {
             myMedia = CursorMediaObject.create(from: data, id: PrimaryKey.myMediaId)(realm)
             myMediaError = nil
             triggerMyMediaQuery = false
+            needUpdate?.myMedia = false
         case .onGetMoreMyMedia(let data):
             myMedia?.merge(from: data)(realm)
             myMediaError = nil
@@ -187,6 +198,11 @@ extension MeStateObject: IsFeedbackStateObject {
             myStaredMedia?.cursor.value = nil
             myStaredMediaError = nil
             triggerMyStaredMediaQuery = true
+        case .onTriggerReloadMyStaredMediaIfNeeded:
+            guard needUpdate?.myStaredMedia == true else { return }
+            myStaredMedia?.cursor.value = nil
+            myStaredMediaError = nil
+            triggerMyStaredMediaQuery = true
         case .onTriggerGetMoreMyStaredMedia:
             guard shouldQueryMoreMyStaredMedia else { return }
             myStaredMediaError = nil
@@ -195,6 +211,7 @@ extension MeStateObject: IsFeedbackStateObject {
             myStaredMedia = CursorMediaObject.create(from: data, id: PrimaryKey.myStaredMediaId)(realm)
             myStaredMediaError = nil
             triggerMyStaredMediaQuery = false
+            needUpdate?.myStaredMedia = false
         case .onGetMoreMyStaredMedia(let data):
             myStaredMedia?.merge(from: data)(realm)
             myStaredMediaError = nil

@@ -48,6 +48,8 @@ final class CreateImageStateObject: PrimaryObject {
 
     @objc dynamic var myMedia: CursorMediaObject?
     @objc dynamic var myInterestedMedia: CursorMediaObject?
+    
+    @objc dynamic var needUpdate: NeedUpdateStateObject?
 
     @objc dynamic var popRoute: PopRouteObject?
     
@@ -78,6 +80,7 @@ extension CreateImageStateObject {
                 "finished": 0,
                 "myMedia": ["_id": PrimaryKey.myMediaId],
                 "myInterestedMedia": ["_id": PrimaryKey.myInterestedMediaId],
+                "needUpdate": ["_id": _id],
                 "popRoute": ["_id": _id],
                 "snackbar": ["_id": _id],
                 ]
@@ -109,11 +112,11 @@ extension CreateImageStateObject: IsFeedbackStateObject {
         case .onSavedMediumSuccess(let medium, let index):
             let mediumObject = realm.create(MediumObject.self, value: medium.snapshot, update: true)
             saveMediumStates[index].savedMedium = mediumObject
-            myMedia?.items.insert(mediumObject, at: 0)
-            myInterestedMedia?.items.insert(mediumObject, at: 0)
             finished += 1
             if allFinished {
                 triggerSaveMediumQuery = false
+                needUpdate?.myInterestedMedia = true
+                needUpdate?.myMedia = true
                 let failState = saveMediumStates.first(where: { $0.savedError != nil })
                 let allSuccess = failState == nil
                 if allSuccess {
@@ -128,6 +131,8 @@ extension CreateImageStateObject: IsFeedbackStateObject {
             finished += 1
             if allFinished {
                 triggerSaveMediumQuery = false
+                needUpdate?.myInterestedMedia = true
+                needUpdate?.myMedia = true
             }
         }
     }

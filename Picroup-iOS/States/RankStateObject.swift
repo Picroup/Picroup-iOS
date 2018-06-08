@@ -122,7 +122,7 @@ extension RankStateObject: IsFeedbackStateObject {
                 hotMedia = CursorMediaObject.create(from: data, id: PrimaryKey.hotMediaId)(realm)
                 isReloadHotMedia = false
             } else {
-                hotMedia?.merge(from: data)(realm)
+                hotMedia?.mergeUnique(from: data)(realm)
             }
             hotMediaError = nil
             triggerHotMediaQuery = false

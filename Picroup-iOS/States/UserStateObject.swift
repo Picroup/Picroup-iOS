@@ -31,6 +31,8 @@ final class UserStateObject: PrimaryObject {
     @objc dynamic var unfollowUserVersion: String?
     @objc dynamic var unfollowUserError: String?
     @objc dynamic var triggerUnfollowUserQuery: Bool = false
+    
+    @objc dynamic var needUpdate: NeedUpdateStateObject?
 
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
@@ -94,6 +96,7 @@ extension UserStateObject {
                 "session": ["_id": _id],
                 "user": ["_id": userId],
                 "userMedia": ["_id": PrimaryKey.userMediaId(userId)],
+                "needUpdate": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
                 "userFollowingsRoute": ["_id": _id],
                 "userFollowersRoute": ["_id": _id],
@@ -187,8 +190,8 @@ extension UserStateObject: IsFeedbackStateObject {
             followUserVersion = UUID().uuidString
             followUserError = nil
             triggerFollowUserQuery = false
-//            guard let medium = medium else { return }
-//            myStaredMedia?.items.insert(medium, at: 0)
+            needUpdate?.myInterestedMedia = true
+
             snackbar?.message = "已关注 @\(user?.username ?? "")"
             snackbar?.version = UUID().uuidString
         case .onFollowUserError(let error):
@@ -206,8 +209,8 @@ extension UserStateObject: IsFeedbackStateObject {
             unfollowUserVersion = UUID().uuidString
             unfollowUserError = nil
             triggerUnfollowUserQuery = false
-            //            guard let medium = medium else { return }
-        //            myStaredMedia?.items.insert(medium, at: 0)
+            needUpdate?.myInterestedMedia = true
+
             snackbar?.message = "已取消关注 @\(user?.username ?? "")"
             snackbar?.version = UUID().uuidString
         case .onUnfollowUserError(let error):

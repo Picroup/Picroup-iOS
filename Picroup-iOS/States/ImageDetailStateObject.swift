@@ -31,6 +31,8 @@ final class ImageDetailStateObject: PrimaryObject {
     @objc dynamic var deleteMediumError: String?
     @objc dynamic var triggerDeleteMedium: Bool = false
     
+    @objc dynamic var needUpdate: NeedUpdateStateObject?
+    
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
     @objc dynamic var userRoute: UserRouteObject?
@@ -83,6 +85,7 @@ extension ImageDetailStateObject {
                 "medium": ["_id": mediumId],
                 "recommendMedia": ["_id": PrimaryKey.recommendMediaId(mediumId)],
                 "myStaredMedia": ["_id": PrimaryKey.myStaredMediaId],
+                "needUpdate": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
                 "imageCommetsRoute": ["_id": _id],
                 "userRoute": ["_id": _id],
@@ -175,12 +178,11 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             starMediumVersion = UUID().uuidString
             starMediumError = nil
             triggerStarMedium = false
-            
+            needUpdate?.myStaredMedia = true
+
             snackbar?.message = "感谢你给图片续命一周"
             snackbar?.version = UUID().uuidString
             
-            guard let medium = medium else { return }
-            myStaredMedia?.items.insert(medium, at: 0)
         case .onStarMediumError(let error):
             starMediumVersion = nil
             starMediumError = error.localizedDescription

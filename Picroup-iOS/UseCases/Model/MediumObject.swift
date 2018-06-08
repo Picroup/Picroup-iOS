@@ -39,5 +39,17 @@ extension CursorMediaObject: IsCursorItemsObject {
 
 extension CursorMediaFragment: IsCursorFragment {}
 
-
+extension CursorMediaObject {
+    
+    func mergeUnique(from data: CursorMediaFragment) -> (Realm) -> Void {
+        return { realm in
+            let items: [MediumObject] = data.items.flatMap { mediaFragment in
+                if self.items.contains(where: { $0._id == mediaFragment.id }) { return nil }
+                return realm.create(MediumObject.self, value: mediaFragment.snapshot, update: true)
+            }
+            self.cursor.value = data.cursor
+            self.items.append(objectsIn: items)
+        }
+    }
+}
 

@@ -10,6 +10,12 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
+final class NeedUpdateStateObject: PrimaryObject {
+    @objc dynamic var myInterestedMedia: Bool = false
+    @objc dynamic var myMedia: Bool = false
+    @objc dynamic var myStaredMedia: Bool = false
+}
+
 final class HomeStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
@@ -18,6 +24,8 @@ final class HomeStateObject: PrimaryObject {
     @objc dynamic var myInterestedMediaError: String?
     @objc dynamic var triggerMyInterestedMediaQuery: Bool = false
     
+    @objc dynamic var needUpdate: NeedUpdateStateObject?
+
     @objc dynamic var createImageRoute: CreateImageRouteObject?
     @objc dynamic var searchUserRoute: SearchUserRouteObject?
     
@@ -56,6 +64,7 @@ extension HomeStateObject {
                 "_id": _id,
                 "session": ["_id": _id],
                 "myInterestedMedia": ["_id": PrimaryKey.myInterestedMediaId],
+                "needUpdate": ["_id": _id],
                 "createImageRoute": ["_id": _id],
                 "searchUserRoute": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
@@ -73,6 +82,7 @@ extension HomeStateObject {
     enum Event {
         
         case onTriggerReloadMyInterestedMedia
+        case onTriggerReloadMyInterestedMediaIfNeeded
         case onTriggerGetMoreMyInterestedMedia
         case onGetReloadMyInterestedMedia(CursorMediaFragment)
         case onGetMoreMyInterestedMedia(CursorMediaFragment)
@@ -102,6 +112,11 @@ extension HomeStateObject: IsFeedbackStateObject {
             myInterestedMedia?.cursor.value = nil
             myInterestedMediaError = nil
             triggerMyInterestedMediaQuery = true
+        case .onTriggerReloadMyInterestedMediaIfNeeded:
+            guard needUpdate?.myInterestedMedia == true else { return }
+            myInterestedMedia?.cursor.value = nil
+            myInterestedMediaError = nil
+            triggerMyInterestedMediaQuery = true
         case .onTriggerGetMoreMyInterestedMedia:
             guard shouldQueryMoreMyInterestedMedia else { return }
             myInterestedMediaError = nil
@@ -110,6 +125,7 @@ extension HomeStateObject: IsFeedbackStateObject {
             myInterestedMedia = CursorMediaObject.create(from: data, id: PrimaryKey.myInterestedMediaId)(realm)
             myInterestedMediaError = nil
             triggerMyInterestedMediaQuery = false
+            needUpdate?.myInterestedMedia = false
         case .onGetMoreMyInterestedMedia(let data):
             myInterestedMedia?.merge(from: data)(realm)
             myInterestedMediaError = nil

@@ -34,13 +34,15 @@ class NotificationsViewController: UIViewController {
         
         typealias Section = NotificationsViewPresenter.Section
 
-        let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
+        let uiFeedback: Feedback = bind(self) { (me, state)  in
+            let presenter = me.presenter!
             let subscriptions = [
                 store.notifications().map { [Section(model: "", items: $0)] }.drive(presenter.items),
                 state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
             ]
             let events: [Signal<NotificationsStateObject.Event>] = [
                 .just(.onTriggerReload),
+                me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReload },
                 state.flatMapLatest {
                     $0.shouldQueryMoreNotifications
                         ? presenter.tableView.rx.triggerGetMore

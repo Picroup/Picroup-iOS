@@ -30,6 +30,8 @@ final class UserFollowersStateObject: PrimaryObject {
     @objc dynamic var unfollowUserError: String?
     @objc dynamic var triggerUnfollowUserQuery: Bool = false
     
+    @objc dynamic var needUpdate: NeedUpdateStateObject?
+    
     @objc dynamic var userRoute: UserRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
 }
@@ -85,6 +87,7 @@ extension UserFollowersStateObject {
                 "session": ["_id": _id],
                 "user": ["_id": userId],
                 "userFollowers": ["_id": PrimaryKey.userFollowersId(userId)],
+                "needUpdate": ["_id": _id],
                 "userRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
@@ -156,8 +159,8 @@ extension UserFollowersStateObject: IsFeedbackStateObject {
             followToUserId = nil
             followUserError = nil
             triggerFollowUserQuery = false
-            //            guard let medium = medium else { return }
-        //            myStaredMedia?.items.insert(medium, at: 0)
+            needUpdate?.myInterestedMedia = true
+
         case .onFollowUserError(let error):
             followUserError = error.localizedDescription
             triggerFollowUserQuery = false
@@ -172,8 +175,8 @@ extension UserFollowersStateObject: IsFeedbackStateObject {
             unfollowToUserId = nil
             unfollowUserError = nil
             triggerUnfollowUserQuery = false
-            //            guard let medium = medium else { return }
-        //            myStaredMedia?.items.insert(medium, at: 0)
+            needUpdate?.myInterestedMedia = true
+
         case .onUnfollowUserError(let error):
             unfollowUserError = error.localizedDescription
             triggerUnfollowUserQuery = false

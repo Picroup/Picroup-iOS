@@ -44,8 +44,8 @@ class MeViewController: HideNavigationBarViewController {
         
         typealias Section = MePresenter.Section
 
-        weak var me = self
-        let uiFeedback: Feedback = bind(presenter) { (presenter, state) -> Bindings<MeStateObject.Event> in
+        let uiFeedback: Feedback = bind(self) { (me, state) -> Bindings<MeStateObject.Event> in
+            let presenter = me.presenter!
             let myMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let myStaredMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions: [Disposable] = [
@@ -72,7 +72,9 @@ class MeViewController: HideNavigationBarViewController {
                         ? presenter.myStardMediaCollectionView.rx.triggerGetMore
                         : .empty()
                     }.map { .onTriggerGetMoreMyStaredMedia },
-                me?.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMe } ?? .never(),
+                me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMe },
+                me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMyMediaIfNeeded },
+                me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMyStaredMediaIfNeeded },
                 presenter.myMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
                 presenter.myStardMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
                 presenter.reputationButton.rx.tap.asSignal().map { _ in .onTriggerShowReputations },

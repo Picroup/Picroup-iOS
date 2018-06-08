@@ -45,6 +45,7 @@ class HomeViewController: UIViewController {
             let events: [Signal<HomeStateObject.Event>] = [
                 .just(.onTriggerReloadMyInterestedMedia),
                 _events.asSignal(),
+                me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMyInterestedMediaIfNeeded },
                 state.flatMapLatest {
                     $0.shouldQueryMoreMyInterestedMedia
                         ? presenter.collectionView.rx.triggerGetMore
