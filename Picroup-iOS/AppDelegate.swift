@@ -30,6 +30,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        appStateService?.events.accept(.onTriggerReloadMe)
+    }
+    
     private func prepareWindow() {
         let window = UIWindow(frame: Screen.bounds)
         window.tintColor = UIColor.primary

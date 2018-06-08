@@ -15,9 +15,9 @@ import RxRealm
 final class MeStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
-    
-    @objc dynamic var meError: String?
-    @objc dynamic var triggerMeQuery: Bool = false
+//
+//    @objc dynamic var meError: String?
+//    @objc dynamic var triggerMeQuery: Bool = false
     
     @objc dynamic var selectedTabIndex: Int = 0
     
@@ -49,14 +49,14 @@ extension MeStateObject {
 }
 
 extension MeStateObject {
-    var meQuery: UserQuery? {
-        guard let userId = session?.currentUser?._id else { return nil }
-        let next = UserQuery(userId: userId, followedByUserId: "", withFollowed: false)
-        return triggerMeQuery ? next : nil
-    }
-    var me: UserObject? {
-        return session?.currentUser
-    }
+//    var meQuery: UserQuery? {
+//        guard let userId = session?.currentUser?._id else { return nil }
+//        let next = UserQuery(userId: userId, followedByUserId: "", withFollowed: false)
+//        return triggerMeQuery ? next : nil
+//    }
+//    var me: UserObject? {
+//        return session?.currentUser
+//    }
     var myMediaQuery: MyMediaQuery? {
         guard let userId = session?.currentUser?._id else { return nil }
         let next = MyMediaQuery(userId: userId, cursor: myMedia?.cursor.value)
@@ -108,9 +108,9 @@ extension MeStateObject {
 extension MeStateObject {
     
     enum Event {
-        case onTriggerReloadMe
-        case onGetMeSuccess(UserDetailFragment)
-        case onGetMeError(Error)
+//        case onTriggerReloadMe
+//        case onGetMeSuccess(UserDetailFragment)
+//        case onGetMeError(Error)
         
         case onChangeSelectedTab(Tab)
         
@@ -154,16 +154,16 @@ extension MeStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
-        case .onTriggerReloadMe:
-            meError = nil
-            triggerMeQuery = true
-        case .onGetMeSuccess(let data):
-            session?.currentUser = UserObject.create(from: data)(realm)
-            meError = nil
-            triggerMeQuery = false
-        case .onGetMeError(let error):
-            meError = error.localizedDescription
-            triggerMeQuery = false
+//        case .onTriggerReloadMe:
+//            meError = nil
+//            triggerMeQuery = true
+//        case .onGetMeSuccess(let data):
+//            session?.currentUser = UserObject.create(from: data)(realm)
+//            meError = nil
+//            triggerMeQuery = false
+//        case .onGetMeError(let error):
+//            meError = error.localizedDescription
+//            triggerMeQuery = false
             
         case .onChangeSelectedTab(let tab):
             selectedTabIndex = tab.rawValue

@@ -28,5 +28,39 @@ final class MainTabBarController: UITabBarController {
         tabBar.isTranslucent = false
 //        hidesBottomBarWhenPushed = true
     }
+    
+    private var disposeBag = DisposeBag()
+    
+    override var viewControllers: [UIViewController]? {
+        didSet {
+            disposeBag = DisposeBag()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: setupRx)
+        }
+    }
+    
+    private func setupRx() {
+        
+        print("setupRx")
+        guard let nvc = viewControllers?.first(where: { ($0 as? BaseNavigationController)?.viewControllers.first is NotificationsViewController }),
+            let appStateService = appStateService,
+            let appStore = appStateService.appStore
+            else { return }
+        
+        print("setupRx0")
+        appStore.me()
+            .map { $0.badgeValue }
+            .drive(nvc.tabBarItem.rx.badgeValue)
+            .disposed(by: disposeBag)
+        
+    }
+}
+
+extension UserObject {
+    fileprivate var badgeValue: String? {
+        if let notificationsCount = notificationsCount.value, notificationsCount > 0 {
+            return notificationsCount.description
+        }
+        return nil
+    }
 }
 

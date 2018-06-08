@@ -110,7 +110,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="用户名"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value="字母加数字，至少需要 4 个字"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value=" "/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FBB-50-cMn" customClass="RaisedButton" customModule="Material">
@@ -179,7 +179,7 @@
                                 <textInputTraits key="textInputTraits"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="密码"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value="大小写字母加数字，至少需要 8 个字"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="detail" value=" "/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QYY-Tz-PSW" customClass="RaisedButton" customModule="Material">
@@ -233,15 +233,6 @@
         <!--Update Password View Controller-->
         <scene sceneID="7j4-YY-Z1s">
             <objects>
-                <customObject id="Qcn-dW-0fG" customClass="UpdatePasswordPresenter" customModule="Picroup_iOS" customModuleProvider="target">
-                    <connections>
-                        <outlet property="headerView" destination="Zao-ZU-H2e" id="8Wq-jM-US1"/>
-                        <outlet property="oldPasswordField" destination="qsb-sD-3SM" id="hns-ss-XbN"/>
-                        <outlet property="passwordField" destination="Zvf-XR-Dd1" id="WRQ-X8-15e"/>
-                        <outlet property="setPasswordButton" destination="jF3-gp-r2Y" id="HaP-Kw-DVs"/>
-                    </connections>
-                </customObject>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="JeZ-kM-TV0" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="UpdatePasswordViewController" id="bkD-QV-BDi" customClass="UpdatePasswordViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="V5n-Si-VBX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -342,6 +333,15 @@
                         <outlet property="presenter" destination="Qcn-dW-0fG" id="1Mz-Fm-k2o"/>
                     </connections>
                 </viewController>
+                <customObject id="Qcn-dW-0fG" customClass="UpdatePasswordPresenter" customModule="Picroup_iOS" customModuleProvider="target">
+                    <connections>
+                        <outlet property="headerView" destination="Zao-ZU-H2e" id="8Wq-jM-US1"/>
+                        <outlet property="oldPasswordField" destination="qsb-sD-3SM" id="hns-ss-XbN"/>
+                        <outlet property="passwordField" destination="Zvf-XR-Dd1" id="WRQ-X8-15e"/>
+                        <outlet property="setPasswordButton" destination="jF3-gp-r2Y" id="HaP-Kw-DVs"/>
+                    </connections>
+                </customObject>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JeZ-kM-TV0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1678" y="782"/>
         </scene>

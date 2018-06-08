@@ -38,13 +38,13 @@ extension RouterService.Main {
         mvc.tabBar.isTranslucent = false
         //        mvc.selectedIndex = 1
         return mvc
-        
     }
     
     static func homeMenuViewController() -> UIViewController {
         let hmvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
         let bnvc = BaseNavigationController(rootViewController: hmvc)
         bnvc.tabBarItem = UITabBarItem(title: "关注", image: UIImage(named: "ic_home"), selectedImage: nil)
+        bnvc.tabBarItem.badgeColor = .secondary
         return bnvc
     }
     
@@ -52,6 +52,7 @@ extension RouterService.Main {
         let rvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RankViewController") as! RankViewController
         let bnvc = BaseNavigationController(rootViewController: rvc)
         bnvc.tabBarItem = UITabBarItem(title: "热门", image: UIImage(named: "ic_apps"), selectedImage: nil)
+        bnvc.tabBarItem.badgeColor = .secondary
         return bnvc
     }
     

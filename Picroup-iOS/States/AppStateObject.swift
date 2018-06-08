@@ -27,12 +27,23 @@ final class AppStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
     
+    @objc dynamic var meError: String?
+    @objc dynamic var triggerMeQuery: Bool = false
+    
     @objc dynamic var previousMediumId: String?
     @objc dynamic var currentMediumId: String?
     @objc dynamic var triggerRecommendMedium = false
 }
 
 extension AppStateObject {
+    var meQuery: UserQuery? {
+        guard let userId = session?.currentUser?._id else { return nil }
+        let next = UserQuery(userId: userId, followedByUserId: "", withFollowed: false)
+        return triggerMeQuery ? next : nil
+    }
+    var me: UserObject? {
+        return session?.currentUser
+    }
     
     var recommendMediumQuery: RecommendMediumMutation? {
         guard
@@ -63,6 +74,9 @@ extension AppStateObject {
 extension AppStateObject {
     
     enum Event {
+        case onTriggerReloadMe
+        case onGetMeSuccess(UserDetailFragment)
+        case onGetMeError(Error)
         case onViewMedium(String)
         case onRecommendMediumCompleted
     }
@@ -72,6 +86,17 @@ extension AppStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
+        case .onTriggerReloadMe:
+            meError = nil
+            triggerMeQuery = true
+        case .onGetMeSuccess(let data):
+            session?.currentUser = UserObject.create(from: data)(realm)
+            meError = nil
+            triggerMeQuery = false
+        case .onGetMeError(let error):
+            meError = error.localizedDescription
+            triggerMeQuery = false
+            
         case .onViewMedium(let mediumId):
             previousMediumId = currentMediumId
             currentMediumId = mediumId
@@ -99,6 +124,11 @@ final class AppStateStore {
     func on(event: AppStateObject.Event) {
         let _id = PrimaryKey.default
         Realm.backgroundReduce(ofType: AppStateObject.self, forPrimaryKey: _id, event: event)
+    }
+    
+    func me() -> Driver<UserObject> {
+        guard let me = _state.session?.currentUser else { return .empty() }
+        return Observable.from(object: me).asDriver(onErrorDriveWith: .empty())
     }
 }
 

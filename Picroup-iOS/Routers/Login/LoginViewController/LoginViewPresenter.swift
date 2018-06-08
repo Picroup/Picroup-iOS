@@ -43,6 +43,7 @@ final class LoginViewPresenter: NSObject {
         usernameField.placeholderActiveColor = .primary
         usernameField.dividerActiveColor = .primary
         usernameField.autocapitalizationType = .none
+        usernameField.detailLabel.isHidden = true
         _ = usernameField.becomeFirstResponder()
     }
     
@@ -51,7 +52,8 @@ final class LoginViewPresenter: NSObject {
         passwordField.dividerActiveColor = .primary
         passwordField.clearButtonMode = .whileEditing
         passwordField.isVisibilityIconButtonEnabled = true
-        
+        passwordField.detailLabel.isHidden = true
+
 //        passwordField.detailColor = Color.red.base
         
         // Setting the visibilityIconButton color.
