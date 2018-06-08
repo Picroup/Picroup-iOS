@@ -40,25 +40,29 @@ class MeViewController: HideNavigationBarViewController {
     
     private func setupRxFeedback() {
         
-        guard let store = try? MeStateStore()  else { return }
+        guard let store = try? MeStateStore(),
+            let appStateService = appStateService,
+            let appStore = appStateService.appStore
+            else { return }
         
         typealias Section = MePresenter.Section
 
-        let uiFeedback: Feedback = bind(self) { (me, state) -> Bindings<MeStateObject.Event> in
+        let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
             let myMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let myStaredMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions: [Disposable] = [
-                state.map { $0.me }.drive(presenter.me),
+                appStore.me().drive(presenter.me),
                 state.map { $0.selectedTabIndex }.distinctUntilChanged().drive(presenter.selectedTabIndex),
                 store.myMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems(myMediaFooterState.asDriver())),
                 store.myStaredMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myStaredMediaItems(myStaredMediaFooterState.asDriver())),
                 state.map { $0.myMediaFooterState }.drive(myMediaFooterState),
                 state.map { $0.myStaredMediaFooterState }.drive(myStaredMediaFooterState),
+                Signal.just(.onTriggerReloadMe).emit(to: appStateService.events),
+                me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMe }.emit(to: appStateService.events),
                 ]
-            
             let events: [Signal<MeStateObject.Event>] = [
-                .of(.onTriggerReloadMe, .onTriggerReloadMyMedia, .onTriggerReloadMyStaredMedia),
+                .of(.onTriggerReloadMyMedia, .onTriggerReloadMyStaredMedia),
                 presenter.moreButton.rx.tap.asSignal().flatMapLatest(mapMoreButtonTapToEvent),
                 presenter.myMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myMedia) },
                 presenter.myStaredMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myStaredMedia) },
@@ -72,7 +76,6 @@ class MeViewController: HideNavigationBarViewController {
                         ? presenter.myStardMediaCollectionView.rx.triggerGetMore
                         : .empty()
                     }.map { .onTriggerGetMoreMyStaredMedia },
-                me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMe },
                 me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMyMediaIfNeeded },
                 me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMyStaredMediaIfNeeded },
                 presenter.myMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
@@ -85,11 +88,11 @@ class MeViewController: HideNavigationBarViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryMe: Feedback = react(query: { $0.meQuery }) { query in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.fragments.userDetailFragment }.unwrap()
-                .map(MeStateObject.Event.onGetMeSuccess)
-                .asSignal(onErrorReturnJust: MeStateObject.Event.onGetMeError)
-        }
+//        let queryMe: Feedback = react(query: { $0.meQuery }) { query in
+//            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.fragments.userDetailFragment }.unwrap()
+//                .map(MeStateObject.Event.onGetMeSuccess)
+//                .asSignal(onErrorReturnJust: MeStateObject.Event.onGetMeError)
+//        }
         
         let queryMyMedia: Feedback = react(query: { $0.myMediaQuery }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
@@ -110,7 +113,6 @@ class MeViewController: HideNavigationBarViewController {
 
         Signal.merge(
             uiFeedback(states),
-            queryMe(states),
             queryMyMedia(states),
             queryMyStaredMedia(states)
             )

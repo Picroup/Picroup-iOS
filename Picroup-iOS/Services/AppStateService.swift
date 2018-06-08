@@ -15,16 +15,32 @@ import Apollo
 
 final class AppStateService {
     
-    private let _appStore: AppStateStore?
+    let appStore: AppStateStore?
     let events = PublishRelay<AppStateObject.Event>()
     fileprivate typealias Feedback = (Driver<AppStateObject>) -> Signal<AppStateObject.Event>
     
     init() {
-        _appStore = try? AppStateStore()
+        appStore = try? AppStateStore()
     }
     
     func setupRxfeedback() {
-        guard let store = _appStore else { return }
+        
+        guard let store = appStore else { return }
+        
+        let bindMe: Feedback = bind(self) { (me, state) in
+            let subscriptions: [Disposable] = [
+                ]
+            let events: [Signal<AppStateObject.Event>] = [
+                .just(.onTriggerReloadMe),
+                ]
+            return Bindings(subscriptions: subscriptions, events: events)
+        }
+        
+        let queryMe: Feedback = react(query: { $0.meQuery }) { query in
+            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.fragments.userDetailFragment }.unwrap()
+                .map(AppStateObject.Event.onGetMeSuccess)
+                .asSignal(onErrorReturnJust: AppStateObject.Event.onGetMeError)
+        }
         
         let queryRecommendMedium: Feedback = react(query: { $0.recommendMediumQuery }) { query in
             ApolloClient.shared.rx.perform(mutation: query)
@@ -35,6 +51,8 @@ final class AppStateService {
         let states = store.states
         
         _ = Signal.merge(
+            bindMe(states),
+            queryMe(states),
             queryRecommendMedium(states),
             events.asSignal()
             )
