@@ -69,7 +69,7 @@ extension ImageDetailPresenter: UICollectionViewDelegate, UICollectionViewDelega
             let height = imageHeight + 8 + 56 + 48 + 1 + 48
             return CGSize(width: width, height: height)
         case .recommendMedium:
-            return CGSize(width: 184, height: 184)
+            return CollectionViewLayoutManager.size(in: collectionView.bounds)
         }
     }
     

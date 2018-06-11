@@ -24,7 +24,8 @@ class RankViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = RankViewPresenter(collectionView: collectionView, navigationItem: navigationItem)
+        presenter = RankViewPresenter()
+        presenter.setup(collectionView: collectionView, navigationItem: navigationItem)
         setupRxFeedback()
     }
     
@@ -84,6 +85,8 @@ class RankViewController: UIViewController {
             .debug("RankState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
+        
+        presenter.collectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
     }
 }
 

@@ -80,6 +80,7 @@
 		455D69042080409A00C651A0 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69032080409A00C651A0 /* BaseNavigationController.swift */; };
 		455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69072080890B00C651A0 /* UIScrollView+Rx.swift */; };
 		456C5E412061446C005F981B /* ImageUpoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C5E402061446C005F981B /* ImageUpoader.swift */; };
+		4574E2A620CE4726005784C8 /* CollectionViewLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4574E2A520CE4726005784C8 /* CollectionViewLayoutManager.swift */; };
 		457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */; };
 		457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B8E205FEA1000BEDDF1 /* Main.storyboard */; };
 		457B1B92205FEA1000BEDDF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B91205FEA1000BEDDF1 /* Assets.xcassets */; };
@@ -280,6 +281,7 @@
 		455D69032080409A00C651A0 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		455D69072080890B00C651A0 /* UIScrollView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx.swift"; sourceTree = "<group>"; };
 		456C5E402061446C005F981B /* ImageUpoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUpoader.swift; sourceTree = "<group>"; };
+		4574E2A520CE4726005784C8 /* CollectionViewLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayoutManager.swift; sourceTree = "<group>"; };
 		457B1B87205FEA1000BEDDF1 /* Picroup-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Picroup-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		457B1B8F205FEA1000BEDDF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -739,6 +741,7 @@
 				4595F213207A0CA20040E5FA /* UIImage+Color.swift */,
 				458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */,
 				45517D5120BD3EB400F2D7DE /* Wireframe.swift */,
+				4574E2A520CE4726005784C8 /* CollectionViewLayoutManager.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -1416,6 +1419,7 @@
 				457BD99320B146CD007F0492 /* MediumService.swift in Sources */,
 				453B95C720C622320043D915 /* FeedbackPresenter.swift in Sources */,
 				457BD98B20ADB55E007F0492 /* CreateImageStateObject.swift in Sources */,
+				4574E2A620CE4726005784C8 /* CollectionViewLayoutManager.swift in Sources */,
 				454F72982089B46300850471 /* RxTableViewCell.swift in Sources */,
 				457BD99A20B306AA007F0492 /* UserFollowingsStateObject.swift in Sources */,
 				451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */,

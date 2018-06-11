@@ -88,12 +88,6 @@ class MeViewController: HideNavigationBarViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-//        let queryMe: Feedback = react(query: { $0.meQuery }) { query in
-//            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.fragments.userDetailFragment }.unwrap()
-//                .map(MeStateObject.Event.onGetMeSuccess)
-//                .asSignal(onErrorReturnJust: MeStateObject.Event.onGetMeError)
-//        }
-        
         let queryMyMedia: Feedback = react(query: { $0.myMediaQuery }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.media.fragments.cursorMediaFragment }.unwrap()
@@ -131,6 +125,8 @@ class MeViewController: HideNavigationBarViewController {
             })
             .disposed(by: disposeBag)
 
+        presenter.myMediaCollectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
+        presenter.myStardMediaCollectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
     }
 }
 
