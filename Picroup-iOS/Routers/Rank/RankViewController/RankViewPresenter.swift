@@ -12,20 +12,16 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class RankViewPresenter {
+class RankViewPresenter: NSObject {
     
     var userButton: IconButton!
     var refreshControl: UIRefreshControl!
     weak var collectionView: UICollectionView!
     weak var navigationItem: UINavigationItem!
-
-    init(collectionView: UICollectionView, navigationItem: UINavigationItem) {
+    
+    func setup(collectionView: UICollectionView, navigationItem: UINavigationItem) {
         self.collectionView = collectionView
         self.navigationItem = navigationItem
-        self.setup()
-    }
-    
-    private func setup() {
         prepareRefreshControl()
         prepareUserButton()
         prepareNavigationItem()
@@ -73,5 +69,12 @@ func createLoadFooterSupplementaryView<D>(loadState: Driver<LoadFooterViewState>
         let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "CollectionLoadFooterView", for: indexPath) as! CollectionLoadFooterView
         loadState.drive(onNext: footer.contentView.on).disposed(by: footer.disposeBag)
         return footer
+    }
+}
+
+extension RankViewPresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CollectionViewLayoutManager.size(in: collectionView.bounds)
     }
 }
