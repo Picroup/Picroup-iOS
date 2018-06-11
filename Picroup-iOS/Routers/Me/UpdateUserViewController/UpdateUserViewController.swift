@@ -42,7 +42,7 @@ final class UpdateUserViewController: HideNavigationBarViewController {
                     .map(UpdateUserStateObject.Event.onTriggerSetDisplayName),
                 presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 presenter.userAvatarImageView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().flatMapLatest { _ in
-                    PhotoPickerController.pickImages(from: weakSelf, imageLimit: 1).map { $0.first }.unwrap()
+                    PhotoPickerProvider.pickImages(from: weakSelf, imageLimit: 1).map { $0.first }.unwrap()
                     }.map(UpdateUserStateObject.Event.onChangeImageKey)
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
