@@ -129,6 +129,7 @@ class UserViewController: HideNavigationBarViewController {
             })
             .disposed(by: disposeBag)
 
+        presenter.myMediaCollectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
     }
 }
 

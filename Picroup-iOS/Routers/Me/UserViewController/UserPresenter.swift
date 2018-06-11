@@ -68,6 +68,12 @@ class UserPresenter: NSObject {
             return myMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
         }
     }
-
 }
 
+
+extension UserPresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CollectionViewLayoutManager.size(in: collectionView.bounds)
+    }
+}

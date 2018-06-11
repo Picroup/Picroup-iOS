@@ -15,10 +15,6 @@ import RxRealm
 final class RankStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
-
-//    @objc dynamic var rankMedia: CursorMediaObject?
-//    @objc dynamic var rankedMediaError: String?
-//    @objc dynamic var triggerRankedMediaQuery: Bool = false
     
     @objc dynamic var hotMedia: CursorMediaObject?
     @objc dynamic var hotMediaError: String?
@@ -30,23 +26,6 @@ final class RankStateObject: PrimaryObject {
 }
 
 extension RankStateObject {
-//    var rankedMediaQuery: RankedMediaQuery? {
-//        let next = RankedMediaQuery(rankBy: .thisWeek, cursor: rankMedia?.cursor.value)
-//        return triggerRankedMediaQuery ? next : nil
-//    }
-//    var shouldQueryMoreRankedMedia: Bool {
-//        return !triggerRankedMediaQuery && hasMoreRankedMedia
-//    }
-//    var isRankedMediaEmpty: Bool {
-//        guard let items = rankMedia?.items else { return false }
-//        return !triggerRankedMediaQuery && rankedMediaError == nil && items.isEmpty
-//    }
-//    var hasMoreRankedMedia: Bool {
-//        return rankMedia?.cursor.value != nil
-//    }
-//    var isReloading: Bool {
-//        return rankMedia?.cursor.value == nil && triggerRankedMediaQuery
-//    }
     var hotMediaQuery: HotMediaQuery? {
         let next = HotMediaQuery()
         return triggerHotMediaQuery ? next : nil
@@ -89,13 +68,6 @@ extension RankStateObject {
     }
 }
 
-extension RankStateObject.Event {
-    
-//    static func onGetData(isReload: Bool) -> (CursorMediaFragment) -> RankStateObject.Event {
-//        return { isReload ? .onGetReloadData($0) : .onGetMoreData($0) }
-//    }
-}
-
 extension RankStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
@@ -109,20 +81,12 @@ extension RankStateObject: IsFeedbackStateObject {
             isReloadHotMedia = false
             hotMediaError = nil
             triggerHotMediaQuery = true
-//        case .onGetReloadData(let data):
-//            rankMedia = CursorMediaObject.create(from: data, id: PrimaryKey.rankMediaId)(realm)
-//            rankedMediaError = nil
-//            triggerRankedMediaQuery = false
-//        case .onGetMoreData(let data):
-//            rankMedia?.merge(from: data)(realm)
-//            rankedMediaError = nil
-//            triggerRankedMediaQuery = false
         case .onGetData(let data):
             if isReloadHotMedia {
                 hotMedia = CursorMediaObject.create(from: data, id: PrimaryKey.hotMediaId)(realm)
                 isReloadHotMedia = false
             } else {
-                hotMedia?.mergeUnique(from: data)(realm)
+                hotMedia?.merge(from: data)(realm)
             }
             hotMediaError = nil
             triggerHotMediaQuery = false

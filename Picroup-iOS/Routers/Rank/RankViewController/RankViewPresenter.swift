@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class RankViewPresenter: NSObject {
+final class RankViewPresenter: NSObject {
     
     var userButton: IconButton!
     var refreshControl: UIRefreshControl!
@@ -47,7 +47,7 @@ class RankViewPresenter: NSObject {
     }
     
     typealias Section = AnimatableSectionModel<String, MediumObject>
-    typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
+    typealias DataSource = RxCollectionViewSectionedReloadDataSource<Section>
     
     var items: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [collectionView] loadState in
