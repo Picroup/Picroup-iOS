@@ -14,18 +14,25 @@ import RxFeedback
 import RxDataSources
 import Apollo
 
-private func mapCommentMoreButtonTapToEvent(comment: CommentObject, currentUserId: String?) -> Signal<ImageCommentsStateObject.Event> {
-    let byMe = comment.userId == currentUserId
-    let actions = byMe ? ["删除"] : ["举报"]
-    return DefaultWireframe.shared
-        .promptFor(cancelAction: "取消", actions: actions)
-        .asSignalOnErrorRecoverEmpty()
-        .flatMap { action in
-            switch action {
-            case "举报":     return .just(.onTriggerCommentFeedback(comment._id))
-            case "删除":     return .just(.onTriggerDeleteComment(comment._id))
-            default:        return .empty()
-            }
+private func mapCommentMoreButtonTapToEvent(sender: UITableView) -> (CommentObject, ImageCommentsStateObject) -> Signal<ImageCommentsStateObject.Event> {
+    return { comment, state in
+        
+        guard let row = state.comments?.items.index(of: comment),
+            let cell = sender.cellForRow(at: IndexPath(row: row, section: 0)) as? CommentCell
+            else { return .empty() }
+        let currentUserId = state.session?.currentUser?._id
+        let byMe = comment.userId == currentUserId
+        let actions = byMe ? ["删除"] : ["举报"]
+        return DefaultWireframe.shared
+            .promptFor(sender: cell.moreButton, cancelAction: "取消", actions: actions)
+            .asSignalOnErrorRecoverEmpty()
+            .flatMap { action in
+                switch action {
+                case "举报":     return .just(.onTriggerCommentFeedback(comment._id))
+                case "删除":     return .just(.onTriggerDeleteComment(comment._id))
+                default:        return .empty()
+                }
+        }
     }
 }
 
@@ -71,8 +78,8 @@ class ImageCommentsViewController: HideNavigationBarViewController {
             
             let events: [Signal<ImageCommentsStateObject.Event>] = [
                 .just(.onTriggerReloadData),
-                commentMoreButtonTap.asObservable().withLatestFrom(state) { ($0, $1.session?.currentUser?._id) }
-                    .asSignalOnErrorRecoverEmpty().flatMapLatest(mapCommentMoreButtonTapToEvent),
+                commentMoreButtonTap.asObservable().withLatestFrom(state) { ($0, $1) }
+                    .asSignalOnErrorRecoverEmpty().flatMapLatest(mapCommentMoreButtonTapToEvent(sender: presenter.tableView)),
                 state.flatMapLatest {
                     $0.shouldQueryMoreComments
                         ? presenter.tableView.rx.triggerGetMore

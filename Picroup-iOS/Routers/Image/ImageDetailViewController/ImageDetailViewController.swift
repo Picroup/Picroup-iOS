@@ -13,25 +13,29 @@ import RxCocoa
 import RxFeedback
 import Apollo
 
-private func mapMoreButtonTapToEvent(state: ImageDetailStateObject) -> Signal<ImageDetailStateObject.Event> {
-    guard state.session?.isLogin == true else { return .empty() }
-    let isMyMedium = state.medium?.userId == state.session?.currentUser?._id
-    let actions = isMyMedium ? ["删除"] : ["举报"]
-    return DefaultWireframe.shared
-        .promptFor(cancelAction: "取消", actions: actions)
-        .asSignalOnErrorRecoverEmpty()
-        .flatMap { action in
-            switch action {
-            case "举报":     return .just(.onTriggerMediumFeedback)
-            case "删除":     return comfirmDelete()
-            default:        return .empty()
-            }
+private func mapMoreButtonTapToEvent(sender: UICollectionView) -> (ImageDetailStateObject) -> Signal<ImageDetailStateObject.Event> {
+    return { state in
+        
+        guard state.session?.isLogin == true else { return .empty() }
+        guard let cell = sender.cellForItem(at: IndexPath(item: 0, section: 0)) as? ImageDetailCell else { return .empty() }
+        let isMyMedium = state.medium?.userId == state.session?.currentUser?._id
+        let actions = isMyMedium ? ["删除"] : ["举报"]
+        return DefaultWireframe.shared
+            .promptFor(sender: cell.moreButton, cancelAction: "取消", actions: actions)
+            .asSignalOnErrorRecoverEmpty()
+            .flatMap { action in
+                switch action {
+                case "举报":     return .just(.onTriggerMediumFeedback)
+                case "删除":     return comfirmDelete()
+                default:        return .empty()
+                }
+        }
     }
 }
 
 private func comfirmDelete() -> Signal<ImageDetailStateObject.Event> {
     return DefaultWireframe.shared
-        .promptFor(message: "确定要删除它吗？", preferredStyle: .alert, cancelAction: "取消", actions: ["删除"])
+        .promptFor(message: "确定要删除它吗？", preferredStyle: .alert, sender: nil, cancelAction: "取消", actions: ["删除"])
         .asSignalOnErrorRecoverEmpty()
         .flatMap { action in
             switch action {
@@ -88,7 +92,7 @@ class ImageDetailViewController: HideNavigationBarViewController {
             let events: [Signal<ImageDetailStateObject.Event>] = [
                 .just(.onTriggerReloadData),
                 _events.asSignal(),
-                _moreButtonTap.asSignal().withLatestFrom(state).flatMapLatest(mapMoreButtonTapToEvent),
+                _moreButtonTap.asSignal().withLatestFrom(state).flatMapLatest(mapMoreButtonTapToEvent(sender: presenter.collectionView)),
                 state.flatMapLatest {
                     $0.shouldQueryMoreRecommendMedia
                         ? presenter.collectionView.rx.triggerGetMore

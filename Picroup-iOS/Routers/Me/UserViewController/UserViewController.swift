@@ -13,16 +13,18 @@ import RxCocoa
 import RxGesture
 import RxFeedback
 
-private func mapMoreButtonTapToEvent(state: UserStateObject) -> Signal<UserStateObject.Event> {
-    guard state.session?.isLogin == true else { return .empty() }
-    return DefaultWireframe.shared
-        .promptFor(cancelAction: "取消", actions: ["举报"])
-        .asSignalOnErrorRecoverEmpty()
-        .flatMap { action in
-            switch action {
-            case "举报":     return .just(.onTriggerUserFeedback)
-            default:        return .empty()
-            }
+private func mapMoreButtonTapToEvent(sender: UIView) -> (UserStateObject) -> Signal<UserStateObject.Event> {
+    return { state in
+        guard state.session?.isLogin == true else { return .empty() }
+        return DefaultWireframe.shared
+            .promptFor(sender: sender, cancelAction: "取消", actions: ["举报"])
+            .asSignalOnErrorRecoverEmpty()
+            .flatMap { action in
+                switch action {
+                case "举报":     return .just(.onTriggerUserFeedback)
+                default:        return .empty()
+                }
+        }
     }
 }
 
@@ -58,7 +60,7 @@ class UserViewController: HideNavigationBarViewController {
                 ]
             let events: [Signal<UserStateObject.Event>] = [
                 .of(.onTriggerReloadUser, .onTriggerReloadUserMedia),
-                presenter.moreButton.rx.tap.asSignal().withLatestFrom(state).flatMapLatest(mapMoreButtonTapToEvent),
+                presenter.moreButton.rx.tap.asSignal().withLatestFrom(state).flatMapLatest(mapMoreButtonTapToEvent(sender: presenter.moreButton)),
                 state.flatMapLatest {
                     $0.shouldQueryMoreUserMedia
                         ? presenter.myMediaCollectionView.rx.triggerGetMore

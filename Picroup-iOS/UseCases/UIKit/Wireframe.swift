@@ -15,7 +15,7 @@ import RxSwift
 
 protocol Wireframe {
     func open(url: URL)
-    func promptFor<Action: CustomStringConvertible>(title: String?, message: String?, preferredStyle: UIAlertControllerStyle, cancelAction: Action, actions: [Action]) -> Observable<Action>
+    func promptFor<Action: CustomStringConvertible>(title: String?, message: String?, preferredStyle: UIAlertControllerStyle, sender: UIView?, cancelAction: Action, actions: [Action]) -> Observable<Action>
 }
 
 
@@ -41,7 +41,7 @@ class DefaultWireframe: Wireframe {
     }
     #endif
     
-    func promptFor<Action : CustomStringConvertible>(title: String? = nil, message: String? = nil, preferredStyle: UIAlertControllerStyle = .actionSheet, cancelAction: Action, actions: [Action]) -> Observable<Action> {
+    func promptFor<Action : CustomStringConvertible>(title: String? = nil, message: String? = nil, preferredStyle: UIAlertControllerStyle = .actionSheet, sender: UIView?, cancelAction: Action, actions: [Action]) -> Observable<Action> {
         #if os(iOS)
             return Observable.create { observer in
                 let alertView = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
@@ -54,7 +54,10 @@ class DefaultWireframe: Wireframe {
                         observer.on(.next(action))
                     })
                 }
-                
+                if let popoverController = alertView.popoverPresentationController, let sourceView = sender {
+                    popoverController.sourceView = sourceView
+                    popoverController.sourceRect = sourceView.bounds
+                }
                 DefaultWireframe.rootViewController().present(alertView, animated: true, completion: nil)
                 
                 return Disposables.create {
