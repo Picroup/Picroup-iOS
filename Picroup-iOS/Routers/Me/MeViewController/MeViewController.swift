@@ -62,6 +62,8 @@ class MeViewController: HideNavigationBarViewController {
                 store.myStaredMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myStaredMediaItems(myStaredMediaFooterState.asDriver())),
                 state.map { $0.myMediaFooterState }.drive(myMediaFooterState),
                 state.map { $0.myStaredMediaFooterState }.drive(myStaredMediaFooterState),
+                state.map { $0.isMyMediaEmpty }.drive(presenter.isMyMediaEmpty),
+                state.map { $0.isMyStaredMediaEmpty }.drive(presenter.isMyStaredMediaEmpty),
                 Signal.just(.onTriggerReloadMe).emit(to: appStateService.events),
                 me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMe }.emit(to: appStateService.events),
                 ]

@@ -59,6 +59,10 @@ extension UserStateObject {
     var shouldQueryMoreUserMedia: Bool {
         return !triggerUserMediaQuery && hasMoreMyMedia
     }
+    var isUserMediaEmpty: Bool {
+        guard let items = userMedia?.items else { return false }
+        return !triggerUserMediaQuery && userMediaError == nil && items.isEmpty
+    }
     var hasMoreMyMedia: Bool {
         return userMedia?.cursor.value != nil
     }

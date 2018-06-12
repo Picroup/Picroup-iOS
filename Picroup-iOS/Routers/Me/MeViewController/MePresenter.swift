@@ -34,6 +34,8 @@ class MePresenter: NSObject {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var myMediaCollectionView: UICollectionView!
     @IBOutlet weak var myStardMediaCollectionView: UICollectionView!
+    @IBOutlet weak var myMediaEmptyView: UIView!
+    @IBOutlet weak var myStardMediaEmptyView: UIView!
 
     @IBOutlet weak var selectMyMediaLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
@@ -92,6 +94,18 @@ class MePresenter: NSObject {
     var myStaredMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [myStardMediaCollectionView] loadState in
             return myStardMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
+        }
+    }
+    
+    var isMyMediaEmpty: Binder<Bool> {
+        return Binder(self) { presenter, isEmpty in
+            presenter.myMediaCollectionView.backgroundView = isEmpty ? presenter.myMediaEmptyView : nil
+        }
+    }
+    
+    var isMyStaredMediaEmpty: Binder<Bool> {
+        return Binder(self) { presenter, isEmpty in
+            presenter.myStardMediaCollectionView.backgroundView = isEmpty ? presenter.myStardMediaEmptyView : nil
         }
     }
 }
