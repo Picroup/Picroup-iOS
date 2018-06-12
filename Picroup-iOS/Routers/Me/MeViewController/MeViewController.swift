@@ -109,6 +109,8 @@ class MeViewController: HideNavigationBarViewController {
         let states = store.states
 //            .debug("MeState", trimOutput: true)
 
+//        states.map { $0.myMediaQuery }.debug("myMediaQuery").drive().disposed(by: disposeBag)
+        
         Signal.merge(
             uiFeedback(states),
             queryMyMedia(states),
@@ -137,13 +139,21 @@ class MeViewController: HideNavigationBarViewController {
 extension MeStateObject {
     
     var myMediaFooterState: LoadFooterViewState {
-        let (cursor, trigger, error) = (myMedia?.cursor.value, triggerMyMediaQuery, myMediaError)
-        return LoadFooterViewState.create(cursor: cursor, trigger: trigger, error: error)
+        return LoadFooterViewState.create(
+            cursor: myMedia?.cursor.value,
+            items: myMedia?.items,
+            trigger: triggerMyMediaQuery,
+            error: myMediaError
+        )
     }
     
     var myStaredMediaFooterState: LoadFooterViewState {
-        let (cursor, trigger, error) = (myStaredMedia?.cursor.value, triggerMyStaredMediaQuery, myStaredMediaError)
-        return LoadFooterViewState.create(cursor: cursor, trigger: trigger, error: error)
+        return LoadFooterViewState.create(
+            cursor: myStaredMedia?.cursor.value,
+            items: myStaredMedia?.items,
+            trigger: triggerMyStaredMediaQuery,
+            error: myStaredMediaError
+        )
     }
 }
 

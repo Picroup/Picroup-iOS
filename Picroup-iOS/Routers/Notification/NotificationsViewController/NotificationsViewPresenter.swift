@@ -15,7 +15,8 @@ class NotificationsViewPresenter: NSObject {
     @IBOutlet weak var tableView: UITableView!
     weak var navigationItem: UINavigationItem!
     @IBOutlet weak var loadFooterView: LoadFooterView!
-    
+    @IBOutlet weak var emptyView: UIView!
+
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
         prepareNavigationItem()
@@ -37,5 +38,11 @@ class NotificationsViewPresenter: NSObject {
                 return cell
         })
         return tableView.rx.items(dataSource: dataSource)
+    }
+    
+    var isNotificationsEmpty: Binder<Bool> {
+        return Binder(self) { presenter, isEmpty in
+            presenter.tableView.backgroundView = isEmpty ? presenter.emptyView : nil
+        }
     }
 }

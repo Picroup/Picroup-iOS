@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import RealmSwift
 
 extension LoadFooterViewState {
     
-    static func create(cursor: Double?, trigger: Bool, error: String?) -> LoadFooterViewState {
+    static func create<T>(cursor: Double?, items: List<T>?, trigger: Bool, error: String?) -> LoadFooterViewState {
         if cursor == nil && trigger {
             return .empty
         }
@@ -20,7 +21,7 @@ extension LoadFooterViewState {
         if cursor != nil && trigger {
             return .loading
         }
-        if cursor == nil && !trigger {
+        if cursor == nil && !trigger && items?.isEmpty == false {
             return .message("🙆🏻‍♀️")
         }
         return .empty

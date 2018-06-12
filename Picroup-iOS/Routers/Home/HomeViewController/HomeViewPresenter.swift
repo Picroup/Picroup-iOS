@@ -24,6 +24,7 @@ final class HomeViewPresenter: NSObject {
     var addUserButton: IconButton!
     var refreshControl: UIRefreshControl!
     weak var navigationItem: UINavigationItem!
+    @IBOutlet weak var emptyView: UIView!
 
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
@@ -78,6 +79,12 @@ final class HomeViewPresenter: NSObject {
                 configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
             )
             return collectionView!.rx.items(dataSource: dataSource)
+        }
+    }
+    
+    var isMyInterestedMediaEmpty: Binder<Bool> {
+        return Binder(self) { presenter, isEmpty in
+            presenter.collectionView.backgroundView = isEmpty ? presenter.emptyView : nil
         }
     }
 }

@@ -39,9 +39,10 @@ class HomeViewController: UIViewController {
                 store.myInterestedMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events, footerState.asDriver())),
                 state.map { $0.isReloading }.drive(presenter.refreshControl.rx.isRefreshing),
                 state.map { $0.footerState }.drive(footerState),
+                state.map { $0.isMyInterestedMediaEmpty }.drive(presenter.isMyInterestedMediaEmpty),
                 presenter.fabButton.rx.tap.asSignal().map { false }.emit(to: me.rx.setNavigationBarHidden(animated: true)),
                 presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
-            ]
+                ]
             let events: [Signal<HomeStateObject.Event>] = [
                 .just(.onTriggerReloadMyInterestedMedia),
                 _events.asSignal(),
@@ -84,8 +85,12 @@ class HomeViewController: UIViewController {
 extension HomeStateObject {
     
     var footerState: LoadFooterViewState {
-        let (cursor, trigger, error) = (myInterestedMedia?.cursor.value, triggerMyInterestedMediaQuery, myInterestedMediaError)
-        return LoadFooterViewState.create(cursor: cursor, trigger: trigger, error: error)
+        return LoadFooterViewState.create(
+            cursor: myInterestedMedia?.cursor.value,
+            items: myInterestedMedia?.items,
+            trigger: triggerMyInterestedMediaQuery,
+            error: myInterestedMediaError
+        )
     }
 }
 

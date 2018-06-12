@@ -139,7 +139,11 @@ class UserViewController: HideNavigationBarViewController {
 extension UserStateObject {
     
     var myMediaFooterState: LoadFooterViewState {
-        let (cursor, trigger, error) = (userMedia?.cursor.value, triggerUserMediaQuery, userMediaError)
-        return LoadFooterViewState.create(cursor: cursor, trigger: trigger, error: error)
+        return LoadFooterViewState.create(
+            cursor: userMedia?.cursor.value,
+            items: userMedia?.items,
+            trigger: triggerUserMediaQuery,
+            error: userMediaError
+        )
     }
 }

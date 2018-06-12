@@ -275,10 +275,30 @@
                         <outlet property="presenter" destination="Tgj-QA-ZNr" id="0wM-JJ-V6I"/>
                     </connections>
                 </viewController>
+                <view contentMode="scaleToFill" id="LTt-dG-Dvd">
+                    <rect key="frame" x="0.0" y="0.0" width="368" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="关注内容为空" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wfb-hY-Eha">
+                            <rect key="frame" x="16" y="54" width="336" height="20.5"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="9Vs-SY-93Y" firstAttribute="trailing" secondItem="Wfb-hY-Eha" secondAttribute="trailing" constant="16" id="2Hf-DR-cbi"/>
+                        <constraint firstItem="Wfb-hY-Eha" firstAttribute="leading" secondItem="9Vs-SY-93Y" secondAttribute="leading" constant="16" id="PaE-xz-lYn"/>
+                        <constraint firstItem="Wfb-hY-Eha" firstAttribute="centerY" secondItem="9Vs-SY-93Y" secondAttribute="centerY" id="WhX-A2-IWC"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="9Vs-SY-93Y"/>
+                </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o9r-bT-uLo" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="Tgj-QA-ZNr" customClass="HomeViewPresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
                         <outlet property="collectionView" destination="La3-kB-0bX" id="ZJR-Tx-Jpp"/>
+                        <outlet property="emptyView" destination="LTt-dG-Dvd" id="cyt-tP-kVr"/>
                         <outlet property="view" destination="Sz9-CY-eUY" id="jMg-n0-b9F"/>
                     </connections>
                 </customObject>
@@ -477,7 +497,7 @@
                     </connections>
                 </customObject>
             </objects>
-            <point key="canvasLocation" x="1677.5999999999999" y="409.7451274362819"/>
+            <point key="canvasLocation" x="1674" y="411"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="52z-m2-jPo">

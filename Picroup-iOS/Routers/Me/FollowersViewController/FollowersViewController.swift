@@ -42,6 +42,7 @@ class FollowersViewController: HideNavigationBarViewController {
                 state.map { $0.user?.followersCount.value?.description ?? "0" }.drive(presenter.followersCountLabel.rx.text),
                 store.userFollowersItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events)),
                 state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
+                state.map { $0.isFollowersEmpty }.drive(presenter.isFollowersEmpty),
                 ]
             let events: [Signal<UserFollowersStateObject.Event>] = [
                 .just(.onTriggerReloadUserFollowers),
@@ -94,7 +95,11 @@ class FollowersViewController: HideNavigationBarViewController {
 extension UserFollowersStateObject {
     
     var footerState: LoadFooterViewState {
-        let (cursor, trigger, error) = (userFollowers?.cursor.value, triggerUserFollowersQuery, userFollowersError)
-        return LoadFooterViewState.create(cursor: cursor, trigger: trigger, error: error)
+        return LoadFooterViewState.create(
+            cursor: userFollowers?.cursor.value,
+            items: userFollowers?.items,
+            trigger: triggerUserFollowersQuery,
+            error: userFollowersError
+        )
     }
 }

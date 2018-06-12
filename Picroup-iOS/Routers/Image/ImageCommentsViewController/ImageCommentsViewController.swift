@@ -134,8 +134,12 @@ class ImageCommentsViewController: HideNavigationBarViewController {
 extension ImageCommentsStateObject {
     
     var footerState: LoadFooterViewState {
-        let (cursor, trigger, error) = (comments?.cursor.value, triggerCommentsQuery, commentsError)
-        return LoadFooterViewState.create(cursor: cursor, trigger: trigger, error: error)
+        return LoadFooterViewState.create(
+            cursor: comments?.cursor.value,
+            items: comments?.items,
+            trigger: triggerCommentsQuery,
+            error: commentsError
+        )
     }
 }
 
