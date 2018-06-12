@@ -16,6 +16,7 @@ class ReputationsViewPresenter: NSObject {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var reputationCountLabel: UILabel!
     @IBOutlet weak var loadFooterView: LoadFooterView!
+    @IBOutlet weak var emptyView: UIView!
 
     typealias Section = AnimatableSectionModel<String, ReputationObject>
     typealias DataSource = RxTableViewSectionedAnimatedDataSource<Section>
@@ -28,5 +29,11 @@ class ReputationsViewPresenter: NSObject {
                 return cell
         })
         return tableView.rx.items(dataSource: dataSource)
+    }
+    
+    var isReputationsEmpty: Binder<Bool> {
+        return Binder(self) { presenter, isEmpty in
+            presenter.tableView.backgroundView = isEmpty ? presenter.emptyView : nil
+        }
     }
 }

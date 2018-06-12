@@ -48,6 +48,10 @@ extension UserFollowersStateObject {
     var shouldQueryMoreUserFollowers: Bool {
         return !triggerUserFollowersQuery && hasMoreUserFollowers
     }
+    var isFollowersEmpty: Bool {
+        guard let items = userFollowers?.items else { return false }
+        return !triggerUserFollowersQuery && userFollowersError == nil && items.isEmpty
+    }
     var hasMoreUserFollowers: Bool {
         return userFollowers?.cursor.value != nil
     }

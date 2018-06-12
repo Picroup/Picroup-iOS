@@ -28,6 +28,7 @@ class UserPresenter: NSObject {
     @IBOutlet weak var followingsButton: UIButton!
     
     @IBOutlet weak var myMediaCollectionView: UICollectionView!
+    @IBOutlet weak var myMediaEmptyView: UIView!
     @IBOutlet weak var followButton: FABButton! {
         didSet { followButton.image = Icon.favorite }
     }
@@ -66,6 +67,12 @@ class UserPresenter: NSObject {
     var myMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [myMediaCollectionView] loadState in
             return myMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
+        }
+    }
+    
+    var isUserMediaEmpty: Binder<Bool> {
+        return Binder(self) { presenter, isEmpty in
+            presenter.myMediaCollectionView.backgroundView = isEmpty ? presenter.myMediaEmptyView : nil
         }
     }
 }

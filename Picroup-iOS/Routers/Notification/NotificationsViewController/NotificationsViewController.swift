@@ -39,6 +39,7 @@ class NotificationsViewController: UIViewController {
             let subscriptions = [
                 store.notifications().map { [Section(model: "", items: $0)] }.drive(presenter.items),
                 state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
+                state.map { $0.isNotificationsEmpty }.drive(presenter.isNotificationsEmpty),
             ]
             let events: [Signal<NotificationsStateObject.Event>] = [
                 .just(.onTriggerReload),
@@ -96,8 +97,12 @@ class NotificationsViewController: UIViewController {
 extension NotificationsStateObject {
     
     var footerState: LoadFooterViewState {
-        let (cursor, trigger, error) = (notifications?.cursor.value, triggerNotificationsQuery, notificationsError)
-        return LoadFooterViewState.create(cursor: cursor, trigger: trigger, error: error)
+        return LoadFooterViewState.create(
+            cursor: notifications?.cursor.value,
+            items: notifications?.items,
+            trigger: triggerNotificationsQuery,
+            error: notificationsError
+        )
     }
 }
 

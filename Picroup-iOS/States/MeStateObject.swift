@@ -55,6 +55,10 @@ extension MeStateObject {
     var shouldQueryMoreMyMedia: Bool {
         return !triggerMyMediaQuery && hasMoreMyMedia
     }
+    var isMyMediaEmpty: Bool {
+        guard let items = myMedia?.items else { return false }
+        return !triggerMyMediaQuery && myMediaError == nil && items.isEmpty
+    }
     var hasMoreMyMedia: Bool {
         return myMedia?.cursor.value != nil
     }
@@ -65,6 +69,10 @@ extension MeStateObject {
     }
     var shouldQueryMoreMyStaredMedia: Bool {
         return !triggerMyStaredMediaQuery && hasMoreMyStaredMedia
+    }
+    var isMyStaredMediaEmpty: Bool {
+        guard let items = myStaredMedia?.items else { return false }
+        return !triggerMyStaredMediaQuery && myStaredMediaError == nil && items.isEmpty
     }
     var hasMoreMyStaredMedia: Bool {
         return myStaredMedia?.cursor.value != nil

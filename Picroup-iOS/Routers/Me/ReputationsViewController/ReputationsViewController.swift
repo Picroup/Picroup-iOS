@@ -33,6 +33,7 @@ class ReputationsViewController: UIViewController {
                 state.map { $0.session?.currentUser?.reputation.value?.description ?? "0" }.drive(presenter.reputationCountLabel.rx.text),
                 store.reputations().map { [Section(model: "", items: $0)] }.drive(presenter.items),
                 state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
+                state.map { $0.isReputationsEmpty }.drive(presenter.isReputationsEmpty),
                 ]
             let events: [Signal<ReputationsStateObject.Event>] = [
                 .just(.onTriggerReload),
@@ -87,7 +88,11 @@ class ReputationsViewController: UIViewController {
 extension ReputationsStateObject {
     
     var footerState: LoadFooterViewState {
-        let (cursor, trigger, error) = (reputations?.cursor.value, triggerReputationsQuery, reputationsError)
-        return LoadFooterViewState.create(cursor: cursor, trigger: trigger, error: error)
+        return LoadFooterViewState.create(
+            cursor: reputations?.cursor.value,
+            items: reputations?.items,
+            trigger: triggerReputationsQuery,
+            error: reputationsError
+        )
     }
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -427,6 +427,70 @@
                         <outlet property="presenter" destination="iRf-N3-E02" id="lxq-fy-cHO"/>
                     </connections>
                 </viewController>
+                <view contentMode="scaleToFill" id="v5r-Cw-jOH">
+                    <rect key="frame" x="0.0" y="0.0" width="368" height="457"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="OJ3-HH-FsV">
+                            <rect key="frame" x="0.0" y="0.0" width="368" height="457"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="37L-f9-PGY">
+                                    <rect key="frame" x="0.0" y="0.0" width="368" height="212"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="212" id="4nr-Lv-XP4"/>
+                                    </constraints>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无分享" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dqa-S3-aEw">
+                                    <rect key="frame" x="0.0" y="212" width="368" height="245"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="cOO-aU-siH" firstAttribute="bottom" secondItem="OJ3-HH-FsV" secondAttribute="bottom" id="7kS-K5-Hdl"/>
+                        <constraint firstItem="OJ3-HH-FsV" firstAttribute="leading" secondItem="cOO-aU-siH" secondAttribute="leading" id="IeW-Oi-MXI"/>
+                        <constraint firstItem="cOO-aU-siH" firstAttribute="trailing" secondItem="OJ3-HH-FsV" secondAttribute="trailing" id="b0l-bJ-uqr"/>
+                        <constraint firstItem="OJ3-HH-FsV" firstAttribute="top" secondItem="cOO-aU-siH" secondAttribute="top" id="jld-w2-3YU"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="cOO-aU-siH"/>
+                </view>
+                <view contentMode="scaleToFill" id="dkq-Su-BwU">
+                    <rect key="frame" x="0.0" y="0.0" width="368" height="453"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cd0-jt-I5w">
+                            <rect key="frame" x="0.0" y="0.0" width="368" height="453"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QjN-DV-RCY">
+                                    <rect key="frame" x="0.0" y="0.0" width="368" height="212"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="212" id="aGn-kC-YEX"/>
+                                    </constraints>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无内容" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIQ-1L-M0g">
+                                    <rect key="frame" x="0.0" y="212" width="368" height="241"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="cd0-jt-I5w" firstAttribute="leading" secondItem="ho5-CQ-4G4" secondAttribute="leading" id="3yQ-UF-He2"/>
+                        <constraint firstItem="ho5-CQ-4G4" firstAttribute="bottom" secondItem="cd0-jt-I5w" secondAttribute="bottom" id="O7Y-ac-lVK"/>
+                        <constraint firstItem="cd0-jt-I5w" firstAttribute="trailing" secondItem="ho5-CQ-4G4" secondAttribute="trailing" id="tDH-WW-OVb"/>
+                        <constraint firstItem="cd0-jt-I5w" firstAttribute="top" secondItem="ho5-CQ-4G4" secondAttribute="top" id="yeo-4k-pHP"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="ho5-CQ-4G4"/>
+                </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jwe-Tt-qRq" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="iRf-N3-E02" customClass="MePresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
@@ -441,7 +505,9 @@
                         <outlet property="moreButton" destination="Twi-Zh-9Ej" id="G3S-Dw-IR3"/>
                         <outlet property="myMediaButton" destination="D04-tt-Koq" id="zAc-iA-9ZZ"/>
                         <outlet property="myMediaCollectionView" destination="TUY-hE-qPx" id="bNe-Qc-OMD"/>
+                        <outlet property="myMediaEmptyView" destination="v5r-Cw-jOH" id="dIh-Nc-FVU"/>
                         <outlet property="myStardMediaCollectionView" destination="P9l-fs-5xe" id="ytk-Ni-olw"/>
+                        <outlet property="myStardMediaEmptyView" destination="dkq-Su-BwU" id="PRV-Xj-l5W"/>
                         <outlet property="myStaredMediaButton" destination="157-vp-xsT" id="CZf-1n-pC8"/>
                         <outlet property="reputationButton" destination="DAR-Kb-lw6" id="6fc-al-4sK"/>
                         <outlet property="reputationCountLabel" destination="j0k-S7-Gv3" id="efd-yT-087"/>
@@ -764,6 +830,38 @@
                         <outlet property="presenter" destination="enZ-gK-SMc" id="ouy-aX-Jw2"/>
                     </connections>
                 </viewController>
+                <view contentMode="scaleToFill" id="fBi-IZ-PnP">
+                    <rect key="frame" x="0.0" y="0.0" width="368" height="457"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="e0z-IH-HAk">
+                            <rect key="frame" x="0.0" y="0.0" width="368" height="457"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NjZ-c8-CJj">
+                                    <rect key="frame" x="0.0" y="0.0" width="368" height="212"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="212" id="m1w-GI-ELS"/>
+                                    </constraints>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无分享" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0A-Hb-nfm">
+                                    <rect key="frame" x="0.0" y="212" width="368" height="245"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="GSr-b7-s0K" firstAttribute="trailing" secondItem="e0z-IH-HAk" secondAttribute="trailing" id="F2K-Fc-qw0"/>
+                        <constraint firstItem="e0z-IH-HAk" firstAttribute="top" secondItem="GSr-b7-s0K" secondAttribute="top" id="KcS-KK-GXp"/>
+                        <constraint firstItem="e0z-IH-HAk" firstAttribute="leading" secondItem="GSr-b7-s0K" secondAttribute="leading" id="W8A-JW-rke"/>
+                        <constraint firstItem="GSr-b7-s0K" firstAttribute="bottom" secondItem="e0z-IH-HAk" secondAttribute="bottom" id="blj-k9-hkH"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="GSr-b7-s0K"/>
+                </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4At-uJ-f4i" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="enZ-gK-SMc" customClass="UserPresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
@@ -778,6 +876,7 @@
                         <outlet property="meBackgroundView" destination="8Kv-gb-uhr" id="Okl-kB-yfU"/>
                         <outlet property="moreButton" destination="A3p-Dr-6aY" id="ASX-Np-eoV"/>
                         <outlet property="myMediaCollectionView" destination="4Hm-fO-o6u" id="1QQ-I2-OOS"/>
+                        <outlet property="myMediaEmptyView" destination="fBi-IZ-PnP" id="K4e-Ix-nfS"/>
                         <outlet property="reputationCountLabel" destination="qeA-x5-1al" id="o0Q-dm-fBW"/>
                         <outlet property="userAvatarImageView" destination="5e8-ag-Al4" id="rIr-qV-yG7"/>
                         <outlet property="usernameLabel" destination="mYk-0R-9gQ" id="C5G-aO-rAM"/>
@@ -880,7 +979,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="700" text="给你的图片续命" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="363-AL-6Wc">
-                                                    <rect key="frame" x="119" y="25.5" width="192" height="21"/>
+                                                    <rect key="frame" x="119" y="26" width="192" height="20.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -926,9 +1025,29 @@
                         <outlet property="presenter" destination="gr1-HE-aHJ" id="4pQ-gr-0ZL"/>
                     </connections>
                 </viewController>
+                <view contentMode="scaleToFill" id="1N4-lc-q24">
+                    <rect key="frame" x="0.0" y="0.0" width="368" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无灵性记录" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yWs-in-a8m">
+                            <rect key="frame" x="16" y="54.5" width="336" height="20.5"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="aVQ-5Q-eQd" firstAttribute="trailing" secondItem="yWs-in-a8m" secondAttribute="trailing" constant="16" id="3GD-GJ-p5Z"/>
+                        <constraint firstItem="yWs-in-a8m" firstAttribute="centerY" secondItem="aVQ-5Q-eQd" secondAttribute="centerY" id="FOy-Af-uLJ"/>
+                        <constraint firstItem="yWs-in-a8m" firstAttribute="leading" secondItem="aVQ-5Q-eQd" secondAttribute="leading" constant="16" id="yY6-8V-Kub"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="aVQ-5Q-eQd"/>
+                </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GTK-UE-ahz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="gr1-HE-aHJ" customClass="ReputationsViewPresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
+                        <outlet property="emptyView" destination="1N4-lc-q24" id="qjQ-eg-Cqt"/>
                         <outlet property="headerView" destination="naj-px-8cr" id="H9q-zw-gKW"/>
                         <outlet property="loadFooterView" destination="wMX-ax-AaA" id="blv-Fz-LXq"/>
                         <outlet property="reputationCountLabel" destination="MIx-Oa-NZK" id="9JR-aP-g1D"/>
@@ -1087,9 +1206,29 @@
                         <outlet property="presenter" destination="xKi-YU-h7c" id="OeK-mA-5gQ"/>
                     </connections>
                 </viewController>
+                <view contentMode="scaleToFill" id="gaa-EU-SSx">
+                    <rect key="frame" x="0.0" y="0.0" width="368" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无关注" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ArG-HE-3GQ">
+                            <rect key="frame" x="16" y="54.5" width="336" height="20.5"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="ArG-HE-3GQ" firstAttribute="leading" secondItem="5DI-cB-SCr" secondAttribute="leading" constant="16" id="Jl6-ad-6LU"/>
+                        <constraint firstItem="ArG-HE-3GQ" firstAttribute="centerY" secondItem="5DI-cB-SCr" secondAttribute="centerY" id="NUd-kB-KV1"/>
+                        <constraint firstItem="5DI-cB-SCr" firstAttribute="trailing" secondItem="ArG-HE-3GQ" secondAttribute="trailing" constant="16" id="rng-Ta-IE0"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="5DI-cB-SCr"/>
+                </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uuR-KZ-o97" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="xKi-YU-h7c" customClass="FollowingsPresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
+                        <outlet property="emptyView" destination="gaa-EU-SSx" id="EFe-aH-t6a"/>
                         <outlet property="followingsCountLabel" destination="eTv-sW-Nic" id="yfh-xB-YMc"/>
                         <outlet property="headerView" destination="Uhg-vA-z38" id="TAS-uj-Sas"/>
                         <outlet property="loadFooterView" destination="QB7-Bz-Res" id="ymP-Bs-w6W"/>
@@ -1248,9 +1387,29 @@
                         <outlet property="presenter" destination="Ljl-dU-WzB" id="joc-cL-Onn"/>
                     </connections>
                 </viewController>
+                <view contentMode="scaleToFill" id="wDL-4F-PdH">
+                    <rect key="frame" x="0.0" y="0.0" width="368" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无粉丝" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ud1-X9-b6x">
+                            <rect key="frame" x="16" y="54" width="336" height="20.5"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="ud1-X9-b6x" firstAttribute="centerY" secondItem="ERD-bv-RJ8" secondAttribute="centerY" id="9jo-zM-a4p"/>
+                        <constraint firstItem="ERD-bv-RJ8" firstAttribute="trailing" secondItem="ud1-X9-b6x" secondAttribute="trailing" constant="16" id="Oxd-2n-SdN"/>
+                        <constraint firstItem="ud1-X9-b6x" firstAttribute="leading" secondItem="ERD-bv-RJ8" secondAttribute="leading" constant="16" id="Ycs-7q-yl7"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="ERD-bv-RJ8"/>
+                </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DN1-iI-3GL" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="Ljl-dU-WzB" customClass="FollowersPresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
+                        <outlet property="emptyView" destination="wDL-4F-PdH" id="qpa-nC-LXs"/>
                         <outlet property="followersCountLabel" destination="azs-YD-tAY" id="F2t-ea-MrR"/>
                         <outlet property="headerView" destination="Sdw-aO-LGm" id="KjJ-mv-cRE"/>
                         <outlet property="loadFooterView" destination="X7m-4u-0Wt" id="9re-gJ-MPO"/>
@@ -1487,7 +1646,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="700" text="给你的图片续命" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2n-lS-u44">
-                                                    <rect key="frame" x="72" y="25.5" width="239" height="21"/>
+                                                    <rect key="frame" x="72" y="26" width="239" height="20.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1530,10 +1689,30 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tOA-ZA-LWe" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="pS3-Dh-OxH" customClass="NotificationsViewPresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
+                        <outlet property="emptyView" destination="psL-2s-yme" id="HtX-Y5-Rtr"/>
                         <outlet property="loadFooterView" destination="asA-7d-fQs" id="3sm-LP-vYj"/>
                         <outlet property="tableView" destination="LFe-Iv-JvC" id="vwD-90-NEg"/>
                     </connections>
                 </customObject>
+                <view contentMode="scaleToFill" id="psL-2s-yme">
+                    <rect key="frame" x="0.0" y="0.0" width="368" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无通知" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHI-qQ-PpB">
+                            <rect key="frame" x="16" y="54" width="336" height="20.5"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="eRq-c2-wcv" firstAttribute="trailing" secondItem="fHI-qQ-PpB" secondAttribute="trailing" constant="16" id="ECg-z9-lbq"/>
+                        <constraint firstItem="fHI-qQ-PpB" firstAttribute="leading" secondItem="eRq-c2-wcv" secondAttribute="leading" constant="16" id="XNQ-V5-XA1"/>
+                        <constraint firstItem="fHI-qQ-PpB" firstAttribute="centerY" secondItem="eRq-c2-wcv" secondAttribute="centerY" id="bN2-9a-dzG"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="eRq-c2-wcv"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="2242" y="410"/>
         </scene>

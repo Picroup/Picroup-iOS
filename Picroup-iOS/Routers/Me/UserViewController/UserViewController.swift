@@ -57,6 +57,7 @@ class UserViewController: HideNavigationBarViewController {
                 state.map { $0.user }.drive(presenter.user),
                 store.userMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems(myMediaFooterState.asDriver())),
                 state.map { $0.myMediaFooterState }.drive(myMediaFooterState),
+                state.map { $0.isUserMediaEmpty }.drive(presenter.isUserMediaEmpty),
                 ]
             let events: [Signal<UserStateObject.Event>] = [
                 .of(.onTriggerReloadUser, .onTriggerReloadUserMedia),
@@ -139,7 +140,11 @@ class UserViewController: HideNavigationBarViewController {
 extension UserStateObject {
     
     var myMediaFooterState: LoadFooterViewState {
-        let (cursor, trigger, error) = (userMedia?.cursor.value, triggerUserMediaQuery, userMediaError)
-        return LoadFooterViewState.create(cursor: cursor, trigger: trigger, error: error)
+        return LoadFooterViewState.create(
+            cursor: userMedia?.cursor.value,
+            items: userMedia?.items,
+            trigger: triggerUserMediaQuery,
+            error: userMediaError
+        )
     }
 }

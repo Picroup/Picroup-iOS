@@ -40,13 +40,11 @@ final class MainTabBarController: UITabBarController {
     
     private func setupRx() {
         
-        print("setupRx")
         guard let nvc = viewControllers?.first(where: { ($0 as? BaseNavigationController)?.viewControllers.first is NotificationsViewController }),
             let appStateService = appStateService,
             let appStore = appStateService.appStore
             else { return }
         
-        print("setupRx0")
         appStore.me()
             .map { $0.badgeValue }
             .drive(nvc.tabBarItem.rx.badgeValue)

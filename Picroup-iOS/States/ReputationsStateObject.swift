@@ -39,7 +39,7 @@ extension ReputationsStateObject {
     var shouldQueryMoreReputations: Bool {
         return !triggerReputationsQuery && hasMoreReputations
     }
-    var isNotificationsEmpty: Bool {
+    var isReputationsEmpty: Bool {
         guard let items = reputations?.items else { return false }
         return !triggerReputationsQuery && reputationsError == nil && items.isEmpty
     }
@@ -49,7 +49,7 @@ extension ReputationsStateObject {
     public var markQuery: MarkReputationLinksAsViewedQuery? {
         guard let userId = session?.currentUser?._id else { return nil }
         let next = MarkReputationLinksAsViewedQuery(userId: userId)
-        return triggerMarkQuery && !isNotificationsEmpty ? next : nil
+        return triggerMarkQuery && !isReputationsEmpty ? next : nil
     }
 }
 

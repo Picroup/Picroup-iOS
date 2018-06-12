@@ -27,6 +27,7 @@ final class FollowersPresenter: NSObject {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var loadFooterView: LoadFooterView!
+    @IBOutlet weak var emptyView: UIView!
 
     typealias Section = SectionModel<String, UserObject>
     typealias DataSource = RxTableViewSectionedReloadDataSource<Section>
@@ -43,6 +44,12 @@ final class FollowersPresenter: NSObject {
                     return cell
             })
             return tableView!.rx.items(dataSource: dataSource)
+        }
+    }
+    
+    var isFollowersEmpty: Binder<Bool> {
+        return Binder(self) { presenter, isEmpty in
+            presenter.tableView.backgroundView = isEmpty ? presenter.emptyView : nil
         }
     }
 }
