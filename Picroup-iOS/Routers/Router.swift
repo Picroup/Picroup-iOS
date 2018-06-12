@@ -120,6 +120,13 @@ final class Router {
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
+        _ = store.aboutAppRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .drive(Binder(self) { (me, _) in
+                let vc = RouterService.Main.aboutAppViewController()
+                vc.hidesBottomBarWhenPushed = true
+                me.currentNavigationController?.pushViewController(vc, animated: true)
+            })
+        
         _ = store.popRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .drive(Binder(self) { (me, _) in
                 me.currentNavigationController?.popViewController(animated: true)

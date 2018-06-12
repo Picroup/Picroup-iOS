@@ -14,14 +14,16 @@ import RxGesture
 import RxFeedback
 import RxViewController
 
-private func mapMoreButtonTapToEvent() -> Signal<MeStateObject.Event> {
+private func mapMoreButtonTapToEvent(state: MeStateObject) -> Signal<MeStateObject.Event> {
+    guard state.session?.isLogin == true else { return .empty() }
     return DefaultWireframe.shared
-        .promptFor(cancelAction: "取消", actions: ["更新个人信息", "应用反馈", "退出登录"])
+        .promptFor(cancelAction: "取消", actions: ["更新个人信息", "应用反馈", "关于应用", "退出登录"])
         .asSignalOnErrorRecoverEmpty()
         .flatMap { action in
             switch action {
             case "更新个人信息":  return .just(.onTriggerUpdateUser)
             case "应用反馈":     return .just(.onTriggerAppFeedback)
+            case "关于应用":     return .just(.onTriggerAboutApp)
             case "退出登录":     return .just(.onLogout)
             default:            return .empty()
             }
@@ -63,7 +65,7 @@ class MeViewController: HideNavigationBarViewController {
                 ]
             let events: [Signal<MeStateObject.Event>] = [
                 .of(.onTriggerReloadMyMedia, .onTriggerReloadMyStaredMedia),
-                presenter.moreButton.rx.tap.asSignal().flatMapLatest(mapMoreButtonTapToEvent),
+                presenter.moreButton.rx.tap.asSignal().withLatestFrom(state).flatMapLatest(mapMoreButtonTapToEvent),
                 presenter.myMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myMedia) },
                 presenter.myStaredMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myStaredMedia) },
                 state.flatMapLatest {

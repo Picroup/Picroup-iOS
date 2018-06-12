@@ -12,13 +12,13 @@ import RxCocoa
 
 extension Reactive where Base: UIViewController {
     
-    public func dismiss(animated flag: Bool, completion: (() -> Swift.Void)? = nil) -> Binder<Void> {
+    public func dismiss(animated flag: Bool = true, completion: (() -> Swift.Void)? = nil) -> Binder<Void> {
         return Binder(base) { vc, _ in
             vc.dismiss(animated: flag, completion: completion)
         }
     }
     
-    public func pop(animated flag: Bool, completion: (() -> Swift.Void)? = nil) -> Binder<Void> {
+    public func pop(animated flag: Bool = true, completion: (() -> Swift.Void)? = nil) -> Binder<Void> {
         return Binder(base) { vc, _ in
             vc.navigationController?.popViewController(animated: flag)
         }

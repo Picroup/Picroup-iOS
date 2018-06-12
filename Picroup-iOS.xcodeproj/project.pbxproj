@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0501F76BC004870A4FD7F133 /* Pods_Picroup_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */; };
+		45183EBE20CF65BC00497B59 /* AboutAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EBD20CF65BC00497B59 /* AboutAppViewController.swift */; };
 		451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD313207910D10063A972 /* SharedSequence+unwrap.swift */; };
 		451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD31A207A38F20063A972 /* UIResponder+Rx.swift */; };
 		451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */; };
@@ -209,6 +210,7 @@
 
 /* Begin PBXFileReference section */
 		0C1CA8B77EB5486794A21137 /* Pods-Picroup-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		45183EBD20CF65BC00497B59 /* AboutAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppViewController.swift; sourceTree = "<group>"; };
 		451CD313207910D10063A972 /* SharedSequence+unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+unwrap.swift"; sourceTree = "<group>"; };
 		451CD31A207A38F20063A972 /* UIResponder+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Rx.swift"; sourceTree = "<group>"; };
 		451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+Operator.swift"; sourceTree = "<group>"; };
@@ -445,10 +447,19 @@
 		4515A68D2079E39F0039C383 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				45183EBC20CF65A300497B59 /* AboutAppViewController */,
 				4595F21C207C88E00040E5FA /* MainTabBarController */,
 				453B95C120C52E850043D915 /* FeedbackViewController */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		45183EBC20CF65A300497B59 /* AboutAppViewController */ = {
+			isa = PBXGroup;
+			children = (
+				45183EBD20CF65BC00497B59 /* AboutAppViewController.swift */,
+			);
+			path = AboutAppViewController;
 			sourceTree = "<group>";
 		};
 		451CD30F207910370063A972 /* RxFeedback */ = {
@@ -1438,6 +1449,7 @@
 				45E240B520862981004B58EF /* HideNavigationBarViewController.swift in Sources */,
 				45B0205820AE69A000BD5D8F /* PrimaryKey.swift in Sources */,
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
+				45183EBE20CF65BC00497B59 /* AboutAppViewController.swift in Sources */,
 				45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */,
 				45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */,
 				454F728F2088230C00850471 /* LocalStorage+Values.swift in Sources */,

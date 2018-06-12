@@ -14,6 +14,7 @@ import RxFeedback
 import Apollo
 
 private func mapMoreButtonTapToEvent(state: ImageDetailStateObject) -> Signal<ImageDetailStateObject.Event> {
+    guard state.session?.isLogin == true else { return .empty() }
     let isMyMedium = state.medium?.userId == state.session?.currentUser?._id
     let actions = isMyMedium ? ["删除"] : ["举报"]
     return DefaultWireframe.shared

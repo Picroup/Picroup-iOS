@@ -113,18 +113,6 @@
       "idiom" : "ios-marketing",
       "filename" : "Icon.png",
       "scale" : "1x"
-    },
-    {
-      "size" : "512x512",
-      "idiom" : "mac",
-      "filename" : "iTunesArtwork.png",
-      "scale" : "1x"
-    },
-    {
-      "size" : "512x512",
-      "idiom" : "mac",
-      "filename" : "iTunesArtwork@2x.png",
-      "scale" : "2x"
     }
   ],
   "info" : {

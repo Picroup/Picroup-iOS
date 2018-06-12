@@ -26,6 +26,8 @@ final class RouteStateObject: PrimaryObject {
     @objc dynamic var searchUserRoute: SearchUserRouteObject?
     @objc dynamic var loginRoute: LoginRouteObject?
     @objc dynamic var feedbackRoute: FeedbackRouteObject?
+    @objc dynamic var aboutAppRoute: AboutAppRouteObject?
+    
     @objc dynamic var popRoute: PopRouteObject?
     
     @objc dynamic var snackbar: SnackbarObject?
@@ -91,6 +93,10 @@ final class FeedbackRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
+final class AboutAppRouteObject: PrimaryObject {
+    @objc dynamic var version: String?
+}
+
 extension FeedbackRouteObject {
     func triggerApp() {
         self.kind = FeedbackKind.app.rawValue
@@ -150,6 +156,7 @@ extension RouteStateObject {
                 "searchUserRoute": ["_id": _id],
                 "loginRoute": ["_id": _id],
                 "feedbackRoute": ["_id": _id],
+                "aboutAppRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 "snackbar": ["_id": _id],
                 ]
@@ -232,6 +239,11 @@ final class RouteStateStore {
     func feedbackRoute() -> Driver<FeedbackRouteObject> {
         guard let feedbackRoute = _state.feedbackRoute else { return .empty() }
         return Observable.from(object: feedbackRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func aboutAppRoute() -> Driver<AboutAppRouteObject> {
+        guard let aboutAppRoute = _state.aboutAppRoute else { return .empty() }
+        return Observable.from(object: aboutAppRoute).asDriver(onErrorDriveWith: .empty())
     }
     
     func popRoute() -> Driver<PopRouteObject> {

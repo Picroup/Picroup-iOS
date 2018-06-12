@@ -15,9 +15,6 @@ import RxRealm
 final class MeStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
-//
-//    @objc dynamic var meError: String?
-//    @objc dynamic var triggerMeQuery: Bool = false
     
     @objc dynamic var selectedTabIndex: Int = 0
     
@@ -37,6 +34,7 @@ final class MeStateObject: PrimaryObject {
     @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
     @objc dynamic var updateUserRoute: UpdateUserRouteObject?
     @objc dynamic var feedbackRoute: FeedbackRouteObject?
+    @objc dynamic var aboutAppRoute: AboutAppRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
 }
 
@@ -49,14 +47,6 @@ extension MeStateObject {
 }
 
 extension MeStateObject {
-//    var meQuery: UserQuery? {
-//        guard let userId = session?.currentUser?._id else { return nil }
-//        let next = UserQuery(userId: userId, followedByUserId: "", withFollowed: false)
-//        return triggerMeQuery ? next : nil
-//    }
-//    var me: UserObject? {
-//        return session?.currentUser
-//    }
     var myMediaQuery: MyMediaQuery? {
         guard let userId = session?.currentUser?._id else { return nil }
         let next = MyMediaQuery(userId: userId, cursor: myMedia?.cursor.value)
@@ -98,6 +88,7 @@ extension MeStateObject {
                 "userFollowersRoute": ["_id": _id],
                 "updateUserRoute": ["_id": _id],
                 "feedbackRoute": ["_id": _id],
+                "aboutAppRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
             return try realm.update(MeStateObject.self, value: value)
@@ -108,10 +99,6 @@ extension MeStateObject {
 extension MeStateObject {
     
     enum Event {
-//        case onTriggerReloadMe
-//        case onGetMeSuccess(UserDetailFragment)
-//        case onGetMeError(Error)
-        
         case onChangeSelectedTab(Tab)
         
         case onTriggerReloadMyMedia
@@ -134,6 +121,7 @@ extension MeStateObject {
         case onTriggerShowUserFollowers
         case onTriggerUpdateUser
         case onTriggerAppFeedback
+        case onTriggerAboutApp
         case onTriggerPop
         case onLogout
     }
@@ -154,17 +142,6 @@ extension MeStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
-//        case .onTriggerReloadMe:
-//            meError = nil
-//            triggerMeQuery = true
-//        case .onGetMeSuccess(let data):
-//            session?.currentUser = UserObject.create(from: data)(realm)
-//            meError = nil
-//            triggerMeQuery = false
-//        case .onGetMeError(let error):
-//            meError = error.localizedDescription
-//            triggerMeQuery = false
-            
         case .onChangeSelectedTab(let tab):
             selectedTabIndex = tab.rawValue
             
@@ -235,6 +212,8 @@ extension MeStateObject: IsFeedbackStateObject {
             updateUserRoute?.version = UUID().uuidString
         case .onTriggerAppFeedback:
             feedbackRoute?.triggerApp()
+        case .onTriggerAboutApp:
+            aboutAppRoute?.version = UUID().uuidString
         case .onTriggerPop:
             popRoute?.version = UUID().uuidString
         case .onLogout:

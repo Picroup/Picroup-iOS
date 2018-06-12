@@ -13,7 +13,7 @@ public struct RegularPattern {
     // TODO: replace in production
     static let username = `default` //"[a-zA-Z0-9]{4,}" // At least 4 characters
     static let password = `default` //"^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z0-9$@$!%*?&]{8,}" // At least 8 characters with one upper case, one lowwer case and one number
-    static let displayName = "^.{4,20}" //"[a-zA-Z0-9]{4,}" // At least 4 characters
+    static let displayName = "^.{2,20}" //"[a-zA-Z0-9]{4,}" // At least 4 characters
     static let email = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
     static let chinesePhone = "^1\\d{10}$"
     static let code4 = "[0-9]{4}" // 4 digit

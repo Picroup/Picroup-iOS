@@ -62,4 +62,8 @@ extension RouterService.Main {
         return vc
     }
     
+    static func aboutAppViewController() -> AboutAppViewController {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AboutAppViewController") as! AboutAppViewController
+        return vc
+    }
 }
