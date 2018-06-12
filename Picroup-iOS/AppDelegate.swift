@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         ImageCache.default.maxDiskCacheSize = 200 * 1024 * 1024
         prepareWindow()
+        setupRealm()
         setupRouter()
         setupAppStateService()
         return true
@@ -39,6 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.tintColor = UIColor.primary
         window.makeKeyAndVisible()
         self.window = window
+    }
+    
+    private func setupRealm() {
+        RealmProvider.setup()
     }
     
     private func setupRouter() {
