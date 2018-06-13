@@ -85,33 +85,33 @@ class UserViewController: HideNavigationBarViewController {
             
         }
         
-        let queryUser: Feedback = react(query: { $0.userQuery }) { query in
+        let queryUser: Feedback = react(query: { $0.userQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user }.unwrap()
                 .map(UserStateObject.Event.onGetUserSuccess)
                 .asSignal(onErrorReturnJust: UserStateObject.Event.onGetUserError)
-        }
+        })
         
-        let queryUserMedia: Feedback = react(query: { $0.userMediaQuery }) { query in
+        let queryUserMedia: Feedback = react(query: { $0.userMediaQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.media.fragments.cursorMediaFragment }.unwrap()
                 .map(UserStateObject.Event.onGetUserMedia(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: UserStateObject.Event.onGetUserMediaError)
-        }
+        })
         
-        let followUser: Feedback = react(query: { $0.followUserQuery }) { query in
+        let followUser: Feedback = react(query: { $0.followUserQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query).asObservable()
                 .map { $0?.data?.followUser }.unwrap()
                 .map(UserStateObject.Event.onFollowUserSuccess)
                 .asSignal(onErrorReturnJust: UserStateObject.Event.onFollowUserError)
-        }
+        })
         
-        let unfollowUser: Feedback = react(query: { $0.unfollowUserQuery }) { query in
+        let unfollowUser: Feedback = react(query: { $0.unfollowUserQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query).asObservable()
                 .map { $0?.data?.unfollowUser }.unwrap()
                 .map(UserStateObject.Event.onUnfollowUserSuccess)
                 .asSignal(onErrorReturnJust: UserStateObject.Event.onUnfollowUserError)
-        }
+        })
         
         let states = store.states
         

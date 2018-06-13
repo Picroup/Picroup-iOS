@@ -59,12 +59,12 @@ class HomeViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryMyInterestedMedia: Feedback = react(query: { $0.myInterestedMediaQuery }) { query in
+        let queryMyInterestedMedia: Feedback = react(query: { $0.myInterestedMediaQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.interestedMedia.fragments.cursorMediaFragment }.unwrap()
                 .map(HomeStateObject.Event.onGetMyInterestedMedia(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: HomeStateObject.Event.onGetMyInterestedMediaError)
-        }
+        })
         
         let states = store.states
         

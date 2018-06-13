@@ -59,17 +59,17 @@ class ReputationsViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryReputations: Feedback = react(query: { $0.reputationsQuery }) { query in
+        let queryReputations: Feedback = react(query: { $0.reputationsQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.reputationLinks.fragments.cursorReputationLinksFragment }.unwrap()
                 .map(ReputationsStateObject.Event.onGetData(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: ReputationsStateObject.Event.onGetError)
-        }
+        })
         
-        let queryMark: Feedback = react(query: { $0.markQuery }) { query in
+        let queryMark: Feedback = react(query: { $0.markQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.markReputationLinksAsViewed.id }.unwrap()
                 .map(ReputationsStateObject.Event.onMarkSuccess)
                 .asSignal(onErrorReturnJust: ReputationsStateObject.Event.onMarkError)
-        }
+        })
         
         let states = store.states
         

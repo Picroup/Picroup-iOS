@@ -67,12 +67,12 @@ final class RegisterUsernameViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let usernameAvailable: Feedback = react(query: { $0.usernameAvailableQuery }) { query in
+        let usernameAvailable: Feedback = react(query: { $0.usernameAvailableQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
             return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.searchUser?.username }
                 .asSignal(onErrorJustReturn: nil)
                 .map(RegisterUsernameStateObject.Event.onUserAvailableResponse)
-        }
+        })
         
         let states = store.states
         

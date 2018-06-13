@@ -65,17 +65,17 @@ class NotificationsViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryNotifacations: Feedback = react(query: { $0.notificationsQuery }) { query in
+        let queryNotifacations: Feedback = react(query: { $0.notificationsQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.notifications.fragments.cursorNotoficationsFragment }.unwrap()
                 .map(NotificationsStateObject.Event.onGetData(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: NotificationsStateObject.Event.onGetError)
-        }
+        })
         
-        let queryMark: Feedback = react(query: { $0.markQuery }) { query in
+        let queryMark: Feedback = react(query: { $0.markQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.markNotificationsAsViewed.id }.unwrap()
                 .map(NotificationsStateObject.Event.onMarkSuccess)
                 .asSignal(onErrorReturnJust: NotificationsStateObject.Event.onMarkError)
-        }
+        })
         
         let states = store.states
         

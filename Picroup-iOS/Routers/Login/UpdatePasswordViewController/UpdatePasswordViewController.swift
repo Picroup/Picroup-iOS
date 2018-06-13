@@ -74,12 +74,12 @@ class UpdatePasswordViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let querySetPassword: Feedback = react(query: { $0.setPasswordQuery }) { query in
+        let querySetPassword: Feedback = react(query: { $0.setPasswordQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.setPassword.fragments.userFragment }.unwrap()
                 .map(UpdatePasswordStateObject.Event.onSetPasswordSuccess)
                 .asSignal(onErrorReturnJust: UpdatePasswordStateObject.Event.onSetPasswordError)
-        }
+        })
 
         let states = store.states
 

@@ -110,27 +110,27 @@ class ImageDetailViewController: HideNavigationBarViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryMedium: Feedback = react(query: { $0.mediumQuery }) { query in
+        let queryMedium: Feedback = react(query: { $0.mediumQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.medium }
                 .map(ImageDetailStateObject.Event.onGetData(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onGetError)
                 .delay(0.4)
-        }
+        })
         
-        let starMedium: Feedback = react(query: { $0.starMediumQuery }) { query in
+        let starMedium: Feedback = react(query: { $0.starMediumQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query)
                 .map { $0?.data?.starMedium }.unwrap()
                 .map(ImageDetailStateObject.Event.onStarMediumSuccess)
                 .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onStarMediumError)
-        }
+        })
         
-        let deleteMedium: Feedback = react(query: { $0.deleteMediumQuery }) { query in
+        let deleteMedium: Feedback = react(query: { $0.deleteMediumQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query)
                 .map { $0?.data?.deleteMedium }.unwrap()
                 .map(ImageDetailStateObject.Event.onDeleteMediumSuccess)
                 .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onDeleteMediumError)
-        }
+        })
         
         let states = store.states
         

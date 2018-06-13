@@ -94,19 +94,19 @@ class MeViewController: HideNavigationBarViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryMyMedia: Feedback = react(query: { $0.myMediaQuery }) { query in
+        let queryMyMedia: Feedback = react(query: { $0.myMediaQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.media.fragments.cursorMediaFragment }.unwrap()
                 .map(MeStateObject.Event.onGetMyMedia(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: MeStateObject.Event.onGetMyMediaError)
-        }
+        })
         
-        let queryMyStaredMedia: Feedback = react(query: { $0.myStaredMediaQuery }) { query in
+        let queryMyStaredMedia: Feedback = react(query: { $0.myStaredMediaQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.staredMedia.fragments.cursorMediaFragment }.unwrap()
                 .map(MeStateObject.Event.onGetMyStaredMedia(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: MeStateObject.Event.onGetMyStaredMediaError)
-        }
+        })
         
         let states = store.states
 //            .debug("MeState", trimOutput: true)
