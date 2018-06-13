@@ -47,6 +47,10 @@ extension ImageCommentsStateObject {
     var shouldQueryMoreComments: Bool {
         return !triggerCommentsQuery && hasMoreComments
     }
+    var isCommentsEmpty: Bool {
+        guard let items = comments?.items else { return false }
+        return !triggerCommentsQuery && commentsError == nil && items.isEmpty
+    }
     var hasMoreComments: Bool {
         return comments?.cursor.value != nil
     }

@@ -110,7 +110,7 @@ extension CreateImageStateObject: IsFeedbackStateObject {
             saveMediumStates[index].progress?.bytesWritten = Int(progress.bytesWritten)
             saveMediumStates[index].progress?.totalBytes = Int(progress.totalBytes)
         case .onSavedMediumSuccess(let medium, let index):
-            let mediumObject = realm.create(MediumObject.self, value: medium.snapshot, update: true)
+            let mediumObject = realm.create(MediumObject.self, value: medium.rawSnapshot, update: true)
             saveMediumStates[index].savedMedium = mediumObject
             finished += 1
             if allFinished {

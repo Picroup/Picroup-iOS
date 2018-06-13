@@ -40,7 +40,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <view key="backgroundView" contentMode="scaleToFill" id="zQy-Dl-Mhy">
-                                    <rect key="frame" x="0.0" y="355" width="375" height="647"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ueA-Un-YhH">
@@ -651,12 +651,32 @@
                         <outlet property="presenter" destination="69D-2t-ZZ3" id="Kap-Zf-arg"/>
                     </connections>
                 </viewController>
+                <view contentMode="scaleToFill" id="ppc-cl-lLr">
+                    <rect key="frame" x="0.0" y="0.0" width="368" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无评论" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDM-mG-4ue">
+                            <rect key="frame" x="16" y="54" width="336" height="20.5"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="aDM-mG-4ue" firstAttribute="centerY" secondItem="DBn-u5-tAL" secondAttribute="centerY" id="9BQ-sA-E0X"/>
+                        <constraint firstItem="DBn-u5-tAL" firstAttribute="trailing" secondItem="aDM-mG-4ue" secondAttribute="trailing" constant="16" id="Qoe-b7-OOy"/>
+                        <constraint firstItem="aDM-mG-4ue" firstAttribute="leading" secondItem="DBn-u5-tAL" secondAttribute="leading" constant="16" id="glQ-3B-hhu"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="DBn-u5-tAL"/>
+                </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mab-Vh-gDe" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="69D-2t-ZZ3" customClass="ImageCommentsPresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
                         <outlet property="commentsCountLabel" destination="AbJ-n1-pIc" id="dwV-Cm-HMh"/>
                         <outlet property="contentTextField" destination="nsx-N0-WLp" id="joX-VJ-YfV"/>
                         <outlet property="deleteAlertView" destination="ybv-PL-JfV" id="UtW-Fj-mHx"/>
+                        <outlet property="emptyView" destination="ppc-cl-lLr" id="qHS-8M-qCe"/>
                         <outlet property="hideCommentsContentView" destination="ssH-eR-rCu" id="xaw-A2-4iO"/>
                         <outlet property="hideCommentsIcon" destination="AZY-MU-RJY" id="Jzn-vN-9xy"/>
                         <outlet property="imageView" destination="qLT-qA-HqQ" id="BE5-vw-UJl"/>

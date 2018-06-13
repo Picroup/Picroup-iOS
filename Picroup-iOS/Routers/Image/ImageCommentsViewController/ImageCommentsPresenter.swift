@@ -28,6 +28,7 @@ class ImageCommentsPresenter: NSObject {
     @IBOutlet weak var tableViewBackgroundButton: UIButton!
     @IBOutlet weak var deleteAlertView: UIView!
     @IBOutlet weak var suggestUpdateLabel: UILabel!
+    @IBOutlet weak var emptyView: UIView!
 
     func setup() {
         tableView.backgroundView = tableViewBackgroundButton
@@ -67,6 +68,12 @@ class ImageCommentsPresenter: NSObject {
             return cell
         })
         return tableView!.rx.items(dataSource: dataSource)
+    }
+    
+    var isCommentsEmpty: Binder<Bool> {
+        return Binder(self) { presenter, isEmpty in
+            presenter.tableView.backgroundView = isEmpty ? presenter.emptyView : nil
+        }
     }
 }
 
