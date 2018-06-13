@@ -76,6 +76,7 @@ class ImageDetailCell: RxCollectionViewCell {
     @IBOutlet weak var remainTimeLabel: UILabel!
     @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
+    @IBOutlet weak var suggestUpdateLabel: UILabel!
 
     func configure(
         with item: MediumObject,
@@ -86,7 +87,14 @@ class ImageDetailCell: RxCollectionViewCell {
         onMoreTap: (() -> Void)?
         ) {
         let viewModel = ViewModel(medium: item)
-        imageView.setImage(with: viewModel.imageViewMinioId)
+        
+        if item.kind == MediumKind.image.rawValue {
+            imageView.setImage(with: item.minioId)
+            suggestUpdateLabel.isHidden = true
+        } else {
+            imageView.image = nil
+            suggestUpdateLabel.isHidden = false
+        }
         imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
         lifeBar.motionIdentifier = viewModel.lifeBarMotionIdentifier
         starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
