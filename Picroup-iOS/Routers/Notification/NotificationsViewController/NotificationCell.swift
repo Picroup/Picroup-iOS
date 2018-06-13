@@ -20,14 +20,14 @@ final class NotificationCell: RxTableViewCell {
         userAvatarImageView.setUserAvatar(with: item.user)
         mediumImageView.setImage(with: item.medium?.minioId)
         switch item.kind {
-        case "commentMedium"?:
+        case NotificationKind.commentMedium.rawValue?:
             contentLabel.text = "评论了你的图片"
-        case "starMedium"?:
+        case NotificationKind.starMedium.rawValue?:
             contentLabel.text = "给你的图片续命"
-        case "followUser"?:
+        case NotificationKind.followUser.rawValue?:
             contentLabel.text = "关注了你"
         default:
-            contentLabel.text = "  "
+            contentLabel.text = "类型未知，请升级应用后查看"
         }
     }
 }

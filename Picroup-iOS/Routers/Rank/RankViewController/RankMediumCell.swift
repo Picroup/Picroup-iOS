@@ -14,6 +14,7 @@ extension RankMediumCell {
         let imageViewMinioId: String?
         let imageViewMotionIdentifier: String?
         let progress: Float
+        let kind: String?
         let lifeBarMotionIdentifier: String?
         let starPlaceholderViewMotionIdentifier: String?
         
@@ -22,6 +23,7 @@ extension RankMediumCell {
                 self.imageViewMinioId = nil
                 self.imageViewMotionIdentifier = nil
                 self.progress = 0
+                self.kind = nil
                 self.lifeBarMotionIdentifier = nil
                 self.starPlaceholderViewMotionIdentifier = nil
                 return
@@ -32,6 +34,7 @@ extension RankMediumCell {
             self.imageViewMinioId = item.minioId
             self.imageViewMotionIdentifier = item._id
             self.progress = Float(remainTime / 12.0.weeks)
+            self.kind = item.kind
             self.lifeBarMotionIdentifier = "lifeBar_\(item._id)"
             self.starPlaceholderViewMotionIdentifier = "starButton_\(item._id)"
         }
@@ -42,10 +45,17 @@ class RankMediumCell: RxCollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var starPlaceholderView: UIView!
-    
+    @IBOutlet weak var suggestUpdateLabel: UILabel!
+
     func configure(with item: MediumObject) {
         let viewModel = ViewModel(item: item)
-        imageView.setImage(with: viewModel.imageViewMinioId)
+        if viewModel.kind == MediumKind.image.rawValue {
+            imageView.setImage(with: viewModel.imageViewMinioId)
+            suggestUpdateLabel.isHidden = true
+        } else {
+            imageView.image = nil
+            suggestUpdateLabel.isHidden = false
+        }
         imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
 //        transition(.fadeOut, .scale(0.75))
         progressView.progress = viewModel.progress

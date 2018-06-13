@@ -27,6 +27,7 @@ class ImageCommentsPresenter: NSObject {
     @IBOutlet weak var hideCommentsContentView: UIView!
     @IBOutlet weak var tableViewBackgroundButton: UIButton!
     @IBOutlet weak var deleteAlertView: UIView!
+    @IBOutlet weak var suggestUpdateLabel: UILabel!
 
     func setup() {
         tableView.backgroundView = tableViewBackgroundButton
@@ -38,7 +39,13 @@ class ImageCommentsPresenter: NSObject {
     var medium: Binder<MediumObject> {
         return Binder(self) { me, medium in
             let remainTime = medium.endedAt.value?.sinceNow ?? 0
-            me.imageView.setImage(with: medium.minioId)
+            if medium.kind == MediumKind.image.rawValue {
+                me.imageView.setImage(with: medium.minioId)
+                me.suggestUpdateLabel.isHidden = true
+            } else {
+                me.imageView.image = nil
+                me.suggestUpdateLabel.isHidden = false
+            }
             me.imageView.motionIdentifier = medium._id
             me.lifeBar.motionIdentifier = "lifeBar_\(medium._id)"
             me.sendButton.motionIdentifier = "starButton_\(medium._id)"

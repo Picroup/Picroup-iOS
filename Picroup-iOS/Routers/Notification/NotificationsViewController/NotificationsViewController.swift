@@ -51,11 +51,11 @@ class NotificationsViewController: UIViewController {
                 }.map { .onTriggerGetMore },
                 presenter.tableView.rx.modelSelected(NotificationObject.self).asSignal().flatMap { notification in
                     switch (notification.kind, notification.mediumId, notification.userId) {
-                    case ("commentMedium"?, let mediumId?, _):
+                    case (NotificationKind.commentMedium.rawValue?, let mediumId?, _):
                         return .just(.onTriggerShowComments(mediumId))
-                    case ("starMedium"?, let mediumId?, _):
+                    case (NotificationKind.starMedium.rawValue?, let mediumId?, _):
                         return .just(.onTriggerShowImage(mediumId))
-                    case ("followUser"?, _, let userId?):
+                    case (NotificationKind.followUser.rawValue?, _, let userId?):
                         return .just(.onTriggerShowUser(userId))
                     default:
                         return .empty()

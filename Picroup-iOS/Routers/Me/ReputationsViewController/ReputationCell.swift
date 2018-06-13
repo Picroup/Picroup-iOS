@@ -29,7 +29,7 @@ class ReputationCell: RxTableViewCell {
         case "followUser"?:
             contentLabel.text = "关注了你"
         default:
-            contentLabel.text = "  "
+            contentLabel.text = "类型未知，请升级应用后查看"
         }
     }
 }

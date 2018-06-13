@@ -21,7 +21,8 @@ class HomeImageCell: RxCollectionViewCell {
     @IBOutlet weak var userView: UIView!
     @IBOutlet weak var displayNameLabel: UILabel!
     @IBOutlet weak var commentButton: UIButton!
-    
+    @IBOutlet weak var suggestUpdateLabel: UILabel!
+
     func configure(
         with item: MediumObject,
         onCommentsTap: (() -> Void)?,
@@ -32,7 +33,13 @@ class HomeImageCell: RxCollectionViewCell {
         
         let remainTime = item.endedAt.value?.sinceNow ?? 0
         
-        imageView.setImage(with: item.minioId)
+        if item.kind == MediumKind.image.rawValue {
+            imageView.setImage(with: item.minioId)
+            suggestUpdateLabel.isHidden = true
+        } else {
+            imageView.image = nil
+            suggestUpdateLabel.isHidden = false
+        }
         lifeViewWidthConstraint.constant = CGFloat(remainTime / 12.0.weeks) * lifeBar.bounds.width
         imageView.motionIdentifier = item._id
         lifeBar.motionIdentifier = "lifeBar_\(item._id)"
