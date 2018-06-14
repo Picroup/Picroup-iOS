@@ -14,7 +14,7 @@ import RxFeedback
 import Material
 import Apollo
 
-class RankViewController: UIViewController {
+class RankViewController: BaseViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     private var presenter: RankViewPresenter!
@@ -68,12 +68,12 @@ class RankViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryMedia: Feedback = react(query: { $0.hotMediaQuery }) { query in
+        let queryMedia: Feedback = react(query: { $0.hotMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.hotMedia.fragments.cursorMediaFragment }.unwrap()
                 .map(RankStateObject.Event.onGetData)
                 .asSignal(onErrorReturnJust: RankStateObject.Event.onGetError)
-        }
+        })
         
         let states = store.states
         

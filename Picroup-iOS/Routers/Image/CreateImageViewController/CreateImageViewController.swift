@@ -54,7 +54,7 @@ class CreateImageViewController: ShowNavigationBarViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let saveMediums: Feedback = react(query: { $0.saveQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { (query) in
+        let saveMediums: Feedback = react(query: { $0.saveQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { (query) in
             let (userId, imageKeys) = query
             let queries: [Signal<CreateImageStateObject.Event>] = imageKeys.enumerated().map { index, imageKey in
                let image = ImageCache.default.retrieveImageInMemoryCache(forKey: imageKey)!

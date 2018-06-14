@@ -13,7 +13,7 @@ import RxCocoa
 import RxFeedback
 import Apollo
 
-class LoginViewController: UIViewController {
+class LoginViewController: BaseViewController {
     
     @IBOutlet fileprivate var presenter: LoginViewPresenter!
     fileprivate typealias Feedback = (Driver<LoginStateObject>) -> Signal<LoginStateObject.Event>
@@ -53,7 +53,7 @@ class LoginViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryLogin: Feedback = react(query: { $0.loginQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let queryLogin: Feedback = react(query: { $0.loginQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.login?.fragments.userDetailFragment }.map {
                     guard let userDetailFragment = $0 else { throw LoginError.usernameOrPasswordIncorrect }

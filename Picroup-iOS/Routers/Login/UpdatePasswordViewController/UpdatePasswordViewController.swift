@@ -40,7 +40,7 @@ final class UpdatePasswordPresenter: NSObject {
     }
 }
 
-class UpdatePasswordViewController: UIViewController {
+class UpdatePasswordViewController: BaseViewController {
 
     @IBOutlet fileprivate var presenter: UpdatePasswordPresenter!
     fileprivate typealias Feedback = (Driver<UpdatePasswordStateObject>) -> Signal<UpdatePasswordStateObject.Event>
@@ -74,7 +74,7 @@ class UpdatePasswordViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let querySetPassword: Feedback = react(query: { $0.setPasswordQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let querySetPassword: Feedback = react(query: { $0.setPasswordQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.setPassword.fragments.userFragment }.unwrap()
                 .map(UpdatePasswordStateObject.Event.onSetPasswordSuccess)

@@ -58,20 +58,20 @@ class FollowersViewController: HideNavigationBarViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryUserFollowers: Feedback = react(query: { $0.userFollowersQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let queryUserFollowers: Feedback = react(query: { $0.userFollowersQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.followers }.unwrap()
                 .map(UserFollowersStateObject.Event.onGetUserFollowers(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: UserFollowersStateObject.Event.onGetUserFollowersError)
         })
         
-        let followUser: Feedback = react(query: { $0.followUserQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let followUser: Feedback = react(query: { $0.followUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query).asObservable()
                 .map { $0?.data?.followUser }.unwrap()
                 .map(UserFollowersStateObject.Event.onFollowUserSuccess)
                 .asSignal(onErrorReturnJust: UserFollowersStateObject.Event.onFollowUserError)
         })
         
-        let unfollowUser: Feedback = react(query: { $0.unfollowUserQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let unfollowUser: Feedback = react(query: { $0.unfollowUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query).asObservable()
                 .map { $0?.data?.unfollowUser }.unwrap()
                 .map(UserFollowersStateObject.Event.onUnfollowUserSuccess)

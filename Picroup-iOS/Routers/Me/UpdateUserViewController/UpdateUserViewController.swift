@@ -48,7 +48,7 @@ final class UpdateUserViewController: HideNavigationBarViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let querySetImageKey: Feedback = react(query: { $0.setImageKeyQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let querySetImageKey: Feedback = react(query: { $0.setImageKeyQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             let image = ImageCache.default.retrieveImageInMemoryCache(forKey: query.imageKey)!
             let (progress, filename) = ImageUpoader.uploadImage(image)
             let next = UserSetAvatarIdQuery(userId: query.userId, avatarId: filename)
@@ -61,7 +61,7 @@ final class UpdateUserViewController: HideNavigationBarViewController {
                 .asSignal(onErrorReturnJust: UpdateUserStateObject.Event.onSetAvatarIdError)
         })
         
-        let querySetDisplayName: Feedback = react(query: { $0.setDisplayNameQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let querySetDisplayName: Feedback = react(query: { $0.setDisplayNameQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.setDisplayName.fragments.userFragment }.unwrap()
                 .map(UpdateUserStateObject.Event.onSetDisplayNameSuccess)

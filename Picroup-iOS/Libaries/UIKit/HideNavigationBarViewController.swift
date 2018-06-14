@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HideNavigationBarViewController: UIViewController {
+class HideNavigationBarViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -20,7 +20,7 @@ class HideNavigationBarViewController: UIViewController {
     
 }
 
-class ShowNavigationBarViewController: UIViewController {
+class ShowNavigationBarViewController: BaseViewController {
     
     private var previousNavigationBarHidden: Bool?
     

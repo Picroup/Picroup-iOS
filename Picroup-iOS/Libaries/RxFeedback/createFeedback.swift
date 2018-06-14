@@ -11,10 +11,10 @@ import RxSwift
 import RxCocoa
 import RxFeedback
 
-public func composeEffects<Query, Event>(predicate: @escaping () -> Bool, effects: @escaping (Query) -> Signal<Event>)
+public func composeEffects<Query, Event>(shouldQuery: @escaping () -> Bool, effects: @escaping (Query) -> Signal<Event>)
     -> (Query) -> Signal<Event> {
         return { query in
-            let shouldQuery = predicate()
+            let shouldQuery = shouldQuery()
             guard shouldQuery else { return .empty() }
             return effects(query)
         }

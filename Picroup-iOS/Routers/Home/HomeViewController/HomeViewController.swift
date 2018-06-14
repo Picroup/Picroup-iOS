@@ -13,7 +13,7 @@ import RxCocoa
 import RxFeedback
 import Apollo
 
-class HomeViewController: UIViewController {
+class HomeViewController: BaseViewController {
     
     fileprivate typealias Feedback = (Driver<HomeStateObject>) -> Signal<HomeStateObject.Event>
     @IBOutlet var presenter: HomeViewPresenter!
@@ -59,7 +59,7 @@ class HomeViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryMyInterestedMedia: Feedback = react(query: { $0.myInterestedMediaQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let queryMyInterestedMedia: Feedback = react(query: { $0.myInterestedMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.interestedMedia.fragments.cursorMediaFragment }.unwrap()
                 .map(HomeStateObject.Event.onGetMyInterestedMedia(isReload: query.cursor == nil))

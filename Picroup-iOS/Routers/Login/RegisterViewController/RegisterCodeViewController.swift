@@ -38,7 +38,7 @@ final class RegisterCodePresenter: NSObject {
     }
 }
 
-final class RegisterCodeViewController: UIViewController {
+final class RegisterCodeViewController: BaseViewController {
     
     @IBOutlet fileprivate var presenter: RegisterCodePresenter!
     fileprivate typealias Feedback = (Driver<RegisterCodeStateObject>) -> Signal<RegisterCodeStateObject.Event>
@@ -69,14 +69,14 @@ final class RegisterCodeViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
 
-        let register: Feedback = react(query: { $0.registerQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let register: Feedback = react(query: { $0.registerQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             return ApolloClient.shared.rx.perform(mutation: query)
                 .map { $0?.data?.register.fragments.userDetailFragment }.unwrap()
                 .map(RegisterCodeStateObject.Event.onRegisterSuccess)
                 .asSignal(onErrorReturnJust: RegisterCodeStateObject.Event.onRegisterError)
         })
         
-        let getVerifyCode: Feedback = react(query: { $0.getVerifyCodeQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let getVerifyCode: Feedback = react(query: { $0.getVerifyCodeQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             return ApolloClient.shared.rx.perform(mutation: query)
                 .map { $0?.data?.getVerifyCode }.unwrap()
                 .map(RegisterCodeStateObject.Event.onGetVerifyCodeSuccess)

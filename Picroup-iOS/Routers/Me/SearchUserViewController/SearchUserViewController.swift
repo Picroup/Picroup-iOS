@@ -50,21 +50,21 @@ final class SearchUserViewController: ShowNavigationBarViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let searchUser: Feedback = react(query: { $0.searchUserQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let searchUser: Feedback = react(query: { $0.searchUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query)
                 .map { $0?.data?.searchUser }
                 .map(SearchUserStateObject.Event.onSearchUserSuccess)
                 .asSignal(onErrorReturnJust: SearchUserStateObject.Event.onSearchUserError)
         })
         
-        let followUser: Feedback = react(query: { $0.followUserQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let followUser: Feedback = react(query: { $0.followUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query).asObservable()
                 .map { $0?.data?.followUser }.unwrap()
                 .map(SearchUserStateObject.Event.onFollowUserSuccess)
                 .asSignal(onErrorReturnJust: SearchUserStateObject.Event.onFollowUserError)
         })
         
-        let unfollowUser: Feedback = react(query: { $0.unfollowUserQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let unfollowUser: Feedback = react(query: { $0.unfollowUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query).asObservable()
                 .map { $0?.data?.unfollowUser }.unwrap()
                 .map(SearchUserStateObject.Event.onUnfollowUserSuccess)

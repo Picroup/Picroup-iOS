@@ -8,9 +8,30 @@
 
 import UIKit
 
-extension UIViewController {
+//extension UIViewController {
+//
+//    public var isViewAppears: Bool {
+//
+//
+//        return viewIfLoaded?.window != nil
+//    }
+//}
+
+class BaseViewController: UIViewController {
     
-    public var isViewAppears: Bool {
-        return viewIfLoaded?.window != nil
+    var isViewDisappeared = false
+    
+    var shouldReactQuery: Bool {
+        return !isViewDisappeared
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        isViewDisappeared = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        isViewDisappeared = true
     }
 }

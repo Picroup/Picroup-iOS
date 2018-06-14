@@ -38,7 +38,7 @@ final class RegisterUsernamePresenter: NSObject {
     }
 }
 
-final class RegisterUsernameViewController: UIViewController {
+final class RegisterUsernameViewController: BaseViewController {
     
     @IBOutlet fileprivate var presenter: RegisterUsernamePresenter!
     fileprivate typealias Feedback = (Driver<RegisterUsernameStateObject>) -> Signal<RegisterUsernameStateObject.Event>
@@ -67,7 +67,7 @@ final class RegisterUsernameViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let usernameAvailable: Feedback = react(query: { $0.usernameAvailableQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let usernameAvailable: Feedback = react(query: { $0.usernameAvailableQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.searchUser?.username }
                 .asSignal(onErrorJustReturn: nil)

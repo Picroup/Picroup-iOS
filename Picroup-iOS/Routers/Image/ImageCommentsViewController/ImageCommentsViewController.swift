@@ -98,21 +98,21 @@ class ImageCommentsViewController: HideNavigationBarViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryComments: Feedback = react(query: { $0.commentsQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { (query) in
+        let queryComments: Feedback = react(query: { $0.commentsQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { (query) in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.medium?.comments.fragments.cursorCommentsFragment }
                 .map(ImageCommentsStateObject.Event.onGetData(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: ImageCommentsStateObject.Event.onGetDataError)
         })
         
-        let saveComment: Feedback = react(query: { $0.saveCommentQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let saveComment: Feedback = react(query: { $0.saveCommentQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query)
                 .map { $0?.data?.saveComment.fragments.commentFragment }.unwrap()
                 .map(ImageCommentsStateObject.Event.onSaveCommentSuccess)
                 .asSignal(onErrorReturnJust: ImageCommentsStateObject.Event.onSaveCommentError)
         })
         
-        let deleteComment: Feedback = react(query: { $0.deleteCommentQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let deleteComment: Feedback = react(query: { $0.deleteCommentQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query)
                 .map { $0?.data?.deleteComment }.unwrap()
                 .map(ImageCommentsStateObject.Event.onDeleteCommentSuccess)

@@ -53,28 +53,28 @@ final class FeedbackViewController: HideNavigationBarViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let saveAppFeedback: Feedback = react(query: { $0.saveAppFeedbackQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let saveAppFeedback: Feedback = react(query: { $0.saveAppFeedbackQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query)
                 .map { $0?.data?.saveAppFeedback.id  }.unwrap()
                 .map(FeedbackStateObject.Event.onSaveFeedbackSuccess)
                 .asSignal(onErrorReturnJust: FeedbackStateObject.Event.onSaveFeedbackError)
         })
         
-        let saveUserFeedback: Feedback = react(query: { $0.saveUserFeedbackQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let saveUserFeedback: Feedback = react(query: { $0.saveUserFeedbackQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query)
                 .map { $0?.data?.saveUserFeedback.id }.unwrap()
                 .map(FeedbackStateObject.Event.onSaveFeedbackSuccess)
                 .asSignal(onErrorReturnJust: FeedbackStateObject.Event.onSaveFeedbackError)
         })
 
-        let saveMediumFeedback: Feedback = react(query: { $0.saveMediumFeedbackQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let saveMediumFeedback: Feedback = react(query: { $0.saveMediumFeedbackQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query)
                 .map { $0?.data?.saveMediumFeedback.id }.unwrap()
                 .map(FeedbackStateObject.Event.onSaveFeedbackSuccess)
                 .asSignal(onErrorReturnJust: FeedbackStateObject.Event.onSaveFeedbackError)
         })
         
-        let saveCommentFeedback: Feedback = react(query: { $0.saveCommentFeedbackQuery }, effects: composeEffects(predicate: { [weak self] in self?.isViewAppears ?? false  }) { query in
+        let saveCommentFeedback: Feedback = react(query: { $0.saveCommentFeedbackQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query)
                 .map { $0?.data?.saveCommentFeedback.id }.unwrap()
                 .map(FeedbackStateObject.Event.onSaveFeedbackSuccess)
