@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YG5-po-3yM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YG5-po-3yM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -435,12 +435,12 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VPi-9u-INB" customClass="RaisedButton" customModule="Material">
-                                <rect key="frame" x="274" y="181" width="63" height="36"/>
+                                <rect key="frame" x="243" y="181" width="94" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="KvV-x0-Z0S"/>
                                 </constraints>
                                 <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
-                                <state key="normal" title="验证">
+                                <state key="normal" title="提交注册">
                                     <color key="titleColor" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -455,11 +455,35 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="l5V-lz-pKf">
+                                <rect key="frame" x="68" y="253" width="239.5" height="44"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击提交注册即代表您同意" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wRb-Wh-UdD">
+                                        <rect key="frame" x="0.0" y="0.0" width="159.5" height="44"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="syv-En-LvW">
+                                        <rect key="frame" x="159.5" y="0.0" width="80" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="rEH-xL-aCK"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <state key="normal" title="《用户协议》"/>
+                                        <connections>
+                                            <segue destination="1wx-Lg-Sez" kind="show" id="oj2-AD-IuW"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="l5V-lz-pKf" firstAttribute="top" secondItem="VPi-9u-INB" secondAttribute="bottom" constant="36" id="C73-hq-n89"/>
                             <constraint firstItem="VPi-9u-INB" firstAttribute="trailing" secondItem="MOd-C7-PYu" secondAttribute="trailing" id="Gsr-i1-BC4"/>
                             <constraint firstItem="MOd-C7-PYu" firstAttribute="top" secondItem="BpZ-CU-AaU" secondAttribute="top" constant="96" id="Nns-z6-Wig"/>
+                            <constraint firstItem="l5V-lz-pKf" firstAttribute="centerX" secondItem="BpZ-CU-AaU" secondAttribute="centerX" id="dHh-e7-KAf"/>
                             <constraint firstItem="VPi-9u-INB" firstAttribute="top" secondItem="MOd-C7-PYu" secondAttribute="bottom" constant="48" id="eV8-b0-Lpe"/>
                             <constraint firstItem="MOd-C7-PYu" firstAttribute="centerX" secondItem="BpZ-CU-AaU" secondAttribute="centerX" id="tZx-Ws-h9h"/>
                         </constraints>
@@ -479,6 +503,62 @@
             </objects>
             <point key="canvasLocation" x="3215" y="107"/>
         </scene>
+        <!--用户协议-->
+        <scene sceneID="5cv-YV-SOb">
+            <objects>
+                <viewController storyboardIdentifier="AgreementViewController" hidesBottomBarWhenPushed="YES" id="1wx-Lg-Sez" customClass="AgreementViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lu4-fJ-p0f"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fdn-Q0-kuZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fj4-wp-U9G">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xeU-cH-nj9" customClass="LocalWebView" customModule="Picroup_iOS" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="fileName" value="agreement.html"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="delegate" destination="1wx-Lg-Sez" id="aab-ng-p5L"/>
+                                </connections>
+                            </webView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lsn-Xa-v0C">
+                                <rect key="frame" x="177" y="333.5" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Fdn-Q0-kuZ" firstAttribute="top" secondItem="xeU-cH-nj9" secondAttribute="bottom" id="J71-iJ-tvk"/>
+                            <constraint firstAttribute="trailing" secondItem="xeU-cH-nj9" secondAttribute="trailing" id="OHK-jG-kSy"/>
+                            <constraint firstItem="xeU-cH-nj9" firstAttribute="leading" secondItem="fj4-wp-U9G" secondAttribute="leading" id="Sby-5Z-jOX"/>
+                            <constraint firstItem="lsn-Xa-v0C" firstAttribute="centerY" secondItem="R39-k7-Plb" secondAttribute="centerY" id="Vdr-Du-CSJ"/>
+                            <constraint firstItem="lsn-Xa-v0C" firstAttribute="centerX" secondItem="R39-k7-Plb" secondAttribute="centerX" id="gOI-Fv-wzM"/>
+                            <constraint firstItem="xeU-cH-nj9" firstAttribute="top" secondItem="fj4-wp-U9G" secondAttribute="top" id="leB-a5-HuR"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="R39-k7-Plb"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="用户协议" id="OuQ-PQ-iDH">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="z5p-O2-h5R">
+                            <color key="tintColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="backButtontClick" destination="1wx-Lg-Sez" id="lls-iP-MLj"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="spinner" destination="lsn-Xa-v0C" id="KdV-YP-VmY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gSV-R5-Byc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4143" y="107"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="back" width="16" height="16"/>
+    </resources>
     <color key="tintColor" red="0.1803921568627451" green="0.49019607843137253" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
 </document>

@@ -528,12 +528,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="614"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="Qzp-2R-WG9">
+                        <view key="tableHeaderView" contentMode="scaleToFill" misplaced="YES" id="Qzp-2R-WG9">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="212"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="App" translatesAutoresizingMaskIntoConstraints="NO" id="PXe-mE-Zwn">
-                                    <rect key="frame" x="123" y="42" width="128" height="128"/>
+                                    <rect key="frame" x="123" y="15.5" width="128" height="128"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="PXe-mE-Zwn" secondAttribute="height" multiplier="1:1" id="2bp-rF-P7Z"/>
                                         <constraint firstAttribute="width" constant="128" id="wL2-HD-SGE"/>
@@ -552,11 +552,11 @@
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="yse-jh-0JS">
-                            <rect key="frame" x="0.0" y="318" width="375" height="256"/>
+                            <rect key="frame" x="0.0" y="398" width="375" height="128"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="版权所有 © 2018年 匹酷普" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXr-1l-hzR">
-                                    <rect key="frame" x="8" y="120" width="359" height="16"/>
+                                    <rect key="frame" x="8" y="112" width="359" height="16"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                     <color key="textColor" red="0.42655369640000002" green="0.475846082" blue="0.4802647531" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -566,7 +566,7 @@
                             <constraints>
                                 <constraint firstItem="EXr-1l-hzR" firstAttribute="leading" secondItem="yse-jh-0JS" secondAttribute="leading" constant="8" id="96F-PU-9p9"/>
                                 <constraint firstAttribute="trailing" secondItem="EXr-1l-hzR" secondAttribute="trailing" constant="8" id="G63-ZY-luU"/>
-                                <constraint firstItem="EXr-1l-hzR" firstAttribute="centerY" secondItem="yse-jh-0JS" secondAttribute="centerY" id="JTb-Zl-8ce"/>
+                                <constraint firstAttribute="bottom" secondItem="EXr-1l-hzR" secondAttribute="bottom" id="JEZ-Vb-E8a"/>
                             </constraints>
                         </view>
                         <sections>
@@ -612,6 +612,34 @@
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="0.0.1" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="T0h-LU-0zL">
                                                     <rect key="frame" x="324" y="12" width="35" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" red="0.42655369640000002" green="0.475846082" blue="0.4802647531" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="6xr-1O-x54">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="hxf-7n-f4w" detailTextLabel="sRg-wQ-gJI" style="IBUITableViewCellStyleValue1" id="dAX-XG-aqC">
+                                        <rect key="frame" x="0.0" y="336" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dAX-XG-aqC" id="qz7-Nc-8M8">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="官方邮箱" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hxf-7n-f4w">
+                                                    <rect key="frame" x="16" y="14" width="61.5" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="beeth0vendev@gmail.com" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sRg-wQ-gJI">
+                                                    <rect key="frame" x="155.5" y="12" width="203.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.42655369640000002" green="0.475846082" blue="0.4802647531" alpha="1" colorSpace="calibratedRGB"/>

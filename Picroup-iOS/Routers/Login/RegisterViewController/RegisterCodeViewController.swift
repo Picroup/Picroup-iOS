@@ -62,7 +62,7 @@ final class RegisterCodeViewController: BaseViewController {
                 presenter.validButton.rx.tap.asSignal().emit(to: presenter.codeField.rx.resignFirstResponder()),
                 ]
             let events: [Signal<RegisterCodeStateObject.Event>] = [
-                .just(.onTriggerGetVerifyCode),
+//                .just(.onTriggerGetVerifyCode),
                 presenter.codeField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).map(RegisterCodeStateObject.Event.onChangeCode),
                 presenter.validButton.rx.tap.asSignal().map { RegisterCodeStateObject.Event.onTriggerRegister },
                 ]
