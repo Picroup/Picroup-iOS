@@ -47,6 +47,19 @@ struct PhotoPickerProvider {
             configuration.startOnScreen = .library
             configuration.screens = [.library, .photo,]
             
+            configuration.filters = [
+                YPFilterDescriptor(name: "原图", filterName: ""),
+                YPFilterDescriptor(name: "瞬间", filterName: "CIPhotoEffectInstant"),
+                YPFilterDescriptor(name: "鲜艳", filterName: "CIPhotoEffectChrome"),
+                YPFilterDescriptor(name: "打磨", filterName: "CIPhotoEffectProcess"),
+                YPFilterDescriptor(name: "转换", filterName: "CIPhotoEffectTransfer"),
+                YPFilterDescriptor(name: "褪色", filterName: "CIPhotoEffectFade"),
+                YPFilterDescriptor(name: "棕褐色", filterName: "CISepiaTone"),
+                YPFilterDescriptor(name: "老电影", filterName: "CIPhotoEffectNoir"),
+                YPFilterDescriptor(name: "色质", filterName: "CIPhotoEffectTonal"),
+                YPFilterDescriptor(name: "黑白", filterName: "CIPhotoEffectMono"),
+            ]
+            
             configuration.wordings.ok = "好"
             configuration.wordings.done = "完成"
             configuration.wordings.cancel = "取消"
