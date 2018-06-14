@@ -65,6 +65,17 @@ extension CreateImageStateObject {
         return !triggerSaveMediumQuery
     }
     var allFinished: Bool { return finished == imageKeys.count }
+    var completed: Float {
+        let count = saveMediumStates.count
+        let allProgress = saveMediumStates.reduce(0) { $0 + ($1.progress?.completed ?? 0)
+        }
+        if count > 0 {
+            return Float(allProgress) / Float(count)
+        }
+        else {
+            return 0
+        }
+    }
 }
 
 extension CreateImageStateObject {

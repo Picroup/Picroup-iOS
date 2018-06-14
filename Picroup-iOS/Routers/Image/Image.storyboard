@@ -792,15 +792,21 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G4I-QG-IaG">
+                                <rect key="frame" x="16" y="624" width="264" height="2"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="N4H-1N-oyF" firstAttribute="bottom" secondItem="cM7-DR-10O" secondAttribute="bottom" constant="24" id="9U4-8N-9Ft"/>
+                            <constraint firstItem="G4I-QG-IaG" firstAttribute="centerY" secondItem="cM7-DR-10O" secondAttribute="centerY" id="E0v-2Y-ycV"/>
                             <constraint firstItem="cM7-DR-10O" firstAttribute="top" secondItem="vyu-uI-IIy" secondAttribute="bottom" constant="24" id="Kio-76-KQw"/>
                             <constraint firstItem="vyu-uI-IIy" firstAttribute="top" secondItem="N4H-1N-oyF" secondAttribute="top" id="Rik-rd-jmW"/>
                             <constraint firstItem="N4H-1N-oyF" firstAttribute="trailing" secondItem="cM7-DR-10O" secondAttribute="trailing" constant="16" id="SLY-rX-f77"/>
                             <constraint firstItem="vyu-uI-IIy" firstAttribute="leading" secondItem="N4H-1N-oyF" secondAttribute="leading" id="j39-Aq-d6J"/>
+                            <constraint firstItem="G4I-QG-IaG" firstAttribute="leading" secondItem="eAd-oR-vBg" secondAttribute="leading" constant="16" id="k8J-Zi-uJB"/>
                             <constraint firstItem="vyu-uI-IIy" firstAttribute="trailing" secondItem="N4H-1N-oyF" secondAttribute="trailing" id="rc4-Di-22L"/>
+                            <constraint firstItem="cM7-DR-10O" firstAttribute="leading" secondItem="G4I-QG-IaG" secondAttribute="trailing" constant="16" id="x8s-0o-RBC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="N4H-1N-oyF"/>
                     </view>
@@ -812,6 +818,7 @@
                 <customObject id="OTH-qF-OqD" customClass="CreateImagePresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
                         <outlet property="collectionView" destination="vyu-uI-IIy" id="9Cw-bX-FGC"/>
+                        <outlet property="progressView" destination="G4I-QG-IaG" id="hOC-j8-Y8b"/>
                         <outlet property="saveButton" destination="cM7-DR-10O" id="NHO-5J-nSb"/>
                     </connections>
                 </customObject>

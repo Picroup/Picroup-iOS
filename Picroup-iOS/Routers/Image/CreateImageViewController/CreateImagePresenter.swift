@@ -16,5 +16,6 @@ class CreateImagePresenter: NSObject {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var saveButton: RaisedButton!
+    @IBOutlet weak var progressView: UIProgressView!
 }
 

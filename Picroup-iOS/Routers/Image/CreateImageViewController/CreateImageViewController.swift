@@ -47,6 +47,7 @@ class CreateImageViewController: ShowNavigationBarViewController {
                     cell.progressView.progress = item.progress?.completed ?? 0
                 },
                 state.map { $0.shouldSaveMedium }.distinctUntilChanged().drive(me.presenter.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
+                state.map { $0.completed }.drive(me.presenter.progressView.rx.progress),
                 ]
             let events: [Signal<CreateImageStateObject.Event>] = [
                 me.presenter.saveButton.rx.tap.asSignal().map { CreateImageStateObject.Event.onTriggerSaveMedium }

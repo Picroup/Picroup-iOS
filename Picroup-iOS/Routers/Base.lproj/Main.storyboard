@@ -528,12 +528,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="614"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" misplaced="YES" id="Qzp-2R-WG9">
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="Qzp-2R-WG9">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="212"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="App" translatesAutoresizingMaskIntoConstraints="NO" id="PXe-mE-Zwn">
-                                    <rect key="frame" x="123" y="15.5" width="128" height="128"/>
+                                    <rect key="frame" x="123" y="42" width="128" height="128"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="PXe-mE-Zwn" secondAttribute="height" multiplier="1:1" id="2bp-rF-P7Z"/>
                                         <constraint firstAttribute="width" constant="128" id="wL2-HD-SGE"/>
