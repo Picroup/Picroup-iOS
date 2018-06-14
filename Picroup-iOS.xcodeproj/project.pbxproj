@@ -12,6 +12,9 @@
 		45183EC020CF862000497B59 /* RealmProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EBF20CF862000497B59 /* RealmProvider.swift */; };
 		45183EC220D0E94100497B59 /* createFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EC120D0E94100497B59 /* createFeedback.swift */; };
 		45183EC420D0ED2300497B59 /* UIViewController+isViewAppears.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EC320D0ED2300497B59 /* UIViewController+isViewAppears.swift */; };
+		45183EC620D2193000497B59 /* LocalWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EC520D2193000497B59 /* LocalWebView.swift */; };
+		45183EC820D2195900497B59 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EC720D2195900497B59 /* AgreementViewController.swift */; };
+		45183ECA20D2199000497B59 /* agreement.html in Resources */ = {isa = PBXBuildFile; fileRef = 45183EC920D2199000497B59 /* agreement.html */; };
 		451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD313207910D10063A972 /* SharedSequence+unwrap.swift */; };
 		451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD31A207A38F20063A972 /* UIResponder+Rx.swift */; };
 		451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */; };
@@ -217,6 +220,9 @@
 		45183EBF20CF862000497B59 /* RealmProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmProvider.swift; sourceTree = "<group>"; };
 		45183EC120D0E94100497B59 /* createFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createFeedback.swift; sourceTree = "<group>"; };
 		45183EC320D0ED2300497B59 /* UIViewController+isViewAppears.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+isViewAppears.swift"; sourceTree = "<group>"; };
+		45183EC520D2193000497B59 /* LocalWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalWebView.swift; sourceTree = "<group>"; };
+		45183EC720D2195900497B59 /* AgreementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
+		45183EC920D2199000497B59 /* agreement.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = agreement.html; sourceTree = "<group>"; };
 		451CD313207910D10063A972 /* SharedSequence+unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+unwrap.swift"; sourceTree = "<group>"; };
 		451CD31A207A38F20063A972 /* UIResponder+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Rx.swift"; sourceTree = "<group>"; };
 		451CD31C207A393C0063A972 /* SharedSequence+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedSequence+Operator.swift"; sourceTree = "<group>"; };
@@ -839,6 +845,7 @@
 			children = (
 				457B1B91205FEA1000BEDDF1 /* Assets.xcassets */,
 				457B1B93205FEA1000BEDDF1 /* LaunchScreen.storyboard */,
+				45183EC920D2199000497B59 /* agreement.html */,
 				457B1B96205FEA1000BEDDF1 /* Info.plist */,
 			);
 			path = SupportingFiles;
@@ -1066,6 +1073,8 @@
 				454CD57420C80EB60087C634 /* RegisterPasswordViewController.swift */,
 				45F0A7D520C7BD330085F978 /* RegisterPhoneViewController.swift */,
 				45F0A7D920C7C4720085F978 /* RegisterCodeViewController.swift */,
+				45183EC720D2195900497B59 /* AgreementViewController.swift */,
+				45183EC520D2193000497B59 /* LocalWebView.swift */,
 			);
 			path = RegisterViewController;
 			sourceTree = "<group>";
@@ -1193,6 +1202,7 @@
 				45F0A7E020C7D2B80085F978 /* GetVerifyCode.graphql in Resources */,
 				45F0A7DE20C7CC510085F978 /* Register.graphql in Resources */,
 				457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */,
+				45183ECA20D2199000497B59 /* agreement.html in Resources */,
 				45E240B920862CF6004B58EF /* Medium.graphql in Resources */,
 				45D04F762088C59100AC2226 /* MediumComments.graphql in Resources */,
 				45FC0BE620A418BF006AAF3D /* CommentFragment.graphql in Resources */,
@@ -1366,6 +1376,7 @@
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
 				45517D4420BCDCD900F2D7DE /* UserViewModel.swift in Sources */,
 				451CD32D207BB5D90063A972 /* HomeViewController.swift in Sources */,
+				45183EC820D2195900497B59 /* AgreementViewController.swift in Sources */,
 				45AA3B4820A346DB0032A8CF /* DispachQueue+realm.swift in Sources */,
 				451DD4C12083125A002C509A /* Objective.swift in Sources */,
 				4595F219207A15010040E5FA /* Mutabled.swift in Sources */,
@@ -1389,6 +1400,7 @@
 				451CD32A207BA49B0063A972 /* RouterService+Main.swift in Sources */,
 				45517D4A20BCDD8000F2D7DE /* CollectionLoadFooterView.swift in Sources */,
 				45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */,
+				45183EC620D2193000497B59 /* LocalWebView.swift in Sources */,
 				45517D4820BCDD3E00F2D7DE /* CommentCell.swift in Sources */,
 				451CD322207A3C1D0063A972 /* ApolloClient+Rx.swift in Sources */,
 				451CD339207D0BAA0063A972 /* NotificationsViewController.swift in Sources */,
