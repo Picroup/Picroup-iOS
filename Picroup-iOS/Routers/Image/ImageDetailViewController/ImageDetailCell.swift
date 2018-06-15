@@ -53,7 +53,8 @@ extension ImageDetailCell.ViewModel {
         self.progress = CGFloat(remainTime / 12.0.weeks)
         self.lifeBarMotionIdentifier = "lifeBar_\(medium._id)"
         self.starButtonMotionIdentifier = "starButton_\(medium._id)"
-        self.remainTimeLabelText = "\(Int(remainTime / 1.0.weeks)) 周"
+//        self.remainTimeLabelText = "\(Int(remainTime / 1.0.weeks)) 周"
+        self.remainTimeLabelText = Moment.string(from: medium.endedAt.value)
         self.commentsCountText = "  \(medium.commentsCount.value ?? 0)"
         self.stared = medium.stared.value
         self.animatedChangeProgress = false

@@ -188,6 +188,7 @@
 		45E240B520862981004B58EF /* HideNavigationBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E240B420862981004B58EF /* HideNavigationBarViewController.swift */; };
 		45E240B920862CF6004B58EF /* Medium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45E240B820862CF6004B58EF /* Medium.graphql */; };
 		45E6C24A20863AC3003D7AA8 /* QueryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6C24920863AC3003D7AA8 /* QueryState.swift */; };
+		45EC928120D3C65100A473D4 /* Moment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC928020D3C65100A473D4 /* Moment.swift */; };
 		45F0A7C820C65E8E0085F978 /* DeleteMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45F0A7C720C65E8E0085F978 /* DeleteMedium.graphql */; };
 		45F0A7CA20C65EC30085F978 /* DeleteComment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45F0A7C920C65EC30085F978 /* DeleteComment.graphql */; };
 		45F0A7CD20C662F10085F978 /* Object+Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F0A7CC20C662F10085F978 /* Object+Delete.swift */; };
@@ -398,6 +399,7 @@
 		45E240B420862981004B58EF /* HideNavigationBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideNavigationBarViewController.swift; sourceTree = "<group>"; };
 		45E240B820862CF6004B58EF /* Medium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Medium.graphql; sourceTree = "<group>"; };
 		45E6C24920863AC3003D7AA8 /* QueryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryState.swift; sourceTree = "<group>"; };
+		45EC928020D3C65100A473D4 /* Moment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moment.swift; sourceTree = "<group>"; };
 		45F0A7C720C65E8E0085F978 /* DeleteMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = DeleteMedium.graphql; sourceTree = "<group>"; };
 		45F0A7C920C65EC30085F978 /* DeleteComment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = DeleteComment.graphql; sourceTree = "<group>"; };
 		45F0A7CC20C662F10085F978 /* Object+Delete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Object+Delete.swift"; sourceTree = "<group>"; };
@@ -872,6 +874,7 @@
 		45A039372075C613007498DB /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				45EC927F20D3C63300A473D4 /* Foundation */,
 				45B0205620AE699000BD5D8F /* PrimaryKey */,
 				45FC0BFF20A94A03006AAF3D /* Model */,
 				45AA3B4620A346C10032A8CF /* Realm */,
@@ -1056,6 +1059,14 @@
 				458C050420C91C07004EB2D8 /* ImageGenerator.swift */,
 			);
 			path = UIKit;
+			sourceTree = "<group>";
+		};
+		45EC927F20D3C63300A473D4 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				45EC928020D3C65100A473D4 /* Moment.swift */,
+			);
+			path = Foundation;
 			sourceTree = "<group>";
 		};
 		45F0A7CB20C662B30085F978 /* Realm */ = {
@@ -1359,6 +1370,7 @@
 				45B0204D20AD143E00BD5D8F /* LoginStateObject.swift in Sources */,
 				4595F21B207C883F0040E5FA /* MainTabBarController.swift in Sources */,
 				45B0205320AD72D600BD5D8F /* PhotoPickerController.swift in Sources */,
+				45EC928120D3C65100A473D4 /* Moment.swift in Sources */,
 				451CD330207BB62D0063A972 /* HomeViewPresenter.swift in Sources */,
 				456C5E412061446C005F981B /* ImageUpoader.swift in Sources */,
 				454B4A4C20ABB73900990063 /* MeStateObject.swift in Sources */,
