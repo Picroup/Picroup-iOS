@@ -13,9 +13,9 @@ struct RealmProvider {
     
     static func setup() {
         let config = Realm.Configuration(
-            schemaVersion: 1,
+            schemaVersion: 2,
             migrationBlock: { migration, oldSchemaVersion in
-                if (oldSchemaVersion < 1) { }
+                if (oldSchemaVersion < 2) { }
         })
         
         Realm.Configuration.defaultConfiguration = config

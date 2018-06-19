@@ -46,11 +46,12 @@ class CreateImageViewController: ShowNavigationBarViewController {
                     cell.imageView.image = image
                     cell.progressView.progress = item.progress?.completed ?? 0
                 },
-                state.map { $0.shouldSaveMedium }.distinctUntilChanged().drive(me.presenter.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
+//                state.map { $0.shouldSaveMedium }.distinctUntilChanged().drive(me.presenter.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 state.map { $0.completed }.drive(me.presenter.progressView.rx.progress),
                 ]
             let events: [Signal<CreateImageStateObject.Event>] = [
-                me.presenter.saveButton.rx.tap.asSignal().map { CreateImageStateObject.Event.onTriggerSaveMedium }
+//                me.presenter.saveButton.rx.tap.asSignal().map { CreateImageStateObject.Event.onTriggerSaveMedium }
+                .never()
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
@@ -73,15 +74,17 @@ class CreateImageViewController: ShowNavigationBarViewController {
         })
         
         let states = store.states
+//            .debug("CreateImageState")
         
         Signal.merge(
             uiFeedback(states),
             saveMediums(states)
             )
-            .debug("CreateImageState", trimOutput: true)
+            .debug("CreateImageState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
     
+        presenter.collectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
     }
     
 }

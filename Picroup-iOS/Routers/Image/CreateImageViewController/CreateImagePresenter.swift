@@ -15,7 +15,14 @@ import Material
 class CreateImagePresenter: NSObject {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var saveButton: RaisedButton!
+//    @IBOutlet weak var saveButton: RaisedButton!
     @IBOutlet weak var progressView: UIProgressView!
+}
+
+extension CreateImagePresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CollectionViewLayoutManager.size(in: collectionView.bounds)
+    }
 }
 

@@ -413,6 +413,7 @@
 		45F0A7DD20C7CC510085F978 /* Register.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Register.graphql; sourceTree = "<group>"; };
 		45F0A7DF20C7D2B80085F978 /* GetVerifyCode.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GetVerifyCode.graphql; sourceTree = "<group>"; };
 		45F0A7E120C8C6E60085F978 /* RegularPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularPattern.swift; sourceTree = "<group>"; };
+		45F291D220D8ABA800B9AC6D /* Picroup-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Picroup-iOS.entitlements"; sourceTree = "<group>"; };
 		45FC0BE120A41704006AAF3D /* UserFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserFragment.graphql; sourceTree = "<group>"; };
 		45FC0BE320A41813006AAF3D /* UserDetailFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserDetailFragment.graphql; sourceTree = "<group>"; };
 		45FC0BE520A418BF006AAF3D /* CommentFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommentFragment.graphql; sourceTree = "<group>"; };
@@ -845,6 +846,7 @@
 		45A039332075C4C5007498DB /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				45F291D220D8ABA800B9AC6D /* Picroup-iOS.entitlements */,
 				457B1B91205FEA1000BEDDF1 /* Assets.xcassets */,
 				457B1B93205FEA1000BEDDF1 /* LaunchScreen.storyboard */,
 				45183EC920D2199000497B59 /* agreement.html */,
@@ -1165,6 +1167,11 @@
 					457B1B86205FEA1000BEDDF1 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1632,12 +1639,13 @@
 			baseConfigurationReference = 7A0DB2063FBD3CD08905936E /* Pods-Picroup-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Picroup-iOS/SupportingFiles/Picroup-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6BDKUNMM63;
 				INFOPLIST_FILE = "Picroup-iOS/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.picroup.Picroup-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.picroup.PicroupiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1649,12 +1657,13 @@
 			baseConfigurationReference = 0C1CA8B77EB5486794A21137 /* Pods-Picroup-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Picroup-iOS/SupportingFiles/Picroup-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6BDKUNMM63;
 				INFOPLIST_FILE = "Picroup-iOS/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.picroup.Picroup-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.picroup.PicroupiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

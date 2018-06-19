@@ -46,8 +46,8 @@ final class CreateImageStateObject: PrimaryObject {
     @objc dynamic var finished: Int = 0
     @objc dynamic var triggerSaveMediumQuery: Bool = false
 
-    @objc dynamic var myMedia: CursorMediaObject?
-    @objc dynamic var myInterestedMedia: CursorMediaObject?
+//    @objc dynamic var myMedia: CursorMediaObject?
+//    @objc dynamic var myInterestedMedia: CursorMediaObject?
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
 
@@ -89,8 +89,9 @@ extension CreateImageStateObject {
                 "imageKeys": imageKeys,
                 "saveMediumStates": imageKeys.map { ["_id": $0, "progress": [:]] },
                 "finished": 0,
-                "myMedia": ["_id": PrimaryKey.myMediaId],
-                "myInterestedMedia": ["_id": PrimaryKey.myInterestedMediaId],
+                "triggerSaveMediumQuery": true,
+//                "myMedia": ["_id": PrimaryKey.myMediaId],
+//                "myInterestedMedia": ["_id": PrimaryKey.myInterestedMediaId],
                 "needUpdate": ["_id": _id],
                 "popRoute": ["_id": _id],
                 "snackbar": ["_id": _id],
