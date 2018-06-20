@@ -21,9 +21,9 @@ extension LoadFooterViewState {
         if cursor != nil && trigger {
             return .loading
         }
-        if cursor == nil && !trigger && items?.isEmpty == false {
-            return .message("🙆🏻‍♀️")
-        }
+//        if cursor == nil && !trigger && items?.isEmpty == false {
+//            return .message("🙆🏻‍♀️")
+//        }
         return .empty
     }
 }
