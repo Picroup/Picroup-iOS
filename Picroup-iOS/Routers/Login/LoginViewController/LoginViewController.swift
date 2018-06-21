@@ -13,9 +13,9 @@ import RxCocoa
 import RxFeedback
 import Apollo
 
-class LoginViewController: UIViewController {
+class LoginViewController: BaseViewController {
     
-    fileprivate var presenter: LoginViewPresenter!
+    @IBOutlet fileprivate var presenter: LoginViewPresenter!
     fileprivate typealias Feedback = (Driver<LoginStateObject>) -> Signal<LoginStateObject.Event>
 
     override func viewDidLoad() {
@@ -27,40 +27,41 @@ class LoginViewController: UIViewController {
         
         guard let store = try? LoginStateStore() else { return }
         
-        presenter = LoginViewPresenter(view: view)
+        presenter.setup(view: view, navigationItem: navigationItem)
         
-        let uiFeedback: Feedback = bind(self) { [snackbarController = snackbarController!] (me, state) in
+        weak var weakSelf = self
+        let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
-                state.map { $0.username }.distinctUntilChanged().drive(presenter.usernameField.rx.text),
-                state.map { $0.password }.distinctUntilChanged().drive(presenter.passwordField.rx.text),
+                state.map { $0.username }.asObservable().take(1).bind(to: presenter.usernameField.rx.text),
+                state.map { $0.password }.asObservable().take(1).bind(to: presenter.passwordField.rx.text),
                 state.map { $0.shouldHideUseenameWarning }.distinctUntilChanged().drive(presenter.usernameField.detailLabel.rx.isHidden),
                 state.map { $0.shouldHidePasswordWarning }.distinctUntilChanged().drive(presenter.passwordField.detailLabel.rx.isHidden),
-                state.map { $0.isLoginButtonEnabled }.distinctUntilChanged().drive(presenter.raisedButton.rx.isEnabledWithBackgroundColor(.secondary)),
-                state.map { $0.triggerLoginQuery }.distinctUntilChanged().mapToVoid().drive(presenter.usernameField.rx.resignFirstResponder()),
-                state.map { $0.triggerLoginQuery }.distinctUntilChanged().mapToVoid().drive(presenter.passwordField.rx.resignFirstResponder()),
-                state.map { $0.session?.currentUser }.distinctUnwrap().map { _ in "登录成功" }.drive(snackbarController.rx.snackbarText),
-                state.map { $0.loginError }.distinctUnwrap().drive(snackbarController.rx.snackbarText),
-                state.map { $0.session?.currentUser }.distinctUnwrap().mapToVoid().delay(2.3).drive(me.rx.dismiss(animated: true)),
-                presenter.closeButton.rx.tap.bind(to: me.rx.dismiss(animated: true))
+                state.map { $0.isLoginButtonEnabled }.distinctUntilChanged().drive(presenter.loginButton.rx.isEnabledWithBackgroundColor(.secondary)),
+                presenter.loginButton.rx.tap.asSignal().emit(to: presenter.usernameField.rx.resignFirstResponder()),
+                presenter.loginButton.rx.tap.asSignal().emit(to: presenter.passwordField.rx.resignFirstResponder()),
+                presenter.registerButton.rx.tap.asSignal().emit(onNext: {
+                    let vc = RouterService.Login.registerUsernameViewController()
+                    weakSelf?.navigationController?.pushViewController(vc, animated: true)
+                })
                 ]
             let events: [Signal<LoginStateObject.Event>] = [
                 presenter.usernameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangeUsername),
                 presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangePassword),
-                presenter.raisedButton.rx.tap.asSignal().map { LoginStateObject.Event.onTriggerLogin }
+                presenter.loginButton.rx.tap.asSignal().map { .onTriggerLogin },
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryLogin: Feedback = react(query: { $0.loginQuery }) { query in
-            return ApolloClient.shared.rx.fetch(query: query)
+        let queryLogin: Feedback = react(query: { $0.loginQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
+            return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.login?.fragments.userDetailFragment }.map {
                     guard let userDetailFragment = $0 else { throw LoginError.usernameOrPasswordIncorrect }
                     return userDetailFragment
                 }
                 .map(LoginStateObject.Event.onLoginSuccess)
                 .asSignal(onErrorReturnJust: LoginStateObject.Event.onLoginError)
-        }
+        })
 
         let states = store.states
         
@@ -89,16 +90,17 @@ private extension LoginStateObject {
     }
 }
 
-extension Reactive where Base: SnackbarController {
-    var snackbarText: Binder<String> {
-        return Binder(base) { snackbarController, text in
-//            let undoButton = FlatButton(title: "Undo", titleColor: Color.yellow.base)
-//            undoButton.pulseAnimation = .backing
-//            undoButton.titleLabel?.font = snackbarController.snackbar.textLabel.font
-//            snackbarController.snackbar.rightViews = [undoButton]
-            snackbarController.snackbar.text = text
-            snackbarController.animate(snackbar: .visible)
-            snackbarController.animate(snackbar: .hidden, delay: 2)
-        }
-    }
-}
+//extension Reactive where Base: SnackbarController {
+//    var snackbarText: Binder<String> {
+//        return Binder(base) { snackbarController, text in
+////            let undoButton = FlatButton(title: "Undo", titleColor: Color.yellow.base)
+////            undoButton.pulseAnimation = .backing
+////            undoButton.titleLabel?.font = snackbarController.snackbar.textLabel.font
+////            snackbarController.snackbar.rightViews = [undoButton]
+//            snackbarController.snackbar.text = text
+//            snackbarController.animate(snackbar: .visible)
+//            snackbarController.animate(snackbar: .hidden, delay: 2)
+//        }
+//    }
+//}
+

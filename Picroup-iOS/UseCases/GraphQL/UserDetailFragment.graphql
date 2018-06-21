@@ -1,6 +1,7 @@
 fragment UserDetailFragment on User {
     _id
     username
+    displayName
     avatarId
     followingsCount
     followersCount

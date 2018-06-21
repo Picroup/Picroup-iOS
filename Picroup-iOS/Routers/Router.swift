@@ -50,14 +50,8 @@ final class Router {
         
         _ = store.reputationsRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .drive(Binder(self) { (me, _) in
-                let vc = RouterService.Main.reputationsViewController()
+                let vc = RouterService.Me.reputationsViewController()
                 me.currentNavigationController?.pushViewController(vc, animated: true)
-            })
-        
-        _ = store.pickImageRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
-            .drive(Binder(self) { (me, _) in
-                let vc = RouterService.Image.photoPickerController()
-                me.currentNavigationController?.present(vc, animated: true)
             })
         
         _ = store.createImageRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
@@ -65,7 +59,8 @@ final class Router {
             .drive(Binder(self) { (me, imageKeys) in
                 print(imageKeys)
                 let vc = RouterService.Image.createImageViewController(dependency: imageKeys)
-                me.currentViewController?.present(SnackbarController(rootViewController: vc), animated: true)
+                vc.hidesBottomBarWhenPushed = true
+                me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
         _ = store.userRoute().distinctUntilChanged { $0.0.version ?? "" }.skip(1)
@@ -74,42 +69,62 @@ final class Router {
                 let vc: UIViewController
                 switch (isCurrentUser, userRoute.userId) {
                 case (true, _):
-                    vc = RouterService.Main.meViewController()
+                    vc = RouterService.Me.meViewController()
                     vc.hidesBottomBarWhenPushed = true
                     me.currentNavigationController?.pushViewController(vc, animated: true)
                 case (false, let userId?):
-                    vc = RouterService.Main.userViewController(dependency: userId)
+                    vc = RouterService.Me.userViewController(dependency: userId)
                     me.currentNavigationController?.pushViewController(vc, animated: true)
                 default:
                     break
                 }
             })
         
+        _ = store.updateUserRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .drive(Binder(self) { (me, _) in
+                let vc = RouterService.Me.updateUserViewController()
+                me.currentNavigationController?.pushViewController(vc, animated: true)
+            })
+        
         _ = store.userFollowingsRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .map { $0.userId }.unwrap()
             .drive(Binder(self) { (me, userId) in
-                let vc = RouterService.Main.followingsViewController(dependency: userId)
+                let vc = RouterService.Me.followingsViewController(dependency: userId)
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
         _ = store.userFollowersRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .map { $0.userId }.unwrap()
             .drive(Binder(self) { (me, userId) in
-                let vc = RouterService.Main.followersViewController(dependency: userId)
+                let vc = RouterService.Me.followersViewController(dependency: userId)
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
         _ = store.searchUserRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .drive(Binder(self) { (me, _) in
-                let vc = RouterService.Main.searchUserViewController()
+                let vc = RouterService.Me.searchUserViewController()
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
         _ = store.loginRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .drive(Binder(self) { (me, _) in
                 let vc = RouterService.Login.loginViewController()
-                let sc = SnackbarController(rootViewController: vc)
-                me.currentNavigationController?.present(sc, animated: true)
+                vc.hidesBottomBarWhenPushed = true
+                me.currentNavigationController?.pushViewController(vc, animated: true)
+            })
+        
+        _ = store.feedbackRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .drive(Binder(self) { (me, route) in
+                let dependency = (route.kind, route.toUserId, route.mediumId, route.commentId)
+                let vc = RouterService.Main.feedbackViewController(dependency: dependency)
+                me.currentNavigationController?.pushViewController(vc, animated: true)
+            })
+        
+        _ = store.aboutAppRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .drive(Binder(self) { (me, _) in
+                let vc = RouterService.Main.aboutAppViewController()
+                vc.hidesBottomBarWhenPushed = true
+                me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
         _ = store.popRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
@@ -125,7 +140,6 @@ final class Router {
                 me.currentNavigationController?.snackbarController?.animate(snackbar: .hidden, delay: 3)
             })
         
-        
         _ = store.session().debug("session").map { $0.isLogin }.distinctUntilChanged().drive(Binder(self) { (me, isLogin) in
             switch (isLogin, me.mainTabBarController) {
             case (false, nil):
@@ -137,20 +151,20 @@ final class Router {
                     return result
                 }()
                 me.mainTabBarController = mtvc
-                me._window.rootViewController = mtvc
+                me._window.rootViewController = SnackbarController(rootViewController: mtvc)
             case (true, nil):
                 let mtvc: MainTabBarController = {
                     let result = RouterService.Main.mainTabBarController()
                     result.viewControllers = [
                         RouterService.Main.homeMenuViewController(),
                         RouterService.Main.rankViewController(),
-                        RouterService.Main.notificationsViewController(),
-                        RouterService.Main.meNavigationViewController(),
+                        RouterService.Me.notificationsViewController(),
+                        RouterService.Me.meNavigationViewController(),
                     ]
                     return result
                 }()
                 me.mainTabBarController = mtvc
-                me._window.rootViewController = mtvc
+                me._window.rootViewController = SnackbarController(rootViewController: mtvc)
             case (false, let mainTabBarController?):
                 mainTabBarController.viewControllers = [
                     RouterService.Main.rankViewController(),
@@ -159,12 +173,12 @@ final class Router {
                 mainTabBarController.viewControllers = [
                     RouterService.Main.homeMenuViewController(),
                     RouterService.Main.rankViewController(),
-                    RouterService.Main.notificationsViewController(),
-                    RouterService.Main.meNavigationViewController(),
+                    RouterService.Me.notificationsViewController(),
+                    RouterService.Me.meNavigationViewController(),
                 ]
                 
             }
         })
-        
     }
 }
+

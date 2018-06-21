@@ -31,10 +31,13 @@ final class UserStateObject: PrimaryObject {
     @objc dynamic var unfollowUserVersion: String?
     @objc dynamic var unfollowUserError: String?
     @objc dynamic var triggerUnfollowUserQuery: Bool = false
+    
+    @objc dynamic var needUpdate: NeedUpdateStateObject?
 
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
     @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
+    @objc dynamic var feedbackRoute: FeedbackRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
     
     @objc dynamic var snackbar: SnackbarObject?
@@ -55,6 +58,10 @@ extension UserStateObject {
     }
     var shouldQueryMoreUserMedia: Bool {
         return !triggerUserMediaQuery && hasMoreMyMedia
+    }
+    var isUserMediaEmpty: Bool {
+        guard let items = userMedia?.items else { return false }
+        return !triggerUserMediaQuery && userMediaError == nil && items.isEmpty
     }
     var hasMoreMyMedia: Bool {
         return userMedia?.cursor.value != nil
@@ -93,9 +100,11 @@ extension UserStateObject {
                 "session": ["_id": _id],
                 "user": ["_id": userId],
                 "userMedia": ["_id": PrimaryKey.userMediaId(userId)],
+                "needUpdate": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
                 "userFollowingsRoute": ["_id": _id],
                 "userFollowersRoute": ["_id": _id],
+                "feedbackRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 "snackbar": ["_id": _id],
                 ]
@@ -128,6 +137,7 @@ extension UserStateObject {
         case onTriggerShowImage(String)
         case onTriggerShowUserFollowings
         case onTriggerShowUserFollowers
+        case onTriggerUserFeedback
         case onTriggerPop
     }
 }
@@ -184,9 +194,9 @@ extension UserStateObject: IsFeedbackStateObject {
             followUserVersion = UUID().uuidString
             followUserError = nil
             triggerFollowUserQuery = false
-//            guard let medium = medium else { return }
-//            myStaredMedia?.items.insert(medium, at: 0)
-            snackbar?.message = "已关注 \(user?.username ?? "")"
+            needUpdate?.myInterestedMedia = true
+
+            snackbar?.message = "已关注 @\(user?.username ?? "")"
             snackbar?.version = UUID().uuidString
         case .onFollowUserError(let error):
             followUserVersion = nil
@@ -203,9 +213,9 @@ extension UserStateObject: IsFeedbackStateObject {
             unfollowUserVersion = UUID().uuidString
             unfollowUserError = nil
             triggerUnfollowUserQuery = false
-            //            guard let medium = medium else { return }
-        //            myStaredMedia?.items.insert(medium, at: 0)
-            snackbar?.message = "已取消关注 \(user?.username ?? "")"
+            needUpdate?.myInterestedMedia = true
+
+            snackbar?.message = "已取消关注 @\(user?.username ?? "")"
             snackbar?.version = UUID().uuidString
         case .onUnfollowUserError(let error):
             unfollowUserVersion = nil
@@ -221,6 +231,8 @@ extension UserStateObject: IsFeedbackStateObject {
         case .onTriggerShowUserFollowers:
             userFollowersRoute?.userId = user?._id
             userFollowersRoute?.version = UUID().uuidString
+        case .onTriggerUserFeedback:
+            feedbackRoute?.triggerUser(toUserId: userId)
         case .onTriggerPop:
             popRoute?.version = UUID().uuidString
         }
@@ -250,7 +262,7 @@ final class UserStateStore {
     func userMediaItems() -> Driver<[MediumObject]> {
         guard let items = _state.userMedia?.items else { return .empty() }
         return Observable.collection(from: items)
-            .delaySubscription(0.3, scheduler: MainScheduler.instance)
+//            .delaySubscription(0.3, scheduler: MainScheduler.instance)
             .asDriver(onErrorDriveWith: .empty())
             .map { $0.toArray() }
     }

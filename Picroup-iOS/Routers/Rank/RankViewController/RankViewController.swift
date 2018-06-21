@@ -14,7 +14,7 @@ import RxFeedback
 import Material
 import Apollo
 
-class RankViewController: UIViewController {
+class RankViewController: BaseViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     private var presenter: RankViewPresenter!
@@ -24,7 +24,8 @@ class RankViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = RankViewPresenter(collectionView: collectionView, navigationItem: navigationItem)
+        presenter = RankViewPresenter()
+        presenter.setup(collectionView: collectionView, navigationItem: navigationItem)
         setupRxFeedback()
     }
     
@@ -33,23 +34,25 @@ class RankViewController: UIViewController {
         guard let store = try? RankStateStore() else { return }
         
         typealias Section = RankViewPresenter.Section
-        
+                
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
+            let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions = [
-                store.rankMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items),
-                state.map { $0.isReloading }.drive(presenter.refreshControl.rx.isRefreshing),
+//                store.rankMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState.asDriver())),
+                store.hotMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState.asDriver())),
+                state.map { $0.isReloadHotMedia }.drive(presenter.refreshControl.rx.isRefreshing),
+                state.map { $0.footerState }.drive(footerState),
+                state.map { $0.session?.isLogin ?? false }.drive(presenter.userButton.rx.isHidden),
             ]
             let events: [Signal<RankStateObject.Event>] = [
                 state.flatMapLatest {
-                    $0.shouldQueryMoreRankedMedia
+                    $0.shouldQueryMoreHotMedia
                         ? presenter.collectionView.rx.triggerGetMore
                         : .empty()
                 }.map { .onTriggerGetMore },
                 presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReload },
                 presenter.collectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
-                presenter.categoryButton.rx.tap.asSignal().withLatestFrom(state)
-                    .map { $0.session?.isLogin ?? false }
-                    .map { isLogin in isLogin ? .onLogout : .onTriggerLogin },
+                presenter.userButton.rx.tap.asSignal().map { .onTriggerLogin },
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
@@ -65,12 +68,12 @@ class RankViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryMedia: Feedback = react(query: { $0.rankedMediaQuery }) { query in
+        let queryMedia: Feedback = react(query: { $0.hotMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.rankedMedia.fragments.cursorMediaFragment }.unwrap()
-                .map(RankStateObject.Event.onGetData(isReload: query.cursor == nil))
+                .map { $0?.data?.hotMedia.fragments.cursorMediaFragment }.unwrap()
+                .map(RankStateObject.Event.onGetData)
                 .asSignal(onErrorReturnJust: RankStateObject.Event.onGetError)
-        }
+        })
         
         let states = store.states
         
@@ -82,6 +85,23 @@ class RankViewController: UIViewController {
             .debug("RankState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
+        
+        presenter.collectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
     }
+}
 
+extension RankStateObject {
+    
+    var footerState: LoadFooterViewState {
+        if isReloadHotMedia {
+            return .empty
+        }
+        if !isReloadHotMedia && triggerHotMediaQuery {
+            return .loading
+        }
+        if hotMediaError != nil {
+            return .message("💁🏻‍♀️ 加载失败，请重试")
+        }
+        return .empty
+    }
 }

@@ -4,3 +4,4 @@ query SearchUser($username: String!, $followedByUserId: ID!) {
         ...UserFragment
     }
 }
+

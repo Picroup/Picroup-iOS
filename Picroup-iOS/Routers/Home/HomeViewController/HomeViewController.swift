@@ -13,7 +13,7 @@ import RxCocoa
 import RxFeedback
 import Apollo
 
-class HomeViewController: UIViewController {
+class HomeViewController: BaseViewController {
     
     fileprivate typealias Feedback = (Driver<HomeStateObject>) -> Signal<HomeStateObject.Event>
     @IBOutlet var presenter: HomeViewPresenter!
@@ -30,35 +30,41 @@ class HomeViewController: UIViewController {
 
         guard let store = try? HomeStateStore() else { return }
         
+        weak var weakSelf = self
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
             let _events = PublishRelay<HomeStateObject.Event>()
+            let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions = [
-                store.myInterestedMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events)),
+                store.myInterestedMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events, footerState.asDriver())),
                 state.map { $0.isReloading }.drive(presenter.refreshControl.rx.isRefreshing),
-                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true))
-            ]
+                state.map { $0.footerState }.drive(footerState),
+                state.map { $0.isMyInterestedMediaEmpty }.drive(presenter.isMyInterestedMediaEmpty),
+                presenter.fabButton.rx.tap.asSignal().map { false }.emit(to: me.rx.setNavigationBarHidden(animated: true)),
+                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
+                ]
             let events: [Signal<HomeStateObject.Event>] = [
                 .just(.onTriggerReloadMyInterestedMedia),
                 _events.asSignal(),
+                me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMyInterestedMediaIfNeeded },
                 state.flatMapLatest {
                     $0.shouldQueryMoreMyInterestedMedia
                         ? presenter.collectionView.rx.triggerGetMore
                         : .empty()
                     }.map { .onTriggerGetMoreMyInterestedMedia },
                 presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReloadMyInterestedMedia },
-                presenter.fabButton.rx.tap.asSignal().map { .onTriggerPickImage },
+                presenter.fabButton.rx.tap.asSignal().flatMapLatest { PhotoPickerProvider.pickImages(from: weakSelf, imageLimit: 10) } .map(HomeStateObject.Event.onTriggerCreateImage),
                 presenter.addUserButton.rx.tap.asSignal().map { .onTriggerSearchUser },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryMyInterestedMedia: Feedback = react(query: { $0.myInterestedMediaQuery }) { query in
+        let queryMyInterestedMedia: Feedback = react(query: { $0.myInterestedMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.interestedMedia.fragments.cursorMediaFragment }.unwrap()
                 .map(HomeStateObject.Event.onGetMyInterestedMedia(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: HomeStateObject.Event.onGetMyInterestedMediaError)
-        }
+        })
         
         let states = store.states
         
@@ -74,5 +80,17 @@ class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
+}
+
+extension HomeStateObject {
+    
+    var footerState: LoadFooterViewState {
+        return LoadFooterViewState.create(
+            cursor: myInterestedMedia?.cursor.value,
+            items: myInterestedMedia?.items,
+            trigger: triggerMyInterestedMediaQuery,
+            error: myInterestedMediaError
+        )
+    }
 }
 

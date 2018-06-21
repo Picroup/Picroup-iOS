@@ -15,7 +15,8 @@ import RxRealm
 final class ImageCommentsStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
-    
+    @objc dynamic var isMediumDeleted: Bool = false
+
     @objc dynamic var medium: MediumObject?
     
     @objc dynamic var comments: CursorCommentsObject?
@@ -27,7 +28,14 @@ final class ImageCommentsStateObject: PrimaryObject {
     @objc dynamic var saveCommentError: String?
     @objc dynamic var triggerSaveComment: Bool = false
     
+    @objc dynamic var deleteComment: CommentObject?
+    @objc dynamic var deleteCommentError: String?
+    @objc dynamic var triggerDeleteComment: Bool = false
+    
+    @objc dynamic var feedbackRoute: FeedbackRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
+    
+    @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension ImageCommentsStateObject {
@@ -39,16 +47,26 @@ extension ImageCommentsStateObject {
     var shouldQueryMoreComments: Bool {
         return !triggerCommentsQuery && hasMoreComments
     }
+    var isCommentsEmpty: Bool {
+        guard let items = comments?.items else { return false }
+        return !triggerCommentsQuery && commentsError == nil && items.isEmpty
+    }
     var hasMoreComments: Bool {
         return comments?.cursor.value != nil
     }
     var shouldSendComment: Bool {
-        return !triggerSaveComment && !saveCommentContent.isEmpty
+        return !triggerSaveComment && saveCommentContent.matchExpression(RegularPattern.default)
     }
     public var saveCommentQuery: SaveCommentMutation? {
         guard let userId = session?.currentUser?._id else { return nil }
         let next = SaveCommentMutation(userId: userId, mediumId: mediumId, content: saveCommentContent)
         return triggerSaveComment ? next : nil
+    }
+    public var deleteCommentQuery: DeleteCommentMutation? {
+        guard deleteComment?.userId == session?.currentUser?._id,
+            let commentId = deleteComment?._id else { return nil }
+        let next = DeleteCommentMutation(commentId: commentId)
+        return triggerDeleteComment ? next : nil
     }
 }
 
@@ -62,7 +80,9 @@ extension ImageCommentsStateObject {
                 "session": ["_id": _id],
                 "medium": ["_id": mediumId],
                 "comments": ["_id": PrimaryKey.commentsId(mediumId)],
+                "feedbackRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
+                "snackbar": ["_id": _id],
                 ]
             return try realm.update(ImageCommentsStateObject.self, value: value)
         }
@@ -74,8 +94,8 @@ extension ImageCommentsStateObject {
     enum Event {
         case onTriggerReloadData
         case onTriggerGetMoreData
-        case onGetReloadData(CursorCommentsFragment)
-        case onGetMoreData(CursorCommentsFragment)
+        case onGetReloadData(CursorCommentsFragment?)
+        case onGetMoreData(CursorCommentsFragment?)
         case onGetDataError(Error)
         
         case onTriggerSaveComment
@@ -83,14 +103,19 @@ extension ImageCommentsStateObject {
         case onSaveCommentError(Error)
         
         case onChangeCommentContent(String)
+        
+        case onTriggerDeleteComment(String)
+        case onDeleteCommentSuccess(String)
+        case onDeleteCommentError(Error)
 
+        case onTriggerCommentFeedback(String)
         case onTriggerPop
     }
 }
 
 extension ImageCommentsStateObject.Event {
     
-    static func onGetData(isReload: Bool) -> (CursorCommentsFragment) -> ImageCommentsStateObject.Event {
+    static func onGetData(isReload: Bool) -> (CursorCommentsFragment?) -> ImageCommentsStateObject.Event {
         return { isReload ? .onGetReloadData($0) : .onGetMoreData($0) }
     }
 }
@@ -108,11 +133,21 @@ extension ImageCommentsStateObject: IsFeedbackStateObject {
             commentsError = nil
             triggerCommentsQuery = true
         case .onGetReloadData(let data):
-            comments = CursorCommentsObject.create(from: data, id: PrimaryKey.commentsId(_id))(realm)
+            if let data = data {
+                comments = CursorCommentsObject.create(from: data, id: PrimaryKey.commentsId(_id))(realm)
+            } else {
+                medium?.delete()
+                isMediumDeleted = true
+            }
             commentsError = nil
             triggerCommentsQuery = false
         case .onGetMoreData(let data):
-            comments?.merge(from: data)(realm)
+            if let data = data {
+                comments?.merge(from: data)(realm)
+            } else {
+                medium?.delete()
+                isMediumDeleted = true
+            }
             commentsError = nil
             triggerCommentsQuery = false
         case .onGetDataError(let error):
@@ -137,6 +172,25 @@ extension ImageCommentsStateObject: IsFeedbackStateObject {
             triggerSaveComment = false
         case .onChangeCommentContent(let content):
             saveCommentContent = content
+            
+        case .onTriggerDeleteComment(let commentId):
+            guard !triggerDeleteComment else { return }
+            deleteComment = realm.object(ofType: CommentObject.self, forPrimaryKey: commentId)
+            deleteCommentError = nil
+            triggerDeleteComment = true
+        case .onDeleteCommentSuccess(let commentId):
+            realm.object(ofType: CommentObject.self, forPrimaryKey: commentId)?.delete()
+            medium?.commentsCount.value?.increase(-1)
+            deleteCommentError = nil
+            triggerDeleteComment = false
+        case .onDeleteCommentError(let error):
+            deleteCommentError = error.localizedDescription
+            triggerDeleteComment = false
+            snackbar?.message = error.localizedDescription
+            snackbar?.version = UUID().uuidString
+            
+        case .onTriggerCommentFeedback(let commentId):
+            feedbackRoute?.triggerComment(commentId: commentId)
         case .onTriggerPop:
             popRoute?.version = UUID().uuidString
         }

@@ -44,12 +44,16 @@ final class CreateImageStateObject: PrimaryObject {
     let imageKeys = List<String>()
     let saveMediumStates = List<SaveMediumStateObject>()
     @objc dynamic var finished: Int = 0
-
     @objc dynamic var triggerSaveMediumQuery: Bool = false
 
-    @objc dynamic var myMedia: CursorMediaObject?
-    @objc dynamic var myInterestedMedia: CursorMediaObject?
+//    @objc dynamic var myMedia: CursorMediaObject?
+//    @objc dynamic var myInterestedMedia: CursorMediaObject?
+    
+    @objc dynamic var needUpdate: NeedUpdateStateObject?
 
+    @objc dynamic var popRoute: PopRouteObject?
+    
+    @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension CreateImageStateObject {
@@ -61,12 +65,18 @@ extension CreateImageStateObject {
         return !triggerSaveMediumQuery
     }
     var allFinished: Bool { return finished == imageKeys.count }
-    var allSuccess: Void? {
-        let failState = saveMediumStates.first(where: { $0.savedError != nil })
-        return (allFinished && failState == nil) ? () : nil
+    var completed: Float {
+        let count = saveMediumStates.count
+        let allProgress = saveMediumStates.reduce(0) { $0 + ($1.progress?.completed ?? 0)
+        }
+        if count > 0 {
+            return Float(allProgress) / Float(count)
+        }
+        else {
+            return 0
+        }
     }
 }
-
 
 extension CreateImageStateObject {
     
@@ -79,8 +89,12 @@ extension CreateImageStateObject {
                 "imageKeys": imageKeys,
                 "saveMediumStates": imageKeys.map { ["_id": $0, "progress": [:]] },
                 "finished": 0,
-                "myMedia": ["_id": PrimaryKey.myMediaId],
-                "myInterestedMedia": ["_id": PrimaryKey.myInterestedMediaId],
+                "triggerSaveMediumQuery": true,
+//                "myMedia": ["_id": PrimaryKey.myMediaId],
+//                "myInterestedMedia": ["_id": PrimaryKey.myInterestedMediaId],
+                "needUpdate": ["_id": _id],
+                "popRoute": ["_id": _id],
+                "snackbar": ["_id": _id],
                 ]
             return try realm.update(CreateImageStateObject.self, value: value)
         }
@@ -107,14 +121,22 @@ extension CreateImageStateObject: IsFeedbackStateObject {
         case .onProgress(let progress, let index):
             saveMediumStates[index].progress?.bytesWritten = Int(progress.bytesWritten)
             saveMediumStates[index].progress?.totalBytes = Int(progress.totalBytes)
+            triggerSaveMediumQuery = true // trigger state update
         case .onSavedMediumSuccess(let medium, let index):
-            let mediumObject = realm.create(MediumObject.self, value: medium.snapshot, update: true)
+            let mediumObject = realm.create(MediumObject.self, value: medium.rawSnapshot, update: true)
             saveMediumStates[index].savedMedium = mediumObject
-            myMedia?.items.insert(mediumObject, at: 0)
-            myInterestedMedia?.items.insert(mediumObject, at: 0)
             finished += 1
             if allFinished {
                 triggerSaveMediumQuery = false
+                needUpdate?.myInterestedMedia = true
+                needUpdate?.myMedia = true
+                let failState = saveMediumStates.first(where: { $0.savedError != nil })
+                let allSuccess = failState == nil
+                if allSuccess {
+                    snackbar?.message = "已分享"
+                    snackbar?.version = UUID().uuidString
+                    popRoute?.version = UUID().uuidString
+                }
             }
         case .onSavedMediumError(let error, let index):
             saveMediumStates[index].savedMedium = nil
@@ -122,6 +144,8 @@ extension CreateImageStateObject: IsFeedbackStateObject {
             finished += 1
             if allFinished {
                 triggerSaveMediumQuery = false
+                needUpdate?.myInterestedMedia = true
+                needUpdate?.myMedia = true
             }
         }
     }

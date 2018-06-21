@@ -24,6 +24,7 @@ final class HomeViewPresenter: NSObject {
     var addUserButton: IconButton!
     var refreshControl: UIRefreshControl!
     weak var navigationItem: UINavigationItem!
+    @IBOutlet weak var emptyView: UIView!
 
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
@@ -60,8 +61,10 @@ final class HomeViewPresenter: NSObject {
     typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
-    var items: (PublishRelay<HomeStateObject.Event>) -> (Observable<[Section]>) -> Disposable {
-        return { [collectionView] _events in
+    var dataSource: DataSource?
+
+    var items: (PublishRelay<HomeStateObject.Event>, Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
+        return { [weak self, collectionView] _events, loadState in
             let dataSource = DataSource(
                 configureCell: { dataSource, collectionView, indexPath, item in
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeImageCell", for: indexPath) as! HomeImageCell
@@ -75,10 +78,16 @@ final class HomeViewPresenter: NSObject {
                     })
                     return cell
             },
-                configureSupplementaryView: { dataSource, collectionView, title, indexPath in
-                    return UICollectionReusableView()
-            })
+                configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
+            )
+            self?.dataSource = dataSource
             return collectionView!.rx.items(dataSource: dataSource)
+        }
+    }
+    
+    var isMyInterestedMediaEmpty: Binder<Bool> {
+        return Binder(self) { presenter, isEmpty in
+            presenter.collectionView.backgroundView = isEmpty ? presenter.emptyView : nil
         }
     }
 }
@@ -86,9 +95,11 @@ final class HomeViewPresenter: NSObject {
 extension HomeViewPresenter: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let dataSource = dataSource else { return .zero }
+        let medium = dataSource[indexPath]
         let width = collectionView.bounds.width - 16
-        let imageHeight = width
-        let height = imageHeight + 8 + 56 + 1 + 48
+        let imageHeight = width / CGFloat(medium.detail?.aspectRatio.value ?? 1)
+        let height = imageHeight + 8 + 56
         return CGSize(width: width, height: height)
     }
 }

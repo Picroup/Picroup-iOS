@@ -13,6 +13,21 @@ import RxCocoa
 import RxGesture
 import RxFeedback
 
+private func mapMoreButtonTapToEvent(sender: UIView) -> (UserStateObject) -> Signal<UserStateObject.Event> {
+    return { state in
+        guard state.session?.isLogin == true else { return .empty() }
+        return DefaultWireframe.shared
+            .promptFor(sender: sender, cancelAction: "取消", actions: ["举报"])
+            .asSignalOnErrorRecoverEmpty()
+            .flatMap { action in
+                switch action {
+                case "举报":     return .just(.onTriggerUserFeedback)
+                default:        return .empty()
+                }
+        }
+    }
+}
+
 class UserViewController: HideNavigationBarViewController {
 
     typealias Dependency = String
@@ -37,19 +52,16 @@ class UserViewController: HideNavigationBarViewController {
         typealias Section = UserPresenter.Section
         
         let uiFeedback: Feedback = bind(presenter) { (presenter, state) -> Bindings<UserStateObject.Event> in
-            let meViewModel = state.map { UserViewModel(user: $0.user) }
+            let myMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions: [Disposable] = [
-                meViewModel.map { $0.avatarId }.drive(presenter.userAvatarImageView.rx.imageMinioId),
-                meViewModel.map { $0.username }.drive(presenter.displaynameLabel.rx.text),
-                meViewModel.map { $0.username }.drive(presenter.usernameLabel.rx.text),
-                meViewModel.map { $0.reputation }.drive(presenter.reputationCountLabel.rx.text),
-                meViewModel.map { $0.followersCount }.drive(presenter.followersCountLabel.rx.text),
-                meViewModel.map { $0.followingsCount }.drive(presenter.followingsCountLabel.rx.text),
-                meViewModel.map { $0.followed }.drive(StarButtonPresenter.isSelected(base: presenter.followButton)),
-                store.userMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems),
+                state.map { $0.user }.drive(presenter.user),
+                store.userMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems(myMediaFooterState.asDriver())),
+                state.map { $0.myMediaFooterState }.drive(myMediaFooterState),
+                state.map { $0.isUserMediaEmpty }.drive(presenter.isUserMediaEmpty),
                 ]
             let events: [Signal<UserStateObject.Event>] = [
                 .of(.onTriggerReloadUser, .onTriggerReloadUserMedia),
+                presenter.moreButton.rx.tap.asSignal().withLatestFrom(state).flatMapLatest(mapMoreButtonTapToEvent(sender: presenter.moreButton)),
                 state.flatMapLatest {
                     $0.shouldQueryMoreUserMedia
                         ? presenter.myMediaCollectionView.rx.triggerGetMore
@@ -73,33 +85,33 @@ class UserViewController: HideNavigationBarViewController {
             
         }
         
-        let queryUser: Feedback = react(query: { $0.userQuery }) { query in
+        let queryUser: Feedback = react(query: { $0.userQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user }.unwrap()
                 .map(UserStateObject.Event.onGetUserSuccess)
                 .asSignal(onErrorReturnJust: UserStateObject.Event.onGetUserError)
-        }
+        })
         
-        let queryUserMedia: Feedback = react(query: { $0.userMediaQuery }) { query in
+        let queryUserMedia: Feedback = react(query: { $0.userMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.media.fragments.cursorMediaFragment }.unwrap()
                 .map(UserStateObject.Event.onGetUserMedia(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: UserStateObject.Event.onGetUserMediaError)
-        }
+        })
         
-        let followUser: Feedback = react(query: { $0.followUserQuery }) { query in
+        let followUser: Feedback = react(query: { $0.followUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query).asObservable()
                 .map { $0?.data?.followUser }.unwrap()
                 .map(UserStateObject.Event.onFollowUserSuccess)
                 .asSignal(onErrorReturnJust: UserStateObject.Event.onFollowUserError)
-        }
+        })
         
-        let unfollowUser: Feedback = react(query: { $0.unfollowUserQuery }) { query in
+        let unfollowUser: Feedback = react(query: { $0.unfollowUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query).asObservable()
                 .map { $0?.data?.unfollowUser }.unwrap()
                 .map(UserStateObject.Event.onUnfollowUserSuccess)
                 .asSignal(onErrorReturnJust: UserStateObject.Event.onUnfollowUserError)
-        }
+        })
         
         let states = store.states
         
@@ -121,5 +133,18 @@ class UserViewController: HideNavigationBarViewController {
             })
             .disposed(by: disposeBag)
 
+        presenter.myMediaCollectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
+    }
+}
+
+extension UserStateObject {
+    
+    var myMediaFooterState: LoadFooterViewState {
+        return LoadFooterViewState.create(
+            cursor: userMedia?.cursor.value,
+            items: userMedia?.items,
+            trigger: triggerUserMediaQuery,
+            error: userMediaError
+        )
     }
 }

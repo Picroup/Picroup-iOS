@@ -12,7 +12,7 @@ import RxCocoa
 import Apollo
 import RxFeedback
 
-class NotificationsViewController: UIViewController {
+class NotificationsViewController: BaseViewController {
     
     @IBOutlet fileprivate var presenter: NotificationsViewPresenter! {
         didSet { setupPresenter() }
@@ -34,12 +34,16 @@ class NotificationsViewController: UIViewController {
         
         typealias Section = NotificationsViewPresenter.Section
 
-        let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
+        let uiFeedback: Feedback = bind(self) { (me, state)  in
+            let presenter = me.presenter!
             let subscriptions = [
                 store.notifications().map { [Section(model: "", items: $0)] }.drive(presenter.items),
-                ]
+                state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
+                state.map { $0.isNotificationsEmpty }.drive(presenter.isNotificationsEmpty),
+            ]
             let events: [Signal<NotificationsStateObject.Event>] = [
                 .just(.onTriggerReload),
+                me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReload },
                 state.flatMapLatest {
                     $0.shouldQueryMoreNotifications
                         ? presenter.tableView.rx.triggerGetMore
@@ -47,11 +51,11 @@ class NotificationsViewController: UIViewController {
                 }.map { .onTriggerGetMore },
                 presenter.tableView.rx.modelSelected(NotificationObject.self).asSignal().flatMap { notification in
                     switch (notification.kind, notification.mediumId, notification.userId) {
-                    case ("commentMedium"?, let mediumId?, _):
+                    case (NotificationKind.commentMedium.rawValue?, let mediumId?, _):
                         return .just(.onTriggerShowComments(mediumId))
-                    case ("starMedium"?, let mediumId?, _):
+                    case (NotificationKind.starMedium.rawValue?, let mediumId?, _):
                         return .just(.onTriggerShowImage(mediumId))
-                    case ("followUser"?, _, let userId?):
+                    case (NotificationKind.followUser.rawValue?, _, let userId?):
                         return .just(.onTriggerShowUser(userId))
                     default:
                         return .empty()
@@ -61,17 +65,17 @@ class NotificationsViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryNotifacations: Feedback = react(query: { $0.notificationsQuery }) { query in
+        let queryNotifacations: Feedback = react(query: { $0.notificationsQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.notifications.fragments.cursorNotoficationsFragment }.unwrap()
                 .map(NotificationsStateObject.Event.onGetData(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: NotificationsStateObject.Event.onGetError)
-        }
+        })
         
-        let queryMark: Feedback = react(query: { $0.markQuery }) { query in
+        let queryMark: Feedback = react(query: { $0.markQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.markNotificationsAsViewed.id }.unwrap()
                 .map(NotificationsStateObject.Event.onMarkSuccess)
                 .asSignal(onErrorReturnJust: NotificationsStateObject.Event.onMarkError)
-        }
+        })
         
         let states = store.states
         
@@ -87,6 +91,18 @@ class NotificationsViewController: UIViewController {
         presenter.tableView.rx.shouldHideNavigationBar()
             .emit(to: rx.setNavigationBarHidden(animated: true))
             .disposed(by: disposeBag)
+    }
+}
+
+extension NotificationsStateObject {
+    
+    var footerState: LoadFooterViewState {
+        return LoadFooterViewState.create(
+            cursor: notifications?.cursor.value,
+            items: notifications?.items,
+            trigger: triggerNotificationsQuery,
+            error: notificationsError
+        )
     }
 }
 

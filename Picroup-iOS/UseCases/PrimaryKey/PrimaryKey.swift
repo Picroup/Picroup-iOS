@@ -10,7 +10,8 @@ import Foundation
 
 struct PrimaryKey {
     static let `default` = "default"
-    static let rankMediaId = "currentDevice.rankMedia"
+//    static let rankMediaId = "currentDevice.rankMedia"
+    static let hotMediaId = "currentDevice.hotMedia"
     static let myMediaId = "currentUser.myMedia"
     static let myStaredMediaId = "currentUser.myStaredMedia"
     static let myInterestedMediaId = "currentUser.myInterestedMediaId"
@@ -33,5 +34,20 @@ struct PrimaryKey {
     
     static func userFollowersId(_ userId: String) -> String {
         return "user.\(userId).userFollowers"
+    }
+    
+    static func feedbackId(kind: String?, toUserId: String?, mediumId: String?, commentId: String?) -> String {
+        switch (kind, toUserId, mediumId, commentId) {
+        case (FeedbackKind.app.rawValue?, _, _, _):
+            return "\(kind!)"
+        case (FeedbackKind.user.rawValue?, let toUserId?, _, _):
+            return "\(kind!).\(toUserId)"
+        case (FeedbackKind.medium.rawValue?, _, let mediumId?, _):
+            return "\(kind!).\(mediumId)"
+        case (FeedbackKind.comment.rawValue?, _, _, let commentId?):
+            return "\(kind!).\(commentId)"
+        default:
+            return UUID().uuidString
+        }
     }
 }

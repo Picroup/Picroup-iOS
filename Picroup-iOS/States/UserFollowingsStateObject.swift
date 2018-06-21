@@ -30,6 +30,8 @@ final class UserFollowingsStateObject: PrimaryObject {
     @objc dynamic var unfollowUserError: String?
     @objc dynamic var triggerUnfollowUserQuery: Bool = false
     
+    @objc dynamic var needUpdate: NeedUpdateStateObject?
+    
     @objc dynamic var userRoute: UserRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
 }
@@ -45,6 +47,10 @@ extension UserFollowingsStateObject {
     }
     var shouldQueryMoreUserFollowings: Bool {
         return !triggerUserFollowingsQuery && hasMoreUserFollowings
+    }
+    var isFollowingsEmpty: Bool {
+        guard let items = userFollowings?.items else { return false }
+        return !triggerUserFollowingsQuery && userFollowingsError == nil && items.isEmpty
     }
     var hasMoreUserFollowings: Bool {
         return userFollowings?.cursor.value != nil
@@ -85,6 +91,7 @@ extension UserFollowingsStateObject {
                 "session": ["_id": _id],
                 "user": ["_id": userId],
                 "userFollowings": ["_id": PrimaryKey.userFollowingsId(userId)],
+                "needUpdate": ["_id": _id],
                 "userRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
@@ -156,8 +163,8 @@ extension UserFollowingsStateObject: IsFeedbackStateObject {
             followToUserId = nil
             followUserError = nil
             triggerFollowUserQuery = false
-            //            guard let medium = medium else { return }
-        //            myStaredMedia?.items.insert(medium, at: 0)
+            needUpdate?.myInterestedMedia = true
+
         case .onFollowUserError(let error):
             followUserError = error.localizedDescription
             triggerFollowUserQuery = false
@@ -172,8 +179,8 @@ extension UserFollowingsStateObject: IsFeedbackStateObject {
             unfollowToUserId = nil
             unfollowUserError = nil
             triggerUnfollowUserQuery = false
-            //            guard let medium = medium else { return }
-        //            myStaredMedia?.items.insert(medium, at: 0)
+            needUpdate?.myInterestedMedia = true
+
         case .onUnfollowUserError(let error):
             unfollowUserError = error.localizedDescription
             triggerUnfollowUserQuery = false
@@ -210,7 +217,7 @@ final class UserFollowingsStateStore {
     func userFollowingsItems() -> Driver<[UserObject]> {
         guard let items = _state.userFollowings?.items else { return .empty() }
         return Observable.collection(from: items)
-            .delaySubscription(0.3, scheduler: MainScheduler.instance)
+//            .delaySubscription(0.3, scheduler: MainScheduler.instance)
             .asDriver(onErrorDriveWith: .empty())
             .map { $0.toArray() }
     }

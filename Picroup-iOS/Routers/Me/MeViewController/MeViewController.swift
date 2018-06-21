@@ -14,6 +14,24 @@ import RxGesture
 import RxFeedback
 import RxViewController
 
+private func mapMoreButtonTapToEvent(sender: UIView) -> (MeStateObject) -> Signal<MeStateObject.Event> {
+    return { state in
+        guard state.session?.isLogin == true else { return .empty() }
+        return DefaultWireframe.shared
+            .promptFor(sender: sender, cancelAction: "取消", actions: ["更新个人信息", "应用反馈", "关于应用", "退出登录"])
+            .asSignalOnErrorRecoverEmpty()
+            .flatMap { action in
+                switch action {
+                case "更新个人信息":  return .just(.onTriggerUpdateUser)
+                case "应用反馈":     return .just(.onTriggerAppFeedback)
+                case "关于应用":     return .just(.onTriggerAboutApp)
+                case "退出登录":     return .just(.onLogout)
+                default:            return .empty()
+                }
+        }
+    }
+}
+
 class MeViewController: HideNavigationBarViewController {
     
     fileprivate typealias Feedback = (Driver<MeStateObject>) -> Signal<MeStateObject.Event>
@@ -26,29 +44,32 @@ class MeViewController: HideNavigationBarViewController {
     
     private func setupRxFeedback() {
         
-        guard let store = try? MeStateStore()  else { return }
+        guard let store = try? MeStateStore(),
+            let appStateService = appStateService,
+            let appStore = appStateService.appStore
+            else { return }
         
         typealias Section = MePresenter.Section
 
-        weak var me = self
-        let uiFeedback: Feedback = bind(presenter) { (presenter, state) -> Bindings<MeStateObject.Event> in
-            let meViewModel = state.map { UserViewModel(user: $0.me) }
+        let uiFeedback: Feedback = bind(self) { (me, state) in
+            let presenter = me.presenter!
+            let myMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
+            let myStaredMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions: [Disposable] = [
-                meViewModel.map { $0.avatarId }.drive(presenter.userAvatarImageView.rx.imageMinioId),
-                meViewModel.map { $0.username }.drive(presenter.displaynameLabel.rx.text),
-                meViewModel.map { $0.username }.drive(presenter.usernameLabel.rx.text),
-                meViewModel.map { $0.reputation }.drive(presenter.reputationCountLabel.rx.text),
-                meViewModel.map { $0.followersCount }.drive(presenter.followersCountLabel.rx.text),
-                meViewModel.map { $0.followingsCount }.drive(presenter.followingsCountLabel.rx.text),
-                meViewModel.map { $0.gainedReputationCount }.drive(presenter.gainedReputationCountButton.rx.title()),
-                meViewModel.map { $0.isGainedReputationCountHidden }.drive(presenter.gainedReputationCountButton.rx.isHidden),
+                appStore.me().drive(presenter.me),
                 state.map { $0.selectedTabIndex }.distinctUntilChanged().drive(presenter.selectedTabIndex),
-                store.myMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems),
-                store.myStaredMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myStaredMediaItems),
+                store.myMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems(myMediaFooterState.asDriver())),
+                store.myStaredMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myStaredMediaItems(myStaredMediaFooterState.asDriver())),
+                state.map { $0.myMediaFooterState }.drive(myMediaFooterState),
+                state.map { $0.myStaredMediaFooterState }.drive(myStaredMediaFooterState),
+                state.map { $0.isMyMediaEmpty }.drive(presenter.isMyMediaEmpty),
+                state.map { $0.isMyStaredMediaEmpty }.drive(presenter.isMyStaredMediaEmpty),
+                Signal.just(.onTriggerReloadMe).emit(to: appStateService.events),
+                me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMe }.emit(to: appStateService.events),
                 ]
-            
             let events: [Signal<MeStateObject.Event>] = [
-                .of(.onTriggerReloadMe, .onTriggerReloadMyMedia, .onTriggerReloadMyStaredMedia),
+                .of(.onTriggerReloadMyMedia, .onTriggerReloadMyStaredMedia),
+                presenter.moreButton.rx.tap.asSignal().withLatestFrom(state).flatMapLatest(mapMoreButtonTapToEvent(sender: presenter.moreButton)),
                 presenter.myMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myMedia) },
                 presenter.myStaredMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myStaredMedia) },
                 state.flatMapLatest {
@@ -61,7 +82,8 @@ class MeViewController: HideNavigationBarViewController {
                         ? presenter.myStardMediaCollectionView.rx.triggerGetMore
                         : .empty()
                     }.map { .onTriggerGetMoreMyStaredMedia },
-                me?.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMe } ?? .never(),
+                me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMyMediaIfNeeded },
+                me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMyStaredMediaIfNeeded },
                 presenter.myMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
                 presenter.myStardMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
                 presenter.reputationButton.rx.tap.asSignal().map { _ in .onTriggerShowReputations },
@@ -72,31 +94,27 @@ class MeViewController: HideNavigationBarViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryMe: Feedback = react(query: { $0.meQuery }) { query in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.fragments.userDetailFragment }.unwrap()
-                .map(MeStateObject.Event.onGetMeSuccess)
-                .asSignal(onErrorReturnJust: MeStateObject.Event.onGetMeError)
-        }
-        
-        let queryMyMedia: Feedback = react(query: { $0.myMediaQuery }) { query in
+        let queryMyMedia: Feedback = react(query: { $0.myMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.media.fragments.cursorMediaFragment }.unwrap()
                 .map(MeStateObject.Event.onGetMyMedia(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: MeStateObject.Event.onGetMyMediaError)
-        }
+        })
         
-        let queryMyStaredMedia: Feedback = react(query: { $0.myStaredMediaQuery }) { query in
+        let queryMyStaredMedia: Feedback = react(query: { $0.myStaredMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.staredMedia.fragments.cursorMediaFragment }.unwrap()
                 .map(MeStateObject.Event.onGetMyStaredMedia(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: MeStateObject.Event.onGetMyStaredMediaError)
-        }
+        })
         
         let states = store.states
+//            .debug("MeState", trimOutput: true)
+
+//        states.map { $0.myMediaQuery }.debug("myMediaQuery").drive().disposed(by: disposeBag)
         
         Signal.merge(
             uiFeedback(states),
-            queryMe(states),
             queryMyMedia(states),
             queryMyStaredMedia(states)
             )
@@ -115,8 +133,30 @@ class MeViewController: HideNavigationBarViewController {
             })
             .disposed(by: disposeBag)
 
+        presenter.myMediaCollectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
+        presenter.myStardMediaCollectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
     }
 }
 
+extension MeStateObject {
+    
+    var myMediaFooterState: LoadFooterViewState {
+        return LoadFooterViewState.create(
+            cursor: myMedia?.cursor.value,
+            items: myMedia?.items,
+            trigger: triggerMyMediaQuery,
+            error: myMediaError
+        )
+    }
+    
+    var myStaredMediaFooterState: LoadFooterViewState {
+        return LoadFooterViewState.create(
+            cursor: myStaredMedia?.cursor.value,
+            items: myStaredMedia?.items,
+            trigger: triggerMyStaredMediaQuery,
+            error: myStaredMediaError
+        )
+    }
+}
 
 

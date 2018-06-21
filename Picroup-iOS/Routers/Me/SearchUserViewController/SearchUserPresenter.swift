@@ -27,6 +27,7 @@ final class SearchUserPresenter: NSObject {
     weak var navigationItem: UINavigationItem!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var loadFooterView: LoadFooterView!
 
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
@@ -48,9 +49,8 @@ final class SearchUserPresenter: NSObject {
             let dataSource = DataSource(
                 configureCell: { dataSource, tableView, indexPath, item in
                     let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
-                    let viewModel = UserViewModel(user: item)
                     cell.configure(
-                        with: viewModel,
+                        with: item,
                         onFollowButtonTap: onFollowButtonTap(_events: _events, item: item)
                     )
                     return cell

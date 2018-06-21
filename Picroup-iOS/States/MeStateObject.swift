@@ -16,9 +16,6 @@ final class MeStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
     
-    @objc dynamic var meError: String?
-    @objc dynamic var triggerMeQuery: Bool = false
-    
     @objc dynamic var selectedTabIndex: Int = 0
     
     @objc dynamic var myMedia: CursorMediaObject?
@@ -29,10 +26,15 @@ final class MeStateObject: PrimaryObject {
     @objc dynamic var myStaredMediaError: String?
     @objc dynamic var triggerMyStaredMediaQuery: Bool = false
     
+    @objc dynamic var needUpdate: NeedUpdateStateObject?
+    
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var reputationsRoute: ReputationsRouteObject?
     @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
     @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
+    @objc dynamic var updateUserRoute: UpdateUserRouteObject?
+    @objc dynamic var feedbackRoute: FeedbackRouteObject?
+    @objc dynamic var aboutAppRoute: AboutAppRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
 }
 
@@ -45,14 +47,6 @@ extension MeStateObject {
 }
 
 extension MeStateObject {
-    var meQuery: UserQuery? {
-        guard let userId = session?.currentUser?._id else { return nil }
-        let next = UserQuery(userId: userId, followedByUserId: "", withFollowed: false)
-        return triggerMeQuery ? next : nil
-    }
-    var me: UserObject? {
-        return session?.currentUser
-    }
     var myMediaQuery: MyMediaQuery? {
         guard let userId = session?.currentUser?._id else { return nil }
         let next = MyMediaQuery(userId: userId, cursor: myMedia?.cursor.value)
@@ -60,6 +54,10 @@ extension MeStateObject {
     }
     var shouldQueryMoreMyMedia: Bool {
         return !triggerMyMediaQuery && hasMoreMyMedia
+    }
+    var isMyMediaEmpty: Bool {
+        guard let items = myMedia?.items else { return false }
+        return !triggerMyMediaQuery && myMediaError == nil && items.isEmpty
     }
     var hasMoreMyMedia: Bool {
         return myMedia?.cursor.value != nil
@@ -71,6 +69,10 @@ extension MeStateObject {
     }
     var shouldQueryMoreMyStaredMedia: Bool {
         return !triggerMyStaredMediaQuery && hasMoreMyStaredMedia
+    }
+    var isMyStaredMediaEmpty: Bool {
+        guard let items = myStaredMedia?.items else { return false }
+        return !triggerMyStaredMediaQuery && myStaredMediaError == nil && items.isEmpty
     }
     var hasMoreMyStaredMedia: Bool {
         return myStaredMedia?.cursor.value != nil
@@ -87,10 +89,14 @@ extension MeStateObject {
                 "session": ["_id": _id],
                 "myMedia": ["_id": PrimaryKey.myMediaId],
                 "myStaredMedia": ["_id": PrimaryKey.myStaredMediaId],
+                "needUpdate": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
                 "reputationsRoute": ["_id": _id],
                 "userFollowingsRoute": ["_id": _id],
                 "userFollowersRoute": ["_id": _id],
+                "updateUserRoute": ["_id": _id],
+                "feedbackRoute": ["_id": _id],
+                "aboutAppRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 ]
             return try realm.update(MeStateObject.self, value: value)
@@ -101,19 +107,17 @@ extension MeStateObject {
 extension MeStateObject {
     
     enum Event {
-        case onTriggerReloadMe
-        case onGetMeSuccess(UserDetailFragment)
-        case onGetMeError(Error)
-        
         case onChangeSelectedTab(Tab)
         
         case onTriggerReloadMyMedia
+        case onTriggerReloadMyMediaIfNeeded
         case onTriggerGetMoreMyMedia
         case onGetReloadMyMedia(CursorMediaFragment)
         case onGetMoreMyMedia(CursorMediaFragment)
         case onGetMyMediaError(Error)
         
         case onTriggerReloadMyStaredMedia
+        case onTriggerReloadMyStaredMediaIfNeeded
         case onTriggerGetMoreMyStaredMedia
         case onGetReloadMyStaredMedia(CursorMediaFragment)
         case onGetMoreMyStaredMedia(CursorMediaFragment)
@@ -123,7 +127,11 @@ extension MeStateObject {
         case onTriggerShowReputations
         case onTriggerShowUserFollowings
         case onTriggerShowUserFollowers
+        case onTriggerUpdateUser
+        case onTriggerAppFeedback
+        case onTriggerAboutApp
         case onTriggerPop
+        case onLogout
     }
 }
 
@@ -142,21 +150,15 @@ extension MeStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
-        case .onTriggerReloadMe:
-            meError = nil
-            triggerMeQuery = true
-        case .onGetMeSuccess(let data):
-            session?.currentUser = UserObject.create(from: data)(realm)
-            meError = nil
-            triggerMeQuery = false
-        case .onGetMeError(let error):
-            meError = error.localizedDescription
-            triggerMeQuery = false
-            
         case .onChangeSelectedTab(let tab):
             selectedTabIndex = tab.rawValue
             
         case .onTriggerReloadMyMedia:
+            myMedia?.cursor.value = nil
+            myMediaError = nil
+            triggerMyMediaQuery = true
+        case .onTriggerReloadMyMediaIfNeeded:
+            guard needUpdate?.myMedia == true else { return }
             myMedia?.cursor.value = nil
             myMediaError = nil
             triggerMyMediaQuery = true
@@ -168,6 +170,7 @@ extension MeStateObject: IsFeedbackStateObject {
             myMedia = CursorMediaObject.create(from: data, id: PrimaryKey.myMediaId)(realm)
             myMediaError = nil
             triggerMyMediaQuery = false
+            needUpdate?.myMedia = false
         case .onGetMoreMyMedia(let data):
             myMedia?.merge(from: data)(realm)
             myMediaError = nil
@@ -180,6 +183,11 @@ extension MeStateObject: IsFeedbackStateObject {
             myStaredMedia?.cursor.value = nil
             myStaredMediaError = nil
             triggerMyStaredMediaQuery = true
+        case .onTriggerReloadMyStaredMediaIfNeeded:
+            guard needUpdate?.myStaredMedia == true else { return }
+            myStaredMedia?.cursor.value = nil
+            myStaredMediaError = nil
+            triggerMyStaredMediaQuery = true
         case .onTriggerGetMoreMyStaredMedia:
             guard shouldQueryMoreMyStaredMedia else { return }
             myStaredMediaError = nil
@@ -188,6 +196,7 @@ extension MeStateObject: IsFeedbackStateObject {
             myStaredMedia = CursorMediaObject.create(from: data, id: PrimaryKey.myStaredMediaId)(realm)
             myStaredMediaError = nil
             triggerMyStaredMediaQuery = false
+            needUpdate?.myStaredMedia = false
         case .onGetMoreMyStaredMedia(let data):
             myStaredMedia?.merge(from: data)(realm)
             myStaredMediaError = nil
@@ -207,8 +216,20 @@ extension MeStateObject: IsFeedbackStateObject {
         case .onTriggerShowUserFollowers:
             userFollowersRoute?.userId = session?.currentUser?._id
             userFollowersRoute?.version = UUID().uuidString
+        case .onTriggerUpdateUser:
+            updateUserRoute?.version = UUID().uuidString
+        case .onTriggerAppFeedback:
+            feedbackRoute?.triggerApp()
+        case .onTriggerAboutApp:
+            aboutAppRoute?.version = UUID().uuidString
         case .onTriggerPop:
             popRoute?.version = UUID().uuidString
+        case .onLogout:
+            session?.currentUser = nil
+            realm.delete(realm.objects(UserObject.self))
+            realm.delete(realm.objects(MediumObject.self))
+            realm.delete(realm.objects(NotificationObject.self))
+            realm.delete(realm.objects(ReputationObject.self))
         }
     }
 }
@@ -235,7 +256,7 @@ final class MeStateStore {
     func myMediaItems() -> Driver<[MediumObject]> {
         guard let items = _state.myMedia?.items else { return .empty() }
         return Observable.collection(from: items)
-            .delaySubscription(0.3, scheduler: MainScheduler.instance)
+//            .delaySubscription(0.3, scheduler: MainScheduler.instance)
             .asDriver(onErrorDriveWith: .empty())
             .map { $0.toArray() }
     }
@@ -243,7 +264,7 @@ final class MeStateStore {
     func myStaredMediaItems() -> Driver<[MediumObject]> {
         guard let items = _state.myStaredMedia?.items else { return .empty() }
         return Observable.collection(from: items)
-            .delaySubscription(0.3, scheduler: MainScheduler.instance)
+//            .delaySubscription(0.3, scheduler: MainScheduler.instance)
             .asDriver(onErrorDriveWith: .empty())
             .map { $0.toArray() }
     }

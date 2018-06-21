@@ -17,13 +17,17 @@ final class RouteStateObject: PrimaryObject {
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
     @objc dynamic var reputationsRoute: ReputationsRouteObject?
-    @objc dynamic var pickImageRoute: PickImageRouteObject?
     @objc dynamic var createImageRoute: CreateImageRouteObject?
     @objc dynamic var userRoute: UserRouteObject?
+    @objc dynamic var updateUserRoute: UpdateUserRouteObject?
+    
     @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
     @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
     @objc dynamic var searchUserRoute: SearchUserRouteObject?
     @objc dynamic var loginRoute: LoginRouteObject?
+    @objc dynamic var feedbackRoute: FeedbackRouteObject?
+    @objc dynamic var aboutAppRoute: AboutAppRouteObject?
+    
     @objc dynamic var popRoute: PopRouteObject?
     
     @objc dynamic var snackbar: SnackbarObject?
@@ -46,10 +50,6 @@ final class ReputationsRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
-final class PickImageRouteObject: PrimaryObject {
-    @objc dynamic var version: String?
-}
-
 final class CreateImageRouteObject: PrimaryObject {
     let imageKeys = List<String>()
     @objc dynamic var version: String?
@@ -58,6 +58,14 @@ final class CreateImageRouteObject: PrimaryObject {
 final class UserRouteObject: PrimaryObject {
     
     @objc dynamic var userId: String?
+    @objc dynamic var version: String?
+}
+
+final class UpdateUserRouteObject: PrimaryObject {
+    @objc dynamic var version: String?
+}
+
+final class SearchUserRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
@@ -73,12 +81,50 @@ final class UserFollowersRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
-final class SearchUserRouteObject: PrimaryObject {
+final class LoginRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
-final class LoginRouteObject: PrimaryObject {
+final class FeedbackRouteObject: PrimaryObject {
+    @objc dynamic var mediumId: String?
+    @objc dynamic var toUserId: String?
+    @objc dynamic var commentId: String?
+    @objc dynamic var kind: String?
     @objc dynamic var version: String?
+}
+
+final class AboutAppRouteObject: PrimaryObject {
+    @objc dynamic var version: String?
+}
+
+extension FeedbackRouteObject {
+    func triggerApp() {
+        self.kind = FeedbackKind.app.rawValue
+        self.mediumId = nil
+        self.toUserId = nil
+        self.commentId = nil
+        self.version = UUID().uuidString
+    }
+    func triggerMedium(mediumId: String) {
+        self.kind = FeedbackKind.medium.rawValue
+        self.mediumId = mediumId
+        self.toUserId = nil
+        self.version = UUID().uuidString
+    }
+    func triggerUser(toUserId: String) {
+        self.kind = FeedbackKind.user.rawValue
+        self.mediumId = nil
+        self.toUserId = toUserId
+        self.commentId = nil
+        self.version = UUID().uuidString
+    }
+    func triggerComment(commentId: String) {
+        self.kind = FeedbackKind.comment.rawValue
+        self.mediumId = nil
+        self.toUserId = nil
+        self.commentId = commentId
+        self.version = UUID().uuidString
+    }
 }
 
 final class PopRouteObject: PrimaryObject {
@@ -102,13 +148,15 @@ extension RouteStateObject {
                 "imageDetialRoute": ["_id": _id],
                 "imageCommetsRoute": ["_id": _id],
                 "reputationsRoute": ["_id": _id],
-                "pickImageRoute": ["_id": _id],
                 "createImageRoute": ["_id": _id],
                 "userRoute": ["_id": _id],
+                "updateUserRoute": ["_id": _id],
                 "userFollowingsRoute": ["_id": _id],
                 "userFollowersRoute": ["_id": _id],
                 "searchUserRoute": ["_id": _id],
                 "loginRoute": ["_id": _id],
+                "feedbackRoute": ["_id": _id],
+                "aboutAppRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
                 "snackbar": ["_id": _id],
                 ]
@@ -151,11 +199,6 @@ final class RouteStateStore {
         return Observable.from(object: popRoute).asDriver(onErrorDriveWith: .empty())
     }
     
-    func pickImageRoute() -> Driver<PickImageRouteObject> {
-        guard let popRoute = _state.pickImageRoute else { return .empty() }
-        return Observable.from(object: popRoute).asDriver(onErrorDriveWith: .empty())
-    }
-    
     func createImageRoute() -> Driver<CreateImageRouteObject> {
         guard let popRoute = _state.createImageRoute else { return .empty() }
         return Observable.from(object: popRoute).asDriver(onErrorDriveWith: .empty())
@@ -166,6 +209,11 @@ final class RouteStateStore {
         return Observable.from(object: userRoute)
             .map { ($0, self._state.session?.currentUser?._id == $0.userId) }
             .asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func updateUserRoute() -> Driver<UpdateUserRouteObject> {
+        guard let updateUserRoute = _state.updateUserRoute else { return .empty() }
+        return Observable.from(object: updateUserRoute).asDriver(onErrorDriveWith: .empty())
     }
     
     func userFollowingsRoute() -> Driver<UserFollowingsRouteObject> {
@@ -186,6 +234,16 @@ final class RouteStateStore {
     func loginRoute() -> Driver<LoginRouteObject> {
         guard let loginRoute = _state.loginRoute else { return .empty() }
         return Observable.from(object: loginRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func feedbackRoute() -> Driver<FeedbackRouteObject> {
+        guard let feedbackRoute = _state.feedbackRoute else { return .empty() }
+        return Observable.from(object: feedbackRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func aboutAppRoute() -> Driver<AboutAppRouteObject> {
+        guard let aboutAppRoute = _state.aboutAppRoute else { return .empty() }
+        return Observable.from(object: aboutAppRoute).asDriver(onErrorDriveWith: .empty())
     }
     
     func popRoute() -> Driver<PopRouteObject> {

@@ -26,7 +26,9 @@ final class FollowingsPresenter: NSObject {
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var followingsCountLabel: UILabel!
-    
+    @IBOutlet weak var loadFooterView: LoadFooterView!
+    @IBOutlet weak var emptyView: UIView!
+
     typealias Section = SectionModel<String, UserObject>
     typealias DataSource = RxTableViewSectionedReloadDataSource<Section>
     
@@ -35,9 +37,8 @@ final class FollowingsPresenter: NSObject {
             let dataSource = DataSource(
                 configureCell: { dataSource, tableView, indexPath, item in
                     let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
-                    let viewModel = UserViewModel(user: item)
                     cell.configure(
-                        with: viewModel,
+                        with: item,
                         onFollowButtonTap: onFollowButtonTap(_events: _events, item: item)
                     )
                     return cell
@@ -45,48 +46,11 @@ final class FollowingsPresenter: NSObject {
             return tableView!.rx.items(dataSource: dataSource)
         }
     }
-}
-
-class UserCell: RxTableViewCell {
     
-    @IBOutlet weak var userAvatarImageView: UIImageView!
-    @IBOutlet weak var displaynameLabel: UILabel!
-    @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var followButton: RaisedButton!
-    
-    func configure(with viewModel: UserViewModel, onFollowButtonTap: (()-> Void)?) {
-        userAvatarImageView.setImage(with: viewModel.avatarId!)
-        displaynameLabel.text = viewModel.username
-        usernameLabel.text = viewModel.username
-        FollowButtonPresenter.isSelected(base: followButton).onNext(viewModel.followed)
-        if let onFollowButtonTap = onFollowButtonTap {
-            followButton.rx.tap
-                .subscribe(onNext: onFollowButtonTap)
-                .disposed(by: disposeBag)
+    var isFollowingsEmpty: Binder<Bool> {
+        return Binder(self) { presenter, isEmpty in
+            presenter.tableView.backgroundView = isEmpty ? presenter.emptyView : nil
         }
     }
 }
 
-struct FollowButtonPresenter {
-    
-    static func isSelected(base: RaisedButton) -> Binder<Bool?> {
-        return Binder(base) { button, isSelected in
-//            UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut, animations: {
-                guard let isSelected = isSelected else {
-                    button.alpha = 0
-                    return
-                }
-                button.alpha =  1
-                if !isSelected {
-                    button.backgroundColor = .primaryText
-                    button.titleColor = .secondary
-                    button.setTitle("关注", for: .normal)
-                } else {
-                    button.backgroundColor = .secondary
-                    button.titleColor = .primaryText
-                    button.setTitle("已关注", for: .normal)
-                }
-//            })
-        }
-    }
-}

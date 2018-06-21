@@ -14,7 +14,7 @@ import RxFeedback
 import Apollo
 import Kingfisher
 
-class CreateImageViewController: UIViewController {
+class CreateImageViewController: ShowNavigationBarViewController {
     
     typealias Dependency = [String]
     var dependency: Dependency?
@@ -36,6 +36,9 @@ class CreateImageViewController: UIViewController {
                 return
         }
         
+        navigationItem.titleLabel.text = "共 \(imageKeys.count) 张" 
+        navigationItem.titleLabel.textColor = .primaryText
+
         let uiFeedback: Feedback =  bind(self) { (me, state) in
             let subscriptions = [
                 store.saveMediumStates().drive(me.presenter.collectionView.rx.items(cellIdentifier: "RankMediumCell", cellType: RankMediumCell.self)) { index, item, cell in
@@ -43,18 +46,17 @@ class CreateImageViewController: UIViewController {
                     cell.imageView.image = image
                     cell.progressView.progress = item.progress?.completed ?? 0
                 },
-                state.map { $0.shouldSaveMedium }.distinctUntilChanged().drive(me.presenter.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
-                me.presenter.cancelButton.rx.tap.asSignal().emit(to: me.rx.dismiss(animated: true)),
-                state.map { $0.allSuccess }.distinctUnwrap().map { _ in "已分享" }.drive(me.snackbarController!.rx.snackbarText),
-                state.map { $0.allSuccess }.distinctUnwrap().mapToVoid().delay(2.3).drive(me.rx.dismiss(animated: true)),
+//                state.map { $0.shouldSaveMedium }.distinctUntilChanged().drive(me.presenter.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
+                state.map { $0.completed }.drive(me.presenter.progressView.rx.progress),
                 ]
             let events: [Signal<CreateImageStateObject.Event>] = [
-                me.presenter.saveButton.rx.tap.asSignal().map { CreateImageStateObject.Event.onTriggerSaveMedium }
+//                me.presenter.saveButton.rx.tap.asSignal().map { CreateImageStateObject.Event.onTriggerSaveMedium }
+                .never()
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let saveMediums: Feedback = react(query: { $0.saveQuery }) { (query) in
+        let saveMediums: Feedback = react(query: { $0.saveQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { (query) in
             let (userId, imageKeys) = query
             let queries: [Signal<CreateImageStateObject.Event>] = imageKeys.enumerated().map { index, imageKey in
                let image = ImageCache.default.retrieveImageInMemoryCache(forKey: imageKey)!
@@ -69,18 +71,20 @@ class CreateImageViewController: UIViewController {
                     }.asSignal(onErrorReturnJust: { .onSavedMediumError($0, index) })
             }
             return Signal.concat(queries)
-        }
+        })
         
         let states = store.states
+//            .debug("CreateImageState")
         
         Signal.merge(
             uiFeedback(states),
             saveMediums(states)
             )
-            .debug("CreateImageStateObject", trimOutput: true)
+            .debug("CreateImageState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
     
+        presenter.collectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
     }
     
 }

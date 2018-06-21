@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RxFeedback
 
-class ReputationsViewController: UIViewController {
+class ReputationsViewController: BaseViewController {
     
     @IBOutlet fileprivate var presenter: ReputationsViewPresenter!
     fileprivate typealias Feedback = (Driver<ReputationsStateObject>) -> Signal<ReputationsStateObject.Event>
@@ -28,11 +28,12 @@ class ReputationsViewController: UIViewController {
         
         typealias Section = ReputationsViewPresenter.Section
         
-        
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let subscriptions = [
                 state.map { $0.session?.currentUser?.reputation.value?.description ?? "0" }.drive(presenter.reputationCountLabel.rx.text),
                 store.reputations().map { [Section(model: "", items: $0)] }.drive(presenter.items),
+                state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
+                state.map { $0.isReputationsEmpty }.drive(presenter.isReputationsEmpty),
                 ]
             let events: [Signal<ReputationsStateObject.Event>] = [
                 .just(.onTriggerReload),
@@ -58,17 +59,17 @@ class ReputationsViewController: UIViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryReputations: Feedback = react(query: { $0.reputationsQuery }) { query in
+        let queryReputations: Feedback = react(query: { $0.reputationsQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.reputationLinks.fragments.cursorReputationLinksFragment }.unwrap()
                 .map(ReputationsStateObject.Event.onGetData(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: ReputationsStateObject.Event.onGetError)
-        }
+        })
         
-        let queryMark: Feedback = react(query: { $0.markQuery }) { query in
+        let queryMark: Feedback = react(query: { $0.markQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.markReputationLinksAsViewed.id }.unwrap()
                 .map(ReputationsStateObject.Event.onMarkSuccess)
                 .asSignal(onErrorReturnJust: ReputationsStateObject.Event.onMarkError)
-        }
+        })
         
         let states = store.states
         
@@ -81,5 +82,17 @@ class ReputationsViewController: UIViewController {
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         
+    }
+}
+
+extension ReputationsStateObject {
+    
+    var footerState: LoadFooterViewState {
+        return LoadFooterViewState.create(
+            cursor: reputations?.cursor.value,
+            items: reputations?.items,
+            trigger: triggerReputationsQuery,
+            error: reputationsError
+        )
     }
 }

@@ -20,11 +20,11 @@ extension ImageDetailCell {
         let lifeBarMotionIdentifier: String?
         let starButtonMotionIdentifier: String?
         let remainTimeLabelText: String?
-        let commentsCountLabelText: String?
+        let commentsCountText: String?
         let stared: Bool?
         let animatedChangeProgress: Bool
         
-        let username: String?
+        let displayName: String?
         let avatarId: String?
     }
 }
@@ -39,10 +39,10 @@ extension ImageDetailCell.ViewModel {
             self.lifeBarMotionIdentifier = nil
             self.starButtonMotionIdentifier = nil
             self.remainTimeLabelText = "\(0) 周"
-            self.commentsCountLabelText = "\(0) 条"
+            self.commentsCountText = "\(0)"
             self.stared = nil
             self.animatedChangeProgress = false
-            self.username = nil
+            self.displayName = nil
             self.avatarId = nil
             return
         }
@@ -53,12 +53,13 @@ extension ImageDetailCell.ViewModel {
         self.progress = CGFloat(remainTime / 12.0.weeks)
         self.lifeBarMotionIdentifier = "lifeBar_\(medium._id)"
         self.starButtonMotionIdentifier = "starButton_\(medium._id)"
-        self.remainTimeLabelText = "\(Int(remainTime / 1.0.weeks)) 周"
-        self.commentsCountLabelText = "\(medium.commentsCount.value ?? 0) 条"
+//        self.remainTimeLabelText = "\(Int(remainTime / 1.0.weeks)) 周"
+        self.remainTimeLabelText = Moment.string(from: medium.endedAt.value)
+        self.commentsCountText = "  \(medium.commentsCount.value ?? 0)"
         self.stared = medium.stared.value
         self.animatedChangeProgress = false
         
-        self.username = medium.user?.username
+        self.displayName = medium.user?.displayName
         self.avatarId = medium.user?.avatarId
     }
 }
@@ -72,27 +73,37 @@ class ImageDetailCell: RxCollectionViewCell {
     @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var userView: UIView!
-    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var displayNameLabel: UILabel!
     @IBOutlet weak var remainTimeLabel: UILabel!
-    @IBOutlet weak var commentsContentView: UIView!
-    @IBOutlet weak var commentsCountLabel: UILabel!
-    
+    @IBOutlet weak var commentButton: UIButton!
+    @IBOutlet weak var moreButton: UIButton!
+    @IBOutlet weak var suggestUpdateLabel: UILabel!
+
     func configure(
-        with viewModel: ViewModel,
+        with item: MediumObject,
         onStarButtonTap: (() -> Void)?,
         onCommentsTap: (() -> Void)?,
         onImageViewTap: (() -> Void)?,
-        onUserTap: (() -> Void)?
+        onUserTap: (() -> Void)?,
+        onMoreTap: (() -> Void)?
         ) {
-        imageView.setImage(with: viewModel.imageViewMinioId!)
+        let viewModel = ViewModel(medium: item)
+        
+        if item.kind == MediumKind.image.rawValue {
+            imageView.setImage(with: item.minioId)
+            suggestUpdateLabel.isHidden = true
+        } else {
+            imageView.image = nil
+            suggestUpdateLabel.isHidden = false
+        }
         imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
         lifeBar.motionIdentifier = viewModel.lifeBarMotionIdentifier
         starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
         lifeViewWidthConstraint.constant = viewModel.progress * lifeBar.bounds.width
-        userAvatarImageView.setImage(with: viewModel.avatarId)
-        usernameLabel.text = viewModel.username
+        userAvatarImageView.setUserAvatar(with: item.user)
+        displayNameLabel.text = viewModel.displayName
         remainTimeLabel.text = viewModel.remainTimeLabelText
-        configureCommentsContentView(with: viewModel)
+        commentButton.setTitle(viewModel.commentsCountText, for: .normal)
         configureStarButton(with: viewModel)
         if viewModel.animatedChangeProgress {
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
@@ -101,7 +112,7 @@ class ImageDetailCell: RxCollectionViewCell {
         }
         
         if let onCommentsTap = onCommentsTap {
-            commentsContentView.rx.tapGesture().when(.recognized).mapToVoid()
+            commentButton.rx.tap
                 .subscribe(onNext: onCommentsTap)
                 .disposed(by: disposeBag)
         }
@@ -125,14 +136,15 @@ class ImageDetailCell: RxCollectionViewCell {
                 .subscribe(onNext: onUserTap)
                 .disposed(by: disposeBag)
         }
-    }
-    
-    private func configureCommentsContentView(with viewModel: ViewModel) {
-        commentsCountLabel.text = viewModel.commentsCountLabelText
+        
+        if let onMoreTap = onMoreTap {
+            moreButton.rx.tap
+                .subscribe(onNext: onMoreTap)
+                .disposed(by: disposeBag)
+        }
     }
     
     private func configureStarButton(with viewModel: ViewModel) {
-        
         starButton.isEnabled = viewModel.stared == false
         StarButtonPresenter.isSelected(base: starButton).onNext(viewModel.stared)
     }

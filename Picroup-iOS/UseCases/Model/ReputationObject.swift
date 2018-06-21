@@ -56,6 +56,9 @@ extension CursorReputationLinksFragment: IsCursorFragment {}
 extension ReputationFragment {
     
     var rawSnapshot: Snapshot {
-        return snapshot.merging(["kind": kind.rawValue]) { $1 }
+        return snapshot.merging([
+            "kind": kind.rawValue,
+            "medium": medium?.fragments.mediumFragment.rawSnapshot
+        ]) { $1 }
     }
 }

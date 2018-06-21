@@ -17,7 +17,8 @@ class MePresenter: NSObject {
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var displaynameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
-
+    @IBOutlet weak var moreButton: UIButton!
+    
     @IBOutlet weak var reputationCountLabel: UILabel!
     @IBOutlet weak var gainedReputationCountButton: UIButton!
     @IBOutlet weak var followersCountLabel: UILabel!
@@ -33,10 +34,27 @@ class MePresenter: NSObject {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var myMediaCollectionView: UICollectionView!
     @IBOutlet weak var myStardMediaCollectionView: UICollectionView!
+    @IBOutlet weak var myMediaEmptyView: UIView!
+    @IBOutlet weak var myStardMediaEmptyView: UIView!
 
     @IBOutlet weak var selectMyMediaLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
     private var isFirstTimeSetSelectedTab = true
+    
+    var me: Binder<UserObject?> {
+        return Binder(self) { presenter, me in
+            let viewModel = UserViewModel(user: me)
+            presenter.userAvatarImageView.setUserAvatar(with: me)
+            presenter.displaynameLabel.text = viewModel.displayName
+            presenter.usernameLabel.text = viewModel.username
+            presenter.reputationCountLabel.text = viewModel.reputation
+            presenter.displaynameLabel.text = viewModel.displayName
+            presenter.followersCountLabel.text = viewModel.followersCount
+            presenter.followingsCountLabel.text = viewModel.followingsCount
+            presenter.gainedReputationCountButton.setTitle(viewModel.gainedReputationCount, for: .normal)
+            presenter.gainedReputationCountButton.isHidden = viewModel.isGainedReputationCountHidden
+        }
+    }
     
     typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
@@ -54,59 +72,48 @@ class MePresenter: NSObject {
         }
     }
     
-    private var dataSource: DataSource {
-        return DataSource(
-            configureCell: { dataSource, collectionView, indexPath, item in
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                let viewModel = RankMediumCell.ViewModel(item: item)
-                cell.configure(with: viewModel)
-                return cell
-        },
-            configureSupplementaryView: { dataSource, collectionView, title, indexPath in
-                return UICollectionReusableView()
-        })
-    }
-    
-    var myMediaItems: (Observable<[Section]>) -> Disposable {
-        return myMediaCollectionView.rx.items(dataSource: dataSource)
-    }
-    
-    var myStaredMediaItems: (Observable<[Section]>) -> Disposable {
-        return myStardMediaCollectionView.rx.items(dataSource: dataSource)
-    }
-}
-
-struct UserViewModel {
-    let username: String
-    let avatarId: String?
-    let reputation: String
-    let followersCount: String
-    let followingsCount: String
-    let gainedReputationCount: String
-    let isGainedReputationCountHidden: Bool
-    let followed: Bool?
-    
-    init(user: UserObject?) {
-        guard user?.isInvalidated == false else {
-            self.username = " "
-            self.avatarId = nil
-            self.reputation = "0"
-            self.followersCount = "0"
-            self.followingsCount = "0"
-            self.gainedReputationCount = ""
-            self.isGainedReputationCountHidden = true
-            self.followed = nil
-            return
+    private var dataSource: (Driver<LoadFooterViewState>) -> DataSource {
+        return { loadState in
+            return DataSource(
+                configureCell: { dataSource, collectionView, indexPath, item in
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
+                    cell.configure(with: item)
+                    return cell
+            },
+                configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
+            )
         }
-        self.username = user.map { "@\($0.username ?? "")" } ?? " "
-        self.avatarId = user?.avatarId
-        self.reputation = user?.reputation.value?.description ?? "0"
-        self.followersCount = user?.followersCount.value?.description ?? "0"
-        self.followingsCount = user?.followingsCount.value?.description ?? "0"
-        self.gainedReputationCount = user.map { "+\($0.gainedReputation.value ?? 0)" } ?? ""
-        self.isGainedReputationCountHidden = user == nil || user?.gainedReputation.value == 0
-        self.followed = user?.followed.value
+    }
+    
+    var myMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
+        return { [myMediaCollectionView] loadState in
+            return myMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
+        }
+    }
+    
+    var myStaredMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
+        return { [myStardMediaCollectionView] loadState in
+            return myStardMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
+        }
+    }
+    
+    var isMyMediaEmpty: Binder<Bool> {
+        return Binder(self) { presenter, isEmpty in
+            presenter.myMediaCollectionView.backgroundView = isEmpty ? presenter.myMediaEmptyView : nil
+        }
+    }
+    
+    var isMyStaredMediaEmpty: Binder<Bool> {
+        return Binder(self) { presenter, isEmpty in
+            presenter.myStardMediaCollectionView.backgroundView = isEmpty ? presenter.myStardMediaEmptyView : nil
+        }
     }
 }
 
 
+extension MePresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CollectionViewLayoutManager.size(in: collectionView.bounds)
+    }
+}

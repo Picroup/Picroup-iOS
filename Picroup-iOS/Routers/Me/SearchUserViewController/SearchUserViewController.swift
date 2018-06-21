@@ -38,8 +38,9 @@ final class SearchUserViewController: ShowNavigationBarViewController {
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let _events = PublishRelay<SearchUserStateObject.Event>()
             let subscriptions = [
-                state.map { $0.searchText }.drive(presenter.searchBar.rx.text),
+                state.map { $0.searchText }.asObservable().take(1).bind(to: presenter.searchBar.rx.text),
                 store.usersItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events)),
+                state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
                 ]
             let events: [Signal<SearchUserStateObject.Event>] = [
                 _events.asSignal(),
@@ -49,26 +50,26 @@ final class SearchUserViewController: ShowNavigationBarViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let searchUser: Feedback = react(query: { $0.searchUserQuery }) { query in
+        let searchUser: Feedback = react(query: { $0.searchUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query)
                 .map { $0?.data?.searchUser }
                 .map(SearchUserStateObject.Event.onSearchUserSuccess)
                 .asSignal(onErrorReturnJust: SearchUserStateObject.Event.onSearchUserError)
-        }
+        })
         
-        let followUser: Feedback = react(query: { $0.followUserQuery }) { query in
+        let followUser: Feedback = react(query: { $0.followUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query).asObservable()
                 .map { $0?.data?.followUser }.unwrap()
                 .map(SearchUserStateObject.Event.onFollowUserSuccess)
                 .asSignal(onErrorReturnJust: SearchUserStateObject.Event.onFollowUserError)
-        }
+        })
         
-        let unfollowUser: Feedback = react(query: { $0.unfollowUserQuery }) { query in
+        let unfollowUser: Feedback = react(query: { $0.unfollowUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query).asObservable()
                 .map { $0?.data?.unfollowUser }.unwrap()
                 .map(SearchUserStateObject.Event.onUnfollowUserSuccess)
                 .asSignal(onErrorReturnJust: SearchUserStateObject.Event.onUnfollowUserError)
-        }
+        })
         
         let states = store.states
         
@@ -81,5 +82,12 @@ final class SearchUserViewController: ShowNavigationBarViewController {
             .debug("SearchUserState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
+    }
+}
+
+extension SearchUserStateObject {
+    
+    var footerState: LoadFooterViewState {
+        return LoadFooterViewState.create(searchUser: self)
     }
 }

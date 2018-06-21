@@ -1,0 +1,9 @@
+query UserSetDisplayName($userId: ID!, $displayName: String!) {
+    user(userId: $userId) {
+        setDisplayName(displayName: $displayName) {
+            ...UserFragment
+        }
+    }
+}
+
+

@@ -35,6 +35,7 @@ extension CursorNotificationsObject: IsCursorItemsObject {
     static func create(from fragment: CursorItemsFragment, id: String) -> (Realm) -> CursorNotificationsObject {
         return { realm in
             let itemSnapshots = fragment.items.map { $0.fragments.notificationFragment.rawSnapshot }
+            print("itemSnapshots", itemSnapshots)
             let value: Snapshot = fragment.snapshot.merging(["_id": id, "items": itemSnapshots]) { $1 }
             return realm.create(CursorNotificationsObject.self, value: value, update: true)
         }
@@ -55,6 +56,9 @@ extension CursorNotoficationsFragment: IsCursorFragment {}
 extension NotificationFragment {
     
     var rawSnapshot: Snapshot {
-        return snapshot.merging(["kind": kind.rawValue]) { $1 }
+        return snapshot.merging([
+            "kind": kind.rawValue,
+            "medium": medium?.fragments.mediumFragment.rawSnapshot
+        ]) { $1 }
     }
 }

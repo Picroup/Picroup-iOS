@@ -15,6 +15,19 @@ target 'Picroup-iOS' do
   pod 'RxRealm', '~> 0.7'
   pod 'Kingfisher', '~> 4.0'
   pod 'Material', '~> 2.14'
-  pod 'ImagePicker', '~> 3.0'
-
+  pod 'YPImagePicker', '~> 3.0'
+  
+  post_install do |installer|
+      # Your list of targets here.
+      myTargets = ['YPImagePicker', 'PryntTrimmerView', 'SteviaLayout']
+      
+      installer.pods_project.targets.each do |target|
+          if myTargets.include? target.name
+              target.build_configurations.each do |config|
+                  config.build_settings['SWIFT_VERSION'] = '4.1'
+              end
+          end
+      end
+  end
+  
 end

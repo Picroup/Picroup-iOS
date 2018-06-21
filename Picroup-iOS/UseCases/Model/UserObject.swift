@@ -11,6 +11,7 @@ import Apollo
 
 final class UserObject: PrimaryObject {
     @objc dynamic var username: String?
+    @objc dynamic var displayName: String?
     @objc dynamic var avatarId: String?
     let followingsCount = RealmOptional<Int>()
     let followersCount = RealmOptional<Int>()

@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import Material
 import RxSwift
 import RxCocoa
 import RxDataSources
 
 class ImageDetailPresenter: NSObject {
     
+    @IBOutlet weak var deleteAlertView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var backgroundButton: UIButton!
     
@@ -25,26 +27,26 @@ class ImageDetailPresenter: NSObject {
         onStarButtonTap: (() -> Void)?,
         onCommentsTap: (() -> Void)?,
         onImageViewTap: (() -> Void)?,
-        onUserTap: (() -> Void)?
+        onUserTap: (() -> Void)?,
+        onMoreTap: (() -> Void)?
         ) -> (Observable<[Section]>) -> Disposable {
             dataSource = DataSource(
                 configureCell: { dataSource, collectionView, indexPath, cellStyle in
                     switch cellStyle {
-                    case .imageDetail(let medium):
+                    case .imageDetail(let item):
                         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageDetailCell", for: indexPath) as! ImageDetailCell
-                        let viewModel = ImageDetailCell.ViewModel(medium: medium)
                         cell.configure(
-                            with: viewModel,
+                            with: item,
                             onStarButtonTap: onStarButtonTap,
                             onCommentsTap: onCommentsTap,
                             onImageViewTap: onImageViewTap,
-                            onUserTap: onUserTap
+                            onUserTap: onUserTap,
+                            onMoreTap: onMoreTap
                         )
                         return cell
                     case .recommendMedium(let item):
                         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                        let viewModel = RankMediumCell.ViewModel(item: item)
-                        cell.configure(with: viewModel)
+                        cell.configure(with: item)
                         return cell
                     }
             },
@@ -64,10 +66,10 @@ extension ImageDetailPresenter: UICollectionViewDelegate, UICollectionViewDelega
 //            print("medium", medium)
             let width = collectionView.bounds.width
             let imageHeight = width / CGFloat(medium.detail?.aspectRatio.value ?? 1)
-            let height = imageHeight + 8 + 56 + 48 + 48
+            let height = imageHeight + 8 + 56 + 48 + 1 + 48
             return CGSize(width: width, height: height)
         case .recommendMedium:
-            return CGSize(width: 184, height: 184)
+            return CollectionViewLayoutManager.size(in: collectionView.bounds)
         }
     }
     

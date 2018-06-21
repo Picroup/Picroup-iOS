@@ -41,6 +41,8 @@ class FollowersViewController: HideNavigationBarViewController {
             let subscriptions = [
                 state.map { $0.user?.followersCount.value?.description ?? "0" }.drive(presenter.followersCountLabel.rx.text),
                 store.userFollowersItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events)),
+                state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
+                state.map { $0.isFollowersEmpty }.drive(presenter.isFollowersEmpty),
                 ]
             let events: [Signal<UserFollowersStateObject.Event>] = [
                 .just(.onTriggerReloadUserFollowers),
@@ -56,25 +58,25 @@ class FollowersViewController: HideNavigationBarViewController {
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
-        let queryUserFollowers: Feedback = react(query: { $0.userFollowersQuery }) { query in
+        let queryUserFollowers: Feedback = react(query: { $0.userFollowersQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.followers }.unwrap()
                 .map(UserFollowersStateObject.Event.onGetUserFollowers(isReload: query.cursor == nil))
                 .asSignal(onErrorReturnJust: UserFollowersStateObject.Event.onGetUserFollowersError)
-        }
+        })
         
-        let followUser: Feedback = react(query: { $0.followUserQuery }) { query in
+        let followUser: Feedback = react(query: { $0.followUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query).asObservable()
                 .map { $0?.data?.followUser }.unwrap()
                 .map(UserFollowersStateObject.Event.onFollowUserSuccess)
                 .asSignal(onErrorReturnJust: UserFollowersStateObject.Event.onFollowUserError)
-        }
+        })
         
-        let unfollowUser: Feedback = react(query: { $0.unfollowUserQuery }) { query in
+        let unfollowUser: Feedback = react(query: { $0.unfollowUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.perform(mutation: query).asObservable()
                 .map { $0?.data?.unfollowUser }.unwrap()
                 .map(UserFollowersStateObject.Event.onUnfollowUserSuccess)
                 .asSignal(onErrorReturnJust: UserFollowersStateObject.Event.onUnfollowUserError)
-        }
+        })
         
         let states = store.states
         
@@ -87,5 +89,17 @@ class FollowersViewController: HideNavigationBarViewController {
             .debug("UserFollowersState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
+    }
+}
+
+extension UserFollowersStateObject {
+    
+    var footerState: LoadFooterViewState {
+        return LoadFooterViewState.create(
+            cursor: userFollowers?.cursor.value,
+            items: userFollowers?.items,
+            trigger: triggerUserFollowersQuery,
+            error: userFollowersError
+        )
     }
 }
