@@ -154,14 +154,15 @@ final class Router {
                 me._window.rootViewController = SnackbarController(rootViewController: mtvc)
             case (true, nil):
                 let mtvc: MainTabBarController = {
-                    let result = RouterService.Main.mainTabBarController()
-                    result.viewControllers = [
+                    let mainTabBarController = RouterService.Main.mainTabBarController()
+                    mainTabBarController.viewControllers = [
                         RouterService.Main.homeMenuViewController(),
                         RouterService.Main.rankViewController(),
                         RouterService.Me.notificationsViewController(),
                         RouterService.Me.meNavigationViewController(),
                     ]
-                    return result
+                    mainTabBarController.selectedIndex = 1
+                    return mainTabBarController
                 }()
                 me.mainTabBarController = mtvc
                 me._window.rootViewController = SnackbarController(rootViewController: mtvc)
@@ -176,7 +177,7 @@ final class Router {
                     RouterService.Me.notificationsViewController(),
                     RouterService.Me.meNavigationViewController(),
                 ]
-                
+//                mainTabBarController.selectedIndex = 1
             }
         })
     }

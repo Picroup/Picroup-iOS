@@ -72,6 +72,9 @@ class RankViewController: BaseViewController {
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.hotMedia.fragments.cursorMediaFragment }.unwrap()
                 .map(RankStateObject.Event.onGetData)
+                .retryWhen { errors -> Observable<Int> in
+                    errors.enumerated().flatMapLatest { Observable<Int>.timer(5 * RxTimeInterval($0.index + 1), scheduler: MainScheduler.instance) }
+                }
                 .asSignal(onErrorReturnJust: RankStateObject.Event.onGetError)
         })
         
