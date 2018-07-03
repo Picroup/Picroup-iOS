@@ -12,11 +12,18 @@ import RxCocoa
 import RxDataSources
 
 class ReputationsViewPresenter: NSObject {
-    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var reputationCountLabel: UILabel!
     @IBOutlet weak var loadFooterView: LoadFooterView!
     @IBOutlet weak var emptyView: UIView!
+    
+    func setup(navigationItem: UINavigationItem) {
+        
+        navigationItem.titleLabel.text = "灵性"
+        navigationItem.titleLabel.textColor = .primaryText
+        
+        navigationItem.detailLabel.text = " "
+        navigationItem.detailLabel.textColor = .primaryText
+    }
 
     typealias Section = AnimatableSectionModel<String, ReputationObject>
     typealias DataSource = RxTableViewSectionedAnimatedDataSource<Section>

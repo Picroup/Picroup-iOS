@@ -14,6 +14,8 @@ import RxGesture
 import RxFeedback
 import RxViewController
 
+import Material
+
 private func mapMoreButtonTapToEvent(sender: UIView) -> (MeStateObject) -> Signal<MeStateObject.Event> {
     return { state in
         guard state.session?.isLogin == true else { return .empty() }
@@ -32,13 +34,14 @@ private func mapMoreButtonTapToEvent(sender: UIView) -> (MeStateObject) -> Signa
     }
 }
 
-class MeViewController: HideNavigationBarViewController {
+class MeViewController: ShowNavigationBarViewController {
     
     fileprivate typealias Feedback = (Driver<MeStateObject>) -> Signal<MeStateObject.Event>
-    @IBOutlet fileprivate var presenter: MePresenter!
+    @IBOutlet fileprivate var presenter: MePresenter! 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     

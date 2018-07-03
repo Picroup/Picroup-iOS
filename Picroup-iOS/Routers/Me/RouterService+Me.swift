@@ -22,7 +22,8 @@ extension RouterService.Me {
     static func notificationsViewController() -> UIViewController {
         let nvc = UIStoryboard(name: "Me", bundle: nil).instantiateViewController(withIdentifier: "NotificationsViewController") as! NotificationsViewController
         let bnvc = BaseNavigationController(rootViewController: nvc)
-        bnvc.tabBarItem = UITabBarItem(title: "通知", image: UIImage(named: "ic_notifications"), selectedImage: nil)
+        bnvc.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "ic_notifications"), selectedImage: nil)
+        bnvc.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
         bnvc.tabBarItem.badgeColor = .secondary
         return bnvc
     }
@@ -31,7 +32,8 @@ extension RouterService.Me {
         let mevc = meViewController()
         let bnvc = BaseNavigationController(rootViewController: mevc)
         bnvc.isNavigationBarHidden = true
-        bnvc.tabBarItem = UITabBarItem(title: "我", image: UIImage(named: "ic_person"), selectedImage: nil)
+        bnvc.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "ic_person"), selectedImage: nil)
+        bnvc.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
         bnvc.tabBarItem.badgeColor = .secondary
         return bnvc
     }

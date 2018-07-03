@@ -13,7 +13,7 @@ import RxCocoa
 import RxDataSources
 import RxFeedback
 
-class FollowersViewController: HideNavigationBarViewController {
+class FollowersViewController: ShowNavigationBarViewController {
     
     typealias Dependency = String
     var dependency: Dependency!
@@ -23,6 +23,7 @@ class FollowersViewController: HideNavigationBarViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
@@ -36,10 +37,11 @@ class FollowersViewController: HideNavigationBarViewController {
         
         typealias Section = FollowersPresenter.Section
         
-        let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
+        let uiFeedback: Feedback = bind(self) { (me, state)  in
             let _events = PublishRelay<UserFollowersStateObject.Event>()
+            let presenter = me.presenter!
             let subscriptions = [
-                state.map { $0.user?.followersCount.value?.description ?? "0" }.drive(presenter.followersCountLabel.rx.text),
+                state.map { $0.user?.followersCount.value?.description ?? "0" }.map { "\($0) 人" }.drive(me.navigationItem.detailLabel.rx.text),
                 store.userFollowersItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events)),
                 state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
                 state.map { $0.isFollowersEmpty }.drive(presenter.isFollowersEmpty),
@@ -53,7 +55,6 @@ class FollowersViewController: HideNavigationBarViewController {
                         : .empty()
                     }.map { .onTriggerGetMoreUserFollowers },
                 presenter.tableView.rx.modelSelected(UserObject.self).asSignal().map { .onTriggerShowUser($0._id) },
-                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }

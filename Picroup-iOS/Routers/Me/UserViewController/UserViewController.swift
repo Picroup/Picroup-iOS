@@ -28,7 +28,7 @@ private func mapMoreButtonTapToEvent(sender: UIView) -> (UserStateObject) -> Sig
     }
 }
 
-class UserViewController: HideNavigationBarViewController {
+class UserViewController: ShowNavigationBarViewController {
 
     typealias Dependency = String
     var dependency: String!
@@ -38,6 +38,7 @@ class UserViewController: HideNavigationBarViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     

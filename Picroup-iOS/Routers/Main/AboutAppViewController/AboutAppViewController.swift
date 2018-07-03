@@ -8,21 +8,14 @@
 
 
 import UIKit
-import Apollo
-import RxSwift
-import RxCocoa
-import RxDataSources
-import RxFeedback
 
-final class AboutAppViewController: HideNavigationBarViewController {
-    @IBOutlet weak var headerView: UIView!
+final class AboutAppViewController: ShowNavigationBarViewController {
+//    @IBOutlet weak var headerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        headerView.rx.tapGesture().when(.recognized)
-            .mapToVoid().asSignalOnErrorRecoverEmpty()
-            .emit(to: rx.pop())
-            .disposed(by: disposeBag)
+        navigationItem.titleLabel.text = "关于"
+        navigationItem.titleLabel.textColor = .primaryText
     }
 }

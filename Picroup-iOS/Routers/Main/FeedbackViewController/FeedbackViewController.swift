@@ -20,16 +20,16 @@ private func mapKindToTitle(kind: String?) -> String {
     }
 }
 
-final class FeedbackViewController: HideNavigationBarViewController {
+final class FeedbackViewController: ShowNavigationBarViewController {
     
-    @IBOutlet var presenter: FeedbackPresenter!
+    @IBOutlet var presenter: FeedbackPresenter! 
     fileprivate typealias Feedback = (Driver<FeedbackStateObject>) -> Signal<FeedbackStateObject.Event>
     typealias Dependency = (kind: String?, toUserId: String?, mediumId: String?, commentId: String?)
     var dependency: Dependency!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
@@ -40,13 +40,13 @@ final class FeedbackViewController: HideNavigationBarViewController {
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
-                state.map { mapKindToTitle(kind: $0.kind) }.drive(presenter.titleLabel.rx.text),
+                state.map { mapKindToTitle(kind: $0.kind) }.drive(me.navigationItem.titleLabel.rx.text),
                 state.map { $0.content }.distinctUntilChanged().drive(presenter.textView.rx.text),
                 state.map { $0.shouldSaveFeedback }.distinctUntilChanged().drive(presenter.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 presenter.saveButton.rx.tap.asSignal().emit(to: presenter.textView.rx.resignFirstResponder()),
                 ]
             let events: [Signal<FeedbackStateObject.Event>] = [
-                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
+//                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
             presenter.textView.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(FeedbackStateObject.Event.onChangeContent),
                 presenter.saveButton.rx.tap.asSignal().map { FeedbackStateObject.Event.onTriggerSaveFeedback },
                 ]

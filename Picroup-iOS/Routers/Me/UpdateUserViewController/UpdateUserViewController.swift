@@ -14,13 +14,14 @@ import RxFeedback
 import Apollo
 import Kingfisher
 
-final class UpdateUserViewController: HideNavigationBarViewController {
+final class UpdateUserViewController: ShowNavigationBarViewController {
     
     @IBOutlet fileprivate weak var presenter: UpdateUserPresenter!
     fileprivate typealias Feedback = (Driver<UpdateUserStateObject>) -> Signal<UpdateUserStateObject.Event>
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
@@ -40,7 +41,7 @@ final class UpdateUserViewController: HideNavigationBarViewController {
             let events: [Signal<UpdateUserStateObject.Event>] = [
                 presenter.displaynameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).skip(2)
                     .map(UpdateUserStateObject.Event.onTriggerSetDisplayName),
-                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
+//                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 presenter.userAvatarImageView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().flatMapLatest { _ in
                     PhotoPickerProvider.pickImages(from: weakSelf, imageLimit: 1).map { $0.first }.unwrap()
                     }.map(UpdateUserStateObject.Event.onChangeImageKey)

@@ -36,7 +36,7 @@ private func mapCommentMoreButtonTapToEvent(sender: UITableView) -> (CommentObje
     }
 }
 
-class ImageCommentsViewController: HideNavigationBarViewController {
+class ImageCommentsViewController: ShowNavigationBarViewController {
     
     typealias Dependency = String
     var dependency: Dependency!

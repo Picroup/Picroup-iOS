@@ -13,7 +13,7 @@ import RxCocoa
 import RxDataSources
 import RxFeedback
 
-class FollowingsViewController: HideNavigationBarViewController {
+class FollowingsViewController: ShowNavigationBarViewController {
     
     typealias Dependency = String
     var dependency: Dependency!
@@ -23,6 +23,7 @@ class FollowingsViewController: HideNavigationBarViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
@@ -36,10 +37,11 @@ class FollowingsViewController: HideNavigationBarViewController {
         
         typealias Section = FollowingsPresenter.Section
         
-        let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
+        let uiFeedback: Feedback = bind(self) { (me, state)  in
+            let presenter = me.presenter!
             let _events = PublishRelay<UserFollowingsStateObject.Event>()
             let subscriptions = [
-                state.map { $0.user?.followingsCount.value?.description ?? "0" }.drive(presenter.followingsCountLabel.rx.text),
+                state.map { $0.user?.followingsCount.value?.description ?? "0" }.map { "\($0) 人" }.drive(me.navigationItem.detailLabel.rx.text),
                 store.userFollowingsItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events)),
                 state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
                 state.map { $0.isFollowingsEmpty }.drive(presenter.isFollowingsEmpty),
@@ -53,7 +55,6 @@ class FollowingsViewController: HideNavigationBarViewController {
                         : .empty()
                     }.map { .onTriggerGetMoreUserFollowings },
                 presenter.tableView.rx.modelSelected(UserObject.self).asSignal().map { .onTriggerShowUser($0._id) },
-                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }

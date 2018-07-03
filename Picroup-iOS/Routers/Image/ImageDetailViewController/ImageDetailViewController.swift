@@ -48,7 +48,7 @@ private func comfirmDelete() -> Signal<ImageDetailStateObject.Event> {
 fileprivate typealias Section = ImageDetailPresenter.Section
 fileprivate typealias CellStyle = ImageDetailPresenter.CellStyle
 
-class ImageDetailViewController: HideNavigationBarViewController {
+class ImageDetailViewController: ShowNavigationBarViewController {
     
     typealias Dependency = String
     var dependency: Dependency!
@@ -83,7 +83,8 @@ class ImageDetailViewController: HideNavigationBarViewController {
                     .drive(me.presenter.items(
                         onStarButtonTap: { _events.accept(.onTriggerStarMedium) },
                         onCommentsTap: { _events.accept(.onTriggerShowComments) },
-                        onImageViewTap: { _events.accept(.onTriggerPop) } ,
+//                        onImageViewTap: { _events.accept(.onTriggerPop) } ,
+                        onImageViewTap: nil,
                         onUserTap: { _events.accept(.onTriggerShowUser) },
                         onMoreTap: { _moreButtonTap.accept(()) })),
                 state.map { $0.isMediumDeleted }.drive(onNext: { presenter.collectionView.backgroundView = $0 ? presenter.deleteAlertView : nil }),

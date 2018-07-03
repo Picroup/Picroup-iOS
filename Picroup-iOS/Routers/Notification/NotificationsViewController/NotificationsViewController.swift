@@ -88,9 +88,9 @@ class NotificationsViewController: BaseViewController {
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         
-        presenter.tableView.rx.shouldHideNavigationBar()
-            .emit(to: rx.setNavigationBarHidden(animated: true))
-            .disposed(by: disposeBag)
+//        presenter.tableView.rx.shouldHideNavigationBar()
+//            .emit(to: rx.setNavigationBarHidden(animated: true))
+//            .disposed(by: disposeBag)
     }
 }
 

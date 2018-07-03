@@ -310,7 +310,7 @@
                                 </cells>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="oWM-uy-VqI" firstAttribute="trailing" secondItem="vDe-ez-C2T" secondAttribute="trailing" id="TS4-ed-Wux"/>
                             <constraint firstItem="oWM-uy-VqI" firstAttribute="leading" secondItem="vDe-ez-C2T" secondAttribute="leading" id="Z83-TU-ptc"/>
