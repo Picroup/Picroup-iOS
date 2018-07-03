@@ -43,7 +43,8 @@ extension RouterService.Main {
     static func homeMenuViewController() -> UIViewController {
         let hmvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
         let bnvc = BaseNavigationController(rootViewController: hmvc)
-        bnvc.tabBarItem = UITabBarItem(title: "关注", image: UIImage(named: "ic_home"), selectedImage: nil)
+        bnvc.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "ic_home"), selectedImage: nil)
+        bnvc.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
         bnvc.tabBarItem.badgeColor = .secondary
         return bnvc
     }
@@ -51,7 +52,8 @@ extension RouterService.Main {
     static func rankViewController() -> UIViewController {
         let rvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RankViewController") as! RankViewController
         let bnvc = BaseNavigationController(rootViewController: rvc)
-        bnvc.tabBarItem = UITabBarItem(title: "热门", image: UIImage(named: "ic_apps"), selectedImage: nil)
+        bnvc.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "ic_apps"), selectedImage: nil)
+        bnvc.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
         bnvc.tabBarItem.badgeColor = .secondary
         return bnvc
     }

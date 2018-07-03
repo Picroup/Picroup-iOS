@@ -27,7 +27,6 @@ extension BaseNavigationController {
     fileprivate func prepareNavigationBar() {
         navigationBar.depthPreset = .none
         navigationBar.barTintColor = .primary
-        navigationBar.isTranslucent = false
         (navigationBar as? NavigationBar)?.backButtonImage = Icon.arrowBack?.tint(with: .primaryText)
     }
 }

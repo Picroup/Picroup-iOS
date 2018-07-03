@@ -23,11 +23,18 @@ private func onFollowButtonTap(_events: PublishRelay<UserFollowingsStateObject.E
 }
 
 final class FollowingsPresenter: NSObject {
-    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var followingsCountLabel: UILabel!
     @IBOutlet weak var loadFooterView: LoadFooterView!
     @IBOutlet weak var emptyView: UIView!
+    
+    func setup(navigationItem: UINavigationItem) {
+        
+        navigationItem.titleLabel.text = "关注"
+        navigationItem.titleLabel.textColor = .primaryText
+        
+        navigationItem.detailLabel.text = "0 人"
+        navigationItem.detailLabel.textColor = .primaryText
+    }
 
     typealias Section = SectionModel<String, UserObject>
     typealias DataSource = RxTableViewSectionedReloadDataSource<Section>

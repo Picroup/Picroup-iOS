@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Material
 
 class HideNavigationBarViewController: BaseViewController {
     
@@ -16,13 +17,18 @@ class HideNavigationBarViewController: BaseViewController {
             navigationController?.setNavigationBarHidden(true, animated: true)
         }
     }
-    
-    
 }
 
 class ShowNavigationBarViewController: BaseViewController {
     
-    private var previousNavigationBarHidden: Bool?
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if navigationController?.isNavigationBarHidden == true,
+            let nav = navigationController as? NavigationController {
+            // fix back button not work when previous bar is hidden
+            _ = nav.navigationBar(nav.navigationBar, shouldPush: navigationItem)
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

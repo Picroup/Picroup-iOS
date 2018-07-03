@@ -13,11 +13,11 @@ import RxCocoa
 import RxDataSources
 
 class UserPresenter: NSObject {
-    @IBOutlet weak var meBackgroundView: UIView!
+    weak var navigationItem: UINavigationItem?
+    @IBOutlet weak var imageContentView: CustomIntrinsicContentSizeView!
+    @IBOutlet weak var meBackgroundView: UIView! { didSet { meBackgroundView.backgroundColor = .primary } }
     @IBOutlet weak var userAvatarImageView: UIImageView!
-    @IBOutlet weak var displaynameLabel: UILabel!
-    @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var moreButton: UIButton!
+    var moreButton: IconButton!
 
     @IBOutlet weak var reputationCountLabel: UILabel!
     @IBOutlet weak var gainedReputationCountButton: UIButton!
@@ -35,12 +35,29 @@ class UserPresenter: NSObject {
     
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
     
+    func setup(navigationItem: UINavigationItem) {
+        self.navigationItem = navigationItem
+        
+        navigationItem.titleLabel.text = "..."
+        navigationItem.titleLabel.textColor = .primaryText
+        navigationItem.titleLabel.textAlignment = .left
+        
+        navigationItem.detailLabel.text = "@..."
+        navigationItem.detailLabel.textColor = .primaryText
+        navigationItem.detailLabel.textAlignment = .left
+        
+        moreButton = IconButton(image: UIImage(named: "ic_more_vert"), tintColor: .primaryText)
+        
+        navigationItem.leftViews = [imageContentView]
+        navigationItem.rightViews = [moreButton]
+    }
+    
     var user: Binder<UserObject?> {
         return Binder(self) { presenter, user in
             let viewModel = UserViewModel(user: user)
             presenter.userAvatarImageView.setUserAvatar(with: user)
-            presenter.displaynameLabel.text = viewModel.displayName
-            presenter.usernameLabel.text = viewModel.username
+            presenter.navigationItem?.titleLabel.text = viewModel.displayName
+            presenter.navigationItem?.detailLabel.text = viewModel.username
             presenter.reputationCountLabel.text = viewModel.reputation
             presenter.followersCountLabel.text = viewModel.followersCount
             presenter.followingsCountLabel.text = viewModel.followingsCount
