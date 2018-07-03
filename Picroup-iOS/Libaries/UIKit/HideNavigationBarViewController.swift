@@ -25,8 +25,10 @@ class ShowNavigationBarViewController: BaseViewController {
         super.viewDidLoad()
         if navigationController?.isNavigationBarHidden == true,
             let nav = navigationController as? NavigationController {
-            // fix back button not work when previous bar is hidden
-            _ = nav.navigationBar(nav.navigationBar, shouldPush: navigationItem)
+            DispatchQueue.main.async {
+                // fix back button not work when previous bar is hidden
+                _ = nav.navigationBar(nav.navigationBar, shouldPush: self.navigationItem)
+            }
         }
     }
     
