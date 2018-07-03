@@ -15,8 +15,9 @@ class BaseNavigationController: NavigationController {
 
     override func prepare() {
         super.prepare()
-//        isMotionEnabled = true
-        motionNavigationTransitionType = .push(direction: .left)
+        isMotionEnabled = true
+        motionNavigationTransitionType =
+            .auto
 //            .autoReverse(presenting: .fade)
         prepareNavigationBar()
     }

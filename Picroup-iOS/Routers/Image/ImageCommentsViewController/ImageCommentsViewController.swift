@@ -57,12 +57,13 @@ class ImageCommentsViewController: ShowNavigationBarViewController {
         
         presenter.setup()
         
+        store.medium().bind(to: presenter.medium).disposed(by: disposeBag)
+
         typealias Section = ImageCommentsPresenter.Section
         let uiFeedback: Feedback = bind(presenter) { (presenter, state) in
             
             let commentMoreButtonTap = PublishRelay<CommentObject>()
             let subscriptions = [
-                store.medium().drive(presenter.medium),
                 state.map { $0.session?.isLogin ?? false }.drive(presenter.sendCommentContentView.rx.isShowed),
                 state.map { $0.saveCommentContent }.asObservable().take(1).bind(to: presenter.contentTextField.rx.text),
                 state.map { $0.shouldSendComment ? 1 : 0 }.drive(presenter.sendButton.rx.alpha),

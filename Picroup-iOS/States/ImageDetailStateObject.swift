@@ -242,19 +242,18 @@ final class ImageDetailStateStore {
         Realm.backgroundReduce(ofType: ImageDetailStateObject.self, forPrimaryKey: mediumId, event: event)
     }
     
-    func medium() -> Driver<MediumObject> {
+    func medium() -> Observable<MediumObject> {
         guard let medium = _state.medium else { return .empty() }
-        return Observable.from(object: medium).asDriver(onErrorDriveWith: .empty())
+        return Observable.from(object: medium)
     }
     
-    func recommendMediaItems() -> Driver<[MediumObject]> {
+    func recommendMediaItems() -> Observable<[MediumObject]> {
         guard let items = _state.recommendMedia?.items else { return .empty() }
         return Observable.collection(from: items)
-            .asDriver(onErrorDriveWith: .empty())
             .map { $0.toArray() }
     }
     
-    func mediumWithRecommendMedia() -> Driver<(MediumObject, [MediumObject])> {
-        return Driver.combineLatest(medium(), recommendMediaItems())
+    func mediumWithRecommendMedia() -> Observable<(MediumObject, [MediumObject])> {
+        return Observable.combineLatest(medium(), recommendMediaItems())
     }
 }

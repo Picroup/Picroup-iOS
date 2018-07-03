@@ -57,7 +57,7 @@ class RankMediumCell: RxCollectionViewCell {
             suggestUpdateLabel.isHidden = false
         }
         imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
-//        transition(.fadeOut, .scale(0.75))
+        transition(.fadeOut, .scale(0.75))
         progressView.progress = viewModel.progress
         progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
         starPlaceholderView.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier

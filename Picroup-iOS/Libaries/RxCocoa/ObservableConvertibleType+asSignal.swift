@@ -20,3 +20,11 @@ extension ObservableConvertibleType {
         return asSignal(onErrorRecover: { error in RxCocoa.SharedSequence<RxCocoa.SignalSharingStrategy, Self.E>.just(onErrorReturnJust(error)) })
     }
 }
+
+
+extension ObservableType {
+    
+    public func catchError(returnJust: @escaping (Error) -> Self.E) -> Observable<E> {
+        return catchError { error in .just(returnJust(error)) }
+    }
+}

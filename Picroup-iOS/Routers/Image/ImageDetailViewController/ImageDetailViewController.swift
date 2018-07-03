@@ -71,22 +71,25 @@ class ImageDetailViewController: ShowNavigationBarViewController {
         }
         
         appStateService?.events.accept(.onViewMedium(mediumId))
-
+        
+        let _events = PublishRelay<ImageDetailStateObject.Event>()
+        let _moreButtonTap = PublishRelay<Void>()
+        
+        // I known this is ugly but it enabled the transition animations
+        Observable.combineLatest(store.sections, store.states.asObservable()) { $1.isMediumDeleted ? [] : $0 }
+            .bind(to: presenter.items(
+                onStarButtonTap: { _events.accept(.onTriggerStarMedium) },
+                onCommentsTap: { _events.accept(.onTriggerShowComments) },
+                onImageViewTap: { _events.accept(.onTriggerPop) } ,
+                //                        onImageViewTap: nil,
+                onUserTap: { _events.accept(.onTriggerShowUser) },
+                onMoreTap: { _moreButtonTap.accept(()) }))
+            .disposed(by: disposeBag)
+        
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
-            
-            let _events = PublishRelay<ImageDetailStateObject.Event>()
-            let _moreButtonTap = PublishRelay<Void>()
 
             let subscriptions = [
-                state.flatMapLatest { $0.isMediumDeleted ? .just([]) : store.sections }
-                    .drive(me.presenter.items(
-                        onStarButtonTap: { _events.accept(.onTriggerStarMedium) },
-                        onCommentsTap: { _events.accept(.onTriggerShowComments) },
-                        onImageViewTap: { _events.accept(.onTriggerPop) } ,
-//                        onImageViewTap: nil,
-                        onUserTap: { _events.accept(.onTriggerShowUser) },
-                        onMoreTap: { _moreButtonTap.accept(()) })),
                 state.map { $0.isMediumDeleted }.drive(onNext: { presenter.collectionView.backgroundView = $0 ? presenter.deleteAlertView : nil }),
                 presenter.backgroundButton.rx.tap.subscribe(onNext: { _events.accept(.onTriggerPop) }),
                 presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
@@ -152,8 +155,8 @@ class ImageDetailViewController: ShowNavigationBarViewController {
 
 extension ImageDetailStateStore {
     
-    fileprivate var sections: Driver<[Section]> {
-        return mediumWithRecommendMedia().map { data in
+    fileprivate var sections: Observable<[Section]> {
+        return mediumWithRecommendMedia().map { [weak self] data in
             let (medium, items) = data
             let imageDetailItems = [CellStyle.imageDetail(medium)]
             let recommendMediaItems = items.map(CellStyle.recommendMedium)

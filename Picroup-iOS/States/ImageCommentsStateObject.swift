@@ -217,9 +217,9 @@ final class ImageCommentsStateStore {
         Realm.backgroundReduce(ofType: ImageCommentsStateObject.self, forPrimaryKey: mediumId, event: event)
     }
     
-    func medium() -> Driver<MediumObject> {
+    func medium() -> Observable<MediumObject> {
         guard let medium = _state.medium else { return .empty() }
-        return Observable.from(object: medium).asDriver(onErrorDriveWith: .empty())
+        return Observable.from(object: medium)
     }
     
     func commentsItems() -> Driver<[CommentObject]> {
