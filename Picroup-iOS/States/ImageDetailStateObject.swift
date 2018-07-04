@@ -244,16 +244,18 @@ final class ImageDetailStateStore {
     
     func medium() -> Observable<MediumObject> {
         guard let medium = _state.medium else { return .empty() }
-        return Observable.from(object: medium)
+        return Observable.from(object: medium).catchErrorRecoverEmpty()
     }
     
     func recommendMediaItems() -> Observable<[MediumObject]> {
         guard let items = _state.recommendMedia?.items else { return .empty() }
         return Observable.collection(from: items)
             .map { $0.toArray() }
+            .catchErrorRecoverEmpty()
     }
     
     func mediumWithRecommendMedia() -> Observable<(MediumObject, [MediumObject])> {
         return Observable.combineLatest(medium(), recommendMediaItems())
+            .catchErrorRecoverEmpty()
     }
 }

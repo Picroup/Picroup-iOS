@@ -16,7 +16,6 @@ class ImageCommentsPresenter: NSObject {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var lifeBar: UIView!
     @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var commentsCountLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadFooterView: LoadFooterView!
     @IBOutlet weak var starPlaceholderView: UIView!
@@ -29,12 +28,21 @@ class ImageCommentsPresenter: NSObject {
     @IBOutlet weak var deleteAlertView: UIView!
     @IBOutlet weak var suggestUpdateLabel: UILabel!
     @IBOutlet weak var emptyView: UIView!
-
-    func setup() {
+    weak var navigationItem: UINavigationItem!
+    
+    func setup(navigationItem: UINavigationItem) {
+        self.navigationItem = navigationItem
+        
         tableView.backgroundView = tableViewBackgroundButton
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
         hideCommentsIcon.image = Icon.cm.arrowDownward
+        
+        navigationItem.titleLabel.text = "评论"
+        navigationItem.titleLabel.textColor = .primaryText
+        
+        navigationItem.detailLabel.text = "0 条"
+        navigationItem.detailLabel.textColor = .primaryText
     }
     
     var medium: Binder<MediumObject> {
@@ -51,7 +59,7 @@ class ImageCommentsPresenter: NSObject {
             me.lifeBar.motionIdentifier = "lifeBar_\(medium._id)"
             me.sendButton.motionIdentifier = "starButton_\(medium._id)"
             me.lifeViewWidthConstraint.constant = CGFloat(remainTime / 12.0.weeks) * me.lifeBar.bounds.width
-            me.commentsCountLabel.text = "\(medium.commentsCount.value ?? 0) 条"
+            me.navigationItem.detailLabel.text = "\(medium.commentsCount.value ?? 0) 条"
         }
     }
     

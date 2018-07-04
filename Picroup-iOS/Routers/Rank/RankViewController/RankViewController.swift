@@ -40,7 +40,7 @@ class RankViewController: BaseViewController {
             let subscriptions = [
 //                store.rankMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState.asDriver())),
                 store.hotMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState.asDriver())),
-                state.map { $0.isReloadHotMedia }.drive(presenter.refreshControl.rx.isRefreshing),
+                state.map { $0.isReloadHotMedia }.drive(presenter.refreshControl.rx.refreshing),
                 state.map { $0.footerState }.drive(footerState),
                 state.map { $0.session?.isLogin ?? false }.drive(presenter.userButton.rx.isHidden),
             ]

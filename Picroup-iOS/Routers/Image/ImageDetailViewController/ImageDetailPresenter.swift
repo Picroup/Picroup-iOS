@@ -63,6 +63,7 @@ extension ImageDetailPresenter: UICollectionViewDelegate, UICollectionViewDelega
         guard let dataSource = dataSource else { return .zero }
         switch dataSource[indexPath] {
         case .imageDetail(let medium):
+            guard !medium.isInvalidated else { return .zero }
 //            print("medium", medium)
             let width = collectionView.bounds.width
             let imageHeight = width / CGFloat(medium.detail?.aspectRatio.value ?? 1)

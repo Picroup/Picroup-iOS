@@ -46,6 +46,7 @@ class ImageCommentsViewController: ShowNavigationBarViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
@@ -55,7 +56,6 @@ class ImageCommentsViewController: ShowNavigationBarViewController {
             let store = try? ImageCommentsStateStore(mediumId: mediumId)
             else { return }
         
-        presenter.setup()
         
         store.medium().bind(to: presenter.medium).disposed(by: disposeBag)
 

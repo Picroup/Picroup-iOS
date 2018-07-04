@@ -85,6 +85,7 @@
 		455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455414B2207E315900296FDE /* IsFeedbackState.swift */; };
 		455808D920EC6B2C005F1A00 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455808D820EC6B2C005F1A00 /* BaseViewController.swift */; };
 		455808DB20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455808DA20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift */; };
+		455808DD20EC9D99005F1A00 /* UIRefreshControl+refreshing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455808DC20EC9D99005F1A00 /* UIRefreshControl+refreshing.swift */; };
 		455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */; };
 		455D69042080409A00C651A0 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69032080409A00C651A0 /* BaseNavigationController.swift */; };
 		455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69072080890B00C651A0 /* UIScrollView+Rx.swift */; };
@@ -296,6 +297,7 @@
 		455414B2207E315900296FDE /* IsFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackState.swift; sourceTree = "<group>"; };
 		455808D820EC6B2C005F1A00 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		455808DA20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+setTabBarHidden.swift"; sourceTree = "<group>"; };
+		455808DC20EC9D99005F1A00 /* UIRefreshControl+refreshing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+refreshing.swift"; sourceTree = "<group>"; };
 		455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+RxMinioId.swift"; sourceTree = "<group>"; };
 		455D69032080409A00C651A0 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		455D69072080890B00C651A0 /* UIScrollView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx.swift"; sourceTree = "<group>"; };
@@ -528,6 +530,7 @@
 				45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */,
 				45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */,
 				45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */,
+				455808DC20EC9D99005F1A00 /* UIRefreshControl+refreshing.swift */,
 				45384BBD207DFB3400624A1B /* UIViewController+Rx+dismiss.swift */,
 				45517D4F20BCFF4C00F2D7DE /* UIView+Rx.swift */,
 				458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */,
@@ -1484,6 +1487,7 @@
 				4574E2A620CE4726005784C8 /* CollectionViewLayoutManager.swift in Sources */,
 				454F72982089B46300850471 /* RxTableViewCell.swift in Sources */,
 				457BD99A20B306AA007F0492 /* UserFollowingsStateObject.swift in Sources */,
+				455808DD20EC9D99005F1A00 /* UIRefreshControl+refreshing.swift in Sources */,
 				451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */,
 				45517D4E20BCEDE100F2D7DE /* UserCell.swift in Sources */,
 				455D69042080409A00C651A0 /* BaseNavigationController.swift in Sources */,

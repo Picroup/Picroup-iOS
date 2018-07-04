@@ -219,7 +219,8 @@ final class ImageCommentsStateStore {
     
     func medium() -> Observable<MediumObject> {
         guard let medium = _state.medium else { return .empty() }
-        return Observable.from(object: medium)
+        return Observable.from(object: medium).catchErrorRecoverEmpty()
+
     }
     
     func commentsItems() -> Driver<[CommentObject]> {
