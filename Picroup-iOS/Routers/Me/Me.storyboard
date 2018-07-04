@@ -1439,13 +1439,13 @@
         <!--Notifications View Controller-->
         <scene sceneID="aJ0-Uf-U71">
             <objects>
-                <viewController storyboardIdentifier="NotificationsViewController" id="xsT-Gg-I7l" customClass="NotificationsViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NotificationsViewController" extendedLayoutIncludesOpaqueBars="YES" id="xsT-Gg-I7l" customClass="NotificationsViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="p0A-JD-jud">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="72" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LFe-Iv-JvC">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="asA-7d-fQs" customClass="LoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="100" width="375" height="80"/>
@@ -1517,7 +1517,7 @@
                         <constraints>
                             <constraint firstItem="LFe-Iv-JvC" firstAttribute="leading" secondItem="BnS-5B-Znc" secondAttribute="leading" id="8BV-8l-mZi"/>
                             <constraint firstItem="LFe-Iv-JvC" firstAttribute="bottom" secondItem="BnS-5B-Znc" secondAttribute="bottom" id="9M3-iA-9MG"/>
-                            <constraint firstItem="LFe-Iv-JvC" firstAttribute="top" secondItem="BnS-5B-Znc" secondAttribute="top" id="Vea-WG-c7q"/>
+                            <constraint firstAttribute="top" secondItem="LFe-Iv-JvC" secondAttribute="top" id="BMm-eh-QdQ"/>
                             <constraint firstItem="LFe-Iv-JvC" firstAttribute="trailing" secondItem="BnS-5B-Znc" secondAttribute="trailing" id="vjb-ye-6bi"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BnS-5B-Znc"/>

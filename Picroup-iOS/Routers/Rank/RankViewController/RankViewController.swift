@@ -59,11 +59,12 @@ class RankViewController: BaseViewController {
         
         let vcFeedback: Feedback = bind(self) { (me, state)  in
             let subscriptions = [
-                me.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true))
+                me.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
+                me.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setTabBarHidden(animated: true)),
             ]
             let events: [Signal<RankStateObject.Event>] = [
                 .just(.onTriggerReload),
-                .never()
+                .never(),
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }

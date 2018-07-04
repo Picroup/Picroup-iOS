@@ -40,6 +40,8 @@ class NotificationsViewController: BaseViewController {
                 store.notifications().map { [Section(model: "", items: $0)] }.drive(presenter.items),
                 state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
                 state.map { $0.isNotificationsEmpty }.drive(presenter.isNotificationsEmpty),
+                presenter.tableView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
+                presenter.tableView.rx.shouldHideNavigationBar().emit(to: me.rx.setTabBarHidden(animated: true)),
             ]
             let events: [Signal<NotificationsStateObject.Event>] = [
                 .just(.onTriggerReload),
@@ -88,9 +90,6 @@ class NotificationsViewController: BaseViewController {
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         
-//        presenter.tableView.rx.shouldHideNavigationBar()
-//            .emit(to: rx.setNavigationBarHidden(animated: true))
-//            .disposed(by: disposeBag)
     }
 }
 

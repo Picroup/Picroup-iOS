@@ -42,6 +42,8 @@ class HomeViewController: BaseViewController {
                 state.map { $0.isMyInterestedMediaEmpty }.drive(presenter.isMyInterestedMediaEmpty),
                 presenter.fabButton.rx.tap.asSignal().map { false }.emit(to: me.rx.setNavigationBarHidden(animated: true)),
                 presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
+                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setTabBarHidden(animated: true)),
+                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: presenter.isFabButtonHidden),
                 ]
             let events: [Signal<HomeStateObject.Event>] = [
                 .just(.onTriggerReloadMyInterestedMedia),
