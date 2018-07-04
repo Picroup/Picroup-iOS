@@ -15,12 +15,12 @@
         <!--Rank View Controller-->
         <scene sceneID="3if-qL-wOS">
             <objects>
-                <viewController storyboardIdentifier="RankViewController" id="LEu-7r-8B3" customClass="RankViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RankViewController" extendedLayoutIncludesOpaqueBars="YES" id="LEu-7r-8B3" customClass="RankViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2Ch-t5-pxt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kaw-Yi-1l5">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kaw-Yi-1l5">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="gxS-p4-IkQ">
@@ -110,9 +110,9 @@
                         </subviews>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="kaw-Yi-1l5" secondAttribute="bottom" id="0lm-OQ-aKt"/>
                             <constraint firstItem="kaw-Yi-1l5" firstAttribute="top" secondItem="2Ch-t5-pxt" secondAttribute="top" id="AlG-Bt-Uxc"/>
                             <constraint firstItem="kaw-Yi-1l5" firstAttribute="trailing" secondItem="Xpd-jY-PHs" secondAttribute="trailing" id="EpJ-gu-Hts"/>
-                            <constraint firstItem="kaw-Yi-1l5" firstAttribute="bottom" secondItem="Xpd-jY-PHs" secondAttribute="bottom" id="Hj2-0g-X4t"/>
                             <constraint firstItem="kaw-Yi-1l5" firstAttribute="leading" secondItem="Xpd-jY-PHs" secondAttribute="leading" id="ftE-HS-ihX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Xpd-jY-PHs"/>
@@ -128,7 +128,7 @@
         <!--Home View Controller-->
         <scene sceneID="oYZ-S2-qIP">
             <objects>
-                <viewController storyboardIdentifier="HomeViewController" id="pn8-dg-GpM" customClass="HomeViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" extendedLayoutIncludesOpaqueBars="YES" id="pn8-dg-GpM" customClass="HomeViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Sz9-CY-eUY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

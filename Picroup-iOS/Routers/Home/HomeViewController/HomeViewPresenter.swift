@@ -13,7 +13,7 @@ import RxCocoa
 import RxDataSources
 
 fileprivate let fabMenuSize = CGSize(width: 56, height: 56)
-fileprivate let bottomInset: CGFloat = 24
+fileprivate let bottomInset: CGFloat = 74
 fileprivate let rightInset: CGFloat = 24
 
 final class HomeViewPresenter: NSObject {
@@ -88,6 +88,14 @@ final class HomeViewPresenter: NSObject {
     var isMyInterestedMediaEmpty: Binder<Bool> {
         return Binder(self) { presenter, isEmpty in
             presenter.collectionView.backgroundView = isEmpty ? presenter.emptyView : nil
+        }
+    }
+    
+    var isFabButtonHidden: Binder<Bool> {
+        return Binder(self) { presenter, isHidden in
+            UIView.animate(withDuration: 0.3) {
+                presenter.fabButton.alpha = isHidden ? 0 : 1
+            }
         }
     }
 }

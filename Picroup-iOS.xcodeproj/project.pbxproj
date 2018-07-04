@@ -83,6 +83,8 @@
 		45525D4A208C3CB500EAF00D /* CreateImagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */; };
 		45525D4F208C468500EAF00D /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D4E208C468500EAF00D /* Feedback.swift */; };
 		455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455414B2207E315900296FDE /* IsFeedbackState.swift */; };
+		455808D920EC6B2C005F1A00 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455808D820EC6B2C005F1A00 /* BaseViewController.swift */; };
+		455808DB20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455808DA20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift */; };
 		455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */; };
 		455D69042080409A00C651A0 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69032080409A00C651A0 /* BaseNavigationController.swift */; };
 		455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69072080890B00C651A0 /* UIScrollView+Rx.swift */; };
@@ -292,6 +294,8 @@
 		45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImagePresenter.swift; sourceTree = "<group>"; };
 		45525D4E208C468500EAF00D /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
 		455414B2207E315900296FDE /* IsFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackState.swift; sourceTree = "<group>"; };
+		455808D820EC6B2C005F1A00 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		455808DA20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+setTabBarHidden.swift"; sourceTree = "<group>"; };
 		455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+RxMinioId.swift"; sourceTree = "<group>"; };
 		455D69032080409A00C651A0 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		455D69072080890B00C651A0 /* UIScrollView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx.swift"; sourceTree = "<group>"; };
@@ -762,6 +766,7 @@
 			isa = PBXGroup;
 			children = (
 				455D69032080409A00C651A0 /* BaseNavigationController.swift */,
+				455808D820EC6B2C005F1A00 /* BaseViewController.swift */,
 				4595F2072079EECF0040E5FA /* colors.swift */,
 				45517D4920BCDD8000F2D7DE /* CollectionLoadFooterView.swift */,
 				45517D4B20BCE9BC00F2D7DE /* LoadFooterViewState+create.swift */,
@@ -1056,6 +1061,7 @@
 				4543ECE320BC38D1002F7C18 /* LoadFooterView */,
 				45E240B420862981004B58EF /* HideNavigationBarViewController.swift */,
 				45183EC320D0ED2300497B59 /* UIViewController+isViewAppears.swift */,
+				455808DA20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift */,
 				45B5E27520C8D2D7005E2E58 /* PlaceholderTextView.swift */,
 				454F72992089BA1300850471 /* UIView+IBInspectable.swift */,
 				458C050420C91C07004EB2D8 /* ImageGenerator.swift */,
@@ -1412,6 +1418,7 @@
 				45B0205A20AEA35600BD5D8F /* UserStateObject.swift in Sources */,
 				45FC0BF320A42F26006AAF3D /* UserViewController.swift in Sources */,
 				4543ECE720BC39DC002F7C18 /* LoadFooterView.swift in Sources */,
+				455808D920EC6B2C005F1A00 /* BaseViewController.swift in Sources */,
 				454B4A4E20ABB78600990063 /* ImageDetailStateObject.swift in Sources */,
 				454A4C42209C2F160063E829 /* LocalStorage.swift in Sources */,
 				454F729A2089BA1300850471 /* UIView+IBInspectable.swift in Sources */,
@@ -1423,6 +1430,7 @@
 				45517D4820BCDD3E00F2D7DE /* CommentCell.swift in Sources */,
 				451CD322207A3C1D0063A972 /* ApolloClient+Rx.swift in Sources */,
 				451CD339207D0BAA0063A972 /* NotificationsViewController.swift in Sources */,
+				455808DB20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift in Sources */,
 				45B5E27920C8D8A2005E2E58 /* UpdatePasswordViewController.swift in Sources */,
 				454CD57520C80EB60087C634 /* RegisterPasswordViewController.swift in Sources */,
 				4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */,

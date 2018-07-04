@@ -28,7 +28,7 @@ extension RouterService.Me {
         return bnvc
     }
     
-    static func meNavigationViewController() -> UIViewController {
+    static func meNavigationViewController(isRoot: Bool = false) -> UIViewController {
         let mevc = meViewController()
         let bnvc = BaseNavigationController(rootViewController: mevc)
         bnvc.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "ic_person"), selectedImage: nil)
