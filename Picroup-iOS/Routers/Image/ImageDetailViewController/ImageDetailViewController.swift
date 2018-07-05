@@ -77,13 +77,7 @@ class ImageDetailViewController: ShowNavigationBarViewController {
         
         // I known this is ugly but it enabled the transition animations
         Observable.combineLatest(store.sections, store.states.asObservable()) { $1.isMediumDeleted ? [] : $0 }
-            .bind(to: presenter.items(
-                onStarButtonTap: { _events.accept(.onTriggerStarMedium) },
-                onCommentsTap: { _events.accept(.onTriggerShowComments) },
-                onImageViewTap: { _events.accept(.onTriggerPop) } ,
-                //                        onImageViewTap: nil,
-                onUserTap: { _events.accept(.onTriggerShowUser) },
-                onMoreTap: { _moreButtonTap.accept(()) }))
+            .bind(to: presenter.items(events: _events, moreButtonTap: _moreButtonTap))
             .disposed(by: disposeBag)
         
         let uiFeedback: Feedback = bind(self) { (me, state) in
@@ -156,12 +150,12 @@ class ImageDetailViewController: ShowNavigationBarViewController {
 extension ImageDetailStateStore {
     
     fileprivate var sections: Observable<[Section]> {
-        return mediumWithRecommendMedia().map { [weak self] data in
+        return mediumWithRecommendMedia().map { data in
             let (medium, items) = data
             let imageDetailItems = [CellStyle.imageDetail(medium)]
             let recommendMediaItems = items.map(CellStyle.recommendMedium)
-            let imageDetailSection = ImageDetailPresenter.Section(model: "imageDetail", items: imageDetailItems)
-            let recommendMediaSection = ImageDetailPresenter.Section(model: "recommendMedia", items: recommendMediaItems)
+            let imageDetailSection = ImageDetailPresenter.Section(model: .imageDetail, items: imageDetailItems)
+            let recommendMediaSection = ImageDetailPresenter.Section(model: .recommendMedia, items: recommendMediaItems)
             return [
                 imageDetailSection,
                 recommendMediaSection

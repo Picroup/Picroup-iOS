@@ -63,26 +63,25 @@ final class HomeViewPresenter: NSObject {
     
     var dataSource: DataSource?
 
-    var items: (PublishRelay<HomeStateObject.Event>, Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
-        return { [weak self, collectionView] _events, loadState in
-            let dataSource = DataSource(
-                configureCell: { dataSource, collectionView, indexPath, item in
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeImageCell", for: indexPath) as! HomeImageCell
-                    cell.configure(
-                        with: item,
-                        onCommentsTap: { _events.accept(.onTriggerShowComments(item._id)) },
-                        onImageViewTap: { _events.accept(.onTriggerShowImage(item._id)) },
-                        onUserTap: {
-                            guard let userId = item.user?._id else { return }
-                            _events.accept(.onTriggerShowUser(userId))
-                    })
-                    return cell
-            },
-                configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
-            )
-            self?.dataSource = dataSource
-            return collectionView!.rx.items(dataSource: dataSource)
-        }
+    func items(events: PublishRelay<HomeStateObject.Event>, loadState: Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
+//        [weak self, collectionView]
+        let dataSource = DataSource(
+            configureCell: { dataSource, collectionView, indexPath, item in
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeImageCell", for: indexPath) as! HomeImageCell
+                cell.configure(
+                    with: item,
+                    onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
+                    onImageViewTap: { events.accept(.onTriggerShowImage(item._id)) },
+                    onUserTap: {
+                        guard let userId = item.user?._id else { return }
+                        events.accept(.onTriggerShowUser(userId))
+                })
+                return cell
+        },
+            configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
+        )
+        self.dataSource = dataSource
+        return collectionView!.rx.items(dataSource: dataSource)
     }
     
     var isMyInterestedMediaEmpty: Binder<Bool> {
