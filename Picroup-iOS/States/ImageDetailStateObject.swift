@@ -116,8 +116,8 @@ extension ImageDetailStateObject {
         case onDeleteMediumError(Error)
         
         case onTriggerShowImage(String)
-        case onTriggerShowComments
-        case onTriggerShowUser
+        case onTriggerShowComments(String)
+        case onTriggerShowUser(String)
         case onTriggerMediumFeedback
         case onTriggerPop
     }
@@ -208,11 +208,11 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
             imageDetialRoute?.version = UUID().uuidString
-        case .onTriggerShowComments:
+        case .onTriggerShowComments(let mediumId):
             imageCommetsRoute?.mediumId = mediumId
             imageCommetsRoute?.version = UUID().uuidString
-        case .onTriggerShowUser:
-            userRoute?.userId = medium?.user?._id
+        case .onTriggerShowUser(let userId):
+            userRoute?.userId = userId
             userRoute?.version = UUID().uuidString
         case .onTriggerMediumFeedback:
             feedbackRoute?.triggerMedium(mediumId: mediumId)

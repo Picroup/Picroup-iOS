@@ -86,6 +86,7 @@
 		455808D920EC6B2C005F1A00 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455808D820EC6B2C005F1A00 /* BaseViewController.swift */; };
 		455808DB20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455808DA20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift */; };
 		455808DD20EC9D99005F1A00 /* UIRefreshControl+refreshing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455808DC20EC9D99005F1A00 /* UIRefreshControl+refreshing.swift */; };
+		455808E620EDAB65005F1A00 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455808E520EDAB65005F1A00 /* Constants.swift */; };
 		455D68FF207F4ECD00C651A0 /* UIImageView+RxMinioId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */; };
 		455D69042080409A00C651A0 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69032080409A00C651A0 /* BaseNavigationController.swift */; };
 		455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69072080890B00C651A0 /* UIScrollView+Rx.swift */; };
@@ -300,6 +301,7 @@
 		455808DC20EC9D99005F1A00 /* UIRefreshControl+refreshing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+refreshing.swift"; sourceTree = "<group>"; };
 		455808E220ECC301005F1A00 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/Main.storyboard"; sourceTree = "<group>"; };
 		455808E420ECC346005F1A00 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.storyboard"; sourceTree = "<group>"; };
+		455808E520EDAB65005F1A00 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+RxMinioId.swift"; sourceTree = "<group>"; };
 		455D69032080409A00C651A0 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		455D69072080890B00C651A0 /* UIScrollView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx.swift"; sourceTree = "<group>"; };
@@ -690,6 +692,7 @@
 				4515A68C2079E3790039C383 /* Routers */,
 				457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */,
 				457B1BA2205FFE9D00BEDDF1 /* Config.swift */,
+				455808E520EDAB65005F1A00 /* Constants.swift */,
 				45A039332075C4C5007498DB /* SupportingFiles */,
 			);
 			path = "Picroup-iOS";
@@ -1186,7 +1189,7 @@
 			};
 			buildConfigurationList = 457B1B82205FEA1000BEDDF1 /* Build configuration list for PBXProject "Picroup-iOS" */;
 			compatibilityVersion = "Xcode 8.0";
-			developmentRegion = zh-Hans;
+			developmentRegion = "zh-Hans";
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
@@ -1513,6 +1516,7 @@
 				4595F223207C97410040E5FA /* UIView+Motion+Rx.swift in Sources */,
 				451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */,
 				45517D4020BCDCA800F2D7DE /* NotificationCell.swift in Sources */,
+				455808E620EDAB65005F1A00 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

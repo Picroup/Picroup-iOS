@@ -18,18 +18,13 @@ class ImageDetailPresenter: NSObject {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var backgroundButton: UIButton!
     
-    typealias Section = AnimatableSectionModel<String, CellStyle>
+    typealias Section = AnimatableSectionModel<SectionStyle, CellStyle>
     typealias DataSource = RxCollectionViewSectionedReloadDataSource<Section>
     
     var dataSource: DataSource?
     
-    func items(
-        onStarButtonTap: (() -> Void)?,
-        onCommentsTap: (() -> Void)?,
-        onImageViewTap: (() -> Void)?,
-        onUserTap: (() -> Void)?,
-        onMoreTap: (() -> Void)?
-        ) -> (Observable<[Section]>) -> Disposable {
+    func items(events:
+        PublishRelay<ImageDetailStateObject.Event>, moreButtonTap: PublishRelay<Void>) -> (Observable<[Section]>) -> Disposable {
             dataSource = DataSource(
                 configureCell: { dataSource, collectionView, indexPath, cellStyle in
                     switch cellStyle {
@@ -37,16 +32,25 @@ class ImageDetailPresenter: NSObject {
                         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageDetailCell", for: indexPath) as! ImageDetailCell
                         cell.configure(
                             with: item,
-                            onStarButtonTap: onStarButtonTap,
-                            onCommentsTap: onCommentsTap,
-                            onImageViewTap: onImageViewTap,
-                            onUserTap: onUserTap,
-                            onMoreTap: onMoreTap
+                            onStarButtonTap: { events.accept(.onTriggerStarMedium) },
+                            onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
+                            onImageViewTap: { events.accept(.onTriggerPop) },
+                            onUserTap: {
+                                guard let userId = item.user?._id else { return }
+                                events.accept(.onTriggerShowUser(userId))
+                        }, onMoreTap: { moreButtonTap.accept(()) }
                         )
                         return cell
                     case .recommendMedium(let item):
-                        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                        cell.configure(with: item)
+                        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeImageCell", for: indexPath) as! HomeImageCell
+                        cell.configure(
+                            with: item,
+                            onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
+                            onImageViewTap: { events.accept(.onTriggerShowImage(item._id)) },
+                            onUserTap: {
+                                guard let userId = item.user?._id else { return }
+                                events.accept(.onTriggerShowUser(userId))
+                        })
                         return cell
                     }
             },
@@ -64,21 +68,24 @@ extension ImageDetailPresenter: UICollectionViewDelegate, UICollectionViewDelega
         switch dataSource[indexPath] {
         case .imageDetail(let medium):
             guard !medium.isInvalidated else { return .zero }
-//            print("medium", medium)
             let width = collectionView.bounds.width
             let imageHeight = width / CGFloat(medium.detail?.aspectRatio.value ?? 1)
             let height = imageHeight + 8 + 56 + 48 + 1 + 48
             return CGSize(width: width, height: height)
-        case .recommendMedium:
-            return CollectionViewLayoutManager.size(in: collectionView.bounds)
+        case .recommendMedium(let medium):
+            guard !medium.isInvalidated else { return .zero }
+            let width = collectionView.bounds.width - 16
+            let imageHeight = width / CGFloat(medium.detail?.aspectRatio.value ?? 1)
+            let height = imageHeight + 8 + 56
+            return CGSize(width: width, height: height)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         guard let dataSource = dataSource else { return .zero }
         switch dataSource[section].model {
-        case "recommendMedia":
-            return UIEdgeInsets(top: 36, left: 2, bottom: 64, right: 2)
+        case .recommendMedia:
+            return UIEdgeInsets(top: 36, left: 8, bottom: 64, right: 8)
         default:
             return .zero
         }
@@ -86,6 +93,11 @@ extension ImageDetailPresenter: UICollectionViewDelegate, UICollectionViewDelega
 }
 
 extension ImageDetailPresenter {
+    
+    enum SectionStyle: String {
+        case imageDetail
+        case recommendMedia
+    }
     
     enum CellStyle {
         case imageDetail(MediumObject)
@@ -103,6 +115,14 @@ extension ImageDetailPresenter.CellStyle {
     }
 }
 
+extension ImageDetailPresenter.SectionStyle: IdentifiableType, Equatable {
+    typealias Identity = String
+    
+    var identity: String {
+        return rawValue
+    }
+}
+
 extension ImageDetailPresenter.CellStyle: IdentifiableType, Equatable {
     typealias Identity = String
     
@@ -111,7 +131,7 @@ extension ImageDetailPresenter.CellStyle: IdentifiableType, Equatable {
         case .imageDetail:
             return "imageDetail"
         case .recommendMedium(let medium):
-            return medium._id
+            return "recommendMedium.\(medium._id)"
         }
     }
     
