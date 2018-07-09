@@ -19,7 +19,8 @@ final class MediumObject: PrimaryObject {
     let endedAt = RealmOptional<Double>()
     let stared = RealmOptional<Bool>()
     let commentsCount = RealmOptional<Int>()
-    
+    let tags = List<String>()
+
     @objc dynamic var user: UserObject?
 }
 

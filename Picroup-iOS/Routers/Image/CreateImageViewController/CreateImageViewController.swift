@@ -46,12 +46,18 @@ class CreateImageViewController: ShowNavigationBarViewController {
                     cell.imageView.image = image
                     cell.progressView.progress = item.progress?.completed ?? 0
                 },
-//                state.map { $0.shouldSaveMedium }.distinctUntilChanged().drive(me.presenter.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
+                store.tagStates().drive(me.presenter.tagsCollectionView.rx.items(cellIdentifier: "TagCollectionViewCell", cellType: TagCollectionViewCell.self)) { index, tagState, cell in
+                    cell.tagLabel.text = tagState.tag
+                    cell.setSelected(tagState.isSelected)
+                },
+                state.map { $0.shouldSaveMedium }.distinctUntilChanged().drive(me.presenter.saveButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 state.map { $0.completed }.drive(me.presenter.progressView.rx.progress),
                 ]
             let events: [Signal<CreateImageStateObject.Event>] = [
-//                me.presenter.saveButton.rx.tap.asSignal().map { CreateImageStateObject.Event.onTriggerSaveMedium }
-                .never()
+                me.presenter.tagsCollectionView.rx.modelSelected(TagStateObject.self).asSignal().map { .onToggleTag($0.tag) },
+                me.presenter.didCommitTag.asSignal().map(CreateImageStateObject.Event.onAddTag),
+                me.presenter.saveButton.rx.tap.asSignal().map { CreateImageStateObject.Event.onTriggerSaveMedium },
+//                .never()
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
@@ -84,8 +90,8 @@ class CreateImageViewController: ShowNavigationBarViewController {
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
     
-        presenter.collectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
+//        presenter.collectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
+        
     }
-    
 }
 

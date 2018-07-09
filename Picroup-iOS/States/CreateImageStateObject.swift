@@ -36,18 +36,24 @@ final class SaveMediumStateObject: PrimaryObject {
     @objc dynamic var savedError: String?
 }
 
+final class TagStateObject: Object {
+    
+    @objc dynamic var tag: String = ""
+    @objc dynamic var isSelected: Bool = false
+}
+
 final class CreateImageStateObject: PrimaryObject {
     typealias Query = (userId: String, imageKeys: [String])
 
     @objc dynamic var session: UserSessionObject?
     
     let imageKeys = List<String>()
+    let tagStates = List<TagStateObject>()
     let saveMediumStates = List<SaveMediumStateObject>()
     @objc dynamic var finished: Int = 0
     @objc dynamic var triggerSaveMediumQuery: Bool = false
-
-//    @objc dynamic var myMedia: CursorMediaObject?
-//    @objc dynamic var myInterestedMedia: CursorMediaObject?
+    
+    @objc dynamic var selectedTagHistory: SelectedTagHistoryObject?
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
 
@@ -87,17 +93,31 @@ extension CreateImageStateObject {
                 "_id": _id,
                 "session": ["_id": _id],
                 "imageKeys": imageKeys,
+                "tags": [],
                 "saveMediumStates": imageKeys.map { ["_id": $0, "progress": [:]] },
                 "finished": 0,
-                "triggerSaveMediumQuery": true,
-//                "myMedia": ["_id": PrimaryKey.myMediaId],
-//                "myInterestedMedia": ["_id": PrimaryKey.myInterestedMediaId],
+                "triggerSaveMediumQuery": false,
+                "selectedTagHistory": ["_id": _id],
                 "needUpdate": ["_id": _id],
                 "popRoute": ["_id": _id],
                 "snackbar": ["_id": _id],
                 ]
-            return try realm.update(CreateImageStateObject.self, value: value)
+            let result = try realm.update(CreateImageStateObject.self, value: value)
+            try realm.write {
+                result.resetTagStates(realm: realm)
+            }
+            return result
         }
+    }
+}
+
+extension CreateImageStateObject {
+    
+    fileprivate func resetTagStates(realm: Realm) {
+        let tags = selectedTagHistory?.getTags().toArray() ?? []
+        let tagStates = tags.map { realm.create(TagStateObject.self, value: ["tag": $0]) }
+        self.tagStates.removeAll()
+        self.tagStates.append(objectsIn: tagStates)
     }
 }
 
@@ -107,6 +127,8 @@ extension CreateImageStateObject {
         case onProgress(RxProgress, Int)
         case onSavedMediumSuccess(MediumFragment, Int)
         case onSavedMediumError(Error, Int)
+        case onToggleTag(String)
+        case onAddTag(String)
 //        case triggerCancel
     }
 }
@@ -147,6 +169,21 @@ extension CreateImageStateObject: IsFeedbackStateObject {
                 needUpdate?.myInterestedMedia = true
                 needUpdate?.myMedia = true
             }
+        case .onToggleTag(let tag):
+            if let tagState = tagStates.first(where: { $0.tag == tag }) {
+                tagState.isSelected = !tagState.isSelected
+                if tagState.isSelected { selectedTagHistory?.accept(tag) }
+            }
+        case .onAddTag(let tag):
+            if let tagState = tagStates.first(where: { $0.tag == tag }) {
+                tagState.isSelected = !tagState.isSelected
+                if tagState.isSelected { selectedTagHistory?.accept(tag) }
+            } else {
+                let newTag = realm.create(TagStateObject.self, value: ["tag": tag])
+                newTag.isSelected = true
+                tagStates.append(newTag)
+                selectedTagHistory?.accept(tag)
+            }
         }
     }
 }
@@ -171,6 +208,12 @@ final class CreateImageStateStore {
     
     func saveMediumStates() -> Driver<[SaveMediumStateObject]> {
         return Observable.collection(from: _state.saveMediumStates)
+            .asDriver(onErrorDriveWith: .empty())
+            .map { $0.toArray() }
+    }
+    
+    func tagStates() -> Driver<[TagStateObject]> {
+        return Observable.collection(from: _state.tagStates)
             .asDriver(onErrorDriveWith: .empty())
             .map { $0.toArray() }
     }
