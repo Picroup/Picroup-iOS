@@ -30,11 +30,12 @@ final class RankStateObject: PrimaryObject {
 }
 
 extension RankStateObject {
-    var hotMediaQuery: HotMediaByTagQuery? {
-        return triggerHotMediaQuery ? HotMediaByTagQuery(tag: selectedTag) : nil
+    var hotMediaQuery: HotMediaByTagsQuery? {
+        return triggerHotMediaQuery ? HotMediaByTagsQuery(tags: selectedTags) : nil
     }
-    private var selectedTag: String? {
-        return tagStates.first(where: { $0.isSelected == true })?.tag
+    private var selectedTags: [String]? {
+        return tagStates.first(where: { $0.isSelected })
+            .map { [$0.tag] }
     }
     var shouldQueryMoreHotMedia: Bool {
         return !triggerHotMediaQuery

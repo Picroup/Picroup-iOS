@@ -82,7 +82,7 @@ class RankViewController: BaseViewController {
         
         let queryMedia: Feedback = react(query: { $0.hotMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.hotMediaByTag.fragments.cursorMediaFragment }.unwrap()
+                .map { $0?.data?.hotMediaByTags.fragments.cursorMediaFragment }.unwrap()
                 .map(RankStateObject.Event.onGetData)
                 .retryWhen { errors -> Observable<Int> in
                     errors.enumerated().flatMapLatest { Observable<Int>.timer(5 * RxTimeInterval($0.index + 1), scheduler: MainScheduler.instance) }
