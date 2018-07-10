@@ -63,10 +63,10 @@ class CreateImageViewController: ShowNavigationBarViewController {
         }
         
         let saveMediums: Feedback = react(query: { $0.saveQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { (query) in
-            let (userId, imageKeys) = query
+            let (userId, imageKeys, tags) = query
             let queries: [Signal<CreateImageStateObject.Event>] = imageKeys.enumerated().map { index, imageKey in
                let image = ImageCache.default.retrieveImageInMemoryCache(forKey: imageKey)!
-                return MediumService.saveMedium(client: ApolloClient.shared, userId: userId, pickedImage: image)
+                return MediumService.saveMedium(client: ApolloClient.shared, userId: userId, pickedImage: image, tags: tags)
                     .map { result in
                         switch result {
                         case .progress(let progress):

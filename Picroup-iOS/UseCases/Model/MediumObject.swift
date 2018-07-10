@@ -65,6 +65,13 @@ extension MediumFragment {
     }
 }
 
+extension MediumQuery.Data.Medium {
+    
+    var rawSnapshot: Snapshot {
+        return snapshot.merging(["kind": kind.rawValue]) { $1 }
+    }
+}
+
 //extension CursorMediaObject {
 //    
 //    func mergeUnique(from data: CursorMediaFragment) -> (Realm) -> Void {

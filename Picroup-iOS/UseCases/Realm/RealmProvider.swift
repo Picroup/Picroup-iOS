@@ -12,10 +12,11 @@ import RealmSwift
 struct RealmProvider {
     
     static func setup() {
+        let schemaVersion: UInt64 = 5
         let config = Realm.Configuration(
-            schemaVersion: 3,
+            schemaVersion: schemaVersion,
             migrationBlock: { migration, oldSchemaVersion in
-                if (oldSchemaVersion < 3) { }
+                if (oldSchemaVersion < schemaVersion) { }
         })
         
         Realm.Configuration.defaultConfiguration = config

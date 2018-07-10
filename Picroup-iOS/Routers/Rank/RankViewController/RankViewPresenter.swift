@@ -16,11 +16,18 @@ final class RankViewPresenter: NSObject {
     
     var userButton: IconButton!
     var refreshControl: UIRefreshControl!
-    weak var collectionView: UICollectionView!
+//    weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var tagsCollectionView: UICollectionView! {
+        didSet {
+//            (tagsCollectionView.collectionViewLayout as! UICollectionViewFlowLayout)
+//                .estimatedItemSize = CGSize(width: 50, height: 24)
+        }
+    }
     weak var navigationItem: UINavigationItem!
-    
-    func setup(collectionView: UICollectionView, navigationItem: UINavigationItem) {
-        self.collectionView = collectionView
+    @IBOutlet weak var hideTagsLayoutConstraint: NSLayoutConstraint!
+
+    func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
         prepareRefreshControl()
         prepareUserButton()
@@ -29,7 +36,7 @@ final class RankViewPresenter: NSObject {
     
     fileprivate func prepareRefreshControl() {
         refreshControl = UIRefreshControl()
-        refreshControl.tintColor = .primaryLight
+        refreshControl.tintColor = .lightGray
         collectionView.addSubview(refreshControl!)
     }
     
@@ -40,7 +47,7 @@ final class RankViewPresenter: NSObject {
     }
     
     fileprivate func prepareNavigationItem() {
-        navigationItem.titleLabel.text = "热门"
+        navigationItem.titleLabel.text = "发现"
         navigationItem.titleLabel.textColor = .primaryText
 //        navigationItem.titleLabel.textAlignment = .left
         navigationItem.rightViews = [userButton]
@@ -62,6 +69,7 @@ final class RankViewPresenter: NSObject {
             return collectionView!.rx.items(dataSource: dataSource)
         }
     }
+    
 }
 
 func createLoadFooterSupplementaryView<D>(loadState: Driver<LoadFooterViewState>) -> (D, UICollectionView, String, IndexPath) -> UICollectionReusableView {

@@ -18,13 +18,13 @@ struct MediumService {
         case completed(MediumFragment)
     }
     
-    static func saveMedium(client: ApolloClient, userId: String, pickedImage: UIImage) -> Observable<MediumService.SaveMediumResult> {
+    static func saveMedium(client: ApolloClient, userId: String, pickedImage: UIImage, tags: [String]?) -> Observable<MediumService.SaveMediumResult> {
 
         let (progress, filename) = ImageUpoader.uploadImage(pickedImage)
         let rxProgress = progress.map(SaveMediumResult.progress)
         
         let (width, aspectRatio) = (pickedImage.size.width, pickedImage.size.aspectRatio)
-        let mutation = SaveImageMediumMutation(userId: userId, minioId: filename, width: Double(width), aspectRatio: Double(aspectRatio))
+        let mutation = SaveImageMediumMutation(userId: userId, minioId: filename, width: Double(width), aspectRatio: Double(aspectRatio), tags: tags)
         let rxCompleted = client.rx.perform(mutation: mutation).map { $0?.data?.saveImageMedium.fragments.mediumFragment }.unwrap()
             .map(SaveMediumResult.completed)
             

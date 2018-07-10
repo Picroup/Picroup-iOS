@@ -144,7 +144,7 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             triggerMediumQuery = true
         case .onGetReloadData(let data):
             if let data = data {
-                medium = realm.create(MediumObject.self, value: data.snapshot, update: true)
+                medium = realm.create(MediumObject.self, value: data.rawSnapshot, update: true)
                 let fragment = data.recommendedMedia.fragments.cursorMediaFragment
                 recommendMedia = CursorMediaObject.create(from: fragment, id: PrimaryKey.recommendMediaId(_id))(realm)
             } else {

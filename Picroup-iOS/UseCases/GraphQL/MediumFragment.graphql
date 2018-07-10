@@ -3,6 +3,7 @@ fragment MediumFragment on Medium {
     userId
     createdAt
     endedAt
+    tags
     kind
     detail {
         width

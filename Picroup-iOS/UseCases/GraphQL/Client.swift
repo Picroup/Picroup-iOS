@@ -8,7 +8,7 @@
 
 import Apollo
 
-// apollo-codegen download-schema http://home.picroup.com:3500/graphql --output schema.json
+// apollo-codegen download-schema https://home.picroup.com:3500/graphql --output schema.json
 
 extension ApolloClient {
     

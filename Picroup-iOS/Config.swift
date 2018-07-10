@@ -7,7 +7,7 @@
 //
 
 struct Config {
-    static let baseURL = productionBaseURL
+    static let baseURL = developBaseURL
     static let productionBaseURL = "https://api.picroup.com:4000"
     static let developBaseURL = "https://home.picroup.com:3500"
 }

@@ -885,7 +885,7 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="搞笑" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ASb-dg-EPc">
-                                                                    <rect key="frame" x="8" y="8" width="50" height="24"/>
+                                                                    <rect key="frame" x="16" y="8" width="34" height="24"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -895,9 +895,9 @@
                                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.12" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstItem="ASb-dg-EPc" firstAttribute="top" secondItem="gqI-DM-I5H" secondAttribute="top" constant="8" id="0Dt-EH-Xro"/>
-                                                            <constraint firstItem="ASb-dg-EPc" firstAttribute="leading" secondItem="gqI-DM-I5H" secondAttribute="leading" constant="8" id="1ab-mU-pay"/>
+                                                            <constraint firstItem="ASb-dg-EPc" firstAttribute="leading" secondItem="gqI-DM-I5H" secondAttribute="leading" constant="16" id="1ab-mU-pay"/>
                                                             <constraint firstAttribute="bottom" secondItem="ASb-dg-EPc" secondAttribute="bottom" constant="8" id="PYs-db-BLU"/>
-                                                            <constraint firstAttribute="trailing" secondItem="ASb-dg-EPc" secondAttribute="trailing" constant="8" id="Zlf-X8-3yz"/>
+                                                            <constraint firstAttribute="trailing" secondItem="ASb-dg-EPc" secondAttribute="trailing" constant="16" id="Zlf-X8-3yz"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

@@ -16,16 +16,13 @@ import Apollo
 
 class RankViewController: BaseViewController {
     
-    @IBOutlet weak var collectionView: UICollectionView!
-    private var presenter: RankViewPresenter!
+    @IBOutlet var presenter: RankViewPresenter!
     
-    private let disposeBag = DisposeBag()
     typealias Feedback = (Driver<RankStateObject>) -> Signal<RankStateObject.Event>
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = RankViewPresenter()
-        presenter.setup(collectionView: collectionView, navigationItem: navigationItem)
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
@@ -39,12 +36,20 @@ class RankViewController: BaseViewController {
             let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions = [
 //                store.rankMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState.asDriver())),
+                store.tagStates().drive(presenter.tagsCollectionView.rx.items(cellIdentifier: "TagCollectionViewCell", cellType: TagCollectionViewCell.self)) { index, tagState, cell in
+                    cell.tagLabel.text = tagState.tag
+                    cell.setSelected(tagState.isSelected)
+                },
                 store.hotMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState.asDriver())),
                 state.map { $0.isReloadHotMedia }.drive(presenter.refreshControl.rx.refreshing),
+//                state.map { $0.isReloadHotMedia }.distinctUntilChanged().filter { $0 }.skip(1).drive(Binder(presenter.collectionView) { collectionView, _ in
+//                    collectionView.setContentOffset(.zero, animated: true)
+//                }),
                 state.map { $0.footerState }.drive(footerState),
                 state.map { $0.session?.isLogin ?? false }.drive(presenter.userButton.rx.isHidden),
             ]
             let events: [Signal<RankStateObject.Event>] = [
+                presenter.tagsCollectionView.rx.modelSelected(TagStateObject.self).asSignal().map { .onToggleTag($0.tag) },
                 state.flatMapLatest {
                     $0.shouldQueryMoreHotMedia
                         ? presenter.collectionView.rx.triggerGetMore
@@ -58,9 +63,15 @@ class RankViewController: BaseViewController {
         }
         
         let vcFeedback: Feedback = bind(self) { (me, state)  in
+            let presenter = me.presenter!
+            let view = me.view!
             let subscriptions = [
-                me.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
-                me.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setTabBarHidden(animated: true)),
+                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
+                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setTabBarHidden(animated: true)),
+                presenter.collectionView.rx.shouldHideNavigationBar().emit(onNext: {
+                    presenter.hideTagsLayoutConstraint.isActive = $0
+                    UIView.animate(withDuration: 0.3) { view.layoutIfNeeded() }
+                    }),
             ]
             let events: [Signal<RankStateObject.Event>] = [
                 .just(.onTriggerReload),
@@ -71,12 +82,13 @@ class RankViewController: BaseViewController {
         
         let queryMedia: Feedback = react(query: { $0.hotMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.hotMedia.fragments.cursorMediaFragment }.unwrap()
+                .map { $0?.data?.hotMediaByTag.fragments.cursorMediaFragment }.unwrap()
                 .map(RankStateObject.Event.onGetData)
                 .retryWhen { errors -> Observable<Int> in
                     errors.enumerated().flatMapLatest { Observable<Int>.timer(5 * RxTimeInterval($0.index + 1), scheduler: MainScheduler.instance) }
                 }
                 .asSignal(onErrorReturnJust: RankStateObject.Event.onGetError)
+                .delay(0.3)
         })
         
         let states = store.states

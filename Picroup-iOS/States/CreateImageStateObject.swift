@@ -43,7 +43,7 @@ final class TagStateObject: Object {
 }
 
 final class CreateImageStateObject: PrimaryObject {
-    typealias Query = (userId: String, imageKeys: [String])
+    typealias Query = (userId: String, imageKeys: [String], tags: [String]?)
 
     @objc dynamic var session: UserSessionObject?
     
@@ -65,7 +65,10 @@ final class CreateImageStateObject: PrimaryObject {
 extension CreateImageStateObject {
     var saveQuery: Query? {
         guard let userId = session?.currentUser?._id else { return nil }
-        return triggerSaveMediumQuery ? (userId: userId, imageKeys: imageKeys.toArray()) : nil
+        return triggerSaveMediumQuery ? (userId: userId, imageKeys: imageKeys.toArray(), tags: selectedTags) : nil
+    }
+    private var selectedTags: [String]? {
+        return tagStates.compactMap { $0.isSelected ? $0.tag : nil }
     }
     var shouldSaveMedium: Bool {
         return !triggerSaveMediumQuery
@@ -176,14 +179,13 @@ extension CreateImageStateObject: IsFeedbackStateObject {
             }
         case .onAddTag(let tag):
             if let tagState = tagStates.first(where: { $0.tag == tag }) {
-                tagState.isSelected = !tagState.isSelected
-                if tagState.isSelected { selectedTagHistory?.accept(tag) }
+                tagState.isSelected = true
             } else {
                 let newTag = realm.create(TagStateObject.self, value: ["tag": tag])
                 newTag.isSelected = true
                 tagStates.append(newTag)
-                selectedTagHistory?.accept(tag)
             }
+            selectedTagHistory?.accept(tag)
         }
     }
 }

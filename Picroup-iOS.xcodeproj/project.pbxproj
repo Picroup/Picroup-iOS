@@ -37,6 +37,7 @@
 		451DD4C12083125A002C509A /* Objective.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4C02083125A002C509A /* Objective.swift */; };
 		451DD4C320831287002C509A /* NSObject+objc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4C220831287002C509A /* NSObject+objc.swift */; };
 		452EAD1F20F339B200FE5E5F /* TagObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452EAD1E20F339B200FE5E5F /* TagObject.swift */; };
+		452EAD2120F4440700FE5E5F /* pinterest.html in Resources */ = {isa = PBXBuildFile; fileRef = 452EAD2020F4440000FE5E5F /* pinterest.html */; };
 		45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */; };
 		45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */; };
 		45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */; };
@@ -251,6 +252,7 @@
 		451DD4C02083125A002C509A /* Objective.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Objective.swift; sourceTree = "<group>"; };
 		451DD4C220831287002C509A /* NSObject+objc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+objc.swift"; sourceTree = "<group>"; };
 		452EAD1E20F339B200FE5E5F /* TagObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagObject.swift; sourceTree = "<group>"; };
+		452EAD2020F4440000FE5E5F /* pinterest.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = pinterest.html; sourceTree = "<group>"; };
 		45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxImagePickerDelegateProxy.swift; sourceTree = "<group>"; };
 		45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
 		45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
@@ -864,6 +866,7 @@
 				457B1B93205FEA1000BEDDF1 /* LaunchScreen.storyboard */,
 				45183EC920D2199000497B59 /* agreement.html */,
 				457B1B96205FEA1000BEDDF1 /* Info.plist */,
+				452EAD2020F4440000FE5E5F /* pinterest.html */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -1243,6 +1246,7 @@
 				453B95BA20C4D1A80043D915 /* UserSetAvatarId.graphql in Resources */,
 				45C3930020C5875D00F4A69A /* SaveAppFeedback.graphql in Resources */,
 				4543ECE520BC38FA002F7C18 /* LoadFooterView.xib in Resources */,
+				452EAD2120F4440700FE5E5F /* pinterest.html in Resources */,
 				454F72A2208DD1AA00850471 /* MyMedia.graphql in Resources */,
 				457BD99620B304F7007F0492 /* UserFollowings.graphql in Resources */,
 				45D04F7C2089FD0500AC2226 /* UserInterestedMedia.graphql in Resources */,
