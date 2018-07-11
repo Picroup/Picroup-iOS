@@ -95,6 +95,9 @@
 		456E90D620F5DB150006FFA8 /* TagMediaStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90D520F5DB150006FFA8 /* TagMediaStateObject.swift */; };
 		456E90D920F5DEC40006FFA8 /* TagMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90D820F5DEC40006FFA8 /* TagMediaViewController.swift */; };
 		456E90DB20F5DECE0006FFA8 /* TagMediaViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90DA20F5DECE0006FFA8 /* TagMediaViewPresenter.swift */; };
+		456E90DD20F5F6140006FFA8 /* UpdateMediumTagsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90DC20F5F6140006FFA8 /* UpdateMediumTagsStateObject.swift */; };
+		456E90E120F602480006FFA8 /* MediumRemoveTag.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 456E90E020F602480006FFA8 /* MediumRemoveTag.graphql */; };
+		456E90E520F602740006FFA8 /* MediumAddTag.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 456E90E420F602740006FFA8 /* MediumAddTag.graphql */; };
 		4574E2A620CE4726005784C8 /* CollectionViewLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4574E2A520CE4726005784C8 /* CollectionViewLayoutManager.swift */; };
 		457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */; };
 		457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B8E205FEA1000BEDDF1 /* Main.storyboard */; };
@@ -314,6 +317,9 @@
 		456E90D520F5DB150006FFA8 /* TagMediaStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaStateObject.swift; sourceTree = "<group>"; };
 		456E90D820F5DEC40006FFA8 /* TagMediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaViewController.swift; sourceTree = "<group>"; };
 		456E90DA20F5DECE0006FFA8 /* TagMediaViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaViewPresenter.swift; sourceTree = "<group>"; };
+		456E90DC20F5F6140006FFA8 /* UpdateMediumTagsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMediumTagsStateObject.swift; sourceTree = "<group>"; };
+		456E90E020F602480006FFA8 /* MediumRemoveTag.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MediumRemoveTag.graphql; sourceTree = "<group>"; };
+		456E90E420F602740006FFA8 /* MediumAddTag.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MediumAddTag.graphql; sourceTree = "<group>"; };
 		4574E2A520CE4726005784C8 /* CollectionViewLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayoutManager.swift; sourceTree = "<group>"; };
 		457B1B87205FEA1000BEDDF1 /* Picroup-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Picroup-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -849,6 +855,7 @@
 				457BD99920B306AA007F0492 /* UserFollowingsStateObject.swift */,
 				45B0206420B4012E00BD5D8F /* UserFollowersStateObject.swift */,
 				453B95B520C4CEF50043D915 /* UpdateUserStateObject.swift */,
+				456E90DC20F5F6140006FFA8 /* UpdateMediumTagsStateObject.swift */,
 				45B5E27A20C8DFF5005E2E58 /* UpdatePasswordStateObject.swift */,
 			);
 			path = States;
@@ -935,8 +942,10 @@
 				45BA0D82209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql */,
 				45BA0D7E209010670002E1D5 /* MarkReputationLinksAsViewed.graphql */,
 				45E240B820862CF6004B58EF /* Medium.graphql */,
+				456E90E420F602740006FFA8 /* MediumAddTag.graphql */,
 				45D04F752088C59100AC2226 /* MediumComments.graphql */,
 				4591AEE320A414C4001EC384 /* MediumFragment.graphql */,
+				456E90E020F602480006FFA8 /* MediumRemoveTag.graphql */,
 				454F72A1208DD1AA00850471 /* MyMedia.graphql */,
 				45BA0D802090391D0002E1D5 /* MyNotifications.graphql */,
 				4591AEDA20A2CF4D001EC384 /* MyStaredMedia.graphql */,
@@ -1245,6 +1254,7 @@
 				4595F20E2079F6780040E5FA /* Login.storyboard in Resources */,
 				45FC0BE220A41704006AAF3D /* UserFragment.graphql in Resources */,
 				45C3930120C5875D00F4A69A /* SaveUserFeedback.graphql in Resources */,
+				456E90E120F602480006FFA8 /* MediumRemoveTag.graphql in Resources */,
 				45B5E27D20C9008D005E2E58 /* UserSetPassword.graphql in Resources */,
 				45C3930220C5875D00F4A69A /* SaveMediumFeedback.graphql in Resources */,
 				453B95BE20C523990043D915 /* Me.storyboard in Resources */,
@@ -1265,6 +1275,7 @@
 				45D04F7C2089FD0500AC2226 /* UserInterestedMedia.graphql in Resources */,
 				457BD99820B30559007F0492 /* UserFollowers.graphql in Resources */,
 				4591AEDD20A2F359001EC384 /* RecommendMedium.graphql in Resources */,
+				456E90E520F602740006FFA8 /* MediumAddTag.graphql in Resources */,
 				45D0E233207E2CC400ECC2A3 /* RankedMedia.graphql in Resources */,
 				453B95B820C4D18A0043D915 /* UserSetDisplayName.graphql in Resources */,
 				45D04F8F208F635C00AC2226 /* MyReputations.graphql in Resources */,
@@ -1408,6 +1419,7 @@
 				45F0A7DA20C7C4720085F978 /* RegisterCodeViewController.swift in Sources */,
 				45B0204D20AD143E00BD5D8F /* LoginStateObject.swift in Sources */,
 				4595F21B207C883F0040E5FA /* MainTabBarController.swift in Sources */,
+				456E90DD20F5F6140006FFA8 /* UpdateMediumTagsStateObject.swift in Sources */,
 				45B0205320AD72D600BD5D8F /* PhotoPickerController.swift in Sources */,
 				45EC928120D3C65100A473D4 /* Moment.swift in Sources */,
 				451CD330207BB62D0063A972 /* HomeViewPresenter.swift in Sources */,
