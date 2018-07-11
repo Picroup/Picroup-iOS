@@ -1,0 +1,8 @@
+
+query MediumRemoveTag($mediumId: ID!, $tag: String!, $byUserId: ID!) {
+    medium(mediumId: $mediumId) {
+        removeTag(tag: $tag, byUserId: $byUserId) {
+            ...MediumFragment
+        }
+    }
+}

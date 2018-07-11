@@ -1,0 +1,8 @@
+
+query MediumAddTag($mediumId: ID!, $tag: String!, $byUserId: ID!) {
+    medium(mediumId: $mediumId) {
+        addTag(tag: $tag, byUserId: $byUserId) {
+            ...MediumFragment
+        }
+    }
+}

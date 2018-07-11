@@ -41,6 +41,11 @@ class ImageDetailPresenter: NSObject {
                         }, onMoreTap: { moreButtonTap.accept(()) }
                         )
                         return cell
+                    case .imageTag(let tag):
+                        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TagCollectionViewCell", for: indexPath) as! TagCollectionViewCell
+                        cell.tagLabel.text = tag
+                        cell.setSelected(true)
+                        return cell
                     case .recommendMedium(let item):
                         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeImageCell", for: indexPath) as! HomeImageCell
                         cell.configure(
@@ -72,6 +77,9 @@ extension ImageDetailPresenter: UICollectionViewDelegate, UICollectionViewDelega
             let imageHeight = width / CGFloat(medium.detail?.aspectRatio.value ?? 1)
             let height = imageHeight + 8 + 56 + 48 + 1 + 48
             return CGSize(width: width, height: height)
+        case .imageTag(let tag):
+            let textSize = (tag as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 14)])
+            return CGSize(width: textSize.width + 34, height: textSize.height + 16)
         case .recommendMedium(let medium):
             guard !medium.isInvalidated else { return .zero }
             let width = collectionView.bounds.width - 16
@@ -84,10 +92,12 @@ extension ImageDetailPresenter: UICollectionViewDelegate, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         guard let dataSource = dataSource else { return .zero }
         switch dataSource[section].model {
+        case .imageDetail:
+            return UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
+        case .imageTags:
+            return UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16)
         case .recommendMedia:
-            return UIEdgeInsets(top: 36, left: 8, bottom: 64, right: 8)
-        default:
-            return .zero
+            return UIEdgeInsets(top: 0, left: 8, bottom: 64, right: 8)
         }
     }
 }
@@ -96,11 +106,13 @@ extension ImageDetailPresenter {
     
     enum SectionStyle: String {
         case imageDetail
+        case imageTags
         case recommendMedia
     }
     
     enum CellStyle {
         case imageDetail(MediumObject)
+        case imageTag(String)
         case recommendMedium(MediumObject)
     }
 }
@@ -130,6 +142,8 @@ extension ImageDetailPresenter.CellStyle: IdentifiableType, Equatable {
         switch self {
         case .imageDetail:
             return "imageDetail"
+        case .imageTag(let tag):
+            return "imageTag.\(tag)"
         case .recommendMedium(let medium):
             return "recommendMedium.\(medium._id)"
         }

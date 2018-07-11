@@ -15,6 +15,10 @@ struct PrimaryKey {
     static let myMediaId = "currentUser.myMedia"
     static let myStaredMediaId = "currentUser.myStaredMedia"
     static let myInterestedMediaId = "currentUser.myInterestedMediaId"
+    
+    static func hotMediaByTagId(_ tag: String) -> String {
+        return "currentDevice.hotMedia.\(tag)"
+    }
 
     static func recommendMediaId(_ mediumId: String) -> String {
         return "medium.\(mediumId).recommendMedia"

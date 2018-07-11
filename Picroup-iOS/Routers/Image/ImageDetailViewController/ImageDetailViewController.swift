@@ -19,12 +19,21 @@ private func mapMoreButtonTapToEvent(sender: UICollectionView) -> (ImageDetailSt
         guard state.session?.isLogin == true else { return .empty() }
         guard let cell = sender.cellForItem(at: IndexPath(item: 0, section: 0)) as? ImageDetailCell else { return .empty() }
         let isMyMedium = state.medium?.userId == state.session?.currentUser?._id
-        let actions = isMyMedium ? ["删除"] : ["举报"]
+        let actions: [String]
+        switch (isMyMedium, state.session?.currentUser?.reputation.value) {
+        case (true, _):
+            actions = ["更新标签", "删除"]
+        case (false, let reputation?) where reputation > 100:
+            actions = ["更新标签", "举报"]
+        case (false, _):
+            actions = ["举报"]
+        }
         return DefaultWireframe.shared
             .promptFor(sender: cell.moreButton, cancelAction: "取消", actions: actions)
             .asSignalOnErrorRecoverEmpty()
             .flatMap { action in
                 switch action {
+                case "更新标签":     return .just(.onTriggerUpdateMediaTags)
                 case "举报":     return .just(.onTriggerMediumFeedback)
                 case "删除":     return comfirmDelete()
                 default:        return .empty()
@@ -99,10 +108,14 @@ class ImageDetailViewController: ShowNavigationBarViewController {
                     }.map { .onTriggerGetMoreData },
                 me.presenter.collectionView.rx.modelSelected(ImageDetailPresenter.CellStyle.self).asSignal()
                     .flatMapLatest { cellStyle -> Signal<ImageDetailStateObject.Event> in
-                    if case .recommendMedium(let medium) = cellStyle {
-                        return .just(.onTriggerShowImage(medium._id))
-                    }
-                    return .empty()
+                        switch cellStyle {
+                        case .recommendMedium(let medium):
+                            return .just(.onTriggerShowImage(medium._id))
+                        case .imageTag(let tag):
+                            return .just(.onTriggerShowTagMedia(tag))
+                        default:
+                            return .empty()
+                        }
                 },
                 presenter.deleteAlertView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
             ]
@@ -152,14 +165,25 @@ extension ImageDetailStateStore {
     fileprivate var sections: Observable<[Section]> {
         return mediumWithRecommendMedia().map { data in
             let (medium, items) = data
-            let imageDetailItems = [CellStyle.imageDetail(medium)]
-            let recommendMediaItems = items.map(CellStyle.recommendMedium)
-            let imageDetailSection = ImageDetailPresenter.Section(model: .imageDetail, items: imageDetailItems)
-            let recommendMediaSection = ImageDetailPresenter.Section(model: .recommendMedia, items: recommendMediaItems)
-            return [
-                imageDetailSection,
-                recommendMediaSection
-            ]
+            var result = [Section]()
+            result.append(Section(
+                model: .imageDetail,
+                items: [CellStyle.imageDetail(medium)]
+            ))
+            if !medium.tags.isEmpty {
+                result.append(Section(
+                    model: .imageTags,
+                    items: medium.tags.toArray().map(CellStyle.imageTag)
+                ))
+            }
+            if !items.isEmpty {
+                result.append(Section(
+                    model: .recommendMedia,
+                    items: items.map(CellStyle.recommendMedium)
+                ))
+            }
+
+            return result
         }
     }
 }
