@@ -48,6 +48,13 @@ final class Router {
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
+        _ = store.tagMediaRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .map { $0.tag }.unwrap()
+            .drive(Binder(self) { (me, tag) in
+                let vc = RouterService.Main.tagMediaViewController(dependency: tag)
+                me.currentNavigationController?.pushViewController(vc, animated: true)
+            })
+        
         _ = store.reputationsRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .drive(Binder(self) { (me, _) in
                 let vc = RouterService.Me.reputationsViewController()

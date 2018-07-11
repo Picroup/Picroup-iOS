@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -652,6 +652,125 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="psB-iy-RT1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2516" y="433.58320839580216"/>
+        </scene>
+        <!--Tag Media View Controller-->
+        <scene sceneID="9Kt-qO-AX6">
+            <objects>
+                <viewController storyboardIdentifier="TagMediaViewController" extendedLayoutIncludesOpaqueBars="YES" id="BJa-gt-fcE" customClass="TagMediaViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qoj-Vy-h4L">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zo3-38-cHh">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="iJZ-yb-o44">
+                                    <size key="itemSize" width="184" height="184"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="50" height="80"/>
+                                    <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="2"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RankMediumCell" id="1i1-V2-qMQ" customClass="RankMediumCell" customModule="Picroup_iOS" customModuleProvider="target">
+                                        <rect key="frame" x="2" y="2" width="184" height="184"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="184" height="184"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jPH-xz-WYA">
+                                                    <rect key="frame" x="0.0" y="0.0" width="184" height="184"/>
+                                                    <color key="backgroundColor" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                </imageView>
+                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="trE-OJ-SgR">
+                                                    <rect key="frame" x="0.0" y="182" width="184" height="2"/>
+                                                </progressView>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="应用版本过低，请升级查看" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qzB-RD-7kj">
+                                                    <rect key="frame" x="8" y="71.5" width="168" height="42.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wb8-zk-Yh5">
+                                                    <rect key="frame" x="175" y="183" width="1" height="1"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="1" id="7Dp-PJ-h9j"/>
+                                                        <constraint firstAttribute="height" constant="1" id="jcu-Pl-wtJ"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="jPH-xz-WYA" secondAttribute="trailing" id="8Rc-hx-Qrd"/>
+                                            <constraint firstAttribute="bottom" secondItem="wb8-zk-Yh5" secondAttribute="bottom" id="9jx-X1-ZQb"/>
+                                            <constraint firstAttribute="trailing" secondItem="wb8-zk-Yh5" secondAttribute="trailing" constant="8" id="9vT-Qg-nXe"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="qzB-RD-7kj" secondAttribute="trailing" id="J2k-K1-xFX"/>
+                                            <constraint firstAttribute="bottom" secondItem="jPH-xz-WYA" secondAttribute="bottom" id="K84-Xp-IbQ"/>
+                                            <constraint firstItem="qzB-RD-7kj" firstAttribute="centerY" secondItem="jPH-xz-WYA" secondAttribute="centerY" id="NbZ-C0-c1L"/>
+                                            <constraint firstAttribute="trailing" secondItem="trE-OJ-SgR" secondAttribute="trailing" id="XrP-LX-SEV"/>
+                                            <constraint firstItem="jPH-xz-WYA" firstAttribute="top" secondItem="1i1-V2-qMQ" secondAttribute="top" id="feP-nZ-Pwq"/>
+                                            <constraint firstItem="jPH-xz-WYA" firstAttribute="leading" secondItem="1i1-V2-qMQ" secondAttribute="leading" id="iJp-X1-nvQ"/>
+                                            <constraint firstAttribute="bottom" secondItem="trE-OJ-SgR" secondAttribute="bottom" id="k5j-vY-yuc"/>
+                                            <constraint firstItem="qzB-RD-7kj" firstAttribute="leading" secondItem="1i1-V2-qMQ" secondAttribute="leadingMargin" id="ob6-KG-9Ie"/>
+                                            <constraint firstItem="trE-OJ-SgR" firstAttribute="leading" secondItem="1i1-V2-qMQ" secondAttribute="leading" id="uhO-95-0Be"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="2"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="imageView" destination="jPH-xz-WYA" id="lCS-u9-7uu"/>
+                                            <outlet property="progressView" destination="trE-OJ-SgR" id="nRy-FE-wEd"/>
+                                            <outlet property="starPlaceholderView" destination="wb8-zk-Yh5" id="hMu-3u-heq"/>
+                                            <outlet property="suggestUpdateLabel" destination="qzB-RD-7kj" id="4UN-Zd-a1A"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CollectionLoadFooterView" id="I0Y-yv-Zzs" customClass="CollectionLoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="188" width="375" height="80"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4uD-uV-j4F" customClass="LoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="4uD-uV-j4F" firstAttribute="top" secondItem="I0Y-yv-Zzs" secondAttribute="top" id="1lb-Hy-Ijk"/>
+                                        <constraint firstAttribute="trailing" secondItem="4uD-uV-j4F" secondAttribute="trailing" id="7yf-HT-s9f"/>
+                                        <constraint firstItem="4uD-uV-j4F" firstAttribute="leading" secondItem="I0Y-yv-Zzs" secondAttribute="leading" id="KHg-sO-LnN"/>
+                                        <constraint firstAttribute="bottom" secondItem="4uD-uV-j4F" secondAttribute="bottom" id="mxf-o5-BT6"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="contentView" destination="4uD-uV-j4F" id="OZQ-Ie-RmF"/>
+                                    </connections>
+                                </collectionReusableView>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="zo3-38-cHh" firstAttribute="top" secondItem="qoj-Vy-h4L" secondAttribute="top" id="2Ex-th-Apc"/>
+                            <constraint firstItem="zo3-38-cHh" firstAttribute="leading" secondItem="uAE-0s-ULm" secondAttribute="leading" id="9Aj-cB-ewY"/>
+                            <constraint firstAttribute="bottom" secondItem="zo3-38-cHh" secondAttribute="bottom" id="ODw-7k-9Wq"/>
+                            <constraint firstItem="zo3-38-cHh" firstAttribute="trailing" secondItem="uAE-0s-ULm" secondAttribute="trailing" id="tBi-lh-6of"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="uAE-0s-ULm"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <connections>
+                        <outlet property="presenter" destination="FhH-cH-PpW" id="58R-Qm-Z8I"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jyc-Ef-83j" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="FhH-cH-PpW" customClass="TagMediaViewPresenter" customModule="Picroup_iOS" customModuleProvider="target">
+                    <connections>
+                        <outlet property="collectionView" destination="zo3-38-cHh" id="QTd-kJ-eVG"/>
+                    </connections>
+                </customObject>
+            </objects>
+            <point key="canvasLocation" x="7" y="1095"/>
         </scene>
     </scenes>
     <resources>

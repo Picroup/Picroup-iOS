@@ -35,6 +35,7 @@ final class ImageDetailStateObject: PrimaryObject {
     
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
+    @objc dynamic var tagMediaRoute: TagMediaRouteObject?
     @objc dynamic var userRoute: UserRouteObject?
     @objc dynamic var feedbackRoute: FeedbackRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
@@ -88,6 +89,7 @@ extension ImageDetailStateObject {
                 "needUpdate": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
                 "imageCommetsRoute": ["_id": _id],
+                "tagMediaRoute": ["_id": _id],
                 "userRoute": ["_id": _id],
                 "feedbackRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
@@ -117,6 +119,7 @@ extension ImageDetailStateObject {
         
         case onTriggerShowImage(String)
         case onTriggerShowComments(String)
+        case onTriggerShowTagMedia(String)
         case onTriggerShowUser(String)
         case onTriggerMediumFeedback
         case onTriggerPop
@@ -211,6 +214,9 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
         case .onTriggerShowComments(let mediumId):
             imageCommetsRoute?.mediumId = mediumId
             imageCommetsRoute?.version = UUID().uuidString
+        case .onTriggerShowTagMedia(let tag):
+            tagMediaRoute?.tag = tag
+            tagMediaRoute?.version = UUID().uuidString
         case .onTriggerShowUser(let userId):
             userRoute?.userId = userId
             userRoute?.version = UUID().uuidString

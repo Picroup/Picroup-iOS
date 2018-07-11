@@ -99,10 +99,14 @@ class ImageDetailViewController: ShowNavigationBarViewController {
                     }.map { .onTriggerGetMoreData },
                 me.presenter.collectionView.rx.modelSelected(ImageDetailPresenter.CellStyle.self).asSignal()
                     .flatMapLatest { cellStyle -> Signal<ImageDetailStateObject.Event> in
-                    if case .recommendMedium(let medium) = cellStyle {
-                        return .just(.onTriggerShowImage(medium._id))
-                    }
-                    return .empty()
+                        switch cellStyle {
+                        case .recommendMedium(let medium):
+                            return .just(.onTriggerShowImage(medium._id))
+                        case .imageTag(let tag):
+                            return .just(.onTriggerShowTagMedia(tag))
+                        default:
+                            return .empty()
+                        }
                 },
                 presenter.deleteAlertView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
             ]
@@ -152,14 +156,25 @@ extension ImageDetailStateStore {
     fileprivate var sections: Observable<[Section]> {
         return mediumWithRecommendMedia().map { data in
             let (medium, items) = data
-            let imageDetailItems = [CellStyle.imageDetail(medium)]
-            let recommendMediaItems = items.map(CellStyle.recommendMedium)
-            let imageDetailSection = ImageDetailPresenter.Section(model: .imageDetail, items: imageDetailItems)
-            let recommendMediaSection = ImageDetailPresenter.Section(model: .recommendMedia, items: recommendMediaItems)
-            return [
-                imageDetailSection,
-                recommendMediaSection
-            ]
+            var result = [Section]()
+            result.append(Section(
+                model: .imageDetail,
+                items: [CellStyle.imageDetail(medium)]
+            ))
+            if !medium.tags.isEmpty {
+                result.append(Section(
+                    model: .imageTags,
+                    items: medium.tags.toArray().map(CellStyle.imageTag)
+                ))
+            }
+            if !items.isEmpty {
+                result.append(Section(
+                    model: .recommendMedia,
+                    items: items.map(CellStyle.recommendMedium)
+                ))
+            }
+
+            return result
         }
     }
 }

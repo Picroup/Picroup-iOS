@@ -92,6 +92,9 @@
 		455D69042080409A00C651A0 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69032080409A00C651A0 /* BaseNavigationController.swift */; };
 		455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D69072080890B00C651A0 /* UIScrollView+Rx.swift */; };
 		456C5E412061446C005F981B /* ImageUpoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C5E402061446C005F981B /* ImageUpoader.swift */; };
+		456E90D620F5DB150006FFA8 /* TagMediaStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90D520F5DB150006FFA8 /* TagMediaStateObject.swift */; };
+		456E90D920F5DEC40006FFA8 /* TagMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90D820F5DEC40006FFA8 /* TagMediaViewController.swift */; };
+		456E90DB20F5DECE0006FFA8 /* TagMediaViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90DA20F5DECE0006FFA8 /* TagMediaViewPresenter.swift */; };
 		4574E2A620CE4726005784C8 /* CollectionViewLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4574E2A520CE4726005784C8 /* CollectionViewLayoutManager.swift */; };
 		457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */; };
 		457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B8E205FEA1000BEDDF1 /* Main.storyboard */; };
@@ -308,6 +311,9 @@
 		455D69032080409A00C651A0 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		455D69072080890B00C651A0 /* UIScrollView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx.swift"; sourceTree = "<group>"; };
 		456C5E402061446C005F981B /* ImageUpoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUpoader.swift; sourceTree = "<group>"; };
+		456E90D520F5DB150006FFA8 /* TagMediaStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaStateObject.swift; sourceTree = "<group>"; };
+		456E90D820F5DEC40006FFA8 /* TagMediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaViewController.swift; sourceTree = "<group>"; };
+		456E90DA20F5DECE0006FFA8 /* TagMediaViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaViewPresenter.swift; sourceTree = "<group>"; };
 		4574E2A520CE4726005784C8 /* CollectionViewLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayoutManager.swift; sourceTree = "<group>"; };
 		457B1B87205FEA1000BEDDF1 /* Picroup-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Picroup-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -662,8 +668,18 @@
 			isa = PBXGroup;
 			children = (
 				451CD333207D0B6F0063A972 /* RankViewController */,
+				456E90D720F5DEA50006FFA8 /* TagMediaViewController */,
 			);
 			path = Rank;
+			sourceTree = "<group>";
+		};
+		456E90D720F5DEA50006FFA8 /* TagMediaViewController */ = {
+			isa = PBXGroup;
+			children = (
+				456E90D820F5DEC40006FFA8 /* TagMediaViewController.swift */,
+				456E90DA20F5DECE0006FFA8 /* TagMediaViewPresenter.swift */,
+			);
+			path = TagMediaViewController;
 			sourceTree = "<group>";
 		};
 		457B1B7E205FEA1000BEDDF1 = {
@@ -828,6 +844,7 @@
 				457BD98620AC68EA007F0492 /* ReputationsStateObject.swift */,
 				457BD98220AB12AD007F0492 /* RouteStateObject.swift */,
 				45B0207220B5182300BD5D8F /* SearchUserStateObject.swift */,
+				456E90D520F5DB150006FFA8 /* TagMediaStateObject.swift */,
 				45B0205920AEA35600BD5D8F /* UserStateObject.swift */,
 				457BD99920B306AA007F0492 /* UserFollowingsStateObject.swift */,
 				45B0206420B4012E00BD5D8F /* UserFollowersStateObject.swift */,
@@ -1377,6 +1394,7 @@
 				45525D4A208C3CB500EAF00D /* CreateImagePresenter.swift in Sources */,
 				451DD4C320831287002C509A /* NSObject+objc.swift in Sources */,
 				45F0A7DC20C7CA610085F978 /* RegisterCodeStateObject.swift in Sources */,
+				456E90D620F5DB150006FFA8 /* TagMediaStateObject.swift in Sources */,
 				45B0206520B4012E00BD5D8F /* UserFollowersStateObject.swift in Sources */,
 				451CD326207B9E5B0063A972 /* RouterService+Login.swift in Sources */,
 				45517D5220BD3EB400F2D7DE /* Wireframe.swift in Sources */,
@@ -1397,6 +1415,7 @@
 				454B4A4C20ABB73900990063 /* MeStateObject.swift in Sources */,
 				45B0204B20AC14D700BD5D8F /* Int+increase.swift in Sources */,
 				458C106920849058005E94CD /* RankViewPresenter.swift in Sources */,
+				456E90D920F5DEC40006FFA8 /* TagMediaViewController.swift in Sources */,
 				45B0206820B4031100BD5D8F /* FollowersViewController.swift in Sources */,
 				457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */,
 				45C1994A20A97402001924B9 /* UserObject.swift in Sources */,
@@ -1429,6 +1448,7 @@
 				4543ECE720BC39DC002F7C18 /* LoadFooterView.swift in Sources */,
 				455808D920EC6B2C005F1A00 /* BaseViewController.swift in Sources */,
 				454B4A4E20ABB78600990063 /* ImageDetailStateObject.swift in Sources */,
+				456E90DB20F5DECE0006FFA8 /* TagMediaViewPresenter.swift in Sources */,
 				454A4C42209C2F160063E829 /* LocalStorage.swift in Sources */,
 				454F729A2089BA1300850471 /* UIView+IBInspectable.swift in Sources */,
 				45F0A7D620C7BD330085F978 /* RegisterPhoneViewController.swift in Sources */,

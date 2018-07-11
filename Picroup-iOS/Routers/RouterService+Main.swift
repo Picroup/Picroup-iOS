@@ -58,6 +58,12 @@ extension RouterService.Main {
         return bnvc
     }
     
+    static func tagMediaViewController(dependency: TagMediaViewController.Dependency) -> TagMediaViewController {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TagMediaViewController") as! TagMediaViewController
+        vc.dependency = dependency
+        return vc
+    }
+    
     static func feedbackViewController(dependency: FeedbackViewController.Dependency) -> FeedbackViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FeedbackViewController") as! FeedbackViewController
         vc.dependency = dependency
