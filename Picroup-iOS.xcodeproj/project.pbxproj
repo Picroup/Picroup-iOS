@@ -37,6 +37,8 @@
 		451DD4C12083125A002C509A /* Objective.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4C02083125A002C509A /* Objective.swift */; };
 		451DD4C320831287002C509A /* NSObject+objc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DD4C220831287002C509A /* NSObject+objc.swift */; };
 		452EAD1F20F339B200FE5E5F /* TagObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452EAD1E20F339B200FE5E5F /* TagObject.swift */; };
+		45315C1320F61CA700E3BCAB /* UpdateMediumTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45315C1220F61CA700E3BCAB /* UpdateMediumTagsViewController.swift */; };
+		45315C1520F61CBB00E3BCAB /* UpdateMediumTagsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45315C1420F61CBB00E3BCAB /* UpdateMediumTagsPresenter.swift */; };
 		45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */; };
 		45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */; };
 		45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */; };
@@ -257,6 +259,8 @@
 		451DD4C02083125A002C509A /* Objective.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Objective.swift; sourceTree = "<group>"; };
 		451DD4C220831287002C509A /* NSObject+objc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+objc.swift"; sourceTree = "<group>"; };
 		452EAD1E20F339B200FE5E5F /* TagObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagObject.swift; sourceTree = "<group>"; };
+		45315C1220F61CA700E3BCAB /* UpdateMediumTagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMediumTagsViewController.swift; sourceTree = "<group>"; };
+		45315C1420F61CBB00E3BCAB /* UpdateMediumTagsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMediumTagsPresenter.swift; sourceTree = "<group>"; };
 		45384B64207DC18C00624A1B /* RxImagePickerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxImagePickerDelegateProxy.swift; sourceTree = "<group>"; };
 		45384B65207DC18D00624A1B /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
 		45384B68207DC19D00624A1B /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
@@ -617,6 +621,15 @@
 			path = MeViewController;
 			sourceTree = "<group>";
 		};
+		45315C1120F61C8800E3BCAB /* UpdateMediumTagsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				45315C1220F61CA700E3BCAB /* UpdateMediumTagsViewController.swift */,
+				45315C1420F61CBB00E3BCAB /* UpdateMediumTagsPresenter.swift */,
+			);
+			path = UpdateMediumTagsViewController;
+			sourceTree = "<group>";
+		};
 		45384BBA207DEFBC00624A1B /* CreateImageViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -772,6 +785,7 @@
 				45384BBA207DEFBC00624A1B /* CreateImageViewController */,
 				45E240B02084D2B6004B58EF /* ImageDetailViewController */,
 				454F72902088714E00850471 /* ImageCommentsViewController */,
+				45315C1120F61C8800E3BCAB /* UpdateMediumTagsViewController */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -1387,6 +1401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */,
+				45315C1320F61CA700E3BCAB /* UpdateMediumTagsViewController.swift in Sources */,
 				457BD98920AC695A007F0492 /* ReputationObject.swift in Sources */,
 				45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */,
 				45F0A7CD20C662F10085F978 /* Object+Delete.swift in Sources */,
@@ -1432,6 +1447,7 @@
 				457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */,
 				45C1994A20A97402001924B9 /* UserObject.swift in Sources */,
 				451CD337207D0B9A0063A972 /* RankViewController.swift in Sources */,
+				45315C1520F61CBB00E3BCAB /* UpdateMediumTagsPresenter.swift in Sources */,
 				452EAD1F20F339B200FE5E5F /* TagObject.swift in Sources */,
 				458006DA20A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift in Sources */,
 				45B0206320B3F5AA00BD5D8F /* SnackbarObject.swift in Sources */,

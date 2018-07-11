@@ -19,12 +19,21 @@ private func mapMoreButtonTapToEvent(sender: UICollectionView) -> (ImageDetailSt
         guard state.session?.isLogin == true else { return .empty() }
         guard let cell = sender.cellForItem(at: IndexPath(item: 0, section: 0)) as? ImageDetailCell else { return .empty() }
         let isMyMedium = state.medium?.userId == state.session?.currentUser?._id
-        let actions = isMyMedium ? ["删除"] : ["举报"]
+        let actions: [String]
+        switch (isMyMedium, state.session?.currentUser?.reputation.value) {
+        case (true, _):
+            actions = ["更新标签", "删除"]
+        case (false, let reputation?) where reputation > 100:
+            actions = ["更新标签", "举报"]
+        case (false, _):
+            actions = ["举报"]
+        }
         return DefaultWireframe.shared
             .promptFor(sender: cell.moreButton, cancelAction: "取消", actions: actions)
             .asSignalOnErrorRecoverEmpty()
             .flatMap { action in
                 switch action {
+                case "更新标签":     return .just(.onTriggerUpdateMediaTags)
                 case "举报":     return .just(.onTriggerMediumFeedback)
                 case "删除":     return comfirmDelete()
                 default:        return .empty()

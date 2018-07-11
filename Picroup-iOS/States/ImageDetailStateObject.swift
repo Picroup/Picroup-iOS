@@ -36,6 +36,7 @@ final class ImageDetailStateObject: PrimaryObject {
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
     @objc dynamic var tagMediaRoute: TagMediaRouteObject?
+    @objc dynamic var updateMediumTagsRoute: UpdateMediumTagsRouteObject?
     @objc dynamic var userRoute: UserRouteObject?
     @objc dynamic var feedbackRoute: FeedbackRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
@@ -90,6 +91,7 @@ extension ImageDetailStateObject {
                 "imageDetialRoute": ["_id": _id],
                 "imageCommetsRoute": ["_id": _id],
                 "tagMediaRoute": ["_id": _id],
+                "updateMediumTagsRoute": ["_id": _id],
                 "userRoute": ["_id": _id],
                 "feedbackRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
@@ -120,6 +122,7 @@ extension ImageDetailStateObject {
         case onTriggerShowImage(String)
         case onTriggerShowComments(String)
         case onTriggerShowTagMedia(String)
+        case onTriggerUpdateMediaTags
         case onTriggerShowUser(String)
         case onTriggerMediumFeedback
         case onTriggerPop
@@ -217,6 +220,9 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
         case .onTriggerShowTagMedia(let tag):
             tagMediaRoute?.tag = tag
             tagMediaRoute?.version = UUID().uuidString
+        case .onTriggerUpdateMediaTags:
+            updateMediumTagsRoute?.mediumId = mediumId
+            updateMediumTagsRoute?.version = UUID().uuidString
         case .onTriggerShowUser(let userId):
             userRoute?.userId = userId
             userRoute?.version = UUID().uuidString

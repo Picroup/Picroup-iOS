@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -30,7 +30,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <view key="backgroundView" contentMode="scaleToFill" id="zQy-Dl-Mhy">
-                                    <rect key="frame" x="0.0" y="1373" width="375" height="667"/>
+                                    <rect key="frame" x="0.0" y="100" width="375" height="667"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ueA-Un-YhH">
@@ -242,7 +242,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TagCollectionViewCell" id="hUs-3b-R7y" customClass="TagCollectionViewCell" customModule="Picroup_iOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="1548" width="375" height="500"/>
+                                        <rect key="frame" x="0.0" y="516" width="375" height="500"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
@@ -273,7 +273,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RankMediumCell" id="wK0-hu-Ttb" customClass="RankMediumCell" customModule="Picroup_iOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="516" width="375" height="500"/>
+                                        <rect key="frame" x="0.0" y="1032" width="375" height="500"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
@@ -329,7 +329,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HomeImageCell" id="uN7-uD-gd6" customClass="HomeImageCell" customModule="Picroup_iOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="1032" width="375" height="500"/>
+                                        <rect key="frame" x="0.0" y="1548" width="375" height="500"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
@@ -1034,10 +1034,10 @@
             </objects>
             <point key="canvasLocation" x="896.79999999999995" y="464.6176911544228"/>
         </scene>
-        <!--View Controller-->
+        <!--Update Medium Tags View Controller-->
         <scene sceneID="Mgd-iw-WcP">
             <objects>
-                <viewController id="rq6-nw-Sba" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UpdateMediumTagsViewController" id="rq6-nw-Sba" customClass="UpdateMediumTagsViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nFw-cW-LGv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1106,7 +1106,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="join"/>
                                                 <connections>
-                                                    <outlet property="delegate" destination="OTH-qF-OqD" id="VpI-Q4-Zof"/>
+                                                    <outlet property="delegate" destination="CWL-6i-kfd" id="na3-pS-eLk"/>
                                                 </connections>
                                             </textField>
                                         </subviews>
@@ -1136,14 +1136,14 @@
                         <viewLayoutGuide key="safeArea" id="CUA-sg-UEC"/>
                     </view>
                     <connections>
-                        <outlet property="presenter" destination="OTH-qF-OqD" id="WeT-ae-sHK"/>
+                        <outlet property="presenter" destination="CWL-6i-kfd" id="oaG-EN-PVc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yjs-JX-dji" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <customObject id="CWL-6i-kfd" customClass="CreateImagePresenter" customModule="Picroup_iOS" customModuleProvider="target">
+                <customObject id="CWL-6i-kfd" customClass="UpdateMediumTagsPresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
-                        <outlet property="addTagTextField" destination="WOq-vm-dHY" id="n83-3w-GfR"/>
-                        <outlet property="tagsCollectionView" destination="Jve-Np-ZQX" id="pKs-Jr-tgd"/>
+                        <outlet property="addTagTextField" destination="WOq-vm-dHY" id="9AP-9c-lfh"/>
+                        <outlet property="tagsCollectionView" destination="Jve-Np-ZQX" id="hxc-Yg-8Ta"/>
                     </connections>
                 </customObject>
             </objects>

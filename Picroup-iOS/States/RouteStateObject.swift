@@ -17,6 +17,7 @@ final class RouteStateObject: PrimaryObject {
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
     @objc dynamic var tagMediaRoute: TagMediaRouteObject?
+    @objc dynamic var updateMediumTagsRoute: UpdateMediumTagsRouteObject?
     @objc dynamic var reputationsRoute: ReputationsRouteObject?
     @objc dynamic var createImageRoute: CreateImageRouteObject?
     @objc dynamic var userRoute: UserRouteObject?
@@ -50,6 +51,12 @@ final class ImageCommetsRouteObject: PrimaryObject {
 final class TagMediaRouteObject: PrimaryObject {
     
     @objc dynamic var tag: String?
+    @objc dynamic var version: String?
+}
+
+final class UpdateMediumTagsRouteObject: PrimaryObject {
+    
+    @objc dynamic var mediumId: String?
     @objc dynamic var version: String?
 }
 
@@ -155,6 +162,7 @@ extension RouteStateObject {
                 "imageDetialRoute": ["_id": _id],
                 "imageCommetsRoute": ["_id": _id],
                 "tagMediaRoute": ["_id": _id],
+                "updateMediumTagsRoute": ["_id": _id],
                 "reputationsRoute": ["_id": _id],
                 "createImageRoute": ["_id": _id],
                 "userRoute": ["_id": _id],
@@ -205,6 +213,11 @@ final class RouteStateStore {
     func tagMediaRoute() -> Driver<TagMediaRouteObject> {
         guard let tagMediaRoute = _state.tagMediaRoute else { return .empty() }
         return Observable.from(object: tagMediaRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func updateMediumTagsRoute() -> Driver<UpdateMediumTagsRouteObject> {
+        guard let updateMediumTagsRoute = _state.updateMediumTagsRoute else { return .empty() }
+        return Observable.from(object: updateMediumTagsRoute).asDriver(onErrorDriveWith: .empty())
     }
     
     func reputationsRoute() -> Driver<ReputationsRouteObject> {
