@@ -11,6 +11,7 @@ import RxSwift
 import RxAlamofire
 import Kingfisher
 
+
 struct ImageUpoader {
     
     enum Error: Swift.Error {
@@ -26,7 +27,7 @@ struct ImageUpoader {
             .map { json in (json as? [String: String])?["signedURL"] }
             .flatMap { url -> Observable<RxProgress> in
                 guard let url = url else { throw Error.signedURLNotFound }
-                guard image.size.area < 3072 * 3072 else { throw Error.imageTooLarge }
+                guard image.size.area < 4096 * 4096 else { throw Error.imageTooLarge }
                 guard let imageData = UIImageJPEGRepresentation(image, compressionQuality(for: image)) else { throw Error.generateImageDataFail }
                 return upload(imageData, to: url, method: .put, headers: ["Content-Type":"image/jpeg"])
                     .rx.progress()

@@ -40,6 +40,8 @@ final class TagMediaViewPresenter: NSObject {
     typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedReloadDataSource<Section>
     
+    var dataSource: DataSource?
+    
     var items: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [collectionView] loadState in
             let dataSource = DataSource(
@@ -50,6 +52,7 @@ final class TagMediaViewPresenter: NSObject {
             },
                 configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
             )
+            self.dataSource = dataSource
             return collectionView!.rx.items(dataSource: dataSource)
         }
     }
@@ -59,6 +62,7 @@ final class TagMediaViewPresenter: NSObject {
 extension TagMediaViewPresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CollectionViewLayoutManager.size(in: collectionView.bounds)
+        let aspectRatio = dataSource?[indexPath].detail?.aspectRatio.value ?? 1
+        return CollectionViewLayoutManager.size(in: collectionView.bounds, aspectRatio: aspectRatio)
     }
 }

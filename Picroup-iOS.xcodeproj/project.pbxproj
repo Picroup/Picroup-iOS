@@ -100,6 +100,7 @@
 		456E90DD20F5F6140006FFA8 /* UpdateMediumTagsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90DC20F5F6140006FFA8 /* UpdateMediumTagsStateObject.swift */; };
 		456E90E120F602480006FFA8 /* MediumRemoveTag.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 456E90E020F602480006FFA8 /* MediumRemoveTag.graphql */; };
 		456E90E520F602740006FFA8 /* MediumAddTag.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 456E90E420F602740006FFA8 /* MediumAddTag.graphql */; };
+		456E910A20FC9B540006FFA8 /* MinioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E910920FC9B540006FFA8 /* MinioHelper.swift */; };
 		4574E2A620CE4726005784C8 /* CollectionViewLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4574E2A520CE4726005784C8 /* CollectionViewLayoutManager.swift */; };
 		457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */; };
 		457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B8E205FEA1000BEDDF1 /* Main.storyboard */; };
@@ -324,6 +325,7 @@
 		456E90DC20F5F6140006FFA8 /* UpdateMediumTagsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMediumTagsStateObject.swift; sourceTree = "<group>"; };
 		456E90E020F602480006FFA8 /* MediumRemoveTag.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MediumRemoveTag.graphql; sourceTree = "<group>"; };
 		456E90E420F602740006FFA8 /* MediumAddTag.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MediumAddTag.graphql; sourceTree = "<group>"; };
+		456E910920FC9B540006FFA8 /* MinioHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinioHelper.swift; sourceTree = "<group>"; };
 		4574E2A520CE4726005784C8 /* CollectionViewLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayoutManager.swift; sourceTree = "<group>"; };
 		457B1B87205FEA1000BEDDF1 /* Picroup-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Picroup-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -826,6 +828,7 @@
 			isa = PBXGroup;
 			children = (
 				456C5E402061446C005F981B /* ImageUpoader.swift */,
+				456E910920FC9B540006FFA8 /* MinioHelper.swift */,
 				455D68FE207F4ECD00C651A0 /* UIImageView+RxMinioId.swift */,
 			);
 			path = Minio;
@@ -1472,6 +1475,7 @@
 				45C1994820A973DD001924B9 /* MediumObject.swift in Sources */,
 				458C050520C91C07004EB2D8 /* ImageGenerator.swift in Sources */,
 				45B0205A20AEA35600BD5D8F /* UserStateObject.swift in Sources */,
+				456E910A20FC9B540006FFA8 /* MinioHelper.swift in Sources */,
 				45FC0BF320A42F26006AAF3D /* UserViewController.swift in Sources */,
 				4543ECE720BC39DC002F7C18 /* LoadFooterView.swift in Sources */,
 				455808D920EC6B2C005F1A00 /* BaseViewController.swift in Sources */,

@@ -68,9 +68,11 @@ class UserPresenter: NSObject {
     typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
-    private var dataSource: (Driver<LoadFooterViewState>) -> DataSource {
+    var dataSource: DataSource?
+
+    private var dataSourceFactory: (Driver<LoadFooterViewState>) -> DataSource {
         return { loadState in
-            return DataSource(
+            let dataSource =  DataSource(
                 configureCell: { dataSource, collectionView, indexPath, item in
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
                     cell.configure(with: item)
@@ -78,12 +80,15 @@ class UserPresenter: NSObject {
             },
                 configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
             )
+            return dataSource
         }
     }
     
     var myMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [myMediaCollectionView] loadState in
-            return myMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
+            let dataSource = self.dataSourceFactory(loadState)
+            self.dataSource = dataSource
+            return myMediaCollectionView!.rx.items(dataSource: dataSource)
         }
     }
     
@@ -98,6 +103,7 @@ class UserPresenter: NSObject {
 extension UserPresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CollectionViewLayoutManager.size(in: collectionView.bounds)
+        let aspectRatio = dataSource?[indexPath].detail?.aspectRatio.value ?? 1
+        return CollectionViewLayoutManager.size(in: collectionView.bounds, aspectRatio: aspectRatio)
     }
 }

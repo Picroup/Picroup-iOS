@@ -84,6 +84,9 @@ class MePresenter: NSObject {
     typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
+    var myMediaDataSource: DataSource?
+    var myStaredMediaDataSource: DataSource?
+
     var selectedTabIndex: Binder<Int> {
         return Binder(self) { me, index in
             guard let tab = MeStateObject.Tab(rawValue: index) else { return }
@@ -97,7 +100,7 @@ class MePresenter: NSObject {
         }
     }
     
-    private var dataSource: (Driver<LoadFooterViewState>) -> DataSource {
+    private var dataSourceFactory: (Driver<LoadFooterViewState>) -> DataSource {
         return { loadState in
             return DataSource(
                 configureCell: { dataSource, collectionView, indexPath, item in
@@ -112,13 +115,17 @@ class MePresenter: NSObject {
     
     var myMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [myMediaCollectionView] loadState in
-            return myMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
+            let dataSource = self.dataSourceFactory(loadState)
+            self.myMediaDataSource = dataSource
+            return myMediaCollectionView!.rx.items(dataSource: dataSource)
         }
     }
     
     var myStaredMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [myStardMediaCollectionView] loadState in
-            return myStardMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
+            let dataSource = self.dataSourceFactory(loadState)
+            self.myStaredMediaDataSource = dataSource
+            return myStardMediaCollectionView!.rx.items(dataSource: dataSource)
         }
     }
     
@@ -139,6 +146,13 @@ class MePresenter: NSObject {
 extension MePresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CollectionViewLayoutManager.size(in: collectionView.bounds)
+        if collectionView == myMediaCollectionView {
+            let aspectRatio = myMediaDataSource?[indexPath].detail?.aspectRatio.value ?? 1
+            return CollectionViewLayoutManager.size(in: collectionView.bounds, aspectRatio: aspectRatio)
+        } else if collectionView == myStardMediaCollectionView {
+            let aspectRatio = myStaredMediaDataSource?[indexPath].detail?.aspectRatio.value ?? 1
+            return CollectionViewLayoutManager.size(in: collectionView.bounds, aspectRatio: aspectRatio)
+        }
+        return .zero
     }
 }
