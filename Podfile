@@ -16,7 +16,8 @@ target 'Picroup-iOS' do
   pod 'Kingfisher', '~> 4.0'
   pod 'Material', '~> 2.14'
   pod 'YPImagePicker', '~> 3.0'
-  
+  pod 'Cache', '~> 4.2'
+
   post_install do |installer|
       # Your list of targets here.
       myTargets = ['YPImagePicker', 'PryntTrimmerView', 'SteviaLayout']

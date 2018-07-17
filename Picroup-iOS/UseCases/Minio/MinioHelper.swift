@@ -18,22 +18,23 @@ struct MinioHelper {
         case signedURLNotFound
     }
     
-    static func save(with fileURL: URL) -> Observable<RxProgress> {
-        return json(.get, "\(Config.baseURL)/signed?name=\(fileURL.lastPathComponent)")
+    static func save(with data: Data, filename: String) -> Observable<RxProgress> {
+        return json(.get, "\(Config.baseURL)/signed?name=\(filename)")
             .map { json in (json as? [String: String])?["signedURL"] }
             .flatMap { signedURL -> Observable<RxProgress> in
                 guard let signedURL = signedURL else { throw Error.signedURLNotFound }
-                let headers = fileURL.mimeType.map { ["Content-Type":$0] }
-                return upload(fileURL, to: signedURL, method: .put, headers: headers)
+                let headers = filename.mimeType.map { ["Content-Type":$0] }
+                return upload(data, to: signedURL, method: .put, headers: headers)
                     .rx.progress()
         }
     }
 }
 
-private extension URL {
+private extension String {
     
     var mimeType: String? {
-        guard let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension as NSString, nil)?.takeRetainedValue(),
+        guard let pathExtension = split(separator: ".").last.map(String.init),
+            let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension as NSString, nil)?.takeRetainedValue(),
             let mimeType = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassMIMEType)?.takeRetainedValue()
             else { return nil }
         return mimeType as String

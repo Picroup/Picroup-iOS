@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var router: Router?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        ImageCache.default.maxDiskCacheSize = 200 * 1024 * 1024
+        ImageCache.default.maxDiskCacheSize = Config.maxDiskImageCacheSize
         prepareWindow()
         setupRealm()
         setupRouter()

@@ -50,8 +50,10 @@ final class UpdateUserViewController: ShowNavigationBarViewController {
         }
         
         let querySetImageKey: Feedback = react(query: { $0.setImageKeyQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            let image = ImageCache.default.retrieveImageInMemoryCache(forKey: query.imageKey)!
-            let (progress, filename) = ImageUpoader.uploadImage(image)
+            guard let pickedImage = ImageCache.default.retrieveImageInMemoryCache(forKey: query.imageKey) else {
+                return .just(.onSetAvatarIdError(CacheError.imageNotCached))
+            }
+            let (progress, filename) = UpoaderService.uploadImage(pickedImage)
             let next = UserSetAvatarIdQuery(userId: query.userId, avatarId: filename)
             return Observable.concat([
                 progress.flatMap { _ in Observable<UpdateUserStateObject.Event>.empty() },

@@ -3,3 +3,5 @@ mutation SaveImageMedium($userId: ID!, $minioId: ID!, $width: Float!, $aspectRat
         ...MediumFragment
     }
 }
+
+
