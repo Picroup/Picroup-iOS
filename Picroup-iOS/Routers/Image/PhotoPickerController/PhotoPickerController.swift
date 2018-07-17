@@ -12,40 +12,66 @@ import RxCocoa
 import RealmSwift
 import Kingfisher
 import YPImagePicker
+import AVKit
 
-private func photoPicker(from vc: UIViewController?, configure: ((inout YPImagePickerConfiguration) -> Void) = { _ in }) -> Signal<[String]> {
+private func photoPicker(from vc: UIViewController?, configure: ((inout YPImagePickerConfiguration) -> Void) = { _ in }) -> Signal<[MediaItem]> {
     guard let vc = vc else { return .empty() }
     var configuration = YPImagePickerConfiguration()
     configure(&configuration)
     let photoPickerController = YPImagePicker(configuration: configuration)
-    let pickedImageKeys = PublishRelay<[String]>()
+    let pickedItems = PublishRelay<[MediaItem]>()
     photoPickerController.didFinishPicking { [weak photoPickerController] (items, cancel) in
-        let images = items.compactMap { item -> UIImage? in
-            switch item {
-            case .photo(let photo): return photo.image
-            default: return nil
-            }
-        }
-        
-        let imageKeys = (0..<images.count).map { _ in UUID().uuidString }
-        let tasks = zip(images, imageKeys).map { image, key in ImageCache.default.rx.store(image, forKey: key, toDisk: false) }
-        _ = Completable.merge(tasks)
-            .subscribe(onCompleted: { pickedImageKeys.accept(imageKeys) })
-        
         photoPickerController?.dismiss(animated: true)
+        if cancel { return }
+        _ = Observable.zip(items.map { $0.mediaItem.asObservable() })
+            .take(1)
+            .subscribe(onNext: pickedItems.accept)
     }
     vc.present(photoPickerController, animated: true)
-    return pickedImageKeys.asSignal()
+    return pickedItems.asSignal()
 }
 
 struct PhotoPickerProvider {
     
-    static func pickImages(from vc: UIViewController?, imageLimit: Int = 0) -> Signal<[String]> {
-        return photoPicker(from: vc) { configuration in
-            configuration.library.maxNumberOfItems = imageLimit
+    static func pickImage(from vc: UIViewController?) -> Signal<String> {
+        return _pickMedia(from: vc) { configuration in
+            configuration.library.maxNumberOfItems = 1
             configuration.shouldSaveNewPicturesToAlbum = false
             configuration.startOnScreen = .library
             configuration.screens = [.library, .photo,]
+            }.flatMap {
+                if case .some(.image(let imageKey)) = $0.first {
+                    return .just(imageKey)
+                }
+                return .empty()
+        }
+    }
+    
+    static func pickMedia(from vc: UIViewController?) -> Signal<[MediaItem]> {
+        return _pickMedia(from: vc) { configuration in
+//            configuration.library.maxNumberOfItems = 10
+//            configuration.shouldSaveNewPicturesToAlbum = false
+//
+//            configuration.video.compression = AVAssetExportPresetMediumQuality
+//            configuration.video.fileType = .mp4
+//            configuration.video.recordingTimeLimit = 15
+//            configuration.video.libraryTimeLimit = 15
+//            configuration.video.minimumTimeLimit = 3
+//            configuration.video.trimmerMaxDuration = 60
+//            configuration.video.trimmerMinDuration = 3
+//
+//            configuration.library.mediaType = .photoAndVideo
+//            configuration.startOnScreen = .library
+//            configuration.screens = [.library, .photo, .video]
+            configuration.library.maxNumberOfItems = 1
+            configuration.shouldSaveNewPicturesToAlbum = false
+            configuration.startOnScreen = .library
+            configuration.screens = [.library, .photo,]
+        }
+    }
+    
+    private static func _pickMedia(from vc: UIViewController?, configure: ((inout YPImagePickerConfiguration) -> Void)) -> Signal<[MediaItem]> {
+        return photoPicker(from: vc) { configuration in
             
             configuration.filters = [
                 YPFilterDescriptor(name: "原图", filterName: ""),
@@ -59,6 +85,8 @@ struct PhotoPickerProvider {
                 YPFilterDescriptor(name: "色质", filterName: "CIPhotoEffectTonal"),
                 YPFilterDescriptor(name: "黑白", filterName: "CIPhotoEffectMono"),
             ]
+            
+            configuration.hidesStatusBar = true
             
             configuration.wordings.ok = "好"
             configuration.wordings.done = "完成"
@@ -75,6 +103,34 @@ struct PhotoPickerProvider {
             configuration.wordings.filter = "滤镜"
             configuration.wordings.crop = "裁剪"
             configuration.wordings.warningMaxItemsLimit = "最多 %d 张图片"
+            
+            configure(&configuration)
+        }
+    }
+}
+
+enum MediaItem {
+    case image(String)
+    case video(thumbnailImageKey: String, videoFileURL: URL)
+}
+
+extension YPMediaItem {
+
+    var mediaItem: Single<MediaItem> {
+        return Single.create { observer in
+            switch self {
+            case .photo(let photo):
+                let imageKey = UUID().uuidString
+                ImageCache.default.store(photo.image, forKey: imageKey, toDisk: false) {
+                    observer(.success(.image(imageKey)))
+                }
+            case .video(let video):
+                let thumbnailImageKey = UUID().uuidString
+                ImageCache.default.store(video.thumbnail, forKey: thumbnailImageKey, toDisk: false) {
+                    observer(.success(.video(thumbnailImageKey: thumbnailImageKey, videoFileURL: video.url)))
+                }
+            }
+            return Disposables.create()
         }
     }
 }

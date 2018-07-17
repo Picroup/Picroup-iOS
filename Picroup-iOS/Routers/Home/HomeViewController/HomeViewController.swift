@@ -55,7 +55,7 @@ class HomeViewController: BaseViewController {
                         : .empty()
                     }.map { .onTriggerGetMoreMyInterestedMedia },
                 presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReloadMyInterestedMedia },
-                presenter.fabButton.rx.tap.asSignal().flatMapLatest { PhotoPickerProvider.pickImages(from: weakSelf, imageLimit: 20) } .map(HomeStateObject.Event.onTriggerCreateImage),
+                presenter.fabButton.rx.tap.asSignal().flatMapLatest { PhotoPickerProvider.pickMedia(from: weakSelf) } .map(HomeStateObject.Event.onTriggerCreateImage),
                 presenter.addUserButton.rx.tap.asSignal().map { .onTriggerSearchUser },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)

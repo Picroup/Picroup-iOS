@@ -16,7 +16,7 @@ import Kingfisher
 
 class CreateImageViewController: ShowNavigationBarViewController {
     
-    typealias Dependency = [String]
+    typealias Dependency = [MediaItem]
     var dependency: Dependency?
     
     fileprivate typealias Feedback = (Driver<CreateImageStateObject>) -> Signal<CreateImageStateObject.Event>
@@ -30,13 +30,13 @@ class CreateImageViewController: ShowNavigationBarViewController {
     private func setupRxFeedback() {
 
         guard
-            let imageKeys = dependency,
-            let store = try? CreateImageStateStore(imageKeys: imageKeys)
+            let mediaItems = dependency,
+            let store = try? CreateImageStateStore(mediaItems: mediaItems)
             else {
                 return
         }
         
-        navigationItem.titleLabel.text = "共 \(imageKeys.count) 张" 
+        navigationItem.titleLabel.text = "共 \(mediaItems.count) 个"
         navigationItem.titleLabel.textColor = .primaryText
 
         let uiFeedback: Feedback =  bind(self) { (me, state) in
@@ -63,10 +63,16 @@ class CreateImageViewController: ShowNavigationBarViewController {
         }
         
         let saveMediums: Feedback = react(query: { $0.saveQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { (query) in
-            let (userId, imageKeys, tags) = query
-            let queries: [Signal<CreateImageStateObject.Event>] = imageKeys.enumerated().map { index, imageKey in
-                return MediumService.saveMedium(client: ApolloClient.shared, userId: userId, imageKey: imageKey, tags: tags)
-                    .map { result in
+            let (userId, mediaItems, tags) = query
+            let queries: [Signal<CreateImageStateObject.Event>] = mediaItems.enumerated().map { index, mediaItem in
+                let saveMedium: Observable<MediumService.SaveMediumResult>
+                switch mediaItem {
+                case .image(let imageKey):
+                    saveMedium = MediumService.saveMedium(client: ApolloClient.shared, userId: userId, imageKey: imageKey, tags: tags)
+                case .video(let thumbnailImageKey, let videoFileURL):
+                    saveMedium = MediumService.saveVideo(client: ApolloClient.shared, userId: userId, thumbnailImageKey: thumbnailImageKey, videoFileURL: videoFileURL, tags: tags)
+                }
+                return saveMedium.map { result in
                         switch result {
                         case .progress(let progress):
                             return CreateImageStateObject.Event.onProgress(progress, index)

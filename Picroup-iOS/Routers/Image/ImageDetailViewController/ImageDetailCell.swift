@@ -14,6 +14,7 @@ import RxCocoa
 extension ImageDetailCell {
     
     struct ViewModel {
+        let kind: String?
         let imageViewMinioId: String?
         let imageViewMotionIdentifier: String?
         let progress: CGFloat
@@ -33,6 +34,7 @@ extension ImageDetailCell.ViewModel {
     
     init(medium: MediumObject) {
         guard !medium.isInvalidated else {
+            self.kind = nil
             self.imageViewMinioId = nil
             self.imageViewMotionIdentifier = nil
             self.progress = 0
@@ -48,6 +50,7 @@ extension ImageDetailCell.ViewModel {
         }
         let remainTime = medium.endedAt.value?.sinceNow ?? 0
         
+        self.kind = medium.kind
         self.imageViewMinioId = medium.minioId
         self.imageViewMotionIdentifier = medium._id
         self.progress = CGFloat(remainTime / 12.0.weeks)
@@ -87,9 +90,10 @@ class ImageDetailCell: RxCollectionViewCell {
         onUserTap: (() -> Void)?,
         onMoreTap: (() -> Void)?
         ) {
+        if item.isInvalidated { return }
         let viewModel = ViewModel(medium: item)
         
-        if item.kind == MediumKind.image.rawValue {
+        if viewModel.kind == MediumKind.image.rawValue {
             imageView.setImage(with: item.minioId)
             suggestUpdateLabel.isHidden = true
         } else {

@@ -65,7 +65,7 @@ final class ReputationsRouteObject: PrimaryObject {
 }
 
 final class CreateImageRouteObject: PrimaryObject {
-    let imageKeys = List<String>()
+    let mediaItemObjects = List<MediaItemObject>()
     @objc dynamic var version: String?
 }
 
