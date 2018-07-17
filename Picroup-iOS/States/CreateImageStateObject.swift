@@ -70,7 +70,7 @@ final class MediaItemObject: PrimaryObject {
                         "_id": mediaItem.id,
                         "kind": MediumKind.video.rawValue,
                         "thumbnailImageKey": thumbnailImageKey,
-                        "videoFileURL": videoFileURL,
+                        "videoFilePath": videoFileURL.absoluteString,
                     ]
                 }
             }()

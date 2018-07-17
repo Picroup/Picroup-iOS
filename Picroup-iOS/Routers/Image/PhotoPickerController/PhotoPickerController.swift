@@ -49,24 +49,22 @@ struct PhotoPickerProvider {
     
     static func pickMedia(from vc: UIViewController?) -> Signal<[MediaItem]> {
         return _pickMedia(from: vc) { configuration in
-//            configuration.library.maxNumberOfItems = 10
-//            configuration.shouldSaveNewPicturesToAlbum = false
-//
-//            configuration.video.compression = AVAssetExportPresetMediumQuality
-//            configuration.video.fileType = .mp4
-//            configuration.video.recordingTimeLimit = 15
-//            configuration.video.libraryTimeLimit = 15
-//            configuration.video.minimumTimeLimit = 3
-//            configuration.video.trimmerMaxDuration = 60
-//            configuration.video.trimmerMinDuration = 3
-//
-//            configuration.library.mediaType = .photoAndVideo
-//            configuration.startOnScreen = .library
-//            configuration.screens = [.library, .photo, .video]
-            configuration.library.maxNumberOfItems = 1
+            configuration.library.maxNumberOfItems = 10
             configuration.shouldSaveNewPicturesToAlbum = false
+
+            configuration.video.compression = AVAssetExportPresetMediumQuality
+            configuration.video.fileType = .mp4
+            configuration.video.recordingTimeLimit = 15
+            configuration.video.libraryTimeLimit = 20
+            configuration.video.trimmerMaxDuration = 15
+
+            configuration.library.mediaType = .photoAndVideo
             configuration.startOnScreen = .library
-            configuration.screens = [.library, .photo,]
+            configuration.screens = [.library, .photo, .video]
+//            configuration.library.maxNumberOfItems = 1
+//            configuration.shouldSaveNewPicturesToAlbum = false
+//            configuration.startOnScreen = .library
+//            configuration.screens = [.library, .photo,]
         }
     }
     
