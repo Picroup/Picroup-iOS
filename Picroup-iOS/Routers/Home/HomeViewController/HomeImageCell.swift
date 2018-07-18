@@ -88,7 +88,7 @@ class HomeVidoeCell: RxCollectionViewCell {
         
         let remainTime = item.endedAt.value?.sinceNow ?? 0
         
-        playerView.play(with: item.detail?.videoMinioId)
+//        playerView.play(with: item.detail?.videoMinioId)
 //        playerView.play(url: URL(string: "http://minio.picroup.com:9000/picroup.dev/1F941694-103E-4EAA-B916-458889E1CF8A.mp4"))
         lifeViewWidthConstraint.constant = CGFloat(remainTime / 12.0.weeks) * lifeBar.bounds.width
 //        imageView.motionIdentifier = item._id

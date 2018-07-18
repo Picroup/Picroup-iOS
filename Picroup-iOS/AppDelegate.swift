@@ -13,6 +13,7 @@ import RxFeedback
 import Material
 import Apollo
 import Kingfisher
+import AVKit
 
 var appStateService: AppStateService?
 
@@ -28,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupRealm()
         setupRouter()
         setupAppStateService()
+        try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+        try? AVAudioSession.sharedInstance().setActive(true)
         return true
     }
     

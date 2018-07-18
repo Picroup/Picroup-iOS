@@ -50,9 +50,7 @@ public final class PlayerView: UIView {
     }
     
     func play(with minioId: String?) {
-        let url = minioId
-            .map { "\(Config.baseURL)/s3?name=\($0)" }
-            .flatMap(URL.init(string: ))
+        let url = URLHelper.url(from: minioId)
         play(url: url)
     }
     
@@ -64,9 +62,6 @@ public final class PlayerView: UIView {
         Cacher.storage?.async.entry(ofType: Data.self, forKey: url.cacheKey, completion: { result in
             guard self.url == url else { return }
             let playerItem: CachingPlayerItem
-            print(url)
-            print(url.pathExtension)
-            print(url.pathExtension.mimeType)
             if case .value(let entry) = result, let mimeType = url.pathExtension.mimeType {
                 print("from cache")
                 playerItem = CachingPlayerItem(data: entry.object, mimeType: mimeType, fileExtension: url.pathExtension)

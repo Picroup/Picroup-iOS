@@ -49,7 +49,7 @@ struct UpoaderService {
 
 private extension String {
     var cacheKey: String {
-        return URL(string: "\(Config.baseURL)/s3?name=\(self)")!.cacheKey
+        return URLHelper.url(from: self)!.cacheKey
     }
 }
 

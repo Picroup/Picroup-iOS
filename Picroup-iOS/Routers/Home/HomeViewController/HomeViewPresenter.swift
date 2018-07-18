@@ -125,6 +125,12 @@ extension HomeViewPresenter: UICollectionViewDelegateFlowLayout, UICollectionVie
         return CGSize(width: width, height: height)
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let homeVidoeCell = cell as? HomeVidoeCell, let medium = dataSource?[indexPath], !medium.isInvalidated {
+            homeVidoeCell.playerView.play(with: medium.detail?.videoMinioId)
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let homeVidoeCell = cell as? HomeVidoeCell {
             homeVidoeCell.playerView.reset()
