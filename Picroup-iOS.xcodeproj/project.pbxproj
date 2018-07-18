@@ -146,6 +146,9 @@
 		459F259920A28C13008B6C9B /* ObservableType+catchErrorRecover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459F259820A28C13008B6C9B /* ObservableType+catchErrorRecover.swift */; };
 		45A0393D2075D0E9007498DB /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A0393C2075D0E9007498DB /* User.graphql */; };
 		45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A61C0C2086356E00AE7D99 /* StarMedium.graphql */; };
+		45A6810F20FF23B80070606B /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6810D20FF23B80070606B /* PlayerView.swift */; };
+		45A6811020FF23B80070606B /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45A6810E20FF23B80070606B /* PlayerView.xib */; };
+		45A6811220FF23E90070606B /* CachingPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6811120FF23E90070606B /* CachingPlayerItem.swift */; };
 		45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */; };
 		45AA3B4520A311BD0032A8CF /* ImageDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4420A311BD0032A8CF /* ImageDetailPresenter.swift */; };
 		45AA3B4820A346DB0032A8CF /* DispachQueue+realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */; };
@@ -372,6 +375,9 @@
 		459F259820A28C13008B6C9B /* ObservableType+catchErrorRecover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+catchErrorRecover.swift"; sourceTree = "<group>"; };
 		45A0393C2075D0E9007498DB /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
 		45A61C0C2086356E00AE7D99 /* StarMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = StarMedium.graphql; sourceTree = "<group>"; };
+		45A6810D20FF23B80070606B /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		45A6810E20FF23B80070606B /* PlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerView.xib; sourceTree = "<group>"; };
+		45A6811120FF23E90070606B /* CachingPlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachingPlayerItem.swift; sourceTree = "<group>"; };
 		45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PublishRelay+asBinder.swift"; sourceTree = "<group>"; };
 		45AA3B4420A311BD0032A8CF /* ImageDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailPresenter.swift; sourceTree = "<group>"; };
 		45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispachQueue+realm.swift"; sourceTree = "<group>"; };
@@ -814,6 +820,7 @@
 		4595F2042079EDE20040E5FA /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				45A6810C20FF23B80070606B /* PlayerView */,
 				455D69032080409A00C651A0 /* BaseNavigationController.swift */,
 				455808D820EC6B2C005F1A00 /* BaseViewController.swift */,
 				4595F2072079EECF0040E5FA /* colors.swift */,
@@ -995,6 +1002,16 @@
 				45B5E27C20C9008D005E2E58 /* UserSetPassword.graphql */,
 			);
 			path = GraphQL;
+			sourceTree = "<group>";
+		};
+		45A6810C20FF23B80070606B /* PlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				45A6810E20FF23B80070606B /* PlayerView.xib */,
+				45A6810D20FF23B80070606B /* PlayerView.swift */,
+				45A6811120FF23E90070606B /* CachingPlayerItem.swift */,
+			);
+			path = PlayerView;
 			sourceTree = "<group>";
 		};
 		45AA3B4620A346C10032A8CF /* Realm */ = {
@@ -1281,6 +1298,7 @@
 				453B95BE20C523990043D915 /* Me.storyboard in Resources */,
 				45F0A7E020C7D2B80085F978 /* GetVerifyCode.graphql in Resources */,
 				45F0A7DE20C7CC510085F978 /* Register.graphql in Resources */,
+				45A6811020FF23B80070606B /* PlayerView.xib in Resources */,
 				457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */,
 				45183ECA20D2199000497B59 /* agreement.html in Resources */,
 				45E240B920862CF6004B58EF /* Medium.graphql in Resources */,
@@ -1445,6 +1463,7 @@
 				4595F21B207C883F0040E5FA /* MainTabBarController.swift in Sources */,
 				456E90DD20F5F6140006FFA8 /* UpdateMediumTagsStateObject.swift in Sources */,
 				456E910C20FD8A510006FFA8 /* UpoaderService.swift in Sources */,
+				45A6810F20FF23B80070606B /* PlayerView.swift in Sources */,
 				45B0205320AD72D600BD5D8F /* PhotoPickerController.swift in Sources */,
 				45EC928120D3C65100A473D4 /* Moment.swift in Sources */,
 				451CD330207BB62D0063A972 /* HomeViewPresenter.swift in Sources */,
@@ -1463,6 +1482,7 @@
 				45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */,
 				4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */,
 				453B95BC20C4D7090043D915 /* UpdateUserPresenter.swift in Sources */,
+				45A6811220FF23E90070606B /* CachingPlayerItem.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
 				45517D4420BCDCD900F2D7DE /* UserViewModel.swift in Sources */,
 				451CD32D207BB5D90063A972 /* HomeViewController.swift in Sources */,

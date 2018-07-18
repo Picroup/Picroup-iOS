@@ -23,18 +23,18 @@ struct MinioHelper {
             .map { json in (json as? [String: String])?["signedURL"] }
             .flatMap { signedURL -> Observable<RxProgress> in
                 guard let signedURL = signedURL else { throw Error.signedURLNotFound }
-                let headers = filename.mimeType.map { ["Content-Type":$0] }
+                let pathExtension = filename.split(separator: ".").last.map(String.init)
+                let headers = pathExtension.flatMap { $0.mimeType }.map { ["Content-Type":$0] }
                 return upload(data, to: signedURL, method: .put, headers: headers)
                     .rx.progress()
         }
     }
 }
 
-private extension String {
+extension String {
     
     var mimeType: String? {
-        guard let pathExtension = split(separator: ".").last.map(String.init),
-            let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension as NSString, nil)?.takeRetainedValue(),
+        guard let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, self as NSString, nil)?.takeRetainedValue(),
             let mimeType = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassMIMEType)?.takeRetainedValue()
             else { return nil }
         return mimeType as String

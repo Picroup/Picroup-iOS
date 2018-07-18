@@ -27,6 +27,7 @@ final class MediumObject: PrimaryObject {
 final class MediumDetailObject: Object {
     let width = RealmOptional<Double>()
     let aspectRatio = RealmOptional<Double>()
+    @objc dynamic var videoMinioId: String?
 }
 
 final class CursorMediaObject: PrimaryObject {

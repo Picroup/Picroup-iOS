@@ -67,16 +67,31 @@ final class HomeViewPresenter: NSObject {
 //        [weak self, collectionView]
         let dataSource = DataSource(
             configureCell: { dataSource, collectionView, indexPath, item in
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeImageCell", for: indexPath) as! HomeImageCell
-                cell.configure(
-                    with: item,
-                    onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
-                    onImageViewTap: { events.accept(.onTriggerShowImage(item._id)) },
-                    onUserTap: {
-                        guard let userId = item.user?._id else { return }
-                        events.accept(.onTriggerShowUser(userId))
-                })
-                return cell
+                guard !item.isInvalidated else { return UICollectionViewCell() }
+                switch item.kind {
+                case MediumKind.video.rawValue?:
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeVidoeCell", for: indexPath) as! HomeVidoeCell
+                    cell.configure(
+                        with: item,
+                        onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
+                        onImageViewTap: { events.accept(.onTriggerShowImage(item._id)) },
+                        onUserTap: {
+                            guard let userId = item.user?._id else { return }
+                            events.accept(.onTriggerShowUser(userId))
+                    })
+                    return cell
+                default:
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeImageCell", for: indexPath) as! HomeImageCell
+                    cell.configure(
+                        with: item,
+                        onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
+                        onImageViewTap: { events.accept(.onTriggerShowImage(item._id)) },
+                        onUserTap: {
+                            guard let userId = item.user?._id else { return }
+                            events.accept(.onTriggerShowUser(userId))
+                    })
+                    return cell
+                }
         },
             configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
         )
@@ -99,7 +114,7 @@ final class HomeViewPresenter: NSObject {
     }
 }
 
-extension HomeViewPresenter: UICollectionViewDelegateFlowLayout {
+extension HomeViewPresenter: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let dataSource = dataSource else { return .zero }
@@ -108,6 +123,12 @@ extension HomeViewPresenter: UICollectionViewDelegateFlowLayout {
         let imageHeight = width / CGFloat(medium.detail?.aspectRatio.value ?? 1)
         let height = imageHeight + 8 + 56
         return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let homeVidoeCell = cell as? HomeVidoeCell {
+            homeVidoeCell.playerView.reset()
+        }
     }
 }
 
