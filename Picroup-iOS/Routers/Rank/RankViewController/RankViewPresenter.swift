@@ -18,20 +18,28 @@ final class RankViewPresenter: NSObject {
     var refreshControl: UIRefreshControl!
 //    weak var collectionView: UICollectionView!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var tagsCollectionView: UICollectionView! {
-        didSet {
-//            (tagsCollectionView.collectionViewLayout as! UICollectionViewFlowLayout)
-//                .estimatedItemSize = CGSize(width: 50, height: 24)
-        }
-    }
+    @IBOutlet weak var tagsCollectionView: UICollectionView!
     weak var navigationItem: UINavigationItem!
     @IBOutlet weak var hideTagsLayoutConstraint: NSLayoutConstraint!
 
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
+        prepareCollectionView()
+        prepareTagsCollectionView()
         prepareRefreshControl()
         prepareUserButton()
         prepareNavigationItem()
+    }
+    
+    fileprivate func prepareCollectionView() {
+        
+        collectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
+        collectionView.register(UINib(nibName: "RankVideoCell", bundle: nil), forCellWithReuseIdentifier: "RankVideoCell")
+    }
+    
+    fileprivate func prepareTagsCollectionView() {
+        
+        tagsCollectionView.register(UINib(nibName: "TagCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TagCollectionViewCell")
     }
     
     fileprivate func prepareRefreshControl() {
@@ -60,11 +68,7 @@ final class RankViewPresenter: NSObject {
     var items: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [collectionView] loadState in
             let dataSource = DataSource(
-                configureCell: { dataSource, collectionView, indexPath, item in
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                    cell.configure(with: item)
-                    return cell
-            },
+                configureCell: configureMediumCell(),
                 configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
             )
             self.dataSource = dataSource
@@ -72,6 +76,21 @@ final class RankViewPresenter: NSObject {
         }
     }
     
+}
+
+func configureMediumCell<D>() -> (D, UICollectionView, IndexPath, MediumObject) -> UICollectionViewCell {
+    return { dataSource, collectionView, indexPath, item in
+        switch item.kind {
+        case MediumKind.video.rawValue?:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankVideoCell", for: indexPath) as! RankVideoCell
+            cell.configure(with: item)
+            return cell
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
+            cell.configure(with: item)
+            return cell
+        }
+    }
 }
 
 func createLoadFooterSupplementaryView<D>(loadState: Driver<LoadFooterViewState>) -> (D, UICollectionView, String, IndexPath) -> UICollectionReusableView {
@@ -82,10 +101,32 @@ func createLoadFooterSupplementaryView<D>(loadState: Driver<LoadFooterViewState>
     }
 }
 
+func playVideoIfNeeded(cell: UICollectionViewCell, medium: MediumObject?) {
+    if let vidoeCell = cell as? RankVideoCell, medium?.isInvalidated == false {
+        vidoeCell.playerView.play(with: medium?.detail?.videoMinioId)
+    }
+}
+
+func resetPlayerIfNeeded(cell: UICollectionViewCell) {
+    if let vidoeCell = cell as? RankVideoCell {
+        vidoeCell.playerView.reset()
+    }
+}
+
+
+
 extension RankViewPresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let aspectRatio = dataSource?[indexPath].detail?.aspectRatio.value ?? 1
         return CollectionViewLayoutManager.size(in: collectionView.bounds, aspectRatio: aspectRatio)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        playVideoIfNeeded(cell: cell, medium: dataSource?[indexPath])
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        resetPlayerIfNeeded(cell: cell)
     }
 }

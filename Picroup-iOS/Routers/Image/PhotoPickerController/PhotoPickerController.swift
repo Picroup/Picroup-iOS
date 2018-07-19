@@ -109,7 +109,7 @@ struct PhotoPickerProvider {
             configuration.wordings.videoDurationPopup.tooShortMessage = "至少 %@ 秒"
 
             configuration.wordings.permissionPopup.title = "无访问权限"
-            configuration.wordings.permissionPopup.message = "请允许访问"
+            configuration.wordings.permissionPopup.message = "请授权访问"
             configuration.wordings.permissionPopup.cancel = "取消"
             configuration.wordings.permissionPopup.grantPermission = "授权"
             

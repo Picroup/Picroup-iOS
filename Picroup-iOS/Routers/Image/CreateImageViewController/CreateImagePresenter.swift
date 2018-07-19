@@ -19,6 +19,7 @@ class CreateImagePresenter: NSObject {
         didSet {
             (tagsCollectionView.collectionViewLayout as! UICollectionViewFlowLayout)
                 .estimatedItemSize = CGSize(width: 44, height: 22)
+            tagsCollectionView.register(UINib(nibName: "TagCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TagCollectionViewCell")
         }
     }
     @IBOutlet weak var addTagTextField: UITextField!
@@ -35,13 +36,6 @@ extension CreateImagePresenter: UICollectionViewDelegate, UICollectionViewDelega
 //    }
 }
 
-final class TagCollectionViewCell: RxCollectionViewCell {
-    @IBOutlet weak var tagLabel: UILabel!
-    
-    func setSelected(_ selected: Bool) {
-        backgroundColor = selected ? .primaryLight : .secondaryLightText
-    }
-}
 
 extension CreateImagePresenter: UITextFieldDelegate {
     

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -37,66 +37,9 @@
                                                     <size key="footerReferenceSize" width="50" height="80"/>
                                                     <inset key="sectionInset" minX="2" minY="152" maxX="2" maxY="2"/>
                                                 </collectionViewFlowLayout>
-                                                <cells>
-                                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RankMediumCell" id="9su-W2-Pui" customClass="RankMediumCell" customModule="Picroup_iOS" customModuleProvider="target">
-                                                        <rect key="frame" x="2" y="152" width="184" height="184"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                                            <rect key="frame" x="0.0" y="0.0" width="184" height="184"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wqz-7d-NyD">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="184" height="184"/>
-                                                                    <color key="backgroundColor" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
-                                                                </imageView>
-                                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="GPf-re-dcV">
-                                                                    <rect key="frame" x="0.0" y="182" width="184" height="2"/>
-                                                                </progressView>
-                                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="应用版本过低，请升级查看" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fXy-cD-FSs">
-                                                                    <rect key="frame" x="8" y="70" width="168" height="42.5"/>
-                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oLp-3Q-ZYM">
-                                                                    <rect key="frame" x="175" y="183" width="1" height="1"/>
-                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="1" id="lpr-HM-68v"/>
-                                                                        <constraint firstAttribute="width" constant="1" id="zKV-1f-hAb"/>
-                                                                    </constraints>
-                                                                </view>
-                                                            </subviews>
-                                                        </view>
-                                                        <constraints>
-                                                            <constraint firstAttribute="bottom" secondItem="wqz-7d-NyD" secondAttribute="bottom" id="1IW-Mr-Ah6"/>
-                                                            <constraint firstItem="GPf-re-dcV" firstAttribute="leading" secondItem="9su-W2-Pui" secondAttribute="leading" id="GJU-J7-ffn"/>
-                                                            <constraint firstItem="wqz-7d-NyD" firstAttribute="top" secondItem="9su-W2-Pui" secondAttribute="top" id="QoO-gC-HHW"/>
-                                                            <constraint firstAttribute="trailing" secondItem="fXy-cD-FSs" secondAttribute="trailing" constant="8" id="Qs5-ez-qaV"/>
-                                                            <constraint firstAttribute="trailing" secondItem="wqz-7d-NyD" secondAttribute="trailing" id="Xeh-pF-7Tj"/>
-                                                            <constraint firstAttribute="trailing" secondItem="GPf-re-dcV" secondAttribute="trailing" id="elP-ZX-Xbe"/>
-                                                            <constraint firstItem="fXy-cD-FSs" firstAttribute="centerY" secondItem="wqz-7d-NyD" secondAttribute="centerY" id="hoC-M9-ffX"/>
-                                                            <constraint firstAttribute="bottom" secondItem="GPf-re-dcV" secondAttribute="bottom" id="lCX-rM-DNM"/>
-                                                            <constraint firstAttribute="bottom" secondItem="oLp-3Q-ZYM" secondAttribute="bottom" id="tOo-cg-41Y"/>
-                                                            <constraint firstItem="wqz-7d-NyD" firstAttribute="leading" secondItem="9su-W2-Pui" secondAttribute="leading" id="yyS-yA-acD"/>
-                                                            <constraint firstAttribute="trailing" secondItem="oLp-3Q-ZYM" secondAttribute="trailing" constant="8" id="z6C-ta-669"/>
-                                                            <constraint firstItem="fXy-cD-FSs" firstAttribute="leading" secondItem="9su-W2-Pui" secondAttribute="leading" constant="8" id="zAc-sT-sBd"/>
-                                                        </constraints>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                <real key="value" value="2"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
-                                                        <connections>
-                                                            <outlet property="imageView" destination="wqz-7d-NyD" id="8S5-ew-Lda"/>
-                                                            <outlet property="progressView" destination="GPf-re-dcV" id="PtN-o7-oQR"/>
-                                                            <outlet property="starPlaceholderView" destination="oLp-3Q-ZYM" id="eA0-bG-HIj"/>
-                                                            <outlet property="suggestUpdateLabel" destination="fXy-cD-FSs" id="KeY-Fd-cit"/>
-                                                        </connections>
-                                                    </collectionViewCell>
-                                                </cells>
+                                                <cells/>
                                                 <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CollectionLoadFooterView" id="hUL-oL-4vS" customClass="CollectionLoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="338" width="375" height="80"/>
+                                                    <rect key="frame" x="0.0" y="154" width="375" height="80"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TI8-Wc-5Bu" customClass="LoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
@@ -124,66 +67,9 @@
                                                     <size key="footerReferenceSize" width="50" height="80"/>
                                                     <inset key="sectionInset" minX="2" minY="152" maxX="2" maxY="2"/>
                                                 </collectionViewFlowLayout>
-                                                <cells>
-                                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RankMediumCell" id="dJb-qq-RM3" customClass="RankMediumCell" customModule="Picroup_iOS" customModuleProvider="target">
-                                                        <rect key="frame" x="2" y="152" width="184" height="184"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                                            <rect key="frame" x="0.0" y="0.0" width="184" height="184"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8JE-9z-gZ4">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="184" height="184"/>
-                                                                    <color key="backgroundColor" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
-                                                                </imageView>
-                                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="DM9-FP-ze8">
-                                                                    <rect key="frame" x="0.0" y="182" width="184" height="2"/>
-                                                                </progressView>
-                                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="应用版本过低，请升级查看" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pTu-Lp-gVl">
-                                                                    <rect key="frame" x="8" y="70" width="168" height="42.5"/>
-                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4SD-Et-P0d">
-                                                                    <rect key="frame" x="175" y="183" width="1" height="1"/>
-                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="1" id="RV4-lr-Mou"/>
-                                                                        <constraint firstAttribute="height" constant="1" id="ifX-n4-lkL"/>
-                                                                    </constraints>
-                                                                </view>
-                                                            </subviews>
-                                                        </view>
-                                                        <constraints>
-                                                            <constraint firstItem="DM9-FP-ze8" firstAttribute="leading" secondItem="dJb-qq-RM3" secondAttribute="leading" id="D1R-9v-DVh"/>
-                                                            <constraint firstAttribute="trailing" secondItem="pTu-Lp-gVl" secondAttribute="trailing" constant="8" id="GhS-He-cJB"/>
-                                                            <constraint firstAttribute="bottom" secondItem="8JE-9z-gZ4" secondAttribute="bottom" id="J1r-6R-IEt"/>
-                                                            <constraint firstAttribute="trailing" secondItem="DM9-FP-ze8" secondAttribute="trailing" id="JTh-W2-Ig0"/>
-                                                            <constraint firstItem="pTu-Lp-gVl" firstAttribute="centerY" secondItem="8JE-9z-gZ4" secondAttribute="centerY" id="Moa-Be-0a0"/>
-                                                            <constraint firstAttribute="trailing" secondItem="4SD-Et-P0d" secondAttribute="trailing" constant="8" id="QSb-Wc-feE"/>
-                                                            <constraint firstItem="pTu-Lp-gVl" firstAttribute="leading" secondItem="dJb-qq-RM3" secondAttribute="leading" constant="8" id="WCP-Da-Asp"/>
-                                                            <constraint firstAttribute="trailing" secondItem="8JE-9z-gZ4" secondAttribute="trailing" id="Ywg-pg-7Bb"/>
-                                                            <constraint firstAttribute="bottom" secondItem="4SD-Et-P0d" secondAttribute="bottom" id="aVF-bm-gSo"/>
-                                                            <constraint firstItem="8JE-9z-gZ4" firstAttribute="top" secondItem="dJb-qq-RM3" secondAttribute="top" id="e7X-Nn-BOc"/>
-                                                            <constraint firstItem="8JE-9z-gZ4" firstAttribute="leading" secondItem="dJb-qq-RM3" secondAttribute="leading" id="hfq-Fj-6nY"/>
-                                                            <constraint firstAttribute="bottom" secondItem="DM9-FP-ze8" secondAttribute="bottom" id="yt5-Se-pGW"/>
-                                                        </constraints>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                <real key="value" value="2"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
-                                                        <connections>
-                                                            <outlet property="imageView" destination="8JE-9z-gZ4" id="gwA-lr-8UZ"/>
-                                                            <outlet property="progressView" destination="DM9-FP-ze8" id="7RY-WH-phb"/>
-                                                            <outlet property="starPlaceholderView" destination="4SD-Et-P0d" id="ijT-MH-Dq3"/>
-                                                            <outlet property="suggestUpdateLabel" destination="pTu-Lp-gVl" id="0Ih-2H-g45"/>
-                                                        </connections>
-                                                    </collectionViewCell>
-                                                </cells>
+                                                <cells/>
                                                 <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CollectionLoadFooterView" id="uTV-bY-BQV" customClass="CollectionLoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="338" width="375" height="80"/>
+                                                    <rect key="frame" x="0.0" y="154" width="375" height="80"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lBn-pP-RqZ" customClass="LoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
@@ -480,9 +366,9 @@
                         <outlet property="myMediaButton" destination="D04-tt-Koq" id="zAc-iA-9ZZ"/>
                         <outlet property="myMediaCollectionView" destination="TUY-hE-qPx" id="bNe-Qc-OMD"/>
                         <outlet property="myMediaEmptyView" destination="v5r-Cw-jOH" id="dIh-Nc-FVU"/>
-                        <outlet property="myStardMediaCollectionView" destination="P9l-fs-5xe" id="ytk-Ni-olw"/>
-                        <outlet property="myStardMediaEmptyView" destination="dkq-Su-BwU" id="PRV-Xj-l5W"/>
                         <outlet property="myStaredMediaButton" destination="157-vp-xsT" id="CZf-1n-pC8"/>
+                        <outlet property="myStaredMediaCollectionView" destination="P9l-fs-5xe" id="ytk-Ni-olw"/>
+                        <outlet property="myStaredMediaEmptyView" destination="dkq-Su-BwU" id="PRV-Xj-l5W"/>
                         <outlet property="reputationButton" destination="DAR-Kb-lw6" id="6fc-al-4sK"/>
                         <outlet property="reputationCountLabel" destination="j0k-S7-Gv3" id="efd-yT-087"/>
                         <outlet property="scrollView" destination="Kea-zv-Eoy" id="YUo-BH-RDf"/>
@@ -543,66 +429,9 @@
                                     <size key="footerReferenceSize" width="50" height="80"/>
                                     <inset key="sectionInset" minX="2" minY="152" maxX="2" maxY="2"/>
                                 </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RankMediumCell" id="073-kG-Voc" customClass="RankMediumCell" customModule="Picroup_iOS" customModuleProvider="target">
-                                        <rect key="frame" x="2" y="152" width="184" height="184"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="184" height="184"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gxs-CX-5q5">
-                                                    <rect key="frame" x="0.0" y="0.0" width="184" height="184"/>
-                                                    <color key="backgroundColor" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
-                                                </imageView>
-                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9Xm-F6-uK7">
-                                                    <rect key="frame" x="0.0" y="182" width="184" height="2"/>
-                                                </progressView>
-                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="应用版本过低，请升级查看" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2BW-Oa-67Q">
-                                                    <rect key="frame" x="8" y="70" width="168" height="42.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d4h-kg-6yF">
-                                                    <rect key="frame" x="175" y="183" width="1" height="1"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="1" id="FK0-Rf-qiF"/>
-                                                        <constraint firstAttribute="height" constant="1" id="uWn-pT-J5Y"/>
-                                                    </constraints>
-                                                </view>
-                                            </subviews>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="9Xm-F6-uK7" firstAttribute="leading" secondItem="073-kG-Voc" secondAttribute="leading" id="08k-uG-hYy"/>
-                                            <constraint firstItem="gxs-CX-5q5" firstAttribute="top" secondItem="073-kG-Voc" secondAttribute="top" id="84f-0y-K8r"/>
-                                            <constraint firstAttribute="trailing" secondItem="2BW-Oa-67Q" secondAttribute="trailing" constant="8" id="894-IO-y8Z"/>
-                                            <constraint firstItem="2BW-Oa-67Q" firstAttribute="centerY" secondItem="gxs-CX-5q5" secondAttribute="centerY" id="97f-ZT-P4G"/>
-                                            <constraint firstAttribute="trailing" secondItem="d4h-kg-6yF" secondAttribute="trailing" constant="8" id="BVL-Cf-a8P"/>
-                                            <constraint firstAttribute="bottom" secondItem="d4h-kg-6yF" secondAttribute="bottom" id="Cf7-Vz-Ya5"/>
-                                            <constraint firstItem="gxs-CX-5q5" firstAttribute="leading" secondItem="073-kG-Voc" secondAttribute="leading" id="Kep-uK-zLg"/>
-                                            <constraint firstAttribute="trailing" secondItem="gxs-CX-5q5" secondAttribute="trailing" id="MT2-CO-2QF"/>
-                                            <constraint firstAttribute="bottom" secondItem="9Xm-F6-uK7" secondAttribute="bottom" id="QP4-Ja-0E1"/>
-                                            <constraint firstAttribute="trailing" secondItem="9Xm-F6-uK7" secondAttribute="trailing" id="ZfL-Nm-BeT"/>
-                                            <constraint firstAttribute="bottom" secondItem="gxs-CX-5q5" secondAttribute="bottom" id="rmK-ub-v44"/>
-                                            <constraint firstItem="2BW-Oa-67Q" firstAttribute="leading" secondItem="073-kG-Voc" secondAttribute="leading" constant="8" id="wAK-49-ujR"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <outlet property="imageView" destination="gxs-CX-5q5" id="GxF-6c-nCw"/>
-                                            <outlet property="progressView" destination="9Xm-F6-uK7" id="fDh-EW-KGb"/>
-                                            <outlet property="starPlaceholderView" destination="d4h-kg-6yF" id="dWk-We-8iU"/>
-                                            <outlet property="suggestUpdateLabel" destination="2BW-Oa-67Q" id="3fw-SH-Zcr"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
+                                <cells/>
                                 <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CollectionLoadFooterView" id="qRm-Tk-gZt" customClass="CollectionLoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="338" width="375" height="80"/>
+                                    <rect key="frame" x="0.0" y="154" width="375" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y41-zw-cwz" customClass="LoadFooterView" customModule="Picroup_iOS" customModuleProvider="target">

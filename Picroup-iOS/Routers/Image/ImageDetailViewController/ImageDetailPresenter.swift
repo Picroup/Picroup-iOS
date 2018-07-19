@@ -15,13 +15,23 @@ import RxDataSources
 class ImageDetailPresenter: NSObject {
     
     @IBOutlet weak var deleteAlertView: UIView!
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView! {
+        didSet { prepareCollectionView() }
+    }
     @IBOutlet weak var backgroundButton: UIButton!
     
     typealias Section = AnimatableSectionModel<SectionStyle, CellStyle>
     typealias DataSource = RxCollectionViewSectionedReloadDataSource<Section>
     
     var dataSource: DataSource?
+    
+    fileprivate func prepareCollectionView() {
+        
+        collectionView.register(UINib(nibName: "ImageDetailCell", bundle: nil), forCellWithReuseIdentifier: "ImageDetailCell")
+        collectionView.register(UINib(nibName: "TagCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TagCollectionViewCell")
+        collectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
+        collectionView.register(UINib(nibName: "RankVideoCell", bundle: nil), forCellWithReuseIdentifier: "RankVideoCell")
+    }
     
     func items(events:
         PublishRelay<ImageDetailStateObject.Event>, moreButtonTap: PublishRelay<Void>) -> (Observable<[Section]>) -> Disposable {
@@ -47,16 +57,7 @@ class ImageDetailPresenter: NSObject {
                         cell.setSelected(true)
                         return cell
                     case .recommendMedium(let item):
-                        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeImageCell", for: indexPath) as! HomeImageCell
-                        cell.configure(
-                            with: item,
-                            onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
-                            onImageViewTap: { events.accept(.onTriggerShowImage(item._id)) },
-                            onUserTap: {
-                                guard let userId = item.user?._id else { return }
-                                events.accept(.onTriggerShowUser(userId))
-                        })
-                        return cell
+                        return configureMediumCell()(dataSource, collectionView, indexPath, item)
                     }
             },
                 configureSupplementaryView: { dataSource, collectionView, title, indexPath in
@@ -82,10 +83,8 @@ extension ImageDetailPresenter: UICollectionViewDelegate, UICollectionViewDelega
             return CGSize(width: textSize.width + 34, height: textSize.height + 16)
         case .recommendMedium(let medium):
             guard !medium.isInvalidated else { return .zero }
-            let width = collectionView.bounds.width - 16
-            let imageHeight = width / CGFloat(medium.detail?.aspectRatio.value ?? 1)
-            let height = imageHeight + 8 + 56
-            return CGSize(width: width, height: height)
+            let aspectRatio = medium.detail?.aspectRatio.value ?? 1
+            return CollectionViewLayoutManager.size(in: collectionView.bounds, aspectRatio: aspectRatio)
         }
     }
     
@@ -97,8 +96,18 @@ extension ImageDetailPresenter: UICollectionViewDelegate, UICollectionViewDelega
         case .imageTags:
             return UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16)
         case .recommendMedia:
-            return UIEdgeInsets(top: 0, left: 8, bottom: 64, right: 8)
+            return UIEdgeInsets(top: 0, left: 2, bottom: 64, right: 2)
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cellStyle = dataSource?[indexPath], case .recommendMedium(let medium) = cellStyle {
+            playVideoIfNeeded(cell: cell, medium: medium)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        resetPlayerIfNeeded(cell: cell)
     }
 }
 

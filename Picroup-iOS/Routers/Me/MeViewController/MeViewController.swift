@@ -82,13 +82,13 @@ class MeViewController: ShowNavigationBarViewController {
                     }.map { .onTriggerGetMoreMyMedia },
                 state.flatMapLatest {
                     $0.shouldQueryMoreMyStaredMedia
-                        ? presenter.myStardMediaCollectionView.rx.triggerGetMore
+                        ? presenter.myStaredMediaCollectionView.rx.triggerGetMore
                         : .empty()
                     }.map { .onTriggerGetMoreMyStaredMedia },
                 me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMyMediaIfNeeded },
                 me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMyStaredMediaIfNeeded },
                 presenter.myMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
-                presenter.myStardMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
+                presenter.myStaredMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
                 presenter.reputationButton.rx.tap.asSignal().map { _ in .onTriggerShowReputations },
                 presenter.followersButton.rx.tap.asSignal().map { _ in .onTriggerShowUserFollowers },
                 presenter.followingsButton.rx.tap.asSignal().map { _ in .onTriggerShowUserFollowings },
@@ -128,7 +128,7 @@ class MeViewController: ShowNavigationBarViewController {
 
         Signal.merge(
             presenter.myMediaCollectionView.rx.shouldHideNavigationBar(),
-            presenter.myStardMediaCollectionView.rx.shouldHideNavigationBar()
+            presenter.myStaredMediaCollectionView.rx.shouldHideNavigationBar()
             )
             .emit(onNext: { [weak presenter, weak self] in
                 presenter?.hideDetailLayoutConstraint.isActive = $0
@@ -137,7 +137,7 @@ class MeViewController: ShowNavigationBarViewController {
             .disposed(by: disposeBag)
 
         presenter.myMediaCollectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
-        presenter.myStardMediaCollectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
+        presenter.myStaredMediaCollectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
     }
 }
 

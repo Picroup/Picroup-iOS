@@ -42,9 +42,9 @@ class MePresenter: NSObject {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var myMediaCollectionView: UICollectionView!
-    @IBOutlet weak var myStardMediaCollectionView: UICollectionView!
+    @IBOutlet weak var myStaredMediaCollectionView: UICollectionView!
     @IBOutlet weak var myMediaEmptyView: UIView!
-    @IBOutlet weak var myStardMediaEmptyView: UIView!
+    @IBOutlet weak var myStaredMediaEmptyView: UIView!
 
     @IBOutlet weak var selectMyMediaLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
@@ -52,7 +52,27 @@ class MePresenter: NSObject {
     
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
+        prepareMyMediaCollectionView()
+        prepareMyStaredMediaCollectionView()
+        prepareNavigationItems()
+    }
+    
+    fileprivate func prepareMyMediaCollectionView() {
         
+        myMediaCollectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
+        myMediaCollectionView.register(UINib(nibName: "RankVideoCell", bundle: nil), forCellWithReuseIdentifier: "RankVideoCell")
+    }
+    
+    fileprivate func prepareMyStaredMediaCollectionView() {
+        
+        myStaredMediaCollectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
+        myStaredMediaCollectionView.register(UINib(nibName: "RankVideoCell", bundle: nil), forCellWithReuseIdentifier: "RankVideoCell")
+    }
+    
+    
+    fileprivate func prepareNavigationItems() {
+        guard let navigationItem = navigationItem else { return  }
+
         navigationItem.titleLabel.text = "..."
         navigationItem.titleLabel.textColor = .primaryText
         navigationItem.titleLabel.textAlignment = .left
@@ -103,11 +123,7 @@ class MePresenter: NSObject {
     private var dataSourceFactory: (Driver<LoadFooterViewState>) -> DataSource {
         return { loadState in
             return DataSource(
-                configureCell: { dataSource, collectionView, indexPath, item in
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                    cell.configure(with: item)
-                    return cell
-            },
+                configureCell: configureMediumCell(),
                 configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
             )
         }
@@ -122,10 +138,10 @@ class MePresenter: NSObject {
     }
     
     var myStaredMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
-        return { [myStardMediaCollectionView] loadState in
+        return { [myStaredMediaCollectionView] loadState in
             let dataSource = self.dataSourceFactory(loadState)
             self.myStaredMediaDataSource = dataSource
-            return myStardMediaCollectionView!.rx.items(dataSource: dataSource)
+            return myStaredMediaCollectionView!.rx.items(dataSource: dataSource)
         }
     }
     
@@ -137,7 +153,7 @@ class MePresenter: NSObject {
     
     var isMyStaredMediaEmpty: Binder<Bool> {
         return Binder(self) { presenter, isEmpty in
-            presenter.myStardMediaCollectionView.backgroundView = isEmpty ? presenter.myStardMediaEmptyView : nil
+            presenter.myStaredMediaCollectionView.backgroundView = isEmpty ? presenter.myStaredMediaEmptyView : nil
         }
     }
 }
@@ -149,10 +165,22 @@ extension MePresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLay
         if collectionView == myMediaCollectionView {
             let aspectRatio = myMediaDataSource?[indexPath].detail?.aspectRatio.value ?? 1
             return CollectionViewLayoutManager.size(in: collectionView.bounds, aspectRatio: aspectRatio)
-        } else if collectionView == myStardMediaCollectionView {
+        } else if collectionView == myStaredMediaCollectionView {
             let aspectRatio = myStaredMediaDataSource?[indexPath].detail?.aspectRatio.value ?? 1
             return CollectionViewLayoutManager.size(in: collectionView.bounds, aspectRatio: aspectRatio)
         }
         return .zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if collectionView == myMediaCollectionView {
+            playVideoIfNeeded(cell: cell, medium: myMediaDataSource?[indexPath])
+        } else if collectionView == myStaredMediaCollectionView {
+            playVideoIfNeeded(cell: cell, medium: myStaredMediaDataSource?[indexPath])
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        resetPlayerIfNeeded(cell: cell)
     }
 }

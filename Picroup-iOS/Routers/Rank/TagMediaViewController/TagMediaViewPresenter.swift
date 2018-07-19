@@ -22,8 +22,15 @@ final class TagMediaViewPresenter: NSObject {
     
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
+        prepareCollectionView()
         prepareRefreshControl()
         prepareNavigationItem()
+    }
+    
+    fileprivate func prepareCollectionView() {
+        
+        collectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
+        collectionView.register(UINib(nibName: "RankVideoCell", bundle: nil), forCellWithReuseIdentifier: "RankVideoCell")
     }
     
     fileprivate func prepareRefreshControl() {
@@ -45,11 +52,7 @@ final class TagMediaViewPresenter: NSObject {
     var items: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [collectionView] loadState in
             let dataSource = DataSource(
-                configureCell: { dataSource, collectionView, indexPath, item in
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                    cell.configure(with: item)
-                    return cell
-            },
+                configureCell: configureMediumCell(),
                 configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
             )
             self.dataSource = dataSource
@@ -64,5 +67,13 @@ extension TagMediaViewPresenter: UICollectionViewDelegate, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let aspectRatio = dataSource?[indexPath].detail?.aspectRatio.value ?? 1
         return CollectionViewLayoutManager.size(in: collectionView.bounds, aspectRatio: aspectRatio)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        playVideoIfNeeded(cell: cell, medium: dataSource?[indexPath])
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        resetPlayerIfNeeded(cell: cell)
     }
 }

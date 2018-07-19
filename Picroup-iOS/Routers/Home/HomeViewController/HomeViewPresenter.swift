@@ -28,9 +28,16 @@ final class HomeViewPresenter: NSObject {
 
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
+        prepareCollectionView()
         prepareFABButton()
         prepareNavigationItem()
         prepareRefreshControl()
+    }
+    
+    fileprivate func prepareCollectionView() {
+        
+        collectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
+        collectionView.register(UINib(nibName: "RankVideoCell", bundle: nil), forCellWithReuseIdentifier: "RankVideoCell")
     }
     
     fileprivate func prepareFABButton() {
@@ -63,36 +70,10 @@ final class HomeViewPresenter: NSObject {
     
     var dataSource: DataSource?
 
-    func items(events: PublishRelay<HomeStateObject.Event>, loadState: Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
+    func items(loadState: Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
 //        [weak self, collectionView]
         let dataSource = DataSource(
-            configureCell: { dataSource, collectionView, indexPath, item in
-                guard !item.isInvalidated else { return UICollectionViewCell() }
-                switch item.kind {
-                case MediumKind.video.rawValue?:
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeVidoeCell", for: indexPath) as! HomeVidoeCell
-                    cell.configure(
-                        with: item,
-                        onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
-                        onImageViewTap: { events.accept(.onTriggerShowImage(item._id)) },
-                        onUserTap: {
-                            guard let userId = item.user?._id else { return }
-                            events.accept(.onTriggerShowUser(userId))
-                    })
-                    return cell
-                default:
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeImageCell", for: indexPath) as! HomeImageCell
-                    cell.configure(
-                        with: item,
-                        onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
-                        onImageViewTap: { events.accept(.onTriggerShowImage(item._id)) },
-                        onUserTap: {
-                            guard let userId = item.user?._id else { return }
-                            events.accept(.onTriggerShowUser(userId))
-                    })
-                    return cell
-                }
-        },
+            configureCell: configureMediumCell(),
             configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
         )
         self.dataSource = dataSource
@@ -117,24 +98,16 @@ final class HomeViewPresenter: NSObject {
 extension HomeViewPresenter: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let dataSource = dataSource else { return .zero }
-        let medium = dataSource[indexPath]
-        let width = collectionView.bounds.width - 16
-        let imageHeight = width / CGFloat(medium.detail?.aspectRatio.value ?? 1)
-        let height = imageHeight + 8 + 56
-        return CGSize(width: width, height: height)
+        let aspectRatio = dataSource?[indexPath].detail?.aspectRatio.value ?? 1
+        return CollectionViewLayoutManager.size(in: collectionView.bounds, aspectRatio: aspectRatio)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let homeVidoeCell = cell as? HomeVidoeCell, let medium = dataSource?[indexPath], !medium.isInvalidated {
-            homeVidoeCell.playerView.play(with: medium.detail?.videoMinioId)
-        }
+        playVideoIfNeeded(cell: cell, medium: dataSource?[indexPath])
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let homeVidoeCell = cell as? HomeVidoeCell {
-            homeVidoeCell.playerView.reset()
-        }
+        resetPlayerIfNeeded(cell: cell)
     }
 }
 

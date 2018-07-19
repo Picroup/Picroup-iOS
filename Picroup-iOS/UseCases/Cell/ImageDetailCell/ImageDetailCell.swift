@@ -11,26 +11,23 @@ import Material
 import RxSwift
 import RxCocoa
 
-extension ImageDetailCell {
+struct ImageDetailViewModel {
+    let kind: String?
+    let imageViewMinioId: String?
+    let imageViewMotionIdentifier: String?
+    let progress: CGFloat
+    let lifeBarMotionIdentifier: String?
+    let starButtonMotionIdentifier: String?
+    let remainTimeLabelText: String?
+    let commentsCountText: String?
+    let stared: Bool?
+    let animatedChangeProgress: Bool
     
-    struct ViewModel {
-        let kind: String?
-        let imageViewMinioId: String?
-        let imageViewMotionIdentifier: String?
-        let progress: CGFloat
-        let lifeBarMotionIdentifier: String?
-        let starButtonMotionIdentifier: String?
-        let remainTimeLabelText: String?
-        let commentsCountText: String?
-        let stared: Bool?
-        let animatedChangeProgress: Bool
-        
-        let displayName: String?
-        let avatarId: String?
-    }
+    let displayName: String?
+    let avatarId: String?
 }
 
-extension ImageDetailCell.ViewModel {
+extension ImageDetailViewModel {
     
     init(medium: MediumObject) {
         guard !medium.isInvalidated else {
@@ -91,7 +88,7 @@ class ImageDetailCell: RxCollectionViewCell {
         onMoreTap: (() -> Void)?
         ) {
         if item.isInvalidated { return }
-        let viewModel = ViewModel(medium: item)
+        let viewModel = ImageDetailViewModel(medium: item)
         
         if viewModel.kind == MediumKind.image.rawValue {
             imageView.setImage(with: item.minioId)
@@ -148,7 +145,7 @@ class ImageDetailCell: RxCollectionViewCell {
         }
     }
     
-    private func configureStarButton(with viewModel: ViewModel) {
+    private func configureStarButton(with viewModel: ImageDetailViewModel) {
         starButton.isEnabled = viewModel.stared == false
         StarButtonPresenter.isSelected(base: starButton).onNext(viewModel.stared)
     }

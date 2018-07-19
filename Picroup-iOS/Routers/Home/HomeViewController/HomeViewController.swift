@@ -33,10 +33,10 @@ class HomeViewController: BaseViewController {
         weak var weakSelf = self
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
-            let _events = PublishRelay<HomeStateObject.Event>()
+//            let _events = PublishRelay<HomeStateObject.Event>()
             let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions = [
-                store.myInterestedMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(events: _events, loadState: footerState.asDriver())),
+                store.myInterestedMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(loadState: footerState.asDriver())),
                 state.map { $0.isReloading }.drive(presenter.refreshControl.rx.isRefreshing),
                 state.map { $0.footerState }.drive(footerState),
                 state.map { $0.isMyInterestedMediaEmpty }.drive(presenter.isMyInterestedMediaEmpty),
@@ -47,13 +47,14 @@ class HomeViewController: BaseViewController {
                 ]
             let events: [Signal<HomeStateObject.Event>] = [
                 .just(.onTriggerReloadMyInterestedMedia),
-                _events.asSignal(),
+//                _events.asSignal(),
                 me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMyInterestedMediaIfNeeded },
                 state.flatMapLatest {
                     $0.shouldQueryMoreMyInterestedMedia
                         ? presenter.collectionView.rx.triggerGetMore
                         : .empty()
                     }.map { .onTriggerGetMoreMyInterestedMedia },
+                presenter.collectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
                 presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReloadMyInterestedMedia },
                 presenter.fabButton.rx.tap.asSignal().flatMapLatest { PhotoPickerProvider.pickMedia(from: weakSelf) } .map(HomeStateObject.Event.onTriggerCreateImage),
                 presenter.addUserButton.rx.tap.asSignal().map { .onTriggerSearchUser },
@@ -81,7 +82,6 @@ class HomeViewController: BaseViewController {
         presenter.collectionView.rx.setDelegate(presenter)
             .disposed(by: disposeBag)
     }
-    
 }
 
 extension HomeStateObject {
