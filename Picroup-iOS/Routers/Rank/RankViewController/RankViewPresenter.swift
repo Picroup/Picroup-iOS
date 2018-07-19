@@ -80,6 +80,7 @@ final class RankViewPresenter: NSObject {
 
 func configureMediumCell<D>() -> (D, UICollectionView, IndexPath, MediumObject) -> UICollectionViewCell {
     return { dataSource, collectionView, indexPath, item in
+        guard !item.isInvalidated else { return UICollectionViewCell() }
         switch item.kind {
         case MediumKind.video.rawValue?:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankVideoCell", for: indexPath) as! RankVideoCell
@@ -101,14 +102,21 @@ func createLoadFooterSupplementaryView<D>(loadState: Driver<LoadFooterViewState>
     }
 }
 
+protocol HasPlayerView {
+    var playerView: PlayerView! { get }
+}
+
+extension RankVideoCell: HasPlayerView {}
+extension VideoDetailCell: HasPlayerView {}
+
 func playVideoIfNeeded(cell: UICollectionViewCell, medium: MediumObject?) {
-    if let vidoeCell = cell as? RankVideoCell, medium?.isInvalidated == false {
+    if let vidoeCell = cell as? HasPlayerView, medium?.isInvalidated == false {
         vidoeCell.playerView.play(with: medium?.detail?.videoMinioId)
     }
 }
 
 func resetPlayerIfNeeded(cell: UICollectionViewCell) {
-    if let vidoeCell = cell as? RankVideoCell {
+    if let vidoeCell = cell as? HasPlayerView {
         vidoeCell.playerView.reset()
     }
 }

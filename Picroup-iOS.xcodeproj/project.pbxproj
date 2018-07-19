@@ -99,6 +99,8 @@
 		4561DE6E2100466C00F77510 /* ImageDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4561DE6D2100466C00F77510 /* ImageDetailCell.xib */; };
 		4561DE71210046D200F77510 /* TagCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4561DE70210046D200F77510 /* TagCollectionViewCell.xib */; };
 		4561DE732100477E00F77510 /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561DE722100477E00F77510 /* TagCollectionViewCell.swift */; };
+		4561DE782100777200F77510 /* VideoDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4561DE772100777200F77510 /* VideoDetailCell.xib */; };
+		4561DE7A2100778C00F77510 /* VideoDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561DE792100778C00F77510 /* VideoDetailCell.swift */; };
 		456E90D620F5DB150006FFA8 /* TagMediaStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90D520F5DB150006FFA8 /* TagMediaStateObject.swift */; };
 		456E90D920F5DEC40006FFA8 /* TagMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90D820F5DEC40006FFA8 /* TagMediaViewController.swift */; };
 		456E90DB20F5DECE0006FFA8 /* TagMediaViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90DA20F5DECE0006FFA8 /* TagMediaViewPresenter.swift */; };
@@ -335,6 +337,8 @@
 		4561DE6D2100466C00F77510 /* ImageDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageDetailCell.xib; sourceTree = "<group>"; };
 		4561DE70210046D200F77510 /* TagCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagCollectionViewCell.xib; sourceTree = "<group>"; };
 		4561DE722100477E00F77510 /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
+		4561DE772100777200F77510 /* VideoDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoDetailCell.xib; sourceTree = "<group>"; };
+		4561DE792100778C00F77510 /* VideoDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailCell.swift; sourceTree = "<group>"; };
 		456E90D520F5DB150006FFA8 /* TagMediaStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaStateObject.swift; sourceTree = "<group>"; };
 		456E90D820F5DEC40006FFA8 /* TagMediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaViewController.swift; sourceTree = "<group>"; };
 		456E90DA20F5DECE0006FFA8 /* TagMediaViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaViewPresenter.swift; sourceTree = "<group>"; };
@@ -757,6 +761,8 @@
 		4561DE7421004BE900F77510 /* VideoDetailCell */ = {
 			isa = PBXGroup;
 			children = (
+				4561DE772100777200F77510 /* VideoDetailCell.xib */,
+				4561DE792100778C00F77510 /* VideoDetailCell.swift */,
 			);
 			path = VideoDetailCell;
 			sourceTree = "<group>";
@@ -1390,6 +1396,7 @@
 				4543ECE520BC38FA002F7C18 /* LoadFooterView.xib in Resources */,
 				4561DE692100411000F77510 /* RankVideoCell.xib in Resources */,
 				454F72A2208DD1AA00850471 /* MyMedia.graphql in Resources */,
+				4561DE782100777200F77510 /* VideoDetailCell.xib in Resources */,
 				457BD99620B304F7007F0492 /* UserFollowings.graphql in Resources */,
 				45D04F7C2089FD0500AC2226 /* UserInterestedMedia.graphql in Resources */,
 				457BD99820B30559007F0492 /* UserFollowers.graphql in Resources */,
@@ -1582,6 +1589,7 @@
 				45B0206120B3AB3700BD5D8F /* FollowingsPresenter.swift in Sources */,
 				45517D4220BCDCC500F2D7DE /* ReputationCell.swift in Sources */,
 				45B0204F20AD59CC00BD5D8F /* HomeStateObject.swift in Sources */,
+				4561DE7A2100778C00F77510 /* VideoDetailCell.swift in Sources */,
 				45C1994D20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift in Sources */,
 				45C1994820A973DD001924B9 /* MediumObject.swift in Sources */,
 				458C050520C91C07004EB2D8 /* ImageGenerator.swift in Sources */,

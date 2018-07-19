@@ -45,6 +45,7 @@ class RankMediumCell: RxCollectionViewCell {
     @IBOutlet weak var suggestUpdateLabel: UILabel!
     
     func configure(with item: MediumObject) {
+        if item.isInvalidated { return }
         let viewModel = MediumViewModel(item: item)
         if viewModel.kind == MediumKind.image.rawValue {
             imageView.setImage(with: viewModel.imageViewMinioId)

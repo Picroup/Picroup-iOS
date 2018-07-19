@@ -28,6 +28,7 @@ class ImageDetailPresenter: NSObject {
     fileprivate func prepareCollectionView() {
         
         collectionView.register(UINib(nibName: "ImageDetailCell", bundle: nil), forCellWithReuseIdentifier: "ImageDetailCell")
+        collectionView.register(UINib(nibName: "VideoDetailCell", bundle: nil), forCellWithReuseIdentifier: "VideoDetailCell")
         collectionView.register(UINib(nibName: "TagCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TagCollectionViewCell")
         collectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
         collectionView.register(UINib(nibName: "RankVideoCell", bundle: nil), forCellWithReuseIdentifier: "RankVideoCell")
@@ -39,18 +40,7 @@ class ImageDetailPresenter: NSObject {
                 configureCell: { dataSource, collectionView, indexPath, cellStyle in
                     switch cellStyle {
                     case .imageDetail(let item):
-                        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageDetailCell", for: indexPath) as! ImageDetailCell
-                        cell.configure(
-                            with: item,
-                            onStarButtonTap: { events.accept(.onTriggerStarMedium) },
-                            onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
-                            onImageViewTap: { events.accept(.onTriggerPop) },
-                            onUserTap: {
-                                guard let userId = item.user?._id else { return }
-                                events.accept(.onTriggerShowUser(userId))
-                        }, onMoreTap: { moreButtonTap.accept(()) }
-                        )
-                        return cell
+                        return configureMediumDetailCell(events: events, moreButtonTap: moreButtonTap)(dataSource, collectionView, indexPath, item)
                     case .imageTag(let tag):
                         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TagCollectionViewCell", for: indexPath) as! TagCollectionViewCell
                         cell.tagLabel.text = tag
@@ -64,6 +54,42 @@ class ImageDetailPresenter: NSObject {
                     return UICollectionReusableView()
             })
         return collectionView.rx.items(dataSource: dataSource!)
+    }
+}
+
+
+func configureMediumDetailCell<D>(events:
+    PublishRelay<ImageDetailStateObject.Event>, moreButtonTap: PublishRelay<Void>) -> (D, UICollectionView, IndexPath, MediumObject) -> UICollectionViewCell {
+    return { dataSource, collectionView, indexPath, item in
+        guard !item.isInvalidated else { return UICollectionViewCell() }
+        switch item.kind {
+        case MediumKind.video.rawValue?:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoDetailCell", for: indexPath) as! VideoDetailCell
+            cell.configure(
+                with: item,
+                onStarButtonTap: { events.accept(.onTriggerStarMedium) },
+                onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
+                onImageViewTap: { events.accept(.onTriggerPop) },
+                onUserTap: {
+                    guard let userId = item.user?._id else { return }
+                    events.accept(.onTriggerShowUser(userId))
+            }, onMoreTap: { moreButtonTap.accept(()) }
+            )
+            return cell
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageDetailCell", for: indexPath) as! ImageDetailCell
+            cell.configure(
+                with: item,
+                onStarButtonTap: { events.accept(.onTriggerStarMedium) },
+                onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
+                onImageViewTap: { events.accept(.onTriggerPop) },
+                onUserTap: {
+                    guard let userId = item.user?._id else { return }
+                    events.accept(.onTriggerShowUser(userId))
+            }, onMoreTap: { moreButtonTap.accept(()) }
+            )
+            return cell
+        }
     }
 }
 
@@ -101,8 +127,15 @@ extension ImageDetailPresenter: UICollectionViewDelegate, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cellStyle = dataSource?[indexPath], case .recommendMedium(let medium) = cellStyle {
-            playVideoIfNeeded(cell: cell, medium: medium)
+        if let cellStyle = dataSource?[indexPath] {
+            switch cellStyle {
+            case .recommendMedium(let medium):
+                playVideoIfNeeded(cell: cell, medium: medium)
+            case .imageDetail(let medium):
+                playVideoIfNeeded(cell: cell, medium: medium)
+            default:
+                break
+            }
         }
     }
     
