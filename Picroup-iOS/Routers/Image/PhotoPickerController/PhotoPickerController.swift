@@ -85,7 +85,9 @@ struct PhotoPickerProvider {
             ]
             
             configuration.hidesStatusBar = true
-            
+            configuration.colors.tintColor = .primary
+            configuration.colors.progressBarCompletedColor = .primary
+
             configuration.wordings.ok = "好"
             configuration.wordings.done = "完成"
             configuration.wordings.cancel = "取消"
@@ -101,6 +103,15 @@ struct PhotoPickerProvider {
             configuration.wordings.filter = "滤镜"
             configuration.wordings.crop = "裁剪"
             configuration.wordings.warningMaxItemsLimit = "最多 %d 张图片"
+            
+            configuration.wordings.videoDurationPopup.title = "视频时长"
+            configuration.wordings.videoDurationPopup.tooLongMessage = "最多 %@ 秒"
+            configuration.wordings.videoDurationPopup.tooShortMessage = "至少 %@ 秒"
+
+            configuration.wordings.permissionPopup.title = "无访问权限"
+            configuration.wordings.permissionPopup.message = "请允许访问"
+            configuration.wordings.permissionPopup.cancel = "取消"
+            configuration.wordings.permissionPopup.grantPermission = "授权"
             
             configure(&configuration)
         }

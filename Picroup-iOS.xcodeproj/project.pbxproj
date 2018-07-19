@@ -125,6 +125,7 @@
 		457BD99D20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD99C20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift */; };
 		458006D820A17283004BD982 /* UIViewController+Rx+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */; };
 		458006DA20A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */; };
+		4580F4F821001DA5006EFF85 /* AVHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4580F4F721001DA4006EFF85 /* AVHelper.swift */; };
 		45850AD620FF4EC9006C8EC1 /* URLHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45850AD520FF4EC9006C8EC1 /* URLHelper.swift */; };
 		458C050520C91C07004EB2D8 /* ImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458C050420C91C07004EB2D8 /* ImageGenerator.swift */; };
 		458C106920849058005E94CD /* RankViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458C106820849058005E94CD /* RankViewPresenter.swift */; };
@@ -355,6 +356,7 @@
 		457BD99C20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrimaryObject+IdentifiableType.swift"; sourceTree = "<group>"; };
 		458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+NavigationBar.swift"; sourceTree = "<group>"; };
 		458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx+shouldHideNavigationBar.swift"; sourceTree = "<group>"; };
+		4580F4F721001DA4006EFF85 /* AVHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVHelper.swift; sourceTree = "<group>"; };
 		45850AD520FF4EC9006C8EC1 /* URLHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLHelper.swift; sourceTree = "<group>"; };
 		458C050420C91C07004EB2D8 /* ImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGenerator.swift; sourceTree = "<group>"; };
 		458C106820849058005E94CD /* RankViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewPresenter.swift; sourceTree = "<group>"; };
@@ -765,6 +767,14 @@
 			path = RxRealm;
 			sourceTree = "<group>";
 		};
+		4580F4F621001DA4006EFF85 /* AVKit */ = {
+			isa = PBXGroup;
+			children = (
+				4580F4F721001DA4006EFF85 /* AVHelper.swift */,
+			);
+			path = AVKit;
+			sourceTree = "<group>";
+		};
 		458C106A2084A094005E94CD /* Notification */ = {
 			isa = PBXGroup;
 			children = (
@@ -941,6 +951,7 @@
 		45A039372075C613007498DB /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				4580F4F621001DA4006EFF85 /* AVKit */,
 				456E910D20FD8A800006FFA8 /* Cache */,
 				45EC927F20D3C63300A473D4 /* Foundation */,
 				45B0205620AE699000BD5D8F /* PrimaryKey */,
@@ -1434,6 +1445,7 @@
 				45315C1320F61CA700E3BCAB /* UpdateMediumTagsViewController.swift in Sources */,
 				457BD98920AC695A007F0492 /* ReputationObject.swift in Sources */,
 				45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */,
+				4580F4F821001DA5006EFF85 /* AVHelper.swift in Sources */,
 				45F0A7CD20C662F10085F978 /* Object+Delete.swift in Sources */,
 				454CD57720C810BD0087C634 /* RegisterPasswordStateObject.swift in Sources */,
 				45F0A7CF20C7AEDF0085F978 /* RegisterUsernameStateObject.swift in Sources */,

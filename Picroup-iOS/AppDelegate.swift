@@ -27,10 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ImageCache.default.maxDiskCacheSize = Config.maxDiskImageCacheSize
         prepareWindow()
         setupRealm()
+        setupAV()
         setupRouter()
         setupAppStateService()
-        try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
-        try? AVAudioSession.sharedInstance().setActive(true)
         return true
     }
     
@@ -47,6 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func setupRealm() {
         RealmProvider.setup()
+    }
+    
+    private func setupAV() {
+        AVHelper.setup()
     }
     
     private func setupRouter() {
