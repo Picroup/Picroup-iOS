@@ -54,8 +54,8 @@ private func comfirmDelete() -> Signal<ImageDetailStateObject.Event> {
     }
 }
 
-fileprivate typealias Section = ImageDetailPresenter.Section
-fileprivate typealias CellStyle = ImageDetailPresenter.CellStyle
+fileprivate typealias Section = MediumDetailPresenter.Section
+fileprivate typealias CellStyle = MediumDetailPresenter.CellStyle
 
 class ImageDetailViewController: ShowNavigationBarViewController {
     
@@ -86,7 +86,7 @@ class ImageDetailViewController: ShowNavigationBarViewController {
         
         // I known this is ugly but it enabled the transition animations
         Observable.combineLatest(store.sections, store.states.asObservable()) { $1.isMediumDeleted ? [] : $0 }
-            .bind(to: presenter.items(events: _events, moreButtonTap: _moreButtonTap))
+            .bind(to: presenter.mediumDetailPresenter.items(events: _events, moreButtonTap: _moreButtonTap))
             .disposed(by: disposeBag)
         
         let uiFeedback: Feedback = bind(self) { (me, state) in
@@ -106,7 +106,7 @@ class ImageDetailViewController: ShowNavigationBarViewController {
                         ? presenter.collectionView.rx.triggerGetMore
                         : .empty()
                     }.map { .onTriggerGetMoreData },
-                me.presenter.collectionView.rx.modelSelected(ImageDetailPresenter.CellStyle.self).asSignal()
+                me.presenter.collectionView.rx.modelSelected(MediumDetailPresenter.CellStyle.self).asSignal()
                     .flatMapLatest { cellStyle -> Signal<ImageDetailStateObject.Event> in
                         switch cellStyle {
                         case .recommendMedium(let medium):
@@ -156,7 +156,7 @@ class ImageDetailViewController: ShowNavigationBarViewController {
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         
-        presenter.collectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
+        presenter.collectionView.rx.setDelegate(presenter.mediumDetailPresenter).disposed(by: disposeBag)
     }
 }
 

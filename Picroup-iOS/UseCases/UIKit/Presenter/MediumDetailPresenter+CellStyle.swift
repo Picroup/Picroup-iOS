@@ -9,7 +9,7 @@
 import Foundation
 import RxDataSources
 
-extension ImageDetailPresenter {
+extension MediumDetailPresenter {
     
     enum SectionStyle: String {
         case imageDetail
@@ -24,7 +24,7 @@ extension ImageDetailPresenter {
     }
 }
 
-extension ImageDetailPresenter.CellStyle {
+extension MediumDetailPresenter.CellStyle {
     
     var recommendMediumId: String? {
         if case .recommendMedium(let medium) = self {
@@ -34,7 +34,7 @@ extension ImageDetailPresenter.CellStyle {
     }
 }
 
-extension ImageDetailPresenter.SectionStyle: IdentifiableType, Equatable {
+extension MediumDetailPresenter.SectionStyle: IdentifiableType, Equatable {
     typealias Identity = String
     
     var identity: String {
@@ -42,7 +42,7 @@ extension ImageDetailPresenter.SectionStyle: IdentifiableType, Equatable {
     }
 }
 
-extension ImageDetailPresenter.CellStyle: IdentifiableType, Equatable {
+extension MediumDetailPresenter.CellStyle: IdentifiableType, Equatable {
     typealias Identity = String
     
     var identity: String {
@@ -56,7 +56,7 @@ extension ImageDetailPresenter.CellStyle: IdentifiableType, Equatable {
         }
     }
     
-    static func ==(lhs: ImageDetailPresenter.CellStyle, rhs: ImageDetailPresenter.CellStyle) -> Bool {
+    static func ==(lhs: MediumDetailPresenter.CellStyle, rhs: MediumDetailPresenter.CellStyle) -> Bool {
         switch (lhs, rhs) {
         case (.imageDetail, imageDetail):
             return false

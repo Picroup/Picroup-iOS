@@ -104,8 +104,9 @@
 		456D1457210564E4008EDD41 /* HasMoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D1456210564E4008EDD41 /* HasMoreButton.swift */; };
 		456D145921057539008EDD41 /* HasPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D145821057539008EDD41 /* HasPlayerView.swift */; };
 		456D145C21057903008EDD41 /* ImageCache+retrieveImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D145B21057903008EDD41 /* ImageCache+retrieveImage.swift */; };
-		456D145E21057E6F008EDD41 /* ImageDetailPresenter+CellStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D145D21057E6F008EDD41 /* ImageDetailPresenter+CellStyle.swift */; };
+		456D145E21057E6F008EDD41 /* MediumDetailPresenter+CellStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D145D21057E6F008EDD41 /* MediumDetailPresenter+CellStyle.swift */; };
 		456D146121058B58008EDD41 /* MediaPreserter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D146021058B58008EDD41 /* MediaPreserter.swift */; };
+		456D146321059B44008EDD41 /* MediumDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D146221059B44008EDD41 /* MediumDetailPresenter.swift */; };
 		456E90D620F5DB150006FFA8 /* TagMediaStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90D520F5DB150006FFA8 /* TagMediaStateObject.swift */; };
 		456E90D920F5DEC40006FFA8 /* TagMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90D820F5DEC40006FFA8 /* TagMediaViewController.swift */; };
 		456E90DB20F5DECE0006FFA8 /* TagMediaViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90DA20F5DECE0006FFA8 /* TagMediaViewPresenter.swift */; };
@@ -347,8 +348,9 @@
 		456D1456210564E4008EDD41 /* HasMoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasMoreButton.swift; sourceTree = "<group>"; };
 		456D145821057539008EDD41 /* HasPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasPlayerView.swift; sourceTree = "<group>"; };
 		456D145B21057903008EDD41 /* ImageCache+retrieveImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCache+retrieveImage.swift"; sourceTree = "<group>"; };
-		456D145D21057E6F008EDD41 /* ImageDetailPresenter+CellStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageDetailPresenter+CellStyle.swift"; sourceTree = "<group>"; };
+		456D145D21057E6F008EDD41 /* MediumDetailPresenter+CellStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MediumDetailPresenter+CellStyle.swift"; sourceTree = "<group>"; };
 		456D146021058B58008EDD41 /* MediaPreserter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPreserter.swift; sourceTree = "<group>"; };
+		456D146221059B44008EDD41 /* MediumDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumDetailPresenter.swift; sourceTree = "<group>"; };
 		456E90D520F5DB150006FFA8 /* TagMediaStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaStateObject.swift; sourceTree = "<group>"; };
 		456E90D820F5DEC40006FFA8 /* TagMediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaViewController.swift; sourceTree = "<group>"; };
 		456E90DA20F5DECE0006FFA8 /* TagMediaViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaViewPresenter.swift; sourceTree = "<group>"; };
@@ -789,6 +791,8 @@
 			isa = PBXGroup;
 			children = (
 				456D146021058B58008EDD41 /* MediaPreserter.swift */,
+				456D146221059B44008EDD41 /* MediumDetailPresenter.swift */,
+				456D145D21057E6F008EDD41 /* MediumDetailPresenter+CellStyle.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -1234,7 +1238,6 @@
 			children = (
 				45E240B12084D2CF004B58EF /* ImageDetailViewController.swift */,
 				45AA3B4420A311BD0032A8CF /* ImageDetailPresenter.swift */,
-				456D145D21057E6F008EDD41 /* ImageDetailPresenter+CellStyle.swift */,
 			);
 			path = ImageDetailViewController;
 			sourceTree = "<group>";
@@ -1559,7 +1562,7 @@
 				453B95C020C523DD0043D915 /* RouterService+Me.swift in Sources */,
 				45B0207320B5182300BD5D8F /* SearchUserStateObject.swift in Sources */,
 				45183EC220D0E94100497B59 /* createFeedback.swift in Sources */,
-				456D145E21057E6F008EDD41 /* ImageDetailPresenter+CellStyle.swift in Sources */,
+				456D145E21057E6F008EDD41 /* MediumDetailPresenter+CellStyle.swift in Sources */,
 				45F0A7D420C7B32B0085F978 /* RegisterUsernameViewController.swift in Sources */,
 				457BD99420B146CD007F0492 /* AppStateService.swift in Sources */,
 				45FC0BF520A42F4A006AAF3D /* UserPresenter.swift in Sources */,
@@ -1598,6 +1601,7 @@
 				451CD337207D0B9A0063A972 /* RankViewController.swift in Sources */,
 				45315C1520F61CBB00E3BCAB /* UpdateMediumTagsPresenter.swift in Sources */,
 				452EAD1F20F339B200FE5E5F /* TagObject.swift in Sources */,
+				456D146321059B44008EDD41 /* MediumDetailPresenter.swift in Sources */,
 				458006DA20A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift in Sources */,
 				4561DE732100477E00F77510 /* TagCollectionViewCell.swift in Sources */,
 				45B0206320B3F5AA00BD5D8F /* SnackbarObject.swift in Sources */,
