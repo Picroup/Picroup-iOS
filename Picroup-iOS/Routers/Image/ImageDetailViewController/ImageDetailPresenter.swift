@@ -61,7 +61,21 @@ class ImageDetailPresenter: NSObject {
 func configureMediumDetailCell<D>(events:
     PublishRelay<ImageDetailStateObject.Event>, moreButtonTap: PublishRelay<Void>) -> (D, UICollectionView, IndexPath, MediumObject) -> UICollectionViewCell {
     return { dataSource, collectionView, indexPath, item in
-        guard !item.isInvalidated else { return UICollectionViewCell() }
+        let defaultCell: () -> UICollectionViewCell = {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageDetailCell", for: indexPath) as! ImageDetailCell
+            cell.configure(
+                with: item,
+                onStarButtonTap: { events.accept(.onTriggerStarMedium) },
+                onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
+                onImageViewTap: { events.accept(.onTriggerPop) },
+                onUserTap: {
+                    guard let userId = item.user?._id else { return }
+                    events.accept(.onTriggerShowUser(userId))
+            }, onMoreTap: { moreButtonTap.accept(()) }
+            )
+            return cell
+        }
+        guard !item.isInvalidated else { return defaultCell() }
         switch item.kind {
         case MediumKind.video.rawValue?:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoDetailCell", for: indexPath) as! VideoDetailCell
@@ -77,18 +91,7 @@ func configureMediumDetailCell<D>(events:
             )
             return cell
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageDetailCell", for: indexPath) as! ImageDetailCell
-            cell.configure(
-                with: item,
-                onStarButtonTap: { events.accept(.onTriggerStarMedium) },
-                onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
-                onImageViewTap: { events.accept(.onTriggerPop) },
-                onUserTap: {
-                    guard let userId = item.user?._id else { return }
-                    events.accept(.onTriggerShowUser(userId))
-            }, onMoreTap: { moreButtonTap.accept(()) }
-            )
-            return cell
+            return defaultCell()
         }
     }
 }
@@ -108,9 +111,7 @@ extension ImageDetailPresenter: UICollectionViewDelegate, UICollectionViewDelega
             let textSize = (tag as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 14)])
             return CGSize(width: textSize.width + 34, height: textSize.height + 16)
         case .recommendMedium(let medium):
-            guard !medium.isInvalidated else { return .zero }
-            let aspectRatio = medium.detail?.aspectRatio.value ?? 1
-            return CollectionViewLayoutManager.size(in: collectionView.bounds, aspectRatio: aspectRatio)
+            return CollectionViewLayoutManager.size(in: collectionView.bounds, with: medium)
         }
     }
     

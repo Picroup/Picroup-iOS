@@ -163,11 +163,9 @@ extension MePresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLay
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == myMediaCollectionView {
-            let aspectRatio = myMediaDataSource?[indexPath].detail?.aspectRatio.value ?? 1
-            return CollectionViewLayoutManager.size(in: collectionView.bounds, aspectRatio: aspectRatio)
+            return CollectionViewLayoutManager.size(in: collectionView.bounds, with: myMediaDataSource?[indexPath])
         } else if collectionView == myStaredMediaCollectionView {
-            let aspectRatio = myStaredMediaDataSource?[indexPath].detail?.aspectRatio.value ?? 1
-            return CollectionViewLayoutManager.size(in: collectionView.bounds, aspectRatio: aspectRatio)
+            return CollectionViewLayoutManager.size(in: collectionView.bounds, with: myStaredMediaDataSource?[indexPath])
         }
         return .zero
     }

@@ -111,8 +111,7 @@ class UserPresenter: NSObject {
 extension UserPresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let aspectRatio = dataSource?[indexPath].detail?.aspectRatio.value ?? 1
-        return CollectionViewLayoutManager.size(in: collectionView.bounds, aspectRatio: aspectRatio)
+        return CollectionViewLayoutManager.size(in: collectionView.bounds, with: dataSource?[indexPath])
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

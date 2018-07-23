@@ -258,7 +258,7 @@ final class MeStateStore {
         return Observable.collection(from: items)
 //            .delaySubscription(0.3, scheduler: MainScheduler.instance)
             .asDriver(onErrorDriveWith: .empty())
-            .map { $0.toArray() }
+            .map { $0.filter { !$0.isInvalidated } }
     }
     
     func myStaredMediaItems() -> Driver<[MediumObject]> {
@@ -266,7 +266,7 @@ final class MeStateStore {
         return Observable.collection(from: items)
 //            .delaySubscription(0.3, scheduler: MainScheduler.instance)
             .asDriver(onErrorDriveWith: .empty())
-            .map { $0.toArray() }
+            .map { $0.filter { !$0.isInvalidated } }
     }
 }
 

@@ -31,4 +31,5 @@ struct CollectionViewLayoutManager {
         let cellHeight = cellWidth / CGFloat(aspectRatio) + 2
         return CGSize(width: cellWidth, height: cellHeight)
     }
+    
 }

@@ -80,16 +80,19 @@ final class RankViewPresenter: NSObject {
 
 func configureMediumCell<D>() -> (D, UICollectionView, IndexPath, MediumObject) -> UICollectionViewCell {
     return { dataSource, collectionView, indexPath, item in
-        guard !item.isInvalidated else { return UICollectionViewCell() }
+        let defaultCell: () -> UICollectionViewCell = {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
+            cell.configure(with: item)
+            return cell
+        }
+        guard !item.isInvalidated else { return defaultCell() }
         switch item.kind {
         case MediumKind.video.rawValue?:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankVideoCell", for: indexPath) as! RankVideoCell
             cell.configure(with: item)
             return cell
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-            cell.configure(with: item)
-            return cell
+            return defaultCell()
         }
     }
 }
@@ -102,12 +105,6 @@ func createLoadFooterSupplementaryView<D>(loadState: Driver<LoadFooterViewState>
     }
 }
 
-protocol HasPlayerView {
-    var playerView: PlayerView! { get }
-}
-
-extension RankVideoCell: HasPlayerView {}
-extension VideoDetailCell: HasPlayerView {}
 
 func playVideoIfNeeded(cell: UICollectionViewCell, medium: MediumObject?) {
     if let vidoeCell = cell as? HasPlayerView, medium?.isInvalidated == false {
@@ -121,13 +118,10 @@ func resetPlayerIfNeeded(cell: UICollectionViewCell) {
     }
 }
 
-
-
 extension RankViewPresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let aspectRatio = dataSource?[indexPath].detail?.aspectRatio.value ?? 1
-        return CollectionViewLayoutManager.size(in: collectionView.bounds, aspectRatio: aspectRatio)
+        return CollectionViewLayoutManager.size(in: collectionView.bounds, with: dataSource?[indexPath])
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

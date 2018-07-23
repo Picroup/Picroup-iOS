@@ -14,7 +14,7 @@ class RankVideoCell: RxCollectionViewCell {
     @IBOutlet weak var starPlaceholderView: UIView!
     
     func configure(with item: MediumObject) {
-        if item.isInvalidated { return }
+//        if item.isInvalidated { return }
         let viewModel = MediumViewModel(item: item)
         //        playerView.play(with: item.detail?.videoMinioId)
         playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
