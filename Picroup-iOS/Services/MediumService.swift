@@ -24,7 +24,7 @@ struct MediumService {
     }
     
     static func saveMedium(client: ApolloClient, userId: String, imageKey: String, tags: [String]?) -> Observable<MediumService.SaveMediumResult> {
-        guard let pickedImage = ImageCache.default.retrieveImageInMemoryCache(forKey: imageKey) else {
+        guard let pickedImage = ImageCache.default.retrieveImage(forKey: imageKey) else {
             return .error(CacheError.imageNotCached)
         }
         let (progress, filename) = UpoaderService.uploadImage(pickedImage)
@@ -39,7 +39,7 @@ struct MediumService {
     }
     
     static func saveVideo(client: ApolloClient, userId: String, thumbnailImageKey: String, videoFileURL: URL, tags: [String]?) -> Observable<MediumService.SaveMediumResult> {
-        guard let thumbnailImage = ImageCache.default.retrieveImageInMemoryCache(forKey: thumbnailImageKey) else {
+        guard let thumbnailImage = ImageCache.default.retrieveImage(forKey: thumbnailImageKey) else {
             return .error(CacheError.imageNotCached)
         }
         let (thumbnailProgress, thumbnailMinioId) = UpoaderService.uploadImage(thumbnailImage)

@@ -42,7 +42,7 @@ class CreateImageViewController: ShowNavigationBarViewController {
         let uiFeedback: Feedback =  bind(self) { (me, state) in
             let subscriptions = [
                 store.saveMediumStates().drive(me.presenter.collectionView.rx.items(cellIdentifier: "RankMediumCell", cellType: RankMediumCell.self)) { index, item, cell in
-                    let image = ImageCache.default.retrieveImageInMemoryCache(forKey: item._id)
+                    let image = ImageCache.default.retrieveImage(forKey: item._id)
                     cell.imageView.image = image
                     cell.progressView.progress = item.progress?.completed ?? 0
                 },
