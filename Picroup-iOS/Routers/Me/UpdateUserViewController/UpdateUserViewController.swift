@@ -43,15 +43,17 @@ final class UpdateUserViewController: ShowNavigationBarViewController {
                     .map(UpdateUserStateObject.Event.onTriggerSetDisplayName),
 //                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 presenter.userAvatarImageView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().flatMapLatest { _ in
-                    PhotoPickerProvider.pickImages(from: weakSelf, imageLimit: 1).map { $0.first }.unwrap()
+                    PhotoPickerProvider.pickImage(from: weakSelf)
                     }.map(UpdateUserStateObject.Event.onChangeImageKey)
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
         let querySetImageKey: Feedback = react(query: { $0.setImageKeyQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            let image = ImageCache.default.retrieveImageInMemoryCache(forKey: query.imageKey)!
-            let (progress, filename) = ImageUpoader.uploadImage(image)
+            guard let pickedImage = ImageCache.default.retrieveImageInMemoryCache(forKey: query.imageKey) else {
+                return .just(.onSetAvatarIdError(CacheError.imageNotCached))
+            }
+            let (progress, filename) = UpoaderService.uploadImage(pickedImage)
             let next = UserSetAvatarIdQuery(userId: query.userId, avatarId: filename)
             return Observable.concat([
                 progress.flatMap { _ in Observable<UpdateUserStateObject.Event>.empty() },

@@ -17,14 +17,14 @@ extension SelectedTagHistoryObject {
     func getTags() -> List<String> {
         if tags.isEmpty {
             tags.append(objectsIn: [
-            "搞笑",
-            "美女",
-            "动物",
-            "帅哥",
-            "摄影",
-            "风景",
-            "人文",
-            ])
+                "视频",
+                "搞笑",
+                "美女",
+                "动物",
+                "帅哥",
+                "摄影",
+                "风景",
+                ])
         }
         return tags
     }

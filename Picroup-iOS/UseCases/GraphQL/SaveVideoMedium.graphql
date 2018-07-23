@@ -1,0 +1,5 @@
+mutation SaveVideoMedium($userId: ID!, $thumbnailMinioId: ID!, $videoMinioId: ID!, $width: Float!, $aspectRatio: Float!, $tags: [String!]){
+    saveVideoMedium(userId: $userId, thumbnailMinioId: $thumbnailMinioId, videoMinioId: $videoMinioId, width: $width, aspectRatio: $aspectRatio, tags: $tags) {
+        ...MediumFragment
+    }
+}

@@ -42,9 +42,9 @@ class MePresenter: NSObject {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var myMediaCollectionView: UICollectionView!
-    @IBOutlet weak var myStardMediaCollectionView: UICollectionView!
+    @IBOutlet weak var myStaredMediaCollectionView: UICollectionView!
     @IBOutlet weak var myMediaEmptyView: UIView!
-    @IBOutlet weak var myStardMediaEmptyView: UIView!
+    @IBOutlet weak var myStaredMediaEmptyView: UIView!
 
     @IBOutlet weak var selectMyMediaLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
@@ -52,7 +52,27 @@ class MePresenter: NSObject {
     
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
+        prepareMyMediaCollectionView()
+        prepareMyStaredMediaCollectionView()
+        prepareNavigationItems()
+    }
+    
+    fileprivate func prepareMyMediaCollectionView() {
         
+        myMediaCollectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
+        myMediaCollectionView.register(UINib(nibName: "RankVideoCell", bundle: nil), forCellWithReuseIdentifier: "RankVideoCell")
+    }
+    
+    fileprivate func prepareMyStaredMediaCollectionView() {
+        
+        myStaredMediaCollectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
+        myStaredMediaCollectionView.register(UINib(nibName: "RankVideoCell", bundle: nil), forCellWithReuseIdentifier: "RankVideoCell")
+    }
+    
+    
+    fileprivate func prepareNavigationItems() {
+        guard let navigationItem = navigationItem else { return  }
+
         navigationItem.titleLabel.text = "..."
         navigationItem.titleLabel.textColor = .primaryText
         navigationItem.titleLabel.textAlignment = .left
@@ -84,6 +104,9 @@ class MePresenter: NSObject {
     typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
+    var myMediaDataSource: DataSource?
+    var myStaredMediaDataSource: DataSource?
+
     var selectedTabIndex: Binder<Int> {
         return Binder(self) { me, index in
             guard let tab = MeStateObject.Tab(rawValue: index) else { return }
@@ -97,14 +120,10 @@ class MePresenter: NSObject {
         }
     }
     
-    private var dataSource: (Driver<LoadFooterViewState>) -> DataSource {
+    private var dataSourceFactory: (Driver<LoadFooterViewState>) -> DataSource {
         return { loadState in
             return DataSource(
-                configureCell: { dataSource, collectionView, indexPath, item in
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                    cell.configure(with: item)
-                    return cell
-            },
+                configureCell: configureMediumCell(),
                 configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
             )
         }
@@ -112,13 +131,17 @@ class MePresenter: NSObject {
     
     var myMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [myMediaCollectionView] loadState in
-            return myMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
+            let dataSource = self.dataSourceFactory(loadState)
+            self.myMediaDataSource = dataSource
+            return myMediaCollectionView!.rx.items(dataSource: dataSource)
         }
     }
     
     var myStaredMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
-        return { [myStardMediaCollectionView] loadState in
-            return myStardMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
+        return { [myStaredMediaCollectionView] loadState in
+            let dataSource = self.dataSourceFactory(loadState)
+            self.myStaredMediaDataSource = dataSource
+            return myStaredMediaCollectionView!.rx.items(dataSource: dataSource)
         }
     }
     
@@ -130,7 +153,7 @@ class MePresenter: NSObject {
     
     var isMyStaredMediaEmpty: Binder<Bool> {
         return Binder(self) { presenter, isEmpty in
-            presenter.myStardMediaCollectionView.backgroundView = isEmpty ? presenter.myStardMediaEmptyView : nil
+            presenter.myStaredMediaCollectionView.backgroundView = isEmpty ? presenter.myStaredMediaEmptyView : nil
         }
     }
 }
@@ -139,6 +162,23 @@ class MePresenter: NSObject {
 extension MePresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CollectionViewLayoutManager.size(in: collectionView.bounds)
+        if collectionView == myMediaCollectionView {
+            return CollectionViewLayoutManager.size(in: collectionView.bounds, with: myMediaDataSource?[indexPath])
+        } else if collectionView == myStaredMediaCollectionView {
+            return CollectionViewLayoutManager.size(in: collectionView.bounds, with: myStaredMediaDataSource?[indexPath])
+        }
+        return .zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if collectionView == myMediaCollectionView {
+            playVideoIfNeeded(cell: cell, medium: myMediaDataSource?[indexPath])
+        } else if collectionView == myStaredMediaCollectionView {
+            playVideoIfNeeded(cell: cell, medium: myStaredMediaDataSource?[indexPath])
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        resetPlayerIfNeeded(cell: cell)
     }
 }

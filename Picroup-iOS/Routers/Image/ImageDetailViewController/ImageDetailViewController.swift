@@ -17,7 +17,7 @@ private func mapMoreButtonTapToEvent(sender: UICollectionView) -> (ImageDetailSt
     return { state in
         
         guard state.session?.isLogin == true else { return .empty() }
-        guard let cell = sender.cellForItem(at: IndexPath(item: 0, section: 0)) as? ImageDetailCell else { return .empty() }
+        guard let cell = sender.cellForItem(at: IndexPath(item: 0, section: 0)) as? HasMoreButton else { return .empty() }
         let isMyMedium = state.medium?.userId == state.session?.currentUser?._id
         let actions: [String]
         switch (isMyMedium, state.session?.currentUser?.reputation.value) {
@@ -187,3 +187,4 @@ extension ImageDetailStateStore {
         }
     }
 }
+

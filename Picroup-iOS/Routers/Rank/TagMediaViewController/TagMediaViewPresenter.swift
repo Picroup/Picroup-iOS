@@ -22,8 +22,15 @@ final class TagMediaViewPresenter: NSObject {
     
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
+        prepareCollectionView()
         prepareRefreshControl()
         prepareNavigationItem()
+    }
+    
+    fileprivate func prepareCollectionView() {
+        
+        collectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
+        collectionView.register(UINib(nibName: "RankVideoCell", bundle: nil), forCellWithReuseIdentifier: "RankVideoCell")
     }
     
     fileprivate func prepareRefreshControl() {
@@ -40,16 +47,15 @@ final class TagMediaViewPresenter: NSObject {
     typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedReloadDataSource<Section>
     
+    var dataSource: DataSource?
+    
     var items: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [collectionView] loadState in
             let dataSource = DataSource(
-                configureCell: { dataSource, collectionView, indexPath, item in
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                    cell.configure(with: item)
-                    return cell
-            },
+                configureCell: configureMediumCell(),
                 configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
             )
+            self.dataSource = dataSource
             return collectionView!.rx.items(dataSource: dataSource)
         }
     }
@@ -59,6 +65,14 @@ final class TagMediaViewPresenter: NSObject {
 extension TagMediaViewPresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CollectionViewLayoutManager.size(in: collectionView.bounds)
+        return CollectionViewLayoutManager.size(in: collectionView.bounds, with: dataSource?[indexPath])
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        playVideoIfNeeded(cell: cell, medium: dataSource?[indexPath])
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        resetPlayerIfNeeded(cell: cell)
     }
 }

@@ -37,7 +37,19 @@ class UserPresenter: NSObject {
     
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
+        prepareMyMediaCollectionView()
+        prepareNavigationItems()
+    }
+    
+    fileprivate func prepareMyMediaCollectionView() {
         
+        myMediaCollectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
+        myMediaCollectionView.register(UINib(nibName: "RankVideoCell", bundle: nil), forCellWithReuseIdentifier: "RankVideoCell")
+    }
+    
+    
+    fileprivate func prepareNavigationItems() {
+        guard let navigationItem = navigationItem else { return  }
         navigationItem.titleLabel.text = "..."
         navigationItem.titleLabel.textColor = .primaryText
         navigationItem.titleLabel.textAlignment = .left
@@ -68,22 +80,23 @@ class UserPresenter: NSObject {
     typealias Section = AnimatableSectionModel<String, MediumObject>
     typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
-    private var dataSource: (Driver<LoadFooterViewState>) -> DataSource {
+    var dataSource: DataSource?
+
+    private var dataSourceFactory: (Driver<LoadFooterViewState>) -> DataSource {
         return { loadState in
-            return DataSource(
-                configureCell: { dataSource, collectionView, indexPath, item in
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                    cell.configure(with: item)
-                    return cell
-            },
+            let dataSource =  DataSource(
+                configureCell: configureMediumCell(),
                 configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
             )
+            return dataSource
         }
     }
     
     var myMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
         return { [myMediaCollectionView] loadState in
-            return myMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
+            let dataSource = self.dataSourceFactory(loadState)
+            self.dataSource = dataSource
+            return myMediaCollectionView!.rx.items(dataSource: dataSource)
         }
     }
     
@@ -98,6 +111,14 @@ class UserPresenter: NSObject {
 extension UserPresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CollectionViewLayoutManager.size(in: collectionView.bounds)
+        return CollectionViewLayoutManager.size(in: collectionView.bounds, with: dataSource?[indexPath])
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        playVideoIfNeeded(cell: cell, medium: dataSource?[indexPath])
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        resetPlayerIfNeeded(cell: cell)
     }
 }

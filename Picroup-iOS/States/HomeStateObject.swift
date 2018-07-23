@@ -92,7 +92,7 @@ extension HomeStateObject {
         case onTriggerShowComments(String)
         case onTriggerShowUser(String)
         
-        case onTriggerCreateImage([String])
+        case onTriggerCreateImage([MediaItem])
         case onTriggerSearchUser
     }
 }
@@ -144,9 +144,10 @@ extension HomeStateObject: IsFeedbackStateObject {
             userRoute?.userId = userId
             userRoute?.version = UUID().uuidString
             
-        case .onTriggerCreateImage(let imageKeys):
-            createImageRoute?.imageKeys.removeAll()
-            createImageRoute?.imageKeys.append(objectsIn: imageKeys)
+        case .onTriggerCreateImage(let mediaItems):
+            createImageRoute?.mediaItemObjects.removeAll()
+            let mediaItemObjects = mediaItems.map { MediaItemObject.create(mediaItem: $0)(realm) }
+            createImageRoute?.mediaItemObjects.append(objectsIn: mediaItemObjects)
             createImageRoute?.version = UUID().uuidString
         case .onTriggerSearchUser:
             searchUserRoute?.version = UUID().uuidString

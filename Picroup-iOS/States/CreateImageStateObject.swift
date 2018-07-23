@@ -12,6 +12,7 @@ import RxSwift
 import RxCocoa
 import RxRealm
 import RxAlamofire
+import YPImagePicker
 
 public final class RxProgressObject: Object {
     @objc public dynamic var bytesWritten: Int = 0
@@ -42,12 +43,71 @@ final class TagStateObject: Object {
     @objc dynamic var isSelected: Bool = false
 }
 
+final class MediaItemObject: PrimaryObject {
+    @objc dynamic var kind: String?
+    @objc dynamic var imageKey: String?
+    @objc dynamic var thumbnailImageKey: String?
+    @objc dynamic var videoFilePath: String?
+    
+    var videoFileURL: URL? {
+        get { return videoFilePath.flatMap(URL.init(string: )) }
+        set { videoFilePath = newValue?.absoluteString }
+    }
+    
+    static func create(mediaItem: MediaItem) -> (Realm) -> MediaItemObject {
+        return { realm in
+            
+            let value: Any = {
+                switch mediaItem {
+                case .image(let imageKey):
+                    return [
+                        "_id": mediaItem.id,
+                        "kind": MediumKind.image.rawValue,
+                        "imageKey": imageKey,
+                    ]
+                case .video(let thumbnailImageKey, let videoFileURL):
+                    return [
+                        "_id": mediaItem.id,
+                        "kind": MediumKind.video.rawValue,
+                        "thumbnailImageKey": thumbnailImageKey,
+                        "videoFilePath": videoFileURL.absoluteString,
+                    ]
+                }
+            }()
+
+            return realm.create(MediaItemObject.self, value: value)
+        }
+    }
+    
+    var mediaItem: MediaItem {
+        switch (kind, imageKey, thumbnailImageKey, videoFileURL) {
+        case (MediumKind.image.rawValue?, let imageKey?, _, _):
+            return .image(imageKey)
+        case (MediumKind.video.rawValue?, _, let thumbnailImageKey?, let videoFileURL?):
+            return .video(thumbnailImageKey: thumbnailImageKey, videoFileURL: videoFileURL)
+        default:
+            fatalError("CreateMediaQueryObject can't convert to MediaItem: \(self)")
+        }
+    }
+}
+
+extension MediaItem {
+    var id: String {
+        switch self {
+        case .image(let imageKey):
+            return imageKey
+        case .video(let thumbnailImageKey, _):
+            return thumbnailImageKey
+        }
+    }
+}
+
 final class CreateImageStateObject: PrimaryObject {
-    typealias Query = (userId: String, imageKeys: [String], tags: [String]?)
+    typealias Query = (userId: String, mediaItems: [MediaItem], tags: [String]?)
 
     @objc dynamic var session: UserSessionObject?
     
-    let imageKeys = List<String>()
+    let mediaItemObjects = List<MediaItemObject>()
     let tagStates = List<TagStateObject>()
     let saveMediumStates = List<SaveMediumStateObject>()
     @objc dynamic var finished: Int = 0
@@ -65,7 +125,7 @@ final class CreateImageStateObject: PrimaryObject {
 extension CreateImageStateObject {
     var saveQuery: Query? {
         guard let userId = session?.currentUser?._id else { return nil }
-        return triggerSaveMediumQuery ? (userId: userId, imageKeys: imageKeys.toArray(), tags: selectedTags) : nil
+        return triggerSaveMediumQuery ? (userId: userId, mediaItems: mediaItemObjects.map { $0.mediaItem }, tags: selectedTags) : nil
     }
     private var selectedTags: [String]? {
         return tagStates.compactMap { $0.isSelected ? $0.tag : nil }
@@ -73,7 +133,7 @@ extension CreateImageStateObject {
     var shouldSaveMedium: Bool {
         return !triggerSaveMediumQuery
     }
-    var allFinished: Bool { return finished == imageKeys.count }
+    var allFinished: Bool { return finished == mediaItemObjects.count }
     var completed: Float {
         let count = saveMediumStates.count
         let allProgress = saveMediumStates.reduce(0) { $0 + ($1.progress?.completed ?? 0)
@@ -89,15 +149,15 @@ extension CreateImageStateObject {
 
 extension CreateImageStateObject {
     
-    static func create(imageKeys: [String]) -> (Realm) throws -> CreateImageStateObject {
+    static func create(mediaItems: [MediaItem]) -> (Realm) throws -> CreateImageStateObject {
         return { realm in
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
                 "session": ["_id": _id],
-                "imageKeys": imageKeys,
+                "mediaItemObjects": mediaItems.map { ["_id": $0.id] },
                 "tags": [],
-                "saveMediumStates": imageKeys.map { ["_id": $0, "progress": [:]] },
+                "saveMediumStates": mediaItems.map { ["_id": $0.id, "progress": [:]] },
                 "finished": 0,
                 "triggerSaveMediumQuery": false,
                 "selectedTagHistory": ["_id": _id],
@@ -195,9 +255,9 @@ final class CreateImageStateStore {
     let states: Driver<CreateImageStateObject>
     private let _state: CreateImageStateObject
     
-    init(imageKeys: [String]) throws {
+    init(mediaItems: [MediaItem]) throws {
         let realm = try Realm()
-        let _state = try CreateImageStateObject.create(imageKeys: imageKeys)(realm)
+        let _state = try CreateImageStateObject.create(mediaItems: mediaItems)(realm)
         let states = Observable.from(object: _state).asDriver(onErrorDriveWith: .empty())
         
         self._state = _state

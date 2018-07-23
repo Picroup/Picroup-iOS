@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RankMediumCell" id="zxf-7a-hWq" customClass="RankMediumCell" customModule="Picroup_iOS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="184" height="184"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                <rect key="frame" x="0.0" y="0.0" width="184" height="184"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I3t-Tc-y1P">
+                        <rect key="frame" x="0.0" y="0.0" width="184" height="184"/>
+                        <color key="backgroundColor" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
+                    </imageView>
+                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="OGL-Gi-Xvt">
+                        <rect key="frame" x="0.0" y="182" width="184" height="2"/>
+                    </progressView>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="应用版本过低，请升级查看" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wzf-Hb-sqk">
+                        <rect key="frame" x="16" y="71.5" width="152" height="42.5"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uWy-sn-cmQ">
+                        <rect key="frame" x="175" y="183" width="1" height="1"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="fNA-t0-5mA"/>
+                            <constraint firstAttribute="width" constant="1" id="jaS-Jb-QGM"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="OGL-Gi-Xvt" firstAttribute="leading" secondItem="zxf-7a-hWq" secondAttribute="leading" id="0aT-v4-4a6"/>
+                <constraint firstAttribute="bottom" secondItem="OGL-Gi-Xvt" secondAttribute="bottom" id="6dm-TV-ETB"/>
+                <constraint firstAttribute="bottom" secondItem="I3t-Tc-y1P" secondAttribute="bottom" id="7rr-c6-Jrs"/>
+                <constraint firstAttribute="trailing" secondItem="OGL-Gi-Xvt" secondAttribute="trailing" id="GE1-we-zLB"/>
+                <constraint firstAttribute="trailing" secondItem="I3t-Tc-y1P" secondAttribute="trailing" id="GGi-Gg-4v6"/>
+                <constraint firstItem="I3t-Tc-y1P" firstAttribute="top" secondItem="zxf-7a-hWq" secondAttribute="top" id="QgB-90-SWT"/>
+                <constraint firstItem="I3t-Tc-y1P" firstAttribute="leading" secondItem="zxf-7a-hWq" secondAttribute="leading" id="Tw7-Q2-amr"/>
+                <constraint firstAttribute="trailing" secondItem="uWy-sn-cmQ" secondAttribute="trailing" constant="8" id="YEF-so-eoU"/>
+                <constraint firstAttribute="bottom" secondItem="uWy-sn-cmQ" secondAttribute="bottom" id="Zar-w4-Yqr"/>
+                <constraint firstItem="Wzf-Hb-sqk" firstAttribute="centerY" secondItem="I3t-Tc-y1P" secondAttribute="centerY" id="hlT-e6-qDP"/>
+                <constraint firstItem="Wzf-Hb-sqk" firstAttribute="leading" secondItem="zxf-7a-hWq" secondAttribute="leadingMargin" id="pt6-ex-NdB"/>
+                <constraint firstAttribute="trailingMargin" secondItem="Wzf-Hb-sqk" secondAttribute="trailing" id="xNc-jp-mdS"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="oPO-NS-9e2"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                    <real key="value" value="2"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="imageView" destination="I3t-Tc-y1P" id="Nuv-WY-x7I"/>
+                <outlet property="progressView" destination="OGL-Gi-Xvt" id="Qhr-PC-zF4"/>
+                <outlet property="starPlaceholderView" destination="uWy-sn-cmQ" id="IvV-Km-KKS"/>
+                <outlet property="suggestUpdateLabel" destination="Wzf-Hb-sqk" id="rqO-3f-InH"/>
+            </connections>
+            <point key="canvasLocation" x="27" y="87"/>
+        </collectionViewCell>
+    </objects>
+</document>
