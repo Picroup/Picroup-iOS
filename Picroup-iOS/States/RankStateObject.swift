@@ -14,15 +14,14 @@ import RxRealm
 
 final class RankStateObject: PrimaryObject {
     
+    @objc dynamic var version: String?
+
     @objc dynamic var session: UserSessionObject?
     
     let tagStates = List<TagStateObject>()
     
-    @objc dynamic var hotMedia: CursorMediaObject?
-    @objc dynamic var hotMediaError: String?
-    @objc dynamic var isReloadHotMedia: Bool = false
-    @objc dynamic var triggerHotMediaQuery: Bool = false
-    
+    @objc dynamic var hotMediaState: CursorMediaStateObject?
+
     @objc dynamic var selectedTagHistory: SelectedTagHistoryObject?
     
     @objc dynamic var loginRoute: LoginRouteObject?
@@ -31,14 +30,11 @@ final class RankStateObject: PrimaryObject {
 
 extension RankStateObject {
     var hotMediaQuery: HotMediaByTagsQuery? {
-        return triggerHotMediaQuery ? HotMediaByTagsQuery(tags: selectedTags) : nil
+        return hotMediaState?.trigger == true ? HotMediaByTagsQuery(tags: selectedTags) : nil
     }
     private var selectedTags: [String]? {
         return tagStates.first(where: { $0.isSelected })
             .map { [$0.tag] }
-    }
-    var shouldQueryMoreHotMedia: Bool {
-        return !triggerHotMediaQuery
     }
 }
 
@@ -51,9 +47,8 @@ extension RankStateObject {
             let value: Any = [
                 "_id": _id,
                 "session": ["_id": _id],
-//                "rankMedia": ["_id": rankMediaId],
-                "hotMedia": ["_id": hotMediaId],
-                "selectedTagHistory": ["_id": "viewTagHistory"],
+                "hotMediaState": CursorMediaStateObject.valuesBy(id: hotMediaId),
+                "selectedTagHistory": ["_id": PrimaryKey.viewTagHistory],
                 "loginRoute": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
                 ]
@@ -80,12 +75,7 @@ extension RankStateObject {
 extension RankStateObject {
     
     enum Event {
-        case onTriggerReload
-        case onTriggerGetMore
-//        case onGetReloadData(CursorMediaFragment)
-//        case onGetMoreData(CursorMediaFragment)
-        case onGetData(CursorMediaFragment)
-        case onGetError(Error)
+        case hotMediaState(CursorMediaStateObject.Event)
         case onToggleTag(String)
         case onTriggerLogin
         case onTriggerShowImage(String)
@@ -96,27 +86,8 @@ extension RankStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
-        case .onTriggerReload:
-            isReloadHotMedia = true
-            hotMediaError = nil
-            triggerHotMediaQuery = true
-        case .onTriggerGetMore:
-            guard shouldQueryMoreHotMedia else { return }
-            isReloadHotMedia = false
-            hotMediaError = nil
-            triggerHotMediaQuery = true
-        case .onGetData(let data):
-            if isReloadHotMedia {
-                hotMedia = CursorMediaObject.create(from: data, id: PrimaryKey.hotMediaId)(realm)
-                isReloadHotMedia = false
-            } else {
-                hotMedia?.merge(from: data)(realm)
-            }
-            hotMediaError = nil
-            triggerHotMediaQuery = false
-        case .onGetError(let error):
-            hotMediaError = error.localizedDescription
-            triggerHotMediaQuery = false
+        case .hotMediaState(let event):
+            hotMediaState?.reduce(event: event, realm: realm)
         case .onToggleTag(let tag):
             tagStates.forEach { tagState in
                 if tagState.tag == tag {
@@ -126,15 +97,14 @@ extension RankStateObject: IsFeedbackStateObject {
                     tagState.isSelected = false
                 }
             }
-            isReloadHotMedia = true
-            hotMediaError = nil
-            triggerHotMediaQuery = true
+            hotMediaState?.reduce(event: .onTriggerReload, realm: realm)
         case .onTriggerLogin:
             loginRoute?.version = UUID().uuidString
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
             imageDetialRoute?.version = UUID().uuidString
         }
+        version = UUID().uuidString
     }
 }
 
@@ -157,16 +127,8 @@ final class RankStateStore {
         Realm.backgroundReduce(ofType: RankStateObject.self, forPrimaryKey: id, event: event)
     }
     
-//    func rankMediaItems() -> Driver<[MediumObject]> {
-//        guard let items = _state.rankMedia?.items else { return .empty() }
-//        return Observable.collection(from: items)
-////            .delaySubscription(0.3, scheduler: MainScheduler.instance)
-//            .asDriver(onErrorDriveWith: .empty())
-//            .map { $0.toArray() }
-//    }
-    
     func hotMediaItems() -> Driver<[MediumObject]> {
-        guard let items = _state.hotMedia?.items else { return .empty() }
+        guard let items = _state.hotMediaState?.cursorMedia?.items else { return .empty() }
         return Observable.collection(from: items)
             //            .delaySubscription(0.3, scheduler: MainScheduler.instance)
             .asDriver(onErrorDriveWith: .empty())

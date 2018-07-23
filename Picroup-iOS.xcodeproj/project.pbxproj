@@ -107,6 +107,8 @@
 		456D145E21057E6F008EDD41 /* MediumDetailPresenter+CellStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D145D21057E6F008EDD41 /* MediumDetailPresenter+CellStyle.swift */; };
 		456D146121058B58008EDD41 /* MediaPreserter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D146021058B58008EDD41 /* MediaPreserter.swift */; };
 		456D146321059B44008EDD41 /* MediumDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D146221059B44008EDD41 /* MediumDetailPresenter.swift */; };
+		456D14662105B089008EDD41 /* CursorMediaStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D14652105B089008EDD41 /* CursorMediaStateObject.swift */; };
+		456D14682105BE63008EDD41 /* NeedUpdateStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D14672105BE63008EDD41 /* NeedUpdateStateObject.swift */; };
 		456E90D620F5DB150006FFA8 /* TagMediaStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90D520F5DB150006FFA8 /* TagMediaStateObject.swift */; };
 		456E90D920F5DEC40006FFA8 /* TagMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90D820F5DEC40006FFA8 /* TagMediaViewController.swift */; };
 		456E90DB20F5DECE0006FFA8 /* TagMediaViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E90DA20F5DECE0006FFA8 /* TagMediaViewPresenter.swift */; };
@@ -351,6 +353,8 @@
 		456D145D21057E6F008EDD41 /* MediumDetailPresenter+CellStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MediumDetailPresenter+CellStyle.swift"; sourceTree = "<group>"; };
 		456D146021058B58008EDD41 /* MediaPreserter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPreserter.swift; sourceTree = "<group>"; };
 		456D146221059B44008EDD41 /* MediumDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumDetailPresenter.swift; sourceTree = "<group>"; };
+		456D14652105B089008EDD41 /* CursorMediaStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorMediaStateObject.swift; sourceTree = "<group>"; };
+		456D14672105BE63008EDD41 /* NeedUpdateStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeedUpdateStateObject.swift; sourceTree = "<group>"; };
 		456E90D520F5DB150006FFA8 /* TagMediaStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaStateObject.swift; sourceTree = "<group>"; };
 		456E90D820F5DEC40006FFA8 /* TagMediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaViewController.swift; sourceTree = "<group>"; };
 		456E90DA20F5DECE0006FFA8 /* TagMediaViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaViewPresenter.swift; sourceTree = "<group>"; };
@@ -797,6 +801,14 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
+		456D14642105B067008EDD41 /* States */ = {
+			isa = PBXGroup;
+			children = (
+				456D14652105B089008EDD41 /* CursorMediaStateObject.swift */,
+			);
+			path = States;
+			sourceTree = "<group>";
+		};
 		456E90D720F5DEA50006FFA8 /* TagMediaViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1064,6 +1076,7 @@
 				457BD99B20B30D22007F0492 /* RxRealm */,
 				4595F2092079F3630040E5FA /* Minio */,
 				45C1994B20A983BC001924B9 /* RxCocoa */,
+				456D14642105B067008EDD41 /* States */,
 				4595F2042079EDE20040E5FA /* UIKit */,
 				45A039392075C6F7007498DB /* GraphQL */,
 			);
@@ -1300,6 +1313,7 @@
 			children = (
 				45B0204820AC0E8C00BD5D8F /* CommentObject.swift */,
 				45C1994720A973DD001924B9 /* MediumObject.swift */,
+				456D14672105BE63008EDD41 /* NeedUpdateStateObject.swift */,
 				457BD98020A9D504007F0492 /* NotificationObject.swift */,
 				457BD98820AC695A007F0492 /* ReputationObject.swift */,
 				452EAD1E20F339B200FE5E5F /* TagObject.swift */,
@@ -1714,6 +1728,7 @@
 				456E910F20FD8A9E0006FFA8 /* Cacher.swift in Sources */,
 				45E6C24A20863AC3003D7AA8 /* QueryState.swift in Sources */,
 				4543ECE920BC4121002F7C18 /* RxCollectionReusableView.swift in Sources */,
+				456D14682105BE63008EDD41 /* NeedUpdateStateObject.swift in Sources */,
 				45384BBE207DFB3400624A1B /* UIViewController+Rx+dismiss.swift in Sources */,
 				457BD98720AC68EA007F0492 /* ReputationsStateObject.swift in Sources */,
 				45E240B520862981004B58EF /* HideNavigationBarViewController.swift in Sources */,
@@ -1723,6 +1738,7 @@
 				45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */,
 				45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */,
 				454CD57A20C821A00087C634 /* ImageCache+Rx.swift in Sources */,
+				456D14662105B089008EDD41 /* CursorMediaStateObject.swift in Sources */,
 				451DD4BB207E558A002C509A /* RaisedButton+Rx.swift in Sources */,
 				456D145C21057903008EDD41 /* ImageCache+retrieveImage.swift in Sources */,
 				45B0206D20B508C200BD5D8F /* SearchUserViewController.swift in Sources */,
