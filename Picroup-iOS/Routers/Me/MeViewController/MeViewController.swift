@@ -63,28 +63,28 @@ class MeViewController: ShowNavigationBarViewController {
                 state.map { $0.selectedTabIndex }.distinctUntilChanged().drive(presenter.selectedTabIndex),
                 store.myMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaPresenter.items(footerState: myMediaFooterState.asDriver())),
                 store.myStaredMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myStaredMediaPresenter.items(footerState: myStaredMediaFooterState.asDriver())),
-                state.map { $0.myMediaFooterState }.drive(myMediaFooterState),
-                state.map { $0.myStaredMediaFooterState }.drive(myStaredMediaFooterState),
-                state.map { $0.isMyMediaEmpty }.drive(presenter.isMyMediaEmpty),
-                state.map { $0.isMyStaredMediaEmpty }.drive(presenter.isMyStaredMediaEmpty),
+                state.map { $0.myMediaState?.footerState ?? .empty }.drive(myMediaFooterState),
+                state.map { $0.myStaredMediaState?.footerState ?? .empty }.drive(myStaredMediaFooterState),
+                state.map { $0.myMediaState?.isEmpty ?? false }.drive(presenter.isMyMediaEmpty),
+                state.map { $0.myStaredMediaState?.isEmpty ?? false }.drive(presenter.isMyStaredMediaEmpty),
                 Signal.just(.onTriggerReloadMe).emit(to: appStateService.events),
                 me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMe }.emit(to: appStateService.events),
                 ]
             let events: [Signal<MeStateObject.Event>] = [
-                .of(.onTriggerReloadMyMedia, .onTriggerReloadMyStaredMedia),
+                .of(.myMediaState(.onTriggerReload), .myStaredMediaState(.onTriggerReload)),
                 presenter.moreButton.rx.tap.asSignal().withLatestFrom(state).flatMapLatest(mapMoreButtonTapToEvent(sender: presenter.moreButton)),
                 presenter.myMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myMedia) },
                 presenter.myStaredMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myStaredMedia) },
                 state.flatMapLatest {
-                    $0.shouldQueryMoreMyMedia
+                    ($0.myMediaState?.shouldQueryMore ?? false)
                         ? presenter.myMediaCollectionView.rx.triggerGetMore
                         : .empty()
-                    }.map { .onTriggerGetMoreMyMedia },
+                    }.map { .myMediaState(.onTriggerGetMore) },
                 state.flatMapLatest {
-                    $0.shouldQueryMoreMyStaredMedia
+                    ($0.myStaredMediaState?.shouldQueryMore ?? false)
                         ? presenter.myStaredMediaCollectionView.rx.triggerGetMore
                         : .empty()
-                    }.map { .onTriggerGetMoreMyStaredMedia },
+                    }.map { .myStaredMediaState(.onTriggerGetMore) },
                 me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMyMediaIfNeeded },
                 me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMyStaredMediaIfNeeded },
                 presenter.myMediaCollectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
@@ -100,21 +100,19 @@ class MeViewController: ShowNavigationBarViewController {
         let queryMyMedia: Feedback = react(query: { $0.myMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.media.fragments.cursorMediaFragment }.unwrap()
-                .map(MeStateObject.Event.onGetMyMedia(isReload: query.cursor == nil))
-                .asSignal(onErrorReturnJust: MeStateObject.Event.onGetMyMediaError)
+                .map { .myMediaState(.onGetData($0)) }
+                .asSignal(onErrorReturnJust: { .myMediaState(.onGetError($0)) })
         })
         
         let queryMyStaredMedia: Feedback = react(query: { $0.myStaredMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.staredMedia.fragments.cursorMediaFragment }.unwrap()
-                .map(MeStateObject.Event.onGetMyStaredMedia(isReload: query.cursor == nil))
-                .asSignal(onErrorReturnJust: MeStateObject.Event.onGetMyStaredMediaError)
+                .map { .myStaredMediaState(.onGetData($0)) }
+                .asSignal(onErrorReturnJust: { .myStaredMediaState(.onGetError($0)) })
         })
         
         let states = store.states
 //            .debug("MeState", trimOutput: true)
-
-//        states.map { $0.myMediaQuery }.debug("myMediaQuery").drive().disposed(by: disposeBag)
         
         Signal.merge(
             uiFeedback(states),
@@ -125,7 +123,6 @@ class MeViewController: ShowNavigationBarViewController {
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         
-
         Signal.merge(
             presenter.myMediaCollectionView.rx.shouldHideNavigationBar(),
             presenter.myStaredMediaCollectionView.rx.shouldHideNavigationBar()
@@ -143,23 +140,23 @@ class MeViewController: ShowNavigationBarViewController {
 
 extension MeStateObject {
     
-    var myMediaFooterState: LoadFooterViewState {
-        return LoadFooterViewState.create(
-            cursor: myMedia?.cursor.value,
-            items: myMedia?.items,
-            trigger: triggerMyMediaQuery,
-            error: myMediaError
-        )
-    }
-    
-    var myStaredMediaFooterState: LoadFooterViewState {
-        return LoadFooterViewState.create(
-            cursor: myStaredMedia?.cursor.value,
-            items: myStaredMedia?.items,
-            trigger: triggerMyStaredMediaQuery,
-            error: myStaredMediaError
-        )
-    }
+//    var myMediaFooterState: LoadFooterViewState {
+//        return LoadFooterViewState.create(
+//            cursor: myMedia?.cursor.value,
+//            items: myMedia?.items,
+//            trigger: triggerMyMediaQuery,
+//            error: myMediaError
+//        )
+//    }
+//
+//    var myStaredMediaFooterState: LoadFooterViewState {
+//        return LoadFooterViewState.create(
+//            cursor: myStaredMedia?.cursor.value,
+//            items: myStaredMedia?.items,
+//            trigger: triggerMyStaredMediaQuery,
+//            error: myStaredMediaError
+//        )
+//    }
 }
 
 
