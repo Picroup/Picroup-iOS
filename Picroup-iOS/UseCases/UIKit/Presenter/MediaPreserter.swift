@@ -104,3 +104,17 @@ func resetPlayerIfNeeded(cell: UICollectionViewCell) {
         vidoeCell.playerView.reset()
     }
 }
+
+extension CollectionViewLayoutManager {
+    
+    static func size(in bounds: CGRect, with medium: MediumObject?) -> CGSize {
+        let aspectRatio: Double
+        if let medium = medium, !medium.isInvalidated {
+            aspectRatio = medium.detail?.aspectRatio.value ?? 1
+        } else {
+            aspectRatio = 1
+        }
+        return CollectionViewLayoutManager.size(in: bounds, aspectRatio: aspectRatio)
+    }
+}
+

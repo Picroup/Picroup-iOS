@@ -25,19 +25,14 @@ final class HomeViewPresenter: NSObject {
     var refreshControl: UIRefreshControl!
     weak var navigationItem: UINavigationItem!
     @IBOutlet weak var emptyView: UIView!
+    var mediaPresenter: MediaPreserter!
 
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
-        prepareCollectionView()
+        self.mediaPresenter = MediaPreserter(collectionView: collectionView, animatedDataSource: true)
         prepareFABButton()
         prepareNavigationItem()
         prepareRefreshControl()
-    }
-    
-    fileprivate func prepareCollectionView() {
-        
-        collectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
-        collectionView.register(UINib(nibName: "RankVideoCell", bundle: nil), forCellWithReuseIdentifier: "RankVideoCell")
     }
     
     fileprivate func prepareFABButton() {
@@ -65,21 +60,6 @@ final class HomeViewPresenter: NSObject {
         collectionView.addSubview(refreshControl!)
     }
     
-    typealias Section = AnimatableSectionModel<String, MediumObject>
-    typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
-    
-    var dataSource: DataSource?
-
-    func items(footerState: Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
-//        [weak self, collectionView]
-        let dataSource = DataSource(
-            configureCell: configureMediumCell(),
-            configureSupplementaryView: createLoadFooterSupplementaryView(footerState: footerState)
-        )
-        self.dataSource = dataSource
-        return collectionView!.rx.items(dataSource: dataSource)
-    }
-    
     var isMyInterestedMediaEmpty: Binder<Bool> {
         return Binder(self) { presenter, isEmpty in
             presenter.collectionView.backgroundView = isEmpty ? presenter.emptyView : nil
@@ -92,34 +72,6 @@ final class HomeViewPresenter: NSObject {
                 presenter.fabButton.alpha = isHidden ? 0 : 1
             }
         }
-    }
-}
-
-extension HomeViewPresenter: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CollectionViewLayoutManager.size(in: collectionView.bounds, with: dataSource?[indexPath])
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        playVideoIfNeeded(cell: cell, medium: dataSource?[indexPath])
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        resetPlayerIfNeeded(cell: cell)
-    }
-}
-
-extension CollectionViewLayoutManager {
-    
-    static func size(in bounds: CGRect, with medium: MediumObject?) -> CGSize {
-        let aspectRatio: Double
-        if let medium = medium, !medium.isInvalidated {
-            aspectRatio = medium.detail?.aspectRatio.value ?? 1
-        } else {
-            aspectRatio = 1
-        }
-        return CollectionViewLayoutManager.size(in: bounds, aspectRatio: aspectRatio)
     }
 }
 

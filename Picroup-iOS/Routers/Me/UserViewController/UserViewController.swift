@@ -50,13 +50,13 @@ class UserViewController: ShowNavigationBarViewController {
                 return
         }
         
-        typealias Section = UserPresenter.Section
-        
+        typealias Section = MediaPreserter.Section
+
         let uiFeedback: Feedback = bind(presenter) { (presenter, state) -> Bindings<UserStateObject.Event> in
             let myMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions: [Disposable] = [
                 state.map { $0.user }.drive(presenter.user),
-                store.userMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems(myMediaFooterState.asDriver())),
+                store.userMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaPresenter.items(footerState: myMediaFooterState.asDriver())),
                 state.map { $0.myMediaFooterState }.drive(myMediaFooterState),
                 state.map { $0.isUserMediaEmpty }.drive(presenter.isUserMediaEmpty),
                 ]
@@ -134,7 +134,7 @@ class UserViewController: ShowNavigationBarViewController {
             })
             .disposed(by: disposeBag)
 
-        presenter.myMediaCollectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
+        presenter.myMediaCollectionView.rx.setDelegate(presenter.myMediaPresenter).disposed(by: disposeBag)
     }
 }
 

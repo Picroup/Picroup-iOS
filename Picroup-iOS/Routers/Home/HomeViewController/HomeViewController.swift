@@ -20,23 +20,23 @@ class HomeViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
     private func setupRxFeedback() {
-        
-        presenter.setup(navigationItem: navigationItem)
-        typealias Section = HomeViewPresenter.Section
 
         guard let store = try? HomeStateStore() else { return }
         
+        typealias Section = MediaPreserter.Section
+
         weak var weakSelf = self
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
 //            let _events = PublishRelay<HomeStateObject.Event>()
             let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions = [
-                store.myInterestedMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState: footerState.asDriver())),
+                store.myInterestedMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.mediaPresenter.items(footerState: footerState.asDriver())),
                 state.map { $0.isReloading }.drive(presenter.refreshControl.rx.isRefreshing),
                 state.map { $0.footerState }.drive(footerState),
                 state.map { $0.isMyInterestedMediaEmpty }.drive(presenter.isMyInterestedMediaEmpty),
@@ -79,8 +79,7 @@ class HomeViewController: BaseViewController {
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         
-        presenter.collectionView.rx.setDelegate(presenter)
-            .disposed(by: disposeBag)
+        presenter.collectionView.rx.setDelegate(presenter.mediaPresenter).disposed(by: disposeBag)
     }
 }
 

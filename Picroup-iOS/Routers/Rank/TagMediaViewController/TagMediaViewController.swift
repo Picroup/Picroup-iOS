@@ -35,13 +35,13 @@ final class TagMediaViewController: ShowNavigationBarViewController {
         guard let tag = dependency,
             let store = try? TagMediaStateObjectStore(tag: tag) else { return }
         
-        typealias Section = TagMediaViewPresenter.Section
-        
+        typealias Section = MediaPreserter.Section
+
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions = [
                 state.map { "# \($0.tag)" }.drive(presenter.navigationItem.titleLabel.rx.text),
-                store.hotMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState.asDriver())),
+                store.hotMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.mediaPresenter.items(footerState: footerState.asDriver())),
                 state.map { $0.isReloadHotMedia }.drive(presenter.refreshControl.rx.refreshing),
                 state.map { $0.footerState }.drive(footerState),
                 ]
@@ -92,7 +92,7 @@ final class TagMediaViewController: ShowNavigationBarViewController {
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         
-        presenter.collectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
+        presenter.collectionView.rx.setDelegate(presenter.mediaPresenter).disposed(by: disposeBag)
     }
 }
 

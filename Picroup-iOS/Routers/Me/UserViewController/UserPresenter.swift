@@ -32,21 +32,15 @@ class UserPresenter: NSObject {
     @IBOutlet weak var followButton: FABButton! {
         didSet { followButton.image = Icon.favorite }
     }
-    
+    var myMediaPresenter: MediaPreserter!
+
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
     
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
-        prepareMyMediaCollectionView()
+        self.myMediaPresenter = MediaPreserter(collectionView: myMediaCollectionView, animatedDataSource: true)
         prepareNavigationItems()
     }
-    
-    fileprivate func prepareMyMediaCollectionView() {
-        
-        myMediaCollectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
-        myMediaCollectionView.register(UINib(nibName: "RankVideoCell", bundle: nil), forCellWithReuseIdentifier: "RankVideoCell")
-    }
-    
     
     fileprivate func prepareNavigationItems() {
         guard let navigationItem = navigationItem else { return  }
@@ -77,48 +71,10 @@ class UserPresenter: NSObject {
         }
     }
     
-    typealias Section = AnimatableSectionModel<String, MediumObject>
-    typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
-    
-    var dataSource: DataSource?
-
-    private var dataSourceFactory: (Driver<LoadFooterViewState>) -> DataSource {
-        return { footerState in
-            let dataSource =  DataSource(
-                configureCell: configureMediumCell(),
-                configureSupplementaryView: createLoadFooterSupplementaryView(footerState: footerState)
-            )
-            return dataSource
-        }
-    }
-    
-    var myMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
-        return { [myMediaCollectionView] footerState in
-            let dataSource = self.dataSourceFactory(footerState)
-            self.dataSource = dataSource
-            return myMediaCollectionView!.rx.items(dataSource: dataSource)
-        }
-    }
     
     var isUserMediaEmpty: Binder<Bool> {
         return Binder(self) { presenter, isEmpty in
             presenter.myMediaCollectionView.backgroundView = isEmpty ? presenter.myMediaEmptyView : nil
         }
-    }
-}
-
-
-extension UserPresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CollectionViewLayoutManager.size(in: collectionView.bounds, with: dataSource?[indexPath])
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        playVideoIfNeeded(cell: cell, medium: dataSource?[indexPath])
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        resetPlayerIfNeeded(cell: cell)
     }
 }

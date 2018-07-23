@@ -52,7 +52,7 @@ class MeViewController: ShowNavigationBarViewController {
             let appStore = appStateService.appStore
             else { return }
         
-        typealias Section = MePresenter.Section
+        typealias Section = MediaPreserter.Section
 
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
@@ -61,8 +61,8 @@ class MeViewController: ShowNavigationBarViewController {
             let subscriptions: [Disposable] = [
                 appStore.me().drive(presenter.me),
                 state.map { $0.selectedTabIndex }.distinctUntilChanged().drive(presenter.selectedTabIndex),
-                store.myMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems(myMediaFooterState.asDriver())),
-                store.myStaredMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myStaredMediaItems(myStaredMediaFooterState.asDriver())),
+                store.myMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaPresenter.items(footerState: myMediaFooterState.asDriver())),
+                store.myStaredMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myStaredMediaPresenter.items(footerState: myStaredMediaFooterState.asDriver())),
                 state.map { $0.myMediaFooterState }.drive(myMediaFooterState),
                 state.map { $0.myStaredMediaFooterState }.drive(myStaredMediaFooterState),
                 state.map { $0.isMyMediaEmpty }.drive(presenter.isMyMediaEmpty),
@@ -136,8 +136,8 @@ class MeViewController: ShowNavigationBarViewController {
             })
             .disposed(by: disposeBag)
 
-        presenter.myMediaCollectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
-        presenter.myStaredMediaCollectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
+        presenter.myMediaCollectionView.rx.setDelegate(presenter.myMediaPresenter).disposed(by: disposeBag)
+        presenter.myStaredMediaCollectionView.rx.setDelegate(presenter.myStaredMediaPresenter).disposed(by: disposeBag)
     }
 }
 
