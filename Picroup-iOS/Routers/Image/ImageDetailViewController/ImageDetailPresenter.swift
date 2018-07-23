@@ -37,19 +37,7 @@ class ImageDetailPresenter: NSObject {
     func items(events:
         PublishRelay<ImageDetailStateObject.Event>, moreButtonTap: PublishRelay<Void>) -> (Observable<[Section]>) -> Disposable {
             dataSource = DataSource(
-                configureCell: { dataSource, collectionView, indexPath, cellStyle in
-                    switch cellStyle {
-                    case .imageDetail(let item):
-                        return configureMediumDetailCell(events: events, moreButtonTap: moreButtonTap)(dataSource, collectionView, indexPath, item)
-                    case .imageTag(let tag):
-                        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TagCollectionViewCell", for: indexPath) as! TagCollectionViewCell
-                        cell.tagLabel.text = tag
-                        cell.setSelected(true)
-                        return cell
-                    case .recommendMedium(let item):
-                        return configureMediumCell()(dataSource, collectionView, indexPath, item)
-                    }
-            },
+                configureCell: configureCell(events: events, moreButtonTap: moreButtonTap),
                 configureSupplementaryView: { dataSource, collectionView, title, indexPath in
                     return UICollectionReusableView()
             })
@@ -57,8 +45,24 @@ class ImageDetailPresenter: NSObject {
     }
 }
 
+private func configureCell<D>(events:
+    PublishRelay<ImageDetailStateObject.Event>, moreButtonTap: PublishRelay<Void>) -> (D, UICollectionView, IndexPath, ImageDetailPresenter.CellStyle) -> UICollectionViewCell {
+    return { dataSource, collectionView, indexPath, cellStyle in
+        switch cellStyle {
+        case .imageDetail(let item):
+            return configureMediumDetailCell(events: events, moreButtonTap: moreButtonTap)(dataSource, collectionView, indexPath, item)
+        case .imageTag(let tag):
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TagCollectionViewCell", for: indexPath) as! TagCollectionViewCell
+            cell.tagLabel.text = tag
+            cell.setSelected(true)
+            return cell
+        case .recommendMedium(let item):
+            return configureMediumCell()(dataSource, collectionView, indexPath, item)
+        }
+    }
+}
 
-func configureMediumDetailCell<D>(events:
+private func configureMediumDetailCell<D>(events:
     PublishRelay<ImageDetailStateObject.Event>, moreButtonTap: PublishRelay<Void>) -> (D, UICollectionView, IndexPath, MediumObject) -> UICollectionViewCell {
     return { dataSource, collectionView, indexPath, item in
         let defaultCell: () -> UICollectionViewCell = {
@@ -144,64 +148,3 @@ extension ImageDetailPresenter: UICollectionViewDelegate, UICollectionViewDelega
         resetPlayerIfNeeded(cell: cell)
     }
 }
-
-extension ImageDetailPresenter {
-    
-    enum SectionStyle: String {
-        case imageDetail
-        case imageTags
-        case recommendMedia
-    }
-    
-    enum CellStyle {
-        case imageDetail(MediumObject)
-        case imageTag(String)
-        case recommendMedium(MediumObject)
-    }
-}
-
-extension ImageDetailPresenter.CellStyle {
-    
-    var recommendMediumId: String? {
-        if case .recommendMedium(let medium) = self {
-            return medium._id
-        }
-        return nil
-    }
-}
-
-extension ImageDetailPresenter.SectionStyle: IdentifiableType, Equatable {
-    typealias Identity = String
-    
-    var identity: String {
-        return rawValue
-    }
-}
-
-extension ImageDetailPresenter.CellStyle: IdentifiableType, Equatable {
-    typealias Identity = String
-    
-    var identity: String {
-        switch self {
-        case .imageDetail:
-            return "imageDetail"
-        case .imageTag(let tag):
-            return "imageTag.\(tag)"
-        case .recommendMedium(let medium):
-            return "recommendMedium.\(medium._id)"
-        }
-    }
-    
-    static func ==(lhs: ImageDetailPresenter.CellStyle, rhs: ImageDetailPresenter.CellStyle) -> Bool {
-        switch (lhs, rhs) {
-        case (.imageDetail, imageDetail):
-            return false
-        case (.recommendMedium(let lMedium), .recommendMedium(let rMedium)):
-            return lMedium._id == rMedium._id
-        default:
-            return false
-        }
-    }
-    
-}
-

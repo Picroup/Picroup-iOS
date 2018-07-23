@@ -36,7 +36,7 @@ class HomeViewController: BaseViewController {
 //            let _events = PublishRelay<HomeStateObject.Event>()
             let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions = [
-                store.myInterestedMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(loadState: footerState.asDriver())),
+                store.myInterestedMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState: footerState.asDriver())),
                 state.map { $0.isReloading }.drive(presenter.refreshControl.rx.isRefreshing),
                 state.map { $0.footerState }.drive(footerState),
                 state.map { $0.isMyInterestedMediaEmpty }.drive(presenter.isMyInterestedMediaEmpty),

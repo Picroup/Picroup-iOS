@@ -83,18 +83,18 @@ class UserPresenter: NSObject {
     var dataSource: DataSource?
 
     private var dataSourceFactory: (Driver<LoadFooterViewState>) -> DataSource {
-        return { loadState in
+        return { footerState in
             let dataSource =  DataSource(
                 configureCell: configureMediumCell(),
-                configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
+                configureSupplementaryView: createLoadFooterSupplementaryView(footerState: footerState)
             )
             return dataSource
         }
     }
     
     var myMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
-        return { [myMediaCollectionView] loadState in
-            let dataSource = self.dataSourceFactory(loadState)
+        return { [myMediaCollectionView] footerState in
+            let dataSource = self.dataSourceFactory(footerState)
             self.dataSource = dataSource
             return myMediaCollectionView!.rx.items(dataSource: dataSource)
         }

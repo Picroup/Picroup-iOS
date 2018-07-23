@@ -50,10 +50,10 @@ final class TagMediaViewPresenter: NSObject {
     var dataSource: DataSource?
     
     var items: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
-        return { [collectionView] loadState in
+        return { [collectionView] footerState in
             let dataSource = DataSource(
                 configureCell: configureMediumCell(),
-                configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
+                configureSupplementaryView: createLoadFooterSupplementaryView(footerState: footerState)
             )
             self.dataSource = dataSource
             return collectionView!.rx.items(dataSource: dataSource)

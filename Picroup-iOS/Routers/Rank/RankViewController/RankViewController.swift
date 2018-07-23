@@ -30,7 +30,7 @@ final class RankViewController: BaseViewController {
         
         guard let store = try? RankStateStore() else { return }
         
-        typealias Section = RankViewPresenter.Section
+        typealias Section = MediaPreserter.Section
                 
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
@@ -40,7 +40,7 @@ final class RankViewController: BaseViewController {
                     cell.tagLabel.text = tagState.tag
                     cell.setSelected(tagState.isSelected)
                 },
-                store.hotMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState.asDriver())),
+                store.hotMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.mediaPresenter.items(footerState: footerState.asDriver())),
                 state.map { $0.isReloadHotMedia }.drive(presenter.refreshControl.rx.refreshing),
 //                state.map { $0.isReloadHotMedia }.distinctUntilChanged().filter { $0 }.skip(1).drive(Binder(presenter.collectionView) { collectionView, _ in
 //                    collectionView.setContentOffset(.zero, animated: true)
@@ -102,7 +102,7 @@ final class RankViewController: BaseViewController {
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         
-        presenter.collectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
+        presenter.collectionView.rx.setDelegate(presenter.mediaPresenter).disposed(by: disposeBag)
     }
 }
 

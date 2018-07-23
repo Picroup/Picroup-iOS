@@ -70,11 +70,11 @@ final class HomeViewPresenter: NSObject {
     
     var dataSource: DataSource?
 
-    func items(loadState: Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
+    func items(footerState: Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
 //        [weak self, collectionView]
         let dataSource = DataSource(
             configureCell: configureMediumCell(),
-            configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
+            configureSupplementaryView: createLoadFooterSupplementaryView(footerState: footerState)
         )
         self.dataSource = dataSource
         return collectionView!.rx.items(dataSource: dataSource)
@@ -122,3 +122,4 @@ extension CollectionViewLayoutManager {
         return CollectionViewLayoutManager.size(in: bounds, aspectRatio: aspectRatio)
     }
 }
+
