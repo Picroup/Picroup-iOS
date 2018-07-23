@@ -221,6 +221,9 @@ extension CreateImageStateObject: IsFeedbackStateObject {
                     snackbar?.message = "已分享"
                     snackbar?.version = UUID().uuidString
                     popRoute?.version = UUID().uuidString
+                } else {
+                    snackbar?.message = failState?.savedError
+                    snackbar?.version = UUID().uuidString
                 }
             }
         case .onSavedMediumError(let error, let index):

@@ -104,7 +104,7 @@ struct PhotoPickerProvider {
             configuration.wordings.next = "下一步"
             configuration.wordings.filter = "滤镜"
             configuration.wordings.crop = "裁剪"
-            configuration.wordings.warningMaxItemsLimit = "最多 %d 张图片"
+            configuration.wordings.warningMaxItemsLimit = "最多 %d 个"
             
             configuration.wordings.videoDurationPopup.title = "视频时长"
             configuration.wordings.videoDurationPopup.tooLongMessage = "最多 %@ 秒"
@@ -132,12 +132,12 @@ extension YPMediaItem {
             switch self {
             case .photo(let photo):
                 let imageKey = UUID().uuidString
-                ImageCache.default.store(photo.image, forKey: imageKey, toDisk: false) {
+                ImageCache.default.store(photo.image, forKey: imageKey, toDisk: true) {
                     observer(.success(.image(imageKey)))
                 }
             case .video(let video):
                 let thumbnailImageKey = UUID().uuidString
-                ImageCache.default.store(video.thumbnail, forKey: thumbnailImageKey, toDisk: false) {
+                ImageCache.default.store(video.thumbnail, forKey: thumbnailImageKey, toDisk: true) {
                     observer(.success(.video(thumbnailImageKey: thumbnailImageKey, videoFileURL: video.url)))
                 }
             }
