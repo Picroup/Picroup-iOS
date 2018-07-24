@@ -15,7 +15,8 @@ struct PrimaryKey {
     static let myMediaId = "currentUser.myMedia"
     static let myStaredMediaId = "currentUser.myStaredMedia"
     static let myInterestedMediaId = "currentUser.myInterestedMediaId"
-    
+    static let viewTagHistory = "currentDevice.viewTagHistory"
+ 
     static func hotMediaByTagId(_ tag: String) -> String {
         return "currentDevice.hotMedia.\(tag)"
     }

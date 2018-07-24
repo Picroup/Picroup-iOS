@@ -21,7 +21,7 @@ final class ImageDetailStateObject: PrimaryObject {
     @objc dynamic var recommendMedia: CursorMediaObject?
     @objc dynamic var mediumError: String?
     @objc dynamic var triggerMediumQuery: Bool = false
-    
+
     @objc dynamic var starMediumVersion: String?
     @objc dynamic var starMediumError: String?
     @objc dynamic var triggerStarMedium: Bool = false
