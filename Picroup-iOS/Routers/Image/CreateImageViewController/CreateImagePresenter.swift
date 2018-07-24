@@ -14,7 +14,9 @@ import Material
 
 class CreateImagePresenter: NSObject {
     
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView! {
+        didSet { prepareCollectionView() }
+    }
     @IBOutlet weak var tagsCollectionView: UICollectionView! {
         didSet {
             (tagsCollectionView.collectionViewLayout as! UICollectionViewFlowLayout)
@@ -24,18 +26,23 @@ class CreateImagePresenter: NSObject {
     }
     @IBOutlet weak var addTagTextField: UITextField!
         @IBOutlet weak var saveButton: RaisedButton!
-    @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var progressView: ProgressView!
     
     let didCommitTag = PublishRelay<String>()
-}
-
-extension CreateImagePresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CollectionViewLayoutManager.size(in: collectionView.bounds)
-//    }
+    private func prepareCollectionView() {
+        collectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
+    }
+    
 }
 
+extension Reactive where Base: ProgressView {
+    var progress: Binder<Float> {
+        return Binder(self.base) { progressView, progress in
+            progressView.progress = progress
+        }
+    }
+}
 
 extension CreateImagePresenter: UITextFieldDelegate {
     

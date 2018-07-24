@@ -44,7 +44,7 @@ class CreateImageViewController: ShowNavigationBarViewController {
                 store.saveMediumStates().drive(me.presenter.collectionView.rx.items(cellIdentifier: "RankMediumCell", cellType: RankMediumCell.self)) { index, item, cell in
                     let image = ImageCache.default.retrieveImage(forKey: item._id)
                     cell.imageView.image = image
-                    cell.progressView.progress = item.progress?.completed ?? 0
+                    cell.progressView.isHidden = true
                 },
                 store.tagStates().drive(me.presenter.tagsCollectionView.rx.items(cellIdentifier: "TagCollectionViewCell", cellType: TagCollectionViewCell.self)) { index, tagState, cell in
                     cell.tagLabel.text = tagState.tag
@@ -94,8 +94,6 @@ class CreateImageViewController: ShowNavigationBarViewController {
             .debug("CreateImageState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
-    
-//        presenter.collectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
         
     }
 }

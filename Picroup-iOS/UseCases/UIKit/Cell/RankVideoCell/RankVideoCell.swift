@@ -10,7 +10,9 @@ import UIKit
 
 class RankVideoCell: RxCollectionViewCell {
     @IBOutlet weak var playerView: PlayerView!
-    @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var progressView: ProgressView!
+//    @IBOutlet weak var lifeBar: UIView!
+//    @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var starPlaceholderView: UIView!
     
     func configure(with item: MediumObject) {
@@ -21,6 +23,8 @@ class RankVideoCell: RxCollectionViewCell {
         transition(.fadeOut, .scale(0.75))
         progressView.progress = viewModel.progress
         progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
+//        lifeViewWidthConstraint.constant = viewModel.progress * lifeBar.bounds.width
+//        lifeBar.motionIdentifier = viewModel.lifeBarMotionIdentifier
         starPlaceholderView.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier
     }
 }

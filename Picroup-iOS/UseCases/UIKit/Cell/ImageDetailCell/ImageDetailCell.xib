@@ -25,26 +25,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7fZ-Do-RFD">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="339"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="343"/>
                                 <color key="backgroundColor" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="btD-A5-asM">
-                                <rect key="frame" x="0.0" y="339" width="375" height="8"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="reT-BX-aUu">
-                                        <rect key="frame" x="0.0" y="0.0" width="20" height="8"/>
-                                        <color key="backgroundColor" red="0.18039215689999999" green="0.49019607840000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="HDG-DO-uh4"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="btD-A5-asM" customClass="ProgressView" customModule="Picroup_iOS" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="343" width="375" height="4"/>
                                 <color key="backgroundColor" red="0.68888300660000001" green="0.71366006140000005" blue="0.73448425530000006" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="reT-BX-aUu" firstAttribute="leading" secondItem="btD-A5-asM" secondAttribute="leading" id="Eu9-4F-00K"/>
-                                    <constraint firstAttribute="bottom" secondItem="reT-BX-aUu" secondAttribute="bottom" id="dwg-yj-Q83"/>
-                                    <constraint firstItem="reT-BX-aUu" firstAttribute="top" secondItem="btD-A5-asM" secondAttribute="top" id="m5M-Bw-O8b"/>
-                                    <constraint firstAttribute="height" constant="8" id="mWC-Ad-P7J"/>
+                                    <constraint firstAttribute="height" constant="4" id="mWC-Ad-P7J"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JeP-2m-iAh">
@@ -152,7 +140,7 @@
                         </subviews>
                     </stackView>
                     <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A0d-T5-LoM" customClass="FABButton" customModule="Material">
-                        <rect key="frame" x="295" y="315" width="56" height="56"/>
+                        <rect key="frame" x="295" y="317" width="56" height="56"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="56" id="HV1-od-TQP"/>
@@ -171,7 +159,7 @@
                         </userDefinedRuntimeAttributes>
                     </button>
                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="应用版本过低，请升级查看" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WsR-W2-nTA">
-                        <rect key="frame" x="16" y="159.5" width="343" height="20.5"/>
+                        <rect key="frame" x="16" y="161.5" width="343" height="20.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -200,9 +188,8 @@
                 <outlet property="commentButton" destination="jOd-dT-iJ1" id="eoC-Qw-Emi"/>
                 <outlet property="displayNameLabel" destination="2BR-2K-LdG" id="wi5-xd-EHo"/>
                 <outlet property="imageView" destination="7fZ-Do-RFD" id="5er-pg-n0G"/>
-                <outlet property="lifeBar" destination="btD-A5-asM" id="SdL-t4-dSD"/>
-                <outlet property="lifeViewWidthConstraint" destination="HDG-DO-uh4" id="NGc-Kd-jef"/>
                 <outlet property="moreButton" destination="zO9-B9-Oib" id="RRL-It-YfV"/>
+                <outlet property="progressView" destination="btD-A5-asM" id="2Ub-8c-1Za"/>
                 <outlet property="remainTimeLabel" destination="QYp-AR-R7W" id="aMl-XI-fZK"/>
                 <outlet property="starButton" destination="A0d-T5-LoM" id="hKU-dQ-XCn"/>
                 <outlet property="suggestUpdateLabel" destination="WsR-W2-nTA" id="gQy-lu-X1Y"/>
