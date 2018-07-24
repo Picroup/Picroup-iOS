@@ -13,7 +13,6 @@ import RxCocoa
 import RxGesture
 import RxFeedback
 import RxViewController
-
 import Material
 
 private func mapMoreButtonTapToEvent(sender: UIView) -> (MeStateObject) -> Signal<MeStateObject.Event> {
@@ -137,26 +136,3 @@ class MeViewController: ShowNavigationBarViewController {
         presenter.myStaredMediaCollectionView.rx.setDelegate(presenter.myStaredMediaPresenter).disposed(by: disposeBag)
     }
 }
-
-extension MeStateObject {
-    
-//    var myMediaFooterState: LoadFooterViewState {
-//        return LoadFooterViewState.create(
-//            cursor: myMedia?.cursor.value,
-//            items: myMedia?.items,
-//            trigger: triggerMyMediaQuery,
-//            error: myMediaError
-//        )
-//    }
-//
-//    var myStaredMediaFooterState: LoadFooterViewState {
-//        return LoadFooterViewState.create(
-//            cursor: myStaredMedia?.cursor.value,
-//            items: myStaredMedia?.items,
-//            trigger: triggerMyStaredMediaQuery,
-//            error: myStaredMediaError
-//        )
-//    }
-}
-
-
