@@ -48,10 +48,11 @@ class ImageCommentsPresenter: NSObject {
     var medium: Binder<MediumObject> {
         return Binder(self) { me, medium in
             let remainTime = medium.endedAt.value?.sinceNow ?? 0
-            if medium.kind == MediumKind.image.rawValue {
+            switch medium.kind {
+            case MediumKind.image.rawValue?, MediumKind.video.rawValue?:
                 me.imageView.setImage(with: medium.minioId)
                 me.suggestUpdateLabel.isHidden = true
-            } else {
+            default:
                 me.imageView.image = nil
                 me.suggestUpdateLabel.isHidden = false
             }
