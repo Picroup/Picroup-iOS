@@ -18,11 +18,6 @@ final class TagMediaStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
     
-//    @objc dynamic var hotMedia: CursorMediaObject?
-//    @objc dynamic var hotMediaError: String?
-//    @objc dynamic var isReloadHotMedia: Bool = false
-//    @objc dynamic var triggerHotMediaQuery: Bool = false
-    
     @objc dynamic var hotMediaState: CursorMediaStateObject?
 
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
@@ -35,9 +30,6 @@ extension TagMediaStateObject {
     var hotMediaQuery: HotMediaByTagsQuery? {
         return hotMediaState?.trigger == true ? HotMediaByTagsQuery(tags: [tag]) : nil
     }
-//    var shouldQueryMoreHotMedia: Bool {
-//        return !triggerHotMediaQuery
-//    }
 }
 
 extension TagMediaStateObject {
@@ -62,10 +54,6 @@ extension TagMediaStateObject {
 extension TagMediaStateObject {
     
     enum Event {
-//        case onTriggerReload
-//        case onTriggerGetMore
-//        case onGetData(CursorMediaFragment)
-//        case onGetError(Error)
         case hotMediaState(CursorMediaStateObject.Event)
         case onTriggerShowImage(String)
     }
@@ -77,28 +65,6 @@ extension TagMediaStateObject: IsFeedbackStateObject {
         switch event {
         case .hotMediaState(let event):
             hotMediaState?.reduce(event: event, realm: realm)
-//        case .onTriggerReload:
-//            isReloadHotMedia = true
-//            hotMediaError = nil
-//            triggerHotMediaQuery = true
-//        case .onTriggerGetMore:
-//            guard shouldQueryMoreHotMedia else { return }
-//            isReloadHotMedia = false
-//            hotMediaError = nil
-//            triggerHotMediaQuery = true
-//        case .onGetData(let data):
-//            if isReloadHotMedia {
-//                let hotMediaId = PrimaryKey.hotMediaByTagId(tag)
-//                hotMedia = CursorMediaObject.create(from: data, id: hotMediaId)(realm)
-//                isReloadHotMedia = false
-//            } else {
-//                hotMedia?.merge(from: data)(realm)
-//            }
-//            hotMediaError = nil
-//            triggerHotMediaQuery = false
-//        case .onGetError(let error):
-//            hotMediaError = error.localizedDescription
-//            triggerHotMediaQuery = false
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
             imageDetialRoute?.version = UUID().uuidString

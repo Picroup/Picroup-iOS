@@ -96,19 +96,3 @@ final class TagMediaViewController: ShowNavigationBarViewController {
         presenter.collectionView.rx.setDelegate(presenter.mediaPresenter).disposed(by: disposeBag)
     }
 }
-
-//extension TagMediaStateObject {
-//
-//    var footerState: LoadFooterViewState {
-//        if isReloadHotMedia {
-//            return .empty
-//        }
-//        if !isReloadHotMedia && triggerHotMediaQuery {
-//            return .loading
-//        }
-//        if hotMediaError != nil {
-//            return .message("💁🏻‍♀️ 加载失败，请重试")
-//        }
-//        return .empty
-//    }
-//}
