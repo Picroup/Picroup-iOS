@@ -65,6 +65,9 @@ extension TagMediaStateObject: IsFeedbackStateObject {
         switch event {
         case .hotMediaState(let event):
             hotMediaState?.reduce(event: event, realm: realm)
+            if case .onGetData = event {
+                hotMediaState?.cursorMedia?.cursor.value = 0
+            }
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
             imageDetialRoute?.version = UUID().uuidString

@@ -55,9 +55,9 @@ struct PhotoPickerProvider {
             configuration.video.compression = AVAssetExportPresetMediumQuality
             configuration.video.fileType = .mp4
             configuration.video.recordingTimeLimit = 15
-            configuration.video.minimumTimeLimit = 1
+            configuration.video.minimumTimeLimit = 0
             configuration.video.libraryTimeLimit = 20
-            configuration.video.trimmerMinDuration = 1
+            configuration.video.trimmerMinDuration = 0
             configuration.video.trimmerMaxDuration = 15
 
             configuration.library.mediaType = .photoAndVideo

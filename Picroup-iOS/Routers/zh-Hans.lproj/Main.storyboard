@@ -6,8 +6,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,16 +15,16 @@
         <!--Rank View Controller-->
         <scene sceneID="3if-qL-wOS">
             <objects>
-                <viewController storyboardIdentifier="RankViewController" extendedLayoutIncludesOpaqueBars="YES" id="LEu-7r-8B3" customClass="RankViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RankViewController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="LEu-7r-8B3" customClass="RankViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2Ch-t5-pxt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eyg-7H-05n">
-                                <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="48"/>
                                 <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="96" id="7wJ-rC-J7S"/>
+                                    <constraint firstAttribute="height" constant="48" id="7wJ-rC-J7S"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="8" minimumInteritemSpacing="8" id="RQs-cI-7KU">
                                     <size key="itemSize" width="66" height="32"/>
@@ -69,10 +69,10 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="kaw-Yi-1l5" secondAttribute="bottom" id="0lm-OQ-aKt"/>
                             <constraint firstItem="eyg-7H-05n" firstAttribute="trailing" secondItem="Xpd-jY-PHs" secondAttribute="trailing" id="CxV-Qa-Vjc"/>
-                            <constraint firstAttribute="top" secondItem="eyg-7H-05n" secondAttribute="centerY" id="Eov-pr-mzK"/>
+                            <constraint firstAttribute="top" secondItem="eyg-7H-05n" secondAttribute="bottom" id="Eov-pr-mzK"/>
                             <constraint firstItem="kaw-Yi-1l5" firstAttribute="trailing" secondItem="Xpd-jY-PHs" secondAttribute="trailing" id="EpJ-gu-Hts"/>
                             <constraint firstItem="eyg-7H-05n" firstAttribute="leading" secondItem="Xpd-jY-PHs" secondAttribute="leading" id="Jyv-6q-ETa"/>
-                            <constraint firstItem="kaw-Yi-1l5" firstAttribute="top" secondItem="eyg-7H-05n" secondAttribute="bottom" constant="-48" id="SmJ-jA-FUU"/>
+                            <constraint firstItem="kaw-Yi-1l5" firstAttribute="top" secondItem="eyg-7H-05n" secondAttribute="bottom" id="SmJ-jA-FUU"/>
                             <constraint firstItem="eyg-7H-05n" firstAttribute="top" secondItem="Xpd-jY-PHs" secondAttribute="top" priority="750" id="aMv-07-e1o"/>
                             <constraint firstItem="kaw-Yi-1l5" firstAttribute="leading" secondItem="Xpd-jY-PHs" secondAttribute="leading" id="ftE-HS-ihX"/>
                         </constraints>
@@ -102,7 +102,7 @@
         <!--Home View Controller-->
         <scene sceneID="oYZ-S2-qIP">
             <objects>
-                <viewController storyboardIdentifier="HomeViewController" extendedLayoutIncludesOpaqueBars="YES" id="pn8-dg-GpM" customClass="HomeViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="pn8-dg-GpM" customClass="HomeViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Sz9-CY-eUY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -140,13 +140,14 @@
                         </subviews>
                         <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="DEL-dJ-nQN" firstAttribute="bottom" secondItem="La3-kB-0bX" secondAttribute="bottom" id="Fb0-s6-1Kv"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="La3-kB-0bX" secondAttribute="bottom" id="D18-sl-bsh"/>
                             <constraint firstItem="La3-kB-0bX" firstAttribute="leading" secondItem="DEL-dJ-nQN" secondAttribute="leading" id="NTK-cr-UCQ"/>
                             <constraint firstItem="La3-kB-0bX" firstAttribute="top" secondItem="Sz9-CY-eUY" secondAttribute="top" id="dkf-4Y-rfU"/>
                             <constraint firstItem="La3-kB-0bX" firstAttribute="trailing" secondItem="DEL-dJ-nQN" secondAttribute="trailing" id="mWd-us-10Z"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DEL-dJ-nQN"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <connections>
                         <outlet property="presenter" destination="Tgj-QA-ZNr" id="0wM-JJ-V6I"/>
                     </connections>
@@ -179,7 +180,7 @@
                     </connections>
                 </customObject>
             </objects>
-            <point key="canvasLocation" x="-783" y="410"/>
+            <point key="canvasLocation" x="-783.20000000000005" y="409.7451274362819"/>
         </scene>
         <!--Feedback View Controller-->
         <scene sceneID="VBI-f5-yFA">
