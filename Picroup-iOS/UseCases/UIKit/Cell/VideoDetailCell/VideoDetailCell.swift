@@ -13,11 +13,12 @@ import RxCocoa
 
 class VideoDetailCell: RxCollectionViewCell {
     @IBOutlet weak var playerView: PlayerView!
-    @IBOutlet weak var lifeBar: UIView!
+//    @IBOutlet weak var lifeBar: UIView!
+//    @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var progressView: ProgressView!
     @IBOutlet weak var starButton: FABButton! {
         didSet { starButton.image = Icon.favorite }
     }
-    @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var userView: UIView!
     @IBOutlet weak var displayNameLabel: UILabel!
@@ -37,9 +38,11 @@ class VideoDetailCell: RxCollectionViewCell {
         let viewModel = ImageDetailViewModel(medium: item)
         
         playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
-        lifeBar.motionIdentifier = viewModel.lifeBarMotionIdentifier
+//        lifeBar.motionIdentifier = viewModel.lifeBarMotionIdentifier
+//        lifeViewWidthConstraint.constant = viewModel.progress * lifeBar.bounds.width
+        progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
+        progressView.progress = viewModel.progress
         starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
-        lifeViewWidthConstraint.constant = viewModel.progress * lifeBar.bounds.width
         userAvatarImageView.setUserAvatar(with: item.user)
         displayNameLabel.text = viewModel.displayName
         remainTimeLabel.text = viewModel.remainTimeLabelText

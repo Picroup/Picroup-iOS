@@ -15,7 +15,7 @@ struct ImageDetailViewModel {
     let kind: String?
     let imageViewMinioId: String?
     let imageViewMotionIdentifier: String?
-    let progress: CGFloat
+    let progress: Float
     let lifeBarMotionIdentifier: String?
     let starButtonMotionIdentifier: String?
     let remainTimeLabelText: String?
@@ -50,7 +50,7 @@ extension ImageDetailViewModel {
         self.kind = medium.kind
         self.imageViewMinioId = medium.minioId
         self.imageViewMotionIdentifier = medium._id
-        self.progress = CGFloat(remainTime / 12.0.weeks)
+        self.progress = Float(remainTime / 12.0.weeks)
         self.lifeBarMotionIdentifier = "lifeBar_\(medium._id)"
         self.starButtonMotionIdentifier = "starButton_\(medium._id)"
 //        self.remainTimeLabelText = "\(Int(remainTime / 1.0.weeks)) 周"
@@ -66,11 +66,12 @@ extension ImageDetailViewModel {
 
 class ImageDetailCell: RxCollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var lifeBar: UIView!
+//    @IBOutlet weak var lifeBar: UIView!
+//    @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var progressView: ProgressView!
     @IBOutlet weak var starButton: FABButton! {
         didSet { starButton.image = Icon.favorite }
     }
-    @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var userView: UIView!
     @IBOutlet weak var displayNameLabel: UILabel!
@@ -98,9 +99,11 @@ class ImageDetailCell: RxCollectionViewCell {
             suggestUpdateLabel.isHidden = false
         }
         imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
-        lifeBar.motionIdentifier = viewModel.lifeBarMotionIdentifier
+//        lifeBar.motionIdentifier = viewModel.lifeBarMotionIdentifier
+//        lifeViewWidthConstraint.constant = viewModel.progress * lifeBar.bounds.width
+        progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
+        progressView.progress = viewModel.progress
         starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
-        lifeViewWidthConstraint.constant = viewModel.progress * lifeBar.bounds.width
         userAvatarImageView.setUserAvatar(with: item.user)
         displayNameLabel.text = viewModel.displayName
         remainTimeLabel.text = viewModel.remainTimeLabelText

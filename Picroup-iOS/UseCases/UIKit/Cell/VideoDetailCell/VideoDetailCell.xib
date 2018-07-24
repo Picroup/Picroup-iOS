@@ -24,26 +24,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="48T-x4-KRr" customClass="PlayerView" customModule="Picroup_iOS" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="339"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="343"/>
                                 <color key="backgroundColor" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dIq-jH-NmI">
-                                <rect key="frame" x="0.0" y="339" width="375" height="8"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gpK-1T-J2t">
-                                        <rect key="frame" x="0.0" y="0.0" width="20" height="8"/>
-                                        <color key="backgroundColor" red="0.18039215689999999" green="0.49019607840000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="oTN-eP-R2t"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dIq-jH-NmI" customClass="ProgressView" customModule="Picroup_iOS" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="343" width="375" height="4"/>
                                 <color key="backgroundColor" red="0.68888300660000001" green="0.71366006140000005" blue="0.73448425530000006" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="8" id="F1m-bj-0UM"/>
-                                    <constraint firstItem="gpK-1T-J2t" firstAttribute="top" secondItem="dIq-jH-NmI" secondAttribute="top" id="OY9-Mz-hfp"/>
-                                    <constraint firstItem="gpK-1T-J2t" firstAttribute="leading" secondItem="dIq-jH-NmI" secondAttribute="leading" id="RKm-H8-o0m"/>
-                                    <constraint firstAttribute="bottom" secondItem="gpK-1T-J2t" secondAttribute="bottom" id="pT4-zO-Za5"/>
+                                    <constraint firstAttribute="height" constant="4" id="F1m-bj-0UM"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u1x-VV-3Ad">
@@ -151,7 +139,7 @@
                         </subviews>
                     </stackView>
                     <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxV-Bb-TLb" customClass="FABButton" customModule="Material">
-                        <rect key="frame" x="295" y="315" width="56" height="56"/>
+                        <rect key="frame" x="295" y="317" width="56" height="56"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="rxV-Bb-TLb" secondAttribute="height" multiplier="1:1" id="9dX-lh-5OA"/>
@@ -189,10 +177,9 @@
             <connections>
                 <outlet property="commentButton" destination="cKE-Rf-uQ1" id="YZI-Zz-ZjT"/>
                 <outlet property="displayNameLabel" destination="DhS-JN-eOz" id="oCS-Ep-PGs"/>
-                <outlet property="lifeBar" destination="dIq-jH-NmI" id="nrO-Rq-7of"/>
-                <outlet property="lifeViewWidthConstraint" destination="oTN-eP-R2t" id="3lr-uX-Xse"/>
                 <outlet property="moreButton" destination="N7s-sr-hl0" id="HWH-PX-6Im"/>
                 <outlet property="playerView" destination="48T-x4-KRr" id="mIX-dV-Jrf"/>
+                <outlet property="progressView" destination="dIq-jH-NmI" id="Ra0-Ky-ihG"/>
                 <outlet property="remainTimeLabel" destination="jUa-ID-pp4" id="72Y-rG-4kR"/>
                 <outlet property="starButton" destination="rxV-Bb-TLb" id="f9d-sE-yav"/>
                 <outlet property="userAvatarImageView" destination="Wal-u8-J2v" id="7sC-yl-xrA"/>

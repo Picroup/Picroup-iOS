@@ -13,38 +13,41 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RankVideoCell" id="edH-nN-nxp" customClass="RankVideoCell" customModule="Picroup_iOS" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="184" height="184"/>
+            <rect key="frame" x="0.0" y="0.0" width="184" height="186"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                <rect key="frame" x="0.0" y="0.0" width="184" height="184"/>
+                <rect key="frame" x="0.0" y="0.0" width="184" height="186"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E1x-bs-g5C" customClass="PlayerView" customModule="Picroup_iOS" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="184" height="184"/>
+                        <rect key="frame" x="0.0" y="0.0" width="184" height="182"/>
                         <color key="backgroundColor" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="H9B-6w-lff">
-                        <rect key="frame" x="0.0" y="182" width="184" height="2"/>
-                    </progressView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="51d-b5-pth">
-                        <rect key="frame" x="175" y="183" width="1" height="1"/>
+                        <rect key="frame" x="175" y="185" width="1" height="1"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="1" id="JAj-rk-zDk"/>
                             <constraint firstAttribute="height" constant="1" id="lJp-nf-tn9"/>
                         </constraints>
                     </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m0T-HT-mJ6" customClass="ProgressView" customModule="Picroup_iOS" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="182" width="184" height="4"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="4" id="NKz-Pa-GeL"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <constraints>
+                <constraint firstItem="m0T-HT-mJ6" firstAttribute="leading" secondItem="edH-nN-nxp" secondAttribute="leading" id="6gO-Xm-8QJ"/>
+                <constraint firstAttribute="bottom" secondItem="m0T-HT-mJ6" secondAttribute="bottom" id="8M9-wD-iDx"/>
                 <constraint firstItem="E1x-bs-g5C" firstAttribute="leading" secondItem="edH-nN-nxp" secondAttribute="leading" id="BWU-AO-IyJ"/>
+                <constraint firstAttribute="trailing" secondItem="m0T-HT-mJ6" secondAttribute="trailing" id="OL8-2f-uqh"/>
                 <constraint firstItem="E1x-bs-g5C" firstAttribute="top" secondItem="edH-nN-nxp" secondAttribute="top" id="QN9-xr-v2g"/>
+                <constraint firstItem="m0T-HT-mJ6" firstAttribute="top" secondItem="E1x-bs-g5C" secondAttribute="bottom" id="Vt9-IJ-hx1"/>
                 <constraint firstAttribute="trailing" secondItem="E1x-bs-g5C" secondAttribute="trailing" id="fN5-3a-VFZ"/>
                 <constraint firstAttribute="bottom" secondItem="51d-b5-pth" secondAttribute="bottom" id="fga-RZ-4vr"/>
-                <constraint firstAttribute="bottom" secondItem="H9B-6w-lff" secondAttribute="bottom" id="gSl-k3-FNK"/>
-                <constraint firstItem="H9B-6w-lff" firstAttribute="leading" secondItem="edH-nN-nxp" secondAttribute="leading" id="kTF-bL-HWN"/>
-                <constraint firstAttribute="trailing" secondItem="H9B-6w-lff" secondAttribute="trailing" id="tUY-Gz-OmG"/>
-                <constraint firstAttribute="bottom" secondItem="E1x-bs-g5C" secondAttribute="bottom" id="uYj-WP-nke"/>
                 <constraint firstAttribute="trailing" secondItem="51d-b5-pth" secondAttribute="trailing" constant="8" id="ycC-p7-LCS"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="DBf-Zw-noL"/>
@@ -55,7 +58,7 @@
             </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="playerView" destination="E1x-bs-g5C" id="FhR-mx-8Yf"/>
-                <outlet property="progressView" destination="H9B-6w-lff" id="MKq-uj-OkS"/>
+                <outlet property="progressView" destination="m0T-HT-mJ6" id="ehZ-a0-XB5"/>
                 <outlet property="starPlaceholderView" destination="51d-b5-pth" id="c1X-lc-3KC"/>
             </connections>
         </collectionViewCell>
