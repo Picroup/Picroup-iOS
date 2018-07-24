@@ -53,7 +53,6 @@ extension ImageDetailViewModel {
         self.progress = Float(remainTime / 12.0.weeks)
         self.lifeBarMotionIdentifier = "lifeBar_\(medium._id)"
         self.starButtonMotionIdentifier = "starButton_\(medium._id)"
-//        self.remainTimeLabelText = "\(Int(remainTime / 1.0.weeks)) 周"
         self.remainTimeLabelText = Moment.string(from: medium.endedAt.value)
         self.commentsCountText = "  \(medium.commentsCount.value ?? 0)"
         self.stared = medium.stared.value
@@ -66,8 +65,6 @@ extension ImageDetailViewModel {
 
 class ImageDetailCell: RxCollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
-//    @IBOutlet weak var lifeBar: UIView!
-//    @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var progressView: ProgressView!
     @IBOutlet weak var starButton: FABButton! {
         didSet { starButton.image = Icon.favorite }
@@ -99,8 +96,6 @@ class ImageDetailCell: RxCollectionViewCell {
             suggestUpdateLabel.isHidden = false
         }
         imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
-//        lifeBar.motionIdentifier = viewModel.lifeBarMotionIdentifier
-//        lifeViewWidthConstraint.constant = viewModel.progress * lifeBar.bounds.width
         progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
         progressView.progress = viewModel.progress
         starButton.motionIdentifier = viewModel.starButtonMotionIdentifier

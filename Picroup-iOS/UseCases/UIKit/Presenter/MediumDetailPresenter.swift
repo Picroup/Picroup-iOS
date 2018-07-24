@@ -107,7 +107,7 @@ extension MediumDetailPresenter: UICollectionViewDelegate, UICollectionViewDeleg
             guard !medium.isInvalidated else { return .zero }
             let width = collectionView.bounds.width
             let imageHeight = width / CGFloat(medium.detail?.aspectRatio.value ?? 1)
-            let height = imageHeight + 4 + 56 + 48 + 1 + 48
+            let height = imageHeight + 2 + 56 + 48 + 1 + 48
             return CGSize(width: width, height: height)
         case .imageTag(let tag):
             let textSize = (tag as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 14)])
