@@ -34,7 +34,7 @@ final class RegisterPhonePresenter: NSObject {
         phoneField.placeholderActiveColor = .primary
         phoneField.dividerActiveColor = .primary
         phoneField.autocapitalizationType = .none
-        _ = phoneField.becomeFirstResponder()
+//        _ = phoneField.becomeFirstResponder()
     }
 }
 

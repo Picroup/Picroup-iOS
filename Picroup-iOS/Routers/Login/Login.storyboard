@@ -13,7 +13,7 @@
         <!--Login View Controller-->
         <scene sceneID="aq0-Ax-yzd">
             <objects>
-                <viewController storyboardIdentifier="LoginViewController" id="YG5-po-3yM" customClass="LoginViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" hidesBottomBarWhenPushed="YES" id="YG5-po-3yM" customClass="LoginViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LFY-om-QE3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

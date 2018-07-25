@@ -34,7 +34,7 @@ final class RegisterUsernamePresenter: NSObject {
         usernameField.placeholderActiveColor = .primary
         usernameField.dividerActiveColor = .primary
         usernameField.autocapitalizationType = .none
-        _ = usernameField.becomeFirstResponder()
+//        _ = usernameField.becomeFirstResponder()
     }
 }
 

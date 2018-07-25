@@ -29,7 +29,7 @@ final class UpdatePasswordPresenter: NSObject {
         oldPasswordField.dividerActiveColor = .primary
         oldPasswordField.clearButtonMode = .whileEditing
         oldPasswordField.isVisibilityIconButtonEnabled = true
-        _ = oldPasswordField.becomeFirstResponder()
+//        _ = oldPasswordField.becomeFirstResponder()
     }
     
     fileprivate func preparePasswordField() {

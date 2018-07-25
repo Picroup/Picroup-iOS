@@ -34,7 +34,7 @@ final class RegisterPasswordPresenter: NSObject {
         passwordField.dividerActiveColor = .primary
         passwordField.clearButtonMode = .whileEditing
         passwordField.isVisibilityIconButtonEnabled = true
-        _ = passwordField.becomeFirstResponder()
+//        _ = passwordField.becomeFirstResponder()
     }
 }
 

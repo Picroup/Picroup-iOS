@@ -34,7 +34,7 @@ final class RegisterCodePresenter: NSObject {
         codeField.placeholderActiveColor = .primary
         codeField.dividerActiveColor = .primary
         codeField.autocapitalizationType = .none
-        _ = codeField.becomeFirstResponder()
+//        _ = codeField.becomeFirstResponder()
     }
 }
 
