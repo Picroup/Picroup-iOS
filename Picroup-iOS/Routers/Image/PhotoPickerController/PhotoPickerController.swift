@@ -56,7 +56,7 @@ struct PhotoPickerProvider {
             configuration.video.fileType = .mp4
             configuration.video.recordingTimeLimit = 15
             configuration.video.minimumTimeLimit = 0
-            configuration.video.libraryTimeLimit = 20
+            configuration.video.libraryTimeLimit = 20.5
             configuration.video.trimmerMinDuration = 0
             configuration.video.trimmerMaxDuration = 15
 
