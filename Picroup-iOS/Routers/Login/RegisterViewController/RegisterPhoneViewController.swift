@@ -59,6 +59,8 @@ final class RegisterPhoneViewController: UIViewController {
             let subscriptions = [
                 state.map { $0.registerParam?.phoneNumber ?? "" }.asObservable().take(1).bind(to: presenter.phoneField.rx.text),
                 state.map { $0.isPhoneNumberValid }.distinctUntilChanged().drive(presenter.nextButton.rx.isEnabledWithBackgroundColor(.secondary)),
+                me.rx.viewDidAppear.asSignal().mapToVoid().emit(to: presenter.phoneField.rx.becomeFirstResponder()),
+                me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.phoneField.rx.resignFirstResponder()),
                 ]
             let events: [Signal<RegisterPhoneStateObject.Event>] = [
                 presenter.phoneField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).map(RegisterPhoneStateObject.Event.onChangePhoneNumber),

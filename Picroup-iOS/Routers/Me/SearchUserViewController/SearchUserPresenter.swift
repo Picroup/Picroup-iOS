@@ -31,7 +31,7 @@ final class SearchUserPresenter: NSObject {
 
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
-        searchBar.becomeFirstResponder()
+//        searchBar.becomeFirstResponder()
         searchBar.autocapitalizationType = .none
         prepareNavigationItem()
     }

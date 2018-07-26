@@ -44,7 +44,9 @@ class LoginViewController: BaseViewController {
                     let vc = RouterService.Login.registerUsernameViewController()
                     weakSelf?.navigationController?.pushViewController(vc, animated: true)
                 }),
-//                me.rx.viewDidAppear.take(1).mapToVoid().bind(to: presenter.usernameField.rx.becomeFirstResponder()),
+                me.rx.viewDidAppear.asSignal().mapToVoid().emit(to: presenter.usernameField.rx.becomeFirstResponder()),
+                me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.usernameField.rx.resignFirstResponder()),
+                me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.passwordField.rx.resignFirstResponder()),
                 ]
             let events: [Signal<LoginStateObject.Event>] = [
                 presenter.usernameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangeUsername),

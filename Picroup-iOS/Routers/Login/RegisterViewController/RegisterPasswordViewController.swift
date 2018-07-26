@@ -60,6 +60,8 @@ final class RegisterPasswordViewController: UIViewController {
                 state.map { $0.registerParam?.password ?? "" }.asObservable().take(1).bind(to: presenter.passwordField.rx.text),
                 state.map { $0.isPasswordValid }.distinctUntilChanged().drive(presenter.nextButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 state.map { $0.detail }.drive(presenter.passwordField.rx.detail),
+                me.rx.viewDidAppear.asSignal().mapToVoid().emit(to: presenter.passwordField.rx.becomeFirstResponder()),
+                me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.passwordField.rx.resignFirstResponder()),
                 ]
             let events: [Signal<RegisterPasswordStateObject.Event>] = [
                 presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).map(RegisterPasswordStateObject.Event.onChangePassword),
