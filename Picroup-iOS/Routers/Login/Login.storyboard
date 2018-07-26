@@ -472,7 +472,7 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                         <state key="normal" title="《用户协议》"/>
                                         <connections>
-                                            <segue destination="1wx-Lg-Sez" kind="show" id="oj2-AD-IuW"/>
+                                            <segue destination="Y04-tq-njQ" kind="show" id="Lfc-7U-fh9"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -503,62 +503,47 @@
             </objects>
             <point key="canvasLocation" x="3215" y="107"/>
         </scene>
-        <!--用户协议-->
-        <scene sceneID="5cv-YV-SOb">
+        <!--Agreement View Controller-->
+        <scene sceneID="k04-8W-mJZ">
             <objects>
-                <viewController storyboardIdentifier="AgreementViewController" hidesBottomBarWhenPushed="YES" id="1wx-Lg-Sez" customClass="AgreementViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="lu4-fJ-p0f"/>
-                        <viewControllerLayoutGuide type="bottom" id="Fdn-Q0-kuZ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="fj4-wp-U9G">
+                <viewController id="Y04-tq-njQ" customClass="AgreementViewController" customModule="Picroup_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4Sl-Ef-HED">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xeU-cH-nj9" customClass="LocalWebView" customModule="Picroup_iOS" customModuleProvider="target">
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7dN-XA-ROO" customClass="LocalWebView" customModule="Picroup_iOS" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="fileName" value="agreement.html"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <outlet property="delegate" destination="1wx-Lg-Sez" id="aab-ng-p5L"/>
+                                    <outlet property="delegate" destination="Y04-tq-njQ" id="Ex7-El-n5L"/>
                                 </connections>
                             </webView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lsn-Xa-v0C">
-                                <rect key="frame" x="177" y="333.5" width="20" height="20"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="CxK-nD-5ti">
+                                <rect key="frame" x="177" y="323.5" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Fdn-Q0-kuZ" firstAttribute="top" secondItem="xeU-cH-nj9" secondAttribute="bottom" id="J71-iJ-tvk"/>
-                            <constraint firstAttribute="trailing" secondItem="xeU-cH-nj9" secondAttribute="trailing" id="OHK-jG-kSy"/>
-                            <constraint firstItem="xeU-cH-nj9" firstAttribute="leading" secondItem="fj4-wp-U9G" secondAttribute="leading" id="Sby-5Z-jOX"/>
-                            <constraint firstItem="lsn-Xa-v0C" firstAttribute="centerY" secondItem="R39-k7-Plb" secondAttribute="centerY" id="Vdr-Du-CSJ"/>
-                            <constraint firstItem="lsn-Xa-v0C" firstAttribute="centerX" secondItem="R39-k7-Plb" secondAttribute="centerX" id="gOI-Fv-wzM"/>
-                            <constraint firstItem="xeU-cH-nj9" firstAttribute="top" secondItem="fj4-wp-U9G" secondAttribute="top" id="leB-a5-HuR"/>
+                            <constraint firstItem="CxK-nD-5ti" firstAttribute="centerY" secondItem="7dN-XA-ROO" secondAttribute="centerY" id="3NX-LD-rDc"/>
+                            <constraint firstItem="7dN-XA-ROO" firstAttribute="top" secondItem="4Sl-Ef-HED" secondAttribute="top" id="EU7-eI-cha"/>
+                            <constraint firstItem="7dN-XA-ROO" firstAttribute="trailing" secondItem="WIq-Uv-SKB" secondAttribute="trailing" id="UiY-WO-vtN"/>
+                            <constraint firstItem="CxK-nD-5ti" firstAttribute="centerX" secondItem="7dN-XA-ROO" secondAttribute="centerX" id="Weh-GN-KJu"/>
+                            <constraint firstItem="7dN-XA-ROO" firstAttribute="bottom" secondItem="WIq-Uv-SKB" secondAttribute="bottom" id="hcU-vj-usJ"/>
+                            <constraint firstItem="7dN-XA-ROO" firstAttribute="leading" secondItem="WIq-Uv-SKB" secondAttribute="leading" id="tXY-ry-hWl"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="R39-k7-Plb"/>
+                        <viewLayoutGuide key="safeArea" id="WIq-Uv-SKB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="用户协议" id="OuQ-PQ-iDH">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="z5p-O2-h5R">
-                            <color key="tintColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="backButtontClick" destination="1wx-Lg-Sez" id="lls-iP-MLj"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
-                        <outlet property="spinner" destination="lsn-Xa-v0C" id="KdV-YP-VmY"/>
+                        <outlet property="spinner" destination="CxK-nD-5ti" id="4ev-qq-3tv"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gSV-R5-Byc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y6c-iK-p27" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4143" y="107"/>
+            <point key="canvasLocation" x="4001" y="107"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="back" width="16" height="16"/>
-    </resources>
     <color key="tintColor" red="0.1803921568627451" green="0.49019607843137253" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
 </document>
