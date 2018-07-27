@@ -13,7 +13,7 @@ struct Cacher {
 
     static let storage: Cache.Storage? = {
         let diskConfig = DiskConfig(name: "DiskCache", maxSize: Config.maxDiskVideoCacheSize) 
-        let memoryConfig = MemoryConfig()
+        let memoryConfig = MemoryConfig(countLimit: Config.maxMemoryVideoCacheCount)
         return try? Cache.Storage(diskConfig: diskConfig, memoryConfig: memoryConfig)
     }()
 }

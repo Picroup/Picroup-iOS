@@ -7,13 +7,8 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
-import RxFeedback
 import Material
-import Apollo
 import Kingfisher
-import AVKit
 
 var appStateService: AppStateService?
 
@@ -24,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var router: Router?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        ImageCache.default.maxDiskCacheSize = Config.maxDiskImageCacheSize
+        prepareKingfisher()
         prepareWindow()
         setupRealm()
         setupAV()
@@ -35,6 +30,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         appStateService?.events.accept(.onTriggerReloadMe)
+    }
+    
+    private func prepareKingfisher() {
+        ImageCache.default.maxDiskCacheSize = Config.maxDiskImageCacheSize
     }
     
     private func prepareWindow() {

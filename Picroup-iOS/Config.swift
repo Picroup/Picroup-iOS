@@ -12,4 +12,5 @@ struct Config {
     static let developBaseURL = "https://home.picroup.com:3500"
     static let maxDiskImageCacheSize: UInt = 100 * 1024 * 1024 // 100 MB
     static let maxDiskVideoCacheSize: UInt = 150 * 1024 * 1024 // 100 MB
+    static let maxMemoryVideoCacheCount: UInt = 48
 }
