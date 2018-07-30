@@ -54,7 +54,11 @@ open class CachingPlayerItem: AVPlayerItem {
         
         func resourceLoader(_ resourceLoader: AVAssetResourceLoader, shouldWaitForLoadingOfRequestedResource loadingRequest: AVAssetResourceLoadingRequest) -> Bool {
             
-            if playingFromData {
+            if owner == nil {
+                print("ResourceLoaderDelegate owner is nil")
+                session?.invalidateAndCancel()
+                return false
+            } else if playingFromData {
                 
                 // Nothing to load.
                 
@@ -128,7 +132,7 @@ open class CachingPlayerItem: AVPlayerItem {
             })
             
             // remove fulfilled requests from pending requests
-            _ = requestsFulfilled.map { self.pendingRequests.remove($0) }
+            requestsFulfilled.forEach { self.pendingRequests.remove($0) }
             
         }
         
@@ -166,7 +170,7 @@ open class CachingPlayerItem: AVPlayerItem {
             }
             
             let bytesToRespond = min(songDataUnwrapped.count - currentOffset, requestedLength)
-            let dataToRespond = songDataUnwrapped.subdata(in: Range(uncheckedBounds: (currentOffset, currentOffset + bytesToRespond)))
+            let dataToRespond = songDataUnwrapped[currentOffset..<(currentOffset + bytesToRespond)]
             dataRequest.respond(with: dataToRespond)
             
             return songDataUnwrapped.count >= requestedLength + requestedOffset
@@ -220,7 +224,7 @@ open class CachingPlayerItem: AVPlayerItem {
     /// Is used for playing from Data.
     init(data: Data, mimeType: String, fileExtension: String) {
         
-        guard let fakeUrl = URL(string: cachingPlayerItemScheme + "://whatever/file.\(fileExtension)") else {
+        guard let fakeUrl = URL(string: "\(cachingPlayerItemScheme)://whatever/file.\(fileExtension)") else {
             fatalError("internal inconsistency")
         }
         

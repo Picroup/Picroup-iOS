@@ -37,7 +37,7 @@ public final class PlayerView: UIView {
         
         player = AVPlayer(playerItem: nil)
         player.isMuted = true
-        //        player.automaticallyWaitsToMinimizeStalling = false
+        player.automaticallyWaitsToMinimizeStalling = false
         
         playerLayer = AVPlayerLayer(player: player)
         playerLayer.videoGravity = .resizeAspectFill
@@ -71,7 +71,6 @@ public final class PlayerView: UIView {
             }
             playerItem.delegate = self
             weakSelf?.player.replaceCurrentItem(with: playerItem)
-            weakSelf?.player.automaticallyWaitsToMinimizeStalling = false
             weakSelf?.player.play()
             
             weakSelf?.tokens.append(NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerItem, queue: .main) { _ in
