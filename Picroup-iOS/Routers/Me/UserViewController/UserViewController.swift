@@ -15,7 +15,9 @@ import RxFeedback
 
 private func mapMoreButtonTapToEvent(sender: UIView) -> (UserStateObject) -> Signal<UserStateObject.Event> {
     return { state in
-        guard state.session?.isLogin == true else { return .empty() }
+        guard state.session?.isLogin == true else {
+            return .just(.onTriggerLogin)
+        }
         return DefaultWireframe.shared
             .promptFor(sender: sender, cancelAction: "取消", actions: ["举报"])
             .asSignalOnErrorRecoverEmpty()

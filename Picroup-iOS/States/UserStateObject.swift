@@ -34,6 +34,7 @@ final class UserStateObject: PrimaryObject {
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
 
+    @objc dynamic var loginRoute: LoginRouteObject?
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
     @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
@@ -92,6 +93,7 @@ extension UserStateObject {
                 "user": ["_id": userId],
                 "userMediaState": CursorMediaStateObject.valuesBy(id: PrimaryKey.userMediaId(userId)),
                 "needUpdate": ["_id": _id],
+                "loginRoute": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
                 "userFollowingsRoute": ["_id": _id],
                 "userFollowersRoute": ["_id": _id],
@@ -121,6 +123,7 @@ extension UserStateObject {
         case onUnfollowUserSuccess(UnfollowUserMutation.Data.UnfollowUser)
         case onUnfollowUserError(Error)
         
+        case onTriggerLogin
         case onTriggerShowImage(String)
         case onTriggerShowUserFollowings
         case onTriggerShowUserFollowers
@@ -185,6 +188,8 @@ extension UserStateObject: IsFeedbackStateObject {
             unfollowUserError = error.localizedDescription
             triggerUnfollowUserQuery = false
             
+        case .onTriggerLogin:
+            loginRoute?.version = UUID().uuidString
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
             imageDetialRoute?.version = UUID().uuidString

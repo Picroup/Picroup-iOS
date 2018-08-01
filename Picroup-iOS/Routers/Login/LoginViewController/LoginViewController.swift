@@ -13,7 +13,7 @@ import RxCocoa
 import RxFeedback
 import Apollo
 
-class LoginViewController: BaseViewController {
+class LoginViewController: ShowNavigationBarViewController {
     
     @IBOutlet fileprivate var presenter: LoginViewPresenter!
     fileprivate typealias Feedback = (Driver<LoginStateObject>) -> Signal<LoginStateObject.Event>

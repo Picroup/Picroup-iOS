@@ -17,6 +17,9 @@ import Apollo
 private func mapCommentMoreButtonTapToEvent(sender: UITableView) -> (CommentObject, ImageCommentsStateObject) -> Signal<ImageCommentsStateObject.Event> {
     return { comment, state in
         
+        guard state.session?.isLogin == true else {
+            return .just(.onTriggerLogin)
+        }
         guard let row = state.comments?.items.index(of: comment),
             let cell = sender.cellForRow(at: IndexPath(row: row, section: 0)) as? CommentCell
             else { return .empty() }

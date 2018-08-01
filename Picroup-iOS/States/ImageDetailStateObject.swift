@@ -33,6 +33,7 @@ final class ImageDetailStateObject: PrimaryObject {
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
     
+    @objc dynamic var loginRoute: LoginRouteObject?
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
     @objc dynamic var tagMediaRoute: TagMediaRouteObject?
@@ -88,6 +89,7 @@ extension ImageDetailStateObject {
                 "recommendMedia": ["_id": PrimaryKey.recommendMediaId(mediumId)],
                 "myStaredMedia": ["_id": PrimaryKey.myStaredMediaId],
                 "needUpdate": ["_id": _id],
+                "loginRoute": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
                 "imageCommetsRoute": ["_id": _id],
                 "tagMediaRoute": ["_id": _id],
@@ -119,6 +121,7 @@ extension ImageDetailStateObject {
         case onDeleteMediumSuccess(String)
         case onDeleteMediumError(Error)
         
+        case onTriggerLogin
         case onTriggerShowImage(String)
         case onTriggerShowComments(String)
         case onTriggerShowTagMedia(String)
@@ -211,6 +214,8 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             snackbar?.message = error.localizedDescription
             snackbar?.version = UUID().uuidString
             
+        case .onTriggerLogin:
+            loginRoute?.version = UUID().uuidString
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
             imageDetialRoute?.version = UUID().uuidString
