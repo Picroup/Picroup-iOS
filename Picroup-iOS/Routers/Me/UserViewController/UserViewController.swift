@@ -24,16 +24,16 @@ private func mapMoreButtonTapToEvent(sender: UIView) -> (UserStateObject) -> Sig
             .flatMap { action in
                 switch action {
                 case "举报":     return .just(.onTriggerUserFeedback)
-                case "拉黑":     return confirmBlockUser(sender: sender)
+                case "拉黑":     return confirmBlockUser()
                 default:        return .empty()
                 }
         }
     }
 }
 
-private func confirmBlockUser(sender: UIView?) -> Signal<UserStateObject.Event> {
+private func confirmBlockUser() -> Signal<UserStateObject.Event> {
     return DefaultWireframe.shared
-        .promptFor(message: "你们将屏蔽对方发布的内容，您确定要拉黑吗？", preferredStyle: .alert, sender: sender, cancelAction: "取消", actions: ["拉黑"])
+        .promptFor(message: "您将屏蔽对方发布的内容，您确定要拉黑吗？", preferredStyle: .alert, sender: nil, cancelAction: "取消", actions: ["拉黑"])
         .asSignalOnErrorRecoverEmpty()
         .flatMap { action in
             switch action {

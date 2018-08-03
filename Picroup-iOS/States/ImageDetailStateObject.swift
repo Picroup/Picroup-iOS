@@ -31,6 +31,10 @@ final class ImageDetailStateObject: PrimaryObject {
     @objc dynamic var deleteMediumError: String?
     @objc dynamic var triggerDeleteMedium: Bool = false
     
+    @objc dynamic var blockMediumVersion: String?
+    @objc dynamic var blockMediumError: String?
+    @objc dynamic var triggerBlockMediumQuery: Bool = false
+    
     @objc dynamic var needUpdate: NeedUpdateStateObject?
     
     @objc dynamic var loginRoute: LoginRouteObject?
@@ -74,6 +78,15 @@ extension ImageDetailStateObject {
     }
     public var shouldDeleteMedium: Bool {
         return !triggerDeleteMedium
+    }
+    var shouldBlockMedium: Bool {
+        return !triggerBlockMediumQuery
+    }
+    var blockUserQuery: BlockMediumMutation? {
+        guard let userId = session?.currentUserId else { return nil }
+        return triggerBlockMediumQuery
+            ? BlockMediumMutation(userId: userId, mediumId: mediumId)
+            : nil
     }
 }
 
@@ -120,6 +133,10 @@ extension ImageDetailStateObject {
         case onTriggerDeleteMedium
         case onDeleteMediumSuccess(String)
         case onDeleteMediumError(Error)
+        
+        case onTriggerBlockMedium
+        case onBlockMediumSuccess(UserFragment)
+        case onBlockMediumError(Error)
         
         case onTriggerLogin
         case onTriggerShowImage(String)
@@ -214,6 +231,24 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             snackbar?.message = error.localizedDescription
             snackbar?.version = UUID().uuidString
             
+        case .onTriggerBlockMedium:
+            guard shouldBlockMedium else { return }
+            blockMediumVersion = nil
+            blockMediumError = nil
+            triggerBlockMediumQuery = true
+        case .onBlockMediumSuccess:
+            medium?.delete()
+            blockMediumVersion = UUID().uuidString
+            blockMediumError = nil
+            triggerBlockMediumQuery = false
+            snackbar?.message = "已减少类似内容"
+            snackbar?.version = UUID().uuidString
+            popRoute?.version = UUID().uuidString
+        case .onBlockMediumError(let error):
+            blockMediumVersion = nil
+            blockMediumError = error.localizedDescription
+            triggerBlockMediumQuery = false
+            
         case .onTriggerLogin:
             loginRoute?.version = UUID().uuidString
         case .onTriggerShowImage(let mediumId):
@@ -261,7 +296,7 @@ final class ImageDetailStateStore {
     
     func medium() -> Observable<MediumObject> {
         guard let medium = _state.medium else { return .empty() }
-        return Observable.from(object: medium).catchErrorRecoverEmpty()
+        return Observable.from(object: medium).catchErrorJustReturn(medium)
     }
     
     func recommendMediaItems() -> Observable<[MediumObject]> {
