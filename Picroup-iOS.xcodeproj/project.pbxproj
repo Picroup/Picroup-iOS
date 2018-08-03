@@ -204,6 +204,9 @@
 		45C1994A20A97402001924B9 /* UserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994920A97402001924B9 /* UserObject.swift */; };
 		45C1994D20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994C20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift */; };
 		45C1995220AA7AFF001924B9 /* IsFeedbackStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1995120AA7AFF001924B9 /* IsFeedbackStateObject.swift */; };
+		45C20765211408FE00A0227B /* BlockUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C20764211408FE00A0227B /* BlockUser.graphql */; };
+		45C2076721140A1100A0227B /* UserBlockingUsers.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C2076621140A1100A0227B /* UserBlockingUsers.graphql */; };
+		45C2076921140B8E00A0227B /* BlockMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C2076821140B8E00A0227B /* BlockMedium.graphql */; };
 		45C392F620C3D88400F4A69A /* UpdateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C392F520C3D88400F4A69A /* UpdateUserViewController.swift */; };
 		45C3930020C5875D00F4A69A /* SaveAppFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C392FD20C5875D00F4A69A /* SaveAppFeedback.graphql */; };
 		45C3930120C5875D00F4A69A /* SaveUserFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C392FE20C5875D00F4A69A /* SaveUserFeedback.graphql */; };
@@ -452,6 +455,9 @@
 		45C1994920A97402001924B9 /* UserObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserObject.swift; sourceTree = "<group>"; };
 		45C1994C20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx+triggerGetMore.swift"; sourceTree = "<group>"; };
 		45C1995120AA7AFF001924B9 /* IsFeedbackStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackStateObject.swift; sourceTree = "<group>"; };
+		45C20764211408FE00A0227B /* BlockUser.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = BlockUser.graphql; sourceTree = "<group>"; };
+		45C2076621140A1100A0227B /* UserBlockingUsers.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserBlockingUsers.graphql; sourceTree = "<group>"; };
+		45C2076821140B8E00A0227B /* BlockMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = BlockMedium.graphql; sourceTree = "<group>"; };
 		45C392F520C3D88400F4A69A /* UpdateUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserViewController.swift; sourceTree = "<group>"; };
 		45C392FD20C5875D00F4A69A /* SaveAppFeedback.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SaveAppFeedback.graphql; sourceTree = "<group>"; };
 		45C392FE20C5875D00F4A69A /* SaveUserFeedback.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SaveUserFeedback.graphql; sourceTree = "<group>"; };
@@ -1093,6 +1099,8 @@
 			children = (
 				457B1BA0205FF2A100BEDDF1 /* API.swift */,
 				451DD4B8207E4880002C509A /* Client.swift */,
+				45C2076821140B8E00A0227B /* BlockMedium.graphql */,
+				45C20764211408FE00A0227B /* BlockUser.graphql */,
 				45FC0BE520A418BF006AAF3D /* CommentFragment.graphql */,
 				45FC0BE920A419FE006AAF3D /* CursorItemsFragment.graphql */,
 				45F0A7C920C65EC30085F978 /* DeleteComment.graphql */,
@@ -1127,6 +1135,7 @@
 				45FC0BED20A41BD2006AAF3D /* ReputationFragment.graphql */,
 				45A0393C2075D0E9007498DB /* User.graphql */,
 				45F0A7D020C7B0BD0085F978 /* UserAvailable.graphql */,
+				45C2076621140A1100A0227B /* UserBlockingUsers.graphql */,
 				457BD99520B304F7007F0492 /* UserFollowings.graphql */,
 				457BD99720B30559007F0492 /* UserFollowers.graphql */,
 				45FC0BE120A41704006AAF3D /* UserFragment.graphql */,
@@ -1362,7 +1371,6 @@
 			buildConfigurationList = 457B1B99205FEA1000BEDDF1 /* Build configuration list for PBXNativeTarget "Picroup-iOS" */;
 			buildPhases = (
 				1A832FF15A88A8EFF78CE953 /* [CP] Check Pods Manifest.lock */,
-				45C207632114059200A0227B /* Generate GraphQL Apollo API */,
 				457B1B83205FEA1000BEDDF1 /* Sources */,
 				457B1B84205FEA1000BEDDF1 /* Frameworks */,
 				457B1B85205FEA1000BEDDF1 /* Resources */,
@@ -1429,6 +1437,7 @@
 				457B1B95205FEA1000BEDDF1 /* LaunchScreen.storyboard in Resources */,
 				45BA0D7F209010670002E1D5 /* MarkReputationLinksAsViewed.graphql in Resources */,
 				457B1B92205FEA1000BEDDF1 /* Assets.xcassets in Resources */,
+				45C2076721140A1100A0227B /* UserBlockingUsers.graphql in Resources */,
 				456E911120FD98780006FFA8 /* SaveVideoMedium.graphql in Resources */,
 				45FC0BEE20A41BD2006AAF3D /* ReputationFragment.graphql in Resources */,
 				4591AEDB20A2CF4D001EC384 /* MyStaredMedia.graphql in Resources */,
@@ -1440,6 +1449,7 @@
 				456E90E120F602480006FFA8 /* MediumRemoveTag.graphql in Resources */,
 				45B5E27D20C9008D005E2E58 /* UserSetPassword.graphql in Resources */,
 				45C3930220C5875D00F4A69A /* SaveMediumFeedback.graphql in Resources */,
+				45C20765211408FE00A0227B /* BlockUser.graphql in Resources */,
 				4561DE6E2100466C00F77510 /* ImageDetailCell.xib in Resources */,
 				453B95BE20C523990043D915 /* Me.storyboard in Resources */,
 				45F0A7E020C7D2B80085F978 /* GetVerifyCode.graphql in Resources */,
@@ -1462,6 +1472,7 @@
 				4561DE782100777200F77510 /* VideoDetailCell.xib in Resources */,
 				457BD99620B304F7007F0492 /* UserFollowings.graphql in Resources */,
 				45D04F7C2089FD0500AC2226 /* UserInterestedMedia.graphql in Resources */,
+				45C2076921140B8E00A0227B /* BlockMedium.graphql in Resources */,
 				457BD99820B30559007F0492 /* UserFollowers.graphql in Resources */,
 				4591AEDD20A2F359001EC384 /* RecommendMedium.graphql in Resources */,
 				456E90E520F602740006FFA8 /* MediumAddTag.graphql in Resources */,
@@ -1500,20 +1511,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
-		};
-		45C207632114059200A0227B /* Generate GraphQL Apollo API */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Generate GraphQL Apollo API";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema UseCases/GraphQL/schema.json --output UseCases/GraphQL/API.swift";
 		};
 		E0FCAA82992B2BFE5A43546E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

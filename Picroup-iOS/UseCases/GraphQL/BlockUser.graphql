@@ -1,0 +1,15 @@
+mutation BlockUser($userId: ID!, $blockingUserId: ID!){
+    blockUser(userId: $userId, blockingUserId: $blockingUserId) {
+        ...UserDetailFragment
+    }
+}
+
+mutation UnblockUser($userId: ID!, $blockingUserId: ID!){
+    unblockUser(userId: $userId, blockingUserId: $blockingUserId) {
+        ...UserDetailFragment
+    }
+}
+
+
+
+
