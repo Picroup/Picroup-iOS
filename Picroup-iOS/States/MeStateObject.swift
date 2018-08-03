@@ -30,6 +30,7 @@ final class MeStateObject: PrimaryObject {
     @objc dynamic var reputationsRoute: ReputationsRouteObject?
     @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
     @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
+    @objc dynamic var userBlockingsRoute: UserBlockingsRouteObject?
     @objc dynamic var updateUserRoute: UpdateUserRouteObject?
     @objc dynamic var feedbackRoute: FeedbackRouteObject?
     @objc dynamic var aboutAppRoute: AboutAppRouteObject?
@@ -46,13 +47,13 @@ extension MeStateObject {
 
 extension MeStateObject {
     var myMediaQuery: MyMediaQuery? {
-        guard let userId = session?.currentUser?._id else { return nil }
+        guard let userId = session?.currentUserId else { return nil }
         return myMediaState?.trigger == true
-            ? MyMediaQuery(userId: userId, cursor: myMediaState?.cursorMedia?.cursor.value)
+            ? MyMediaQuery(userId: userId, cursor: myMediaState?.cursorMedia?.cursor.value, queryUserId: userId)
             : nil
     }
     var myStaredMediaQuery: MyStaredMediaQuery? {
-        guard let userId = session?.currentUser?._id else { return nil }
+        guard let userId = session?.currentUserId else { return nil }
         return myStaredMediaState?.trigger == true
             ? MyStaredMediaQuery(userId: userId, cursor: myStaredMediaState?.cursorMedia?.cursor.value)
             : nil
@@ -74,6 +75,7 @@ extension MeStateObject {
                 "reputationsRoute": ["_id": _id],
                 "userFollowingsRoute": ["_id": _id],
                 "userFollowersRoute": ["_id": _id],
+                "userBlockingsRoute": ["_id": _id],
                 "updateUserRoute": ["_id": _id],
                 "feedbackRoute": ["_id": _id],
                 "aboutAppRoute": ["_id": _id],
@@ -99,6 +101,7 @@ extension MeStateObject {
         case onTriggerShowReputations
         case onTriggerShowUserFollowings
         case onTriggerShowUserFollowers
+        case onTriggerShowUserBlockings
         case onTriggerUpdateUser
         case onTriggerAppFeedback
         case onTriggerAboutApp
@@ -134,11 +137,13 @@ extension MeStateObject: IsFeedbackStateObject {
         case .onTriggerShowReputations:
             reputationsRoute?.version = UUID().uuidString
         case .onTriggerShowUserFollowings:
-            userFollowingsRoute?.userId = session?.currentUser?._id
+            userFollowingsRoute?.userId = session?.currentUserId
             userFollowingsRoute?.version = UUID().uuidString
         case .onTriggerShowUserFollowers:
-            userFollowersRoute?.userId = session?.currentUser?._id
+            userFollowersRoute?.userId = session?.currentUserId
             userFollowersRoute?.version = UUID().uuidString
+        case .onTriggerShowUserBlockings:
+            userBlockingsRoute?.version = UUID().uuidString
         case .onTriggerUpdateUser:
             updateUserRoute?.version = UUID().uuidString
         case .onTriggerAppFeedback:

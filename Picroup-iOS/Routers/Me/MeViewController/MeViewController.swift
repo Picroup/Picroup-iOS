@@ -19,12 +19,13 @@ private func mapMoreButtonTapToEvent(sender: UIView) -> (MeStateObject) -> Signa
     return { state in
         guard state.session?.isLogin == true else { return .empty() }
         return DefaultWireframe.shared
-            .promptFor(sender: sender, cancelAction: "取消", actions: ["更新个人信息", "应用反馈", "关于应用", "退出登录"])
+            .promptFor(sender: sender, cancelAction: "取消", actions: ["更新个人信息", "应用反馈", "黑名单", "关于应用", "退出登录"])
             .asSignalOnErrorRecoverEmpty()
             .flatMap { action in
                 switch action {
                 case "更新个人信息":  return .just(.onTriggerUpdateUser)
                 case "应用反馈":     return .just(.onTriggerAppFeedback)
+                case "黑名单":      return .just(.onTriggerShowUserBlockings)
                 case "关于应用":     return .just(.onTriggerAboutApp)
                 case "退出登录":     return .just(.onLogout)
                 default:            return .empty()

@@ -23,7 +23,7 @@ private func mapCommentMoreButtonTapToEvent(sender: UITableView) -> (CommentObje
         guard let row = state.comments?.items.index(of: comment),
             let cell = sender.cellForRow(at: IndexPath(row: row, section: 0)) as? CommentCell
             else { return .empty() }
-        let currentUserId = state.session?.currentUser?._id
+        let currentUserId = state.session?.currentUserId
         let byMe = comment.userId == currentUserId
         let actions = byMe ? ["删除"] : ["举报"]
         return DefaultWireframe.shared

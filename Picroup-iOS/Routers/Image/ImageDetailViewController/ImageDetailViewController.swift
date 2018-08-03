@@ -20,7 +20,7 @@ private func mapMoreButtonTapToEvent(sender: UICollectionView) -> (ImageDetailSt
             return .just(.onTriggerLogin)
         }
         guard let cell = sender.cellForItem(at: IndexPath(item: 0, section: 0)) as? HasMoreButton else { return .empty() }
-        let isMyMedium = state.medium?.userId == state.session?.currentUser?._id
+        let isMyMedium = state.medium?.userId == state.session?.currentUserId
         let actions: [String]
         switch (isMyMedium, state.session?.currentUser?.reputation.value) {
         case (true, _):
@@ -87,7 +87,9 @@ class ImageDetailViewController: ShowNavigationBarViewController {
         let _moreButtonTap = PublishRelay<Void>()
         
         // I known this is ugly but it enabled the transition animations
-        Observable.combineLatest(store.sections, store.states.asObservable()) { $1.isMediumDeleted ? [] : $0 }
+        let sections = Observable.combineLatest(store.sections, store.states.asObservable()) { $1.isMediumDeleted ? [] : $0 }
+        
+        sections
             .bind(to: presenter.mediumDetailPresenter.items(events: _events, moreButtonTap: _moreButtonTap))
             .disposed(by: disposeBag)
         
@@ -95,7 +97,7 @@ class ImageDetailViewController: ShowNavigationBarViewController {
             let presenter = me.presenter!
 
             let subscriptions = [
-                state.map { $0.isMediumDeleted }.drive(onNext: { presenter.collectionView.backgroundView = $0 ? presenter.deleteAlertView : nil }),
+                sections.map { $0.isEmpty }.subscribe(onNext: { presenter.collectionView.backgroundView = $0 ? presenter.deleteAlertView : nil }),
                 presenter.backgroundButton.rx.tap.subscribe(onNext: { _events.accept(.onTriggerPop) }),
                 presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
                 ]
@@ -168,6 +170,7 @@ extension ImageDetailStateStore {
         return mediumWithRecommendMedia().map { data in
             let (medium, items) = data
             var result = [Section]()
+            guard !medium.isInvalidated else { return result }
             result.append(Section(
                 model: .imageDetail,
                 items: [CellStyle.imageDetail(medium)]

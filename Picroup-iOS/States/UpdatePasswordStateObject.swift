@@ -30,7 +30,7 @@ final class UpdatePasswordStateObject: PrimaryObject {
 
 extension UpdatePasswordStateObject {
     var setPasswordQuery: UserSetPasswordQuery? {
-        guard let userId = session?.currentUser?._id else { return nil }
+        guard let userId = session?.currentUserId else { return nil }
         let next = UserSetPasswordQuery(userId: userId, password: password, oldPassword: oldPassword)
         return triggerSetPasswordQuery ? next : nil
     }

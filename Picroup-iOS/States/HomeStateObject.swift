@@ -30,7 +30,7 @@ final class HomeStateObject: PrimaryObject {
 
 extension HomeStateObject {
     var myInterestedMediaQuery: UserInterestedMediaQuery? {
-        guard let userId = session?.currentUser?._id else { return nil }
+        guard let userId = session?.currentUserId else { return nil }
         return myInterestedMediaState?.trigger == true
             ? UserInterestedMediaQuery(userId: userId, cursor: myInterestedMediaState?.cursorMedia?.cursor.value)
             : nil

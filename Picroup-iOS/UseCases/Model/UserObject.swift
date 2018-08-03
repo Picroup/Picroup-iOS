@@ -19,6 +19,7 @@ final class UserObject: PrimaryObject {
     let gainedReputation = RealmOptional<Int>()
     let notificationsCount = RealmOptional<Int>()
     let followed = RealmOptional<Bool>()
+    let blocked = RealmOptional<Bool>()
 }
 
 extension UserObject {

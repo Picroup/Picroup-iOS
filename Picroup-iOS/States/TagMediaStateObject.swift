@@ -28,7 +28,9 @@ extension TagMediaStateObject {
         return _id
     }
     var hotMediaQuery: HotMediaByTagsQuery? {
-        return hotMediaState?.trigger == true ? HotMediaByTagsQuery(tags: [tag]) : nil
+        return hotMediaState?.trigger == true
+            ? HotMediaByTagsQuery(tags: [tag], queryUserId: session?.currentUserId)
+            : nil
     }
 }
 

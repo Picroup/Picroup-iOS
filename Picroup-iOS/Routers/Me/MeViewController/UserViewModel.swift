@@ -18,7 +18,8 @@ struct UserViewModel {
     let gainedReputationCount: String
     let isGainedReputationCountHidden: Bool
     let followed: Bool?
-    
+    let blocked: Bool?
+
     init(user: UserObject?) {
         guard user?.isInvalidated == false else {
             self.username = " "
@@ -30,6 +31,7 @@ struct UserViewModel {
             self.gainedReputationCount = ""
             self.isGainedReputationCountHidden = true
             self.followed = nil
+            self.blocked = nil
             return
         }
         self.username = user.map { "@\($0.username ?? "")" } ?? " "
@@ -41,6 +43,7 @@ struct UserViewModel {
         self.gainedReputationCount = user.map { "+\($0.gainedReputation.value ?? 0)" } ?? ""
         self.isGainedReputationCountHidden = user == nil || user?.gainedReputation.value == 0
         self.followed = user?.followed.value
+        self.blocked = user?.blocked.value
     }
 }
 
