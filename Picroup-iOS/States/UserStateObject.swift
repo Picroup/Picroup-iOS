@@ -55,7 +55,7 @@ extension UserStateObject {
     }
     var userMediaQuery: MyMediaQuery? {
         return userMediaState?.trigger == true
-            ? MyMediaQuery(userId: userId, cursor: userMediaState?.cursorMedia?.cursor.value)
+            ? MyMediaQuery(userId: userId, cursor: userMediaState?.cursorMedia?.cursor.value, queryUserId: session?.currentUserId)
             : nil
     }
     var shouldFollowUser: Bool {

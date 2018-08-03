@@ -51,7 +51,7 @@ extension ImageDetailStateObject {
         let (userId, withStared) = session?.currentUser?._id == nil
             ? ("", false)
             : (session!.currentUser!._id, true)
-        let next = MediumQuery(userId: userId, mediumId: mediumId, cursor: recommendMedia?.cursor.value, withStared: withStared)
+        let next = MediumQuery(userId: userId, mediumId: mediumId, cursor: recommendMedia?.cursor.value, withStared: withStared, queryUserId: session?.currentUserId)
         return triggerMediumQuery ? next : nil
     }
     var shouldQueryMoreRecommendMedia: Bool {

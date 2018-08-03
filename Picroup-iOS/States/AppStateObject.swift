@@ -21,6 +21,9 @@ extension UserSessionObject {
     var isLogin: Bool {
         return currentUser != nil
     }
+    var currentUserId: String? {
+        return currentUser?._id
+    }
 }
 
 final class AppStateObject: PrimaryObject {

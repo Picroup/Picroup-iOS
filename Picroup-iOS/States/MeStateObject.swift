@@ -48,7 +48,7 @@ extension MeStateObject {
     var myMediaQuery: MyMediaQuery? {
         guard let userId = session?.currentUser?._id else { return nil }
         return myMediaState?.trigger == true
-            ? MyMediaQuery(userId: userId, cursor: myMediaState?.cursorMedia?.cursor.value)
+            ? MyMediaQuery(userId: userId, cursor: myMediaState?.cursorMedia?.cursor.value, queryUserId: userId)
             : nil
     }
     var myStaredMediaQuery: MyStaredMediaQuery? {

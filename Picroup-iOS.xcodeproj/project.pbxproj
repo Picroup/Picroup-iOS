@@ -1075,15 +1075,15 @@
 				4580F4F621001DA4006EFF85 /* AVKit */,
 				456E910D20FD8A800006FFA8 /* Cache */,
 				45EC927F20D3C63300A473D4 /* Foundation */,
-				45B0205620AE699000BD5D8F /* PrimaryKey */,
+				45A039392075C6F7007498DB /* GraphQL */,
+				4595F2092079F3630040E5FA /* Minio */,
 				45FC0BFF20A94A03006AAF3D /* Model */,
+				45B0205620AE699000BD5D8F /* PrimaryKey */,
 				45AA3B4620A346C10032A8CF /* Realm */,
 				457BD99B20B30D22007F0492 /* RxRealm */,
-				4595F2092079F3630040E5FA /* Minio */,
 				45C1994B20A983BC001924B9 /* RxCocoa */,
 				456D14642105B067008EDD41 /* States */,
 				4595F2042079EDE20040E5FA /* UIKit */,
-				45A039392075C6F7007498DB /* GraphQL */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1362,7 +1362,7 @@
 			buildConfigurationList = 457B1B99205FEA1000BEDDF1 /* Build configuration list for PBXNativeTarget "Picroup-iOS" */;
 			buildPhases = (
 				1A832FF15A88A8EFF78CE953 /* [CP] Check Pods Manifest.lock */,
-				457B1B9D205FF08300BEDDF1 /* Generate GraphQL Apollo API */,
+				45C207632114059200A0227B /* Generate GraphQL Apollo API */,
 				457B1B83205FEA1000BEDDF1 /* Sources */,
 				457B1B84205FEA1000BEDDF1 /* Frameworks */,
 				457B1B85205FEA1000BEDDF1 /* Resources */,
@@ -1501,7 +1501,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		457B1B9D205FF08300BEDDF1 /* Generate GraphQL Apollo API */ = {
+		45C207632114059200A0227B /* Generate GraphQL Apollo API */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
