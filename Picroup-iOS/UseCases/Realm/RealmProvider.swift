@@ -12,7 +12,7 @@ import RealmSwift
 struct RealmProvider {
     
     static func setup() {
-        let schemaVersion: UInt64 = 17
+        let schemaVersion = Config.realmSchemaVersion
         let config = Realm.Configuration(
             schemaVersion: schemaVersion,
             migrationBlock: { migration, oldSchemaVersion in

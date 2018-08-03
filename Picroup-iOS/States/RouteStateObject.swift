@@ -26,6 +26,8 @@ final class RouteStateObject: PrimaryObject {
     @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
     @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
     @objc dynamic var searchUserRoute: SearchUserRouteObject?
+    @objc dynamic var userBlockingsRoute: UserBlockingsRouteObject?
+
     @objc dynamic var loginRoute: LoginRouteObject?
     @objc dynamic var feedbackRoute: FeedbackRouteObject?
     @objc dynamic var aboutAppRoute: AboutAppRouteObject?
@@ -92,6 +94,10 @@ final class UserFollowingsRouteObject: PrimaryObject {
 final class UserFollowersRouteObject: PrimaryObject {
     
     @objc dynamic var userId: String?
+    @objc dynamic var version: String?
+}
+
+final class UserBlockingsRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
@@ -170,6 +176,7 @@ extension RouteStateObject {
                 "userFollowingsRoute": ["_id": _id],
                 "userFollowersRoute": ["_id": _id],
                 "searchUserRoute": ["_id": _id],
+                "userBlockingsRoute": ["_id": _id],
                 "loginRoute": ["_id": _id],
                 "feedbackRoute": ["_id": _id],
                 "aboutAppRoute": ["_id": _id],
@@ -233,7 +240,7 @@ final class RouteStateStore {
     func userRoute() -> Driver<(UserRouteObject, Bool)> {
         guard let userRoute = _state.userRoute else { return .empty() }
         return Observable.from(object: userRoute)
-            .map { ($0, self._state.session?.currentUser?._id == $0.userId) }
+            .map { ($0, self._state.session?.currentUserId == $0.userId) }
             .asDriver(onErrorDriveWith: .empty())
     }
     
@@ -255,6 +262,11 @@ final class RouteStateStore {
     func searchUserRoute() -> Driver<SearchUserRouteObject> {
         guard let searchUserRoute = _state.searchUserRoute else { return .empty() }
         return Observable.from(object: searchUserRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func userBlockingsRoute() -> Driver<UserBlockingsRouteObject> {
+        guard let userBlockingsRoute = _state.userBlockingsRoute else { return .empty() }
+        return Observable.from(object: userBlockingsRoute).asDriver(onErrorDriveWith: .empty())
     }
     
     func loginRoute() -> Driver<LoginRouteObject> {

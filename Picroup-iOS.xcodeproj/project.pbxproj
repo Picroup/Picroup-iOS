@@ -207,6 +207,11 @@
 		45C20765211408FE00A0227B /* BlockUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C20764211408FE00A0227B /* BlockUser.graphql */; };
 		45C2076721140A1100A0227B /* UserBlockingUsers.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C2076621140A1100A0227B /* UserBlockingUsers.graphql */; };
 		45C2076921140B8E00A0227B /* BlockMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C2076821140B8E00A0227B /* BlockMedium.graphql */; };
+		45C2076D21142F4F00A0227B /* BlockingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2076C21142F4F00A0227B /* BlockingsViewController.swift */; };
+		45C2076F21142F5E00A0227B /* BlockingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2076E21142F5E00A0227B /* BlockingsPresenter.swift */; };
+		45C2077121142F7400A0227B /* BlockButtonPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2077021142F7400A0227B /* BlockButtonPresenter.swift */; };
+		45C2077321142F8300A0227B /* BlockUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2077221142F8300A0227B /* BlockUserCell.swift */; };
+		45C2077521142FD000A0227B /* UserBlockingsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2077421142FD000A0227B /* UserBlockingsStateObject.swift */; };
 		45C392F620C3D88400F4A69A /* UpdateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C392F520C3D88400F4A69A /* UpdateUserViewController.swift */; };
 		45C3930020C5875D00F4A69A /* SaveAppFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C392FD20C5875D00F4A69A /* SaveAppFeedback.graphql */; };
 		45C3930120C5875D00F4A69A /* SaveUserFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C392FE20C5875D00F4A69A /* SaveUserFeedback.graphql */; };
@@ -458,6 +463,11 @@
 		45C20764211408FE00A0227B /* BlockUser.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = BlockUser.graphql; sourceTree = "<group>"; };
 		45C2076621140A1100A0227B /* UserBlockingUsers.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserBlockingUsers.graphql; sourceTree = "<group>"; };
 		45C2076821140B8E00A0227B /* BlockMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = BlockMedium.graphql; sourceTree = "<group>"; };
+		45C2076C21142F4F00A0227B /* BlockingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockingsViewController.swift; sourceTree = "<group>"; };
+		45C2076E21142F5E00A0227B /* BlockingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockingsPresenter.swift; sourceTree = "<group>"; };
+		45C2077021142F7400A0227B /* BlockButtonPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockButtonPresenter.swift; sourceTree = "<group>"; };
+		45C2077221142F8300A0227B /* BlockUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockUserCell.swift; sourceTree = "<group>"; };
+		45C2077421142FD000A0227B /* UserBlockingsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBlockingsStateObject.swift; sourceTree = "<group>"; };
 		45C392F520C3D88400F4A69A /* UpdateUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserViewController.swift; sourceTree = "<group>"; };
 		45C392FD20C5875D00F4A69A /* SaveAppFeedback.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SaveAppFeedback.graphql; sourceTree = "<group>"; };
 		45C392FE20C5875D00F4A69A /* SaveUserFeedback.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SaveUserFeedback.graphql; sourceTree = "<group>"; };
@@ -909,12 +919,13 @@
 			children = (
 				453B95BD20C523990043D915 /* Me.storyboard */,
 				453B95BF20C523DD0043D915 /* RouterService+Me.swift */,
+				45C2076B21142F2600A0227B /* BlockingsViewController */,
+				45B0205D20B2BFC000BD5D8F /* FollowingsViewController */,
+				45B0206620B402E700BD5D8F /* FollowersViewController */,
 				451CD335207D0B7F0063A972 /* MeViewController */,
 				45BA0D7B208ED3980002E1D5 /* ReputationsViewController */,
 				45FC0BF120A42F11006AAF3D /* UserViewController */,
 				45C392F420C3D86200F4A69A /* UpdateUserViewController */,
-				45B0205D20B2BFC000BD5D8F /* FollowingsViewController */,
-				45B0206620B402E700BD5D8F /* FollowersViewController */,
 				45B0206B20B5089B00BD5D8F /* SearchUserViewController */,
 			);
 			path = Me;
@@ -1016,6 +1027,7 @@
 				45B0207220B5182300BD5D8F /* SearchUserStateObject.swift */,
 				456E90D520F5DB150006FFA8 /* TagMediaStateObject.swift */,
 				45B0205920AEA35600BD5D8F /* UserStateObject.swift */,
+				45C2077421142FD000A0227B /* UserBlockingsStateObject.swift */,
 				457BD99920B306AA007F0492 /* UserFollowingsStateObject.swift */,
 				45B0206420B4012E00BD5D8F /* UserFollowersStateObject.swift */,
 				453B95B520C4CEF50043D915 /* UpdateUserStateObject.swift */,
@@ -1249,6 +1261,17 @@
 			);
 			name = "RxFeedback+Realm";
 			path = "New Group";
+			sourceTree = "<group>";
+		};
+		45C2076B21142F2600A0227B /* BlockingsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				45C2076C21142F4F00A0227B /* BlockingsViewController.swift */,
+				45C2076E21142F5E00A0227B /* BlockingsPresenter.swift */,
+				45C2077021142F7400A0227B /* BlockButtonPresenter.swift */,
+				45C2077221142F8300A0227B /* BlockUserCell.swift */,
+			);
+			path = BlockingsViewController;
 			sourceTree = "<group>";
 		};
 		45C392F420C3D86200F4A69A /* UpdateUserViewController */ = {
@@ -1606,6 +1629,7 @@
 				451DD4B9207E4880002C509A /* Client.swift in Sources */,
 				453B95B620C4CEF50043D915 /* UpdateUserStateObject.swift in Sources */,
 				4595F2102079F6B60040E5FA /* LoginViewController.swift in Sources */,
+				45C2077321142F8300A0227B /* BlockUserCell.swift in Sources */,
 				454F72962089B44500850471 /* RxCollectionViewCell.swift in Sources */,
 				45D04F8B208F60A600AC2226 /* ReputationsViewPresenter.swift in Sources */,
 				45B5E27620C8D2D7005E2E58 /* PlaceholderTextView.swift in Sources */,
@@ -1672,6 +1696,7 @@
 				45384BBC207DEFFA00624A1B /* CreateImageViewController.swift in Sources */,
 				45183EC620D2193000497B59 /* LocalWebView.swift in Sources */,
 				45517D4820BCDD3E00F2D7DE /* CommentCell.swift in Sources */,
+				45C2077521142FD000A0227B /* UserBlockingsStateObject.swift in Sources */,
 				451CD322207A3C1D0063A972 /* ApolloClient+Rx.swift in Sources */,
 				451CD339207D0BAA0063A972 /* NotificationsViewController.swift in Sources */,
 				455808DB20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift in Sources */,
@@ -1707,6 +1732,7 @@
 				45B0204920AC0E8C00BD5D8F /* CommentObject.swift in Sources */,
 				45F0A7D820C7BE7F0085F978 /* RegisterPhoneStateObject.swift in Sources */,
 				45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */,
+				45C2077121142F7400A0227B /* BlockButtonPresenter.swift in Sources */,
 				45183EC020CF862000497B59 /* RealmProvider.swift in Sources */,
 				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
 				45FC0C0320A95765006AAF3D /* Realm+background.swift in Sources */,
@@ -1715,6 +1741,7 @@
 				45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */,
 				454F72A0208DB90000850471 /* RouterService+Image.swift in Sources */,
 				4595F227207D9CF90040E5FA /* logger.swift in Sources */,
+				45C2076F21142F5E00A0227B /* BlockingsPresenter.swift in Sources */,
 				457BD98D20B135DF007F0492 /* AppStateObject.swift in Sources */,
 				451CD31B207A38F20063A972 /* UIResponder+Rx.swift in Sources */,
 				45B0205F20B2BFDC00BD5D8F /* FollowingsViewController.swift in Sources */,
@@ -1750,6 +1777,7 @@
 				45183EBE20CF65BC00497B59 /* AboutAppViewController.swift in Sources */,
 				45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */,
 				45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */,
+				45C2076D21142F4F00A0227B /* BlockingsViewController.swift in Sources */,
 				454CD57A20C821A00087C634 /* ImageCache+Rx.swift in Sources */,
 				456D14662105B089008EDD41 /* CursorMediaStateObject.swift in Sources */,
 				451DD4BB207E558A002C509A /* RaisedButton+Rx.swift in Sources */,

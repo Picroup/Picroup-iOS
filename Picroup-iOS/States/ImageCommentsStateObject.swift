@@ -59,12 +59,12 @@ extension ImageCommentsStateObject {
         return !triggerSaveComment && saveCommentContent.matchExpression(RegularPattern.default)
     }
     public var saveCommentQuery: SaveCommentMutation? {
-        guard let userId = session?.currentUser?._id else { return nil }
+        guard let userId = session?.currentUserId else { return nil }
         let next = SaveCommentMutation(userId: userId, mediumId: mediumId, content: saveCommentContent)
         return triggerSaveComment ? next : nil
     }
     public var deleteCommentQuery: DeleteCommentMutation? {
-        guard deleteComment?.userId == session?.currentUser?._id,
+        guard deleteComment?.userId == session?.currentUserId,
             let commentId = deleteComment?._id else { return nil }
         let next = DeleteCommentMutation(commentId: commentId)
         return triggerDeleteComment ? next : nil

@@ -40,7 +40,7 @@ final class AppStateObject: PrimaryObject {
 
 extension AppStateObject {
     var meQuery: UserQuery? {
-        guard let userId = session?.currentUser?._id else { return nil }
+        guard let userId = session?.currentUserId else { return nil }
         let next = UserQuery(userId: userId, followedByUserId: "", withFollowed: false)
         return triggerMeQuery ? next : nil
     }

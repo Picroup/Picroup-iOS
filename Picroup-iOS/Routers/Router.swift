@@ -121,6 +121,12 @@ final class Router {
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
+        _ = store.userBlockingsRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .drive(Binder(self) { (me, _) in
+                let vc = RouterService.Me.blockingsViewController()
+                me.currentNavigationController?.pushViewController(vc, animated: true)
+            })
+        
         _ = store.loginRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .drive(Binder(self) { (me, _) in
                 let vc = RouterService.Login.loginViewController()

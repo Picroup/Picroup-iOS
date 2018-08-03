@@ -124,7 +124,7 @@ final class CreateImageStateObject: PrimaryObject {
 
 extension CreateImageStateObject {
     var saveQuery: Query? {
-        guard let userId = session?.currentUser?._id else { return nil }
+        guard let userId = session?.currentUserId else { return nil }
         return triggerSaveMediumQuery ? (userId: userId, mediaItems: mediaItemObjects.map { $0.mediaItem }, tags: selectedTags) : nil
     }
     private var selectedTags: [String]? {

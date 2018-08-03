@@ -32,6 +32,10 @@ final class UserStateObject: PrimaryObject {
     @objc dynamic var unfollowUserError: String?
     @objc dynamic var triggerUnfollowUserQuery: Bool = false
     
+    @objc dynamic var blockUserVersion: String?
+    @objc dynamic var blockUserError: String?
+    @objc dynamic var triggerBlockUserQuery: Bool = false
+    
     @objc dynamic var needUpdate: NeedUpdateStateObject?
 
     @objc dynamic var loginRoute: LoginRouteObject?
@@ -47,7 +51,7 @@ final class UserStateObject: PrimaryObject {
 extension UserStateObject {
     var userId: String { return _id }
     var userQuery: UserQuery? {
-        let (byUserId, withFollowed) = session?.currentUser?._id == nil
+        let (byUserId, withFollowed) = session?.currentUserId == nil
             ? ("", false)
             : (session!.currentUser!._id, true)
         let next = UserQuery(userId: userId, followedByUserId: byUserId, withFollowed: withFollowed)
@@ -63,7 +67,7 @@ extension UserStateObject {
     }
     var followUserQuery: FollowUserMutation? {
         guard
-            let userId = session?.currentUser?._id,
+            let userId = session?.currentUserId,
             let toUserId = user?._id else {
                 return nil
         }
@@ -74,11 +78,24 @@ extension UserStateObject {
     }
     var unfollowUserQuery: UnfollowUserMutation? {
         guard
-            let userId = session?.currentUser?._id,
+            let userId = session?.currentUserId,
             let toUserId = user?._id else {
                 return nil
         }
         return triggerUnfollowUserQuery ? UnfollowUserMutation(userId: userId, toUserId: toUserId) : nil
+    }
+    var shouldBlockUser: Bool {
+        return !triggerBlockUserQuery
+    }
+    var blockUserQuery: BlockUserMutation? {
+        guard
+            let userId = session?.currentUserId,
+            let toUserId = user?._id else {
+                return nil
+        }
+        return triggerBlockUserQuery
+            ? BlockUserMutation(userId: userId, blockingUserId: toUserId)
+            : nil
     }
 }
 
@@ -122,6 +139,10 @@ extension UserStateObject {
         case onTriggerUnfollowUser
         case onUnfollowUserSuccess(UnfollowUserMutation.Data.UnfollowUser)
         case onUnfollowUserError(Error)
+        
+        case onTriggerBlockUser
+        case onBlockUserSuccess(UserFragment)
+        case onBlockUserError(Error)
         
         case onTriggerLogin
         case onTriggerShowImage(String)
@@ -180,13 +201,31 @@ extension UserStateObject: IsFeedbackStateObject {
             unfollowUserError = nil
             triggerUnfollowUserQuery = false
             needUpdate?.myInterestedMedia = true
-
             snackbar?.message = "已取消关注 @\(user?.username ?? "")"
             snackbar?.version = UUID().uuidString
         case .onUnfollowUserError(let error):
             unfollowUserVersion = nil
             unfollowUserError = error.localizedDescription
             triggerUnfollowUserQuery = false
+            
+        case .onTriggerBlockUser:
+            guard shouldBlockUser else { return }
+            blockUserVersion = nil
+            blockUserError = nil
+            triggerBlockUserQuery = true
+        case .onBlockUserSuccess(let data):
+            let blockedMedia = realm.objects(MediumObject.self).filter("userId = %@", data.id)
+            realm.delete(blockedMedia)
+            blockUserVersion = UUID().uuidString
+            blockUserError = nil
+            triggerBlockUserQuery = false
+            needUpdate?.myInterestedMedia = true
+            snackbar?.message = "已拉黑 @\(user?.username ?? "")，您可以前往设置取消拉黑"
+            snackbar?.version = UUID().uuidString
+        case .onBlockUserError(let error):
+            blockUserVersion = nil
+            blockUserError = error.localizedDescription
+            triggerBlockUserQuery = false
             
         case .onTriggerLogin:
             loginRoute?.version = UUID().uuidString

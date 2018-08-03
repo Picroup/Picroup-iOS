@@ -37,11 +37,11 @@ final class UpdateMediumTagsStateObject: PrimaryObject {
 extension UpdateMediumTagsStateObject {
     var mediumId: String { return _id }
     var addTagQuery: MediumAddTagQuery? {
-        guard let tag = addTag, let byUserId = session?.currentUser?._id else { return nil }
+        guard let tag = addTag, let byUserId = session?.currentUserId else { return nil }
         return triggerAddTagQuery ? MediumAddTagQuery(mediumId: mediumId, tag: tag, byUserId: byUserId) : nil
     }
     var removeTagQuery: MediumRemoveTagQuery? {
-        guard let tag = removeTag, let byUserId = session?.currentUser?._id else { return nil }
+        guard let tag = removeTag, let byUserId = session?.currentUserId else { return nil }
         return triggerRemoveTagQuery ? MediumRemoveTagQuery(mediumId: mediumId, tag: tag, byUserId: byUserId) : nil
     }
 }

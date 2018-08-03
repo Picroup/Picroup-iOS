@@ -1,5 +1,5 @@
 mutation BlockMedium($userId: ID!, $mediumId: ID!){
     blockMedium(userId: $userId, mediumId: $mediumId) {
-        ...UserDetailFragment
+        ...UserFragment
     }
 }

@@ -19,14 +19,27 @@ private func mapMoreButtonTapToEvent(sender: UIView) -> (UserStateObject) -> Sig
             return .just(.onTriggerLogin)
         }
         return DefaultWireframe.shared
-            .promptFor(sender: sender, cancelAction: "取消", actions: ["举报"])
+            .promptFor(sender: sender, cancelAction: "取消", actions: ["举报", "拉黑"])
             .asSignalOnErrorRecoverEmpty()
             .flatMap { action in
                 switch action {
                 case "举报":     return .just(.onTriggerUserFeedback)
+                case "拉黑":     return confirmBlockUser(sender: sender)
                 default:        return .empty()
                 }
         }
+    }
+}
+
+private func confirmBlockUser(sender: UIView?) -> Signal<UserStateObject.Event> {
+    return DefaultWireframe.shared
+        .promptFor(message: "你们将屏蔽对方发布的内容，您确定要拉黑吗？", preferredStyle: .alert, sender: sender, cancelAction: "取消", actions: ["拉黑"])
+        .asSignalOnErrorRecoverEmpty()
+        .flatMap { action in
+            switch action {
+            case "拉黑":     return .just(.onTriggerBlockUser)
+            default:        return .empty()
+            }
     }
 }
 
@@ -116,6 +129,13 @@ class UserViewController: ShowNavigationBarViewController {
                 .asSignal(onErrorReturnJust: UserStateObject.Event.onUnfollowUserError)
         })
         
+        let blockUser: Feedback = react(query: { $0.blockUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
+            ApolloClient.shared.rx.perform(mutation: query).asObservable()
+                .map { $0?.data?.blockUser.fragments.userFragment }.unwrap()
+                .map(UserStateObject.Event.onBlockUserSuccess)
+                .asSignal(onErrorReturnJust: UserStateObject.Event.onBlockUserError)
+        })
+        
         let states = store.states
         
         Signal.merge(
@@ -123,7 +143,8 @@ class UserViewController: ShowNavigationBarViewController {
             queryUser(states),
             queryUserMedia(states),
             followUser(states),
-            unfollowUser(states)
+            unfollowUser(states),
+            blockUser(states)
             )
             .debug("UserState.Event", trimOutput: true)
             .emit(onNext: store.on)

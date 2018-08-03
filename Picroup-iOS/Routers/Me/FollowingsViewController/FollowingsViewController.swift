@@ -13,7 +13,7 @@ import RxCocoa
 import RxDataSources
 import RxFeedback
 
-class FollowingsViewController: ShowNavigationBarViewController {
+final class FollowingsViewController: ShowNavigationBarViewController {
     
     typealias Dependency = String
     var dependency: Dependency!

@@ -74,4 +74,9 @@ extension RouterService.Me {
         vc.dependency = dependency
         return vc
     }
+    
+    static func blockingsViewController() -> BlockingsViewController {
+        let vc = UIStoryboard(name: "Me", bundle: nil).instantiateViewController(withIdentifier: "BlockingsViewController") as! BlockingsViewController
+        return vc
+    }
 }

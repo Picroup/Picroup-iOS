@@ -33,7 +33,7 @@ extension FeedbackStateObject {
     var saveAppFeedbackQuery: SaveAppFeedbackMutation? {
         guard kind == FeedbackKind.app.rawValue,
             !content.isEmpty,
-            let userId = session?.currentUser?._id
+            let userId = session?.currentUserId
             else { return nil }
         let next = SaveAppFeedbackMutation(userId: userId, content: content)
         return triggerSaveFeedback ? next : nil
@@ -41,7 +41,7 @@ extension FeedbackStateObject {
     var saveUserFeedbackQuery: SaveUserFeedbackMutation? {
         guard kind == FeedbackKind.user.rawValue,
             !content.isEmpty,
-            let userId = session?.currentUser?._id,
+            let userId = session?.currentUserId,
             let toUserId = toUserId
             else { return nil }
         let next = SaveUserFeedbackMutation(userId: userId, toUserId: toUserId, content: content)
@@ -50,7 +50,7 @@ extension FeedbackStateObject {
     var saveMediumFeedbackQuery: SaveMediumFeedbackMutation? {
         guard kind == FeedbackKind.medium.rawValue,
             !content.isEmpty,
-            let userId = session?.currentUser?._id,
+            let userId = session?.currentUserId,
             let mediumId = mediumId
             else { return nil }
         let next = SaveMediumFeedbackMutation(userId: userId, mediumId: mediumId, content: content)
@@ -59,7 +59,7 @@ extension FeedbackStateObject {
     var saveCommentFeedbackQuery: SaveCommentFeedbackMutation? {
         guard kind == FeedbackKind.comment.rawValue,
             !content.isEmpty,
-            let userId = session?.currentUser?._id,
+            let userId = session?.currentUserId,
             let commentId = commentId
             else { return nil }
         let next = SaveCommentFeedbackMutation(userId: userId, commentId: commentId, content: content)

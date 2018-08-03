@@ -32,14 +32,14 @@ final class UpdateUserStateObject: PrimaryObject {
 
 extension UpdateUserStateObject {
     var setImageKeyQuery: SetImageKeyQuery? {
-        guard let userId = session?.currentUser?._id,
+        guard let userId = session?.currentUserId,
             let imageKey = imageKey
             else { return nil }
         let next = (userId, imageKey)
         return triggerSetAvatarIdQuery ? next : nil
     }
     var setDisplayNameQuery: UserSetDisplayNameQuery? {
-        guard let userId = session?.currentUser?._id else { return nil }
+        guard let userId = session?.currentUserId else { return nil }
         let next = UserSetDisplayNameQuery(userId: userId, displayName: displayName)
         return triggerSetDisplayNameQuery ? next : nil
     }

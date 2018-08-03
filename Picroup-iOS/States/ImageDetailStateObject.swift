@@ -48,7 +48,7 @@ final class ImageDetailStateObject: PrimaryObject {
 extension ImageDetailStateObject {
     var mediumId: String { return _id }
     var mediumQuery: MediumQuery? {
-        let (userId, withStared) = session?.currentUser?._id == nil
+        let (userId, withStared) = session?.currentUserId == nil
             ? ("", false)
             : (session!.currentUser!._id, true)
         let next = MediumQuery(userId: userId, mediumId: mediumId, cursor: recommendMedia?.cursor.value, withStared: withStared, queryUserId: session?.currentUserId)
@@ -64,7 +64,7 @@ extension ImageDetailStateObject {
         return medium?.stared.value != true && !triggerStarMedium
     }
     public var starMediumQuery: StarMediumMutation? {
-        guard let userId = session?.currentUser?._id else { return nil }
+        guard let userId = session?.currentUserId else { return nil }
         let next = StarMediumMutation(userId: userId, mediumId: mediumId)
         return triggerStarMedium ? next : nil
     }

@@ -31,7 +31,7 @@ final class NotificationsStateObject: PrimaryObject {
 
 extension NotificationsStateObject {
     public var notificationsQuery: MyNotificationsQuery? {
-        guard let userId = session?.currentUser?._id else { return nil }
+        guard let userId = session?.currentUserId else { return nil }
         let next = MyNotificationsQuery(userId: userId, cursor: notifications?.cursor.value)
         return triggerNotificationsQuery ? next : nil
     }
@@ -46,7 +46,7 @@ extension NotificationsStateObject {
         return notifications?.cursor.value != nil
     }
     public var markQuery: MarkNotificationsAsViewedQuery? {
-        guard let userId = session?.currentUser?._id else { return nil }
+        guard let userId = session?.currentUserId else { return nil }
         let next = MarkNotificationsAsViewedQuery(userId: userId)
         return triggerMarkQuery && !isNotificationsEmpty ? next : nil
     }
