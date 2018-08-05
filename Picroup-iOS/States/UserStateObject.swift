@@ -14,15 +14,15 @@ import RxRealm
 
 final class UserStateObject: PrimaryObject {
     
+    @objc dynamic var version: String?
+    
     @objc dynamic var session: UserSessionObject?
     
     @objc dynamic var user: UserObject?
     @objc dynamic var userError: String?
     @objc dynamic var triggerUserQuery: Bool = false
     
-    @objc dynamic var userMedia: CursorMediaObject?
-    @objc dynamic var userMediaError: String?
-    @objc dynamic var triggerUserMediaQuery: Bool = false
+    @objc dynamic var userMediaState: CursorMediaStateObject?
     
     @objc dynamic var followUserVersion: String?
     @objc dynamic var followUserError: String?
@@ -32,8 +32,13 @@ final class UserStateObject: PrimaryObject {
     @objc dynamic var unfollowUserError: String?
     @objc dynamic var triggerUnfollowUserQuery: Bool = false
     
+    @objc dynamic var blockUserVersion: String?
+    @objc dynamic var blockUserError: String?
+    @objc dynamic var triggerBlockUserQuery: Bool = false
+    
     @objc dynamic var needUpdate: NeedUpdateStateObject?
 
+    @objc dynamic var loginRoute: LoginRouteObject?
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
     @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
@@ -46,32 +51,23 @@ final class UserStateObject: PrimaryObject {
 extension UserStateObject {
     var userId: String { return _id }
     var userQuery: UserQuery? {
-        let (byUserId, withFollowed) = session?.currentUser?._id == nil
+        let (byUserId, withFollowed) = session?.currentUserId == nil
             ? ("", false)
             : (session!.currentUser!._id, true)
         let next = UserQuery(userId: userId, followedByUserId: byUserId, withFollowed: withFollowed)
         return triggerUserQuery ? next : nil
     }
     var userMediaQuery: MyMediaQuery? {
-        let next = MyMediaQuery(userId: userId, cursor: userMedia?.cursor.value)
-        return triggerUserMediaQuery ? next : nil
-    }
-    var shouldQueryMoreUserMedia: Bool {
-        return !triggerUserMediaQuery && hasMoreMyMedia
-    }
-    var isUserMediaEmpty: Bool {
-        guard let items = userMedia?.items else { return false }
-        return !triggerUserMediaQuery && userMediaError == nil && items.isEmpty
-    }
-    var hasMoreMyMedia: Bool {
-        return userMedia?.cursor.value != nil
+        return userMediaState?.trigger == true
+            ? MyMediaQuery(userId: userId, cursor: userMediaState?.cursorMedia?.cursor.value, queryUserId: session?.currentUserId)
+            : nil
     }
     var shouldFollowUser: Bool {
         return user?.followed.value == false && !triggerFollowUserQuery
     }
     var followUserQuery: FollowUserMutation? {
         guard
-            let userId = session?.currentUser?._id,
+            let userId = session?.currentUserId,
             let toUserId = user?._id else {
                 return nil
         }
@@ -82,11 +78,24 @@ extension UserStateObject {
     }
     var unfollowUserQuery: UnfollowUserMutation? {
         guard
-            let userId = session?.currentUser?._id,
+            let userId = session?.currentUserId,
             let toUserId = user?._id else {
                 return nil
         }
         return triggerUnfollowUserQuery ? UnfollowUserMutation(userId: userId, toUserId: toUserId) : nil
+    }
+    var shouldBlockUser: Bool {
+        return !triggerBlockUserQuery
+    }
+    var blockUserQuery: BlockUserMutation? {
+        guard
+            let userId = session?.currentUserId,
+            let toUserId = user?._id else {
+                return nil
+        }
+        return triggerBlockUserQuery
+            ? BlockUserMutation(userId: userId, blockingUserId: toUserId)
+            : nil
     }
 }
 
@@ -99,8 +108,9 @@ extension UserStateObject {
                 "_id": userId,
                 "session": ["_id": _id],
                 "user": ["_id": userId],
-                "userMedia": ["_id": PrimaryKey.userMediaId(userId)],
+                "userMediaState": CursorMediaStateObject.valuesBy(id: PrimaryKey.userMediaId(userId)),
                 "needUpdate": ["_id": _id],
+                "loginRoute": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
                 "userFollowingsRoute": ["_id": _id],
                 "userFollowersRoute": ["_id": _id],
@@ -120,12 +130,8 @@ extension UserStateObject {
         case onGetUserSuccess(UserQuery.Data.User)
         case onGetUserError(Error)
         
-        case onTriggerReloadUserMedia
-        case onTriggerGetMoreUserMedia
-        case onGetReloadUserMedia(CursorMediaFragment)
-        case onGetMoreUserMedia(CursorMediaFragment)
-        case onGetUserMediaError(Error)
-        
+        case userMediaState(CursorMediaStateObject.Event)
+
         case onTriggerFollowUser
         case onFollowUserSuccess(FollowUserMutation.Data.FollowUser)
         case onFollowUserError(Error)
@@ -134,18 +140,16 @@ extension UserStateObject {
         case onUnfollowUserSuccess(UnfollowUserMutation.Data.UnfollowUser)
         case onUnfollowUserError(Error)
         
+        case onTriggerBlockUser
+        case onBlockUserSuccess(UserFragment)
+        case onBlockUserError(Error)
+        
+        case onTriggerLogin
         case onTriggerShowImage(String)
         case onTriggerShowUserFollowings
         case onTriggerShowUserFollowers
         case onTriggerUserFeedback
         case onTriggerPop
-    }
-}
-
-extension UserStateObject.Event {
-    
-    static func onGetUserMedia(isReload: Bool) -> (CursorMediaFragment) -> UserStateObject.Event {
-        return { isReload ? .onGetReloadUserMedia($0) : .onGetMoreUserMedia($0) }
     }
 }
 
@@ -164,25 +168,8 @@ extension UserStateObject: IsFeedbackStateObject {
             userError = error.localizedDescription
             triggerUserQuery = false
             
-        case .onTriggerReloadUserMedia:
-            userMedia?.cursor.value = nil
-            userMediaError = nil
-            triggerUserMediaQuery = true
-        case .onTriggerGetMoreUserMedia:
-            guard shouldQueryMoreUserMedia else { return }
-            userMediaError = nil
-            triggerUserMediaQuery = true
-        case .onGetReloadUserMedia(let data):
-            userMedia = CursorMediaObject.create(from: data, id: PrimaryKey.userMediaId(userId))(realm)
-            userMediaError = nil
-            triggerUserMediaQuery = false
-        case .onGetMoreUserMedia(let data):
-            userMedia?.merge(from: data)(realm)
-            userMediaError = nil
-            triggerUserMediaQuery = false
-        case .onGetUserMediaError(let error):
-            userMediaError = error.localizedDescription
-            triggerUserMediaQuery = false
+        case .userMediaState(let event):
+            userMediaState?.reduce(event: event, realm: realm)
             
         case .onTriggerFollowUser:
             guard shouldFollowUser else { return }
@@ -214,7 +201,6 @@ extension UserStateObject: IsFeedbackStateObject {
             unfollowUserError = nil
             triggerUnfollowUserQuery = false
             needUpdate?.myInterestedMedia = true
-
             snackbar?.message = "已取消关注 @\(user?.username ?? "")"
             snackbar?.version = UUID().uuidString
         case .onUnfollowUserError(let error):
@@ -222,6 +208,27 @@ extension UserStateObject: IsFeedbackStateObject {
             unfollowUserError = error.localizedDescription
             triggerUnfollowUserQuery = false
             
+        case .onTriggerBlockUser:
+            guard shouldBlockUser else { return }
+            blockUserVersion = nil
+            blockUserError = nil
+            triggerBlockUserQuery = true
+        case .onBlockUserSuccess(let data):
+            let blockedMedia = realm.objects(MediumObject.self).filter("userId = %@", data.id)
+            realm.delete(blockedMedia)
+            blockUserVersion = UUID().uuidString
+            blockUserError = nil
+            triggerBlockUserQuery = false
+            needUpdate?.myInterestedMedia = true
+            snackbar?.message = "已拉黑 @\(user?.username ?? "")，您可以前往设置取消拉黑"
+            snackbar?.version = UUID().uuidString
+        case .onBlockUserError(let error):
+            blockUserVersion = nil
+            blockUserError = error.localizedDescription
+            triggerBlockUserQuery = false
+            
+        case .onTriggerLogin:
+            loginRoute?.version = UUID().uuidString
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
             imageDetialRoute?.version = UUID().uuidString
@@ -236,6 +243,7 @@ extension UserStateObject: IsFeedbackStateObject {
         case .onTriggerPop:
             popRoute?.version = UUID().uuidString
         }
+        version = UUID().uuidString
     }
 }
 
@@ -260,7 +268,7 @@ final class UserStateStore {
     }
     
     func userMediaItems() -> Driver<[MediumObject]> {
-        guard let items = _state.userMedia?.items else { return .empty() }
+        guard let items = _state.userMediaState?.cursorMedia?.items else { return .empty() }
         return Observable.collection(from: items)
 //            .delaySubscription(0.3, scheduler: MainScheduler.instance)
             .asDriver(onErrorDriveWith: .empty())

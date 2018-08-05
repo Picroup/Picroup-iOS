@@ -17,10 +17,13 @@ import Apollo
 private func mapCommentMoreButtonTapToEvent(sender: UITableView) -> (CommentObject, ImageCommentsStateObject) -> Signal<ImageCommentsStateObject.Event> {
     return { comment, state in
         
+        guard state.session?.isLogin == true else {
+            return .just(.onTriggerLogin)
+        }
         guard let row = state.comments?.items.index(of: comment),
             let cell = sender.cellForRow(at: IndexPath(row: row, section: 0)) as? CommentCell
             else { return .empty() }
-        let currentUserId = state.session?.currentUser?._id
+        let currentUserId = state.session?.currentUserId
         let byMe = comment.userId == currentUserId
         let actions = byMe ? ["删除"] : ["举报"]
         return DefaultWireframe.shared
@@ -36,7 +39,7 @@ private func mapCommentMoreButtonTapToEvent(sender: UITableView) -> (CommentObje
     }
 }
 
-class ImageCommentsViewController: HideNavigationBarViewController {
+class ImageCommentsViewController: ShowNavigationBarViewController {
     
     typealias Dependency = String
     var dependency: Dependency!
@@ -46,6 +49,7 @@ class ImageCommentsViewController: HideNavigationBarViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
@@ -55,14 +59,14 @@ class ImageCommentsViewController: HideNavigationBarViewController {
             let store = try? ImageCommentsStateStore(mediumId: mediumId)
             else { return }
         
-        presenter.setup()
         
+        store.medium().bind(to: presenter.medium).disposed(by: disposeBag)
+
         typealias Section = ImageCommentsPresenter.Section
         let uiFeedback: Feedback = bind(presenter) { (presenter, state) in
             
             let commentMoreButtonTap = PublishRelay<CommentObject>()
             let subscriptions = [
-                store.medium().drive(presenter.medium),
                 state.map { $0.session?.isLogin ?? false }.drive(presenter.sendCommentContentView.rx.isShowed),
                 state.map { $0.saveCommentContent }.asObservable().take(1).bind(to: presenter.contentTextField.rx.text),
                 state.map { $0.shouldSendComment ? 1 : 0 }.drive(presenter.sendButton.rx.alpha),

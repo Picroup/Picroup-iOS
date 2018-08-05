@@ -12,6 +12,12 @@ import RxCocoa
 
 extension Reactive where Base: UIResponder {
     
+    public func becomeFirstResponder() -> Binder<Void> {
+        return Binder(base) { responder, _ in
+            responder.becomeFirstResponder()
+        }
+    }
+    
     public func resignFirstResponder() -> Binder<Void> {
         return Binder(base) { responder, _ in
             responder.resignFirstResponder()

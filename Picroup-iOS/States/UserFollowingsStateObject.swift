@@ -39,7 +39,7 @@ final class UserFollowingsStateObject: PrimaryObject {
 extension UserFollowingsStateObject {
     var userId: String { return _id }
     var userFollowingsQuery: UserFollowingsQuery? {
-        let (byUserId, withFollowed) = session?.currentUser?._id == nil
+        let (byUserId, withFollowed) = session?.currentUserId == nil
             ? ("", false)
             : (session!.currentUser!._id, true)
         let next = UserFollowingsQuery(userId: userId, followedByUserId: byUserId, cursor: userFollowings?.cursor.value, withFollowed: withFollowed)
@@ -61,7 +61,7 @@ extension UserFollowingsStateObject {
     }
     var followUserQuery: FollowUserMutation? {
         guard
-            let userId = session?.currentUser?._id,
+            let userId = session?.currentUserId,
             let toUserId = followToUserId else {
                 return nil
         }
@@ -73,7 +73,7 @@ extension UserFollowingsStateObject {
     }
     var unfollowUserQuery: UnfollowUserMutation? {
         guard
-            let userId = session?.currentUser?._id,
+            let userId = session?.currentUserId,
             let toUserId = unfollowToUserId else {
                 return nil
         }

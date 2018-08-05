@@ -21,12 +21,13 @@ class ReputationCell: RxTableViewCell {
         valueLabel.text = "+\(item.value.value ?? 0)"
         userAvatarImageView.setUserAvatar(with: item.user)
         mediumImageView.setImage(with: item.medium?.minioId)
+        mediumImageView.motionIdentifier = item.medium?._id
         switch item.kind {
-        case "saveMedium"?:
+        case ReputationKind.saveMedium.rawValue?:
             contentLabel.text = "分享了图片"
-        case "starMedium"?:
+        case ReputationKind.starMedium.rawValue?:
             contentLabel.text = "给你的图片续命"
-        case "followUser"?:
+        case ReputationKind.followUser.rawValue?:
             contentLabel.text = "关注了你"
         default:
             contentLabel.text = "类型未知，请升级应用后查看"

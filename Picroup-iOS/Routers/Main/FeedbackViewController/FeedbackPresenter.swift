@@ -13,10 +13,15 @@ import RxSwift
 import RxCocoa
 
 class FeedbackPresenter: NSObject {
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var titleLabel: UILabel!
+//    @IBOutlet weak var headerView: UIView!
+//    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var textView: UITextView! {
         didSet { textView.becomeFirstResponder() }
     }
     @IBOutlet weak var saveButton: RaisedButton!
+    
+    func setup(navigationItem: UINavigationItem) {
+        navigationItem.titleLabel.text = " "
+        navigationItem.titleLabel.textColor = .primaryText
+    }
 }

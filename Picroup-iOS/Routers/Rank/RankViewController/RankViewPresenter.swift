@@ -16,20 +16,30 @@ final class RankViewPresenter: NSObject {
     
     var userButton: IconButton!
     var refreshControl: UIRefreshControl!
-    weak var collectionView: UICollectionView!
+//    weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var tagsCollectionView: UICollectionView!
     weak var navigationItem: UINavigationItem!
+    @IBOutlet weak var hideTagsLayoutConstraint: NSLayoutConstraint!
+    var mediaPresenter: MediaPreserter!
     
-    func setup(collectionView: UICollectionView, navigationItem: UINavigationItem) {
-        self.collectionView = collectionView
+    func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
+        self.mediaPresenter = MediaPreserter(collectionView: collectionView, animatedDataSource: false)
+        prepareTagsCollectionView()
         prepareRefreshControl()
         prepareUserButton()
         prepareNavigationItem()
     }
     
+    fileprivate func prepareTagsCollectionView() {
+        
+        tagsCollectionView.register(UINib(nibName: "TagCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TagCollectionViewCell")
+    }
+    
     fileprivate func prepareRefreshControl() {
         refreshControl = UIRefreshControl()
-        refreshControl.tintColor = .primaryLight
+        refreshControl.tintColor = .lightGray
         collectionView.addSubview(refreshControl!)
     }
     
@@ -40,41 +50,10 @@ final class RankViewPresenter: NSObject {
     }
     
     fileprivate func prepareNavigationItem() {
-        navigationItem.titleLabel.text = "热门"
+        navigationItem.titleLabel.text = "发现"
         navigationItem.titleLabel.textColor = .primaryText
 //        navigationItem.titleLabel.textAlignment = .left
         navigationItem.rightViews = [userButton]
     }
     
-    typealias Section = AnimatableSectionModel<String, MediumObject>
-    typealias DataSource = RxCollectionViewSectionedReloadDataSource<Section>
-    
-    var items: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
-        return { [collectionView] loadState in
-            let dataSource = DataSource(
-                configureCell: { dataSource, collectionView, indexPath, item in
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                    cell.configure(with: item)
-                    return cell
-            },
-                configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
-            )
-            return collectionView!.rx.items(dataSource: dataSource)
-        }
-    }
-}
-
-func createLoadFooterSupplementaryView<D>(loadState: Driver<LoadFooterViewState>) -> (D, UICollectionView, String, IndexPath) -> UICollectionReusableView {
-    return { dataSource, collectionView, title, indexPath in
-        let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "CollectionLoadFooterView", for: indexPath) as! CollectionLoadFooterView
-        loadState.drive(onNext: footer.contentView.on).disposed(by: footer.disposeBag)
-        return footer
-    }
-}
-
-extension RankViewPresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CollectionViewLayoutManager.size(in: collectionView.bounds)
-    }
 }

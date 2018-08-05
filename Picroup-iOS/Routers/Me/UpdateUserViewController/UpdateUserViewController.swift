@@ -14,13 +14,14 @@ import RxFeedback
 import Apollo
 import Kingfisher
 
-final class UpdateUserViewController: HideNavigationBarViewController {
+final class UpdateUserViewController: ShowNavigationBarViewController {
     
     @IBOutlet fileprivate weak var presenter: UpdateUserPresenter!
     fileprivate typealias Feedback = (Driver<UpdateUserStateObject>) -> Signal<UpdateUserStateObject.Event>
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
@@ -40,17 +41,19 @@ final class UpdateUserViewController: HideNavigationBarViewController {
             let events: [Signal<UpdateUserStateObject.Event>] = [
                 presenter.displaynameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).skip(2)
                     .map(UpdateUserStateObject.Event.onTriggerSetDisplayName),
-                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
+//                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 presenter.userAvatarImageView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().flatMapLatest { _ in
-                    PhotoPickerProvider.pickImages(from: weakSelf, imageLimit: 1).map { $0.first }.unwrap()
+                    PhotoPickerProvider.pickImage(from: weakSelf)
                     }.map(UpdateUserStateObject.Event.onChangeImageKey)
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
         let querySetImageKey: Feedback = react(query: { $0.setImageKeyQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            let image = ImageCache.default.retrieveImageInMemoryCache(forKey: query.imageKey)!
-            let (progress, filename) = ImageUpoader.uploadImage(image)
+            guard let pickedImage = ImageCache.default.retrieveImage(forKey: query.imageKey) else {
+                return .just(.onSetAvatarIdError(CacheError.imageNotCached))
+            }
+            let (progress, filename) = UpoaderService.uploadImage(pickedImage)
             let next = UserSetAvatarIdQuery(userId: query.userId, avatarId: filename)
             return Observable.concat([
                 progress.flatMap { _ in Observable<UpdateUserStateObject.Event>.empty() },

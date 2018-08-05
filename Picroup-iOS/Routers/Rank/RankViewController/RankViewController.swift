@@ -14,18 +14,15 @@ import RxFeedback
 import Material
 import Apollo
 
-class RankViewController: BaseViewController {
+final class RankViewController: BaseViewController {
     
-    @IBOutlet weak var collectionView: UICollectionView!
-    private var presenter: RankViewPresenter!
+    @IBOutlet var presenter: RankViewPresenter!
     
-    private let disposeBag = DisposeBag()
     typealias Feedback = (Driver<RankStateObject>) -> Signal<RankStateObject.Event>
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = RankViewPresenter()
-        presenter.setup(collectionView: collectionView, navigationItem: navigationItem)
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
@@ -33,24 +30,28 @@ class RankViewController: BaseViewController {
         
         guard let store = try? RankStateStore() else { return }
         
-        typealias Section = RankViewPresenter.Section
+        typealias Section = MediaPreserter.Section
                 
         let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
             let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions = [
-//                store.rankMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState.asDriver())),
-                store.hotMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(footerState.asDriver())),
-                state.map { $0.isReloadHotMedia }.drive(presenter.refreshControl.rx.isRefreshing),
-                state.map { $0.footerState }.drive(footerState),
+                store.tagStates().drive(presenter.tagsCollectionView.rx.items(cellIdentifier: "TagCollectionViewCell", cellType: TagCollectionViewCell.self)) { index, tagState, cell in
+                    cell.tagLabel.text = tagState.tag
+                    cell.setSelected(tagState.isSelected)
+                },
+                store.hotMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.mediaPresenter.items(footerState: footerState.asDriver())),
+                state.map { $0.hotMediaState?.isReload ?? false }.drive(presenter.refreshControl.rx.refreshing),
+                state.map { $0.hotMediaState?.footerState ?? .empty }.drive(footerState),
                 state.map { $0.session?.isLogin ?? false }.drive(presenter.userButton.rx.isHidden),
             ]
             let events: [Signal<RankStateObject.Event>] = [
+                presenter.tagsCollectionView.rx.modelSelected(TagStateObject.self).asSignal().map { .onToggleTag($0.tag) },
                 state.flatMapLatest {
-                    $0.shouldQueryMoreHotMedia
+                    ($0.hotMediaState?.shouldQueryMore ?? false)
                         ? presenter.collectionView.rx.triggerGetMore
                         : .empty()
-                }.map { .onTriggerGetMore },
-                presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReload },
+                }.map { .hotMediaState(.onTriggerGetMore) },
+                presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .hotMediaState(.onTriggerReload) },
                 presenter.collectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
                 presenter.userButton.rx.tap.asSignal().map { .onTriggerLogin },
             ]
@@ -58,27 +59,36 @@ class RankViewController: BaseViewController {
         }
         
         let vcFeedback: Feedback = bind(self) { (me, state)  in
+            let presenter = me.presenter!
+            let view = me.view!
             let subscriptions = [
-                me.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true))
+                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
+                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setTabBarHidden(animated: true)),
+                presenter.collectionView.rx.shouldHideNavigationBar().emit(onNext: {
+                    presenter.hideTagsLayoutConstraint.isActive = $0
+                    UIView.animate(withDuration: 0.3) { view.layoutIfNeeded() }
+                    }),
             ]
             let events: [Signal<RankStateObject.Event>] = [
-                .just(.onTriggerReload),
-                .never()
+                .just(.hotMediaState(.onTriggerReload)),
+                .never(),
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
         
         let queryMedia: Feedback = react(query: { $0.hotMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.hotMedia.fragments.cursorMediaFragment }.unwrap()
-                .map(RankStateObject.Event.onGetData)
+                .map { $0?.data?.hotMediaByTags.fragments.cursorMediaFragment }.unwrap()
+                .map { .hotMediaState(.onGetData($0)) }
                 .retryWhen { errors -> Observable<Int> in
                     errors.enumerated().flatMapLatest { Observable<Int>.timer(5 * RxTimeInterval($0.index + 1), scheduler: MainScheduler.instance) }
                 }
-                .asSignal(onErrorReturnJust: RankStateObject.Event.onGetError)
+                .asSignal(onErrorReturnJust: { .hotMediaState(.onGetError($0)) })
+                .delay(0.3)
         })
         
         let states = store.states
+//            .debug("RankState")
         
         Signal.merge(
             vcFeedback(states),
@@ -89,20 +99,20 @@ class RankViewController: BaseViewController {
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         
-        presenter.collectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
+        presenter.collectionView.rx.setDelegate(presenter.mediaPresenter).disposed(by: disposeBag)
     }
 }
 
-extension RankStateObject {
+extension CursorMediaStateObject {
     
     var footerState: LoadFooterViewState {
-        if isReloadHotMedia {
+        if isReload == true {
             return .empty
         }
-        if !isReloadHotMedia && triggerHotMediaQuery {
+        if isReload == false && trigger == true {
             return .loading
         }
-        if hotMediaError != nil {
+        if error != nil {
             return .message("💁🏻‍♀️ 加载失败，请重试")
         }
         return .empty

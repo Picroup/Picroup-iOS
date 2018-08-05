@@ -44,7 +44,7 @@ final class LoginViewPresenter: NSObject {
         usernameField.dividerActiveColor = .primary
         usernameField.autocapitalizationType = .none
         usernameField.detailLabel.isHidden = true
-        _ = usernameField.becomeFirstResponder()
+//        _ = usernameField.becomeFirstResponder()
     }
     
     fileprivate func preparePasswordField() {

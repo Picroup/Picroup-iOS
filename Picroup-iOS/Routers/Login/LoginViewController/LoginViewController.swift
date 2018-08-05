@@ -13,7 +13,7 @@ import RxCocoa
 import RxFeedback
 import Apollo
 
-class LoginViewController: BaseViewController {
+class LoginViewController: ShowNavigationBarViewController {
     
     @IBOutlet fileprivate var presenter: LoginViewPresenter!
     fileprivate typealias Feedback = (Driver<LoginStateObject>) -> Signal<LoginStateObject.Event>
@@ -43,7 +43,10 @@ class LoginViewController: BaseViewController {
                 presenter.registerButton.rx.tap.asSignal().emit(onNext: {
                     let vc = RouterService.Login.registerUsernameViewController()
                     weakSelf?.navigationController?.pushViewController(vc, animated: true)
-                })
+                }),
+                me.rx.viewDidAppear.asSignal().mapToVoid().emit(to: presenter.usernameField.rx.becomeFirstResponder()),
+                me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.usernameField.rx.resignFirstResponder()),
+                me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.passwordField.rx.resignFirstResponder()),
                 ]
             let events: [Signal<LoginStateObject.Event>] = [
                 presenter.usernameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangeUsername),

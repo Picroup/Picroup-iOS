@@ -36,7 +36,7 @@ final class SearchUserStateObject: PrimaryObject {
 
 extension SearchUserStateObject {
     var searchUserQuery: SearchUserQuery? {
-        guard let byUserId = session?.currentUser?._id, !searchText.isEmpty else { return nil }
+        guard let byUserId = session?.currentUserId, !searchText.isEmpty else { return nil }
         let next = SearchUserQuery(username: searchText, followedByUserId: byUserId)
         return triggerSearchUserQuery ? next : nil
     }
@@ -52,7 +52,7 @@ extension SearchUserStateObject {
     }
     var followUserQuery: FollowUserMutation? {
         guard
-            let userId = session?.currentUser?._id,
+            let userId = session?.currentUserId,
             let toUserId = followToUserId else {
                 return nil
         }
@@ -64,7 +64,7 @@ extension SearchUserStateObject {
     }
     var unfollowUserQuery: UnfollowUserMutation? {
         guard
-            let userId = session?.currentUser?._id,
+            let userId = session?.currentUserId,
             let toUserId = unfollowToUserId else {
                 return nil
         }

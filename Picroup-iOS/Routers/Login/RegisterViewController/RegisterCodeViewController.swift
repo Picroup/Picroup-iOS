@@ -34,7 +34,7 @@ final class RegisterCodePresenter: NSObject {
         codeField.placeholderActiveColor = .primary
         codeField.dividerActiveColor = .primary
         codeField.autocapitalizationType = .none
-        _ = codeField.becomeFirstResponder()
+//        _ = codeField.becomeFirstResponder()
     }
 }
 
@@ -60,6 +60,8 @@ final class RegisterCodeViewController: BaseViewController {
                 state.map { $0.isRegisterEnabled }.distinctUntilChanged().drive(presenter.validButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 state.map { $0.detail }.drive(presenter.codeField.rx.detail),
                 presenter.validButton.rx.tap.asSignal().emit(to: presenter.codeField.rx.resignFirstResponder()),
+                me.rx.viewDidAppear.asSignal().mapToVoid().emit(to: presenter.codeField.rx.becomeFirstResponder()),
+                me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.codeField.rx.resignFirstResponder()),
                 ]
             let events: [Signal<RegisterCodeStateObject.Event>] = [
                 .just(.onTriggerGetVerifyCode),

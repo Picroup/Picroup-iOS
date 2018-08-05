@@ -10,20 +10,14 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
-final class NeedUpdateStateObject: PrimaryObject {
-    @objc dynamic var myInterestedMedia: Bool = false
-    @objc dynamic var myMedia: Bool = false
-    @objc dynamic var myStaredMedia: Bool = false
-}
-
 final class HomeStateObject: PrimaryObject {
+    
+    @objc dynamic var version: String?
     
     @objc dynamic var session: UserSessionObject?
     
-    @objc dynamic var myInterestedMedia: CursorMediaObject?
-    @objc dynamic var myInterestedMediaError: String?
-    @objc dynamic var triggerMyInterestedMediaQuery: Bool = false
-    
+    @objc dynamic var myInterestedMediaState: CursorMediaStateObject?
+
     @objc dynamic var needUpdate: NeedUpdateStateObject?
 
     @objc dynamic var createImageRoute: CreateImageRouteObject?
@@ -36,22 +30,10 @@ final class HomeStateObject: PrimaryObject {
 
 extension HomeStateObject {
     var myInterestedMediaQuery: UserInterestedMediaQuery? {
-        guard let userId = session?.currentUser?._id else { return nil }
-        let next = UserInterestedMediaQuery(userId: userId, cursor: myInterestedMedia?.cursor.value)
-        return triggerMyInterestedMediaQuery ? next : nil
-    }
-    var shouldQueryMoreMyInterestedMedia: Bool {
-        return !triggerMyInterestedMediaQuery && hasMoreMyInterestedMedia
-    }
-    var isMyInterestedMediaEmpty: Bool {
-        guard let items = myInterestedMedia?.items else { return false }
-        return !triggerMyInterestedMediaQuery && myInterestedMediaError == nil && items.isEmpty
-    }
-    var hasMoreMyInterestedMedia: Bool {
-        return myInterestedMedia?.cursor.value != nil
-    }
-    var isReloading: Bool {
-        return myInterestedMedia?.cursor.value == nil && triggerMyInterestedMediaQuery
+        guard let userId = session?.currentUserId else { return nil }
+        return myInterestedMediaState?.trigger == true
+            ? UserInterestedMediaQuery(userId: userId, cursor: myInterestedMediaState?.cursorMedia?.cursor.value)
+            : nil
     }
 }
 
@@ -63,7 +45,7 @@ extension HomeStateObject {
             let value: Any = [
                 "_id": _id,
                 "session": ["_id": _id],
-                "myInterestedMedia": ["_id": PrimaryKey.myInterestedMediaId],
+                "myInterestedMediaState": CursorMediaStateObject.valuesBy(id: PrimaryKey.myInterestedMediaId),
                 "needUpdate": ["_id": _id],
                 "createImageRoute": ["_id": _id],
                 "searchUserRoute": ["_id": _id],
@@ -81,26 +63,15 @@ extension HomeStateObject {
     
     enum Event {
         
-        case onTriggerReloadMyInterestedMedia
+        case myInterestedMediaState(CursorMediaStateObject.Event)
         case onTriggerReloadMyInterestedMediaIfNeeded
-        case onTriggerGetMoreMyInterestedMedia
-        case onGetReloadMyInterestedMedia(CursorMediaFragment)
-        case onGetMoreMyInterestedMedia(CursorMediaFragment)
-        case onGetMyInterestedMediaError(Error)
-        
+
         case onTriggerShowImage(String)
         case onTriggerShowComments(String)
         case onTriggerShowUser(String)
         
-        case onTriggerCreateImage([String])
+        case onTriggerCreateImage([MediaItem])
         case onTriggerSearchUser
-    }
-}
-
-extension HomeStateObject.Event {
-    
-    static func onGetMyInterestedMedia(isReload: Bool) -> (CursorMediaFragment) -> HomeStateObject.Event {
-        return { isReload ? .onGetReloadMyInterestedMedia($0) : .onGetMoreMyInterestedMedia($0) }
     }
 }
 
@@ -108,31 +79,12 @@ extension HomeStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
-        case .onTriggerReloadMyInterestedMedia:
-            myInterestedMedia?.cursor.value = nil
-            myInterestedMediaError = nil
-            triggerMyInterestedMediaQuery = true
+        case .myInterestedMediaState(let event):
+            myInterestedMediaState?.reduce(event: event, realm: realm)
         case .onTriggerReloadMyInterestedMediaIfNeeded:
             guard needUpdate?.myInterestedMedia == true else { return }
-            myInterestedMedia?.cursor.value = nil
-            myInterestedMediaError = nil
-            triggerMyInterestedMediaQuery = true
-        case .onTriggerGetMoreMyInterestedMedia:
-            guard shouldQueryMoreMyInterestedMedia else { return }
-            myInterestedMediaError = nil
-            triggerMyInterestedMediaQuery = true
-        case .onGetReloadMyInterestedMedia(let data):
-            myInterestedMedia = CursorMediaObject.create(from: data, id: PrimaryKey.myInterestedMediaId)(realm)
-            myInterestedMediaError = nil
-            triggerMyInterestedMediaQuery = false
             needUpdate?.myInterestedMedia = false
-        case .onGetMoreMyInterestedMedia(let data):
-            myInterestedMedia?.merge(from: data)(realm)
-            myInterestedMediaError = nil
-            triggerMyInterestedMediaQuery = false
-        case .onGetMyInterestedMediaError(let error):
-            myInterestedMediaError = error.localizedDescription
-            triggerMyInterestedMediaQuery = false
+            myInterestedMediaState?.reduce(event: .onTriggerReload, realm: realm)
             
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
@@ -144,13 +96,15 @@ extension HomeStateObject: IsFeedbackStateObject {
             userRoute?.userId = userId
             userRoute?.version = UUID().uuidString
             
-        case .onTriggerCreateImage(let imageKeys):
-            createImageRoute?.imageKeys.removeAll()
-            createImageRoute?.imageKeys.append(objectsIn: imageKeys)
+        case .onTriggerCreateImage(let mediaItems):
+            createImageRoute?.mediaItemObjects.removeAll()
+            let mediaItemObjects = mediaItems.map { MediaItemObject.create(mediaItem: $0)(realm) }
+            createImageRoute?.mediaItemObjects.append(objectsIn: mediaItemObjects)
             createImageRoute?.version = UUID().uuidString
         case .onTriggerSearchUser:
             searchUserRoute?.version = UUID().uuidString
         }
+        version = UUID().uuidString
     }
 }
 
@@ -174,7 +128,7 @@ final class HomeStateStore {
     }
     
     func myInterestedMediaItems() -> Driver<[MediumObject]> {
-        guard let items = _state.myInterestedMedia?.items else { return .empty() }
+        guard let items = _state.myInterestedMediaState?.cursorMedia?.items else { return .empty() }
         return Observable.collection(from: items)
 //            .delaySubscription(0.3, scheduler: MainScheduler.instance)
             .asDriver(onErrorDriveWith: .empty())

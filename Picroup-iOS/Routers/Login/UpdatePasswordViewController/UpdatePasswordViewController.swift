@@ -29,7 +29,7 @@ final class UpdatePasswordPresenter: NSObject {
         oldPasswordField.dividerActiveColor = .primary
         oldPasswordField.clearButtonMode = .whileEditing
         oldPasswordField.isVisibilityIconButtonEnabled = true
-        _ = oldPasswordField.becomeFirstResponder()
+//        _ = oldPasswordField.becomeFirstResponder()
     }
     
     fileprivate func preparePasswordField() {
@@ -64,6 +64,9 @@ class UpdatePasswordViewController: BaseViewController {
                 state.map { $0.shouldSetPassword }.distinctUntilChanged().drive(presenter.setPasswordButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 presenter.setPasswordButton.rx.tap.asSignal().emit(to: presenter.oldPasswordField.rx.resignFirstResponder()),
                 presenter.setPasswordButton.rx.tap.asSignal().emit(to: presenter.passwordField.rx.resignFirstResponder()),
+                me.rx.viewDidAppear.asSignal().mapToVoid().emit(to: presenter.oldPasswordField.rx.becomeFirstResponder()),
+                me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.oldPasswordField.rx.resignFirstResponder()),
+                me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.passwordField.rx.resignFirstResponder()),
                 ]
             let events: [Signal<UpdatePasswordStateObject.Event>] = [
                 presenter.oldPasswordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).map(UpdatePasswordStateObject.Event.onChangeOldPassword),

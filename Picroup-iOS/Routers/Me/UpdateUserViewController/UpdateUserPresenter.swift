@@ -13,10 +13,14 @@ import RxCocoa
 
 class UpdateUserPresenter: NSObject {
 
-    @IBOutlet weak var headerView: UIView!
+//    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var userAvatarSpinner: UIActivityIndicatorView!
     @IBOutlet weak var displaynameField: UITextField!
     @IBOutlet weak var usernameLabel: UILabel!
 
+    func setup(navigationItem: UINavigationItem) {
+        navigationItem.titleLabel.text = "更新个人信息"
+        navigationItem.titleLabel.textColor = .primaryText
+    }
 }

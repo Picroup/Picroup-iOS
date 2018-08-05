@@ -12,12 +12,21 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
+class CustomIntrinsicContentSizeView: UIView {
+    @IBInspectable var height: CGFloat = 100.0
+    @IBInspectable var width: CGFloat = 100.0
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: width, height: height)
+    }
+}
+
 class MePresenter: NSObject {
-    @IBOutlet weak var meBackgroundView: UIView!
+    weak var navigationItem: UINavigationItem?
+    @IBOutlet weak var imageContentView: CustomIntrinsicContentSizeView!
+    
+    @IBOutlet weak var meBackgroundView: UIView! { didSet { meBackgroundView.backgroundColor = .primary } }
     @IBOutlet weak var userAvatarImageView: UIImageView!
-    @IBOutlet weak var displaynameLabel: UILabel!
-    @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var moreButton: UIButton!
+    var moreButton: IconButton!
     
     @IBOutlet weak var reputationCountLabel: UILabel!
     @IBOutlet weak var gainedReputationCountButton: UIButton!
@@ -33,31 +42,53 @@ class MePresenter: NSObject {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var myMediaCollectionView: UICollectionView!
-    @IBOutlet weak var myStardMediaCollectionView: UICollectionView!
+    @IBOutlet weak var myStaredMediaCollectionView: UICollectionView!
     @IBOutlet weak var myMediaEmptyView: UIView!
-    @IBOutlet weak var myStardMediaEmptyView: UIView!
+    @IBOutlet weak var myStaredMediaEmptyView: UIView!
+    var myMediaPresenter: MediaPreserter!
+    var myStaredMediaPresenter: MediaPreserter!
 
     @IBOutlet weak var selectMyMediaLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var hideDetailLayoutConstraint: NSLayoutConstraint!
     private var isFirstTimeSetSelectedTab = true
     
+    func setup(navigationItem: UINavigationItem) {
+        self.navigationItem = navigationItem
+        self.myMediaPresenter = MediaPreserter(collectionView: myMediaCollectionView, animatedDataSource: true)
+        self.myStaredMediaPresenter = MediaPreserter(collectionView: myStaredMediaCollectionView, animatedDataSource: true)
+        prepareNavigationItems()
+    }
+    
+    fileprivate func prepareNavigationItems() {
+        guard let navigationItem = navigationItem else { return  }
+
+        navigationItem.titleLabel.text = "..."
+        navigationItem.titleLabel.textColor = .primaryText
+        navigationItem.titleLabel.textAlignment = .left
+        
+        navigationItem.detailLabel.text = "@..."
+        navigationItem.detailLabel.textColor = .primaryText
+        navigationItem.detailLabel.textAlignment = .left
+        
+        moreButton = IconButton(image: UIImage(named: "ic_more_vert"), tintColor: .primaryText)
+        
+        navigationItem.leftViews = [imageContentView]
+        navigationItem.rightViews = [moreButton]
+    }
+    
     var me: Binder<UserObject?> {
         return Binder(self) { presenter, me in
             let viewModel = UserViewModel(user: me)
             presenter.userAvatarImageView.setUserAvatar(with: me)
-            presenter.displaynameLabel.text = viewModel.displayName
-            presenter.usernameLabel.text = viewModel.username
+            presenter.navigationItem?.titleLabel.text = viewModel.displayName
+            presenter.navigationItem?.detailLabel.text = viewModel.username
             presenter.reputationCountLabel.text = viewModel.reputation
-            presenter.displaynameLabel.text = viewModel.displayName
             presenter.followersCountLabel.text = viewModel.followersCount
             presenter.followingsCountLabel.text = viewModel.followingsCount
             presenter.gainedReputationCountButton.setTitle(viewModel.gainedReputationCount, for: .normal)
             presenter.gainedReputationCountButton.isHidden = viewModel.isGainedReputationCountHidden
         }
     }
-    
-    typealias Section = AnimatableSectionModel<String, MediumObject>
-    typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     
     var selectedTabIndex: Binder<Int> {
         return Binder(self) { me, index in
@@ -72,31 +103,6 @@ class MePresenter: NSObject {
         }
     }
     
-    private var dataSource: (Driver<LoadFooterViewState>) -> DataSource {
-        return { loadState in
-            return DataSource(
-                configureCell: { dataSource, collectionView, indexPath, item in
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-                    cell.configure(with: item)
-                    return cell
-            },
-                configureSupplementaryView: createLoadFooterSupplementaryView(loadState: loadState)
-            )
-        }
-    }
-    
-    var myMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
-        return { [myMediaCollectionView] loadState in
-            return myMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
-        }
-    }
-    
-    var myStaredMediaItems: (Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
-        return { [myStardMediaCollectionView] loadState in
-            return myStardMediaCollectionView!.rx.items(dataSource: self.dataSource(loadState))
-        }
-    }
-    
     var isMyMediaEmpty: Binder<Bool> {
         return Binder(self) { presenter, isEmpty in
             presenter.myMediaCollectionView.backgroundView = isEmpty ? presenter.myMediaEmptyView : nil
@@ -105,15 +111,7 @@ class MePresenter: NSObject {
     
     var isMyStaredMediaEmpty: Binder<Bool> {
         return Binder(self) { presenter, isEmpty in
-            presenter.myStardMediaCollectionView.backgroundView = isEmpty ? presenter.myStardMediaEmptyView : nil
+            presenter.myStaredMediaCollectionView.backgroundView = isEmpty ? presenter.myStaredMediaEmptyView : nil
         }
-    }
-}
-
-
-extension MePresenter: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CollectionViewLayoutManager.size(in: collectionView.bounds)
     }
 }

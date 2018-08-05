@@ -1,0 +1,8 @@
+query UserBlockingUsers($userId: ID!) {
+    user(userId: $userId) {
+        blockingUsers {
+            ...UserFragment
+        }
+    }
+}
+

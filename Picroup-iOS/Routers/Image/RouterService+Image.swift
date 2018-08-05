@@ -35,4 +35,10 @@ extension RouterService.Image {
         vc.dependency = dependency
         return vc
     }
+    
+    static func updateMediumTagsViewController(dependency: UpdateMediumTagsViewController.Dependency) -> UpdateMediumTagsViewController {
+        let vc = UIStoryboard(name: "Image", bundle: nil).instantiateViewController(withIdentifier: "UpdateMediumTagsViewController") as! UpdateMediumTagsViewController
+        vc.dependency = dependency
+        return vc
+    }
 }

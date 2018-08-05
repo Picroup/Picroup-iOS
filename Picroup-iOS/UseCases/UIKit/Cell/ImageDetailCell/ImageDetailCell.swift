@@ -11,28 +11,27 @@ import Material
 import RxSwift
 import RxCocoa
 
-extension ImageDetailCell {
+struct ImageDetailViewModel {
+    let kind: String?
+    let imageViewMinioId: String?
+    let imageViewMotionIdentifier: String?
+    let progress: Float
+    let lifeBarMotionIdentifier: String?
+    let starButtonMotionIdentifier: String?
+    let remainTimeLabelText: String?
+    let commentsCountText: String?
+    let stared: Bool?
+    let animatedChangeProgress: Bool
     
-    struct ViewModel {
-        let imageViewMinioId: String?
-        let imageViewMotionIdentifier: String?
-        let progress: CGFloat
-        let lifeBarMotionIdentifier: String?
-        let starButtonMotionIdentifier: String?
-        let remainTimeLabelText: String?
-        let commentsCountText: String?
-        let stared: Bool?
-        let animatedChangeProgress: Bool
-        
-        let displayName: String?
-        let avatarId: String?
-    }
+    let displayName: String?
+    let avatarId: String?
 }
 
-extension ImageDetailCell.ViewModel {
+extension ImageDetailViewModel {
     
     init(medium: MediumObject) {
         guard !medium.isInvalidated else {
+            self.kind = nil
             self.imageViewMinioId = nil
             self.imageViewMotionIdentifier = nil
             self.progress = 0
@@ -48,12 +47,12 @@ extension ImageDetailCell.ViewModel {
         }
         let remainTime = medium.endedAt.value?.sinceNow ?? 0
         
+        self.kind = medium.kind
         self.imageViewMinioId = medium.minioId
         self.imageViewMotionIdentifier = medium._id
-        self.progress = CGFloat(remainTime / 12.0.weeks)
+        self.progress = Float(remainTime / 12.0.weeks)
         self.lifeBarMotionIdentifier = "lifeBar_\(medium._id)"
         self.starButtonMotionIdentifier = "starButton_\(medium._id)"
-//        self.remainTimeLabelText = "\(Int(remainTime / 1.0.weeks)) 周"
         self.remainTimeLabelText = Moment.string(from: medium.endedAt.value)
         self.commentsCountText = "  \(medium.commentsCount.value ?? 0)"
         self.stared = medium.stared.value
@@ -66,11 +65,10 @@ extension ImageDetailCell.ViewModel {
 
 class ImageDetailCell: RxCollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var lifeBar: UIView!
+    @IBOutlet weak var progressView: ProgressView!
     @IBOutlet weak var starButton: FABButton! {
         didSet { starButton.image = Icon.favorite }
     }
-    @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var userView: UIView!
     @IBOutlet weak var displayNameLabel: UILabel!
@@ -87,9 +85,10 @@ class ImageDetailCell: RxCollectionViewCell {
         onUserTap: (() -> Void)?,
         onMoreTap: (() -> Void)?
         ) {
-        let viewModel = ViewModel(medium: item)
+        if item.isInvalidated { return }
+        let viewModel = ImageDetailViewModel(medium: item)
         
-        if item.kind == MediumKind.image.rawValue {
+        if viewModel.kind == MediumKind.image.rawValue {
             imageView.setImage(with: item.minioId)
             suggestUpdateLabel.isHidden = true
         } else {
@@ -97,9 +96,9 @@ class ImageDetailCell: RxCollectionViewCell {
             suggestUpdateLabel.isHidden = false
         }
         imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
-        lifeBar.motionIdentifier = viewModel.lifeBarMotionIdentifier
+        progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
+        progressView.progress = viewModel.progress
         starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
-        lifeViewWidthConstraint.constant = viewModel.progress * lifeBar.bounds.width
         userAvatarImageView.setUserAvatar(with: item.user)
         displayNameLabel.text = viewModel.displayName
         remainTimeLabel.text = viewModel.remainTimeLabelText
@@ -144,7 +143,7 @@ class ImageDetailCell: RxCollectionViewCell {
         }
     }
     
-    private func configureStarButton(with viewModel: ViewModel) {
+    private func configureStarButton(with viewModel: ImageDetailViewModel) {
         starButton.isEnabled = viewModel.stared == false
         StarButtonPresenter.isSelected(base: starButton).onNext(viewModel.stared)
     }

@@ -48,6 +48,20 @@ final class Router {
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         
+        _ = store.tagMediaRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .map { $0.tag }.unwrap()
+            .drive(Binder(self) { (me, tag) in
+                let vc = RouterService.Main.tagMediaViewController(dependency: tag)
+                me.currentNavigationController?.pushViewController(vc, animated: true)
+            })
+        
+        _ = store.updateMediumTagsRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .map { $0.mediumId }.unwrap()
+            .drive(Binder(self) { (me, mediumId) in
+                let vc = RouterService.Image.updateMediumTagsViewController(dependency: mediumId)
+                me.currentNavigationController?.pushViewController(vc, animated: true)
+            })
+        
         _ = store.reputationsRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .drive(Binder(self) { (me, _) in
                 let vc = RouterService.Me.reputationsViewController()
@@ -55,10 +69,11 @@ final class Router {
             })
         
         _ = store.createImageRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
-            .map { $0.imageKeys.toArray() }.filter { !$0.isEmpty }
-            .drive(Binder(self) { (me, imageKeys) in
-                print(imageKeys)
-                let vc = RouterService.Image.createImageViewController(dependency: imageKeys)
+            .map { $0.mediaItemObjects.toArray() }.filter { !$0.isEmpty }
+            .drive(Binder(self) { (me, mediaItemObjects) in
+                print(mediaItemObjects)
+                let mediaItems = mediaItemObjects.map { $0.mediaItem }
+                let vc = RouterService.Image.createImageViewController(dependency: mediaItems)
                 vc.hidesBottomBarWhenPushed = true
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
@@ -103,6 +118,12 @@ final class Router {
         _ = store.searchUserRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
             .drive(Binder(self) { (me, _) in
                 let vc = RouterService.Me.searchUserViewController()
+                me.currentNavigationController?.pushViewController(vc, animated: true)
+            })
+        
+        _ = store.userBlockingsRoute().distinctUntilChanged { $0.version ?? "" }.skip(1)
+            .drive(Binder(self) { (me, _) in
+                let vc = RouterService.Me.blockingsViewController()
                 me.currentNavigationController?.pushViewController(vc, animated: true)
             })
         

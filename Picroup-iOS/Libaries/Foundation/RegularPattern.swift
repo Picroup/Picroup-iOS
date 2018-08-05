@@ -19,6 +19,8 @@ public struct RegularPattern {
     static let code6 = "[0-9]{6}" // 6 digit
     static let number = "[0-9]{1,}"
     static let double = "^-?(?:0|[1-9]\\d{0,2}(?:,?\\d{3})*)(?:\\.\\d+)?$"
+    
+    static let tag = "^.{1,20}" // At least 1 characters without whitespace
 }
 
 extension String {

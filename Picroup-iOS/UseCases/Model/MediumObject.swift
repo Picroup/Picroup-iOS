@@ -19,13 +19,15 @@ final class MediumObject: PrimaryObject {
     let endedAt = RealmOptional<Double>()
     let stared = RealmOptional<Bool>()
     let commentsCount = RealmOptional<Int>()
-    
+    let tags = List<String>()
+
     @objc dynamic var user: UserObject?
 }
 
 final class MediumDetailObject: Object {
     let width = RealmOptional<Double>()
     let aspectRatio = RealmOptional<Double>()
+    @objc dynamic var videoMinioId: String?
 }
 
 final class CursorMediaObject: PrimaryObject {
@@ -58,6 +60,13 @@ extension CursorMediaObject: IsCursorItemsObject {
 extension CursorMediaFragment: IsCursorFragment {}
 
 extension MediumFragment {
+    
+    var rawSnapshot: Snapshot {
+        return snapshot.merging(["kind": kind.rawValue]) { $1 }
+    }
+}
+
+extension MediumQuery.Data.Medium {
     
     var rawSnapshot: Snapshot {
         return snapshot.merging(["kind": kind.rawValue]) { $1 }

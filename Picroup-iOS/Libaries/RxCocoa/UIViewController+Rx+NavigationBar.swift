@@ -19,3 +19,12 @@ extension Reactive where Base: UIViewController {
     }
 }
 
+extension Reactive where Base: UIViewController {
+    
+    public func setTabBarHidden(animated flag: Bool) -> Binder<Bool> {
+        return Binder(base) { vc, hidden in
+            vc.tabBarController?.setTabBarHidden(hidden, animated: flag)
+        }
+    }
+}
+

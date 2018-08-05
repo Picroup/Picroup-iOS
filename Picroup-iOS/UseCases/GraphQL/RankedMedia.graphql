@@ -4,8 +4,8 @@ query RankedMedia($rankBy: RankBy, $cursor: Float) {
     }
 }
 
-query HotMedia {
-    hotMedia {
+query HotMediaByTags($tags: [String!], $queryUserId: ID) {
+    hotMediaByTags(tags: $tags, queryUserId: $queryUserId) {
         ...CursorMediaFragment
     }
 }

@@ -15,8 +15,9 @@ class BaseNavigationController: NavigationController {
 
     override func prepare() {
         super.prepare()
-//        isMotionEnabled = true
-        motionNavigationTransitionType = .push(direction: .left)
+        isMotionEnabled = true
+        motionNavigationTransitionType =
+            .auto
 //            .autoReverse(presenting: .fade)
         prepareNavigationBar()
     }
@@ -27,7 +28,6 @@ extension BaseNavigationController {
     fileprivate func prepareNavigationBar() {
         navigationBar.depthPreset = .none
         navigationBar.barTintColor = .primary
-        navigationBar.isTranslucent = false
         (navigationBar as? NavigationBar)?.backButtonImage = Icon.arrowBack?.tint(with: .primaryText)
     }
 }

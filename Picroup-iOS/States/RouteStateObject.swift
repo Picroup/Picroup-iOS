@@ -16,6 +16,8 @@ final class RouteStateObject: PrimaryObject {
     @objc dynamic var session: UserSessionObject?
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
+    @objc dynamic var tagMediaRoute: TagMediaRouteObject?
+    @objc dynamic var updateMediumTagsRoute: UpdateMediumTagsRouteObject?
     @objc dynamic var reputationsRoute: ReputationsRouteObject?
     @objc dynamic var createImageRoute: CreateImageRouteObject?
     @objc dynamic var userRoute: UserRouteObject?
@@ -24,6 +26,8 @@ final class RouteStateObject: PrimaryObject {
     @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
     @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
     @objc dynamic var searchUserRoute: SearchUserRouteObject?
+    @objc dynamic var userBlockingsRoute: UserBlockingsRouteObject?
+
     @objc dynamic var loginRoute: LoginRouteObject?
     @objc dynamic var feedbackRoute: FeedbackRouteObject?
     @objc dynamic var aboutAppRoute: AboutAppRouteObject?
@@ -46,12 +50,24 @@ final class ImageCommetsRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
+final class TagMediaRouteObject: PrimaryObject {
+    
+    @objc dynamic var tag: String?
+    @objc dynamic var version: String?
+}
+
+final class UpdateMediumTagsRouteObject: PrimaryObject {
+    
+    @objc dynamic var mediumId: String?
+    @objc dynamic var version: String?
+}
+
 final class ReputationsRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
 final class CreateImageRouteObject: PrimaryObject {
-    let imageKeys = List<String>()
+    let mediaItemObjects = List<MediaItemObject>()
     @objc dynamic var version: String?
 }
 
@@ -78,6 +94,10 @@ final class UserFollowingsRouteObject: PrimaryObject {
 final class UserFollowersRouteObject: PrimaryObject {
     
     @objc dynamic var userId: String?
+    @objc dynamic var version: String?
+}
+
+final class UserBlockingsRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
@@ -147,6 +167,8 @@ extension RouteStateObject {
                 "session": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
                 "imageCommetsRoute": ["_id": _id],
+                "tagMediaRoute": ["_id": _id],
+                "updateMediumTagsRoute": ["_id": _id],
                 "reputationsRoute": ["_id": _id],
                 "createImageRoute": ["_id": _id],
                 "userRoute": ["_id": _id],
@@ -154,6 +176,7 @@ extension RouteStateObject {
                 "userFollowingsRoute": ["_id": _id],
                 "userFollowersRoute": ["_id": _id],
                 "searchUserRoute": ["_id": _id],
+                "userBlockingsRoute": ["_id": _id],
                 "loginRoute": ["_id": _id],
                 "feedbackRoute": ["_id": _id],
                 "aboutAppRoute": ["_id": _id],
@@ -194,6 +217,16 @@ final class RouteStateStore {
         return Observable.from(object: imageDetialRoute).asDriver(onErrorDriveWith: .empty())
     }
     
+    func tagMediaRoute() -> Driver<TagMediaRouteObject> {
+        guard let tagMediaRoute = _state.tagMediaRoute else { return .empty() }
+        return Observable.from(object: tagMediaRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func updateMediumTagsRoute() -> Driver<UpdateMediumTagsRouteObject> {
+        guard let updateMediumTagsRoute = _state.updateMediumTagsRoute else { return .empty() }
+        return Observable.from(object: updateMediumTagsRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
     func reputationsRoute() -> Driver<ReputationsRouteObject> {
         guard let popRoute = _state.reputationsRoute else { return .empty() }
         return Observable.from(object: popRoute).asDriver(onErrorDriveWith: .empty())
@@ -207,7 +240,7 @@ final class RouteStateStore {
     func userRoute() -> Driver<(UserRouteObject, Bool)> {
         guard let userRoute = _state.userRoute else { return .empty() }
         return Observable.from(object: userRoute)
-            .map { ($0, self._state.session?.currentUser?._id == $0.userId) }
+            .map { ($0, self._state.session?.currentUserId == $0.userId) }
             .asDriver(onErrorDriveWith: .empty())
     }
     
@@ -229,6 +262,11 @@ final class RouteStateStore {
     func searchUserRoute() -> Driver<SearchUserRouteObject> {
         guard let searchUserRoute = _state.searchUserRoute else { return .empty() }
         return Observable.from(object: searchUserRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func userBlockingsRoute() -> Driver<UserBlockingsRouteObject> {
+        guard let userBlockingsRoute = _state.userBlockingsRoute else { return .empty() }
+        return Observable.from(object: userBlockingsRoute).asDriver(onErrorDriveWith: .empty())
     }
     
     func loginRoute() -> Driver<LoginRouteObject> {

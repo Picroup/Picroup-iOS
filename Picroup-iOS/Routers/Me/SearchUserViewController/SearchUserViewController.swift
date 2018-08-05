@@ -35,12 +35,15 @@ final class SearchUserViewController: ShowNavigationBarViewController {
         
         typealias Section = SearchUserPresenter.Section
         
-        let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
+        let uiFeedback: Feedback = bind(self) { (me, state)  in
+            let presenter = me.presenter!
             let _events = PublishRelay<SearchUserStateObject.Event>()
             let subscriptions = [
                 state.map { $0.searchText }.asObservable().take(1).bind(to: presenter.searchBar.rx.text),
                 store.usersItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events)),
                 state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
+                me.rx.viewDidAppear.asSignal().mapToVoid().emit(to: presenter.searchBar.rx.becomeFirstResponder()),
+                me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.searchBar.rx.resignFirstResponder()),
                 ]
             let events: [Signal<SearchUserStateObject.Event>] = [
                 _events.asSignal(),

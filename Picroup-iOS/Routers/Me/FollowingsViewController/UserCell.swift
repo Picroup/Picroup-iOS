@@ -9,7 +9,7 @@
 import UIKit
 import Material
 
-class UserCell: RxTableViewCell {
+final class UserCell: RxTableViewCell {
     
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var displaynameLabel: UILabel!

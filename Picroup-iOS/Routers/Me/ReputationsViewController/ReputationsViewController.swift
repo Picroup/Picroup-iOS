@@ -12,13 +12,14 @@ import RxSwift
 import RxCocoa
 import RxFeedback
 
-class ReputationsViewController: BaseViewController {
+class ReputationsViewController: ShowNavigationBarViewController {
     
     @IBOutlet fileprivate var presenter: ReputationsViewPresenter!
     fileprivate typealias Feedback = (Driver<ReputationsStateObject>) -> Signal<ReputationsStateObject.Event>
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
@@ -28,9 +29,10 @@ class ReputationsViewController: BaseViewController {
         
         typealias Section = ReputationsViewPresenter.Section
         
-        let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
+        let uiFeedback: Feedback = bind(self) { (me, state)  in
+            let presenter = me.presenter!
             let subscriptions = [
-                state.map { $0.session?.currentUser?.reputation.value?.description ?? "0" }.drive(presenter.reputationCountLabel.rx.text),
+                state.map { $0.session?.currentUser?.reputation.value?.description ?? "0" }.drive(me.navigationItem.detailLabel.rx.text),
                 store.reputations().map { [Section(model: "", items: $0)] }.drive(presenter.items),
                 state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
                 state.map { $0.isReputationsEmpty }.drive(presenter.isReputationsEmpty),
@@ -42,7 +44,6 @@ class ReputationsViewController: BaseViewController {
                         ? presenter.tableView.rx.triggerGetMore
                         : .empty()
                     }.map { .onTriggerGetMore },
-                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 presenter.tableView.rx.modelSelected(ReputationObject.self).asSignal().flatMap { reputation in
                     switch (reputation.kind, reputation.mediumId, reputation.userId) {
                     case ("saveMedium"?, let mediumId?, _):

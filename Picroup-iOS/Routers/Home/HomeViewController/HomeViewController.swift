@@ -20,40 +20,43 @@ class HomeViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
     private func setupRxFeedback() {
-        
-        presenter.setup(navigationItem: navigationItem)
-        typealias Section = HomeViewPresenter.Section
 
         guard let store = try? HomeStateStore() else { return }
         
+        typealias Section = MediaPreserter.Section
+
         weak var weakSelf = self
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
-            let _events = PublishRelay<HomeStateObject.Event>()
+//            let _events = PublishRelay<HomeStateObject.Event>()
             let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions = [
-                store.myInterestedMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events, footerState.asDriver())),
-                state.map { $0.isReloading }.drive(presenter.refreshControl.rx.isRefreshing),
-                state.map { $0.footerState }.drive(footerState),
-                state.map { $0.isMyInterestedMediaEmpty }.drive(presenter.isMyInterestedMediaEmpty),
+                store.myInterestedMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.mediaPresenter.items(footerState: footerState.asDriver())),
+                state.map { $0.myInterestedMediaState?.isReload ?? false }.drive(presenter.refreshControl.rx.isRefreshing),
+                state.map { $0.myInterestedMediaState?.footerState ?? .empty }.drive(footerState),
+                state.map { $0.myInterestedMediaState?.isEmpty ??  false }.drive(presenter.isMyInterestedMediaEmpty),
                 presenter.fabButton.rx.tap.asSignal().map { false }.emit(to: me.rx.setNavigationBarHidden(animated: true)),
                 presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
+                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setTabBarHidden(animated: true)),
+                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: presenter.isFabButtonHidden),
                 ]
             let events: [Signal<HomeStateObject.Event>] = [
-                .just(.onTriggerReloadMyInterestedMedia),
-                _events.asSignal(),
+                .just(.myInterestedMediaState(.onTriggerReload)),
+//                _events.asSignal(),
                 me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMyInterestedMediaIfNeeded },
                 state.flatMapLatest {
-                    $0.shouldQueryMoreMyInterestedMedia
+                    ($0.myInterestedMediaState?.shouldQueryMore ?? false)
                         ? presenter.collectionView.rx.triggerGetMore
                         : .empty()
-                    }.map { .onTriggerGetMoreMyInterestedMedia },
-                presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReloadMyInterestedMedia },
-                presenter.fabButton.rx.tap.asSignal().flatMapLatest { PhotoPickerProvider.pickImages(from: weakSelf, imageLimit: 10) } .map(HomeStateObject.Event.onTriggerCreateImage),
+                    }.map { .myInterestedMediaState(.onTriggerGetMore) },
+                presenter.collectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
+                presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .myInterestedMediaState(.onTriggerReload) },
+                presenter.fabButton.rx.tap.asSignal().flatMapLatest { PhotoPickerProvider.pickMedia(from: weakSelf) } .map(HomeStateObject.Event.onTriggerCreateImage),
                 presenter.addUserButton.rx.tap.asSignal().map { .onTriggerSearchUser },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
@@ -62,11 +65,12 @@ class HomeViewController: BaseViewController {
         let queryMyInterestedMedia: Feedback = react(query: { $0.myInterestedMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.interestedMedia.fragments.cursorMediaFragment }.unwrap()
-                .map(HomeStateObject.Event.onGetMyInterestedMedia(isReload: query.cursor == nil))
-                .asSignal(onErrorReturnJust: HomeStateObject.Event.onGetMyInterestedMediaError)
+                .map { .myInterestedMediaState(.onGetData($0)) }
+                .asSignal(onErrorReturnJust: { .myInterestedMediaState(.onGetError($0)) })
         })
         
         let states = store.states
+//            .debug("HomeState")
         
         Signal.merge(
             uiFeedback(states),
@@ -76,21 +80,6 @@ class HomeViewController: BaseViewController {
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         
-        presenter.collectionView.rx.setDelegate(presenter)
-            .disposed(by: disposeBag)
-    }
-    
-}
-
-extension HomeStateObject {
-    
-    var footerState: LoadFooterViewState {
-        return LoadFooterViewState.create(
-            cursor: myInterestedMedia?.cursor.value,
-            items: myInterestedMedia?.items,
-            trigger: triggerMyInterestedMediaQuery,
-            error: myInterestedMediaError
-        )
+        presenter.collectionView.rx.setDelegate(presenter.mediaPresenter).disposed(by: disposeBag)
     }
 }
-

@@ -32,7 +32,7 @@ final class ReputationsStateObject: PrimaryObject {
 
 extension ReputationsStateObject {
     public var reputationsQuery: MyReputationsQuery? {
-        guard let userId = session?.currentUser?._id else { return nil }
+        guard let userId = session?.currentUserId else { return nil }
         let next = MyReputationsQuery(userId: userId, cursor: reputations?.cursor.value)
         return triggerReputationsQuery ? next : nil
     }
@@ -47,7 +47,7 @@ extension ReputationsStateObject {
         return reputations?.cursor.value != nil
     }
     public var markQuery: MarkReputationLinksAsViewedQuery? {
-        guard let userId = session?.currentUser?._id else { return nil }
+        guard let userId = session?.currentUserId else { return nil }
         let next = MarkReputationLinksAsViewedQuery(userId: userId)
         return triggerMarkQuery && !isReputationsEmpty ? next : nil
     }

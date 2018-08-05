@@ -21,7 +21,7 @@ final class ImageDetailStateObject: PrimaryObject {
     @objc dynamic var recommendMedia: CursorMediaObject?
     @objc dynamic var mediumError: String?
     @objc dynamic var triggerMediumQuery: Bool = false
-    
+
     @objc dynamic var starMediumVersion: String?
     @objc dynamic var starMediumError: String?
     @objc dynamic var triggerStarMedium: Bool = false
@@ -31,10 +31,17 @@ final class ImageDetailStateObject: PrimaryObject {
     @objc dynamic var deleteMediumError: String?
     @objc dynamic var triggerDeleteMedium: Bool = false
     
+    @objc dynamic var blockMediumVersion: String?
+    @objc dynamic var blockMediumError: String?
+    @objc dynamic var triggerBlockMediumQuery: Bool = false
+    
     @objc dynamic var needUpdate: NeedUpdateStateObject?
     
+    @objc dynamic var loginRoute: LoginRouteObject?
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
+    @objc dynamic var tagMediaRoute: TagMediaRouteObject?
+    @objc dynamic var updateMediumTagsRoute: UpdateMediumTagsRouteObject?
     @objc dynamic var userRoute: UserRouteObject?
     @objc dynamic var feedbackRoute: FeedbackRouteObject?
     @objc dynamic var popRoute: PopRouteObject?
@@ -45,10 +52,10 @@ final class ImageDetailStateObject: PrimaryObject {
 extension ImageDetailStateObject {
     var mediumId: String { return _id }
     var mediumQuery: MediumQuery? {
-        let (userId, withStared) = session?.currentUser?._id == nil
+        let (userId, withStared) = session?.currentUserId == nil
             ? ("", false)
             : (session!.currentUser!._id, true)
-        let next = MediumQuery(userId: userId, mediumId: mediumId, cursor: recommendMedia?.cursor.value, withStared: withStared)
+        let next = MediumQuery(userId: userId, mediumId: mediumId, cursor: recommendMedia?.cursor.value, withStared: withStared, queryUserId: session?.currentUserId)
         return triggerMediumQuery ? next : nil
     }
     var shouldQueryMoreRecommendMedia: Bool {
@@ -61,7 +68,7 @@ extension ImageDetailStateObject {
         return medium?.stared.value != true && !triggerStarMedium
     }
     public var starMediumQuery: StarMediumMutation? {
-        guard let userId = session?.currentUser?._id else { return nil }
+        guard let userId = session?.currentUserId else { return nil }
         let next = StarMediumMutation(userId: userId, mediumId: mediumId)
         return triggerStarMedium ? next : nil
     }
@@ -71,6 +78,15 @@ extension ImageDetailStateObject {
     }
     public var shouldDeleteMedium: Bool {
         return !triggerDeleteMedium
+    }
+    var shouldBlockMedium: Bool {
+        return !triggerBlockMediumQuery
+    }
+    var blockUserQuery: BlockMediumMutation? {
+        guard let userId = session?.currentUserId else { return nil }
+        return triggerBlockMediumQuery
+            ? BlockMediumMutation(userId: userId, mediumId: mediumId)
+            : nil
     }
 }
 
@@ -86,8 +102,11 @@ extension ImageDetailStateObject {
                 "recommendMedia": ["_id": PrimaryKey.recommendMediaId(mediumId)],
                 "myStaredMedia": ["_id": PrimaryKey.myStaredMediaId],
                 "needUpdate": ["_id": _id],
+                "loginRoute": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
                 "imageCommetsRoute": ["_id": _id],
+                "tagMediaRoute": ["_id": _id],
+                "updateMediumTagsRoute": ["_id": _id],
                 "userRoute": ["_id": _id],
                 "feedbackRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
@@ -115,9 +134,16 @@ extension ImageDetailStateObject {
         case onDeleteMediumSuccess(String)
         case onDeleteMediumError(Error)
         
+        case onTriggerBlockMedium
+        case onBlockMediumSuccess(UserFragment)
+        case onBlockMediumError(Error)
+        
+        case onTriggerLogin
         case onTriggerShowImage(String)
-        case onTriggerShowComments
-        case onTriggerShowUser
+        case onTriggerShowComments(String)
+        case onTriggerShowTagMedia(String)
+        case onTriggerUpdateMediaTags
+        case onTriggerShowUser(String)
         case onTriggerMediumFeedback
         case onTriggerPop
     }
@@ -144,7 +170,7 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             triggerMediumQuery = true
         case .onGetReloadData(let data):
             if let data = data {
-                medium = realm.create(MediumObject.self, value: data.snapshot, update: true)
+                medium = realm.create(MediumObject.self, value: data.rawSnapshot, update: true)
                 let fragment = data.recommendedMedia.fragments.cursorMediaFragment
                 recommendMedia = CursorMediaObject.create(from: fragment, id: PrimaryKey.recommendMediaId(_id))(realm)
             } else {
@@ -205,14 +231,40 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             snackbar?.message = error.localizedDescription
             snackbar?.version = UUID().uuidString
             
+        case .onTriggerBlockMedium:
+            guard shouldBlockMedium else { return }
+            blockMediumVersion = nil
+            blockMediumError = nil
+            triggerBlockMediumQuery = true
+        case .onBlockMediumSuccess:
+            medium?.delete()
+            blockMediumVersion = UUID().uuidString
+            blockMediumError = nil
+            triggerBlockMediumQuery = false
+            snackbar?.message = "已减少类似内容"
+            snackbar?.version = UUID().uuidString
+            popRoute?.version = UUID().uuidString
+        case .onBlockMediumError(let error):
+            blockMediumVersion = nil
+            blockMediumError = error.localizedDescription
+            triggerBlockMediumQuery = false
+            
+        case .onTriggerLogin:
+            loginRoute?.version = UUID().uuidString
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
             imageDetialRoute?.version = UUID().uuidString
-        case .onTriggerShowComments:
+        case .onTriggerShowComments(let mediumId):
             imageCommetsRoute?.mediumId = mediumId
             imageCommetsRoute?.version = UUID().uuidString
-        case .onTriggerShowUser:
-            userRoute?.userId = medium?.user?._id
+        case .onTriggerShowTagMedia(let tag):
+            tagMediaRoute?.tag = tag
+            tagMediaRoute?.version = UUID().uuidString
+        case .onTriggerUpdateMediaTags:
+            updateMediumTagsRoute?.mediumId = mediumId
+            updateMediumTagsRoute?.version = UUID().uuidString
+        case .onTriggerShowUser(let userId):
+            userRoute?.userId = userId
             userRoute?.version = UUID().uuidString
         case .onTriggerMediumFeedback:
             feedbackRoute?.triggerMedium(mediumId: mediumId)
@@ -242,19 +294,20 @@ final class ImageDetailStateStore {
         Realm.backgroundReduce(ofType: ImageDetailStateObject.self, forPrimaryKey: mediumId, event: event)
     }
     
-    func medium() -> Driver<MediumObject> {
+    func medium() -> Observable<MediumObject> {
         guard let medium = _state.medium else { return .empty() }
-        return Observable.from(object: medium).asDriver(onErrorDriveWith: .empty())
+        return Observable.from(object: medium).catchErrorJustReturn(medium)
     }
     
-    func recommendMediaItems() -> Driver<[MediumObject]> {
+    func recommendMediaItems() -> Observable<[MediumObject]> {
         guard let items = _state.recommendMedia?.items else { return .empty() }
         return Observable.collection(from: items)
-            .asDriver(onErrorDriveWith: .empty())
             .map { $0.toArray() }
+            .catchErrorRecoverEmpty()
     }
     
-    func mediumWithRecommendMedia() -> Driver<(MediumObject, [MediumObject])> {
-        return Driver.combineLatest(medium(), recommendMediaItems())
+    func mediumWithRecommendMedia() -> Observable<(MediumObject, [MediumObject])> {
+        return Observable.combineLatest(medium(), recommendMediaItems())
+            .catchErrorRecoverEmpty()
     }
 }

@@ -26,7 +26,6 @@ final class MainTabBarController: UITabBarController {
     
     private func setup() {
         tabBar.isTranslucent = false
-//        hidesBottomBarWhenPushed = true
     }
     
     private var disposeBag = DisposeBag()

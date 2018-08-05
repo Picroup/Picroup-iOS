@@ -16,18 +16,30 @@ import Apollo
 private func mapMoreButtonTapToEvent(sender: UICollectionView) -> (ImageDetailStateObject) -> Signal<ImageDetailStateObject.Event> {
     return { state in
         
-        guard state.session?.isLogin == true else { return .empty() }
-        guard let cell = sender.cellForItem(at: IndexPath(item: 0, section: 0)) as? ImageDetailCell else { return .empty() }
-        let isMyMedium = state.medium?.userId == state.session?.currentUser?._id
-        let actions = isMyMedium ? ["删除"] : ["举报"]
+        guard state.session?.isLogin == true else {
+            return .just(.onTriggerLogin)
+        }
+        guard let cell = sender.cellForItem(at: IndexPath(item: 0, section: 0)) as? HasMoreButton else { return .empty() }
+        let isMyMedium = state.medium?.userId == state.session?.currentUserId
+        let actions: [String]
+        switch (isMyMedium, state.session?.currentUser?.reputation.value) {
+        case (true, _):
+            actions = ["更新标签", "删除"]
+        case (false, let reputation?) where reputation > 100:
+            actions = ["更新标签", "举报", "减少类似内容"]
+        case (false, _):
+            actions = ["举报", "减少类似内容"]
+        }
         return DefaultWireframe.shared
             .promptFor(sender: cell.moreButton, cancelAction: "取消", actions: actions)
             .asSignalOnErrorRecoverEmpty()
             .flatMap { action in
                 switch action {
-                case "举报":     return .just(.onTriggerMediumFeedback)
-                case "删除":     return comfirmDelete()
-                default:        return .empty()
+                case "更新标签":      return .just(.onTriggerUpdateMediaTags)
+                case "举报":         return .just(.onTriggerMediumFeedback)
+                case "减少类似内容":  return .just(.onTriggerBlockMedium)
+                case "删除":         return comfirmDelete()
+                default:            return .empty()
                 }
         }
     }
@@ -45,10 +57,10 @@ private func comfirmDelete() -> Signal<ImageDetailStateObject.Event> {
     }
 }
 
-fileprivate typealias Section = ImageDetailPresenter.Section
-fileprivate typealias CellStyle = ImageDetailPresenter.CellStyle
+fileprivate typealias Section = MediumDetailPresenter.Section
+fileprivate typealias CellStyle = MediumDetailPresenter.CellStyle
 
-class ImageDetailViewController: HideNavigationBarViewController {
+class ImageDetailViewController: ShowNavigationBarViewController {
     
     typealias Dependency = String
     var dependency: Dependency!
@@ -71,24 +83,25 @@ class ImageDetailViewController: HideNavigationBarViewController {
         }
         
         appStateService?.events.accept(.onViewMedium(mediumId))
-
+        
+        let _events = PublishRelay<ImageDetailStateObject.Event>()
+        let _moreButtonTap = PublishRelay<Void>()
+        
+        // I known this is ugly but it enabled the transition animations
+        let sections = Observable.combineLatest(store.sections, store.states.asObservable()) { $1.isMediumDeleted ? [] : $0 }
+        
+        sections
+            .bind(to: presenter.mediumDetailPresenter.items(events: _events, moreButtonTap: _moreButtonTap))
+            .disposed(by: disposeBag)
+        
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
-            
-            let _events = PublishRelay<ImageDetailStateObject.Event>()
-            let _moreButtonTap = PublishRelay<Void>()
 
             let subscriptions = [
-                state.flatMapLatest { $0.isMediumDeleted ? .just([]) : store.sections }
-                    .drive(me.presenter.items(
-                        onStarButtonTap: { _events.accept(.onTriggerStarMedium) },
-                        onCommentsTap: { _events.accept(.onTriggerShowComments) },
-                        onImageViewTap: { _events.accept(.onTriggerPop) } ,
-                        onUserTap: { _events.accept(.onTriggerShowUser) },
-                        onMoreTap: { _moreButtonTap.accept(()) })),
-                state.map { $0.isMediumDeleted }.drive(onNext: { presenter.collectionView.backgroundView = $0 ? presenter.deleteAlertView : nil }),
+                sections.map { $0.isEmpty }.subscribe(onNext: { presenter.collectionView.backgroundView = $0 ? presenter.deleteAlertView : nil }),
                 presenter.backgroundButton.rx.tap.subscribe(onNext: { _events.accept(.onTriggerPop) }),
-            ]
+                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
+                ]
             let events: [Signal<ImageDetailStateObject.Event>] = [
                 .just(.onTriggerReloadData),
                 _events.asSignal(),
@@ -98,12 +111,16 @@ class ImageDetailViewController: HideNavigationBarViewController {
                         ? presenter.collectionView.rx.triggerGetMore
                         : .empty()
                     }.map { .onTriggerGetMoreData },
-                me.presenter.collectionView.rx.modelSelected(ImageDetailPresenter.CellStyle.self).asSignal()
+                me.presenter.collectionView.rx.modelSelected(MediumDetailPresenter.CellStyle.self).asSignal()
                     .flatMapLatest { cellStyle -> Signal<ImageDetailStateObject.Event> in
-                    if case .recommendMedium(let medium) = cellStyle {
-                        return .just(.onTriggerShowImage(medium._id))
-                    }
-                    return .empty()
+                        switch cellStyle {
+                        case .recommendMedium(let medium):
+                            return .just(.onTriggerShowImage(medium._id))
+                        case .imageTag(let tag):
+                            return .just(.onTriggerShowTagMedia(tag))
+                        default:
+                            return .empty()
+                        }
                 },
                 presenter.deleteAlertView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
             ]
@@ -132,35 +149,55 @@ class ImageDetailViewController: HideNavigationBarViewController {
                 .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onDeleteMediumError)
         })
         
+        let blockMedium: Feedback = react(query: { $0.blockUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
+            ApolloClient.shared.rx.perform(mutation: query)
+                .map { $0?.data?.blockMedium.fragments.userFragment }.unwrap()
+                .map(ImageDetailStateObject.Event.onBlockMediumSuccess)
+                .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onBlockMediumError)
+        })
+        
         let states = store.states
         
         Signal.merge(
             uiFeedback(states),
             queryMedium(states),
             starMedium(states),
-            deleteMedium(states)
+            deleteMedium(states),
+            blockMedium(states)
             )
             .debug("ImageDetailState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         
-        presenter.collectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
+        presenter.collectionView.rx.setDelegate(presenter.mediumDetailPresenter).disposed(by: disposeBag)
     }
 }
 
 extension ImageDetailStateStore {
     
-    fileprivate var sections: Driver<[Section]> {
+    fileprivate var sections: Observable<[Section]> {
         return mediumWithRecommendMedia().map { data in
             let (medium, items) = data
-            let imageDetailItems = [CellStyle.imageDetail(medium)]
-            let recommendMediaItems = items.map(CellStyle.recommendMedium)
-            let imageDetailSection = ImageDetailPresenter.Section(model: "imageDetail", items: imageDetailItems)
-            let recommendMediaSection = ImageDetailPresenter.Section(model: "recommendMedia", items: recommendMediaItems)
-            return [
-                imageDetailSection,
-                recommendMediaSection
-            ]
+            var result = [Section]()
+            guard !medium.isInvalidated else { return result }
+            result.append(Section(
+                model: .imageDetail,
+                items: [CellStyle.imageDetail(medium)]
+            ))
+            if !medium.tags.isEmpty {
+                result.append(Section(
+                    model: .imageTags,
+                    items: medium.tags.toArray().map(CellStyle.imageTag)
+                ))
+            }
+            if !items.isEmpty {
+                result.append(Section(
+                    model: .recommendMedia,
+                    items: items.map(CellStyle.recommendMedium)
+                ))
+            }
+            return result
         }
     }
 }
+

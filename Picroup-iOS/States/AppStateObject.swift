@@ -21,6 +21,9 @@ extension UserSessionObject {
     var isLogin: Bool {
         return currentUser != nil
     }
+    var currentUserId: String? {
+        return currentUser?._id
+    }
 }
 
 final class AppStateObject: PrimaryObject {
@@ -37,7 +40,7 @@ final class AppStateObject: PrimaryObject {
 
 extension AppStateObject {
     var meQuery: UserQuery? {
-        guard let userId = session?.currentUser?._id else { return nil }
+        guard let userId = session?.currentUserId else { return nil }
         let next = UserQuery(userId: userId, followedByUserId: "", withFollowed: false)
         return triggerMeQuery ? next : nil
     }
@@ -90,6 +93,7 @@ extension AppStateObject: IsFeedbackStateObject {
             meError = nil
             triggerMeQuery = true
         case .onGetMeSuccess(let data):
+            guard session?.isLogin == true else { return }
             session?.currentUser = UserObject.create(from: data)(realm)
             meError = nil
             triggerMeQuery = false

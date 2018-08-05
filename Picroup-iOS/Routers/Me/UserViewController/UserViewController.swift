@@ -15,20 +15,35 @@ import RxFeedback
 
 private func mapMoreButtonTapToEvent(sender: UIView) -> (UserStateObject) -> Signal<UserStateObject.Event> {
     return { state in
-        guard state.session?.isLogin == true else { return .empty() }
+        guard state.session?.isLogin == true else {
+            return .just(.onTriggerLogin)
+        }
         return DefaultWireframe.shared
-            .promptFor(sender: sender, cancelAction: "取消", actions: ["举报"])
+            .promptFor(sender: sender, cancelAction: "取消", actions: ["举报", "拉黑"])
             .asSignalOnErrorRecoverEmpty()
             .flatMap { action in
                 switch action {
                 case "举报":     return .just(.onTriggerUserFeedback)
+                case "拉黑":     return confirmBlockUser()
                 default:        return .empty()
                 }
         }
     }
 }
 
-class UserViewController: HideNavigationBarViewController {
+private func confirmBlockUser() -> Signal<UserStateObject.Event> {
+    return DefaultWireframe.shared
+        .promptFor(message: "您将屏蔽对方发布的内容，您确定要拉黑吗？", preferredStyle: .alert, sender: nil, cancelAction: "取消", actions: ["拉黑"])
+        .asSignalOnErrorRecoverEmpty()
+        .flatMap { action in
+            switch action {
+            case "拉黑":     return .just(.onTriggerBlockUser)
+            default:        return .empty()
+            }
+    }
+}
+
+class UserViewController: ShowNavigationBarViewController {
 
     typealias Dependency = String
     var dependency: String!
@@ -38,6 +53,7 @@ class UserViewController: HideNavigationBarViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
@@ -49,24 +65,24 @@ class UserViewController: HideNavigationBarViewController {
                 return
         }
         
-        typealias Section = UserPresenter.Section
-        
+        typealias Section = MediaPreserter.Section
+
         let uiFeedback: Feedback = bind(presenter) { (presenter, state) -> Bindings<UserStateObject.Event> in
             let myMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions: [Disposable] = [
                 state.map { $0.user }.drive(presenter.user),
-                store.userMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaItems(myMediaFooterState.asDriver())),
-                state.map { $0.myMediaFooterState }.drive(myMediaFooterState),
-                state.map { $0.isUserMediaEmpty }.drive(presenter.isUserMediaEmpty),
+                store.userMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.myMediaPresenter.items(footerState: myMediaFooterState.asDriver())),
+                state.map { $0.userMediaState?.footerState ?? .empty }.drive(myMediaFooterState),
+                state.map { $0.userMediaState?.isEmpty ?? false }.drive(presenter.isUserMediaEmpty),
                 ]
             let events: [Signal<UserStateObject.Event>] = [
-                .of(.onTriggerReloadUser, .onTriggerReloadUserMedia),
+                .of(.onTriggerReloadUser, .userMediaState(.onTriggerReload)),
                 presenter.moreButton.rx.tap.asSignal().withLatestFrom(state).flatMapLatest(mapMoreButtonTapToEvent(sender: presenter.moreButton)),
                 state.flatMapLatest {
-                    $0.shouldQueryMoreUserMedia
+                    ($0.userMediaState?.shouldQueryMore ?? false)
                         ? presenter.myMediaCollectionView.rx.triggerGetMore
                         : .empty()
-                    }.map { .onTriggerGetMoreUserMedia },
+                    }.map { .userMediaState(.onTriggerGetMore) },
                 presenter.followButton.rx.tap.asSignal()
                     .withLatestFrom(state)
                     .flatMapLatest { state in
@@ -95,8 +111,8 @@ class UserViewController: HideNavigationBarViewController {
         let queryUserMedia: Feedback = react(query: { $0.userMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.user?.media.fragments.cursorMediaFragment }.unwrap()
-                .map(UserStateObject.Event.onGetUserMedia(isReload: query.cursor == nil))
-                .asSignal(onErrorReturnJust: UserStateObject.Event.onGetUserMediaError)
+                .map { .userMediaState(.onGetData($0)) }
+                .asSignal(onErrorReturnJust: { .userMediaState(.onGetError($0)) })
         })
         
         let followUser: Feedback = react(query: { $0.followUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
@@ -113,6 +129,13 @@ class UserViewController: HideNavigationBarViewController {
                 .asSignal(onErrorReturnJust: UserStateObject.Event.onUnfollowUserError)
         })
         
+        let blockUser: Feedback = react(query: { $0.blockUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
+            ApolloClient.shared.rx.perform(mutation: query).asObservable()
+                .map { $0?.data?.blockUser.fragments.userFragment }.unwrap()
+                .map(UserStateObject.Event.onBlockUserSuccess)
+                .asSignal(onErrorReturnJust: UserStateObject.Event.onBlockUserError)
+        })
+        
         let states = store.states
         
         Signal.merge(
@@ -120,7 +143,8 @@ class UserViewController: HideNavigationBarViewController {
             queryUser(states),
             queryUserMedia(states),
             followUser(states),
-            unfollowUser(states)
+            unfollowUser(states),
+            blockUser(states)
             )
             .debug("UserState.Event", trimOutput: true)
             .emit(onNext: store.on)
@@ -133,18 +157,7 @@ class UserViewController: HideNavigationBarViewController {
             })
             .disposed(by: disposeBag)
 
-        presenter.myMediaCollectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
+        presenter.myMediaCollectionView.rx.setDelegate(presenter.myMediaPresenter).disposed(by: disposeBag)
     }
 }
 
-extension UserStateObject {
-    
-    var myMediaFooterState: LoadFooterViewState {
-        return LoadFooterViewState.create(
-            cursor: userMedia?.cursor.value,
-            items: userMedia?.items,
-            trigger: triggerUserMediaQuery,
-            error: userMediaError
-        )
-    }
-}
