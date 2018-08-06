@@ -19,6 +19,7 @@ final class NotificationCell: RxTableViewCell {
         
         userAvatarImageView.setUserAvatar(with: item.user)
         mediumImageView.setImage(with: item.medium?.minioId)
+        mediumImageView.backgroundColor = item.medium?.placeholderColor
         mediumImageView.motionIdentifier = item.medium?._id
         switch item.kind {
         case NotificationKind.commentMedium.rawValue?:

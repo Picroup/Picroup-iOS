@@ -15,6 +15,7 @@ struct MediumViewModel {
     let kind: String?
     let lifeBarMotionIdentifier: String?
     let starPlaceholderViewMotionIdentifier: String?
+    let placeholderColor: UIColor
     
     init(item: MediumObject) {
         guard !item.isInvalidated else {
@@ -24,6 +25,7 @@ struct MediumViewModel {
             self.kind = nil
             self.lifeBarMotionIdentifier = nil
             self.starPlaceholderViewMotionIdentifier = nil
+            self.placeholderColor = .background
             return
         }
         
@@ -35,6 +37,7 @@ struct MediumViewModel {
         self.kind = item.kind
         self.lifeBarMotionIdentifier = "lifeBar_\(item._id)"
         self.starPlaceholderViewMotionIdentifier = "starButton_\(item._id)"
+        self.placeholderColor = item.placeholderColor
     }
 }
 
@@ -56,6 +59,7 @@ class RankMediumCell: RxCollectionViewCell {
             imageView.image = nil
             suggestUpdateLabel.isHidden = false
         }
+        imageView.backgroundColor = viewModel.placeholderColor
         imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
         transition(.fadeOut, .scale(0.75))
 //        progressView.progress = viewModel.progress
@@ -65,4 +69,10 @@ class RankMediumCell: RxCollectionViewCell {
         starPlaceholderView.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier
     }
     
+}
+
+extension MediumObject {
+    var placeholderColor: UIColor {
+        return detail?.placeholderColor.map { UIColor(hexString: $0) } ?? .background
+    }
 }

@@ -19,10 +19,11 @@ struct ImageDetailViewModel {
     let lifeBarMotionIdentifier: String?
     let starButtonMotionIdentifier: String?
     let remainTimeLabelText: String?
-    let commentsCountText: String?
+    let commentsCountText: String
     let stared: Bool?
     let animatedChangeProgress: Bool
-    
+    let placeholderColor: UIColor
+
     let displayName: String?
     let avatarId: String?
 }
@@ -43,6 +44,7 @@ extension ImageDetailViewModel {
             self.animatedChangeProgress = false
             self.displayName = nil
             self.avatarId = nil
+            self.placeholderColor = .background
             return
         }
         let remainTime = medium.endedAt.value?.sinceNow ?? 0
@@ -57,7 +59,8 @@ extension ImageDetailViewModel {
         self.commentsCountText = "  \(medium.commentsCount.value ?? 0)"
         self.stared = medium.stared.value
         self.animatedChangeProgress = false
-        
+        self.placeholderColor = medium.placeholderColor
+
         self.displayName = medium.user?.displayName
         self.avatarId = medium.user?.avatarId
     }
@@ -95,6 +98,7 @@ class ImageDetailCell: RxCollectionViewCell {
             imageView.image = nil
             suggestUpdateLabel.isHidden = false
         }
+        imageView.backgroundColor = viewModel.placeholderColor
         imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
         progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
         progressView.progress = viewModel.progress
