@@ -19,6 +19,7 @@ class RankVideoCell: RxCollectionViewCell {
 //        if item.isInvalidated { return }
         let viewModel = MediumViewModel(item: item)
         //        playerView.play(with: item.detail?.videoMinioId)
+        playerView.backgroundColor = viewModel.placeholderColor
         playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
         transition(.fadeOut, .scale(0.75))
         progressView.progress = viewModel.progress

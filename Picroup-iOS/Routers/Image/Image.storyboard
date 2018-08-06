@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -114,35 +114,6 @@
                                             <constraint firstAttribute="height" constant="150" id="PCM-kw-Tc5"/>
                                         </constraints>
                                     </imageView>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W9u-DI-ikX">
-                                        <rect key="frame" x="0.0" y="150" width="375" height="8"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HU3-Ow-RX8">
-                                                <rect key="frame" x="0.0" y="0.0" width="20" height="8"/>
-                                                <color key="backgroundColor" red="0.18039215689999999" green="0.49019607840000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="20" id="Wf5-H4-MHg"/>
-                                                </constraints>
-                                            </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rCX-nv-23a">
-                                                <rect key="frame" x="322" y="7" width="1" height="1"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="1" id="UBw-vZ-1Nj"/>
-                                                    <constraint firstAttribute="height" constant="1" id="ZS8-z5-reM"/>
-                                                </constraints>
-                                            </view>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.68888300660000001" green="0.71366006140000005" blue="0.73448425530000006" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="8" id="38G-AK-232"/>
-                                            <constraint firstItem="HU3-Ow-RX8" firstAttribute="top" secondItem="W9u-DI-ikX" secondAttribute="top" id="4K0-t6-CWa"/>
-                                            <constraint firstItem="HU3-Ow-RX8" firstAttribute="leading" secondItem="W9u-DI-ikX" secondAttribute="leading" id="GZi-QW-CGs"/>
-                                            <constraint firstAttribute="bottom" secondItem="rCX-nv-23a" secondAttribute="bottom" id="QLa-dZ-Pgg"/>
-                                            <constraint firstAttribute="bottom" secondItem="HU3-Ow-RX8" secondAttribute="bottom" id="XK5-eb-NOe"/>
-                                            <constraint firstAttribute="trailing" secondItem="rCX-nv-23a" secondAttribute="trailing" constant="52" id="wiD-9l-YFG"/>
-                                        </constraints>
-                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6oT-Dt-q2V">
                                         <rect key="frame" x="0.0" y="150" width="375" height="48"/>
                                         <subviews>
@@ -385,12 +356,9 @@
                         <outlet property="hideCommentsContentView" destination="ssH-eR-rCu" id="xaw-A2-4iO"/>
                         <outlet property="hideCommentsIcon" destination="AZY-MU-RJY" id="Jzn-vN-9xy"/>
                         <outlet property="imageView" destination="qLT-qA-HqQ" id="BE5-vw-UJl"/>
-                        <outlet property="lifeBar" destination="W9u-DI-ikX" id="S7b-Kf-p3r"/>
-                        <outlet property="lifeViewWidthConstraint" destination="Wf5-H4-MHg" id="3bS-Hu-cCG"/>
                         <outlet property="loadFooterView" destination="ALC-xb-vWA" id="761-XY-FWU"/>
                         <outlet property="sendButton" destination="EcL-oH-6V9" id="RFk-zy-jkt"/>
                         <outlet property="sendCommentContentView" destination="6oT-Dt-q2V" id="u6W-CI-onQ"/>
-                        <outlet property="starPlaceholderView" destination="rCX-nv-23a" id="Uo6-sB-FMc"/>
                         <outlet property="suggestUpdateLabel" destination="Pm3-fW-VRX" id="rTx-sK-1N2"/>
                         <outlet property="tableView" destination="Ago-t9-O2E" id="lN1-JZ-w7K"/>
                         <outlet property="tableViewBackgroundButton" destination="FAI-Lh-ZxK" id="q3K-rj-jzP"/>

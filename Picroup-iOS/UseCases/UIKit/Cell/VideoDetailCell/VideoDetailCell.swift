@@ -35,6 +35,7 @@ class VideoDetailCell: RxCollectionViewCell {
         if item.isInvalidated { return }
         let viewModel = ImageDetailViewModel(medium: item)
         
+        playerView.backgroundColor = viewModel.placeholderColor
         playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
         progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
         progressView.progress = viewModel.progress

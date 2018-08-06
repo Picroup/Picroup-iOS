@@ -14,11 +14,8 @@ import RxDataSources
 
 class ImageCommentsPresenter: NSObject {
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var lifeBar: UIView!
-    @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadFooterView: LoadFooterView!
-    @IBOutlet weak var starPlaceholderView: UIView!
     @IBOutlet weak var contentTextField: UITextField!
     @IBOutlet weak var sendButton: FlatButton!
     @IBOutlet weak var sendCommentContentView: UIView!
@@ -47,8 +44,8 @@ class ImageCommentsPresenter: NSObject {
     
     var medium: Binder<MediumObject> {
         return Binder(self) { me, medium in
-            let remainTime = medium.endedAt.value?.sinceNow ?? 0
-            switch medium.kind {
+            let viewModel = ImageDetailViewModel(medium: medium)
+            switch viewModel.kind {
             case MediumKind.image.rawValue?, MediumKind.video.rawValue?:
                 me.imageView.setImage(with: medium.minioId)
                 me.suggestUpdateLabel.isHidden = true
@@ -56,11 +53,10 @@ class ImageCommentsPresenter: NSObject {
                 me.imageView.image = nil
                 me.suggestUpdateLabel.isHidden = false
             }
-            me.imageView.motionIdentifier = medium._id
-            me.lifeBar.motionIdentifier = "lifeBar_\(medium._id)"
-            me.sendButton.motionIdentifier = "starButton_\(medium._id)"
-            me.lifeViewWidthConstraint.constant = CGFloat(remainTime / 12.0.weeks) * me.lifeBar.bounds.width
-            me.navigationItem.detailLabel.text = "\(medium.commentsCount.value ?? 0) 条"
+            me.imageView.backgroundColor = viewModel.placeholderColor
+            me.imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
+            me.sendButton.motionIdentifier = viewModel.starButtonMotionIdentifier
+            me.navigationItem.detailLabel.text = "\(viewModel.commentsCountText) 条  "
         }
     }
     
