@@ -54,7 +54,7 @@ final class MediaItemObject: PrimaryObject {
         set { videoFilePath = newValue?.absoluteString }
     }
     
-    static func create(mediaItem: MediaItem) -> (Realm) -> MediaItemObject {
+    static func create(mediaItem: MediumItem) -> (Realm) -> MediaItemObject {
         return { realm in
             
             let value: Any = {
@@ -79,7 +79,7 @@ final class MediaItemObject: PrimaryObject {
         }
     }
     
-    var mediaItem: MediaItem {
+    var mediaItem: MediumItem {
         switch (kind, imageKey, thumbnailImageKey, videoFileURL) {
         case (MediumKind.image.rawValue?, let imageKey?, _, _):
             return .image(imageKey)
@@ -91,7 +91,7 @@ final class MediaItemObject: PrimaryObject {
     }
 }
 
-extension MediaItem {
+extension MediumItem {
     var id: String {
         switch self {
         case .image(let imageKey):
@@ -103,7 +103,7 @@ extension MediaItem {
 }
 
 final class CreateImageStateObject: PrimaryObject {
-    typealias Query = (userId: String, mediaItems: [MediaItem], tags: [String]?)
+    typealias Query = (userId: String, mediaItems: [MediumItem], tags: [String]?)
 
     @objc dynamic var session: UserSessionObject?
     
@@ -149,7 +149,7 @@ extension CreateImageStateObject {
 
 extension CreateImageStateObject {
     
-    static func create(mediaItems: [MediaItem]) -> (Realm) throws -> CreateImageStateObject {
+    static func create(mediaItems: [MediumItem]) -> (Realm) throws -> CreateImageStateObject {
         return { realm in
             let _id = PrimaryKey.default
             let value: Any = [
@@ -258,7 +258,7 @@ final class CreateImageStateStore {
     let states: Driver<CreateImageStateObject>
     private let _state: CreateImageStateObject
     
-    init(mediaItems: [MediaItem]) throws {
+    init(mediaItems: [MediumItem]) throws {
         let realm = try Realm()
         let _state = try CreateImageStateObject.create(mediaItems: mediaItems)(realm)
         let states = Observable.from(object: _state).asDriver(onErrorDriveWith: .empty())

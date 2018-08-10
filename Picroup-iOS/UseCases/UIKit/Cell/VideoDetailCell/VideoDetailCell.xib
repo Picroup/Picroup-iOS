@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -108,32 +108,44 @@
                                     <constraint firstAttribute="height" constant="1" id="Hk3-mu-HUV"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="98w-fw-o4P">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="57g-K1-h5w">
                                 <rect key="frame" x="0.0" y="452" width="375" height="48"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cKE-Rf-uQ1">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hyb-ks-Pcu">
                                         <rect key="frame" x="16" y="12" width="297" height="24"/>
                                         <color key="tintColor" red="0.42655369640000002" green="0.475846082" blue="0.4802647531" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="  22" image="ic_chat_bubble"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N7s-sr-hl0">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BvZ-gn-ylH">
                                         <rect key="frame" x="329" y="9" width="30" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="Svy-gM-cLX"/>
-                                            <constraint firstAttribute="width" secondItem="N7s-sr-hl0" secondAttribute="height" multiplier="1:1" id="rLv-K3-TeW"/>
+                                            <constraint firstAttribute="width" constant="30" id="Db4-cu-Uy3"/>
+                                            <constraint firstAttribute="width" secondItem="BvZ-gn-ylH" secondAttribute="height" multiplier="1:1" id="pTW-Pf-Map"/>
                                         </constraints>
                                         <color key="tintColor" red="0.42655369640000002" green="0.475846082" blue="0.4802647531" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="ic_more_vert"/>
+                                        <state key="normal" image="baseline_more_horiz_black_24pt"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="758-Sw-le9">
+                                        <rect key="frame" x="291" y="9" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="758-Sw-le9" secondAttribute="height" multiplier="1:1" id="Eh1-nJ-DJG"/>
+                                            <constraint firstAttribute="width" constant="30" id="z2o-Sy-VSs"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.42655369640000002" green="0.475846082" blue="0.4802647531" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="baseline_share_black_24pt"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="cKE-Rf-uQ1" firstAttribute="centerY" secondItem="N7s-sr-hl0" secondAttribute="centerY" id="992-Bh-SHL"/>
-                                    <constraint firstAttribute="trailing" secondItem="N7s-sr-hl0" secondAttribute="trailing" constant="16" id="PbG-z5-tXx"/>
-                                    <constraint firstItem="N7s-sr-hl0" firstAttribute="leading" secondItem="cKE-Rf-uQ1" secondAttribute="trailing" constant="16" id="QhJ-fd-8Jj"/>
-                                    <constraint firstItem="N7s-sr-hl0" firstAttribute="centerY" secondItem="98w-fw-o4P" secondAttribute="centerY" id="UUZ-mf-WHY"/>
-                                    <constraint firstAttribute="height" constant="48" id="YLN-QM-SDl"/>
-                                    <constraint firstItem="cKE-Rf-uQ1" firstAttribute="leading" secondItem="98w-fw-o4P" secondAttribute="leading" constant="16" id="kWf-2J-XGV"/>
+                                    <constraint firstItem="BvZ-gn-ylH" firstAttribute="centerY" secondItem="57g-K1-h5w" secondAttribute="centerY" id="EZm-m3-jtz"/>
+                                    <constraint firstItem="hyb-ks-Pcu" firstAttribute="centerY" secondItem="BvZ-gn-ylH" secondAttribute="centerY" id="TWm-Pv-mwY"/>
+                                    <constraint firstItem="758-Sw-le9" firstAttribute="centerY" secondItem="BvZ-gn-ylH" secondAttribute="centerY" id="e7E-8v-St5"/>
+                                    <constraint firstAttribute="height" constant="48" id="iE6-Dm-24K"/>
+                                    <constraint firstItem="BvZ-gn-ylH" firstAttribute="leading" secondItem="758-Sw-le9" secondAttribute="trailing" constant="8" symbolic="YES" id="j5A-In-ejs"/>
+                                    <constraint firstItem="BvZ-gn-ylH" firstAttribute="leading" secondItem="hyb-ks-Pcu" secondAttribute="trailing" constant="16" id="n8k-bb-r1K"/>
+                                    <constraint firstItem="hyb-ks-Pcu" firstAttribute="leading" secondItem="57g-K1-h5w" secondAttribute="leading" constant="16" id="o1e-xG-XYK"/>
+                                    <constraint firstAttribute="trailing" secondItem="BvZ-gn-ylH" secondAttribute="trailing" constant="16" id="s33-E4-1y8"/>
+                                    <constraint firstItem="758-Sw-le9" firstAttribute="width" secondItem="758-Sw-le9" secondAttribute="height" multiplier="1:1" id="veU-6D-0mJ"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -175,12 +187,13 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
-                <outlet property="commentButton" destination="cKE-Rf-uQ1" id="YZI-Zz-ZjT"/>
+                <outlet property="commentButton" destination="hyb-ks-Pcu" id="VFf-PK-iJu"/>
                 <outlet property="displayNameLabel" destination="DhS-JN-eOz" id="oCS-Ep-PGs"/>
-                <outlet property="moreButton" destination="N7s-sr-hl0" id="HWH-PX-6Im"/>
+                <outlet property="moreButton" destination="BvZ-gn-ylH" id="QA7-ao-a1U"/>
                 <outlet property="playerView" destination="48T-x4-KRr" id="mIX-dV-Jrf"/>
                 <outlet property="progressView" destination="dIq-jH-NmI" id="Ra0-Ky-ihG"/>
                 <outlet property="remainTimeLabel" destination="jUa-ID-pp4" id="72Y-rG-4kR"/>
+                <outlet property="shareButton" destination="758-Sw-le9" id="fgh-it-DZe"/>
                 <outlet property="starButton" destination="rxV-Bb-TLb" id="f9d-sE-yav"/>
                 <outlet property="userAvatarImageView" destination="Wal-u8-J2v" id="7sC-yl-xrA"/>
                 <outlet property="userView" destination="u1x-VV-3Ad" id="fba-IF-ZSg"/>
@@ -188,9 +201,10 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="baseline_more_horiz_black_24pt" width="24" height="24"/>
+        <image name="baseline_share_black_24pt" width="24" height="24"/>
         <image name="beethoven" width="369" height="369"/>
         <image name="ic_chat_bubble" width="24" height="24"/>
         <image name="ic_favorite_white" width="24" height="24"/>
-        <image name="ic_more_vert" width="24" height="24"/>
     </resources>
 </document>

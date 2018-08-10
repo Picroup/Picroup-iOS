@@ -73,7 +73,8 @@ private func configureMediumDetailCell<D>(events:
                 onUserTap: {
                     guard let userId = item.user?._id else { return }
                     events.accept(.onTriggerShowUser(userId))
-            }, onMoreTap: { moreButtonTap.accept(()) }
+            }, onShareTap: { events.accept(.onTriggerShareMedium) },
+               onMoreTap: { moreButtonTap.accept(()) }
             )
             return cell
         }
@@ -89,7 +90,8 @@ private func configureMediumDetailCell<D>(events:
                 onUserTap: {
                     guard let userId = item.user?._id else { return }
                     events.accept(.onTriggerShowUser(userId))
-            }, onMoreTap: { moreButtonTap.accept(()) }
+            }, onShareTap: { events.accept(.onTriggerShareMedium) },
+               onMoreTap: { moreButtonTap.accept(()) }
             )
             return cell
         default:

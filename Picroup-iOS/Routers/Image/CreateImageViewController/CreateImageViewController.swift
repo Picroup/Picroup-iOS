@@ -16,7 +16,7 @@ import Kingfisher
 
 class CreateImageViewController: ShowNavigationBarViewController {
     
-    typealias Dependency = [MediaItem]
+    typealias Dependency = [MediumItem]
     var dependency: Dependency?
     
     fileprivate typealias Feedback = (Driver<CreateImageStateObject>) -> Signal<CreateImageStateObject.Event>

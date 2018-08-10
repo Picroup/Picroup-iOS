@@ -22,6 +22,7 @@ class VideoDetailCell: RxCollectionViewCell {
     @IBOutlet weak var displayNameLabel: UILabel!
     @IBOutlet weak var remainTimeLabel: UILabel!
     @IBOutlet weak var commentButton: UIButton!
+    @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
     
     func configure(
@@ -30,6 +31,7 @@ class VideoDetailCell: RxCollectionViewCell {
         onCommentsTap: (() -> Void)?,
         onImageViewTap: (() -> Void)?,
         onUserTap: (() -> Void)?,
+        onShareTap: (() -> Void)?,
         onMoreTap: (() -> Void)?
         ) {
         if item.isInvalidated { return }
@@ -74,6 +76,13 @@ class VideoDetailCell: RxCollectionViewCell {
             userView.rx.tapGesture().when(.recognized)
                 .mapToVoid()
                 .subscribe(onNext: onUserTap)
+                .disposed(by: disposeBag)
+        }
+        
+        if let onShareTap = onShareTap {
+            shareButton.rx.tap
+                .mapToVoid()
+                .subscribe(onNext: onShareTap)
                 .disposed(by: disposeBag)
         }
         

@@ -12,6 +12,7 @@ import RxSwift
 import RxCocoa
 import RxFeedback
 import Apollo
+import Kingfisher
 
 private func mapMoreButtonTapToEvent(sender: UICollectionView) -> (ImageDetailStateObject) -> Signal<ImageDetailStateObject.Event> {
     return { state in
@@ -156,6 +157,33 @@ class ImageDetailViewController: ShowNavigationBarViewController {
                 .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onBlockMediumError)
         })
         
+        let shareMedium: Feedback = react(query: { $0.shareMediumQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
+            let (username, mediumItem) = query
+            switch mediumItem {
+            case .image(let cacheKey):
+                let image = ImageCache.default.retrieveImage(forKey: cacheKey)!
+                return WatermarkService.addImageWatermark(image: image, username: username)
+                    .observeOn(MainScheduler.instance)
+                    .do(onSuccess: { [weak self] item in
+                        let vc = UIActivityViewController(activityItems: [item], applicationActivities: nil)
+                        self?.present(vc, animated: true, completion: nil)
+                    })
+                    .map { _ in .onShareMediumSuccess }
+                    .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onShareMediumError)
+
+            case .video(thumbnailImageKey: _, videoFileURL: let url):
+                let videoURL = Cacher.fileURL(for: url.cacheKey)!
+                return WatermarkService.addVideoWatermark(videoURL: videoURL, username: username)
+                    .observeOn(MainScheduler.instance)
+                    .do(onSuccess: { [weak self] item in
+                        let vc = UIActivityViewController(activityItems: [item], applicationActivities: nil)
+                        self?.present(vc, animated: true, completion: nil)
+                    })
+                    .map { _ in .onShareMediumSuccess }
+                    .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onShareMediumError)
+            }
+        })
+        
         let states = store.states
         
         Signal.merge(
@@ -163,7 +191,8 @@ class ImageDetailViewController: ShowNavigationBarViewController {
             queryMedium(states),
             starMedium(states),
             deleteMedium(states),
-            blockMedium(states)
+            blockMedium(states),
+            shareMedium(states)
             )
             .debug("ImageDetailState.Event", trimOutput: true)
             .emit(onNext: store.on)
@@ -200,4 +229,5 @@ extension ImageDetailStateStore {
         }
     }
 }
+
 

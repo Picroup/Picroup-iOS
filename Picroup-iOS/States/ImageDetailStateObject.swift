@@ -24,16 +24,19 @@ final class ImageDetailStateObject: PrimaryObject {
 
     @objc dynamic var starMediumVersion: String?
     @objc dynamic var starMediumError: String?
-    @objc dynamic var triggerStarMedium: Bool = false
+    @objc dynamic var triggerStarMediumQuery: Bool = false
 
     @objc dynamic var myStaredMedia: CursorMediaObject?
     
     @objc dynamic var deleteMediumError: String?
-    @objc dynamic var triggerDeleteMedium: Bool = false
+    @objc dynamic var triggerDeleteMediumQuery: Bool = false
     
     @objc dynamic var blockMediumVersion: String?
     @objc dynamic var blockMediumError: String?
     @objc dynamic var triggerBlockMediumQuery: Bool = false
+    
+    @objc dynamic var shareMediumError: String?
+    @objc dynamic var triggerShareMediumQuery: Bool = false
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
     
@@ -65,19 +68,19 @@ extension ImageDetailStateObject {
         return recommendMedia?.cursor.value != nil
     }
     public var shouldStarMedium: Bool {
-        return medium?.stared.value != true && !triggerStarMedium
+        return medium?.stared.value != true && !triggerStarMediumQuery
     }
     public var starMediumQuery: StarMediumMutation? {
         guard let userId = session?.currentUserId else { return nil }
         let next = StarMediumMutation(userId: userId, mediumId: mediumId)
-        return triggerStarMedium ? next : nil
+        return triggerStarMediumQuery ? next : nil
     }
     var deleteMediumQuery: DeleteMediumMutation? {
         let next = DeleteMediumMutation(mediumId: mediumId)
-        return triggerDeleteMedium ? next : nil
+        return triggerDeleteMediumQuery ? next : nil
     }
     public var shouldDeleteMedium: Bool {
-        return !triggerDeleteMedium
+        return !triggerDeleteMediumQuery
     }
     var shouldBlockMedium: Bool {
         return !triggerBlockMediumQuery
@@ -87,6 +90,12 @@ extension ImageDetailStateObject {
         return triggerBlockMediumQuery
             ? BlockMediumMutation(userId: userId, mediumId: mediumId)
             : nil
+    }
+    var shareMediumQuery: (String, MediumItem)? {
+        guard triggerShareMediumQuery else { return nil }
+        guard let username = medium?.user?.username,
+            let mediumItem = MediumItemHelper.mediumItem(from: medium) else { return nil }
+        return (username, mediumItem)
     }
 }
 
@@ -125,7 +134,7 @@ extension ImageDetailStateObject {
         case onGetReloadData(MediumQuery.Data.Medium?)
         case onGetMoreData(MediumQuery.Data.Medium?)
         case onGetError(Error)
-        
+
         case onTriggerStarMedium
         case onStarMediumSuccess(StarMediumMutation.Data.StarMedium)
         case onStarMediumError(Error)
@@ -138,6 +147,10 @@ extension ImageDetailStateObject {
         case onBlockMediumSuccess(UserFragment)
         case onBlockMediumError(Error)
         
+        case onTriggerShareMedium
+        case onShareMediumSuccess
+        case onShareMediumError(Error)
+
         case onTriggerLogin
         case onTriggerShowImage(String)
         case onTriggerShowComments(String)
@@ -197,13 +210,13 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             guard shouldStarMedium else { return }
             starMediumVersion = nil
             starMediumError = nil
-            triggerStarMedium = true
+            triggerStarMediumQuery = true
         case .onStarMediumSuccess(let data):
             medium?.stared.value = true
             medium?.endedAt.value = data.endedAt
             starMediumVersion = UUID().uuidString
             starMediumError = nil
-            triggerStarMedium = false
+            triggerStarMediumQuery = false
             needUpdate?.myStaredMedia = true
 
             snackbar?.message = "感谢你给图片续命一周"
@@ -212,22 +225,22 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
         case .onStarMediumError(let error):
             starMediumVersion = nil
             starMediumError = error.localizedDescription
-            triggerStarMedium = false
+            triggerStarMediumQuery = false
             
         case .onTriggerDeleteMedium:
             guard shouldDeleteMedium else { return }
             deleteMediumError = nil
-            triggerDeleteMedium = true
+            triggerDeleteMediumQuery = true
         case .onDeleteMediumSuccess:
             medium?.delete()
             deleteMediumError = nil
-            triggerDeleteMedium = false
+            triggerDeleteMediumQuery = false
             snackbar?.message = "已删除"
             snackbar?.version = UUID().uuidString
             popRoute?.version = UUID().uuidString
         case .onDeleteMediumError(let error):
             deleteMediumError = error.localizedDescription
-            triggerDeleteMedium = false
+            triggerDeleteMediumQuery = false
             snackbar?.message = error.localizedDescription
             snackbar?.version = UUID().uuidString
             
@@ -249,6 +262,14 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             blockMediumError = error.localizedDescription
             triggerBlockMediumQuery = false
             
+        case .onTriggerShareMedium:
+            triggerShareMediumQuery = true
+        case .onShareMediumSuccess:
+            triggerShareMediumQuery = false
+        case .onShareMediumError(let error):
+            shareMediumError = error.localizedDescription
+            triggerShareMediumQuery = false
+
         case .onTriggerLogin:
             loginRoute?.version = UUID().uuidString
         case .onTriggerShowImage(let mediumId):
