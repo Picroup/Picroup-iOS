@@ -70,7 +70,7 @@ extension HomeStateObject {
         case onTriggerShowComments(String)
         case onTriggerShowUser(String)
         
-        case onTriggerCreateImage([MediaItem])
+        case onTriggerCreateImage([MediumItem])
         case onTriggerSearchUser
     }
 }

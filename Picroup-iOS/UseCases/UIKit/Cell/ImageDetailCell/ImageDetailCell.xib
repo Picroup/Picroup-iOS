@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -124,16 +124,28 @@
                                             <constraint firstAttribute="width" constant="30" id="rgB-fI-72V"/>
                                         </constraints>
                                         <color key="tintColor" red="0.42655369640000002" green="0.475846082" blue="0.4802647531" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="ic_more_vert"/>
+                                        <state key="normal" image="baseline_more_horiz_black_24pt"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VFy-No-M1x" customClass="SpinnerButton" customModule="Picroup_iOS" customModuleProvider="target">
+                                        <rect key="frame" x="291" y="9" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="YOF-WE-jgV"/>
+                                            <constraint firstAttribute="width" secondItem="VFy-No-M1x" secondAttribute="height" multiplier="1:1" id="hVL-Md-Sst"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.42655369640000002" green="0.475846082" blue="0.4802647531" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="baseline_share_black_24pt"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="zO9-B9-Oib" firstAttribute="leading" secondItem="jOd-dT-iJ1" secondAttribute="trailing" constant="16" id="266-0o-TwC"/>
                                     <constraint firstAttribute="trailing" secondItem="zO9-B9-Oib" secondAttribute="trailing" constant="16" id="PKj-2p-fjY"/>
+                                    <constraint firstItem="zO9-B9-Oib" firstAttribute="leading" secondItem="VFy-No-M1x" secondAttribute="trailing" constant="8" symbolic="YES" id="cOL-eQ-uzR"/>
+                                    <constraint firstItem="VFy-No-M1x" firstAttribute="width" secondItem="VFy-No-M1x" secondAttribute="height" multiplier="1:1" id="ccg-2W-yHG"/>
                                     <constraint firstAttribute="height" constant="48" id="dQ9-IA-sgU"/>
                                     <constraint firstItem="jOd-dT-iJ1" firstAttribute="centerY" secondItem="zO9-B9-Oib" secondAttribute="centerY" id="h1K-bu-goR"/>
                                     <constraint firstItem="zO9-B9-Oib" firstAttribute="centerY" secondItem="zQw-Ow-uB0" secondAttribute="centerY" id="lVw-a8-auM"/>
+                                    <constraint firstItem="VFy-No-M1x" firstAttribute="centerY" secondItem="zO9-B9-Oib" secondAttribute="centerY" id="n39-D4-hOw"/>
                                     <constraint firstItem="jOd-dT-iJ1" firstAttribute="leading" secondItem="zQw-Ow-uB0" secondAttribute="leading" constant="16" id="weL-J2-I3p"/>
                                 </constraints>
                             </view>
@@ -191,6 +203,7 @@
                 <outlet property="moreButton" destination="zO9-B9-Oib" id="RRL-It-YfV"/>
                 <outlet property="progressView" destination="btD-A5-asM" id="2Ub-8c-1Za"/>
                 <outlet property="remainTimeLabel" destination="QYp-AR-R7W" id="aMl-XI-fZK"/>
+                <outlet property="shareButton" destination="VFy-No-M1x" id="vtB-cU-Ipn"/>
                 <outlet property="starButton" destination="A0d-T5-LoM" id="hKU-dQ-XCn"/>
                 <outlet property="suggestUpdateLabel" destination="WsR-W2-nTA" id="gQy-lu-X1Y"/>
                 <outlet property="userAvatarImageView" destination="fHK-Jc-m2W" id="qjS-Wm-7QW"/>
@@ -199,9 +212,10 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="baseline_more_horiz_black_24pt" width="24" height="24"/>
+        <image name="baseline_share_black_24pt" width="24" height="24"/>
         <image name="beethoven" width="369" height="369"/>
         <image name="ic_chat_bubble" width="24" height="24"/>
         <image name="ic_favorite_white" width="24" height="24"/>
-        <image name="ic_more_vert" width="24" height="24"/>
     </resources>
 </document>

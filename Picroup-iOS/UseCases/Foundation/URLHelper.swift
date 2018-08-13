@@ -14,5 +14,6 @@ struct URLHelper {
         return minioId
             .map { "\(Config.baseURL)/files/\($0)" }
             .flatMap(URL.init(string: ))
-    }
+    }    
 }
+

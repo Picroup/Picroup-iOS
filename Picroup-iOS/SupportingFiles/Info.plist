@@ -28,11 +28,13 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Upoad photos</string>
+	<string>上传照片</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Record video sound!</string>
+	<string>录制视频</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Upoad photos</string>
+	<string>上传照片</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>保存照片</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

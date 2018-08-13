@@ -77,15 +77,18 @@ class ImageDetailCell: RxCollectionViewCell {
     @IBOutlet weak var displayNameLabel: UILabel!
     @IBOutlet weak var remainTimeLabel: UILabel!
     @IBOutlet weak var commentButton: UIButton!
+    @IBOutlet weak var shareButton: SpinnerButton!
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var suggestUpdateLabel: UILabel!
 
     func configure(
         with item: MediumObject,
+        isSharing: Driver<Bool>,
         onStarButtonTap: (() -> Void)?,
         onCommentsTap: (() -> Void)?,
         onImageViewTap: (() -> Void)?,
         onUserTap: (() -> Void)?,
+        onShareTap: (() -> Void)?,
         onMoreTap: (() -> Void)?
         ) {
         if item.isInvalidated { return }
@@ -114,6 +117,10 @@ class ImageDetailCell: RxCollectionViewCell {
             })
         }
         
+        isSharing.distinctUntilChanged()
+            .drive(shareButton.rx.spinning)
+            .disposed(by: disposeBag)
+
         if let onCommentsTap = onCommentsTap {
             commentButton.rx.tap
                 .subscribe(onNext: onCommentsTap)
@@ -137,6 +144,13 @@ class ImageDetailCell: RxCollectionViewCell {
             userView.rx.tapGesture().when(.recognized)
                 .mapToVoid()
                 .subscribe(onNext: onUserTap)
+                .disposed(by: disposeBag)
+        }
+        
+        if let onShareTap = onShareTap {
+            shareButton.rx.tap
+                .mapToVoid()
+                .subscribe(onNext: onShareTap)
                 .disposed(by: disposeBag)
         }
         
@@ -175,3 +189,11 @@ struct StarButtonPresenter {
     }
 }
 
+extension Reactive where Base: SpinnerButton {
+    
+    var spinning: Binder<Bool> {
+        return Binder(base) { spinnerButton, spinning in
+            spinning ? spinnerButton.startSpinning() : spinnerButton.stopSpinning()
+        }
+    }
+}

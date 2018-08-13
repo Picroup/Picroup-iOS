@@ -56,6 +56,9 @@
 		4543ECE520BC38FA002F7C18 /* LoadFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4543ECE420BC38FA002F7C18 /* LoadFooterView.xib */; };
 		4543ECE720BC39DC002F7C18 /* LoadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ECE620BC39DC002F7C18 /* LoadFooterView.swift */; };
 		4543ECE920BC4121002F7C18 /* RxCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ECE820BC4121002F7C18 /* RxCollectionReusableView.swift */; };
+		454714A0211D65E4003A5D04 /* WatermarkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4547149F211D65E4003A5D04 /* WatermarkService.swift */; };
+		454714A3211D7C7C003A5D04 /* MediumItemHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454714A2211D7C7C003A5D04 /* MediumItemHelper.swift */; };
+		454714A7212125B2003A5D04 /* SpinnerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454714A6212125B2003A5D04 /* SpinnerButton.swift */; };
 		454A4C42209C2F160063E829 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454A4C41209C2F160063E829 /* LocalStorage.swift */; };
 		454B4A4C20ABB73900990063 /* MeStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B4A4B20ABB73900990063 /* MeStateObject.swift */; };
 		454B4A4E20ABB78600990063 /* ImageDetailStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B4A4D20ABB78600990063 /* ImageDetailStateObject.swift */; };
@@ -310,6 +313,9 @@
 		4543ECE420BC38FA002F7C18 /* LoadFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadFooterView.xib; sourceTree = "<group>"; };
 		4543ECE620BC39DC002F7C18 /* LoadFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFooterView.swift; sourceTree = "<group>"; };
 		4543ECE820BC4121002F7C18 /* RxCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCollectionReusableView.swift; sourceTree = "<group>"; };
+		4547149F211D65E4003A5D04 /* WatermarkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatermarkService.swift; sourceTree = "<group>"; };
+		454714A2211D7C7C003A5D04 /* MediumItemHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumItemHelper.swift; sourceTree = "<group>"; };
+		454714A6212125B2003A5D04 /* SpinnerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerButton.swift; sourceTree = "<group>"; };
 		454A4C41209C2F160063E829 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		454B4A4B20ABB73900990063 /* MeStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeStateObject.swift; sourceTree = "<group>"; };
 		454B4A4D20ABB78600990063 /* ImageDetailStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailStateObject.swift; sourceTree = "<group>"; };
@@ -719,6 +725,14 @@
 			path = LoadFooterView;
 			sourceTree = "<group>";
 		};
+		454714A1211D7C69003A5D04 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				454714A2211D7C7C003A5D04 /* MediumItemHelper.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
 		454CD57820C821800087C634 /* RxKingfisher */ = {
 			isa = PBXGroup;
 			children = (
@@ -883,9 +897,10 @@
 		457BD99020B146CD007F0492 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				457BD99220B146CD007F0492 /* AppStateService.swift */,
 				457BD99120B146CD007F0492 /* MediumService.swift */,
 				456E910B20FD8A510006FFA8 /* UpoaderService.swift */,
-				457BD99220B146CD007F0492 /* AppStateService.swift */,
+				4547149F211D65E4003A5D04 /* WatermarkService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -964,10 +979,10 @@
 		4595F2042079EDE20040E5FA /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
-				45F55F8D21070154002BF481 /* ProgressView */,
 				4561DE612100407200F77510 /* Cell */,
-				456D145F21058B43008EDD41 /* Presenter */,
 				45A6810C20FF23B80070606B /* PlayerView */,
+				456D145F21058B43008EDD41 /* Presenter */,
+				45F55F8D21070154002BF481 /* ProgressView */,
 				455D69032080409A00C651A0 /* BaseNavigationController.swift */,
 				455808D820EC6B2C005F1A00 /* BaseViewController.swift */,
 				4595F2072079EECF0040E5FA /* colors.swift */,
@@ -1102,6 +1117,7 @@
 				45C1994B20A983BC001924B9 /* RxCocoa */,
 				456D14642105B067008EDD41 /* States */,
 				4595F2042079EDE20040E5FA /* UIKit */,
+				454714A1211D7C69003A5D04 /* Other */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1297,11 +1313,12 @@
 			children = (
 				4543ECE320BC38D1002F7C18 /* LoadFooterView */,
 				45E240B420862981004B58EF /* HideNavigationBarViewController.swift */,
+				458C050420C91C07004EB2D8 /* ImageGenerator.swift */,
+				45B5E27520C8D2D7005E2E58 /* PlaceholderTextView.swift */,
+				454714A6212125B2003A5D04 /* SpinnerButton.swift */,
 				45183EC320D0ED2300497B59 /* UIViewController+isViewAppears.swift */,
 				455808DA20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift */,
-				45B5E27520C8D2D7005E2E58 /* PlaceholderTextView.swift */,
 				454F72992089BA1300850471 /* UIView+IBInspectable.swift */,
-				458C050420C91C07004EB2D8 /* ImageGenerator.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -1548,6 +1565,7 @@
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Material/Material.framework",
+				"${BUILT_PRODUCTS_DIR}/MediaWatermark/MediaWatermark.framework",
 				"${BUILT_PRODUCTS_DIR}/Motion/Motion.framework",
 				"${BUILT_PRODUCTS_DIR}/PryntTrimmerView/PryntTrimmerView.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
@@ -1571,6 +1589,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Material.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MediaWatermark.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Motion.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PryntTrimmerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
@@ -1599,6 +1618,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */,
+				454714A3211D7C7C003A5D04 /* MediumItemHelper.swift in Sources */,
 				45315C1320F61CA700E3BCAB /* UpdateMediumTagsViewController.swift in Sources */,
 				457BD98920AC695A007F0492 /* ReputationObject.swift in Sources */,
 				45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */,
@@ -1704,6 +1724,7 @@
 				454CD57520C80EB60087C634 /* RegisterPasswordViewController.swift in Sources */,
 				4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */,
 				45183EC420D0ED2300497B59 /* UIViewController+isViewAppears.swift in Sources */,
+				454714A0211D65E4003A5D04 /* WatermarkService.swift in Sources */,
 				45850AD620FF4EC9006C8EC1 /* URLHelper.swift in Sources */,
 				45FC0BFB20A91541006AAF3D /* PrimaryObject.swift in Sources */,
 				451DD4B7207E3EB5002C509A /* ErrorMessage.swift in Sources */,
@@ -1717,6 +1738,7 @@
 				457BD98120A9D504007F0492 /* NotificationObject.swift in Sources */,
 				451DD4BD207F8BC7002C509A /* RankStateObject.swift in Sources */,
 				45BA0D8520903A020002E1D5 /* NotificationsStateObject.swift in Sources */,
+				454714A7212125B2003A5D04 /* SpinnerButton.swift in Sources */,
 				45B0206A20B4036100BD5D8F /* FollowersPresenter.swift in Sources */,
 				45AA3B4520A311BD0032A8CF /* ImageDetailPresenter.swift in Sources */,
 				45B0204720AC0D7000BD5D8F /* ImageCommentsStateObject.swift in Sources */,
