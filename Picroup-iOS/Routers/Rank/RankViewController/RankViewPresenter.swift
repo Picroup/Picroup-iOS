@@ -25,7 +25,7 @@ final class RankViewPresenter: NSObject {
     
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
-        self.mediaPresenter = MediaPreserter(collectionView: collectionView, animatedDataSource: false)
+        self.mediaPresenter = MediaPreserter(collectionView: collectionView, animatedDataSource: true)
         prepareTagsCollectionView()
         prepareRefreshControl()
         prepareUserButton()

@@ -45,6 +45,7 @@ extension CursorMediaStateObject {
         case onTriggerReload
         case onTriggerGetMore
         case onGetData(CursorMediaFragment)
+        case onGetSampleData(CursorMediaFragment)
         case onGetError(Error)
     }
 }
@@ -69,6 +70,17 @@ extension CursorMediaStateObject: IsFeedbackStateObject {
                 isReload = false
             } else {
                 cursorMedia?.merge(from: data)(realm)
+            }
+            error = nil
+            trigger = false
+        case .onGetSampleData(let data):
+            if isReload {
+                cursorMedia = CursorMediaObject.create(from: data, id: _id)(realm)
+                cursorMedia?.cursor.value = 0
+                isReload = false
+            } else {
+                cursorMedia?.mergeSample(from: data)(realm)
+                cursorMedia?.cursor.value = 0
             }
             error = nil
             trigger = false

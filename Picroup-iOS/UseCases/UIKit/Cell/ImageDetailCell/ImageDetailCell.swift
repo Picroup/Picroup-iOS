@@ -90,7 +90,6 @@ class ImageDetailCell: RxCollectionViewCell {
         ) {
 
         Observable.from(object: item)
-            //            .bind(to: rxItem)
             .asDriverOnErrorRecoverEmpty()
             .drive(rxItem)
             .disposed(by: disposeBag)
