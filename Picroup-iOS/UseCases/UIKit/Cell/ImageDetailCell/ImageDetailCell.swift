@@ -21,7 +21,6 @@ struct ImageDetailViewModel {
     let remainTimeLabelText: String?
     let commentsCountText: String
     let stared: Bool?
-    let animatedChangeProgress: Bool
     let placeholderColor: UIColor
 
     let displayName: String?
@@ -41,7 +40,6 @@ extension ImageDetailViewModel {
             self.remainTimeLabelText = "\(0) 周"
             self.commentsCountText = "\(0)"
             self.stared = nil
-            self.animatedChangeProgress = false
             self.displayName = nil
             self.avatarId = nil
             self.placeholderColor = .background
@@ -58,7 +56,6 @@ extension ImageDetailViewModel {
         self.remainTimeLabelText = Moment.string(from: medium.endedAt.value)
         self.commentsCountText = "  \(medium.commentsCount.value ?? 0)"
         self.stared = medium.stared.value
-        self.animatedChangeProgress = false
         self.placeholderColor = medium.placeholderColor
 
         self.displayName = medium.user?.displayName
@@ -91,31 +88,12 @@ class ImageDetailCell: RxCollectionViewCell {
         onShareTap: (() -> Void)?,
         onMoreTap: (() -> Void)?
         ) {
-        if item.isInvalidated { return }
-        let viewModel = ImageDetailViewModel(medium: item)
-        
-        if viewModel.kind == MediumKind.image.rawValue {
-            imageView.setImage(with: item.minioId)
-            suggestUpdateLabel.isHidden = true
-        } else {
-            imageView.image = nil
-            suggestUpdateLabel.isHidden = false
-        }
-        imageView.backgroundColor = viewModel.placeholderColor
-        imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
-        progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
-        progressView.progress = viewModel.progress
-        starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
-        userAvatarImageView.setUserAvatar(with: item.user)
-        displayNameLabel.text = viewModel.displayName
-        remainTimeLabel.text = viewModel.remainTimeLabelText
-        commentButton.setTitle(viewModel.commentsCountText, for: .normal)
-        configureStarButton(with: viewModel)
-        if viewModel.animatedChangeProgress {
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
-                self.layoutIfNeeded()
-            })
-        }
+
+        Observable.from(object: item)
+            //            .bind(to: rxItem)
+            .asDriverOnErrorRecoverEmpty()
+            .drive(rxItem)
+            .disposed(by: disposeBag)
         
         isSharing.distinctUntilChanged()
             .drive(shareButton.rx.spinning)
@@ -158,6 +136,32 @@ class ImageDetailCell: RxCollectionViewCell {
             moreButton.rx.tap
                 .subscribe(onNext: onMoreTap)
                 .disposed(by: disposeBag)
+        }
+    }
+    
+    private var rxItem: Binder<MediumObject> {
+        return Binder(self) { cell, item in
+            if item.isInvalidated { return }
+            let viewModel = ImageDetailViewModel(medium: item)
+            
+            if viewModel.kind == MediumKind.image.rawValue {
+                cell.imageView.setImage(with: item.minioId)
+                cell.suggestUpdateLabel.isHidden = true
+            } else {
+                cell.imageView.image = nil
+                cell.suggestUpdateLabel.isHidden = false
+            }
+            cell.imageView.backgroundColor = viewModel.placeholderColor
+            cell.imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
+            cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
+            cell.progressView.progress = viewModel.progress
+            cell.starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
+            cell.userAvatarImageView.setUserAvatar(with: item.user)
+            cell.displayNameLabel.text = viewModel.displayName
+            cell.remainTimeLabel.text = viewModel.remainTimeLabelText
+            cell.commentButton.setTitle(viewModel.commentsCountText, for: .normal)
+            DispatchQueue.main.async { cell.configureStarButton(with: viewModel) }
+            
         }
     }
     

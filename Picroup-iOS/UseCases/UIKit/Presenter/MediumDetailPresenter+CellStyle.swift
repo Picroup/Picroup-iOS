@@ -59,7 +59,9 @@ extension MediumDetailPresenter.CellStyle: IdentifiableType, Equatable {
     static func ==(lhs: MediumDetailPresenter.CellStyle, rhs: MediumDetailPresenter.CellStyle) -> Bool {
         switch (lhs, rhs) {
         case (.imageDetail, imageDetail):
-            return false
+            return true
+        case (.imageTag(let lTag), .imageTag(let rTag)):
+            return lTag == rTag
         case (.recommendMedium(let lMedium), .recommendMedium(let rMedium)):
             return lMedium._id == rMedium._id
         default:

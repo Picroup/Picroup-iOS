@@ -22,6 +22,18 @@ extension ObservableConvertibleType {
 }
 
 
+extension ObservableConvertibleType {
+    
+    public func asDriverOnErrorRecoverEmpty() -> RxCocoa.SharedSequence<RxCocoa.DriverSharingStrategy, Self.E> {
+        return asDriver(onErrorRecover: { _ in RxCocoa.SharedSequence<RxCocoa.DriverSharingStrategy, Self.E>.empty() })
+    }
+    
+    public func asDriver(onErrorReturnJust: @escaping (Error) -> Self.E) -> RxCocoa.SharedSequence<RxCocoa.DriverSharingStrategy, Self.E> {
+        return asDriver(onErrorRecover: { error in RxCocoa.SharedSequence<RxCocoa.DriverSharingStrategy, Self.E>.just(onErrorReturnJust(error)) })
+    }
+}
+
+
 extension ObservableType {
     
     public func catchError(returnJust: @escaping (Error) -> Self.E) -> Observable<E> {
