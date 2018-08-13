@@ -73,7 +73,7 @@ final class TagMediaViewController: ShowNavigationBarViewController {
         let queryMedia: Feedback = react(query: { $0.hotMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
             ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                 .map { $0?.data?.hotMediaByTags.fragments.cursorMediaFragment }.unwrap()
-                .map { .hotMediaState(.onGetData($0)) }
+                .map { .hotMediaState(.onGetSampleData($0)) }
                 .retryWhen { errors -> Observable<Int> in
                     errors.enumerated().flatMapLatest { Observable<Int>.timer(5 * RxTimeInterval($0.index + 1), scheduler: MainScheduler.instance) }
                 }

@@ -15,7 +15,7 @@ final class MediumDetailPresenter: NSObject {
     private weak var _collectionView: UICollectionView?
     
     typealias Section = AnimatableSectionModel<SectionStyle, CellStyle>
-    typealias DataSource = RxCollectionViewSectionedReloadDataSource<Section>
+    typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<Section>
     fileprivate var dataSource: DataSource?
 
     init(collectionView: UICollectionView) {

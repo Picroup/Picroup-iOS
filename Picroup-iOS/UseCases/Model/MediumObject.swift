@@ -50,7 +50,18 @@ extension CursorMediaObject: IsCursorItemsObject {
     
     func merge(from fragment: CursorItemsFragment) -> (Realm) -> Void {
         return { realm in
-            let itemSnapshots = fragment.items.map { $0.fragments.mediumFragment.rawSnapshot }
+            let itemSnapshots = fragment.items.lazy.map { $0.fragments.mediumFragment.rawSnapshot }
+            let items = itemSnapshots.map { realm.create(Item.self, value: $0, update: true) }
+            self.cursor.value = fragment.cursor
+            self.items.append(objectsIn: items)
+        }
+    }
+    
+    func mergeSample(from fragment: CursorItemsFragment) -> (Realm) -> Void {
+        return { realm in
+            let itemSnapshots = fragment.items.lazy
+                .filter { item in !self.items.contains(where: { $0._id == item.id}) }
+                .map { $0.fragments.mediumFragment.rawSnapshot }
             let items = itemSnapshots.map { realm.create(Item.self, value: $0, update: true) }
             self.cursor.value = fragment.cursor
             self.items.append(objectsIn: items)

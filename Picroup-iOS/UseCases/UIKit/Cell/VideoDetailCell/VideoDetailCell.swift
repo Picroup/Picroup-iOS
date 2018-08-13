@@ -35,26 +35,13 @@ class VideoDetailCell: RxCollectionViewCell {
         onShareTap: (() -> Void)?,
         onMoreTap: (() -> Void)?
         ) {
-        if item.isInvalidated { return }
-        let viewModel = ImageDetailViewModel(medium: item)
         
-        playerView.backgroundColor = viewModel.placeholderColor
-        playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
-        progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
-        progressView.progress = viewModel.progress
-        starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
-        userAvatarImageView.setUserAvatar(with: item.user)
-        displayNameLabel.text = viewModel.displayName
-        remainTimeLabel.text = viewModel.remainTimeLabelText
-        commentButton.setTitle(viewModel.commentsCountText, for: .normal)
-        configureStarButton(with: viewModel)
-        if viewModel.animatedChangeProgress {
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
-                self.layoutIfNeeded()
-            })
-        }
+       Observable.from(object: item)
+            .asDriverOnErrorRecoverEmpty()
+            .drive(rxItem)
+            .disposed(by: disposeBag)
         
-        isSharing.distinctUntilChanged().debug("isSharing")
+        isSharing.distinctUntilChanged()
             .drive(shareButton.rx.spinning)
             .disposed(by: disposeBag)
         
@@ -95,6 +82,24 @@ class VideoDetailCell: RxCollectionViewCell {
             moreButton.rx.tap
                 .subscribe(onNext: onMoreTap)
                 .disposed(by: disposeBag)
+        }
+    }
+    
+    private var rxItem: Binder<MediumObject> {
+        return Binder(self) { cell, item in
+            if item.isInvalidated { return }
+            let viewModel = ImageDetailViewModel(medium: item)
+            
+            cell.playerView.backgroundColor = viewModel.placeholderColor
+            cell.playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
+            cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
+            cell.progressView.progress = viewModel.progress
+            cell.starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
+            cell.userAvatarImageView.setUserAvatar(with: item.user)
+            cell.displayNameLabel.text = viewModel.displayName
+            cell.remainTimeLabel.text = viewModel.remainTimeLabelText
+            cell.commentButton.setTitle(viewModel.commentsCountText, for: .normal)
+            DispatchQueue.main.async { cell.configureStarButton(with: viewModel) }
         }
     }
     
