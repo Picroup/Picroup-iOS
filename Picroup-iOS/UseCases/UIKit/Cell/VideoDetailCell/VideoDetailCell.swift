@@ -22,11 +22,12 @@ class VideoDetailCell: RxCollectionViewCell {
     @IBOutlet weak var displayNameLabel: UILabel!
     @IBOutlet weak var remainTimeLabel: UILabel!
     @IBOutlet weak var commentButton: UIButton!
-    @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var shareButton: SpinnerButton!
     @IBOutlet weak var moreButton: UIButton!
     
     func configure(
         with item: MediumObject,
+        isSharing: Driver<Bool>,
         onStarButtonTap: (() -> Void)?,
         onCommentsTap: (() -> Void)?,
         onImageViewTap: (() -> Void)?,
@@ -52,6 +53,10 @@ class VideoDetailCell: RxCollectionViewCell {
                 self.layoutIfNeeded()
             })
         }
+        
+        isSharing.distinctUntilChanged().debug("isSharing")
+            .drive(shareButton.rx.spinning)
+            .disposed(by: disposeBag)
         
         if let onCommentsTap = onCommentsTap {
             commentButton.rx.tap

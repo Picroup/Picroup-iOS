@@ -33,9 +33,9 @@ final class MediumDetailPresenter: NSObject {
     }
     
     func items(events:
-        PublishRelay<ImageDetailStateObject.Event>, moreButtonTap: PublishRelay<Void>) -> (Observable<[Section]>) -> Disposable {
+        PublishRelay<ImageDetailStateObject.Event>, isSharing: Driver<Bool>, moreButtonTap: PublishRelay<Void>) -> (Observable<[Section]>) -> Disposable {
         dataSource = DataSource(
-            configureCell: configureCell(events: events, moreButtonTap: moreButtonTap),
+            configureCell: configureCell(events: events, isSharing: isSharing, moreButtonTap: moreButtonTap),
             configureSupplementaryView: { dataSource, collectionView, title, indexPath in
                 return UICollectionReusableView()
         })
@@ -44,11 +44,11 @@ final class MediumDetailPresenter: NSObject {
 }
 
 private func configureCell<D>(events:
-    PublishRelay<ImageDetailStateObject.Event>, moreButtonTap: PublishRelay<Void>) -> (D, UICollectionView, IndexPath, MediumDetailPresenter.CellStyle) -> UICollectionViewCell {
+    PublishRelay<ImageDetailStateObject.Event>,isSharing: Driver<Bool>, moreButtonTap: PublishRelay<Void>) -> (D, UICollectionView, IndexPath, MediumDetailPresenter.CellStyle) -> UICollectionViewCell {
     return { dataSource, collectionView, indexPath, cellStyle in
         switch cellStyle {
         case .imageDetail(let item):
-            return configureMediumDetailCell(events: events, moreButtonTap: moreButtonTap)(dataSource, collectionView, indexPath, item)
+            return configureMediumDetailCell(events: events, isSharing: isSharing, moreButtonTap: moreButtonTap)(dataSource, collectionView, indexPath, item)
         case .imageTag(let tag):
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TagCollectionViewCell", for: indexPath) as! TagCollectionViewCell
             cell.tagLabel.text = tag
@@ -61,12 +61,13 @@ private func configureCell<D>(events:
 }
 
 private func configureMediumDetailCell<D>(events:
-    PublishRelay<ImageDetailStateObject.Event>, moreButtonTap: PublishRelay<Void>) -> (D, UICollectionView, IndexPath, MediumObject) -> UICollectionViewCell {
+    PublishRelay<ImageDetailStateObject.Event>, isSharing: Driver<Bool>, moreButtonTap: PublishRelay<Void>) -> (D, UICollectionView, IndexPath, MediumObject) -> UICollectionViewCell {
     return { dataSource, collectionView, indexPath, item in
         let defaultCell: () -> UICollectionViewCell = {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageDetailCell", for: indexPath) as! ImageDetailCell
             cell.configure(
                 with: item,
+                isSharing: isSharing,
                 onStarButtonTap: { events.accept(.onTriggerStarMedium) },
                 onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
                 onImageViewTap: { events.accept(.onTriggerPop) },
@@ -84,6 +85,7 @@ private func configureMediumDetailCell<D>(events:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoDetailCell", for: indexPath) as! VideoDetailCell
             cell.configure(
                 with: item,
+                isSharing: isSharing,
                 onStarButtonTap: { events.accept(.onTriggerStarMedium) },
                 onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
                 onImageViewTap: { events.accept(.onTriggerPop) },

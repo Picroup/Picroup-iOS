@@ -18,18 +18,18 @@ struct Cacher {
         return try? Cache.Storage(diskConfig: diskConfig, memoryConfig: memoryConfig)
     }()
     
-    static func fileURL(for key: String) -> URL? {
-        let fileManager = FileManager.default
-        do {
-            let url = try fileManager.url(
-                for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true
-            )
-            let path = url.appendingPathComponent(diskConfig.name, isDirectory: true).path
-            let filePath = "\(path)/\(MD5(key))"
-            return URL(fileURLWithPath: filePath)
-        } catch  {
-            return nil
-        }
-    }
+//    static func fileURL(for key: String) -> URL? {
+//        let fileManager = FileManager.default
+//        do {
+//            let url = try fileManager.url(
+//                for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true
+//            )
+//            let path = url.appendingPathComponent(diskConfig.name, isDirectory: true).path
+//            let filePath = "\(path)/\(MD5(key))"
+//            return URL(fileURLWithPath: filePath)
+//        } catch  {
+//            return nil
+//        }
+//    }
 }
 

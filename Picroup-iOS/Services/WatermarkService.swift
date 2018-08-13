@@ -29,10 +29,10 @@ extension MediaItem {
 struct WatermarkService {
     
     private struct Constants {
-        static let watermarkMargin: CGFloat = 8
         static let colorAlpha: CGFloat = 0.7
-        static let logoFontSize: CGFloat = 32
-        static let usernameFontSize: CGFloat = 24
+        static let watermarkMarginRatio: CGFloat = 0.02
+        static let logoFontRatio: CGFloat = 0.05
+        static let usernameFontRatio: CGFloat = logoFontRatio * 0.75
     }
     
     static func addImageWatermark(image: UIImage, username: String) -> Single<UIImage> {
@@ -60,22 +60,25 @@ struct WatermarkService {
     }
     
     private static func warkmarkElement(username: String, for mediaItem: MediaItem) -> MediaElement {
-        let text = warkmarkText(username: username)
+        let mediumSize = mediaItem.size
+        let text = warkmarkText(username: username, mediumSize: mediumSize)
         let watermark = MediaElement(text: text)
-        let y = mediaItem.type == .video ? Constants.watermarkMargin : mediaItem.size.height - Constants.watermarkMargin - text.size().height
-        watermark.frame = CGRect(x: Constants.watermarkMargin, y: y, width: text.size().width, height: text.size().height)
+        let margin = mediumSize.width * Constants.watermarkMarginRatio
+        let y = mediaItem.type == .video ? margin : mediumSize.height - margin - text.size().height
+        watermark.frame = CGRect(x: margin, y: y, width: text.size().width, height: text.size().height)
         return watermark
     }
     
-    private static func warkmarkText(username: String) -> NSAttributedString {
+    private static func warkmarkText(username: String, mediumSize: CGSize) -> NSAttributedString {
+        let mediumWidth = mediumSize.width
         let string = NSMutableAttributedString()
         string.append(NSAttributedString(string: "Picroup ", attributes: [
             .foregroundColor: UIColor.white.withAlphaComponent(Constants.colorAlpha),
-            .font: UIFont(name: "HelveticaNeue-Bold", size: Constants.logoFontSize)!,
+            .font: UIFont(name: "HelveticaNeue-Bold", size: mediumWidth * Constants.logoFontRatio)!,
             ]))
         string.append(NSAttributedString(string: "作者 @\(username)", attributes: [
             .foregroundColor: UIColor.white.withAlphaComponent(Constants.colorAlpha),
-            .font: UIFont(name: "HelveticaNeue", size: Constants.usernameFontSize)!,
+            .font: UIFont(name: "HelveticaNeue", size: mediumWidth * Constants.usernameFontRatio)!,
             ]))
         return string
     }

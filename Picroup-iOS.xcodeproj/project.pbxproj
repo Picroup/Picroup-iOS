@@ -58,6 +58,7 @@
 		4543ECE920BC4121002F7C18 /* RxCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ECE820BC4121002F7C18 /* RxCollectionReusableView.swift */; };
 		454714A0211D65E4003A5D04 /* WatermarkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4547149F211D65E4003A5D04 /* WatermarkService.swift */; };
 		454714A3211D7C7C003A5D04 /* MediumItemHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454714A2211D7C7C003A5D04 /* MediumItemHelper.swift */; };
+		454714A7212125B2003A5D04 /* SpinnerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454714A6212125B2003A5D04 /* SpinnerButton.swift */; };
 		454A4C42209C2F160063E829 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454A4C41209C2F160063E829 /* LocalStorage.swift */; };
 		454B4A4C20ABB73900990063 /* MeStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B4A4B20ABB73900990063 /* MeStateObject.swift */; };
 		454B4A4E20ABB78600990063 /* ImageDetailStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B4A4D20ABB78600990063 /* ImageDetailStateObject.swift */; };
@@ -314,6 +315,7 @@
 		4543ECE820BC4121002F7C18 /* RxCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCollectionReusableView.swift; sourceTree = "<group>"; };
 		4547149F211D65E4003A5D04 /* WatermarkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatermarkService.swift; sourceTree = "<group>"; };
 		454714A2211D7C7C003A5D04 /* MediumItemHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumItemHelper.swift; sourceTree = "<group>"; };
+		454714A6212125B2003A5D04 /* SpinnerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerButton.swift; sourceTree = "<group>"; };
 		454A4C41209C2F160063E829 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		454B4A4B20ABB73900990063 /* MeStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeStateObject.swift; sourceTree = "<group>"; };
 		454B4A4D20ABB78600990063 /* ImageDetailStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailStateObject.swift; sourceTree = "<group>"; };
@@ -1311,11 +1313,12 @@
 			children = (
 				4543ECE320BC38D1002F7C18 /* LoadFooterView */,
 				45E240B420862981004B58EF /* HideNavigationBarViewController.swift */,
+				458C050420C91C07004EB2D8 /* ImageGenerator.swift */,
+				45B5E27520C8D2D7005E2E58 /* PlaceholderTextView.swift */,
+				454714A6212125B2003A5D04 /* SpinnerButton.swift */,
 				45183EC320D0ED2300497B59 /* UIViewController+isViewAppears.swift */,
 				455808DA20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift */,
-				45B5E27520C8D2D7005E2E58 /* PlaceholderTextView.swift */,
 				454F72992089BA1300850471 /* UIView+IBInspectable.swift */,
-				458C050420C91C07004EB2D8 /* ImageGenerator.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -1408,7 +1411,6 @@
 			buildConfigurationList = 457B1B99205FEA1000BEDDF1 /* Build configuration list for PBXNativeTarget "Picroup-iOS" */;
 			buildPhases = (
 				1A832FF15A88A8EFF78CE953 /* [CP] Check Pods Manifest.lock */,
-				4547149E211D5AF9003A5D04 /* ShellScript */,
 				457B1B83205FEA1000BEDDF1 /* Sources */,
 				457B1B84205FEA1000BEDDF1 /* Frameworks */,
 				457B1B85205FEA1000BEDDF1 /* Resources */,
@@ -1549,19 +1551,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
-		};
-		4547149E211D5AF9003A5D04 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema UseCases/GraphQL/schema.json --output UseCases/GraphQL/API.swift\n";
 		};
 		E0FCAA82992B2BFE5A43546E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1749,6 +1738,7 @@
 				457BD98120A9D504007F0492 /* NotificationObject.swift in Sources */,
 				451DD4BD207F8BC7002C509A /* RankStateObject.swift in Sources */,
 				45BA0D8520903A020002E1D5 /* NotificationsStateObject.swift in Sources */,
+				454714A7212125B2003A5D04 /* SpinnerButton.swift in Sources */,
 				45B0206A20B4036100BD5D8F /* FollowersPresenter.swift in Sources */,
 				45AA3B4520A311BD0032A8CF /* ImageDetailPresenter.swift in Sources */,
 				45B0204720AC0D7000BD5D8F /* ImageCommentsStateObject.swift in Sources */,

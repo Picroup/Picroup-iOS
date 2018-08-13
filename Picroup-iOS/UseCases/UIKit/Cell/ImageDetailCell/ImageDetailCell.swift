@@ -77,12 +77,13 @@ class ImageDetailCell: RxCollectionViewCell {
     @IBOutlet weak var displayNameLabel: UILabel!
     @IBOutlet weak var remainTimeLabel: UILabel!
     @IBOutlet weak var commentButton: UIButton!
-    @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var shareButton: SpinnerButton!
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var suggestUpdateLabel: UILabel!
 
     func configure(
         with item: MediumObject,
+        isSharing: Driver<Bool>,
         onStarButtonTap: (() -> Void)?,
         onCommentsTap: (() -> Void)?,
         onImageViewTap: (() -> Void)?,
@@ -116,6 +117,10 @@ class ImageDetailCell: RxCollectionViewCell {
             })
         }
         
+        isSharing.distinctUntilChanged()
+            .drive(shareButton.rx.spinning)
+            .disposed(by: disposeBag)
+
         if let onCommentsTap = onCommentsTap {
             commentButton.rx.tap
                 .subscribe(onNext: onCommentsTap)
@@ -184,3 +189,11 @@ struct StarButtonPresenter {
     }
 }
 
+extension Reactive where Base: SpinnerButton {
+    
+    var spinning: Binder<Bool> {
+        return Binder(base) { spinnerButton, spinning in
+            spinning ? spinnerButton.startSpinning() : spinnerButton.stopSpinning()
+        }
+    }
+}

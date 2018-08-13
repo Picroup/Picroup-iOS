@@ -13,6 +13,7 @@ import RxCocoa
 import RxFeedback
 import Apollo
 import Kingfisher
+import AVKit
 
 private func mapMoreButtonTapToEvent(sender: UICollectionView) -> (ImageDetailStateObject) -> Signal<ImageDetailStateObject.Event> {
     return { state in
@@ -90,9 +91,10 @@ class ImageDetailViewController: ShowNavigationBarViewController {
         
         // I known this is ugly but it enabled the transition animations
         let sections = Observable.combineLatest(store.sections, store.states.asObservable()) { $1.isMediumDeleted ? [] : $0 }
+        let isSharing = store.states.map { $0.triggerShareMediumQuery }
         
         sections
-            .bind(to: presenter.mediumDetailPresenter.items(events: _events, moreButtonTap: _moreButtonTap))
+            .bind(to: presenter.mediumDetailPresenter.items(events: _events, isSharing: isSharing, moreButtonTap: _moreButtonTap))
             .disposed(by: disposeBag)
         
         let uiFeedback: Feedback = bind(self) { (me, state) in
@@ -171,8 +173,7 @@ class ImageDetailViewController: ShowNavigationBarViewController {
                     .map { _ in .onShareMediumSuccess }
                     .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onShareMediumError)
 
-            case .video(thumbnailImageKey: _, videoFileURL: let url):
-                let videoURL = Cacher.fileURL(for: url.cacheKey)!
+            case .video(thumbnailImageKey: _, videoFileURL: let videoURL):
                 return WatermarkService.addVideoWatermark(videoURL: videoURL, username: username)
                     .observeOn(MainScheduler.instance)
                     .do(onSuccess: { [weak self] item in
