@@ -238,37 +238,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zao-ZU-H2e">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="52.5"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ap2-cH-DtX">
-                                        <rect key="frame" x="16" y="16" width="343" height="20.5"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="修改密码" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ojO-hu-zdU">
-                                                <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="string" keyPath="motionIdentifier" value="reputationTitle"/>
-                                                </userDefinedRuntimeAttributes>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <color key="backgroundColor" red="0.18039215689999999" green="0.49019607840000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="Ap2-cH-DtX" secondAttribute="bottom" constant="16" id="GnR-BK-R7i"/>
-                                    <constraint firstItem="Ap2-cH-DtX" firstAttribute="top" secondItem="Zao-ZU-H2e" secondAttribute="top" constant="16" id="TKB-yc-ZY8"/>
-                                    <constraint firstAttribute="trailing" secondItem="Ap2-cH-DtX" secondAttribute="trailing" constant="16" id="eJy-by-YkU"/>
-                                    <constraint firstItem="Ap2-cH-DtX" firstAttribute="leading" secondItem="Zao-ZU-H2e" secondAttribute="leading" constant="16" id="o0W-Xo-pVy"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="motionIdentifier" value="userHeader"/>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qsb-sD-3SM" customClass="TextField" customModule="Material">
-                                <rect key="frame" x="37" y="116.5" width="300" height="17"/>
+                                <rect key="frame" x="37" y="84" width="300" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="LrL-Kj-13h"/>
                                 </constraints>
@@ -281,7 +252,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zvf-XR-Dd1" customClass="TextField" customModule="Material">
-                                <rect key="frame" x="37" y="213.5" width="300" height="17"/>
+                                <rect key="frame" x="37" y="181" width="300" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="w69-vw-uhk"/>
                                 </constraints>
@@ -294,7 +265,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jF3-gp-r2Y" customClass="RaisedButton" customModule="Material">
-                                <rect key="frame" x="243" y="278.5" width="94" height="36"/>
+                                <rect key="frame" x="243" y="246" width="94" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="nFn-hg-Cao"/>
                                 </constraints>
@@ -318,13 +289,10 @@
                         <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="jF3-gp-r2Y" firstAttribute="top" secondItem="Zvf-XR-Dd1" secondAttribute="bottom" constant="48" id="0hq-8y-dYI"/>
-                            <constraint firstItem="Zao-ZU-H2e" firstAttribute="trailing" secondItem="XAf-4b-F4X" secondAttribute="trailing" id="3xz-98-SmE"/>
                             <constraint firstItem="Zvf-XR-Dd1" firstAttribute="top" secondItem="qsb-sD-3SM" secondAttribute="bottom" constant="80" id="Ett-IP-QjE"/>
-                            <constraint firstItem="Zao-ZU-H2e" firstAttribute="top" secondItem="V5n-Si-VBX" secondAttribute="top" id="J9d-01-x54"/>
                             <constraint firstItem="Zvf-XR-Dd1" firstAttribute="centerX" secondItem="XAf-4b-F4X" secondAttribute="centerX" id="XgS-J6-gm0"/>
                             <constraint firstItem="jF3-gp-r2Y" firstAttribute="trailing" secondItem="Zvf-XR-Dd1" secondAttribute="trailing" id="bI4-Dg-BHm"/>
-                            <constraint firstItem="qsb-sD-3SM" firstAttribute="top" secondItem="Zao-ZU-H2e" secondAttribute="bottom" constant="64" id="bkj-RT-sQJ"/>
-                            <constraint firstItem="Zao-ZU-H2e" firstAttribute="leading" secondItem="XAf-4b-F4X" secondAttribute="leading" id="ijS-UC-FGa"/>
+                            <constraint firstItem="qsb-sD-3SM" firstAttribute="top" secondItem="XAf-4b-F4X" secondAttribute="top" constant="64" id="h7k-Sb-sHe"/>
                             <constraint firstItem="qsb-sD-3SM" firstAttribute="centerX" secondItem="XAf-4b-F4X" secondAttribute="centerX" id="sr3-Qt-pCb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="XAf-4b-F4X"/>
@@ -335,7 +303,6 @@
                 </viewController>
                 <customObject id="Qcn-dW-0fG" customClass="UpdatePasswordPresenter" customModule="Picroup_iOS" customModuleProvider="target">
                     <connections>
-                        <outlet property="headerView" destination="Zao-ZU-H2e" id="8Wq-jM-US1"/>
                         <outlet property="oldPasswordField" destination="qsb-sD-3SM" id="hns-ss-XbN"/>
                         <outlet property="passwordField" destination="Zvf-XR-Dd1" id="WRQ-X8-15e"/>
                         <outlet property="setPasswordButton" destination="jF3-gp-r2Y" id="HaP-Kw-DVs"/>

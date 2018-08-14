@@ -14,14 +14,21 @@ import RxFeedback
 import Apollo
 
 final class UpdatePasswordPresenter: NSObject {
-    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var oldPasswordField: TextField!
     @IBOutlet weak var passwordField: TextField!
     @IBOutlet weak var setPasswordButton: RaisedButton!
-    
-    func setup() {
+    weak var navigationItem: UINavigationItem!
+
+    func setup(navigationItem: UINavigationItem) {
+        self.navigationItem = navigationItem
+        prepareNavigationItem()
         prepareOldPasswordField()
         preparePasswordField()
+    }
+    
+    fileprivate func prepareNavigationItem() {
+        navigationItem.titleLabel.text = "修改密码"
+        navigationItem.titleLabel.textColor = .primaryText
     }
     
     fileprivate func prepareOldPasswordField() {
@@ -54,7 +61,7 @@ class UpdatePasswordViewController: BaseViewController {
         
         guard let store = try? UpdatePasswordStateStore() else { return }
 
-        presenter.setup()
+        presenter.setup(navigationItem: navigationItem)
 
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
@@ -72,7 +79,6 @@ class UpdatePasswordViewController: BaseViewController {
                 presenter.oldPasswordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).map(UpdatePasswordStateObject.Event.onChangeOldPassword),
                 presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).map(UpdatePasswordStateObject.Event.onChangePassword),
                 presenter.setPasswordButton.rx.tap.asSignal().map { .onTriggerSetPassword },
-                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
