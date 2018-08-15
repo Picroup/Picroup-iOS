@@ -47,7 +47,7 @@ final class SearchUserViewController: ShowNavigationBarViewController {
                 ]
             let events: [Signal<SearchUserStateObject.Event>] = [
                 _events.asSignal(),
-                presenter.searchBar.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).skip(1).map { .onChangeSearchText($0) },
+                presenter.searchBar.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).skip(1).distinctUntilChanged().map { .onChangeSearchText($0) },
                 presenter.tableView.rx.modelSelected(UserObject.self).asSignal().map { .onTriggerShowUser($0._id) },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)

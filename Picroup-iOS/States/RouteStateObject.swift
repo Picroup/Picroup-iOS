@@ -29,6 +29,8 @@ final class RouteStateObject: PrimaryObject {
     @objc dynamic var userBlockingsRoute: UserBlockingsRouteObject?
 
     @objc dynamic var loginRoute: LoginRouteObject?
+    @objc dynamic var resetPasswordRoute: ResetPasswordRouteObject?
+    @objc dynamic var backToLoginRoute: BackToLoginRouteObject?
     @objc dynamic var feedbackRoute: FeedbackRouteObject?
     @objc dynamic var aboutAppRoute: AboutAppRouteObject?
     
@@ -105,6 +107,14 @@ final class LoginRouteObject: PrimaryObject {
     @objc dynamic var version: String?
 }
 
+final class ResetPasswordRouteObject: PrimaryObject {
+    @objc dynamic var version: String?
+}
+
+final class BackToLoginRouteObject: PrimaryObject {
+    @objc dynamic var version: String?
+}
+
 final class FeedbackRouteObject: PrimaryObject {
     @objc dynamic var mediumId: String?
     @objc dynamic var toUserId: String?
@@ -178,6 +188,8 @@ extension RouteStateObject {
                 "searchUserRoute": ["_id": _id],
                 "userBlockingsRoute": ["_id": _id],
                 "loginRoute": ["_id": _id],
+                "resetPasswordRoute": ["_id": _id],
+                "backToLoginRoute": ["_id": _id],
                 "feedbackRoute": ["_id": _id],
                 "aboutAppRoute": ["_id": _id],
                 "popRoute": ["_id": _id],
@@ -272,6 +284,16 @@ final class RouteStateStore {
     func loginRoute() -> Driver<LoginRouteObject> {
         guard let loginRoute = _state.loginRoute else { return .empty() }
         return Observable.from(object: loginRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func resetPasswordRoute() -> Driver<ResetPasswordRouteObject> {
+        guard let resetPasswordRoute = _state.resetPasswordRoute else { return .empty() }
+        return Observable.from(object: resetPasswordRoute).asDriver(onErrorDriveWith: .empty())
+    }
+    
+    func backToLoginRoute() -> Driver<BackToLoginRouteObject> {
+        guard let backToLoginRoute = _state.backToLoginRoute else { return .empty() }
+        return Observable.from(object: backToLoginRoute).asDriver(onErrorDriveWith: .empty())
     }
     
     func feedbackRoute() -> Driver<FeedbackRouteObject> {
