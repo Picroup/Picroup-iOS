@@ -14,6 +14,21 @@ final class RegisterPhoneStateObject: PrimaryObject {
     
     @objc dynamic var registerParam: RegisterParamObject?
     @objc dynamic var isPhoneNumberValid: Bool = false
+    @objc dynamic var triggerValidPhoneQuery: Bool = false
+}
+
+extension RegisterPhoneStateObject {
+    var phoneNumberAvailableQuery: PhoneNumberAvailableQuery? {
+        guard let phoneNumber = registerParam?.phoneNumber, !phoneNumber.isEmpty else {
+            return nil
+        }
+        let next = PhoneNumberAvailableQuery(phoneNumber: phoneNumber)
+        return triggerValidPhoneQuery ? next : nil
+    }
+    var shouldValidPhone: Bool {
+        guard let phoneNumber = registerParam?.phoneNumber else { return false }
+        return phoneNumber.matchExpression(RegularPattern.chinesePhone)
+    }
 }
 
 extension RegisterPhoneStateObject {
@@ -24,7 +39,8 @@ extension RegisterPhoneStateObject {
             let value: Any = [
                 "_id": _id,
                 "registerParam": ["_id": _id],
-            ]
+                "isPhoneNumberValid": false,
+                ]
             return try realm.update(RegisterPhoneStateObject.self, value: value)
         }
     }
@@ -34,6 +50,7 @@ extension RegisterPhoneStateObject {
     
     enum Event {
         case onChangePhoneNumber(String)
+        case onPhoneNumberAvailableResponse(String?)
     }
 }
 
@@ -43,7 +60,12 @@ extension RegisterPhoneStateObject: IsFeedbackStateObject {
         switch event {
         case .onChangePhoneNumber(let phoneNumber):
             self.registerParam?.phoneNumber = phoneNumber
-            self.isPhoneNumberValid = phoneNumber.matchExpression(RegularPattern.chinesePhone)
+            self.isPhoneNumberValid = false
+            guard shouldValidPhone else { return }
+            self.triggerValidPhoneQuery = true
+        case .onPhoneNumberAvailableResponse(let data):
+            self.isPhoneNumberValid = data == nil
+            self.triggerValidPhoneQuery = false
         }
     }
 }

@@ -26,11 +26,11 @@ final class RegisterUsernameStateObject: PrimaryObject {
 }
 
 extension RegisterUsernameStateObject {
-    var usernameAvailableQuery: UserAvailableQuery? {
+    var usernameAvailableQuery: UsernameAvailableQuery? {
         guard let username = registerParam?.username, !username.isEmpty else {
             return nil
         }
-        let next = UserAvailableQuery(username: username)
+        let next = UsernameAvailableQuery(username: username)
         return triggerValidUsernameQuery ? next : nil
     }
     var shouldValidUsername: Bool {
@@ -58,7 +58,7 @@ extension RegisterUsernameStateObject {
     
     enum Event {
         case onChangeUsername(String)
-        case onUserAvailableResponse(String?)
+        case onUsernameAvailableResponse(String?)
     }
 }
 
@@ -71,7 +71,7 @@ extension RegisterUsernameStateObject: IsFeedbackStateObject {
             self.isUsernameAvaliable = false
             guard shouldValidUsername else { return }
             self.triggerValidUsernameQuery = true
-        case .onUserAvailableResponse(let data):
+        case .onUsernameAvailableResponse(let data):
             self.isUsernameAvaliable = data == nil
             self.triggerValidUsernameQuery = false
         }
@@ -99,8 +99,8 @@ final class RegisterUsernameStateStore {
     }
 }
 
-extension UserAvailableQuery: Equatable {
-    public static func ==(lhs: UserAvailableQuery, rhs: UserAvailableQuery) -> Bool {
+extension UsernameAvailableQuery: Equatable {
+    public static func ==(lhs: UsernameAvailableQuery, rhs: UsernameAvailableQuery) -> Bool {
         return lhs.username == rhs.username
     }
 }

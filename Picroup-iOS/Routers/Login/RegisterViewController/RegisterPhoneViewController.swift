@@ -38,7 +38,7 @@ final class RegisterPhonePresenter: NSObject {
     }
 }
 
-final class RegisterPhoneViewController: UIViewController {
+final class RegisterPhoneViewController: BaseViewController {
     
     @IBOutlet fileprivate var presenter: RegisterPhonePresenter!
     fileprivate typealias Feedback = (Driver<RegisterPhoneStateObject>) -> Signal<RegisterPhoneStateObject.Event>
@@ -59,6 +59,7 @@ final class RegisterPhoneViewController: UIViewController {
             let subscriptions = [
                 state.map { $0.registerParam?.phoneNumber ?? "" }.asObservable().take(1).bind(to: presenter.phoneField.rx.text),
                 state.map { $0.isPhoneNumberValid }.distinctUntilChanged().drive(presenter.nextButton.rx.isEnabledWithBackgroundColor(.secondary)),
+                state.map { $0.detail }.debounce(0.3).drive(presenter.phoneField.rx.detail),
                 me.rx.viewDidAppear.asSignal().mapToVoid().emit(to: presenter.phoneField.rx.becomeFirstResponder()),
                 me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.phoneField.rx.resignFirstResponder()),
                 ]
@@ -67,16 +68,48 @@ final class RegisterPhoneViewController: UIViewController {
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-
+        
+        let phoneNumberAvailable: Feedback = react(query: { $0.phoneNumberAvailableQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
+            return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                .map { $0?.data?.searchUserByPhoneNumber?.username }
+                .asSignal(onErrorJustReturn: nil)
+                .map(RegisterPhoneStateObject.Event.onPhoneNumberAvailableResponse)
+        })
 
         let states = store.states
 
         Signal.merge(
-            uiFeedback(states)
+            uiFeedback(states),
+            phoneNumberAvailable(states)
             )
             .debug("RegisterPhoneState.Event", trimOutput: true)
             .emit(onNext: store.on)
             .disposed(by: disposeBag)
         
+    }
+}
+
+extension RegisterPhoneStateObject {
+    
+    var detail: String {
+        if registerParam?.phoneNumber.isEmpty == true {
+            return " "
+        }
+        if !shouldValidPhone {
+            return "请输入 11 位手机号"
+        }
+        if triggerValidPhoneQuery {
+            return "正在验证..."
+        }
+        if !isPhoneNumberValid {
+            return "手机号已被注册"
+        }
+        return " "
+    }
+}
+
+extension PhoneNumberAvailableQuery: Equatable {
+    public static func ==(lhs: PhoneNumberAvailableQuery, rhs: PhoneNumberAvailableQuery) -> Bool {
+        return lhs.phoneNumber == rhs.phoneNumber
     }
 }
