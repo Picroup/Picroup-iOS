@@ -219,6 +219,8 @@
 		45C3930020C5875D00F4A69A /* SaveAppFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C392FD20C5875D00F4A69A /* SaveAppFeedback.graphql */; };
 		45C3930120C5875D00F4A69A /* SaveUserFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C392FE20C5875D00F4A69A /* SaveUserFeedback.graphql */; };
 		45C3930220C5875D00F4A69A /* SaveMediumFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C392FF20C5875D00F4A69A /* SaveMediumFeedback.graphql */; };
+		45CEDD532123BDD500491B60 /* VerifyCode.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45CEDD522123BDD500491B60 /* VerifyCode.graphql */; };
+		45CEDD552123BDF800491B60 /* ResetPassword.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45CEDD542123BDF800491B60 /* ResetPassword.graphql */; };
 		45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */; };
 		45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F71208790C700AC2226 /* TimeInterval+.swift */; };
 		45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */; };
@@ -478,6 +480,8 @@
 		45C392FD20C5875D00F4A69A /* SaveAppFeedback.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SaveAppFeedback.graphql; sourceTree = "<group>"; };
 		45C392FE20C5875D00F4A69A /* SaveUserFeedback.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SaveUserFeedback.graphql; sourceTree = "<group>"; };
 		45C392FF20C5875D00F4A69A /* SaveMediumFeedback.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SaveMediumFeedback.graphql; sourceTree = "<group>"; };
+		45CEDD522123BDD500491B60 /* VerifyCode.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = VerifyCode.graphql; sourceTree = "<group>"; };
+		45CEDD542123BDF800491B60 /* ResetPassword.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ResetPassword.graphql; sourceTree = "<group>"; };
 		45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailCell.swift; sourceTree = "<group>"; };
 		45D04F71208790C700AC2226 /* TimeInterval+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+.swift"; sourceTree = "<group>"; };
 		45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Operator.swift"; sourceTree = "<group>"; };
@@ -1150,6 +1154,7 @@
 				45FC0BEB20A41B0D006AAF3D /* NotificationFragment.graphql */,
 				45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */,
 				4591AEDC20A2F359001EC384 /* RecommendMedium.graphql */,
+				45CEDD542123BDF800491B60 /* ResetPassword.graphql */,
 				45C392FE20C5875D00F4A69A /* SaveUserFeedback.graphql */,
 				45C392FF20C5875D00F4A69A /* SaveMediumFeedback.graphql */,
 				454CD57220C6D4470087C634 /* SaveCommentFeedback.graphql */,
@@ -1172,6 +1177,7 @@
 				453B95B920C4D1A80043D915 /* UserSetAvatarId.graphql */,
 				453B95B720C4D18A0043D915 /* UserSetDisplayName.graphql */,
 				45B5E27C20C9008D005E2E58 /* UserSetPassword.graphql */,
+				45CEDD522123BDD500491B60 /* VerifyCode.graphql */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -1468,6 +1474,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45CEDD532123BDD500491B60 /* VerifyCode.graphql in Resources */,
 				45FC0BEA20A419FE006AAF3D /* CursorItemsFragment.graphql in Resources */,
 				45B0205C20B2A1D900BD5D8F /* FollowUser.graphql in Resources */,
 				45FC0BEC20A41B0D006AAF3D /* NotificationFragment.graphql in Resources */,
@@ -1527,6 +1534,7 @@
 				4561DE652100409D00F77510 /* RankMediumCell.xib in Resources */,
 				454CD57320C6D4470087C634 /* SaveCommentFeedback.graphql in Resources */,
 				451CD31F207A3B3A0063A972 /* Login.graphql in Resources */,
+				45CEDD552123BDF800491B60 /* ResetPassword.graphql in Resources */,
 				45D04F7A2088D57B00AC2226 /* SaveComment.graphql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

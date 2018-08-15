@@ -1,0 +1,5 @@
+query VerifyCode($phoneNumber: String!, $code: Float!) {
+    verifyCode(phoneNumber: $phoneNumber, code: $code)
+}
+
+

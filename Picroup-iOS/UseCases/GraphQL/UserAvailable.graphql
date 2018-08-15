@@ -3,3 +3,9 @@ query UserAvailable($username: String!) {
         username
     }
 }
+
+query UserAvailableByPhoneNumber($phoneNumber: String!) {
+    searchUserByPhoneNumber(phoneNumber: $phoneNumber) {
+        username
+    }
+}
