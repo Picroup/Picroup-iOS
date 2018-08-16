@@ -49,9 +49,8 @@ public final class PlayerView: UIView {
         playerLayer.frame = contentView.bounds
     }
     
-    func play(with minioId: String?) {
-        let url = URLHelper.url(from: minioId)
-        play(url: url)
+    func play(with url: String?) {
+        play(url: url?.toURL())
     }
     
     func play(url: URL?) {

@@ -2,7 +2,6 @@ query Medium($userId: ID!, $mediumId: ID! $cursor: Float, $withStared: Boolean!,
     medium(mediumId: $mediumId) {
         ...MediumFragment
         stared(userId: $userId) @include(if: $withStared)
-        user { ...UserFragment }
         recommendedMedia(cursor: $cursor, queryUserId: $queryUserId) {
             ...CursorMediaFragment
         }

@@ -146,7 +146,6 @@
 		458006D820A17283004BD982 /* UIViewController+Rx+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */; };
 		458006DA20A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */; };
 		4580F4F821001DA5006EFF85 /* AVHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4580F4F721001DA4006EFF85 /* AVHelper.swift */; };
-		45850AD620FF4EC9006C8EC1 /* URLHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45850AD520FF4EC9006C8EC1 /* URLHelper.swift */; };
 		458C050520C91C07004EB2D8 /* ImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458C050420C91C07004EB2D8 /* ImageGenerator.swift */; };
 		458C106920849058005E94CD /* RankViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458C106820849058005E94CD /* RankViewPresenter.swift */; };
 		4591AEDB20A2CF4D001EC384 /* MyStaredMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4591AEDA20A2CF4D001EC384 /* MyStaredMedia.graphql */; };
@@ -203,6 +202,7 @@
 		45BA0D83209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D82209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql */; };
 		45BA0D8520903A020002E1D5 /* NotificationsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D8420903A020002E1D5 /* NotificationsStateObject.swift */; };
 		45BA0D8A20903C760002E1D5 /* NotificationsViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D8920903C760002E1D5 /* NotificationsViewPresenter.swift */; };
+		45C02050212528070095DB0C /* PresignedPutURL.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C0204F212528070095DB0C /* PresignedPutURL.graphql */; };
 		45C1994820A973DD001924B9 /* MediumObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994720A973DD001924B9 /* MediumObject.swift */; };
 		45C1994A20A97402001924B9 /* UserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994920A97402001924B9 /* UserObject.swift */; };
 		45C1994D20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994C20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift */; };
@@ -413,7 +413,6 @@
 		458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+NavigationBar.swift"; sourceTree = "<group>"; };
 		458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx+shouldHideNavigationBar.swift"; sourceTree = "<group>"; };
 		4580F4F721001DA4006EFF85 /* AVHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVHelper.swift; sourceTree = "<group>"; };
-		45850AD520FF4EC9006C8EC1 /* URLHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLHelper.swift; sourceTree = "<group>"; };
 		458C050420C91C07004EB2D8 /* ImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGenerator.swift; sourceTree = "<group>"; };
 		458C106820849058005E94CD /* RankViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewPresenter.swift; sourceTree = "<group>"; };
 		4591AEDA20A2CF4D001EC384 /* MyStaredMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyStaredMedia.graphql; sourceTree = "<group>"; };
@@ -470,6 +469,7 @@
 		45BA0D82209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MarkNotificationsAsViewed.graphql; sourceTree = "<group>"; };
 		45BA0D8420903A020002E1D5 /* NotificationsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsStateObject.swift; sourceTree = "<group>"; };
 		45BA0D8920903C760002E1D5 /* NotificationsViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewPresenter.swift; sourceTree = "<group>"; };
+		45C0204F212528070095DB0C /* PresignedPutURL.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = PresignedPutURL.graphql; sourceTree = "<group>"; };
 		45C1994720A973DD001924B9 /* MediumObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumObject.swift; sourceTree = "<group>"; };
 		45C1994920A97402001924B9 /* UserObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserObject.swift; sourceTree = "<group>"; };
 		45C1994C20A983EF001924B9 /* UIScrollView+Rx+triggerGetMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx+triggerGetMore.swift"; sourceTree = "<group>"; };
@@ -1168,6 +1168,7 @@
 				4591AEDA20A2CF4D001EC384 /* MyStaredMedia.graphql */,
 				45D04F8E208F635C00AC2226 /* MyReputations.graphql */,
 				45FC0BEB20A41B0D006AAF3D /* NotificationFragment.graphql */,
+				45C0204F212528070095DB0C /* PresignedPutURL.graphql */,
 				45D0E232207E2CC400ECC2A3 /* RankedMedia.graphql */,
 				4591AEDC20A2F359001EC384 /* RecommendMedium.graphql */,
 				45CEDD542123BDF800491B60 /* ResetPassword.graphql */,
@@ -1359,7 +1360,6 @@
 			isa = PBXGroup;
 			children = (
 				45EC928020D3C65100A473D4 /* Moment.swift */,
-				45850AD520FF4EC9006C8EC1 /* URLHelper.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -1525,6 +1525,7 @@
 				45C20765211408FE00A0227B /* BlockUser.graphql in Resources */,
 				4561DE6E2100466C00F77510 /* ImageDetailCell.xib in Resources */,
 				453B95BE20C523990043D915 /* Me.storyboard in Resources */,
+				45C02050212528070095DB0C /* PresignedPutURL.graphql in Resources */,
 				45F0A7E020C7D2B80085F978 /* GetVerifyCode.graphql in Resources */,
 				45F0A7DE20C7CC510085F978 /* Register.graphql in Resources */,
 				45A6811020FF23B80070606B /* PlayerView.xib in Resources */,
@@ -1764,7 +1765,6 @@
 				4595F221207C96620040E5FA /* FABMenu+Rx.swift in Sources */,
 				45183EC420D0ED2300497B59 /* UIViewController+isViewAppears.swift in Sources */,
 				454714A0211D65E4003A5D04 /* WatermarkService.swift in Sources */,
-				45850AD620FF4EC9006C8EC1 /* URLHelper.swift in Sources */,
 				45FC0BFB20A91541006AAF3D /* PrimaryObject.swift in Sources */,
 				451DD4B7207E3EB5002C509A /* ErrorMessage.swift in Sources */,
 				45F0A7E220C8C6E60085F978 /* RegularPattern.swift in Sources */,

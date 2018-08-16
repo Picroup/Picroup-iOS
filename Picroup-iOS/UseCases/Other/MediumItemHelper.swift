@@ -13,12 +13,12 @@ struct MediumItemHelper {
     static func mediumItem(from medium: MediumObject?) -> MediumItem? {
         switch medium?.kind {
         case MediumKind.image.rawValue?:
-            guard let cacheKey = URLHelper.url(from: medium?.minioId)?.cacheKey else {
+            guard let cacheKey = medium?.url else {
                 return nil
             }
             return .image(cacheKey)
         case MediumKind.video.rawValue?:
-            guard let url = URLHelper.url(from: medium?.detail?.videoMinioId) else {
+            guard let url = medium?.detail?.videoURL?.toURL() else {
                 return nil
             }
             return .video(thumbnailImageKey: "ignore", videoFileURL: url)

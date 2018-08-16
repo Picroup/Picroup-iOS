@@ -95,7 +95,7 @@ func createLoadFooterSupplementaryView<D>(footerState: Driver<LoadFooterViewStat
 
 func playVideoIfNeeded(cell: UICollectionViewCell, medium: MediumObject?) {
     if let vidoeCell = cell as? HasPlayerView, medium?.isInvalidated == false {
-        vidoeCell.playerView.play(with: medium?.detail?.videoMinioId)
+        vidoeCell.playerView.play(with: medium?.detail?.videoURL)
     }
 }
 

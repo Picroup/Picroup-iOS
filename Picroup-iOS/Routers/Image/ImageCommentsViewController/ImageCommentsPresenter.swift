@@ -47,7 +47,7 @@ class ImageCommentsPresenter: NSObject {
             let viewModel = ImageDetailViewModel(medium: medium)
             switch viewModel.kind {
             case MediumKind.image.rawValue?, MediumKind.video.rawValue?:
-                me.imageView.setImage(with: medium.minioId)
+                me.imageView.setImage(with: medium.url)
                 me.suggestUpdateLabel.isHidden = true
             default:
                 me.imageView.image = nil
