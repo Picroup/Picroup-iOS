@@ -39,7 +39,7 @@ final class UpdateUserViewController: ShowNavigationBarViewController {
                 state.map { $0.session?.currentUser?.username.map { "@\($0)" } ?? " " }.drive(presenter.usernameLabel.rx.text),
                 ]
             let events: [Signal<UpdateUserStateObject.Event>] = [
-                presenter.displaynameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).skip(2)
+                presenter.displaynameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).skip(2).distinctUntilChanged()
                     .map(UpdateUserStateObject.Event.onTriggerSetDisplayName),
 //                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 presenter.userAvatarImageView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().flatMapLatest { _ in

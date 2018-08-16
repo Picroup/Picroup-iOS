@@ -10,7 +10,6 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
-
 final class RegisterCodeStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
@@ -116,6 +115,9 @@ extension RegisterCodeStateObject: IsFeedbackStateObject {
             phoneNumber = nil
             getVerifyCodeError = error.localizedDescription
             triggerGetVerifyCodeQuery = false
+            
+            snackbar?.message = getVerifyCodeError
+            snackbar?.version = UUID().uuidString
         }
     }
 }

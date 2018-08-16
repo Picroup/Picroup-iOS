@@ -38,7 +38,7 @@ final class RegisterPasswordPresenter: NSObject {
     }
 }
 
-final class RegisterPasswordViewController: UIViewController {
+final class RegisterPasswordViewController: BaseViewController {
     
     @IBOutlet fileprivate var presenter: RegisterPasswordPresenter!
     fileprivate typealias Feedback = (Driver<RegisterPasswordStateObject>) -> Signal<RegisterPasswordStateObject.Event>
@@ -64,7 +64,7 @@ final class RegisterPasswordViewController: UIViewController {
                 me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.passwordField.rx.resignFirstResponder()),
                 ]
             let events: [Signal<RegisterPasswordStateObject.Event>] = [
-                presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).map(RegisterPasswordStateObject.Event.onChangePassword),
+                presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).distinctUntilChanged().map(RegisterPasswordStateObject.Event.onChangePassword),
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }

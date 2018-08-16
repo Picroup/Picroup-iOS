@@ -76,8 +76,8 @@ class UpdatePasswordViewController: BaseViewController {
                 me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.passwordField.rx.resignFirstResponder()),
                 ]
             let events: [Signal<UpdatePasswordStateObject.Event>] = [
-                presenter.oldPasswordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).map(UpdatePasswordStateObject.Event.onChangeOldPassword),
-                presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).map(UpdatePasswordStateObject.Event.onChangePassword),
+                presenter.oldPasswordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).distinctUntilChanged().map(UpdatePasswordStateObject.Event.onChangeOldPassword),
+                presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).distinctUntilChanged().map(UpdatePasswordStateObject.Event.onChangePassword),
                 presenter.setPasswordButton.rx.tap.asSignal().map { .onTriggerSetPassword },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)

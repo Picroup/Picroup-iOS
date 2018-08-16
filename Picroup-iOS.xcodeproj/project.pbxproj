@@ -221,6 +221,12 @@
 		45C3930220C5875D00F4A69A /* SaveMediumFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C392FF20C5875D00F4A69A /* SaveMediumFeedback.graphql */; };
 		45CEDD532123BDD500491B60 /* VerifyCode.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45CEDD522123BDD500491B60 /* VerifyCode.graphql */; };
 		45CEDD552123BDF800491B60 /* ResetPassword.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45CEDD542123BDF800491B60 /* ResetPassword.graphql */; };
+		45CEDD5921240AF000491B60 /* ResetPasswordPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEDD5821240AF000491B60 /* ResetPasswordPhoneViewController.swift */; };
+		45CEDD5B21240B2900491B60 /* ResetPasswordCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEDD5A21240B2900491B60 /* ResetPasswordCodeViewController.swift */; };
+		45CEDD5D21240B3F00491B60 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEDD5C21240B3F00491B60 /* ResetPasswordViewController.swift */; };
+		45CEDD5F21240CBE00491B60 /* ResetPasswordPhoneStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEDD5E21240CBE00491B60 /* ResetPasswordPhoneStateObject.swift */; };
+		45CEDD6121240CD300491B60 /* ResetPasswordCodeStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEDD6021240CD300491B60 /* ResetPasswordCodeStateObject.swift */; };
+		45CEDD6321240CE300491B60 /* ResetPasswordStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEDD6221240CE300491B60 /* ResetPasswordStateObject.swift */; };
 		45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */; };
 		45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F71208790C700AC2226 /* TimeInterval+.swift */; };
 		45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */; };
@@ -482,6 +488,12 @@
 		45C392FF20C5875D00F4A69A /* SaveMediumFeedback.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SaveMediumFeedback.graphql; sourceTree = "<group>"; };
 		45CEDD522123BDD500491B60 /* VerifyCode.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = VerifyCode.graphql; sourceTree = "<group>"; };
 		45CEDD542123BDF800491B60 /* ResetPassword.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ResetPassword.graphql; sourceTree = "<group>"; };
+		45CEDD5821240AF000491B60 /* ResetPasswordPhoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordPhoneViewController.swift; sourceTree = "<group>"; };
+		45CEDD5A21240B2900491B60 /* ResetPasswordCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordCodeViewController.swift; sourceTree = "<group>"; };
+		45CEDD5C21240B3F00491B60 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		45CEDD5E21240CBE00491B60 /* ResetPasswordPhoneStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordPhoneStateObject.swift; sourceTree = "<group>"; };
+		45CEDD6021240CD300491B60 /* ResetPasswordCodeStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordCodeStateObject.swift; sourceTree = "<group>"; };
+		45CEDD6221240CE300491B60 /* ResetPasswordStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordStateObject.swift; sourceTree = "<group>"; };
 		45D04F6F20875B1D00AC2226 /* ImageDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailCell.swift; sourceTree = "<group>"; };
 		45D04F71208790C700AC2226 /* TimeInterval+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+.swift"; sourceTree = "<group>"; };
 		45D04F732088ABB500AC2226 /* ObservableType+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Operator.swift"; sourceTree = "<group>"; };
@@ -1018,6 +1030,7 @@
 				451CD325207B9E5B0063A972 /* RouterService+Login.swift */,
 				451CD32B207BA5880063A972 /* LoginViewController */,
 				45F0A7D220C7B3110085F978 /* RegisterViewController */,
+				45CEDD5721240AA900491B60 /* ResetPasswordViewController */,
 				45B5E27720C8D882005E2E58 /* UpdatePasswordViewController */,
 			);
 			path = Login;
@@ -1042,6 +1055,9 @@
 				45F0A7D720C7BE7F0085F978 /* RegisterPhoneStateObject.swift */,
 				45F0A7DB20C7CA610085F978 /* RegisterCodeStateObject.swift */,
 				457BD98620AC68EA007F0492 /* ReputationsStateObject.swift */,
+				45CEDD5E21240CBE00491B60 /* ResetPasswordPhoneStateObject.swift */,
+				45CEDD6021240CD300491B60 /* ResetPasswordCodeStateObject.swift */,
+				45CEDD6221240CE300491B60 /* ResetPasswordStateObject.swift */,
 				457BD98220AB12AD007F0492 /* RouteStateObject.swift */,
 				45B0207220B5182300BD5D8F /* SearchUserStateObject.swift */,
 				456E90D520F5DB150006FFA8 /* TagMediaStateObject.swift */,
@@ -1303,6 +1319,16 @@
 				453B95BB20C4D7090043D915 /* UpdateUserPresenter.swift */,
 			);
 			path = UpdateUserViewController;
+			sourceTree = "<group>";
+		};
+		45CEDD5721240AA900491B60 /* ResetPasswordViewController */ = {
+			isa = PBXGroup;
+			children = (
+				45CEDD5821240AF000491B60 /* ResetPasswordPhoneViewController.swift */,
+				45CEDD5A21240B2900491B60 /* ResetPasswordCodeViewController.swift */,
+				45CEDD5C21240B3F00491B60 /* ResetPasswordViewController.swift */,
+			);
+			path = ResetPasswordViewController;
 			sourceTree = "<group>";
 		};
 		45E240B02084D2B6004B58EF /* ImageDetailViewController */ = {
@@ -1644,6 +1670,7 @@
 				457BD99420B146CD007F0492 /* AppStateService.swift in Sources */,
 				45FC0BF520A42F4A006AAF3D /* UserPresenter.swift in Sources */,
 				45F55F9121070183002BF481 /* ProgressView.swift in Sources */,
+				45CEDD5F21240CBE00491B60 /* ResetPasswordPhoneStateObject.swift in Sources */,
 				45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */,
 				451DD4BF208311DA002C509A /* HasDisposeBag.swift in Sources */,
 				45525D4A208C3CB500EAF00D /* CreateImagePresenter.swift in Sources */,
@@ -1654,6 +1681,7 @@
 				451CD326207B9E5B0063A972 /* RouterService+Login.swift in Sources */,
 				45517D5220BD3EB400F2D7DE /* Wireframe.swift in Sources */,
 				455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */,
+				45CEDD6121240CD300491B60 /* ResetPasswordCodeStateObject.swift in Sources */,
 				451DD4B9207E4880002C509A /* Client.swift in Sources */,
 				453B95B620C4CEF50043D915 /* UpdateUserStateObject.swift in Sources */,
 				4595F2102079F6B60040E5FA /* LoginViewController.swift in Sources */,
@@ -1667,6 +1695,8 @@
 				456E90DD20F5F6140006FFA8 /* UpdateMediumTagsStateObject.swift in Sources */,
 				456E910C20FD8A510006FFA8 /* UpoaderService.swift in Sources */,
 				45A6810F20FF23B80070606B /* PlayerView.swift in Sources */,
+				45CEDD5921240AF000491B60 /* ResetPasswordPhoneViewController.swift in Sources */,
+				45CEDD5B21240B2900491B60 /* ResetPasswordCodeViewController.swift in Sources */,
 				45B0205320AD72D600BD5D8F /* PhotoPickerController.swift in Sources */,
 				45EC928120D3C65100A473D4 /* Moment.swift in Sources */,
 				451CD330207BB62D0063A972 /* HomeViewPresenter.swift in Sources */,
@@ -1727,6 +1757,7 @@
 				45C2077521142FD000A0227B /* UserBlockingsStateObject.swift in Sources */,
 				451CD322207A3C1D0063A972 /* ApolloClient+Rx.swift in Sources */,
 				451CD339207D0BAA0063A972 /* NotificationsViewController.swift in Sources */,
+				45CEDD6321240CE300491B60 /* ResetPasswordStateObject.swift in Sources */,
 				455808DB20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift in Sources */,
 				45B5E27920C8D8A2005E2E58 /* UpdatePasswordViewController.swift in Sources */,
 				454CD57520C80EB60087C634 /* RegisterPasswordViewController.swift in Sources */,
@@ -1818,6 +1849,7 @@
 				45517D4020BCDCA800F2D7DE /* NotificationCell.swift in Sources */,
 				455808E620EDAB65005F1A00 /* Constants.swift in Sources */,
 				456D146121058B58008EDD41 /* MediaPreserter.swift in Sources */,
+				45CEDD5D21240B3F00491B60 /* ResetPasswordViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
