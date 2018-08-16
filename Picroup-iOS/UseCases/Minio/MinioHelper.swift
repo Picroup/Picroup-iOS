@@ -11,6 +11,7 @@ import Alamofire
 import RxSwift
 import RxAlamofire
 import MobileCoreServices
+import Apollo
 
 struct MinioHelper {
     
@@ -18,9 +19,10 @@ struct MinioHelper {
         case signedURLNotFound
     }
     
-    static func save(with data: Data, filename: String) -> Observable<RxProgress> {
-        return json(.get, "\(Config.baseURL)/signed?name=\(filename)")
-            .map { json in (json as? [String: String])?["signedURL"] }
+    static func save(with data: Data, filename: String) -> (Observable<RxProgress>, String) {
+        
+        let save = ApolloClient.shared.rx.fetch(query: PresignedPutUrlQuery(minioId: filename), cachePolicy: .fetchIgnoringCacheData)
+            .map { result in result?.data?.presignedPutUrl }.asObservable()
             .flatMap { signedURL -> Observable<RxProgress> in
                 guard let signedURL = signedURL else { throw Error.signedURLNotFound }
                 let pathExtension = filename.split(separator: ".").last.map(String.init)
@@ -28,6 +30,8 @@ struct MinioHelper {
                 return upload(data, to: signedURL, method: .put, headers: headers)
                     .rx.progress()
         }
+        let url = "\(Config.baseURL)/files/\(filename)"
+        return (save, url)
     }
 }
 

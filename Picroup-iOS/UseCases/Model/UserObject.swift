@@ -12,7 +12,7 @@ import Apollo
 final class UserObject: PrimaryObject {
     @objc dynamic var username: String?
     @objc dynamic var displayName: String?
-    @objc dynamic var avatarId: String?
+    @objc dynamic var url: String?
     let followingsCount = RealmOptional<Int>()
     let followersCount = RealmOptional<Int>()
     let reputation = RealmOptional<Int>()

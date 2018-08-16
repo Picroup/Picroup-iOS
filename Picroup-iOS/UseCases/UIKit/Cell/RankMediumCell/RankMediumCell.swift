@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 struct MediumViewModel {
-    let imageViewMinioId: String?
+    let imageViewURL: String?
     let imageViewMotionIdentifier: String?
     let progress: Float
     let kind: String?
@@ -21,7 +21,7 @@ struct MediumViewModel {
     
     init(item: MediumObject) {
         guard !item.isInvalidated else {
-            self.imageViewMinioId = nil
+            self.imageViewURL = nil
             self.imageViewMotionIdentifier = nil
             self.progress = 0
             self.kind = nil
@@ -33,7 +33,7 @@ struct MediumViewModel {
         
         let remainTime = item.endedAt.value?.sinceNow ?? 0
         
-        self.imageViewMinioId = item.minioId
+        self.imageViewURL = item.url
         self.imageViewMotionIdentifier = item._id
         self.progress = Float(remainTime / 12.0.weeks)
         self.kind = item.kind
@@ -61,7 +61,7 @@ class RankMediumCell: RxCollectionViewCell {
             //        if item.isInvalidated { return }
             let viewModel = MediumViewModel(item: item)
             if viewModel.kind == MediumKind.image.rawValue {
-                cell.imageView.setImage(with: viewModel.imageViewMinioId)
+                cell.imageView.setImage(with: viewModel.imageViewURL)
                 cell.suggestUpdateLabel.isHidden = true
             } else {
                 cell.imageView.image = nil

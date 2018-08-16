@@ -13,7 +13,7 @@ import RxCocoa
 
 struct ImageDetailViewModel {
     let kind: String?
-    let imageViewMinioId: String?
+    let imageViewURL: String?
     let imageViewMotionIdentifier: String?
     let progress: Float
     let lifeBarMotionIdentifier: String?
@@ -24,7 +24,7 @@ struct ImageDetailViewModel {
     let placeholderColor: UIColor
 
     let displayName: String?
-    let avatarId: String?
+    let url: String?
 }
 
 extension ImageDetailViewModel {
@@ -32,7 +32,7 @@ extension ImageDetailViewModel {
     init(medium: MediumObject) {
         guard !medium.isInvalidated else {
             self.kind = nil
-            self.imageViewMinioId = nil
+            self.imageViewURL = nil
             self.imageViewMotionIdentifier = nil
             self.progress = 0
             self.lifeBarMotionIdentifier = nil
@@ -41,14 +41,14 @@ extension ImageDetailViewModel {
             self.commentsCountText = "\(0)"
             self.stared = nil
             self.displayName = nil
-            self.avatarId = nil
+            self.url = nil
             self.placeholderColor = .background
             return
         }
         let remainTime = medium.endedAt.value?.sinceNow ?? 0
         
         self.kind = medium.kind
-        self.imageViewMinioId = medium.minioId
+        self.imageViewURL = medium.url
         self.imageViewMotionIdentifier = medium._id
         self.progress = Float(remainTime / 12.0.weeks)
         self.lifeBarMotionIdentifier = "lifeBar_\(medium._id)"
@@ -59,7 +59,7 @@ extension ImageDetailViewModel {
         self.placeholderColor = medium.placeholderColor
 
         self.displayName = medium.user?.displayName
-        self.avatarId = medium.user?.avatarId
+        self.url = medium.user?.url
     }
 }
 
@@ -144,7 +144,7 @@ class ImageDetailCell: RxCollectionViewCell {
             let viewModel = ImageDetailViewModel(medium: item)
             
             if viewModel.kind == MediumKind.image.rawValue {
-                cell.imageView.setImage(with: item.minioId)
+                cell.imageView.setImage(with: viewModel.url)
                 cell.suggestUpdateLabel.isHidden = true
             } else {
                 cell.imageView.image = nil

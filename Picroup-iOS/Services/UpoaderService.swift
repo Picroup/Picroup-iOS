@@ -24,8 +24,9 @@ struct UpoaderService {
         let progress: Observable<RxProgress> = {
             guard image.size.area < 4096 * 4096 else { return .error(Error.imageTooLarge) }
             guard let imageData = UIImageJPEGRepresentation(image, compressionQuality(for: image)) else { return .error(Error.generateImageDataFail) }
-            return MinioHelper.save(with: imageData, filename: filename)
-                .do(onCompleted: { ImageCache.default.store(image, forKey: filename.cacheKey) })
+            let (save, url) = MinioHelper.save(with: imageData, filename: filename)
+            return save
+                .do(onCompleted: { ImageCache.default.store(image, forKey: url) })
         }()
         return (progress, filename)
     }
@@ -34,8 +35,9 @@ struct UpoaderService {
         let filename = "\(UUID().uuidString).\(fileURL.pathExtension)"
         let progress: Observable<RxProgress> = {
             guard let vidoeData = try? Data(contentsOf: fileURL) else { return .error(Error.generateVideoDataFail) }
-            return MinioHelper.save(with: vidoeData, filename: filename)
-                .do(onCompleted: { Cacher.storage?.async.setObject(vidoeData, forKey: filename.cacheKey, completion: { _ in }) })
+            let (save, url) = MinioHelper.save(with: vidoeData, filename: filename)
+            return save
+                .do(onCompleted: { Cacher.storage?.async.setObject(vidoeData, forKey: url, completion: { _ in }) })
         }()
         return (progress, filename)
     }
@@ -44,12 +46,6 @@ struct UpoaderService {
         let area = image.size.area
         let criticalArea: CGFloat = 800 * 800
         return area < criticalArea ? 1 : (criticalArea / area)
-    }
-}
-
-private extension String {
-    var cacheKey: String {
-        return URLHelper.url(from: self)!.cacheKey
     }
 }
 

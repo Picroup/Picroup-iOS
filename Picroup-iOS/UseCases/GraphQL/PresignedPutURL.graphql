@@ -1,0 +1,3 @@
+query PresignedPutURL($minioId: ID!) {
+    presignedPutURL(minioId: $minioId)
+}

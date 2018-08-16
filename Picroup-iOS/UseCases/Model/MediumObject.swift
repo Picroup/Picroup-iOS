@@ -13,7 +13,7 @@ final class MediumObject: PrimaryObject {
     
     @objc dynamic var userId: String?
     @objc dynamic var detail: MediumDetailObject?
-    @objc dynamic var minioId: String?
+    @objc dynamic var url: String?
     @objc dynamic var kind: String?
     let createdAt = RealmOptional<Double>()
     let endedAt = RealmOptional<Double>()
@@ -27,7 +27,7 @@ final class MediumObject: PrimaryObject {
 final class MediumDetailObject: Object {
     let width = RealmOptional<Double>()
     let aspectRatio = RealmOptional<Double>()
-    @objc dynamic var videoMinioId: String?
+    @objc dynamic var videoURL: String?
     @objc dynamic var placeholderColor: String?
 }
 
