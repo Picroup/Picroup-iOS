@@ -1443,7 +1443,6 @@
 			buildConfigurationList = 457B1B99205FEA1000BEDDF1 /* Build configuration list for PBXNativeTarget "Picroup-iOS" */;
 			buildPhases = (
 				1A832FF15A88A8EFF78CE953 /* [CP] Check Pods Manifest.lock */,
-				45C0204E21250D820095DB0C /* Run Script */,
 				457B1B83205FEA1000BEDDF1 /* Sources */,
 				457B1B84205FEA1000BEDDF1 /* Frameworks */,
 				457B1B85205FEA1000BEDDF1 /* Resources */,
@@ -1587,20 +1586,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
-		};
-		45C0204E21250D820095DB0C /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema UseCases/GraphQL/schema.json --output UseCases/GraphQL/API.swift\n";
 		};
 		E0FCAA82992B2BFE5A43546E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
