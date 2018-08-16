@@ -37,6 +37,7 @@ class LoginViewController: ShowNavigationBarViewController {
                 state.map { $0.password }.asObservable().take(1).bind(to: presenter.passwordField.rx.text),
                 state.map { $0.shouldHideUseenameWarning }.distinctUntilChanged().drive(presenter.usernameField.detailLabel.rx.isHidden),
                 state.map { $0.shouldHidePasswordWarning }.distinctUntilChanged().drive(presenter.passwordField.detailLabel.rx.isHidden),
+                state.map { $0.shouldHideForgetPasswordButton }.distinctUntilChanged().drive(presenter.forgetPasswordButton.rx.isHidden),
                 state.map { $0.isLoginButtonEnabled }.distinctUntilChanged().drive(presenter.loginButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 presenter.loginButton.rx.tap.asSignal().emit(to: presenter.usernameField.rx.resignFirstResponder()),
                 presenter.loginButton.rx.tap.asSignal().emit(to: presenter.passwordField.rx.resignFirstResponder()),
@@ -87,23 +88,10 @@ private extension LoginStateObject {
     var shouldHidePasswordWarning: Bool {
         return password.isEmpty || isPasswordValid
     }
-    
+    var shouldHideForgetPasswordButton: Bool {
+        return !password.isEmpty
+    }
     var isLoginButtonEnabled: Bool {
         return shouldLogin && !triggerLoginQuery
     }
 }
-
-//extension Reactive where Base: SnackbarController {
-//    var snackbarText: Binder<String> {
-//        return Binder(base) { snackbarController, text in
-////            let undoButton = FlatButton(title: "Undo", titleColor: Color.yellow.base)
-////            undoButton.pulseAnimation = .backing
-////            undoButton.titleLabel?.font = snackbarController.snackbar.textLabel.font
-////            snackbarController.snackbar.rightViews = [undoButton]
-//            snackbarController.snackbar.text = text
-//            snackbarController.animate(snackbar: .visible)
-//            snackbarController.animate(snackbar: .hidden, delay: 2)
-//        }
-//    }
-//}
-

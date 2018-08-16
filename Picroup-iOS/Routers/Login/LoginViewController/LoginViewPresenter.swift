@@ -15,6 +15,7 @@ final class LoginViewPresenter: NSObject {
     @IBOutlet weak var usernameField: TextField!
     @IBOutlet weak var passwordField: TextField!
     @IBOutlet weak var loginButton: RaisedButton!
+    @IBOutlet weak var forgetPasswordButton: UIButton!
     var registerButton: FlatButton!
 //    weak var view: UIView!
     weak var navigationItem: UINavigationItem!

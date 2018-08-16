@@ -103,7 +103,7 @@ extension ResetPasswordStateObject {
             return " "
         }
         if !isPasswordValid {
-            return "大小写字母加数字，至少需要 8 个字"
+            return "至少需要 6 个字"
         }
         return " "
     }
