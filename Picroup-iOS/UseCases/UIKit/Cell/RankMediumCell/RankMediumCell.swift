@@ -50,6 +50,7 @@ class RankMediumCell: RxCollectionViewCell {
     @IBOutlet weak var suggestUpdateLabel: UILabel!
     
     func configure(with item: MediumObject) {
+        if item.isInvalidated { return }
         Observable.from(object: item)
             .asDriverOnErrorRecoverEmpty()
             .drive(rxItem)
@@ -58,7 +59,6 @@ class RankMediumCell: RxCollectionViewCell {
     
     private var rxItem: Binder<MediumObject> {
         return Binder(self) { cell, item in
-            //        if item.isInvalidated { return }
             let viewModel = MediumViewModel(item: item)
             if viewModel.kind == MediumKind.image.rawValue {
                 cell.imageView.setImage(with: viewModel.imageViewURL)
