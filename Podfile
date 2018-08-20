@@ -18,6 +18,7 @@ target 'Picroup-iOS' do
   pod 'YPImagePicker', '~> 3.0'
   pod 'Cache', '~> 4.2'
   pod 'MediaWatermark', '~> 0.3'
+  pod 'DVAssetLoaderDelegate', '~> 0.3'
 
   post_install do |installer|
       # Your list of targets here.

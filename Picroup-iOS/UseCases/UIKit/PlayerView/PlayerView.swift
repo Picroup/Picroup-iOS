@@ -59,7 +59,7 @@ public final class PlayerView: UIView {
         weak var weakSelf = self
 
         Cacher.storage?.async.entry(ofType: Data.self, forKey: url.cacheKey, completion: { result in
-            guard self.url == url else { return }
+            guard weakSelf?.url == url else { return }
             let playerItem: CachingPlayerItem
             if case .value(let entry) = result, let mimeType = url.pathExtension.mimeType {
                 print("from cache")
