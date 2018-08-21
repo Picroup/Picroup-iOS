@@ -13,4 +13,5 @@ protocol CacheService {
     
     func set(_ data: Data, for remoteURL: URL)
     func fileURL(for remoteURL: URL) -> URL?
+    func removeExpiredObjects()
 }

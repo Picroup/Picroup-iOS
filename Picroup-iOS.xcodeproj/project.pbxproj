@@ -105,8 +105,6 @@
 		4561DE782100777200F77510 /* VideoDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4561DE772100777200F77510 /* VideoDetailCell.xib */; };
 		4561DE7A2100778C00F77510 /* VideoDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561DE792100778C00F77510 /* VideoDetailCell.swift */; };
 		45662A9E212B9B8700964BC9 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662A9D212B9B8700964BC9 /* CacheService.swift */; };
-		45662AA0212B9CDE00964BC9 /* DefaultCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662A9F212B9CDE00964BC9 /* DefaultCacheService.swift */; };
-		45662AA2212BA36E00964BC9 /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662AA1212BA36E00964BC9 /* MD5.swift */; };
 		45662AA4212BD98200964BC9 /* HYCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662AA3212BD98200964BC9 /* HYCacheService.swift */; };
 		456D1457210564E4008EDD41 /* HasMoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D1456210564E4008EDD41 /* HasMoreButton.swift */; };
 		456D145921057539008EDD41 /* HasPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D145821057539008EDD41 /* HasPlayerView.swift */; };
@@ -374,8 +372,6 @@
 		4561DE772100777200F77510 /* VideoDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoDetailCell.xib; sourceTree = "<group>"; };
 		4561DE792100778C00F77510 /* VideoDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailCell.swift; sourceTree = "<group>"; };
 		45662A9D212B9B8700964BC9 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
-		45662A9F212B9CDE00964BC9 /* DefaultCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCacheService.swift; sourceTree = "<group>"; };
-		45662AA1212BA36E00964BC9 /* MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MD5.swift; sourceTree = "<group>"; };
 		45662AA3212BD98200964BC9 /* HYCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HYCacheService.swift; sourceTree = "<group>"; };
 		456D1456210564E4008EDD41 /* HasMoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasMoreButton.swift; sourceTree = "<group>"; };
 		456D145821057539008EDD41 /* HasPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasPlayerView.swift; sourceTree = "<group>"; };
@@ -620,7 +616,6 @@
 			children = (
 				451DD4B6207E3EB5002C509A /* ErrorMessage.swift */,
 				45B0204A20AC14D700BD5D8F /* Int+increase.swift */,
-				45662AA1212BA36E00964BC9 /* MD5.swift */,
 				4595F218207A15010040E5FA /* Mutabled.swift */,
 				451DD4C02083125A002C509A /* Objective.swift */,
 				451DD4C220831287002C509A /* NSObject+objc.swift */,
@@ -921,7 +916,6 @@
 			children = (
 				457BD99220B146CD007F0492 /* AppStateService.swift */,
 				457BD99120B146CD007F0492 /* MediumService.swift */,
-				45662A9F212B9CDE00964BC9 /* DefaultCacheService.swift */,
 				45662AA3212BD98200964BC9 /* HYCacheService.swift */,
 				456E910B20FD8A510006FFA8 /* UpoaderService.swift */,
 				4547149F211D65E4003A5D04 /* WatermarkService.swift */,
@@ -1818,7 +1812,6 @@
 				453B95C520C619AD0043D915 /* FeedbackStateObject.swift in Sources */,
 				45E240B22084D2CF004B58EF /* ImageDetailViewController.swift in Sources */,
 				45FC0BFE20A94995006AAF3D /* Realm+findOrCreate.swift in Sources */,
-				45662AA0212B9CDE00964BC9 /* DefaultCacheService.swift in Sources */,
 				457BD99320B146CD007F0492 /* MediumService.swift in Sources */,
 				453B95C720C622320043D915 /* FeedbackPresenter.swift in Sources */,
 				457BD98B20ADB55E007F0492 /* CreateImageStateObject.swift in Sources */,
@@ -1844,7 +1837,6 @@
 				45E240B520862981004B58EF /* HideNavigationBarViewController.swift in Sources */,
 				45B0205820AE69A000BD5D8F /* PrimaryKey.swift in Sources */,
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
-				45662AA2212BA36E00964BC9 /* MD5.swift in Sources */,
 				45183EBE20CF65BC00497B59 /* AboutAppViewController.swift in Sources */,
 				45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */,
 				45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */,

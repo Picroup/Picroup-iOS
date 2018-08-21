@@ -7,13 +7,9 @@
 //
 
 import struct Foundation.URL
-import class Foundation.FileManager
-import struct Foundation.FileAttributeKey
-import struct Foundation.Date
 import struct Foundation.Data
 import class Foundation.DispatchQueue
 
-import class Cache.Storage
 import class Cache.DiskStorage
 import struct Cache.DiskConfig
 import class Cache.TransformerFactory
@@ -22,8 +18,13 @@ extension HYDefaultCacheService {
     
     static let shared: HYDefaultCacheService? = {
         let diskConfig = DiskConfig(name: "DiskCache", maxSize: Config.maxDiskVideoCacheSize)
-        let storage = try? DiskStorage(config: diskConfig, transformer: TransformerFactory.forData())
-        return storage.map(HYDefaultCacheService.init)
+        do {
+            let storage = try DiskStorage(config: diskConfig, transformer: TransformerFactory.forData())
+            return HYDefaultCacheService(storage: storage)
+        } catch {
+            print("create HYDefaultCacheService error \(error.localizedDescription)")
+            return nil
+        }
     }()
 }
 
@@ -36,10 +37,12 @@ final class HYDefaultCacheService: CacheService {
     }
     
     func set(_ data: Data, for remoteURL: URL) {
-        do {
-            try storage.setObject(data, forKey: remoteURL.absoluteString)
-        } catch {
-            print("cache error \(error.localizedDescription) for \(remoteURL)")
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                try self.storage.setObject(data, forKey: remoteURL.absoluteString)
+            } catch {
+                print("cache error \(error.localizedDescription) for \(remoteURL)")
+            }
         }
     }
     
@@ -49,6 +52,14 @@ final class HYDefaultCacheService: CacheService {
             return entry.filePath.map(URL.init(fileURLWithPath:))
         } catch {
             return nil
+        }
+    }
+    
+    func removeExpiredObjects() {
+        do {
+            try storage.removeExpiredObjects()
+        } catch {
+            print("storage removeExpiredObjects error \(error.localizedDescription)")
         }
     }
 }
