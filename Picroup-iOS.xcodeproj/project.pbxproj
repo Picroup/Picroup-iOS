@@ -104,6 +104,10 @@
 		4561DE732100477E00F77510 /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561DE722100477E00F77510 /* TagCollectionViewCell.swift */; };
 		4561DE782100777200F77510 /* VideoDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4561DE772100777200F77510 /* VideoDetailCell.xib */; };
 		4561DE7A2100778C00F77510 /* VideoDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561DE792100778C00F77510 /* VideoDetailCell.swift */; };
+		45662A9E212B9B8700964BC9 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662A9D212B9B8700964BC9 /* CacheService.swift */; };
+		45662AA0212B9CDE00964BC9 /* DefaultCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662A9F212B9CDE00964BC9 /* DefaultCacheService.swift */; };
+		45662AA2212BA36E00964BC9 /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662AA1212BA36E00964BC9 /* MD5.swift */; };
+		45662AA4212BD98200964BC9 /* HYCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662AA3212BD98200964BC9 /* HYCacheService.swift */; };
 		456D1457210564E4008EDD41 /* HasMoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D1456210564E4008EDD41 /* HasMoreButton.swift */; };
 		456D145921057539008EDD41 /* HasPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D145821057539008EDD41 /* HasPlayerView.swift */; };
 		456D145C21057903008EDD41 /* ImageCache+retrieveImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D145B21057903008EDD41 /* ImageCache+retrieveImage.swift */; };
@@ -120,7 +124,6 @@
 		456E90E520F602740006FFA8 /* MediumAddTag.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 456E90E420F602740006FFA8 /* MediumAddTag.graphql */; };
 		456E910A20FC9B540006FFA8 /* MinioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E910920FC9B540006FFA8 /* MinioHelper.swift */; };
 		456E910C20FD8A510006FFA8 /* UpoaderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E910B20FD8A510006FFA8 /* UpoaderService.swift */; };
-		456E910F20FD8A9E0006FFA8 /* Cacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E910E20FD8A9E0006FFA8 /* Cacher.swift */; };
 		456E911120FD98780006FFA8 /* SaveVideoMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 456E911020FD98780006FFA8 /* SaveVideoMedium.graphql */; };
 		4574E2A620CE4726005784C8 /* CollectionViewLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4574E2A520CE4726005784C8 /* CollectionViewLayoutManager.swift */; };
 		457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */; };
@@ -168,7 +171,6 @@
 		45A61C0D2086356E00AE7D99 /* StarMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45A61C0C2086356E00AE7D99 /* StarMedium.graphql */; };
 		45A6810F20FF23B80070606B /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6810D20FF23B80070606B /* PlayerView.swift */; };
 		45A6811020FF23B80070606B /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45A6810E20FF23B80070606B /* PlayerView.xib */; };
-		45A6811220FF23E90070606B /* CachingPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6811120FF23E90070606B /* CachingPlayerItem.swift */; };
 		45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */; };
 		45AA3B4520A311BD0032A8CF /* ImageDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4420A311BD0032A8CF /* ImageDetailPresenter.swift */; };
 		45AA3B4820A346DB0032A8CF /* DispachQueue+realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */; };
@@ -371,6 +373,10 @@
 		4561DE722100477E00F77510 /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
 		4561DE772100777200F77510 /* VideoDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoDetailCell.xib; sourceTree = "<group>"; };
 		4561DE792100778C00F77510 /* VideoDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailCell.swift; sourceTree = "<group>"; };
+		45662A9D212B9B8700964BC9 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
+		45662A9F212B9CDE00964BC9 /* DefaultCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCacheService.swift; sourceTree = "<group>"; };
+		45662AA1212BA36E00964BC9 /* MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MD5.swift; sourceTree = "<group>"; };
+		45662AA3212BD98200964BC9 /* HYCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HYCacheService.swift; sourceTree = "<group>"; };
 		456D1456210564E4008EDD41 /* HasMoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasMoreButton.swift; sourceTree = "<group>"; };
 		456D145821057539008EDD41 /* HasPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasPlayerView.swift; sourceTree = "<group>"; };
 		456D145B21057903008EDD41 /* ImageCache+retrieveImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCache+retrieveImage.swift"; sourceTree = "<group>"; };
@@ -387,7 +393,6 @@
 		456E90E420F602740006FFA8 /* MediumAddTag.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MediumAddTag.graphql; sourceTree = "<group>"; };
 		456E910920FC9B540006FFA8 /* MinioHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinioHelper.swift; sourceTree = "<group>"; };
 		456E910B20FD8A510006FFA8 /* UpoaderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpoaderService.swift; sourceTree = "<group>"; };
-		456E910E20FD8A9E0006FFA8 /* Cacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cacher.swift; sourceTree = "<group>"; };
 		456E911020FD98780006FFA8 /* SaveVideoMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveVideoMedium.graphql; sourceTree = "<group>"; };
 		4574E2A520CE4726005784C8 /* CollectionViewLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayoutManager.swift; sourceTree = "<group>"; };
 		457B1B87205FEA1000BEDDF1 /* Picroup-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Picroup-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -435,7 +440,6 @@
 		45A61C0C2086356E00AE7D99 /* StarMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = StarMedium.graphql; sourceTree = "<group>"; };
 		45A6810D20FF23B80070606B /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		45A6810E20FF23B80070606B /* PlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerView.xib; sourceTree = "<group>"; };
-		45A6811120FF23E90070606B /* CachingPlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachingPlayerItem.swift; sourceTree = "<group>"; };
 		45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PublishRelay+asBinder.swift"; sourceTree = "<group>"; };
 		45AA3B4420A311BD0032A8CF /* ImageDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailPresenter.swift; sourceTree = "<group>"; };
 		45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispachQueue+realm.swift"; sourceTree = "<group>"; };
@@ -616,6 +620,7 @@
 			children = (
 				451DD4B6207E3EB5002C509A /* ErrorMessage.swift */,
 				45B0204A20AC14D700BD5D8F /* Int+increase.swift */,
+				45662AA1212BA36E00964BC9 /* MD5.swift */,
 				4595F218207A15010040E5FA /* Mutabled.swift */,
 				451DD4C02083125A002C509A /* Objective.swift */,
 				451DD4C220831287002C509A /* NSObject+objc.swift */,
@@ -833,6 +838,14 @@
 			path = VideoDetailCell;
 			sourceTree = "<group>";
 		};
+		45662A9C212B9B6D00964BC9 /* ServiceProtocols */ = {
+			isa = PBXGroup;
+			children = (
+				45662A9D212B9B8700964BC9 /* CacheService.swift */,
+			);
+			path = ServiceProtocols;
+			sourceTree = "<group>";
+		};
 		456D145A210578CC008EDD41 /* Kingfisher */ = {
 			isa = PBXGroup;
 			children = (
@@ -868,14 +881,6 @@
 			path = TagMediaViewController;
 			sourceTree = "<group>";
 		};
-		456E910D20FD8A800006FFA8 /* Cache */ = {
-			isa = PBXGroup;
-			children = (
-				456E910E20FD8A9E0006FFA8 /* Cacher.swift */,
-			);
-			path = Cache;
-			sourceTree = "<group>";
-		};
 		457B1B7E205FEA1000BEDDF1 = {
 			isa = PBXGroup;
 			children = (
@@ -900,6 +905,7 @@
 				45A039362075C608007498DB /* Libaries */,
 				45A039372075C613007498DB /* UseCases */,
 				457BD99020B146CD007F0492 /* Services */,
+				45662A9C212B9B6D00964BC9 /* ServiceProtocols */,
 				4595F215207A10520040E5FA /* States */,
 				4515A68C2079E3790039C383 /* Routers */,
 				457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */,
@@ -915,6 +921,8 @@
 			children = (
 				457BD99220B146CD007F0492 /* AppStateService.swift */,
 				457BD99120B146CD007F0492 /* MediumService.swift */,
+				45662A9F212B9CDE00964BC9 /* DefaultCacheService.swift */,
+				45662AA3212BD98200964BC9 /* HYCacheService.swift */,
 				456E910B20FD8A510006FFA8 /* UpoaderService.swift */,
 				4547149F211D65E4003A5D04 /* WatermarkService.swift */,
 			);
@@ -1126,7 +1134,6 @@
 			isa = PBXGroup;
 			children = (
 				4580F4F621001DA4006EFF85 /* AVKit */,
-				456E910D20FD8A800006FFA8 /* Cache */,
 				45EC927F20D3C63300A473D4 /* Foundation */,
 				45A039392075C6F7007498DB /* GraphQL */,
 				4595F2092079F3630040E5FA /* Minio */,
@@ -1204,7 +1211,6 @@
 			children = (
 				45A6810E20FF23B80070606B /* PlayerView.xib */,
 				45A6810D20FF23B80070606B /* PlayerView.swift */,
-				45A6811120FF23E90070606B /* CachingPlayerItem.swift */,
 			);
 			path = PlayerView;
 			sourceTree = "<group>";
@@ -1720,7 +1726,6 @@
 				45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */,
 				4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */,
 				453B95BC20C4D7090043D915 /* UpdateUserPresenter.swift in Sources */,
-				45A6811220FF23E90070606B /* CachingPlayerItem.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
 				45517D4420BCDCD900F2D7DE /* UserViewModel.swift in Sources */,
 				4561DE67210040EA00F77510 /* RankMediumCell.swift in Sources */,
@@ -1730,6 +1735,7 @@
 				451DD4C12083125A002C509A /* Objective.swift in Sources */,
 				4595F219207A15010040E5FA /* Mutabled.swift in Sources */,
 				4561DE6B2100412800F77510 /* RankVideoCell.swift in Sources */,
+				45662A9E212B9B8700964BC9 /* CacheService.swift in Sources */,
 				45517D4620BCDCF900F2D7DE /* FollowButtonPresenter.swift in Sources */,
 				455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */,
 				451CD33B207D0BB60063A972 /* MeViewController.swift in Sources */,
@@ -1771,6 +1777,7 @@
 				451DD4B7207E3EB5002C509A /* ErrorMessage.swift in Sources */,
 				45F0A7E220C8C6E60085F978 /* RegularPattern.swift in Sources */,
 				45D04F84208E0EAA00AC2226 /* MePresenter.swift in Sources */,
+				45662AA4212BD98200964BC9 /* HYCacheService.swift in Sources */,
 				45525D4F208C468500EAF00D /* Feedback.swift in Sources */,
 				45C1995220AA7AFF001924B9 /* IsFeedbackStateObject.swift in Sources */,
 				457BD98520AB1521007F0492 /* Router.swift in Sources */,
@@ -1811,6 +1818,7 @@
 				453B95C520C619AD0043D915 /* FeedbackStateObject.swift in Sources */,
 				45E240B22084D2CF004B58EF /* ImageDetailViewController.swift in Sources */,
 				45FC0BFE20A94995006AAF3D /* Realm+findOrCreate.swift in Sources */,
+				45662AA0212B9CDE00964BC9 /* DefaultCacheService.swift in Sources */,
 				457BD99320B146CD007F0492 /* MediumService.swift in Sources */,
 				453B95C720C622320043D915 /* FeedbackPresenter.swift in Sources */,
 				457BD98B20ADB55E007F0492 /* CreateImageStateObject.swift in Sources */,
@@ -1828,7 +1836,6 @@
 				451CD328207BA39E0063A972 /* RouterService.swift in Sources */,
 				457BD97F20A9C7B5007F0492 /* IsCursorItemsObject.swift in Sources */,
 				4595F212207A000C0040E5FA /* LoginViewPresenter.swift in Sources */,
-				456E910F20FD8A9E0006FFA8 /* Cacher.swift in Sources */,
 				45E6C24A20863AC3003D7AA8 /* QueryState.swift in Sources */,
 				4543ECE920BC4121002F7C18 /* RxCollectionReusableView.swift in Sources */,
 				456D14682105BE63008EDD41 /* NeedUpdateStateObject.swift in Sources */,
@@ -1837,6 +1844,7 @@
 				45E240B520862981004B58EF /* HideNavigationBarViewController.swift in Sources */,
 				45B0205820AE69A000BD5D8F /* PrimaryKey.swift in Sources */,
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
+				45662AA2212BA36E00964BC9 /* MD5.swift in Sources */,
 				45183EBE20CF65BC00497B59 /* AboutAppViewController.swift in Sources */,
 				45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */,
 				45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */,

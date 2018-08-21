@@ -16,13 +16,13 @@ target 'Picroup-iOS' do
   pod 'Kingfisher', '~> 4.0'
   pod 'Material', '~> 2.14'
   pod 'YPImagePicker', '~> 3.0'
-  pod 'Cache', '~> 4.2'
+  pod 'Cache', :git => 'https://github.com/hyperoslo/Cache.git', :tag => '5.1.0'
   pod 'MediaWatermark', '~> 0.3'
   pod 'DVAssetLoaderDelegate', '~> 0.3'
 
   post_install do |installer|
       # Your list of targets here.
-      myTargets = ['YPImagePicker', 'PryntTrimmerView', 'SteviaLayout']
+      myTargets = ['YPImagePicker', 'PryntTrimmerView', 'SteviaLayout', 'Cache']
       
       installer.pods_project.targets.each do |target|
           if myTargets.include? target.name

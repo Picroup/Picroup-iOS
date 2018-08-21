@@ -174,7 +174,8 @@ class ImageDetailViewController: ShowNavigationBarViewController {
                     .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onShareMediumError)
 
             case .video(thumbnailImageKey: _, videoFileURL: let videoURL):
-                return WatermarkService.addVideoWatermark(videoURL: videoURL, username: username)
+                let url = HYDefaultCacheService.shared?.fileURL(for: videoURL) ?? videoURL
+                return WatermarkService.addVideoWatermark(videoURL: url, username: username)
                     .observeOn(MainScheduler.instance)
                     .do(onSuccess: { [weak self] item in
                         let vc = UIActivityViewController(activityItems: [item], applicationActivities: nil)

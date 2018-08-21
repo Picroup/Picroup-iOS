@@ -37,7 +37,10 @@ struct UpoaderService {
             guard let vidoeData = try? Data(contentsOf: fileURL) else { return .error(Error.generateVideoDataFail) }
             let (save, url) = MinioHelper.save(with: vidoeData, filename: filename)
             return save
-                .do(onCompleted: { Cacher.storage?.async.setObject(vidoeData, forKey: url, completion: { _ in }) })
+                .do(onCompleted: {
+                    guard let remoteURL = URL(string: url) else { fatalError() }
+                    HYDefaultCacheService.shared?.set(vidoeData, for: remoteURL)
+                })
         }()
         return (progress, filename)
     }
