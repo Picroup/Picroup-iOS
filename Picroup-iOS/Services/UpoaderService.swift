@@ -24,9 +24,8 @@ struct UpoaderService {
         let progress: Observable<RxProgress> = {
             guard image.size.area < 4096 * 4096 else { return .error(Error.imageTooLarge) }
             guard let imageData = UIImageJPEGRepresentation(image, compressionQuality(for: image)) else { return .error(Error.generateImageDataFail) }
-            let (save, url) = MinioHelper.save(with: imageData, filename: filename)
+            let (save, _) = MinioHelper.save(with: imageData, filename: filename)
             return save
-                .do(onCompleted: { ImageCache.default.store(image, forKey: url) })
         }()
         return (progress, filename)
     }
@@ -35,9 +34,8 @@ struct UpoaderService {
         let filename = "\(UUID().uuidString).\(fileURL.pathExtension)"
         let progress: Observable<RxProgress> = {
             guard let vidoeData = try? Data(contentsOf: fileURL) else { return .error(Error.generateVideoDataFail) }
-            let (save, url) = MinioHelper.save(with: vidoeData, filename: filename)
+            let (save, _) = MinioHelper.save(with: vidoeData, filename: filename)
             return save
-                .do(onCompleted: { Cacher.storage?.async.setObject(vidoeData, forKey: url, completion: { _ in }) })
         }()
         return (progress, filename)
     }

@@ -9,10 +9,13 @@
 import UIKit
 import AVKit
 import AVFoundation
+import DVAssetLoaderDelegate
 
 public final class PlayerView: UIView {
     
     @IBOutlet var contentView: UIView!
+    var cacheService: CacheService?
+    
     fileprivate var player: AVPlayer!
     fileprivate var playerLayer: AVPlayerLayer!
     
@@ -42,6 +45,8 @@ public final class PlayerView: UIView {
         playerLayer = AVPlayerLayer(player: player)
         playerLayer.videoGravity = .resizeAspectFill
         contentView.layer.addSublayer(playerLayer)
+        
+        cacheService = HYDefaultCacheService.shared
     }
     
     override public func layoutSubviews() {
@@ -57,29 +62,30 @@ public final class PlayerView: UIView {
         guard let url = url else { return reset() }
         self.url = url
         weak var weakSelf = self
-
-        Cacher.storage?.async.entry(ofType: Data.self, forKey: url.cacheKey, completion: { result in
-            guard self.url == url else { return }
-            let playerItem: CachingPlayerItem
-            if case .value(let entry) = result, let mimeType = url.pathExtension.mimeType {
-                print("from cache")
-                playerItem = CachingPlayerItem(data: entry.object, mimeType: mimeType, fileExtension: url.pathExtension)
-            } else {
-                print("from server")
-                playerItem = CachingPlayerItem(url: url)
-            }
-            playerItem.delegate = self
-            weakSelf?.player.replaceCurrentItem(with: playerItem)
-            weakSelf?.player.play()
-            
-            weakSelf?.tokens.append(NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerItem, queue: .main) { _ in
-                weakSelf?.player?.seek(to: kCMTimeZero)
-                weakSelf?.player?.play()
-            })
-            
-            weakSelf?.tokens.append(NotificationCenter.default.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: .main) { _ in
-                weakSelf?.player?.play()
-            })
+        
+        let urlAsset: AVURLAsset
+        if let fileURL = cacheService?.fileURL(for: url) {
+            print("from cache")
+            urlAsset = AVURLAsset(url: fileURL)
+        } else {
+            print("from server")
+            urlAsset = {
+                let item = DVURLAsset(url: url)
+                item.loaderDelegate = self
+                return item
+            }()
+        }
+        let playerItem = AVPlayerItem(asset: urlAsset)
+        player.replaceCurrentItem(with: playerItem)
+        player.play()
+        
+        tokens.append(NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerItem, queue: .main) { _ in
+            weakSelf?.player?.seek(to: kCMTimeZero)
+            weakSelf?.player?.play()
+        })
+        
+        tokens.append(NotificationCenter.default.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: .main) { _ in
+            weakSelf?.player?.play()
         })
     }
     
@@ -101,10 +107,12 @@ public final class PlayerView: UIView {
     
 }
 
-extension PlayerView: CachingPlayerItemDelegate {
-    func playerItem(_ playerItem: CachingPlayerItem, didFinishDownloadingData data: Data) {
-        // A track is downloaded. Saving it to the cache asynchronously.
-        print("cache video", playerItem.url)
-        Cacher.storage?.async.setObject(data, forKey: playerItem.url.cacheKey, completion: { _ in })
+extension PlayerView: DVAssetLoaderDelegatesDelegate {
+    public func dvAssetLoaderDelegate(_ loaderDelegate: DVAssetLoaderDelegate!, didLoad data: Data!, for url: URL!) {
+        guard data != nil, url != nil else {
+            return print("DVAssetLoaderDelegatesDelegate data or url is nil")
+        }
+        print("cache video for", url!)
+        cacheService?.set(data, for: url)
     }
 }
