@@ -44,6 +44,6 @@ extension RankStateObject: IsFeedbackStateObject {
             imageDetialRoute?.mediumId = mediumId
             imageDetialRoute?.version = UUID().uuidString
         }
-        version = UUID().uuidString
+        updateVersion()
     }
 }

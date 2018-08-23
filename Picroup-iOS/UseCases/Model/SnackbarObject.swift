@@ -2,8 +2,13 @@
 //  SnackbarObject.swift
 //  Picroup-iOS
 //
-//  Created by luojie on 2018/5/22.
+//  Created by ovfun on 2018/8/23.
 //  Copyright © 2018年 luojie. All rights reserved.
 //
 
-import RealmSwift
+import Foundation
+
+final class SnackbarObject: VersionedPrimaryObject {
+    
+    @objc dynamic var message: String?
+}

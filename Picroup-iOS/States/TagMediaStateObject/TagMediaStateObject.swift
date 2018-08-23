@@ -12,9 +12,7 @@ import RxSwift
 import RxCocoa
 import RxRealm
 
-final class TagMediaStateObject: PrimaryObject {
-    
-    @objc dynamic var version: String?
+final class TagMediaStateObject: VersionedPrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
     

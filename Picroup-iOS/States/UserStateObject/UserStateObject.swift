@@ -12,9 +12,7 @@ import RxSwift
 import RxCocoa
 import RxRealm
 
-final class UserStateObject: PrimaryObject {
-    
-    @objc dynamic var version: String?
+final class UserStateObject: VersionedPrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
     

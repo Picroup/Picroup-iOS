@@ -10,10 +10,8 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
-final class HomeStateObject: PrimaryObject {
-    
-    @objc dynamic var version: String?
-    
+final class HomeStateObject: VersionedPrimaryObject {
+        
     @objc dynamic var session: UserSessionObject?
     
     @objc dynamic var myInterestedMediaState: CursorMediaStateObject?

@@ -85,6 +85,6 @@ extension MeStateObject: IsFeedbackStateObject {
             realm.delete(realm.objects(NotificationObject.self))
             realm.delete(realm.objects(ReputationObject.self))
         }
-        version = UUID().uuidString
+        updateVersion()
     }
 }

@@ -12,10 +12,8 @@ import RxSwift
 import RxCocoa
 import RxRealm
 
-final class RankStateObject: PrimaryObject {
+final class RankStateObject: VersionedPrimaryObject {
     
-    @objc dynamic var version: String?
-
     @objc dynamic var session: UserSessionObject?
     
     let tagStates = List<TagStateObject>()

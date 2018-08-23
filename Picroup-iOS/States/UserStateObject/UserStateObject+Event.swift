@@ -132,6 +132,6 @@ extension UserStateObject: IsFeedbackStateObject {
         case .onTriggerPop:
             popRoute?.version = UUID().uuidString
         }
-        version = UUID().uuidString
+        updateVersion()
     }
 }

@@ -12,10 +12,8 @@ import RxSwift
 import RxCocoa
 import RxRealm
 
-final class MeStateObject: PrimaryObject {
+final class MeStateObject: VersionedPrimaryObject {
     
-    @objc dynamic var version: String?
-
     @objc dynamic var session: UserSessionObject?
     
     @objc dynamic var selectedTabIndex: Int = 0

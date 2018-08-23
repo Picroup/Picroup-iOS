@@ -56,6 +56,6 @@ extension HomeStateObject: IsFeedbackStateObject {
         case .onTriggerSearchUser:
             searchUserRoute?.version = UUID().uuidString
         }
-        version = UUID().uuidString
+        updateVersion()
     }
 }
