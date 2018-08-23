@@ -37,7 +37,7 @@ struct WatermarkService {
     
     static func addImageWatermark(image: UIImage, username: String) -> Single<UIImage> {
         let item = MediaItem(image: image)
-        let watermark = warkmarkElement(username: username, for: item)
+        let watermark = watermarkElement(username: username, for: item)
         item.add(element: watermark)
         return MediaProcessor().rx.processElements(item: item)
             .map {
@@ -50,7 +50,7 @@ struct WatermarkService {
         guard let item = MediaItem(url: videoURL) else {
             return Single.error(WatermarkError.imageDataUnavailable(videoURL))
         }
-        let watermark = warkmarkElement(username: username, for: item)
+        let watermark = watermarkElement(username: username, for: item)
         item.add(element: watermark)
         return MediaProcessor().rx.processElements(item: item)
             .map {
@@ -59,9 +59,9 @@ struct WatermarkService {
         }
     }
     
-    private static func warkmarkElement(username: String, for mediaItem: MediaItem) -> MediaElement {
+    private static func watermarkElement(username: String, for mediaItem: MediaItem) -> MediaElement {
         let mediumSize = mediaItem.size
-        let text = warkmarkText(username: username, mediumSize: mediumSize)
+        let text = watermarkText(username: username, mediumSize: mediumSize)
         let watermark = MediaElement(text: text)
         let margin = mediumSize.width * Constants.watermarkMarginRatio
         let y = mediaItem.type == .video ? margin : mediumSize.height - margin - text.size().height
@@ -69,7 +69,7 @@ struct WatermarkService {
         return watermark
     }
     
-    private static func warkmarkText(username: String, mediumSize: CGSize) -> NSAttributedString {
+    private static func watermarkText(username: String, mediumSize: CGSize) -> NSAttributedString {
         let mediumWidth = mediumSize.width
         let string = NSMutableAttributedString()
         string.append(NSAttributedString(string: "Picroup ", attributes: [

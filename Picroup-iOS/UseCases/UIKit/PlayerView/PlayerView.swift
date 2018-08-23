@@ -46,7 +46,9 @@ public final class PlayerView: UIView {
         playerLayer.videoGravity = .resizeAspectFill
         contentView.layer.addSublayer(playerLayer)
         
-        cacheService = HYDefaultCacheService.shared
+        if cacheService == nil  {
+            cacheService = HYDefaultCacheService.shared
+        }
     }
     
     override public func layoutSubviews() {
