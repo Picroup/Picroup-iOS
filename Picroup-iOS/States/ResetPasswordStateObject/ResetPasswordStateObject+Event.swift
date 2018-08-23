@@ -43,8 +43,7 @@ extension ResetPasswordStateObject: IsFeedbackStateObject {
         case .onResetPasswordError(let error):
             resetPasswordError = error.localizedDescription
             triggerResetPasswordQuery = false
-            snackbar?.message = resetPasswordError
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage(resetPasswordError), realm: realm)
             
         case .onConfirmResetPasswordSuccess:
             backToLoginRoute?.version = UUID().uuidString

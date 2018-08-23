@@ -45,16 +45,14 @@ extension UpdatePasswordStateObject: IsFeedbackStateObject {
             setPasswordError = nil
             triggerSetPasswordQuery = false
             
-            snackbar?.message = "密码已修改"
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage("密码已修改"), realm: realm)
             
             popRoute?.version = UUID().uuidString
         case .onSetPasswordError(let error):
             setPasswordError = error.localizedDescription
             triggerSetPasswordQuery = false
             
-            snackbar?.message = setPasswordError
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage(setPasswordError), realm: realm)
         case .onTriggerPop:
             popRoute?.version = UUID().uuidString
         }

@@ -13,19 +13,6 @@ import RxFeedback
 import RealmSwift
 import RxRealm
 
-final class UserSessionObject: PrimaryObject {
-    @objc dynamic var currentUser: UserObject?
-}
-
-extension UserSessionObject {
-    var isLogin: Bool {
-        return currentUser != nil
-    }
-    var currentUserId: String? {
-        return currentUser?._id
-    }
-}
-
 final class AppStateObject: PrimaryObject {
     
     @objc dynamic var session: UserSessionObject?

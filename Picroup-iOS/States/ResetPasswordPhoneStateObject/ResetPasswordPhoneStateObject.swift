@@ -10,14 +10,6 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
-final class ResetPasswordParamObject: PrimaryObject {
-    
-    @objc dynamic var phoneNumber: String = ""
-    @objc dynamic var password: String = ""
-    @objc dynamic var token: String = ""
-    @objc dynamic var code: Double = 0
-}
-
 final class ResetPasswordPhoneStateObject: PrimaryObject {
     
     @objc dynamic var resetPasswordParam: ResetPasswordParamObject?

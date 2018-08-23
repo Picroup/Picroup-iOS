@@ -105,8 +105,7 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             triggerStarMediumQuery = false
             needUpdate?.myStaredMedia = true
             
-            snackbar?.message = "感谢你给图片续命一周"
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage("感谢你给图片续命一周"), realm: realm)
             
         case .onStarMediumError(let error):
             starMediumVersion = nil
@@ -121,14 +120,12 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             medium?.delete()
             deleteMediumError = nil
             triggerDeleteMediumQuery = false
-            snackbar?.message = "已删除"
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage("已删除"), realm: realm)
             popRoute?.version = UUID().uuidString
         case .onDeleteMediumError(let error):
             deleteMediumError = error.localizedDescription
             triggerDeleteMediumQuery = false
-            snackbar?.message = error.localizedDescription
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
             
         case .onTriggerBlockMedium:
             guard shouldBlockMedium else { return }
@@ -140,8 +137,7 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             blockMediumVersion = UUID().uuidString
             blockMediumError = nil
             triggerBlockMediumQuery = false
-            snackbar?.message = "已减少类似内容"
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage("已减少类似内容"), realm: realm)
             popRoute?.version = UUID().uuidString
         case .onBlockMediumError(let error):
             blockMediumVersion = nil

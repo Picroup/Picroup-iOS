@@ -72,8 +72,7 @@ extension UserStateObject: IsFeedbackStateObject {
             triggerFollowUserQuery = false
             needUpdate?.myInterestedMedia = true
             
-            snackbar?.message = "已关注 @\(user?.username ?? "")"
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage("已关注 @\(user?.username ?? "")"), realm: realm)
         case .onFollowUserError(let error):
             followUserVersion = nil
             followUserError = error.localizedDescription
@@ -90,8 +89,7 @@ extension UserStateObject: IsFeedbackStateObject {
             unfollowUserError = nil
             triggerUnfollowUserQuery = false
             needUpdate?.myInterestedMedia = true
-            snackbar?.message = "已取消关注 @\(user?.username ?? "")"
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage("已取消关注 @\(user?.username ?? "")"), realm: realm)
         case .onUnfollowUserError(let error):
             unfollowUserVersion = nil
             unfollowUserError = error.localizedDescription
@@ -109,8 +107,7 @@ extension UserStateObject: IsFeedbackStateObject {
             blockUserError = nil
             triggerBlockUserQuery = false
             needUpdate?.myInterestedMedia = true
-            snackbar?.message = "已拉黑 @\(user?.username ?? "")，您可以前往设置取消拉黑"
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage("已拉黑 @\(user?.username ?? "")，您可以前往设置取消拉黑"), realm: realm)
         case .onBlockUserError(let error):
             blockUserVersion = nil
             blockUserError = error.localizedDescription

@@ -50,8 +50,7 @@ extension ResetPasswordCodeStateObject: IsFeedbackStateObject {
             verifyCodeError = error.localizedDescription
             triggerVerifyCodeQuery = false
             
-            snackbar?.message = verifyCodeError
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage(verifyCodeError), realm: realm)
             
         case .onTriggerGetVerifyCode:
             phoneNumber = nil
@@ -66,8 +65,7 @@ extension ResetPasswordCodeStateObject: IsFeedbackStateObject {
             getVerifyCodeError = error.localizedDescription
             triggerGetVerifyCodeQuery = false
             
-            snackbar?.message = getVerifyCodeError
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage(getVerifyCodeError), realm: realm)
         }
     }
 }

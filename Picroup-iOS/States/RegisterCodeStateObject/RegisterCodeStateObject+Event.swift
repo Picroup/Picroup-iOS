@@ -43,13 +43,11 @@ extension RegisterCodeStateObject: IsFeedbackStateObject {
             session?.currentUser = UserObject.create(from: data)(realm)
             registerError = nil
             triggerRegisterQuery = false
-            snackbar?.message = "注册成功"
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage("注册成功"), realm: realm)
         case .onRegisterError(let error):
             registerError = error.localizedDescription
             triggerRegisterQuery = false
-            snackbar?.message = registerError
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage(registerError), realm: realm)
             
         case .onTriggerGetVerifyCode:
             phoneNumber = nil
@@ -64,8 +62,7 @@ extension RegisterCodeStateObject: IsFeedbackStateObject {
             getVerifyCodeError = error.localizedDescription
             triggerGetVerifyCodeQuery = false
             
-            snackbar?.message = getVerifyCodeError
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage(getVerifyCodeError), realm: realm)
         }
     }
 }

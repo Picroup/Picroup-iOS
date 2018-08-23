@@ -34,14 +34,12 @@ extension LoginStateObject: IsFeedbackStateObject {
             session?.currentUser = UserObject.create(from: data)(realm)
             loginError = nil
             triggerLoginQuery = false
-            snackbar?.message = "登录成功"
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage("登录成功"), realm: realm)
         case .onLoginError(let error):
             session?.currentUser = nil
             loginError = error.localizedDescription
             triggerLoginQuery = false
-            snackbar?.message = loginError
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage(loginError), realm: realm)
         case .onChangeUsername(let username):
             self.username = username
         case .onChangePassword(let password):

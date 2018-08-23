@@ -39,16 +39,14 @@ extension FeedbackStateObject: IsFeedbackStateObject {
             triggerSaveFeedback = false
             content = ""
             
-            snackbar?.message = "已提交"
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage("已提交"), realm: realm)
             popRoute?.version = UUID().uuidString
         case .onSaveFeedbackError(let error):
             savedFeedbackId = nil
             savedFeedbackError = error.localizedDescription
             triggerSaveFeedback = false
             
-            snackbar?.message = error.localizedDescription
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
         case .onChangeContent(let content):
             self.content = content
         case .onTriggerPop:

@@ -10,13 +10,6 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
-final class RegisterParamObject: PrimaryObject {
-    
-    @objc dynamic var username: String = ""
-    @objc dynamic var password: String = ""
-    @objc dynamic var phoneNumber: String = ""
-    @objc dynamic var code: Double = 0
-}
 
 final class RegisterUsernameStateObject: PrimaryObject {
     

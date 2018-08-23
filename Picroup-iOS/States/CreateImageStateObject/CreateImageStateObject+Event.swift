@@ -46,12 +46,10 @@ extension CreateImageStateObject: IsFeedbackStateObject {
                 let failState = saveMediumStates.first(where: { $0.savedError != nil })
                 let allSuccess = failState == nil
                 if allSuccess {
-                    snackbar?.message = "已分享"
-                    snackbar?.version = UUID().uuidString
+                    snackbar?.reduce(event: .onUpdateMessage("已分享"), realm: realm)
                     popRoute?.version = UUID().uuidString
                 } else {
-                    snackbar?.message = failState?.savedError
-                    snackbar?.version = UUID().uuidString
+                    snackbar?.reduce(event: .onUpdateMessage(failState?.savedError), realm: realm)
                 }
             }
         case .onSavedMediumError(let error, let index):

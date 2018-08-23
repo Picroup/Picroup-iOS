@@ -111,8 +111,7 @@ extension ImageCommentsStateObject: IsFeedbackStateObject {
         case .onDeleteCommentError(let error):
             deleteCommentError = error.localizedDescription
             triggerDeleteComment = false
-            snackbar?.message = error.localizedDescription
-            snackbar?.version = UUID().uuidString
+            snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
             
         case .onTriggerLogin:
             loginRoute?.version = UUID().uuidString
