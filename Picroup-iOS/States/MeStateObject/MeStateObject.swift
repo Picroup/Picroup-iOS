@@ -24,15 +24,7 @@ final class MeStateObject: VersionedPrimaryObject {
 
     @objc dynamic var needUpdate: NeedUpdateStateObject?
     
-    @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
-    @objc dynamic var reputationsRoute: ReputationsRouteObject?
-    @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
-    @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
-    @objc dynamic var userBlockingsRoute: UserBlockingsRouteObject?
-    @objc dynamic var updateUserRoute: UpdateUserRouteObject?
-    @objc dynamic var feedbackRoute: FeedbackRouteObject?
-    @objc dynamic var aboutAppRoute: AboutAppRouteObject?
-    @objc dynamic var popRoute: PopRouteObject?
+    @objc dynamic var routeState: RouteStateObject?
 }
 
 extension MeStateObject {
@@ -69,15 +61,7 @@ extension MeStateObject {
                 "myMediaState": CursorMediaStateObject.createValues(id: PrimaryKey.myMediaId),
                 "myStaredMediaState":  CursorMediaStateObject.createValues(id: PrimaryKey.myStaredMediaId),
                 "needUpdate": ["_id": _id],
-                "imageDetialRoute": ["_id": _id],
-                "reputationsRoute": ["_id": _id],
-                "userFollowingsRoute": ["_id": _id],
-                "userFollowersRoute": ["_id": _id],
-                "userBlockingsRoute": ["_id": _id],
-                "updateUserRoute": ["_id": _id],
-                "feedbackRoute": ["_id": _id],
-                "aboutAppRoute": ["_id": _id],
-                "popRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 ]
             return try realm.update(MeStateObject.self, value: value)
         }

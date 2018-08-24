@@ -99,10 +99,9 @@ extension UserFollowingsStateObject: IsFeedbackStateObject {
             triggerUnfollowUserQuery = false
             
         case .onTriggerShowUser(let userId):
-            userRoute?.userId = userId
-            userRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerShowUser(userId), realm: realm)
         case .onTriggerPop:
-            popRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerPop, realm: realm)
         }
     }
 }

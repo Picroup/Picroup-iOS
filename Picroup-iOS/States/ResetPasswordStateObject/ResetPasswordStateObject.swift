@@ -19,8 +19,8 @@ final class ResetPasswordStateObject: PrimaryObject {
     @objc dynamic var resetPasswordError: String?
     @objc dynamic var triggerResetPasswordQuery: Bool = false
     
-    @objc dynamic var backToLoginRoute: BackToLoginRouteObject?
-    
+    @objc dynamic var routeState: RouteStateObject?
+
     @objc dynamic var snackbar: SnackbarObject?
 }
 
@@ -47,7 +47,7 @@ extension ResetPasswordStateObject {
                 "resetPasswordParam": ["_id": _id, "password": ""],
                 "isPasswordValid": false,
                 "username": nil,
-                "backToLoginRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],
                 ]
             return try realm.update(ResetPasswordStateObject.self, value: value)

@@ -24,9 +24,7 @@ final class ReputationsStateObject: PrimaryObject {
     @objc dynamic var markError: String?
     @objc dynamic var triggerMarkQuery: Bool = false
     
-    @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
-    @objc dynamic var userRoute: UserRouteObject?
-    @objc dynamic var popRoute: PopRouteObject?
+    @objc dynamic var routeState: RouteStateObject?
 
 }
 
@@ -63,9 +61,7 @@ extension ReputationsStateObject {
                 "_id": _id,
                 "session": ["_id": _id],
                 "reputations": ["_id": _id],
-                "imageDetialRoute": ["_id": _id],
-                "userRoute": ["_id": _id],
-                "popRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 ]
             return try realm.update(ReputationsStateObject.self, value: value)
         }

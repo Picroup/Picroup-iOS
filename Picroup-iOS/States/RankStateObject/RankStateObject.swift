@@ -22,8 +22,8 @@ final class RankStateObject: VersionedPrimaryObject {
 
     @objc dynamic var selectedTagHistory: SelectedTagHistoryObject?
     
-    @objc dynamic var loginRoute: LoginRouteObject?
-    @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
+    @objc dynamic var routeState: RouteStateObject?
+
 }
 
 extension RankStateObject {
@@ -49,8 +49,7 @@ extension RankStateObject {
                 "session": ["_id": _id],
                 "hotMediaState": CursorMediaStateObject.createValues(id: hotMediaId),
                 "selectedTagHistory": ["_id": PrimaryKey.viewTagHistory],
-                "loginRoute": ["_id": _id],
-                "imageDetialRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 ]
             let result = try realm.update(RankStateObject.self, value: value)
             try realm.write {

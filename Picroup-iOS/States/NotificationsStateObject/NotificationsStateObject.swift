@@ -24,9 +24,8 @@ final class NotificationsStateObject: PrimaryObject {
     @objc dynamic var markError: String?
     @objc dynamic var triggerMarkQuery: Bool = false
     
-    @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
-    @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
-    @objc dynamic var userRoute: UserRouteObject?
+    @objc dynamic var routeState: RouteStateObject?
+
 }
 
 extension NotificationsStateObject {
@@ -62,9 +61,7 @@ extension NotificationsStateObject {
                 "_id": _id,
                 "session": ["_id": _id],
                 "notifications": ["_id": _id],
-                "imageDetialRoute": ["_id": _id],
-                "imageCommetsRoute": ["_id": _id],
-                "userRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 ]
             return try realm.update(NotificationsStateObject.self, value: value)
         }

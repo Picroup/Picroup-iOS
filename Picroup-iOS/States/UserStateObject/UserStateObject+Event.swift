@@ -114,20 +114,17 @@ extension UserStateObject: IsFeedbackStateObject {
             triggerBlockUserQuery = false
             
         case .onTriggerLogin:
-            loginRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerLogin, realm: realm)
         case .onTriggerShowImage(let mediumId):
-            imageDetialRoute?.mediumId = mediumId
-            imageDetialRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerShowImage(mediumId), realm: realm)
         case .onTriggerShowUserFollowings:
-            userFollowingsRoute?.userId = user?._id
-            userFollowingsRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerShowUserFollowings(user?._id), realm: realm)
         case .onTriggerShowUserFollowers:
-            userFollowersRoute?.userId = user?._id
-            userFollowersRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerShowUserFollowers(user?._id), realm: realm)
         case .onTriggerUserFeedback:
-            feedbackRoute?.triggerUser(toUserId: userId)
+            routeState?.reduce(event: .onTriggerUserFeedback(userId), realm: realm)
         case .onTriggerPop:
-            popRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerPop, realm: realm)
         }
         updateVersion()
     }

@@ -38,6 +38,8 @@ final class ImageDetailStateObject: VersionedPrimaryObject {
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
     
+    @objc dynamic var routeState: RouteStateObject?
+    
     @objc dynamic var loginRoute: LoginRouteObject?
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
@@ -107,14 +109,7 @@ extension ImageDetailStateObject {
                 "starMediumState": StarMediumStateObject.createValues(mediumId: mediumId),
                 "myStaredMedia": ["_id": PrimaryKey.myStaredMediaId],
                 "needUpdate": ["_id": _id],
-                "loginRoute": ["_id": _id],
-                "imageDetialRoute": ["_id": _id],
-                "imageCommetsRoute": ["_id": _id],
-                "tagMediaRoute": ["_id": _id],
-                "updateMediumTagsRoute": ["_id": _id],
-                "userRoute": ["_id": _id],
-                "feedbackRoute": ["_id": _id],
-                "popRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],
                 ]
             return try realm.update(ImageDetailStateObject.self, value: value)

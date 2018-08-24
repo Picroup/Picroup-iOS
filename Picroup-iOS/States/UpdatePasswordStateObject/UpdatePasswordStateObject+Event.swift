@@ -47,14 +47,14 @@ extension UpdatePasswordStateObject: IsFeedbackStateObject {
             
             snackbar?.reduce(event: .onUpdateMessage("密码已修改"), realm: realm)
             
-            popRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerPop, realm: realm)
         case .onSetPasswordError(let error):
             setPasswordError = error.localizedDescription
             triggerSetPasswordQuery = false
             
             snackbar?.reduce(event: .onUpdateMessage(setPasswordError), realm: realm)
         case .onTriggerPop:
-            popRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerPop, realm: realm)
         }
     }
 }

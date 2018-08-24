@@ -114,11 +114,11 @@ extension ImageCommentsStateObject: IsFeedbackStateObject {
             snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
             
         case .onTriggerLogin:
-            loginRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerLogin, realm: realm)
         case .onTriggerCommentFeedback(let commentId):
-            feedbackRoute?.triggerComment(commentId: commentId)
+            routeState?.reduce(event: .onTriggerCommentFeedback(commentId), realm: realm)
         case .onTriggerPop:
-            popRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerPop, realm: realm)
         }
     }
 }

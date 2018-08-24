@@ -18,7 +18,7 @@ final class TagMediaStateObject: VersionedPrimaryObject {
     
     @objc dynamic var hotMediaState: CursorMediaStateObject?
 
-    @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
+    @objc dynamic var routeState: RouteStateObject?
 }
 
 extension TagMediaStateObject {
@@ -42,7 +42,7 @@ extension TagMediaStateObject {
                 "_id": tag,
                 "session": ["_id": _id],
                 "hotMediaState": CursorMediaStateObject.createValues(id: hotMediaId),
-                "imageDetialRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 ]
             let result = try realm.update(TagMediaStateObject.self, value: value)
             return result

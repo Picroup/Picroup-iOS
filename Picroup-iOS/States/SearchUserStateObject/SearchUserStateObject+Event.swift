@@ -80,8 +80,7 @@ extension SearchUserStateObject: IsFeedbackStateObject {
             triggerUnfollowUserQuery = false
             
         case .onTriggerShowUser(let userId):
-            userRoute?.userId = userId
-            userRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerShowUser(userId), realm: realm)
         }
     }
 }

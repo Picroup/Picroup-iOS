@@ -36,12 +36,7 @@ final class UserStateObject: VersionedPrimaryObject {
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
 
-    @objc dynamic var loginRoute: LoginRouteObject?
-    @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
-    @objc dynamic var userFollowingsRoute: UserFollowingsRouteObject?
-    @objc dynamic var userFollowersRoute: UserFollowersRouteObject?
-    @objc dynamic var feedbackRoute: FeedbackRouteObject?
-    @objc dynamic var popRoute: PopRouteObject?
+    @objc dynamic var routeState: RouteStateObject?
     
     @objc dynamic var snackbar: SnackbarObject?
 }
@@ -108,12 +103,7 @@ extension UserStateObject {
                 "user": ["_id": userId],
                 "userMediaState": CursorMediaStateObject.createValues(id: PrimaryKey.userMediaId(userId)),
                 "needUpdate": ["_id": _id],
-                "loginRoute": ["_id": _id],
-                "imageDetialRoute": ["_id": _id],
-                "userFollowingsRoute": ["_id": _id],
-                "userFollowersRoute": ["_id": _id],
-                "feedbackRoute": ["_id": _id],
-                "popRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],
                 ]
             return try realm.update(UserStateObject.self, value: value)

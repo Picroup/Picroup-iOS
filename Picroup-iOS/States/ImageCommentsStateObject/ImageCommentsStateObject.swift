@@ -32,9 +32,7 @@ final class ImageCommentsStateObject: PrimaryObject {
     @objc dynamic var deleteCommentError: String?
     @objc dynamic var triggerDeleteComment: Bool = false
     
-    @objc dynamic var loginRoute: LoginRouteObject?
-    @objc dynamic var feedbackRoute: FeedbackRouteObject?
-    @objc dynamic var popRoute: PopRouteObject?
+    @objc dynamic var routeState: RouteStateObject?
     
     @objc dynamic var snackbar: SnackbarObject?
 }
@@ -81,9 +79,7 @@ extension ImageCommentsStateObject {
                 "session": ["_id": _id],
                 "medium": ["_id": mediumId],
                 "comments": ["_id": PrimaryKey.commentsId(mediumId)],
-                "loginRoute": ["_id": _id],
-                "feedbackRoute": ["_id": _id],
-                "popRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],
                 ]
             return try realm.update(ImageCommentsStateObject.self, value: value)

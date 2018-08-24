@@ -39,10 +39,9 @@ extension RankStateObject: IsFeedbackStateObject {
             }
             hotMediaState?.reduce(event: .onTriggerReload, realm: realm)
         case .onTriggerLogin:
-            loginRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerLogin, realm: realm)
         case .onTriggerShowImage(let mediumId):
-            imageDetialRoute?.mediumId = mediumId
-            imageDetialRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerShowImage(mediumId), realm: realm)
         }
         updateVersion()
     }

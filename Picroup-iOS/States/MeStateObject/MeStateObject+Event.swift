@@ -58,26 +58,23 @@ extension MeStateObject: IsFeedbackStateObject {
             myStaredMediaState?.reduce(event: .onTriggerReload, realm: realm)
             
         case .onTriggerShowImage(let mediumId):
-            imageDetialRoute?.mediumId = mediumId
-            imageDetialRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerShowImage(mediumId), realm: realm)
         case .onTriggerShowReputations:
-            reputationsRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerShowReputations, realm: realm)
         case .onTriggerShowUserFollowings:
-            userFollowingsRoute?.userId = session?.currentUserId
-            userFollowingsRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerShowUserFollowings(session?.currentUserId), realm: realm)
         case .onTriggerShowUserFollowers:
-            userFollowersRoute?.userId = session?.currentUserId
-            userFollowersRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerShowUserFollowers(session?.currentUserId), realm: realm)
         case .onTriggerShowUserBlockings:
-            userBlockingsRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerShowUserBlockings, realm: realm)
         case .onTriggerUpdateUser:
-            updateUserRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerUpdateUser, realm: realm)
         case .onTriggerAppFeedback:
-            feedbackRoute?.triggerApp()
+            routeState?.reduce(event: .onTriggerAppFeedback, realm: realm)
         case .onTriggerAboutApp:
-            aboutAppRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerAboutApp, realm: realm)
         case .onTriggerPop:
-            popRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerPop, realm: realm)
         case .onLogout:
             session?.currentUser = nil
             realm.delete(realm.objects(UserObject.self))

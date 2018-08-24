@@ -58,7 +58,7 @@ extension UpdateUserStateObject: IsFeedbackStateObject {
             triggerSetDisplayNameQuery = false
             
         case .onTriggerPop:
-            popRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerPop, realm: realm)
         }
     }
 }

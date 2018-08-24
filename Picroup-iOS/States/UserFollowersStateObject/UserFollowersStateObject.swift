@@ -32,8 +32,7 @@ final class UserFollowersStateObject: PrimaryObject {
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
     
-    @objc dynamic var userRoute: UserRouteObject?
-    @objc dynamic var popRoute: PopRouteObject?
+    @objc dynamic var routeState: RouteStateObject?
 }
 
 extension UserFollowersStateObject {
@@ -92,8 +91,7 @@ extension UserFollowersStateObject {
                 "user": ["_id": userId],
                 "userFollowers": ["_id": PrimaryKey.userFollowersId(userId)],
                 "needUpdate": ["_id": _id],
-                "userRoute": ["_id": _id],
-                "popRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 ]
             return try realm.update(UserFollowersStateObject.self, value: value)
         }

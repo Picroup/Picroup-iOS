@@ -146,26 +146,21 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             triggerShareMediumQuery = false
             
         case .onTriggerLogin:
-            loginRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerLogin, realm: realm)
         case .onTriggerShowImage(let mediumId):
-            imageDetialRoute?.mediumId = mediumId
-            imageDetialRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerShowImage(mediumId), realm: realm)
         case .onTriggerShowComments(let mediumId):
-            imageCommetsRoute?.mediumId = mediumId
-            imageCommetsRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerShowComments(mediumId), realm: realm)
         case .onTriggerShowTagMedia(let tag):
-            tagMediaRoute?.tag = tag
-            tagMediaRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerShowTagMedia(tag), realm: realm)
         case .onTriggerUpdateMediaTags:
-            updateMediumTagsRoute?.mediumId = mediumId
-            updateMediumTagsRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerUpdateMediaTags(mediumId), realm: realm)
         case .onTriggerShowUser(let userId):
-            userRoute?.userId = userId
-            userRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerShowUser(userId), realm: realm)
         case .onTriggerMediumFeedback:
-            feedbackRoute?.triggerMedium(mediumId: mediumId)
+            routeState?.reduce(event: .onTriggerMediumFeedback(mediumId), realm: realm)
         case .onTriggerPop:
-            popRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerPop, realm: realm)
         }
         updateVersion()
     }

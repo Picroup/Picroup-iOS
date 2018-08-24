@@ -31,7 +31,7 @@ final class SearchUserStateObject: PrimaryObject {
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
     
-    @objc dynamic var userRoute: UserRouteObject?
+    @objc dynamic var routeState: RouteStateObject?
 }
 
 extension SearchUserStateObject {
@@ -88,7 +88,7 @@ extension SearchUserStateObject {
                 "_id": _id,
                 "session": ["_id": _id],
                 "needUpdate": ["_id": _id],
-                "userRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 ]
             return try realm.update(SearchUserStateObject.self, value: value)
         }

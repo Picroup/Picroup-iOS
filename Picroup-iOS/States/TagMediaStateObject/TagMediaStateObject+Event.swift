@@ -27,8 +27,7 @@ extension TagMediaStateObject: IsFeedbackStateObject {
         case .hotMediaState(let event):
             hotMediaState?.reduce(event: event, realm: realm)
         case .onTriggerShowImage(let mediumId):
-            imageDetialRoute?.mediumId = mediumId
-            imageDetialRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerShowImage(mediumId), realm: realm)
         }
         updateVersion()
     }

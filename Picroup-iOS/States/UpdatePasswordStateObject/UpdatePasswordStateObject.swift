@@ -24,7 +24,7 @@ final class UpdatePasswordStateObject: PrimaryObject {
     @objc dynamic var setPasswordError: String?
     @objc dynamic var triggerSetPasswordQuery: Bool = false
     
-    @objc dynamic var popRoute: PopRouteObject?
+    @objc dynamic var routeState: RouteStateObject?
     @objc dynamic var snackbar: SnackbarObject?
 }
 
@@ -51,7 +51,7 @@ extension UpdatePasswordStateObject {
                 "password": "",
                 "isOldPasswordValid": false,
                 "isPasswordValid": false,
-                "popRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],
                 ]
             return try realm.update(UpdatePasswordStateObject.self, value: value)

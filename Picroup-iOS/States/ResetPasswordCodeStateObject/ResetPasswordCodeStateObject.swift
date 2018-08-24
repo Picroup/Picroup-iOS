@@ -22,8 +22,8 @@ final class ResetPasswordCodeStateObject: PrimaryObject {
     @objc dynamic var getVerifyCodeError: String?
     @objc dynamic var triggerGetVerifyCodeQuery: Bool = false
     
-    @objc dynamic var resetPasswordRoute: ResetPasswordRouteObject?
-    
+    @objc dynamic var routeState: RouteStateObject?
+
     @objc dynamic var snackbar: SnackbarObject?
 }
 
@@ -54,7 +54,7 @@ extension ResetPasswordCodeStateObject {
                 "resetPasswordParam": ["_id": _id, "code": 0],
                 "isCodeAvaliable": false,
                 "phoneNumber": nil,
-                "resetPasswordRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],
                 ]
             return try realm.update(ResetPasswordCodeStateObject.self, value: value)

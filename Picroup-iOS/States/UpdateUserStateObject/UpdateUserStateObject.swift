@@ -27,7 +27,7 @@ final class UpdateUserStateObject: PrimaryObject {
     @objc dynamic var setDisplayNameError: String?
     @objc dynamic var triggerSetDisplayNameQuery: Bool = false
 
-    @objc dynamic var popRoute: PopRouteObject?
+    @objc dynamic var routeState: RouteStateObject?
 }
 
 extension UpdateUserStateObject {
@@ -56,7 +56,7 @@ extension UpdateUserStateObject {
             let value: Any = [
                 "_id": _id,
                 "session": ["_id": _id],
-                "popRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 ]
             let result = try realm.update(UpdateUserStateObject.self, value: value)
             try realm.write {

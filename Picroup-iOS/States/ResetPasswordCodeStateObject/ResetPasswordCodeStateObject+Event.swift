@@ -44,7 +44,7 @@ extension ResetPasswordCodeStateObject: IsFeedbackStateObject {
             verifyCodeError = nil
             triggerVerifyCodeQuery = false
             
-            resetPasswordRoute?.updateVersion()
+            routeState?.reduce(event: .onTriggerResetPassword, realm: realm)
             
         case .onVerifyError(let error):
             verifyCodeError = error.localizedDescription

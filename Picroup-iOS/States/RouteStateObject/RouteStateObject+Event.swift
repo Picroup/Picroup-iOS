@@ -22,8 +22,8 @@ extension RouteStateObject {
         
         case onTriggerShowUser(String)
         case onTriggerUpdateUser
-        case onTriggerShowUserFollowings(String)
-        case onTriggerShowUserFollowers(String)
+        case onTriggerShowUserFollowings(String?)
+        case onTriggerShowUserFollowers(String?)
         case onTriggerSearchUser
         case onTriggerShowUserBlockings
         
@@ -33,6 +33,7 @@ extension RouteStateObject {
         case onTriggerAppFeedback
         case onTriggerMediumFeedback(String)
         case onTriggerUserFeedback(String)
+        case onTriggerCommentFeedback(String)
         case onTriggerAboutApp
         
 //        case onLogout
@@ -93,6 +94,8 @@ extension RouteStateObject: IsFeedbackStateObject {
             feedbackRoute?.triggerMedium(mediumId: mediumId)
         case .onTriggerUserFeedback(let userId):
             feedbackRoute?.triggerUser(toUserId: userId)
+        case .onTriggerCommentFeedback(let commentId):
+            feedbackRoute?.triggerComment(commentId: commentId)
         case .onTriggerAboutApp:
             aboutAppRoute?.updateVersion()
         case .onTriggerPop:

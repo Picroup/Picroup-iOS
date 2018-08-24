@@ -30,7 +30,7 @@ final class UserBlockingsStateObject: PrimaryObject {
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
     
-    @objc dynamic var userRoute: UserRouteObject?
+    @objc dynamic var routeState: RouteStateObject?
 }
 
 extension UserBlockingsStateObject {
@@ -77,7 +77,7 @@ extension UserBlockingsStateObject {
                 "session": ["_id": _id],
                 "userBlockings": [],
                 "needUpdate": ["_id": _id],
-                "userRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 ]
             return try realm.update(UserBlockingsStateObject.self, value: value)
         }
