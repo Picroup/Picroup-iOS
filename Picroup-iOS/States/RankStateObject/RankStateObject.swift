@@ -14,7 +14,7 @@ import RxRealm
 
 final class RankStateObject: VersionedPrimaryObject {
     
-    @objc dynamic var sessionStateState: UserSessionStateObject?
+    @objc dynamic var sessionState: UserSessionStateObject?
     
     let tagStates = List<TagStateObject>()
     
@@ -29,7 +29,7 @@ final class RankStateObject: VersionedPrimaryObject {
 extension RankStateObject {
     var hotMediaQuery: HotMediaByTagsQuery? {
         return hotMediaState?.trigger == true
-            ? HotMediaByTagsQuery(tags: selectedTags, queryUserId: sessionStateState?.currentUserId)
+            ? HotMediaByTagsQuery(tags: selectedTags, queryUserId: sessionState?.currentUserId)
             : nil
     }
     private var selectedTags: [String]? {
@@ -46,7 +46,7 @@ extension RankStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "sessionStateState": ["_id": _id],
+                "sessionState": UserSessionStateObject.createValues(),
                 "hotMediaState": CursorMediaStateObject.createValues(id: hotMediaId),
                 "selectedTagHistory": ["_id": PrimaryKey.viewTagHistory],
                 "routeState": RouteStateObject.createValues(),

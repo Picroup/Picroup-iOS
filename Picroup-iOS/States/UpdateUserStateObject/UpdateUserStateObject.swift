@@ -17,7 +17,7 @@ final class UpdateUserStateObject: PrimaryObject {
     
     typealias SetImageKeyQuery = (userId: String, imageKey: String)
     
-    @objc dynamic var sessionStateState: UserSessionStateObject?
+    @objc dynamic var sessionState: UserSessionStateObject?
     
     @objc dynamic var imageKey: String?
     @objc dynamic var setAvatarIdError: String?
@@ -32,14 +32,14 @@ final class UpdateUserStateObject: PrimaryObject {
 
 extension UpdateUserStateObject {
     var setImageKeyQuery: SetImageKeyQuery? {
-        guard let userId = sessionStateState?.currentUserId,
+        guard let userId = sessionState?.currentUserId,
             let imageKey = imageKey
             else { return nil }
         let next = (userId, imageKey)
         return triggerSetAvatarIdQuery ? next : nil
     }
     var setDisplayNameQuery: UserSetDisplayNameQuery? {
-        guard let userId = sessionStateState?.currentUserId else { return nil }
+        guard let userId = sessionState?.currentUserId else { return nil }
         let next = UserSetDisplayNameQuery(userId: userId, displayName: displayName)
         return triggerSetDisplayNameQuery ? next : nil
     }
@@ -55,13 +55,13 @@ extension UpdateUserStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "sessionStateState": ["_id": _id],
+                "sessionState": UserSessionStateObject.createValues(),
                 "routeState": RouteStateObject.createValues(),
                 ]
             let result = try realm.update(UpdateUserStateObject.self, value: value)
             try realm.write {
                 result.imageKey = nil
-                result.displayName = result.sessionStateState?.currentUser?.displayName ?? ""
+                result.displayName = result.sessionState?.currentUser?.displayName ?? ""
             }
             return result
         }

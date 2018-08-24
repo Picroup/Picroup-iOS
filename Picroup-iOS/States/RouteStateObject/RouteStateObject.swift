@@ -13,7 +13,7 @@ import RxRealm
 
 final class RouteStateObject: PrimaryObject {
     
-    @objc dynamic var sessionStateState: UserSessionStateObject?
+    @objc dynamic var sessionState: UserSessionStateObject?
     @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
     @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
     @objc dynamic var tagMediaRoute: TagMediaRouteObject?
@@ -45,7 +45,7 @@ extension RouteStateObject {
         let _id = PrimaryKey.default
         return [
             "_id": _id,
-            "sessionStateState": ["_id": _id],
+            "sessionState": UserSessionStateObject.createValues(),
             "imageDetialRoute": ["_id": _id],
             "imageCommetsRoute": ["_id": _id],
             "tagMediaRoute": ["_id": _id],

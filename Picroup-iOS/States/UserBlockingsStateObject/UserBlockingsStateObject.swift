@@ -14,7 +14,7 @@ import RxRealm
 
 final class UserBlockingsStateObject: PrimaryObject {
     
-    @objc dynamic var sessionStateState: UserSessionStateObject?
+    @objc dynamic var sessionState: UserSessionStateObject?
     
     let userBlockings = List<UserObject>()
     @objc dynamic var userBlockingsError: String?
@@ -35,7 +35,7 @@ final class UserBlockingsStateObject: PrimaryObject {
 
 extension UserBlockingsStateObject {
     var userBlockingsQuery: UserBlockingUsersQuery? {
-        guard let userId = sessionStateState?.currentUserId else { return nil }
+        guard let userId = sessionState?.currentUserId else { return nil }
         return triggerUserBlockingsQuery
             ? UserBlockingUsersQuery(userId: userId)
             : nil
@@ -48,7 +48,7 @@ extension UserBlockingsStateObject {
         return !triggerBlockUserQuery
     }
     var blockUserQuery: BlockUserMutation? {
-        guard let userId = sessionStateState?.currentUserId,
+        guard let userId = sessionState?.currentUserId,
             let blockingUserId = blockingUserId else { return nil }
         return triggerBlockUserQuery
             ? BlockUserMutation(userId: userId, blockingUserId: blockingUserId)
@@ -59,7 +59,7 @@ extension UserBlockingsStateObject {
         return !triggerUnblockUserQuery
     }
     var unblockUserQuery: UnblockUserMutation? {
-        guard let userId = sessionStateState?.currentUserId,
+        guard let userId = sessionState?.currentUserId,
             let unblockingUserId = unblockingUserId else { return nil }
         return triggerUnblockUserQuery
             ? UnblockUserMutation(userId: userId, blockingUserId: unblockingUserId)
@@ -74,7 +74,7 @@ extension UserBlockingsStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "sessionStateState": ["_id": _id],
+                "sessionState": UserSessionStateObject.createValues(),
                 "userBlockings": [],
                 "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),

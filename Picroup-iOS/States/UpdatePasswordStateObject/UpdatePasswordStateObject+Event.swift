@@ -41,7 +41,8 @@ extension UpdatePasswordStateObject: IsFeedbackStateObject {
             setPasswordError = nil
             triggerSetPasswordQuery = true
         case .onSetPasswordSuccess(let data):
-            sessionStateState?.currentUser = UserObject.create(from: data)(realm)
+            sessionState?.reduce(event: .onCreateUser(data), realm: realm)
+
             setPasswordError = nil
             triggerSetPasswordQuery = false
             

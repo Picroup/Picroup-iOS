@@ -20,3 +20,30 @@ extension UserSessionStateObject {
         return currentUser?._id
     }
 }
+
+extension UserSessionStateObject {
+    
+    static func createValues() -> Any {
+        return ["_id": PrimaryKey.default]
+    }
+}
+
+extension UserSessionStateObject {
+    
+    enum Event {
+        case onCreateUser(UserDetailFragment)
+        case onRemoveUser
+    }
+}
+
+extension UserSessionStateObject: IsFeedbackStateObject {
+    func reduce(event: Event, realm: Realm) {
+        switch event {
+        case .onCreateUser(let data):
+            currentUser = UserObject.create(from: data)(realm)
+        case .onRemoveUser:
+            currentUser = nil
+        }
+    }
+}
+

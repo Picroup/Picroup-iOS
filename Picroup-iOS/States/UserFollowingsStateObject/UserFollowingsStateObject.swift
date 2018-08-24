@@ -14,7 +14,7 @@ import RxRealm
 
 final class UserFollowingsStateObject: PrimaryObject {
     
-    @objc dynamic var sessionStateState: UserSessionStateObject?
+    @objc dynamic var sessionState: UserSessionStateObject?
     
     @objc dynamic var user: UserObject?
     
@@ -38,9 +38,9 @@ final class UserFollowingsStateObject: PrimaryObject {
 extension UserFollowingsStateObject {
     var userId: String { return _id }
     var userFollowingsQuery: UserFollowingsQuery? {
-        let (byUserId, withFollowed) = sessionStateState?.currentUserId == nil
+        let (byUserId, withFollowed) = sessionState?.currentUserId == nil
             ? ("", false)
-            : (sessionStateState!.currentUser!._id, true)
+            : (sessionState!.currentUser!._id, true)
         let next = UserFollowingsQuery(userId: userId, followedByUserId: byUserId, cursor: userFollowings?.cursor.value, withFollowed: withFollowed)
         return triggerUserFollowingsQuery ? next : nil
     }
@@ -60,7 +60,7 @@ extension UserFollowingsStateObject {
     }
     var followUserQuery: FollowUserMutation? {
         guard
-            let userId = sessionStateState?.currentUserId,
+            let userId = sessionState?.currentUserId,
             let toUserId = followToUserId else {
                 return nil
         }
@@ -72,7 +72,7 @@ extension UserFollowingsStateObject {
     }
     var unfollowUserQuery: UnfollowUserMutation? {
         guard
-            let userId = sessionStateState?.currentUserId,
+            let userId = sessionState?.currentUserId,
             let toUserId = unfollowToUserId else {
                 return nil
         }
@@ -87,7 +87,7 @@ extension UserFollowingsStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": userId,
-                "sessionStateState": ["_id": _id],
+                "sessionState": UserSessionStateObject.createValues(),
                 "user": ["_id": userId],
                 "userFollowings": ["_id": PrimaryKey.userFollowingsId(userId)],
                 "needUpdate": ["_id": _id],

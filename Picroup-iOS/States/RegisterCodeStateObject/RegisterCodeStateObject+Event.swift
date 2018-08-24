@@ -40,7 +40,8 @@ extension RegisterCodeStateObject: IsFeedbackStateObject {
             registerError = nil
             triggerRegisterQuery = true
         case .onRegisterSuccess(let data):
-            sessionStateState?.currentUser = UserObject.create(from: data)(realm)
+            sessionState?.reduce(event: .onCreateUser(data), realm: realm)
+
             registerError = nil
             triggerRegisterQuery = false
             snackbar?.reduce(event: .onUpdateMessage("注册成功"), realm: realm)

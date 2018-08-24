@@ -35,9 +35,7 @@ extension RouteStateObject {
         case onTriggerUserFeedback(String)
         case onTriggerCommentFeedback(String)
         case onTriggerAboutApp
-        
-//        case onLogout
-        
+                
         case onTriggerPop
     }
 }

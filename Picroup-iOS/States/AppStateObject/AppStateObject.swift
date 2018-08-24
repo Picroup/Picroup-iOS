@@ -15,7 +15,7 @@ import RxRealm
 
 final class AppStateObject: PrimaryObject {
     
-    @objc dynamic var sessionStateState: UserSessionStateObject?
+    @objc dynamic var sessionState: UserSessionStateObject?
     
     @objc dynamic var meError: String?
     @objc dynamic var triggerMeQuery: Bool = false
@@ -27,12 +27,12 @@ final class AppStateObject: PrimaryObject {
 
 extension AppStateObject {
     var meQuery: UserQuery? {
-        guard let userId = sessionStateState?.currentUserId else { return nil }
+        guard let userId = sessionState?.currentUserId else { return nil }
         let next = UserQuery(userId: userId, followedByUserId: "", withFollowed: false)
         return triggerMeQuery ? next : nil
     }
     var me: UserObject? {
-        return sessionStateState?.currentUser
+        return sessionState?.currentUser
     }
     
     var recommendMediumQuery: RecommendMediumMutation? {
@@ -54,7 +54,7 @@ extension AppStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "sessionStateState": ["_id": _id],
+                "sessionState": UserSessionStateObject.createValues(),
                 ]
             return try realm.update(AppStateObject.self, value: value)
         }

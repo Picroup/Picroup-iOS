@@ -13,7 +13,7 @@ import RxCocoa
 
 final class UpdatePasswordStateObject: PrimaryObject {
     
-    @objc dynamic var sessionStateState: UserSessionStateObject?
+    @objc dynamic var sessionState: UserSessionStateObject?
     
     @objc dynamic var oldPassword: String = ""
     @objc dynamic var password: String = ""
@@ -30,7 +30,7 @@ final class UpdatePasswordStateObject: PrimaryObject {
 
 extension UpdatePasswordStateObject {
     var setPasswordQuery: UserSetPasswordQuery? {
-        guard let userId = sessionStateState?.currentUserId else { return nil }
+        guard let userId = sessionState?.currentUserId else { return nil }
         let next = UserSetPasswordQuery(userId: userId, password: password, oldPassword: oldPassword)
         return triggerSetPasswordQuery ? next : nil
     }
@@ -46,7 +46,7 @@ extension UpdatePasswordStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "sessionStateState": ["_id": _id],
+                "sessionState": UserSessionStateObject.createValues(),
                 "oldPassword": "",
                 "password": "",
                 "isOldPasswordValid": false,

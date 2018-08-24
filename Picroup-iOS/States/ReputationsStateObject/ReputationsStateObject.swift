@@ -14,7 +14,7 @@ import RxRealm
 
 final class ReputationsStateObject: PrimaryObject {
     
-    @objc dynamic var sessionStateState: UserSessionStateObject?
+    @objc dynamic var sessionState: UserSessionStateObject?
     
     @objc dynamic var reputations: CursorReputationsObject?
     @objc dynamic var reputationsError: String?
@@ -30,7 +30,7 @@ final class ReputationsStateObject: PrimaryObject {
 
 extension ReputationsStateObject {
     public var reputationsQuery: MyReputationsQuery? {
-        guard let userId = sessionStateState?.currentUserId else { return nil }
+        guard let userId = sessionState?.currentUserId else { return nil }
         let next = MyReputationsQuery(userId: userId, cursor: reputations?.cursor.value)
         return triggerReputationsQuery ? next : nil
     }
@@ -45,7 +45,7 @@ extension ReputationsStateObject {
         return reputations?.cursor.value != nil
     }
     public var markQuery: MarkReputationLinksAsViewedQuery? {
-        guard let userId = sessionStateState?.currentUserId else { return nil }
+        guard let userId = sessionState?.currentUserId else { return nil }
         let next = MarkReputationLinksAsViewedQuery(userId: userId)
         return triggerMarkQuery && !isReputationsEmpty ? next : nil
     }
@@ -59,7 +59,7 @@ extension ReputationsStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "sessionStateState": ["_id": _id],
+                "sessionState": UserSessionStateObject.createValues(),
                 "reputations": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
                 ]

@@ -27,8 +27,9 @@ extension AppStateObject: IsFeedbackStateObject {
             meError = nil
             triggerMeQuery = true
         case .onGetMeSuccess(let data):
-            guard sessionStateState?.isLogin == true else { return }
-            sessionStateState?.currentUser = UserObject.create(from: data)(realm)
+            guard sessionState?.isLogin == true else { return }
+            sessionState?.reduce(event: .onCreateUser(data), realm: realm)
+
             meError = nil
             triggerMeQuery = false
         case .onGetMeError(let error):

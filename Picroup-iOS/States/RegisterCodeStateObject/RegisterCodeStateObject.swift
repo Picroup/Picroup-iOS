@@ -12,7 +12,7 @@ import RxCocoa
 
 final class RegisterCodeStateObject: PrimaryObject {
     
-    @objc dynamic var sessionStateState: UserSessionStateObject?
+    @objc dynamic var sessionState: UserSessionStateObject?
     
     @objc dynamic var registerParam: RegisterParamObject?
     @objc dynamic var isCodeAvaliable: Bool = false
@@ -52,7 +52,7 @@ extension RegisterCodeStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "sessionStateState": ["_id": _id],
+                "sessionState": UserSessionStateObject.createValues(),
                 "registerParam": ["_id": _id, "code": 0],
                 "isCodeAvaliable": false,
                 "phoneNumber": nil,

@@ -17,7 +17,7 @@ import Material
 
 private func mapMoreButtonTapToEvent(sender: UIView) -> (MeStateObject) -> Signal<MeStateObject.Event> {
     return { state in
-        guard state.sessionStateState?.isLogin == true else { return .empty() }
+        guard state.sessionState?.isLogin == true else { return .empty() }
         return DefaultWireframe.shared
             .promptFor(sender: sender, cancelAction: "取消", actions: ["更新个人信息", "应用反馈", "黑名单", "关于应用", "退出登录"])
             .asSignalOnErrorRecoverEmpty()

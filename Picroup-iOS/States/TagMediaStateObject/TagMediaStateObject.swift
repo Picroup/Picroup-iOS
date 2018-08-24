@@ -14,7 +14,7 @@ import RxRealm
 
 final class TagMediaStateObject: VersionedPrimaryObject {
     
-    @objc dynamic var sessionStateState: UserSessionStateObject?
+    @objc dynamic var sessionState: UserSessionStateObject?
     
     @objc dynamic var hotMediaState: CursorMediaStateObject?
 
@@ -27,7 +27,7 @@ extension TagMediaStateObject {
     }
     var hotMediaQuery: HotMediaByTagsQuery? {
         return hotMediaState?.trigger == true
-            ? HotMediaByTagsQuery(tags: [tag], queryUserId: sessionStateState?.currentUserId)
+            ? HotMediaByTagsQuery(tags: [tag], queryUserId: sessionState?.currentUserId)
             : nil
     }
 }
@@ -40,7 +40,7 @@ extension TagMediaStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": tag,
-                "sessionStateState": ["_id": _id],
+                "sessionState": UserSessionStateObject.createValues(),
                 "hotMediaState": CursorMediaStateObject.createValues(id: hotMediaId),
                 "routeState": RouteStateObject.createValues(),
                 ]

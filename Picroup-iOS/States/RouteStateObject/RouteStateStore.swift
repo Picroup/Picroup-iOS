@@ -25,9 +25,9 @@ final class RouteStateStore {
         self.states = states
     }
     
-    func sessionStateState() -> Driver<UserSessionStateObject> {
-        guard let sessionStateState = _state.sessionStateState else { return .empty() }
-        return Observable.from(object: sessionStateState).asDriver(onErrorDriveWith: .empty())
+    func sessionState() -> Driver<UserSessionStateObject> {
+        guard let sessionState = _state.sessionState else { return .empty() }
+        return Observable.from(object: sessionState).asDriver(onErrorDriveWith: .empty())
     }
     
     func imageDetialRoute() -> Driver<ImageDetialRouteObject> {
@@ -63,7 +63,7 @@ final class RouteStateStore {
     func userRoute() -> Driver<(UserRouteObject, Bool)> {
         guard let userRoute = _state.userRoute else { return .empty() }
         return Observable.from(object: userRoute)
-            .map { ($0, self._state.sessionStateState?.currentUserId == $0.userId) }
+            .map { ($0, self._state.sessionState?.currentUserId == $0.userId) }
             .asDriver(onErrorDriveWith: .empty())
     }
     

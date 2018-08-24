@@ -174,7 +174,7 @@ final class Router {
                 me.currentNavigationController?.snackbarController?.animate(snackbar: .hidden, delay: 3)
             })
         
-        _ = store.sessionStateState().debug("sessionStateState").map { $0.isLogin }.distinctUntilChanged().drive(Binder(self) { (me, isLogin) in
+        _ = store.sessionState().debug("sessionState").map { $0.isLogin }.distinctUntilChanged().drive(Binder(self) { (me, isLogin) in
             switch (isLogin, me.mainTabBarController) {
             case (false, nil):
                 let mtvc: MainTabBarController = {

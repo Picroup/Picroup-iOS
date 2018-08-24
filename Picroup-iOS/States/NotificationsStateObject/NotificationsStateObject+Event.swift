@@ -65,7 +65,7 @@ extension NotificationsStateObject: IsFeedbackStateObject {
             triggerNotificationsQuery = false
             
         case .onMarkSuccess(let id):
-            sessionStateState?.currentUser?.notificationsCount.value = 0
+            sessionState?.currentUser?.notificationsCount.value = 0
             marked = id
             markError = nil
             triggerMarkQuery = false
