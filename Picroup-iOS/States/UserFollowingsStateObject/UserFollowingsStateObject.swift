@@ -14,7 +14,7 @@ import RxRealm
 
 final class UserFollowingsStateObject: PrimaryObject {
     
-    @objc dynamic var session: UserSessionObject?
+    @objc dynamic var sessionStateState: UserSessionStateObject?
     
     @objc dynamic var user: UserObject?
     
@@ -38,9 +38,9 @@ final class UserFollowingsStateObject: PrimaryObject {
 extension UserFollowingsStateObject {
     var userId: String { return _id }
     var userFollowingsQuery: UserFollowingsQuery? {
-        let (byUserId, withFollowed) = session?.currentUserId == nil
+        let (byUserId, withFollowed) = sessionStateState?.currentUserId == nil
             ? ("", false)
-            : (session!.currentUser!._id, true)
+            : (sessionStateState!.currentUser!._id, true)
         let next = UserFollowingsQuery(userId: userId, followedByUserId: byUserId, cursor: userFollowings?.cursor.value, withFollowed: withFollowed)
         return triggerUserFollowingsQuery ? next : nil
     }
@@ -60,7 +60,7 @@ extension UserFollowingsStateObject {
     }
     var followUserQuery: FollowUserMutation? {
         guard
-            let userId = session?.currentUserId,
+            let userId = sessionStateState?.currentUserId,
             let toUserId = followToUserId else {
                 return nil
         }
@@ -72,7 +72,7 @@ extension UserFollowingsStateObject {
     }
     var unfollowUserQuery: UnfollowUserMutation? {
         guard
-            let userId = session?.currentUserId,
+            let userId = sessionStateState?.currentUserId,
             let toUserId = unfollowToUserId else {
                 return nil
         }
@@ -87,7 +87,7 @@ extension UserFollowingsStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": userId,
-                "session": ["_id": _id],
+                "sessionStateState": ["_id": _id],
                 "user": ["_id": userId],
                 "userFollowings": ["_id": PrimaryKey.userFollowingsId(userId)],
                 "needUpdate": ["_id": _id],

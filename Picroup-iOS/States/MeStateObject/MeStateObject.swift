@@ -14,7 +14,7 @@ import RxRealm
 
 final class MeStateObject: VersionedPrimaryObject {
     
-    @objc dynamic var session: UserSessionObject?
+    @objc dynamic var sessionStateState: UserSessionStateObject?
     
     @objc dynamic var selectedTabIndex: Int = 0
     
@@ -37,13 +37,13 @@ extension MeStateObject {
 
 extension MeStateObject {
     var myMediaQuery: MyMediaQuery? {
-        guard let userId = session?.currentUserId else { return nil }
+        guard let userId = sessionStateState?.currentUserId else { return nil }
         return myMediaState?.trigger == true
             ? MyMediaQuery(userId: userId, cursor: myMediaState?.cursorMedia?.cursor.value, queryUserId: userId)
             : nil
     }
     var myStaredMediaQuery: MyStaredMediaQuery? {
-        guard let userId = session?.currentUserId else { return nil }
+        guard let userId = sessionStateState?.currentUserId else { return nil }
         return myStaredMediaState?.trigger == true
             ? MyStaredMediaQuery(userId: userId, cursor: myStaredMediaState?.cursorMedia?.cursor.value)
             : nil
@@ -57,7 +57,7 @@ extension MeStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "session": ["_id": _id],
+                "sessionStateState": ["_id": _id],
                 "myMediaState": CursorMediaStateObject.createValues(id: PrimaryKey.myMediaId),
                 "myStaredMediaState":  CursorMediaStateObject.createValues(id: PrimaryKey.myStaredMediaId),
                 "needUpdate": ["_id": _id],

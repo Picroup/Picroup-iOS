@@ -12,7 +12,7 @@ import RxCocoa
 
 final class HomeStateObject: VersionedPrimaryObject {
         
-    @objc dynamic var session: UserSessionObject?
+    @objc dynamic var sessionStateState: UserSessionStateObject?
     
     @objc dynamic var myInterestedMediaState: CursorMediaStateObject?
 
@@ -23,7 +23,7 @@ final class HomeStateObject: VersionedPrimaryObject {
 
 extension HomeStateObject {
     var myInterestedMediaQuery: UserInterestedMediaQuery? {
-        guard let userId = session?.currentUserId else { return nil }
+        guard let userId = sessionStateState?.currentUserId else { return nil }
         return myInterestedMediaState?.trigger == true
             ? UserInterestedMediaQuery(userId: userId, cursor: myInterestedMediaState?.cursorMedia?.cursor.value)
             : nil
@@ -37,7 +37,7 @@ extension HomeStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "session": ["_id": _id],
+                "sessionStateState": ["_id": _id],
                 "myInterestedMediaState": CursorMediaStateObject.createValues(id: PrimaryKey.myInterestedMediaId),
                 "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),

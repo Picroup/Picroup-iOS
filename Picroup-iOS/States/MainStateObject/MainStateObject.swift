@@ -14,7 +14,7 @@ import RxRealm
 
 final class MainStateObject: PrimaryObject {
     
-    @objc dynamic var session: UserSessionObject?
+    @objc dynamic var sessionStateState: UserSessionStateObject?
     
 }
 
@@ -25,7 +25,7 @@ extension MainStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "session": ["_id": _id],
+                "sessionStateState": ["_id": _id],
                 ]
             return try realm.update(MainStateObject.self, value: value)
         }

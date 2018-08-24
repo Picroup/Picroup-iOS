@@ -33,7 +33,7 @@ final class AppStateStore {
     }
     
     func me() -> Driver<UserObject> {
-        guard let me = _state.session?.currentUser else { return .empty() }
+        guard let me = _state.sessionStateState?.currentUser else { return .empty() }
         return Observable.from(object: me).asDriver(onErrorDriveWith: .empty())
     }
 }

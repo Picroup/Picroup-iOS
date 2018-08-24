@@ -14,7 +14,7 @@ import RxRealm
 
 final class NotificationsStateObject: PrimaryObject {
     
-    @objc dynamic var session: UserSessionObject?
+    @objc dynamic var sessionStateState: UserSessionStateObject?
     
     @objc dynamic var notifications: CursorNotificationsObject?
     @objc dynamic var notificationsError: String?
@@ -30,7 +30,7 @@ final class NotificationsStateObject: PrimaryObject {
 
 extension NotificationsStateObject {
     public var notificationsQuery: MyNotificationsQuery? {
-        guard let userId = session?.currentUserId else { return nil }
+        guard let userId = sessionStateState?.currentUserId else { return nil }
         let next = MyNotificationsQuery(userId: userId, cursor: notifications?.cursor.value)
         return triggerNotificationsQuery ? next : nil
     }
@@ -45,7 +45,7 @@ extension NotificationsStateObject {
         return notifications?.cursor.value != nil
     }
     public var markQuery: MarkNotificationsAsViewedQuery? {
-        guard let userId = session?.currentUserId else { return nil }
+        guard let userId = sessionStateState?.currentUserId else { return nil }
         let next = MarkNotificationsAsViewedQuery(userId: userId)
         return triggerMarkQuery && !isNotificationsEmpty ? next : nil
     }
@@ -59,7 +59,7 @@ extension NotificationsStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "session": ["_id": _id],
+                "sessionStateState": ["_id": _id],
                 "notifications": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
                 ]

@@ -1,5 +1,5 @@
 //
-//  UserSessionObject.swift
+//  UserSessionStateObject.swift
 //  Picroup-iOS
 //
 //  Created by ovfun on 2018/8/23.
@@ -8,11 +8,11 @@
 
 import RealmSwift
 
-final class UserSessionObject: PrimaryObject {
+final class UserSessionStateObject: PrimaryObject {
     @objc dynamic var currentUser: UserObject?
 }
 
-extension UserSessionObject {
+extension UserSessionStateObject {
     var isLogin: Bool {
         return currentUser != nil
     }

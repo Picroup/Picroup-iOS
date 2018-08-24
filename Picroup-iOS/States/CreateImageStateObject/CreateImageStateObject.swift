@@ -17,7 +17,7 @@ import RxAlamofire
 final class CreateImageStateObject: PrimaryObject {
     typealias Query = (userId: String, mediaItems: [MediumItem], tags: [String]?)
 
-    @objc dynamic var session: UserSessionObject?
+    @objc dynamic var sessionStateState: UserSessionStateObject?
     
     let mediaItemObjects = List<MediaItemObject>()
     let tagStates = List<TagStateObject>()
@@ -36,7 +36,7 @@ final class CreateImageStateObject: PrimaryObject {
 
 extension CreateImageStateObject {
     var saveQuery: Query? {
-        guard let userId = session?.currentUserId else { return nil }
+        guard let userId = sessionStateState?.currentUserId else { return nil }
         return triggerSaveMediumQuery ? (userId: userId, mediaItems: mediaItemObjects.map { $0.mediaItem }, tags: selectedTags) : nil
     }
     private var selectedTags: [String]? {
@@ -66,7 +66,7 @@ extension CreateImageStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "session": ["_id": _id],
+                "sessionStateState": ["_id": _id],
                 "mediaItemObjects": mediaItems.map { ["_id": $0.id] },
                 "tags": [],
                 "saveMediumStates": mediaItems.map { ["_id": $0.id, "progress": [:]] },

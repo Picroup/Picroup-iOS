@@ -27,16 +27,16 @@ extension LoginStateObject: IsFeedbackStateObject {
         switch event {
         case .onTriggerLogin:
             guard shouldLogin else { return }
-            session?.currentUser = nil
+            sessionStateState?.currentUser = nil
             loginError = nil
             triggerLoginQuery = true
         case .onLoginSuccess(let data):
-            session?.currentUser = UserObject.create(from: data)(realm)
+            sessionStateState?.currentUser = UserObject.create(from: data)(realm)
             loginError = nil
             triggerLoginQuery = false
             snackbar?.reduce(event: .onUpdateMessage("登录成功"), realm: realm)
         case .onLoginError(let error):
-            session?.currentUser = nil
+            sessionStateState?.currentUser = nil
             loginError = error.localizedDescription
             triggerLoginQuery = false
             snackbar?.reduce(event: .onUpdateMessage(loginError), realm: realm)

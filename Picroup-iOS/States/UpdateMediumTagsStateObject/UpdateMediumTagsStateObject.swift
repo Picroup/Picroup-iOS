@@ -16,7 +16,7 @@ import RxAlamofire
 
 final class UpdateMediumTagsStateObject: PrimaryObject {
     
-    @objc dynamic var session: UserSessionObject?
+    @objc dynamic var sessionStateState: UserSessionStateObject?
     @objc dynamic var medium: MediumObject?
 
     let tagStates = List<TagStateObject>()
@@ -37,11 +37,11 @@ final class UpdateMediumTagsStateObject: PrimaryObject {
 extension UpdateMediumTagsStateObject {
     var mediumId: String { return _id }
     var addTagQuery: MediumAddTagQuery? {
-        guard let tag = addTag, let byUserId = session?.currentUserId else { return nil }
+        guard let tag = addTag, let byUserId = sessionStateState?.currentUserId else { return nil }
         return triggerAddTagQuery ? MediumAddTagQuery(mediumId: mediumId, tag: tag, byUserId: byUserId) : nil
     }
     var removeTagQuery: MediumRemoveTagQuery? {
-        guard let tag = removeTag, let byUserId = session?.currentUserId else { return nil }
+        guard let tag = removeTag, let byUserId = sessionStateState?.currentUserId else { return nil }
         return triggerRemoveTagQuery ? MediumRemoveTagQuery(mediumId: mediumId, tag: tag, byUserId: byUserId) : nil
     }
 }
@@ -53,7 +53,7 @@ extension UpdateMediumTagsStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": mediumId,
-                "session": ["_id": _id],
+                "sessionStateState": ["_id": _id],
                 "medium": ["_id": mediumId],
                 "selectedTagHistory": ["_id": _id],
                 "snackbar": ["_id": _id],

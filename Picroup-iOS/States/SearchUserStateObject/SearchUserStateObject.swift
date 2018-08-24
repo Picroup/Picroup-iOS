@@ -14,7 +14,7 @@ import RxRealm
 
 final class SearchUserStateObject: PrimaryObject {
     
-    @objc dynamic var session: UserSessionObject?
+    @objc dynamic var sessionStateState: UserSessionStateObject?
     
     @objc dynamic var searchText: String = ""
     @objc dynamic var user: UserObject?
@@ -36,7 +36,7 @@ final class SearchUserStateObject: PrimaryObject {
 
 extension SearchUserStateObject {
     var searchUserQuery: SearchUserQuery? {
-        guard let byUserId = session?.currentUserId, !searchText.isEmpty else { return nil }
+        guard let byUserId = sessionStateState?.currentUserId, !searchText.isEmpty else { return nil }
         let next = SearchUserQuery(username: searchText, followedByUserId: byUserId)
         return triggerSearchUserQuery ? next : nil
     }
@@ -52,7 +52,7 @@ extension SearchUserStateObject {
     }
     var followUserQuery: FollowUserMutation? {
         guard
-            let userId = session?.currentUserId,
+            let userId = sessionStateState?.currentUserId,
             let toUserId = followToUserId else {
                 return nil
         }
@@ -64,7 +64,7 @@ extension SearchUserStateObject {
     }
     var unfollowUserQuery: UnfollowUserMutation? {
         guard
-            let userId = session?.currentUserId,
+            let userId = sessionStateState?.currentUserId,
             let toUserId = unfollowToUserId else {
                 return nil
         }
@@ -86,7 +86,7 @@ extension SearchUserStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "session": ["_id": _id],
+                "sessionStateState": ["_id": _id],
                 "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
                 ]

@@ -32,7 +32,7 @@ class ReputationsViewController: ShowNavigationBarViewController {
         let uiFeedback: Feedback = bind(self) { (me, state)  in
             let presenter = me.presenter!
             let subscriptions = [
-                state.map { $0.session?.currentUser?.reputation.value?.description ?? "0" }.drive(me.navigationItem.detailLabel.rx.text),
+                state.map { $0.sessionStateState?.currentUser?.reputation.value?.description ?? "0" }.drive(me.navigationItem.detailLabel.rx.text),
                 store.reputations().map { [Section(model: "", items: $0)] }.drive(presenter.items),
                 state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
                 state.map { $0.isReputationsEmpty }.drive(presenter.isReputationsEmpty),

@@ -15,7 +15,7 @@ import RxFeedback
 
 private func mapMoreButtonTapToEvent(sender: UIView) -> (UserStateObject) -> Signal<UserStateObject.Event> {
     return { state in
-        guard state.session?.isLogin == true else {
+        guard state.sessionStateState?.isLogin == true else {
             return .just(.onTriggerLogin)
         }
         return DefaultWireframe.shared

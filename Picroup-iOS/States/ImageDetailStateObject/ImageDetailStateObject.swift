@@ -14,7 +14,7 @@ import RxRealm
 
 final class ImageDetailStateObject: VersionedPrimaryObject {
     
-    @objc dynamic var session: UserSessionObject?
+    @objc dynamic var sessionStateState: UserSessionStateObject?
     @objc dynamic var isMediumDeleted: Bool = false
 
     @objc dynamic var medium: MediumObject?
@@ -55,10 +55,10 @@ final class ImageDetailStateObject: VersionedPrimaryObject {
 extension ImageDetailStateObject {
     var mediumId: String { return _id }
     var mediumQuery: MediumQuery? {
-        let (userId, withStared) = session?.currentUserId == nil
+        let (userId, withStared) = sessionStateState?.currentUserId == nil
             ? ("", false)
-            : (session!.currentUser!._id, true)
-        let next = MediumQuery(userId: userId, mediumId: mediumId, cursor: recommendMedia?.cursor.value, withStared: withStared, queryUserId: session?.currentUserId)
+            : (sessionStateState!.currentUser!._id, true)
+        let next = MediumQuery(userId: userId, mediumId: mediumId, cursor: recommendMedia?.cursor.value, withStared: withStared, queryUserId: sessionStateState?.currentUserId)
         return triggerMediumQuery ? next : nil
     }
     var shouldQueryMoreRecommendMedia: Bool {
@@ -69,7 +69,7 @@ extension ImageDetailStateObject {
     }
     
     var starMediumQuery: StarMediumMutation? {
-        return starMediumState?.query(userId: session?.currentUserId)
+        return starMediumState?.query(userId: sessionStateState?.currentUserId)
     }
     
     var deleteMediumQuery: DeleteMediumMutation? {
@@ -83,7 +83,7 @@ extension ImageDetailStateObject {
         return !triggerBlockMediumQuery
     }
     var blockUserQuery: BlockMediumMutation? {
-        guard let userId = session?.currentUserId else { return nil }
+        guard let userId = sessionStateState?.currentUserId else { return nil }
         return triggerBlockMediumQuery
             ? BlockMediumMutation(userId: userId, mediumId: mediumId)
             : nil
@@ -103,7 +103,7 @@ extension ImageDetailStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": mediumId,
-                "session": ["_id": _id],
+                "sessionStateState": ["_id": _id],
                 "medium": ["_id": mediumId],
                 "recommendMedia": ["_id": PrimaryKey.recommendMediaId(mediumId)],
                 "starMediumState": StarMediumStateObject.createValues(mediumId: mediumId),

@@ -62,9 +62,9 @@ extension MeStateObject: IsFeedbackStateObject {
         case .onTriggerShowReputations:
             routeState?.reduce(event: .onTriggerShowReputations, realm: realm)
         case .onTriggerShowUserFollowings:
-            routeState?.reduce(event: .onTriggerShowUserFollowings(session?.currentUserId), realm: realm)
+            routeState?.reduce(event: .onTriggerShowUserFollowings(sessionStateState?.currentUserId), realm: realm)
         case .onTriggerShowUserFollowers:
-            routeState?.reduce(event: .onTriggerShowUserFollowers(session?.currentUserId), realm: realm)
+            routeState?.reduce(event: .onTriggerShowUserFollowers(sessionStateState?.currentUserId), realm: realm)
         case .onTriggerShowUserBlockings:
             routeState?.reduce(event: .onTriggerShowUserBlockings, realm: realm)
         case .onTriggerUpdateUser:
@@ -76,7 +76,7 @@ extension MeStateObject: IsFeedbackStateObject {
         case .onTriggerPop:
             routeState?.reduce(event: .onTriggerPop, realm: realm)
         case .onLogout:
-            session?.currentUser = nil
+            sessionStateState?.currentUser = nil
             realm.delete(realm.objects(UserObject.self))
             realm.delete(realm.objects(MediumObject.self))
             realm.delete(realm.objects(NotificationObject.self))

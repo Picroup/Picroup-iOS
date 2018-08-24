@@ -36,7 +36,7 @@ extension UpdateUserStateObject: IsFeedbackStateObject {
             setAvatarIdError = nil
             triggerSetAvatarIdQuery = true
         case .onSetAvatarIdSuccess(let data):
-            session?.currentUser = UserObject.create(from: data)(realm)
+            sessionStateState?.currentUser = UserObject.create(from: data)(realm)
             setAvatarIdError = nil
             triggerSetAvatarIdQuery = false
         case .onSetAvatarIdError(let error):
@@ -49,11 +49,11 @@ extension UpdateUserStateObject: IsFeedbackStateObject {
             setDisplayNameError = nil
             triggerSetDisplayNameQuery = true
         case .onSetDisplayNameSuccess(let data):
-            session?.currentUser = UserObject.create(from: data)(realm)
+            sessionStateState?.currentUser = UserObject.create(from: data)(realm)
             setDisplayNameError = nil
             triggerSetDisplayNameQuery = false
         case .onSetDisplayNameError(let error):
-            self.displayName = session?.currentUser?.displayName ?? ""
+            self.displayName = sessionStateState?.currentUser?.displayName ?? ""
             setDisplayNameError = error.localizedDescription
             triggerSetDisplayNameQuery = false
             

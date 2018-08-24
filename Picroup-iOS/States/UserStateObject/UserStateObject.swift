@@ -14,7 +14,7 @@ import RxRealm
 
 final class UserStateObject: VersionedPrimaryObject {
     
-    @objc dynamic var session: UserSessionObject?
+    @objc dynamic var sessionStateState: UserSessionStateObject?
     
     @objc dynamic var user: UserObject?
     @objc dynamic var userError: String?
@@ -44,15 +44,15 @@ final class UserStateObject: VersionedPrimaryObject {
 extension UserStateObject {
     var userId: String { return _id }
     var userQuery: UserQuery? {
-        let (byUserId, withFollowed) = session?.currentUserId == nil
+        let (byUserId, withFollowed) = sessionStateState?.currentUserId == nil
             ? ("", false)
-            : (session!.currentUser!._id, true)
+            : (sessionStateState!.currentUser!._id, true)
         let next = UserQuery(userId: userId, followedByUserId: byUserId, withFollowed: withFollowed)
         return triggerUserQuery ? next : nil
     }
     var userMediaQuery: MyMediaQuery? {
         return userMediaState?.trigger == true
-            ? MyMediaQuery(userId: userId, cursor: userMediaState?.cursorMedia?.cursor.value, queryUserId: session?.currentUserId)
+            ? MyMediaQuery(userId: userId, cursor: userMediaState?.cursorMedia?.cursor.value, queryUserId: sessionStateState?.currentUserId)
             : nil
     }
     var shouldFollowUser: Bool {
@@ -60,7 +60,7 @@ extension UserStateObject {
     }
     var followUserQuery: FollowUserMutation? {
         guard
-            let userId = session?.currentUserId,
+            let userId = sessionStateState?.currentUserId,
             let toUserId = user?._id else {
                 return nil
         }
@@ -71,7 +71,7 @@ extension UserStateObject {
     }
     var unfollowUserQuery: UnfollowUserMutation? {
         guard
-            let userId = session?.currentUserId,
+            let userId = sessionStateState?.currentUserId,
             let toUserId = user?._id else {
                 return nil
         }
@@ -82,7 +82,7 @@ extension UserStateObject {
     }
     var blockUserQuery: BlockUserMutation? {
         guard
-            let userId = session?.currentUserId,
+            let userId = sessionStateState?.currentUserId,
             let toUserId = user?._id else {
                 return nil
         }
@@ -99,7 +99,7 @@ extension UserStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": userId,
-                "session": ["_id": _id],
+                "sessionStateState": ["_id": _id],
                 "user": ["_id": userId],
                 "userMediaState": CursorMediaStateObject.createValues(id: PrimaryKey.userMediaId(userId)),
                 "needUpdate": ["_id": _id],

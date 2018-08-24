@@ -18,13 +18,13 @@ import AVKit
 private func mapMoreButtonTapToEvent(sender: UICollectionView) -> (ImageDetailStateObject) -> Signal<ImageDetailStateObject.Event> {
     return { state in
         
-        guard state.session?.isLogin == true else {
+        guard state.sessionStateState?.isLogin == true else {
             return .just(.onTriggerLogin)
         }
         guard let cell = sender.cellForItem(at: IndexPath(item: 0, section: 0)) as? HasMoreButton else { return .empty() }
-        let isMyMedium = state.medium?.userId == state.session?.currentUserId
+        let isMyMedium = state.medium?.userId == state.sessionStateState?.currentUserId
         let actions: [String]
-        switch (isMyMedium, state.session?.currentUser?.reputation.value) {
+        switch (isMyMedium, state.sessionStateState?.currentUser?.reputation.value) {
         case (true, _):
             actions = ["更新标签", "删除"]
         case (false, let reputation?) where reputation > 100:

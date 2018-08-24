@@ -171,7 +171,7 @@
 		45662B46212EAD7600964BC9 /* TagStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B45212EAD7600964BC9 /* TagStateObject.swift */; };
 		45662B48212EAD9500964BC9 /* MediaItemObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B47212EAD9500964BC9 /* MediaItemObject.swift */; };
 		45662B4A212EADB300964BC9 /* SaveMediumStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B49212EADB300964BC9 /* SaveMediumStateObject.swift */; };
-		45662B4C212EAE9900964BC9 /* UserSessionObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B4B212EAE9900964BC9 /* UserSessionObject.swift */; };
+		45662B4C212EAE9900964BC9 /* UserSessionStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B4B212EAE9900964BC9 /* UserSessionStateObject.swift */; };
 		45662B4E212EAEE700964BC9 /* RegisterParamObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B4D212EAEE700964BC9 /* RegisterParamObject.swift */; };
 		45662B50212EAF2D00964BC9 /* ResetPasswordParamObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B4F212EAF2D00964BC9 /* ResetPasswordParamObject.swift */; };
 		456D1457210564E4008EDD41 /* HasMoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D1456210564E4008EDD41 /* HasMoreButton.swift */; };
@@ -509,7 +509,7 @@
 		45662B45212EAD7600964BC9 /* TagStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagStateObject.swift; sourceTree = "<group>"; };
 		45662B47212EAD9500964BC9 /* MediaItemObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemObject.swift; sourceTree = "<group>"; };
 		45662B49212EADB300964BC9 /* SaveMediumStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveMediumStateObject.swift; sourceTree = "<group>"; };
-		45662B4B212EAE9900964BC9 /* UserSessionObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionObject.swift; sourceTree = "<group>"; };
+		45662B4B212EAE9900964BC9 /* UserSessionStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionStateObject.swift; sourceTree = "<group>"; };
 		45662B4D212EAEE700964BC9 /* RegisterParamObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterParamObject.swift; sourceTree = "<group>"; };
 		45662B4F212EAF2D00964BC9 /* ResetPasswordParamObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordParamObject.swift; sourceTree = "<group>"; };
 		456D1456210564E4008EDD41 /* HasMoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasMoreButton.swift; sourceTree = "<group>"; };
@@ -1761,6 +1761,7 @@
 				456D14652105B089008EDD41 /* CursorMediaStateObject.swift */,
 				45662B41212EA20400964BC9 /* SnackbarObject.swift */,
 				45CD0694212FA91200AE563E /* StarMediumStateObject.swift */,
+				45662B4B212EAE9900964BC9 /* UserSessionStateObject.swift */,
 			);
 			path = SubStates;
 			sourceTree = "<group>";
@@ -1865,7 +1866,6 @@
 				452EAD1E20F339B200FE5E5F /* TagObject.swift */,
 				45662B45212EAD7600964BC9 /* TagStateObject.swift */,
 				45C1994920A97402001924B9 /* UserObject.swift */,
-				45662B4B212EAE9900964BC9 /* UserSessionObject.swift */,
 				45662B3F212EA06900964BC9 /* VersionedPrimaryObject.swift */,
 			);
 			path = Model;
@@ -2276,7 +2276,7 @@
 				45662B35212E8C0F00964BC9 /* UpdateUserStateStore.swift in Sources */,
 				454714A7212125B2003A5D04 /* SpinnerButton.swift in Sources */,
 				45662B3E212EA00A00964BC9 /* Versioned.swift in Sources */,
-				45662B4C212EAE9900964BC9 /* UserSessionObject.swift in Sources */,
+				45662B4C212EAE9900964BC9 /* UserSessionStateObject.swift in Sources */,
 				45B0206A20B4036100BD5D8F /* FollowersPresenter.swift in Sources */,
 				45662B17212E8B5300964BC9 /* RankStateStore.swift in Sources */,
 				45662B4A212EADB300964BC9 /* SaveMediumStateObject.swift in Sources */,

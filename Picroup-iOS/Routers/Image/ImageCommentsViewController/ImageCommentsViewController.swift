@@ -17,13 +17,13 @@ import Apollo
 private func mapCommentMoreButtonTapToEvent(sender: UITableView) -> (CommentObject, ImageCommentsStateObject) -> Signal<ImageCommentsStateObject.Event> {
     return { comment, state in
         
-        guard state.session?.isLogin == true else {
+        guard state.sessionStateState?.isLogin == true else {
             return .just(.onTriggerLogin)
         }
         guard let row = state.comments?.items.index(of: comment),
             let cell = sender.cellForRow(at: IndexPath(row: row, section: 0)) as? CommentCell
             else { return .empty() }
-        let currentUserId = state.session?.currentUserId
+        let currentUserId = state.sessionStateState?.currentUserId
         let byMe = comment.userId == currentUserId
         let actions = byMe ? ["删除"] : ["举报"]
         return DefaultWireframe.shared
@@ -67,7 +67,7 @@ class ImageCommentsViewController: ShowNavigationBarViewController {
             
             let commentMoreButtonTap = PublishRelay<CommentObject>()
             let subscriptions = [
-                state.map { $0.session?.isLogin ?? false }.drive(presenter.sendCommentContentView.rx.isShowed),
+                state.map { $0.sessionStateState?.isLogin ?? false }.drive(presenter.sendCommentContentView.rx.isShowed),
                 state.map { $0.saveCommentContent }.asObservable().take(1).bind(to: presenter.contentTextField.rx.text),
                 state.map { $0.shouldSendComment ? 1 : 0 }.drive(presenter.sendButton.rx.alpha),
                 presenter.sendButton.rx.tap.bind(to: presenter.contentTextField.rx.resignFirstResponder()),

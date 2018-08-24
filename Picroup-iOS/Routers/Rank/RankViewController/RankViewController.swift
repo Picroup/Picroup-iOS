@@ -42,7 +42,7 @@ final class RankViewController: BaseViewController {
                 store.hotMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.mediaPresenter.items(footerState: footerState.asDriver())),
                 state.map { $0.hotMediaState?.isReload ?? false }.drive(presenter.refreshControl.rx.refreshing),
                 state.map { $0.hotMediaState?.footerState ?? .empty }.drive(footerState),
-                state.map { $0.session?.isLogin ?? false }.drive(presenter.userButton.rx.isHidden),
+                state.map { $0.sessionStateState?.isLogin ?? false }.drive(presenter.userButton.rx.isHidden),
             ]
             let events: [Signal<RankStateObject.Event>] = [
                 presenter.tagsCollectionView.rx.modelSelected(TagStateObject.self).asSignal().map { .onToggleTag($0.tag) },
