@@ -44,7 +44,7 @@ extension ResetPasswordCodeStateObject: IsFeedbackStateObject {
             verifyCodeError = nil
             triggerVerifyCodeQuery = false
             
-            resetPasswordRoute?.version = UUID().uuidString
+            resetPasswordRoute?.updateVersion()
             
         case .onVerifyError(let error):
             verifyCodeError = error.localizedDescription

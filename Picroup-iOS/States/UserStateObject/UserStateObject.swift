@@ -106,7 +106,7 @@ extension UserStateObject {
                 "_id": userId,
                 "session": ["_id": _id],
                 "user": ["_id": userId],
-                "userMediaState": CursorMediaStateObject.valuesBy(id: PrimaryKey.userMediaId(userId)),
+                "userMediaState": CursorMediaStateObject.createValues(id: PrimaryKey.userMediaId(userId)),
                 "needUpdate": ["_id": _id],
                 "loginRoute": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],

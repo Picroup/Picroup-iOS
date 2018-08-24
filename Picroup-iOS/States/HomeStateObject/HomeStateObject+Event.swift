@@ -21,7 +21,6 @@ extension HomeStateObject {
         case onTriggerShowImage(String)
         case onTriggerShowComments(String)
         case onTriggerShowUser(String)
-        
         case onTriggerCreateImage([MediumItem])
         case onTriggerSearchUser
     }
@@ -39,22 +38,15 @@ extension HomeStateObject: IsFeedbackStateObject {
             myInterestedMediaState?.reduce(event: .onTriggerReload, realm: realm)
             
         case .onTriggerShowImage(let mediumId):
-            imageDetialRoute?.mediumId = mediumId
-            imageDetialRoute?.version = UUID().uuidString
+            routeState?.reduce(event: .onTriggerShowImage(mediumId), realm: realm)
         case .onTriggerShowComments(let mediumId):
-            imageCommetsRoute?.mediumId = mediumId
-            imageCommetsRoute?.version = UUID().uuidString
+            routeState?.reduce(event: .onTriggerShowComments(mediumId), realm: realm)
         case .onTriggerShowUser(let userId):
-            userRoute?.userId = userId
-            userRoute?.version = UUID().uuidString
-            
+            routeState?.reduce(event: .onTriggerShowUser(userId), realm: realm)
         case .onTriggerCreateImage(let mediaItems):
-            createImageRoute?.mediaItemObjects.removeAll()
-            let mediaItemObjects = mediaItems.map { MediaItemObject.create(mediaItem: $0)(realm) }
-            createImageRoute?.mediaItemObjects.append(objectsIn: mediaItemObjects)
-            createImageRoute?.version = UUID().uuidString
+            routeState?.reduce(event: .onTriggerCreateImage(mediaItems), realm: realm)
         case .onTriggerSearchUser:
-            searchUserRoute?.version = UUID().uuidString
+            routeState?.reduce(event: .onTriggerSearchUser, realm: realm)
         }
         updateVersion()
     }

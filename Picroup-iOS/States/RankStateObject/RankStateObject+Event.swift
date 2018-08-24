@@ -39,10 +39,10 @@ extension RankStateObject: IsFeedbackStateObject {
             }
             hotMediaState?.reduce(event: .onTriggerReload, realm: realm)
         case .onTriggerLogin:
-            loginRoute?.version = UUID().uuidString
+            loginRoute?.updateVersion()
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
-            imageDetialRoute?.version = UUID().uuidString
+            imageDetialRoute?.updateVersion()
         }
         updateVersion()
     }

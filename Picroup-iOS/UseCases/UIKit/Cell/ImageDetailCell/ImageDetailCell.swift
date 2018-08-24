@@ -24,7 +24,7 @@ struct ImageDetailViewModel {
     let placeholderColor: UIColor
 
     let displayName: String?
-    let url: String?
+    let userURL: String?
 }
 
 extension ImageDetailViewModel {
@@ -41,7 +41,7 @@ extension ImageDetailViewModel {
             self.commentsCountText = "\(0)"
             self.stared = nil
             self.displayName = nil
-            self.url = nil
+            self.userURL = nil
             self.placeholderColor = .background
             return
         }
@@ -59,7 +59,7 @@ extension ImageDetailViewModel {
         self.placeholderColor = medium.placeholderColor
 
         self.displayName = medium.user?.displayName
-        self.url = medium.user?.url
+        self.userURL = medium.user?.url
     }
 }
 
@@ -144,7 +144,7 @@ class ImageDetailCell: RxCollectionViewCell {
             let viewModel = ImageDetailViewModel(medium: item)
             
             if viewModel.kind == MediumKind.image.rawValue {
-                cell.imageView.setImage(with: viewModel.url)
+                cell.imageView.setImage(with: viewModel.imageViewURL)
                 cell.suggestUpdateLabel.isHidden = true
             } else {
                 cell.imageView.image = nil

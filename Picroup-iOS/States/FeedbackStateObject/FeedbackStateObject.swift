@@ -25,7 +25,7 @@ final class FeedbackStateObject: PrimaryObject {
     @objc dynamic var savedFeedbackError: String?
     @objc dynamic var triggerSaveFeedback: Bool = false
 
-    @objc dynamic var popRoute: PopRouteObject?
+    @objc dynamic var routeState: RouteStateObject?
     @objc dynamic var snackbar: SnackbarObject?
 }
 
@@ -83,7 +83,7 @@ extension FeedbackStateObject {
                 "toUserId": toUserId,
                 "mediumId": mediumId,
                 "commentId": commentId,
-                "popRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],
                 ]
             return try realm.update(FeedbackStateObject.self, value: value)

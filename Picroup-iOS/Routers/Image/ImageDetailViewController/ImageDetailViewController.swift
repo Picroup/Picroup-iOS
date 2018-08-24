@@ -187,6 +187,7 @@ class ImageDetailViewController: ShowNavigationBarViewController {
         })
         
         let states = store.states
+//            .debug("ImageDetailState")
         
         Signal.merge(
             uiFeedback(states),

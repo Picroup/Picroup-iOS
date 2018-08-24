@@ -46,7 +46,7 @@ extension ResetPasswordStateObject: IsFeedbackStateObject {
             snackbar?.reduce(event: .onUpdateMessage(resetPasswordError), realm: realm)
             
         case .onConfirmResetPasswordSuccess:
-            backToLoginRoute?.version = UUID().uuidString
+            backToLoginRoute?.updateVersion()
         }
     }
 }

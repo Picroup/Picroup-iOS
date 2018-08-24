@@ -92,25 +92,18 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
         case .onGetError(let error):
             mediumError = error.localizedDescription
             triggerMediumQuery = false
+            
         case .onTriggerStarMedium:
-            guard shouldStarMedium else { return }
-            starMediumVersion = nil
-            starMediumError = nil
-            triggerStarMediumQuery = true
+            starMediumState?.reduce(event: .onTrigger, realm: realm)
         case .onStarMediumSuccess(let data):
-            medium?.stared.value = true
-            medium?.endedAt.value = data.endedAt
-            starMediumVersion = UUID().uuidString
-            starMediumError = nil
-            triggerStarMediumQuery = false
+            medium?.reduce(event: .onStared(data.endedAt), realm: realm)
+            starMediumState?.reduce(event: .onSuccess(data), realm: realm)
             needUpdate?.myStaredMedia = true
             
             snackbar?.reduce(event: .onUpdateMessage("感谢你给图片续命一周"), realm: realm)
             
         case .onStarMediumError(let error):
-            starMediumVersion = nil
-            starMediumError = error.localizedDescription
-            triggerStarMediumQuery = false
+            starMediumState?.reduce(event: .onError(error), realm: realm)
             
         case .onTriggerDeleteMedium:
             guard shouldDeleteMedium else { return }
@@ -121,7 +114,7 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             deleteMediumError = nil
             triggerDeleteMediumQuery = false
             snackbar?.reduce(event: .onUpdateMessage("已删除"), realm: realm)
-            popRoute?.version = UUID().uuidString
+            popRoute?.updateVersion()
         case .onDeleteMediumError(let error):
             deleteMediumError = error.localizedDescription
             triggerDeleteMediumQuery = false
@@ -138,7 +131,7 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             blockMediumError = nil
             triggerBlockMediumQuery = false
             snackbar?.reduce(event: .onUpdateMessage("已减少类似内容"), realm: realm)
-            popRoute?.version = UUID().uuidString
+            popRoute?.updateVersion()
         case .onBlockMediumError(let error):
             blockMediumVersion = nil
             blockMediumError = error.localizedDescription
@@ -153,26 +146,27 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             triggerShareMediumQuery = false
             
         case .onTriggerLogin:
-            loginRoute?.version = UUID().uuidString
+            loginRoute?.updateVersion()
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
-            imageDetialRoute?.version = UUID().uuidString
+            imageDetialRoute?.updateVersion()
         case .onTriggerShowComments(let mediumId):
             imageCommetsRoute?.mediumId = mediumId
-            imageCommetsRoute?.version = UUID().uuidString
+            imageCommetsRoute?.updateVersion()
         case .onTriggerShowTagMedia(let tag):
             tagMediaRoute?.tag = tag
-            tagMediaRoute?.version = UUID().uuidString
+            tagMediaRoute?.updateVersion()
         case .onTriggerUpdateMediaTags:
             updateMediumTagsRoute?.mediumId = mediumId
-            updateMediumTagsRoute?.version = UUID().uuidString
+            updateMediumTagsRoute?.updateVersion()
         case .onTriggerShowUser(let userId):
             userRoute?.userId = userId
-            userRoute?.version = UUID().uuidString
+            userRoute?.updateVersion()
         case .onTriggerMediumFeedback:
             feedbackRoute?.triggerMedium(mediumId: mediumId)
         case .onTriggerPop:
-            popRoute?.version = UUID().uuidString
+            popRoute?.updateVersion()
         }
+        updateVersion()
     }
 }

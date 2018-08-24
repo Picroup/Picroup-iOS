@@ -41,32 +41,36 @@ final class RouteStateObject: PrimaryObject {
 
 extension RouteStateObject {
     
+    static func createValues() -> Any {
+        let _id = PrimaryKey.default
+        return [
+            "_id": _id,
+            "session": ["_id": _id],
+            "imageDetialRoute": ["_id": _id],
+            "imageCommetsRoute": ["_id": _id],
+            "tagMediaRoute": ["_id": _id],
+            "updateMediumTagsRoute": ["_id": _id],
+            "reputationsRoute": ["_id": _id],
+            "createImageRoute": ["_id": _id],
+            "userRoute": ["_id": _id],
+            "updateUserRoute": ["_id": _id],
+            "userFollowingsRoute": ["_id": _id],
+            "userFollowersRoute": ["_id": _id],
+            "searchUserRoute": ["_id": _id],
+            "userBlockingsRoute": ["_id": _id],
+            "loginRoute": ["_id": _id],
+            "resetPasswordRoute": ["_id": _id],
+            "backToLoginRoute": ["_id": _id],
+            "feedbackRoute": ["_id": _id],
+            "aboutAppRoute": ["_id": _id],
+            "popRoute": ["_id": _id],
+            "snackbar": ["_id": _id],
+        ]
+    }
+    
     static func create() -> (Realm) throws -> RouteStateObject {
         return { realm in
-            let _id = PrimaryKey.default
-            let value: Any = [
-                "_id": _id,
-                "session": ["_id": _id],
-                "imageDetialRoute": ["_id": _id],
-                "imageCommetsRoute": ["_id": _id],
-                "tagMediaRoute": ["_id": _id],
-                "updateMediumTagsRoute": ["_id": _id],
-                "reputationsRoute": ["_id": _id],
-                "createImageRoute": ["_id": _id],
-                "userRoute": ["_id": _id],
-                "updateUserRoute": ["_id": _id],
-                "userFollowingsRoute": ["_id": _id],
-                "userFollowersRoute": ["_id": _id],
-                "searchUserRoute": ["_id": _id],
-                "userBlockingsRoute": ["_id": _id],
-                "loginRoute": ["_id": _id],
-                "resetPasswordRoute": ["_id": _id],
-                "backToLoginRoute": ["_id": _id],
-                "feedbackRoute": ["_id": _id],
-                "aboutAppRoute": ["_id": _id],
-                "popRoute": ["_id": _id],
-                "snackbar": ["_id": _id],
-                ]
+            let value: Any = createValues()
             return try realm.update(RouteStateObject.self, value: value)
         }
     }

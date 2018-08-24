@@ -114,20 +114,20 @@ extension UserStateObject: IsFeedbackStateObject {
             triggerBlockUserQuery = false
             
         case .onTriggerLogin:
-            loginRoute?.version = UUID().uuidString
+            loginRoute?.updateVersion()
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
-            imageDetialRoute?.version = UUID().uuidString
+            imageDetialRoute?.updateVersion()
         case .onTriggerShowUserFollowings:
             userFollowingsRoute?.userId = user?._id
-            userFollowingsRoute?.version = UUID().uuidString
+            userFollowingsRoute?.updateVersion()
         case .onTriggerShowUserFollowers:
             userFollowersRoute?.userId = user?._id
-            userFollowersRoute?.version = UUID().uuidString
+            userFollowersRoute?.updateVersion()
         case .onTriggerUserFeedback:
             feedbackRoute?.triggerUser(toUserId: userId)
         case .onTriggerPop:
-            popRoute?.version = UUID().uuidString
+            popRoute?.updateVersion()
         }
         updateVersion()
     }

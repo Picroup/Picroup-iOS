@@ -59,25 +59,25 @@ extension MeStateObject: IsFeedbackStateObject {
             
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
-            imageDetialRoute?.version = UUID().uuidString
+            imageDetialRoute?.updateVersion()
         case .onTriggerShowReputations:
-            reputationsRoute?.version = UUID().uuidString
+            reputationsRoute?.updateVersion()
         case .onTriggerShowUserFollowings:
             userFollowingsRoute?.userId = session?.currentUserId
-            userFollowingsRoute?.version = UUID().uuidString
+            userFollowingsRoute?.updateVersion()
         case .onTriggerShowUserFollowers:
             userFollowersRoute?.userId = session?.currentUserId
-            userFollowersRoute?.version = UUID().uuidString
+            userFollowersRoute?.updateVersion()
         case .onTriggerShowUserBlockings:
-            userBlockingsRoute?.version = UUID().uuidString
+            userBlockingsRoute?.updateVersion()
         case .onTriggerUpdateUser:
-            updateUserRoute?.version = UUID().uuidString
+            updateUserRoute?.updateVersion()
         case .onTriggerAppFeedback:
             feedbackRoute?.triggerApp()
         case .onTriggerAboutApp:
-            aboutAppRoute?.version = UUID().uuidString
+            aboutAppRoute?.updateVersion()
         case .onTriggerPop:
-            popRoute?.version = UUID().uuidString
+            popRoute?.updateVersion()
         case .onLogout:
             session?.currentUser = nil
             realm.delete(realm.objects(UserObject.self))

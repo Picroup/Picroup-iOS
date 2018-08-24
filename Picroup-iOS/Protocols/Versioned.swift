@@ -15,6 +15,6 @@ protocol Versioned: AnyObject {
 extension Versioned {
     
     func updateVersion() {
-        self.version = UUID().uuidString
+        version = UUID().uuidString
     }
 }

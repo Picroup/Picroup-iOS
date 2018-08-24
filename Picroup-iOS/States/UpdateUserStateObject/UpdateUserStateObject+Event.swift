@@ -58,7 +58,7 @@ extension UpdateUserStateObject: IsFeedbackStateObject {
             triggerSetDisplayNameQuery = false
             
         case .onTriggerPop:
-            popRoute?.version = UUID().uuidString
+            popRoute?.updateVersion()
         }
     }
 }

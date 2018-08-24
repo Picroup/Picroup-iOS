@@ -66,8 +66,8 @@ extension MeStateObject {
             let value: Any = [
                 "_id": _id,
                 "session": ["_id": _id],
-                "myMediaState": CursorMediaStateObject.valuesBy(id: PrimaryKey.myMediaId),
-                "myStaredMediaState":  CursorMediaStateObject.valuesBy(id: PrimaryKey.myStaredMediaId),
+                "myMediaState": CursorMediaStateObject.createValues(id: PrimaryKey.myMediaId),
+                "myStaredMediaState":  CursorMediaStateObject.createValues(id: PrimaryKey.myStaredMediaId),
                 "needUpdate": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],
                 "reputationsRoute": ["_id": _id],

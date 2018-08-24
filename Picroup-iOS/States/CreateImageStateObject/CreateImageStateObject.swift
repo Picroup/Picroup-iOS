@@ -29,7 +29,7 @@ final class CreateImageStateObject: PrimaryObject {
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
 
-    @objc dynamic var popRoute: PopRouteObject?
+    @objc dynamic var routeState: RouteStateObject?
     
     @objc dynamic var snackbar: SnackbarObject?
 }
@@ -74,7 +74,7 @@ extension CreateImageStateObject {
                 "triggerSaveMediumQuery": false,
                 "selectedTagHistory": ["_id": _id],
                 "needUpdate": ["_id": _id],
-                "popRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],
                 ]
             let result = try realm.update(CreateImageStateObject.self, value: value)

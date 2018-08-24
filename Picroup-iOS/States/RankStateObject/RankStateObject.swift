@@ -47,7 +47,7 @@ extension RankStateObject {
             let value: Any = [
                 "_id": _id,
                 "session": ["_id": _id],
-                "hotMediaState": CursorMediaStateObject.valuesBy(id: hotMediaId),
+                "hotMediaState": CursorMediaStateObject.createValues(id: hotMediaId),
                 "selectedTagHistory": ["_id": PrimaryKey.viewTagHistory],
                 "loginRoute": ["_id": _id],
                 "imageDetialRoute": ["_id": _id],

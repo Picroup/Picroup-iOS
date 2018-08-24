@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RxRealm
 
-final class ImageDetailStateObject: PrimaryObject {
+final class ImageDetailStateObject: VersionedPrimaryObject {
     
     @objc dynamic var session: UserSessionObject?
     @objc dynamic var isMediumDeleted: Bool = false
@@ -22,9 +22,7 @@ final class ImageDetailStateObject: PrimaryObject {
     @objc dynamic var mediumError: String?
     @objc dynamic var triggerMediumQuery: Bool = false
 
-    @objc dynamic var starMediumVersion: String?
-    @objc dynamic var starMediumError: String?
-    @objc dynamic var triggerStarMediumQuery: Bool = false
+    @objc dynamic var starMediumState: StarMediumStateObject?
 
     @objc dynamic var myStaredMedia: CursorMediaObject?
     
@@ -67,14 +65,11 @@ extension ImageDetailStateObject {
     var hasMoreRecommendMedia: Bool {
         return recommendMedia?.cursor.value != nil
     }
-    public var shouldStarMedium: Bool {
-        return medium?.stared.value != true && !triggerStarMediumQuery
+    
+    var starMediumQuery: StarMediumMutation? {
+        return starMediumState?.query(userId: session?.currentUserId)
     }
-    public var starMediumQuery: StarMediumMutation? {
-        guard let userId = session?.currentUserId else { return nil }
-        let next = StarMediumMutation(userId: userId, mediumId: mediumId)
-        return triggerStarMediumQuery ? next : nil
-    }
+    
     var deleteMediumQuery: DeleteMediumMutation? {
         let next = DeleteMediumMutation(mediumId: mediumId)
         return triggerDeleteMediumQuery ? next : nil
@@ -109,6 +104,7 @@ extension ImageDetailStateObject {
                 "session": ["_id": _id],
                 "medium": ["_id": mediumId],
                 "recommendMedia": ["_id": PrimaryKey.recommendMediaId(mediumId)],
+                "starMediumState": StarMediumStateObject.createValues(mediumId: mediumId),
                 "myStaredMedia": ["_id": PrimaryKey.myStaredMediaId],
                 "needUpdate": ["_id": _id],
                 "loginRoute": ["_id": _id],

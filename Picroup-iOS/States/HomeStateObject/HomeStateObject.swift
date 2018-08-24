@@ -18,12 +18,7 @@ final class HomeStateObject: VersionedPrimaryObject {
 
     @objc dynamic var needUpdate: NeedUpdateStateObject?
 
-    @objc dynamic var createImageRoute: CreateImageRouteObject?
-    @objc dynamic var searchUserRoute: SearchUserRouteObject?
-    
-    @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
-    @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
-    @objc dynamic var userRoute: UserRouteObject?
+    @objc dynamic var routeState: RouteStateObject?
 }
 
 extension HomeStateObject {
@@ -43,13 +38,9 @@ extension HomeStateObject {
             let value: Any = [
                 "_id": _id,
                 "session": ["_id": _id],
-                "myInterestedMediaState": CursorMediaStateObject.valuesBy(id: PrimaryKey.myInterestedMediaId),
+                "myInterestedMediaState": CursorMediaStateObject.createValues(id: PrimaryKey.myInterestedMediaId),
                 "needUpdate": ["_id": _id],
-                "createImageRoute": ["_id": _id],
-                "searchUserRoute": ["_id": _id],
-                "imageDetialRoute": ["_id": _id],
-                "imageCommetsRoute": ["_id": _id],
-                "userRoute": ["_id": _id],
+                "routeState": RouteStateObject.createValues(),
                 ]
             let state = try realm.update(HomeStateObject.self, value: value)
             return state

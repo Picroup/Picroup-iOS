@@ -100,9 +100,9 @@ extension UserFollowingsStateObject: IsFeedbackStateObject {
             
         case .onTriggerShowUser(let userId):
             userRoute?.userId = userId
-            userRoute?.version = UUID().uuidString
+            userRoute?.updateVersion()
         case .onTriggerPop:
-            popRoute?.version = UUID().uuidString
+            popRoute?.updateVersion()
         }
     }
 }

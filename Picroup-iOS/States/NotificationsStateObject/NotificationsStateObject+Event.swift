@@ -76,13 +76,13 @@ extension NotificationsStateObject: IsFeedbackStateObject {
             
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
-            imageDetialRoute?.version = UUID().uuidString
+            imageDetialRoute?.updateVersion()
         case .onTriggerShowComments(let mediumId):
             imageCommetsRoute?.mediumId = mediumId
-            imageCommetsRoute?.version = UUID().uuidString
+            imageCommetsRoute?.updateVersion()
         case .onTriggerShowUser(let userId):
             userRoute?.userId = userId
-            userRoute?.version = UUID().uuidString
+            userRoute?.updateVersion()
         }
     }
 }

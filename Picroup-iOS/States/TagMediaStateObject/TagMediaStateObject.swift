@@ -41,7 +41,7 @@ extension TagMediaStateObject {
             let value: Any = [
                 "_id": tag,
                 "session": ["_id": _id],
-                "hotMediaState": CursorMediaStateObject.valuesBy(id: hotMediaId),
+                "hotMediaState": CursorMediaStateObject.createValues(id: hotMediaId),
                 "imageDetialRoute": ["_id": _id],
                 ]
             let result = try realm.update(TagMediaStateObject.self, value: value)

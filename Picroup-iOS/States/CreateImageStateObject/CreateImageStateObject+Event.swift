@@ -47,7 +47,7 @@ extension CreateImageStateObject: IsFeedbackStateObject {
                 let allSuccess = failState == nil
                 if allSuccess {
                     snackbar?.reduce(event: .onUpdateMessage("已分享"), realm: realm)
-                    popRoute?.version = UUID().uuidString
+                    routeState?.reduce(event: .onTriggerPop, realm: realm)
                 } else {
                     snackbar?.reduce(event: .onUpdateMessage(failState?.savedError), realm: realm)
                 }

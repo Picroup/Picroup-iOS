@@ -286,6 +286,10 @@
 		45C3930020C5875D00F4A69A /* SaveAppFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C392FD20C5875D00F4A69A /* SaveAppFeedback.graphql */; };
 		45C3930120C5875D00F4A69A /* SaveUserFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C392FE20C5875D00F4A69A /* SaveUserFeedback.graphql */; };
 		45C3930220C5875D00F4A69A /* SaveMediumFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C392FF20C5875D00F4A69A /* SaveMediumFeedback.graphql */; };
+		45CD0695212FA91200AE563E /* StarMediumStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0694212FA91200AE563E /* StarMediumStateObject.swift */; };
+		45CD0697212FD26B00AE563E /* MediumDetailObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0696212FD26B00AE563E /* MediumDetailObject.swift */; };
+		45CD0699212FD28200AE563E /* CursorMediaObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0698212FD28200AE563E /* CursorMediaObject.swift */; };
+		45CD069B212FD8A500AE563E /* RouteStateObject+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD069A212FD8A500AE563E /* RouteStateObject+Event.swift */; };
 		45CEDD532123BDD500491B60 /* VerifyCode.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45CEDD522123BDD500491B60 /* VerifyCode.graphql */; };
 		45CEDD552123BDF800491B60 /* ResetPassword.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45CEDD542123BDF800491B60 /* ResetPassword.graphql */; };
 		45CEDD5921240AF000491B60 /* ResetPasswordPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEDD5821240AF000491B60 /* ResetPasswordPhoneViewController.swift */; };
@@ -620,6 +624,10 @@
 		45C392FD20C5875D00F4A69A /* SaveAppFeedback.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SaveAppFeedback.graphql; sourceTree = "<group>"; };
 		45C392FE20C5875D00F4A69A /* SaveUserFeedback.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SaveUserFeedback.graphql; sourceTree = "<group>"; };
 		45C392FF20C5875D00F4A69A /* SaveMediumFeedback.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SaveMediumFeedback.graphql; sourceTree = "<group>"; };
+		45CD0694212FA91200AE563E /* StarMediumStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarMediumStateObject.swift; sourceTree = "<group>"; };
+		45CD0696212FD26B00AE563E /* MediumDetailObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumDetailObject.swift; sourceTree = "<group>"; };
+		45CD0698212FD28200AE563E /* CursorMediaObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorMediaObject.swift; sourceTree = "<group>"; };
+		45CD069A212FD8A500AE563E /* RouteStateObject+Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouteStateObject+Event.swift"; sourceTree = "<group>"; };
 		45CEDD522123BDD500491B60 /* VerifyCode.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = VerifyCode.graphql; sourceTree = "<group>"; };
 		45CEDD542123BDF800491B60 /* ResetPassword.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ResetPassword.graphql; sourceTree = "<group>"; };
 		45CEDD5821240AF000491B60 /* ResetPasswordPhoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordPhoneViewController.swift; sourceTree = "<group>"; };
@@ -988,6 +996,7 @@
 			isa = PBXGroup;
 			children = (
 				457BD98220AB12AD007F0492 /* RouteStateObject.swift */,
+				45CD069A212FD8A500AE563E /* RouteStateObject+Event.swift */,
 				45662AAD212E873500964BC9 /* RouteStateStore.swift */,
 			);
 			path = RouteStateObject;
@@ -1291,14 +1300,6 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
-		456D14642105B067008EDD41 /* States */ = {
-			isa = PBXGroup;
-			children = (
-				456D14652105B089008EDD41 /* CursorMediaStateObject.swift */,
-			);
-			path = States;
-			sourceTree = "<group>";
-		};
 		456E90D720F5DEA50006FFA8 /* TagMediaViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1473,6 +1474,7 @@
 		4595F215207A10520040E5FA /* States */ = {
 			isa = PBXGroup;
 			children = (
+				45CD0693212FA8B100AE563E /* SubStates */,
 				45662AAC212E870900964BC9 /* AppStateObject */,
 				45662AB3212E87F500964BC9 /* CreateImageStateObject */,
 				45662AB6212E880C00964BC9 /* FeedbackStateObject */,
@@ -1568,7 +1570,6 @@
 				45AA3B4620A346C10032A8CF /* Realm */,
 				457BD99B20B30D22007F0492 /* RxRealm */,
 				45C1994B20A983BC001924B9 /* RxCocoa */,
-				456D14642105B067008EDD41 /* States */,
 				4595F2042079EDE20040E5FA /* UIKit */,
 				454714A1211D7C69003A5D04 /* Other */,
 			);
@@ -1754,6 +1755,16 @@
 			path = UpdateUserViewController;
 			sourceTree = "<group>";
 		};
+		45CD0693212FA8B100AE563E /* SubStates */ = {
+			isa = PBXGroup;
+			children = (
+				456D14652105B089008EDD41 /* CursorMediaStateObject.swift */,
+				45662B41212EA20400964BC9 /* SnackbarObject.swift */,
+				45CD0694212FA91200AE563E /* StarMediumStateObject.swift */,
+			);
+			path = SubStates;
+			sourceTree = "<group>";
+		};
 		45CEDD5721240AA900491B60 /* ResetPasswordViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1839,8 +1850,10 @@
 			isa = PBXGroup;
 			children = (
 				45B0204820AC0E8C00BD5D8F /* CommentObject.swift */,
+				45CD0698212FD28200AE563E /* CursorMediaObject.swift */,
 				45662B47212EAD9500964BC9 /* MediaItemObject.swift */,
 				45C1994720A973DD001924B9 /* MediumObject.swift */,
+				45CD0696212FD26B00AE563E /* MediumDetailObject.swift */,
 				456D14672105BE63008EDD41 /* NeedUpdateStateObject.swift */,
 				457BD98020A9D504007F0492 /* NotificationObject.swift */,
 				45662B4D212EAEE700964BC9 /* RegisterParamObject.swift */,
@@ -1849,7 +1862,6 @@
 				45662AAA212D3DCA00964BC9 /* RouteObjects.swift */,
 				45662B43212EAD3D00964BC9 /* RxProgressObject.swift */,
 				45662B49212EADB300964BC9 /* SaveMediumStateObject.swift */,
-				45662B41212EA20400964BC9 /* SnackbarObject.swift */,
 				452EAD1E20F339B200FE5E5F /* TagObject.swift */,
 				45662B45212EAD7600964BC9 /* TagStateObject.swift */,
 				45C1994920A97402001924B9 /* UserObject.swift */,
@@ -2201,6 +2213,7 @@
 				45662B1B212E8B6900964BC9 /* RegisterPasswordStateStore.swift in Sources */,
 				456D145921057539008EDD41 /* HasPlayerView.swift in Sources */,
 				45662B42212EA20400964BC9 /* SnackbarObject.swift in Sources */,
+				45CD0697212FD26B00AE563E /* MediumDetailObject.swift in Sources */,
 				45662AE5212E8A1800964BC9 /* RegisterPasswordStateObject+Event.swift in Sources */,
 				454F72942089720C00850471 /* ImageCommentsPresenter.swift in Sources */,
 				45B0206120B3AB3700BD5D8F /* FollowingsPresenter.swift in Sources */,
@@ -2318,6 +2331,7 @@
 				455808DD20EC9D99005F1A00 /* UIRefreshControl+refreshing.swift in Sources */,
 				451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */,
 				45662AFD212E8A9E00964BC9 /* UserFollowersStateObject+Event.swift in Sources */,
+				45CD0695212FA91200AE563E /* StarMediumStateObject.swift in Sources */,
 				45517D4E20BCEDE100F2D7DE /* UserCell.swift in Sources */,
 				45662B29212E8BCA00964BC9 /* SearchUserStateStore.swift in Sources */,
 				45662B03212E8ABE00964BC9 /* UpdatePasswordStateObject+Event.swift in Sources */,
@@ -2344,11 +2358,13 @@
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
 				45662B25212E8BA100964BC9 /* ResetPasswordCodeStateStore.swift in Sources */,
 				45183EBE20CF65BC00497B59 /* AboutAppViewController.swift in Sources */,
+				45CD0699212FD28200AE563E /* CursorMediaObject.swift in Sources */,
 				45D04F7020875B1D00AC2226 /* ImageDetailCell.swift in Sources */,
 				45384B69207DC19E00624A1B /* UIImagePickerController+RxCreate.swift in Sources */,
 				45C2076D21142F4F00A0227B /* BlockingsViewController.swift in Sources */,
 				454CD57A20C821A00087C634 /* ImageCache+Rx.swift in Sources */,
 				456D14662105B089008EDD41 /* CursorMediaStateObject.swift in Sources */,
+				45CD069B212FD8A500AE563E /* RouteStateObject+Event.swift in Sources */,
 				451DD4BB207E558A002C509A /* RaisedButton+Rx.swift in Sources */,
 				456D145C21057903008EDD41 /* ImageCache+retrieveImage.swift in Sources */,
 				45B0206D20B508C200BD5D8F /* SearchUserViewController.swift in Sources */,

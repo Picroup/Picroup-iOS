@@ -74,12 +74,12 @@ extension ReputationsStateObject: IsFeedbackStateObject {
             
         case .onTriggerShowImage(let mediumId):
             imageDetialRoute?.mediumId = mediumId
-            imageDetialRoute?.version = UUID().uuidString
+            imageDetialRoute?.updateVersion()
         case .onTriggerShowUser(let userId):
             userRoute?.userId = userId
-            userRoute?.version = UUID().uuidString
+            userRoute?.updateVersion()
         case .onTriggerPop:
-            popRoute?.version = UUID().uuidString
+            popRoute?.updateVersion()
         }
     }
 }

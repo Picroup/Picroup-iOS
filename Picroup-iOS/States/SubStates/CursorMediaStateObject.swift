@@ -31,7 +31,7 @@ extension CursorMediaStateObject {
 
 extension CursorMediaStateObject {
     
-    static func valuesBy(id: String) -> Any {
+    static func createValues(id: String) -> Any {
         return  [
             "_id": id,
             "cursorMedia": ["_id": id],
