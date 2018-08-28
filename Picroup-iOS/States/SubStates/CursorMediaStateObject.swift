@@ -91,4 +91,3 @@ extension CursorMediaStateObject: IsFeedbackStateObject {
     }
 }
 
-//class HotMediaStateObject: CursorMediaStateObject {}

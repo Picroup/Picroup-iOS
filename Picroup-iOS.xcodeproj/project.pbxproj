@@ -137,7 +137,7 @@
 		45662B03212E8ABE00964BC9 /* UpdatePasswordStateObject+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B02212E8ABE00964BC9 /* UpdatePasswordStateObject+Event.swift */; };
 		45662B05212E8AD100964BC9 /* CreateImageStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B04212E8AD100964BC9 /* CreateImageStateStore.swift */; };
 		45662B07212E8ADB00964BC9 /* FeedbackStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B06212E8ADB00964BC9 /* FeedbackStateStore.swift */; };
-		45662B09212E8AE900964BC9 /* HomeStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B08212E8AE900964BC9 /* HomeStateStore.swift */; };
+		45662B09212E8AE900964BC9 /* HomeStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B08212E8AE900964BC9 /* HomeStateObject+system.swift */; };
 		45662B0B212E8AFD00964BC9 /* ImageDetailStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B0A212E8AFD00964BC9 /* ImageDetailStateStore.swift */; };
 		45662B0D212E8B0A00964BC9 /* ImageCommentsStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B0C212E8B0A00964BC9 /* ImageCommentsStateStore.swift */; };
 		45662B0F212E8B1700964BC9 /* LoginStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B0E212E8B1700964BC9 /* LoginStateObject+system.swift */; };
@@ -478,7 +478,7 @@
 		45662B02212E8ABE00964BC9 /* UpdatePasswordStateObject+Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UpdatePasswordStateObject+Event.swift"; sourceTree = "<group>"; };
 		45662B04212E8AD100964BC9 /* CreateImageStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageStateStore.swift; sourceTree = "<group>"; };
 		45662B06212E8ADB00964BC9 /* FeedbackStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackStateStore.swift; sourceTree = "<group>"; };
-		45662B08212E8AE900964BC9 /* HomeStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStateStore.swift; sourceTree = "<group>"; };
+		45662B08212E8AE900964BC9 /* HomeStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B0A212E8AFD00964BC9 /* ImageDetailStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailStateStore.swift; sourceTree = "<group>"; };
 		45662B0C212E8B0A00964BC9 /* ImageCommentsStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsStateStore.swift; sourceTree = "<group>"; };
 		45662B0E212E8B1700964BC9 /* LoginStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginStateObject+system.swift"; sourceTree = "<group>"; };
@@ -1042,7 +1042,7 @@
 			children = (
 				45B0204E20AD59CC00BD5D8F /* HomeStateObject.swift */,
 				45662AD2212E891000964BC9 /* HomeStateObject+Event.swift */,
-				45662B08212E8AE900964BC9 /* HomeStateStore.swift */,
+				45662B08212E8AE900964BC9 /* HomeStateObject+system.swift */,
 			);
 			path = HomeStateObject;
 			sourceTree = "<group>";
@@ -2316,7 +2316,7 @@
 				45B0204920AC0E8C00BD5D8F /* CommentObject.swift in Sources */,
 				45F0A7D820C7BE7F0085F978 /* RegisterPhoneStateObject.swift in Sources */,
 				45662AAE212E873500964BC9 /* RouteStateStore.swift in Sources */,
-				45662B09212E8AE900964BC9 /* HomeStateStore.swift in Sources */,
+				45662B09212E8AE900964BC9 /* HomeStateObject+system.swift in Sources */,
 				45384B67207DC18D00624A1B /* UIImagePickerController+Rx.swift in Sources */,
 				45C2077121142F7400A0227B /* BlockButtonPresenter.swift in Sources */,
 				45183EC020CF862000497B59 /* RealmProvider.swift in Sources */,

@@ -15,8 +15,11 @@ extension HomeStateObject {
     
     enum Event {
         
-        case myInterestedMediaState(CursorMediaStateObject.Event)
         case onTriggerReloadMyInterestedMediaIfNeeded
+        case onTriggerReloadMyInterestedMedia
+        case onTriggerGetMoreMyInterestedMedia
+        case onGetMyInterestedMediaData(CursorMediaFragment)
+        case onGetMyInterestedMediaError(Error)
         
         case onTriggerShowImage(String)
         case onTriggerShowComments(String)
@@ -30,12 +33,19 @@ extension HomeStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
-        case .myInterestedMediaState(let event):
-            myInterestedMediaState?.reduce(event: event, realm: realm)
         case .onTriggerReloadMyInterestedMediaIfNeeded:
             guard needUpdate?.myInterestedMedia == true else { return }
             needUpdate?.myInterestedMedia = false
             myInterestedMediaState?.reduce(event: .onTriggerReload, realm: realm)
+            
+        case .onTriggerReloadMyInterestedMedia:
+            myInterestedMediaState?.reduce(event: .onTriggerReload, realm: realm)
+        case .onTriggerGetMoreMyInterestedMedia:
+            myInterestedMediaState?.reduce(event: .onTriggerGetMore, realm: realm)
+        case .onGetMyInterestedMediaData(let data):
+            myInterestedMediaState?.reduce(event: .onGetData(data), realm: realm)
+        case .onGetMyInterestedMediaError(let error):
+            myInterestedMediaState?.reduce(event: .onGetError(error), realm: realm)
             
         case .onTriggerShowImage(let mediumId):
             routeState?.reduce(event: .onTriggerShowImage(mediumId), realm: realm)
@@ -48,6 +58,5 @@ extension HomeStateObject: IsFeedbackStateObject {
         case .onTriggerSearchUser:
             routeState?.reduce(event: .onTriggerSearchUser, realm: realm)
         }
-        updateVersion()
     }
 }
