@@ -86,8 +86,6 @@
 		45517D5020BCFF4C00F2D7DE /* UIView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4F20BCFF4C00F2D7DE /* UIView+Rx.swift */; };
 		45517D5220BD3EB400F2D7DE /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D5120BD3EB400F2D7DE /* Wireframe.swift */; };
 		45525D4A208C3CB500EAF00D /* CreateImagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */; };
-		45525D4F208C468500EAF00D /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45525D4E208C468500EAF00D /* Feedback.swift */; };
-		455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455414B2207E315900296FDE /* IsFeedbackState.swift */; };
 		455808D920EC6B2C005F1A00 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455808D820EC6B2C005F1A00 /* BaseViewController.swift */; };
 		455808DB20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455808DA20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift */; };
 		455808DD20EC9D99005F1A00 /* UIRefreshControl+refreshing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455808DC20EC9D99005F1A00 /* UIRefreshControl+refreshing.swift */; };
@@ -142,7 +140,7 @@
 		45662B09212E8AE900964BC9 /* HomeStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B08212E8AE900964BC9 /* HomeStateStore.swift */; };
 		45662B0B212E8AFD00964BC9 /* ImageDetailStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B0A212E8AFD00964BC9 /* ImageDetailStateStore.swift */; };
 		45662B0D212E8B0A00964BC9 /* ImageCommentsStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B0C212E8B0A00964BC9 /* ImageCommentsStateStore.swift */; };
-		45662B0F212E8B1700964BC9 /* LoginStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B0E212E8B1700964BC9 /* LoginStateStore.swift */; };
+		45662B0F212E8B1700964BC9 /* LoginStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B0E212E8B1700964BC9 /* LoginStateObject+system.swift */; };
 		45662B11212E8B2100964BC9 /* MainStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B10212E8B2100964BC9 /* MainStateStore.swift */; };
 		45662B13212E8B2D00964BC9 /* MeStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B12212E8B2D00964BC9 /* MeStateStore.swift */; };
 		45662B15212E8B3C00964BC9 /* NotificationsStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B14212E8B3C00964BC9 /* NotificationsStateStore.swift */; };
@@ -313,6 +311,10 @@
 		45E240B520862981004B58EF /* HideNavigationBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E240B420862981004B58EF /* HideNavigationBarViewController.swift */; };
 		45E240B920862CF6004B58EF /* Medium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45E240B820862CF6004B58EF /* Medium.graphql */; };
 		45E6C24A20863AC3003D7AA8 /* QueryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6C24920863AC3003D7AA8 /* QueryState.swift */; };
+		45E977092134D81F00723BA1 /* LoginQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E977082134D81F00723BA1 /* LoginQueryStateObject.swift */; };
+		45E9770C2134E9FF00723BA1 /* IsFeedbackStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E9770B2134E9FF00723BA1 /* IsFeedbackStateObject+system.swift */; };
+		45E9770E2134ECAA00723BA1 /* IsFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E9770D2134ECA900723BA1 /* IsFeedbackState.swift */; };
+		45E977102134F36400723BA1 /* UpdatePasswordPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E9770F2134F36400723BA1 /* UpdatePasswordPresenter.swift */; };
 		45EC928120D3C65100A473D4 /* Moment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC928020D3C65100A473D4 /* Moment.swift */; };
 		45F0A7C820C65E8E0085F978 /* DeleteMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45F0A7C720C65E8E0085F978 /* DeleteMedium.graphql */; };
 		45F0A7CA20C65EC30085F978 /* DeleteComment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45F0A7C920C65EC30085F978 /* DeleteComment.graphql */; };
@@ -422,8 +424,6 @@
 		45517D4F20BCFF4C00F2D7DE /* UIView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Rx.swift"; sourceTree = "<group>"; };
 		45517D5120BD3EB400F2D7DE /* Wireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wireframe.swift; sourceTree = "<group>"; };
 		45525D49208C3CB500EAF00D /* CreateImagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImagePresenter.swift; sourceTree = "<group>"; };
-		45525D4E208C468500EAF00D /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
-		455414B2207E315900296FDE /* IsFeedbackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFeedbackState.swift; sourceTree = "<group>"; };
 		455808D820EC6B2C005F1A00 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		455808DA20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+setTabBarHidden.swift"; sourceTree = "<group>"; };
 		455808DC20EC9D99005F1A00 /* UIRefreshControl+refreshing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+refreshing.swift"; sourceTree = "<group>"; };
@@ -480,7 +480,7 @@
 		45662B08212E8AE900964BC9 /* HomeStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStateStore.swift; sourceTree = "<group>"; };
 		45662B0A212E8AFD00964BC9 /* ImageDetailStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailStateStore.swift; sourceTree = "<group>"; };
 		45662B0C212E8B0A00964BC9 /* ImageCommentsStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsStateStore.swift; sourceTree = "<group>"; };
-		45662B0E212E8B1700964BC9 /* LoginStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStateStore.swift; sourceTree = "<group>"; };
+		45662B0E212E8B1700964BC9 /* LoginStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B10212E8B2100964BC9 /* MainStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStateStore.swift; sourceTree = "<group>"; };
 		45662B12212E8B2D00964BC9 /* MeStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeStateStore.swift; sourceTree = "<group>"; };
 		45662B14212E8B3C00964BC9 /* NotificationsStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsStateStore.swift; sourceTree = "<group>"; };
@@ -651,6 +651,10 @@
 		45E240B420862981004B58EF /* HideNavigationBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideNavigationBarViewController.swift; sourceTree = "<group>"; };
 		45E240B820862CF6004B58EF /* Medium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Medium.graphql; sourceTree = "<group>"; };
 		45E6C24920863AC3003D7AA8 /* QueryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryState.swift; sourceTree = "<group>"; };
+		45E977082134D81F00723BA1 /* LoginQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginQueryStateObject.swift; sourceTree = "<group>"; };
+		45E9770B2134E9FF00723BA1 /* IsFeedbackStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IsFeedbackStateObject+system.swift"; sourceTree = "<group>"; };
+		45E9770D2134ECA900723BA1 /* IsFeedbackState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsFeedbackState.swift; sourceTree = "<group>"; };
+		45E9770F2134F36400723BA1 /* UpdatePasswordPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordPresenter.swift; sourceTree = "<group>"; };
 		45EC928020D3C65100A473D4 /* Moment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moment.swift; sourceTree = "<group>"; };
 		45F0A7C720C65E8E0085F978 /* DeleteMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = DeleteMedium.graphql; sourceTree = "<group>"; };
 		45F0A7C920C65EC30085F978 /* DeleteComment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = DeleteComment.graphql; sourceTree = "<group>"; };
@@ -734,11 +738,10 @@
 		451CD30F207910370063A972 /* RxFeedback */ = {
 			isa = PBXGroup;
 			children = (
-				4595F226207D9CF90040E5FA /* logger.swift */,
-				455414B2207E315900296FDE /* IsFeedbackState.swift */,
-				45E6C24920863AC3003D7AA8 /* QueryState.swift */,
-				45525D4E208C468500EAF00D /* Feedback.swift */,
 				45183EC120D0E94100497B59 /* createFeedback.swift */,
+				4595F226207D9CF90040E5FA /* logger.swift */,
+				45E9770D2134ECA900723BA1 /* IsFeedbackState.swift */,
+				45E6C24920863AC3003D7AA8 /* QueryState.swift */,
 			);
 			path = RxFeedback;
 			sourceTree = "<group>";
@@ -1067,7 +1070,7 @@
 			children = (
 				45B0204C20AD143E00BD5D8F /* LoginStateObject.swift */,
 				45662AD8212E89C700964BC9 /* LoginStateObject+Event.swift */,
-				45662B0E212E8B1700964BC9 /* LoginStateStore.swift */,
+				45662B0E212E8B1700964BC9 /* LoginStateObject+system.swift */,
 			);
 			path = LoginStateObject;
 			sourceTree = "<group>";
@@ -1568,6 +1571,7 @@
 				45FC0BFF20A94A03006AAF3D /* Model */,
 				45B0205620AE699000BD5D8F /* PrimaryKey */,
 				45AA3B4620A346C10032A8CF /* Realm */,
+				45E9770A2134E9E200723BA1 /* RxFeedback+Realm */,
 				457BD99B20B30D22007F0492 /* RxRealm */,
 				45C1994B20A983BC001924B9 /* RxCocoa */,
 				4595F2042079EDE20040E5FA /* UIKit */,
@@ -1704,6 +1708,7 @@
 			isa = PBXGroup;
 			children = (
 				45B5E27820C8D8A2005E2E58 /* UpdatePasswordViewController.swift */,
+				45E9770F2134F36400723BA1 /* UpdatePasswordPresenter.swift */,
 			);
 			path = UpdatePasswordViewController;
 			sourceTree = "<group>";
@@ -1759,6 +1764,7 @@
 			isa = PBXGroup;
 			children = (
 				456D14652105B089008EDD41 /* CursorMediaStateObject.swift */,
+				45E977082134D81F00723BA1 /* LoginQueryStateObject.swift */,
 				45662B41212EA20400964BC9 /* SnackbarObject.swift */,
 				45CD0694212FA91200AE563E /* StarMediumStateObject.swift */,
 				45662B4B212EAE9900964BC9 /* UserSessionStateObject.swift */,
@@ -1798,6 +1804,14 @@
 				454F72992089BA1300850471 /* UIView+IBInspectable.swift */,
 			);
 			path = UIKit;
+			sourceTree = "<group>";
+		};
+		45E9770A2134E9E200723BA1 /* RxFeedback+Realm */ = {
+			isa = PBXGroup;
+			children = (
+				45E9770B2134E9FF00723BA1 /* IsFeedbackStateObject+system.swift */,
+			);
+			path = "RxFeedback+Realm";
 			sourceTree = "<group>";
 		};
 		45EC927F20D3C63300A473D4 /* Foundation */ = {
@@ -2109,6 +2123,7 @@
 			files = (
 				45384B66207DC18D00624A1B /* RxImagePickerDelegateProxy.swift in Sources */,
 				454714A3211D7C7C003A5D04 /* MediumItemHelper.swift in Sources */,
+				45E977102134F36400723BA1 /* UpdatePasswordPresenter.swift in Sources */,
 				45315C1320F61CA700E3BCAB /* UpdateMediumTagsViewController.swift in Sources */,
 				457BD98920AC695A007F0492 /* ReputationObject.swift in Sources */,
 				45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */,
@@ -2144,7 +2159,6 @@
 				45B0206520B4012E00BD5D8F /* UserFollowersStateObject.swift in Sources */,
 				451CD326207B9E5B0063A972 /* RouterService+Login.swift in Sources */,
 				45517D5220BD3EB400F2D7DE /* Wireframe.swift in Sources */,
-				455414B3207E315900296FDE /* IsFeedbackState.swift in Sources */,
 				45662B1D212E8B7500964BC9 /* RegisterPhoneStateStore.swift in Sources */,
 				45662AF5212E8A7400964BC9 /* TagMediaStateObject+Event.swift in Sources */,
 				45662AE7212E8A2500964BC9 /* RegisterPhoneStateObject+Event.swift in Sources */,
@@ -2169,6 +2183,7 @@
 				45662B2F212E8BEC00964BC9 /* UserBlockingsStateStore.swift in Sources */,
 				45A6810F20FF23B80070606B /* PlayerView.swift in Sources */,
 				45CEDD5921240AF000491B60 /* ResetPasswordPhoneViewController.swift in Sources */,
+				45E9770C2134E9FF00723BA1 /* IsFeedbackStateObject+system.swift in Sources */,
 				45CEDD5B21240B2900491B60 /* ResetPasswordCodeViewController.swift in Sources */,
 				45B0205320AD72D600BD5D8F /* PhotoPickerController.swift in Sources */,
 				45662B39212E8C2600964BC9 /* UpdatePasswordStateStore.swift in Sources */,
@@ -2179,6 +2194,7 @@
 				458C106920849058005E94CD /* RankViewPresenter.swift in Sources */,
 				456E90D920F5DEC40006FFA8 /* TagMediaViewController.swift in Sources */,
 				45662ADB212E89D900964BC9 /* MainStateObject+Event.swift in Sources */,
+				45E9770E2134ECAA00723BA1 /* IsFeedbackState.swift in Sources */,
 				45B0206820B4031100BD5D8F /* FollowersViewController.swift in Sources */,
 				457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */,
 				45C1994A20A97402001924B9 /* UserObject.swift in Sources */,
@@ -2261,16 +2277,16 @@
 				45F0A7E220C8C6E60085F978 /* RegularPattern.swift in Sources */,
 				45D04F84208E0EAA00AC2226 /* MePresenter.swift in Sources */,
 				45662AA4212BD98200964BC9 /* HYCacheService.swift in Sources */,
-				45525D4F208C468500EAF00D /* Feedback.swift in Sources */,
 				45C1995220AA7AFF001924B9 /* IsFeedbackStateObject.swift in Sources */,
 				457BD98520AB1521007F0492 /* Router.swift in Sources */,
 				45BA0D8A20903C760002E1D5 /* NotificationsViewPresenter.swift in Sources */,
 				4595F2082079EECF0040E5FA /* colors.swift in Sources */,
+				45E977092134D81F00723BA1 /* LoginQueryStateObject.swift in Sources */,
 				457BD98120A9D504007F0492 /* NotificationObject.swift in Sources */,
 				45662B48212EAD9500964BC9 /* MediaItemObject.swift in Sources */,
 				45662B31212E8BF700964BC9 /* UserFollowingsStateStore.swift in Sources */,
 				451DD4BD207F8BC7002C509A /* RankStateObject.swift in Sources */,
-				45662B0F212E8B1700964BC9 /* LoginStateStore.swift in Sources */,
+				45662B0F212E8B1700964BC9 /* LoginStateObject+system.swift in Sources */,
 				45BA0D8520903A020002E1D5 /* NotificationsStateObject.swift in Sources */,
 				45662AB2212E879600964BC9 /* AppStateStore.swift in Sources */,
 				45662B35212E8C0F00964BC9 /* UpdateUserStateStore.swift in Sources */,

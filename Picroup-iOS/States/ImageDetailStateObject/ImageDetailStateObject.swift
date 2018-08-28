@@ -40,15 +40,6 @@ final class ImageDetailStateObject: VersionedPrimaryObject {
     
     @objc dynamic var routeState: RouteStateObject?
     
-    @objc dynamic var loginRoute: LoginRouteObject?
-    @objc dynamic var imageDetialRoute: ImageDetialRouteObject?
-    @objc dynamic var imageCommetsRoute: ImageCommetsRouteObject?
-    @objc dynamic var tagMediaRoute: TagMediaRouteObject?
-    @objc dynamic var updateMediumTagsRoute: UpdateMediumTagsRouteObject?
-    @objc dynamic var userRoute: UserRouteObject?
-    @objc dynamic var feedbackRoute: FeedbackRouteObject?
-    @objc dynamic var popRoute: PopRouteObject?
-    
     @objc dynamic var snackbar: SnackbarObject?
 }
 

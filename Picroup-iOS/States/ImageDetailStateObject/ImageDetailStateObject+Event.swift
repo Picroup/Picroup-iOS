@@ -113,8 +113,8 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             medium?.delete()
             deleteMediumError = nil
             triggerDeleteMediumQuery = false
+            routeState?.reduce(event: .onTriggerPop, realm: realm)
             snackbar?.reduce(event: .onUpdateMessage("已删除"), realm: realm)
-            popRoute?.updateVersion()
         case .onDeleteMediumError(let error):
             deleteMediumError = error.localizedDescription
             triggerDeleteMediumQuery = false
@@ -130,8 +130,8 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             blockMediumVersion = UUID().uuidString
             blockMediumError = nil
             triggerBlockMediumQuery = false
+            routeState?.reduce(event: .onTriggerPop, realm: realm)
             snackbar?.reduce(event: .onUpdateMessage("已减少类似内容"), realm: realm)
-            popRoute?.updateVersion()
         case .onBlockMediumError(let error):
             blockMediumVersion = nil
             blockMediumError = error.localizedDescription

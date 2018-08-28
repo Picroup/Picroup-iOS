@@ -23,27 +23,21 @@ extension LoginStateObject {
 
 extension LoginStateObject: IsFeedbackStateObject {
     
-    func reduce(event: LoginStateObject.Event, realm: Realm) {
+    func reduce(event: Event, realm: Realm) {
         switch event {
         case .onTriggerLogin:
-            guard shouldLogin else { return }
-            sessionState?.currentUser = nil
-            loginError = nil
-            triggerLoginQuery = true
+            loginQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onLoginSuccess(let data):
-            sessionState?.reduce(event: .onCreateUser(data), realm: realm)
-            loginError = nil
-            triggerLoginQuery = false
+            loginQueryState?.reduce(event: .onSuccess(data), realm: realm)
             snackbar?.reduce(event: .onUpdateMessage("登录成功"), realm: realm)
         case .onLoginError(let error):
-            sessionState?.currentUser = nil
-            loginError = error.localizedDescription
-            triggerLoginQuery = false
-            snackbar?.reduce(event: .onUpdateMessage(loginError), realm: realm)
+            loginQueryState?.reduce(event: .onError(error), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
         case .onChangeUsername(let username):
-            self.username = username
+            loginQueryState?.reduce(event: .onChangeUsername(username), realm: realm)
         case .onChangePassword(let password):
-            self.password = password
+            loginQueryState?.reduce(event: .onChangePassword(password), realm: realm)
         }
+        updateVersion()
     }
 }

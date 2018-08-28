@@ -32,6 +32,7 @@ extension UserSessionStateObject {
     
     enum Event {
         case onCreateUser(UserDetailFragment)
+        case onUpdateUser(UserFragment)
         case onRemoveUser
     }
 }
@@ -40,6 +41,8 @@ extension UserSessionStateObject: IsFeedbackStateObject {
     func reduce(event: Event, realm: Realm) {
         switch event {
         case .onCreateUser(let data):
+            currentUser = UserObject.create(from: data)(realm)
+        case .onUpdateUser(let data):
             currentUser = UserObject.create(from: data)(realm)
         case .onRemoveUser:
             currentUser = nil

@@ -10,39 +10,20 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
-enum LoginError: LocalizedError {
-    case usernameOrPasswordIncorrect
-}
 
-extension LoginError {
+final class LoginStateObject: VersionedPrimaryObject {
     
-    var errorDescription: String {
-        switch self {
-        case .usernameOrPasswordIncorrect: return "用户名或密码错误"
-        }
-    }
-}
-
-final class LoginStateObject: PrimaryObject {
-    
-    @objc dynamic var sessionState: UserSessionStateObject?
-    
-    @objc dynamic var username: String = ""
-    @objc dynamic var password: String = ""
-    @objc dynamic var loginError: String?
-    @objc dynamic var triggerLoginQuery: Bool = false
-    
+    @objc dynamic var loginQueryState: LoginQueryStateObject?
     @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension LoginStateObject {
     var loginQuery: LoginQuery? {
-        let next = LoginQuery(username: username, password: password)
-        return triggerLoginQuery ? next : nil
+        return loginQueryState?.query
     }
-    var isUsernameValid: Bool { return username.matchExpression(RegularPattern.username) }
-    var isPasswordValid: Bool { return password.matchExpression(RegularPattern.password) }
-    var shouldLogin: Bool { return isUsernameValid && isPasswordValid && !triggerLoginQuery }
+    var isUsernameValid: Bool { return loginQueryState?.isUsernameValid ?? false }
+    var isPasswordValid: Bool { return loginQueryState?.isPasswordValid ?? false }
+    var shouldLogin: Bool { return loginQueryState?.shouldLogin ?? false }
 }
 
 extension LoginStateObject {
@@ -52,7 +33,7 @@ extension LoginStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "sessionState": UserSessionStateObject.createValues(),
+                "loginQueryState": LoginQueryStateObject.createValues(),
                 "snackbar": ["_id": _id],
                 ]
             return try realm.update(LoginStateObject.self, value: value)
