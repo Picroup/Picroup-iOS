@@ -38,6 +38,5 @@ extension LoginStateObject: IsFeedbackStateObject {
         case .onChangePassword(let password):
             loginQueryState?.reduce(event: .onChangePassword(password), realm: realm)
         }
-        updateVersion()
     }
 }

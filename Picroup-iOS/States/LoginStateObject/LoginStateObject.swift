@@ -18,9 +18,7 @@ final class LoginStateObject: VersionedPrimaryObject {
 }
 
 extension LoginStateObject {
-    var loginQuery: LoginQuery? {
-        return loginQueryState?.query
-    }
+    var loginQuery: LoginQuery? { return loginQueryState?.query }
     var isUsernameValid: Bool { return loginQueryState?.isUsernameValid ?? false }
     var isPasswordValid: Bool { return loginQueryState?.isPasswordValid ?? false }
     var shouldLogin: Bool { return loginQueryState?.shouldLogin ?? false }

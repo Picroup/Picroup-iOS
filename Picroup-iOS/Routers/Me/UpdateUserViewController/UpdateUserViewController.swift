@@ -72,7 +72,7 @@ final class UpdateUserViewController: ShowNavigationBarViewController {
         })
         
         let states = store.states
-            .debug("UpdateUserState", trimOutput: false)
+//            .debug("UpdateUserState", trimOutput: true)
 
         Signal.merge(
             uiFeedback(states),

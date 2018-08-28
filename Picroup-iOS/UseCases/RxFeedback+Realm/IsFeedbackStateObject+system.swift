@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import RxRealm
 
-extension IsFeedbackStateObject where Self: PrimaryObject {
+extension IsFeedbackStateObject where Self: VersionedPrimaryObject {
     
     typealias DriverFeedback = (Driver<Self>) -> Signal<Event>
     typealias ObservableFeedback = (Observable<Self>) -> Observable<Event>

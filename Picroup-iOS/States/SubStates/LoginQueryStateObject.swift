@@ -26,7 +26,6 @@ extension LoginError {
 
 final class LoginQueryStateObject: PrimaryObject {
     
-    
     @objc dynamic var username: String = ""
     @objc dynamic var password: String = ""
     

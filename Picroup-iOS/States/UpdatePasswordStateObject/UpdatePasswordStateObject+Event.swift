@@ -30,30 +30,18 @@ extension UpdatePasswordStateObject: IsFeedbackStateObject {
     func reduce(event: UpdatePasswordStateObject.Event, realm: Realm) {
         switch event {
         case .onChangeOldPassword(let password):
-            self.oldPassword = password
-            self.isOldPasswordValid = password.matchExpression(RegularPattern.password)
+            userSetPasswordQueryState?.reduce(event: .onChangeOldPassword(password), realm: realm)
         case .onChangePassword(let password):
-            self.password = password
-            self.isPasswordValid = password.matchExpression(RegularPattern.password)
-            
+            userSetPasswordQueryState?.reduce(event: .onChangePassword(password), realm: realm)
         case .onTriggerSetPassword:
-            guard shouldSetPassword else { return }
-            setPasswordError = nil
-            triggerSetPasswordQuery = true
+            userSetPasswordQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onSetPasswordSuccess(let data):
-            sessionState?.reduce(event: .onUpdateUser(data), realm: realm)
-
-            setPasswordError = nil
-            triggerSetPasswordQuery = false
-            
+            userSetPasswordQueryState?.reduce(event: .onSuccess(data), realm: realm)
             snackbar?.reduce(event: .onUpdateMessage("密码已修改"), realm: realm)
-            
             routeState?.reduce(event: .onTriggerPop, realm: realm)
         case .onSetPasswordError(let error):
-            setPasswordError = error.localizedDescription
-            triggerSetPasswordQuery = false
-            
-            snackbar?.reduce(event: .onUpdateMessage(setPasswordError), realm: realm)
+            userSetPasswordQueryState?.reduce(event: .onError(error), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
         case .onTriggerPop:
             routeState?.reduce(event: .onTriggerPop, realm: realm)
         }

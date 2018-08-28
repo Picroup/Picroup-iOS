@@ -8,10 +8,21 @@
 
 import RxSwift
 
+enum UnwrapError: Error {
+    case unexpectedNil
+}
+
 extension PrimitiveSequence where TraitType == SingleTrait {
     
     public func unwrap<T>() -> PrimitiveSequence<MaybeTrait, T> where Element == T? {
         return filter { $0 != nil }.map { $0! }
+    }
+    
+    public func forceUnwrap<T>() -> PrimitiveSequence<SingleTrait, T> where Element == T? {
+        return map {
+            guard let value = $0 else { throw UnwrapError.unexpectedNil }
+            return value
+        }
     }
 }
 

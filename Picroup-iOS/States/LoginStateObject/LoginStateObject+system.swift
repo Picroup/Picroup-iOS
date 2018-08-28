@@ -27,6 +27,7 @@ extension LoginStateObject {
         
         return system(
             feedbacks: [uiFeedback, queryLoginFeedback],
+//            composeStates: { $0.debug("LoginState", trimOutput: false) },
             composeEvents: { $0.debug("LoginState.Event", trimOutput: true) }
         )
     }

@@ -11,32 +11,16 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
-final class UpdatePasswordStateObject: PrimaryObject {
+final class UpdatePasswordStateObject: VersionedPrimaryObject {
     
-    @objc dynamic var sessionState: UserSessionStateObject?
-    
-    @objc dynamic var oldPassword: String = ""
-    @objc dynamic var password: String = ""
-    
-    @objc dynamic var isOldPasswordValid: Bool = false
-    @objc dynamic var isPasswordValid: Bool = false
-    
-    @objc dynamic var setPasswordError: String?
-    @objc dynamic var triggerSetPasswordQuery: Bool = false
-    
+    @objc dynamic var userSetPasswordQueryState: UserSetPasswordQueryStateObject?
     @objc dynamic var routeState: RouteStateObject?
     @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension UpdatePasswordStateObject {
-    var setPasswordQuery: UserSetPasswordQuery? {
-        guard let userId = sessionState?.currentUserId else { return nil }
-        let next = UserSetPasswordQuery(userId: userId, password: password, oldPassword: oldPassword)
-        return triggerSetPasswordQuery ? next : nil
-    }
-    var shouldSetPassword: Bool {
-        return isOldPasswordValid && isPasswordValid && !triggerSetPasswordQuery
-    }
+    var setPasswordQuery: UserSetPasswordQuery? { return userSetPasswordQueryState?.query }
+    var shouldSetPassword: Bool { return userSetPasswordQueryState?.shouldSetPassword ?? false }
 }
 
 extension UpdatePasswordStateObject {
@@ -46,11 +30,7 @@ extension UpdatePasswordStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "sessionState": UserSessionStateObject.createValues(),
-                "oldPassword": "",
-                "password": "",
-                "isOldPasswordValid": false,
-                "isPasswordValid": false,
+                "userSetPasswordQueryState": UserSetPasswordQueryStateObject.createValues(),
                 "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],
                 ]
