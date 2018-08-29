@@ -17,9 +17,9 @@ extension NotificationsStateObject {
     enum Event {
         case onTriggerReload
         case onTriggerGetMore
-        case onGetReloadData(CursorNotoficationsFragment)
-        case onGetMoreData(CursorNotoficationsFragment)
+        case onGetData(CursorNotoficationsFragment)
         case onGetError(Error)
+        
         case onMarkSuccess(String)
         case onMarkError(Error)
         
@@ -29,40 +29,25 @@ extension NotificationsStateObject {
     }
 }
 
-extension NotificationsStateObject.Event {
-    
-    static func onGetData(isReload: Bool) -> (CursorNotoficationsFragment) -> NotificationsStateObject.Event {
-        return { isReload ? .onGetReloadData($0) : .onGetMoreData($0) }
-    }
-}
-
 extension NotificationsStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
         case .onTriggerReload:
-            notifications?.cursor.value = nil
-            notificationsError = nil
-            triggerNotificationsQuery = true
+            notificationsQueryState?.reduce(event: .onTriggerReload, realm: realm)
+
         case .onTriggerGetMore:
-            guard shouldQueryMoreNotifications else { return }
-            notificationsError = nil
-            triggerNotificationsQuery = true
-        case .onGetReloadData(let data):
-            notifications = CursorNotificationsObject.create(from: data, id: PrimaryKey.default)(realm)
-            notificationsError = nil
-            triggerNotificationsQuery = false
-            
+            notificationsQueryState?.reduce(event: .onTriggerGetMore, realm: realm)
+
+        case .onGetData(let data):
+            notificationsQueryState?.reduce(event: .onGetData(data), realm: realm)
+
             marked = nil
             markError = nil
             triggerMarkQuery = true
-        case .onGetMoreData(let data):
-            notifications?.merge(from: data)(realm)
-            notificationsError = nil
-            triggerNotificationsQuery = false
         case .onGetError(let error):
-            notificationsError = error.localizedDescription
-            triggerNotificationsQuery = false
+            notificationsQueryState?.reduce(event: .onGetError(error), realm: realm)
+
             
         case .onMarkSuccess(let id):
             sessionState?.currentUser?.notificationsCount.value = 0

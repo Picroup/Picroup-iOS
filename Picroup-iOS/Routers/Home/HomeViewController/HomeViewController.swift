@@ -17,7 +17,7 @@ import RealmSwift
 final class HomeViewController: BaseViewController, IsStateViewController {
     
     typealias State = HomeStateObject
-    typealias Event = HomeStateObject.Event
+    typealias Event = State.Event
 
     @IBOutlet var presenter: HomeViewPresenter!
 

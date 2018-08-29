@@ -16,17 +16,8 @@ class CursorMediaStateObject: PrimaryObject {
     @objc dynamic var trigger: Bool = false
 }
 
-extension CursorMediaStateObject {
-    var hasMore: Bool {
-        return cursorMedia?.cursor.value != nil
-    }
-    var shouldQueryMore: Bool {
-        return !trigger && hasMore
-    }
-    var isEmpty: Bool {
-        guard let items = cursorMedia?.items else { return false }
-        return trigger == false && error == nil && items.isEmpty
-    }
+extension CursorMediaStateObject: IsCursorItemsStateObject {
+    var cursorItemsObject: CursorMediaObject? { return cursorMedia }
 }
 
 extension CursorMediaStateObject {

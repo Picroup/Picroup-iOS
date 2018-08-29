@@ -19,7 +19,7 @@ final class UpdatePasswordViewController: BaseViewController, IsStateViewControl
     @IBOutlet fileprivate var presenter: UpdatePasswordPresenter!
     
     typealias State = UpdatePasswordStateObject
-    typealias Event = UpdatePasswordStateObject.Event
+    typealias Event = State.Event
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -19,7 +19,7 @@ class LoginViewController: ShowNavigationBarViewController, IsStateViewControlle
     @IBOutlet fileprivate var presenter: LoginViewPresenter!
     
     typealias State = LoginStateObject
-    typealias Event = LoginStateObject.Event
+    typealias Event = State.Event
     
     override func viewDidLoad() {
         super.viewDidLoad()

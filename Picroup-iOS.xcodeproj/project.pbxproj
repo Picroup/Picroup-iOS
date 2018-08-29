@@ -210,6 +210,8 @@
 		457BD99820B30559007F0492 /* UserFollowers.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 457BD99720B30559007F0492 /* UserFollowers.graphql */; };
 		457BD99A20B306AA007F0492 /* UserFollowingsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD99920B306AA007F0492 /* UserFollowingsStateObject.swift */; };
 		457BD99D20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457BD99C20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift */; };
+		457D8A9D21366D1A00719F23 /* CursorNotificationsQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D8A9C21366D1A00719F23 /* CursorNotificationsQueryStateObject.swift */; };
+		457D8A9F2136709F00719F23 /* IsCursorItemsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D8A9E2136709F00719F23 /* IsCursorItemsStateObject.swift */; };
 		458006D820A17283004BD982 /* UIViewController+Rx+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */; };
 		458006DA20A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */; };
 		4580F4F821001DA5006EFF85 /* AVHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4580F4F721001DA4006EFF85 /* AVHelper.swift */; };
@@ -554,6 +556,8 @@
 		457BD99720B30559007F0492 /* UserFollowers.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserFollowers.graphql; sourceTree = "<group>"; };
 		457BD99920B306AA007F0492 /* UserFollowingsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFollowingsStateObject.swift; sourceTree = "<group>"; };
 		457BD99C20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrimaryObject+IdentifiableType.swift"; sourceTree = "<group>"; };
+		457D8A9C21366D1A00719F23 /* CursorNotificationsQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorNotificationsQueryStateObject.swift; sourceTree = "<group>"; };
+		457D8A9E2136709F00719F23 /* IsCursorItemsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsCursorItemsStateObject.swift; sourceTree = "<group>"; };
 		458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+NavigationBar.swift"; sourceTree = "<group>"; };
 		458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx+shouldHideNavigationBar.swift"; sourceTree = "<group>"; };
 		4580F4F721001DA4006EFF85 /* AVHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVHelper.swift; sourceTree = "<group>"; };
@@ -999,6 +1003,7 @@
 			children = (
 				45662A9C212B9B6D00964BC9 /* Services */,
 				45662B3D212EA00A00964BC9 /* Versioned.swift */,
+				457D8A9E2136709F00719F23 /* IsCursorItemsStateObject.swift */,
 				45E9771721364BC900723BA1 /* IsStateViewController.swift */,
 			);
 			path = Protocols;
@@ -1772,6 +1777,7 @@
 		45CD0693212FA8B100AE563E /* SubStates */ = {
 			isa = PBXGroup;
 			children = (
+				457D8A9C21366D1A00719F23 /* CursorNotificationsQueryStateObject.swift */,
 				456D14652105B089008EDD41 /* CursorMediaStateObject.swift */,
 				45E977132136291E00723BA1 /* HotMediaStateObject.swift */,
 				45E9771521362B3200723BA1 /* HotMediaTagsStateObject.swift */,
@@ -2234,6 +2240,7 @@
 				451DD4C12083125A002C509A /* Objective.swift in Sources */,
 				4595F219207A15010040E5FA /* Mutabled.swift in Sources */,
 				4561DE6B2100412800F77510 /* RankVideoCell.swift in Sources */,
+				457D8A9F2136709F00719F23 /* IsCursorItemsStateObject.swift in Sources */,
 				45662A9E212B9B8700964BC9 /* CacheService.swift in Sources */,
 				45517D4620BCDCF900F2D7DE /* FollowButtonPresenter.swift in Sources */,
 				455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */,
@@ -2332,6 +2339,7 @@
 				45183EC020CF862000497B59 /* RealmProvider.swift in Sources */,
 				45662B44212EAD3D00964BC9 /* RxProgressObject.swift in Sources */,
 				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
+				457D8A9D21366D1A00719F23 /* CursorNotificationsQueryStateObject.swift in Sources */,
 				45E977142136291E00723BA1 /* HotMediaStateObject.swift in Sources */,
 				45FC0C0320A95765006AAF3D /* Realm+background.swift in Sources */,
 				45662AFF212E8AA900964BC9 /* UpdateUserStateObject+Event.swift in Sources */,

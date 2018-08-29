@@ -10,32 +10,33 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 import RxRealm
+import RxFeedback
 
-final class NotificationsStateStore {
+extension NotificationsStateObject {
     
-    let states: Driver<NotificationsStateObject>
-    private let _state: NotificationsStateObject
-    
-    init() throws {
+    func system(
+        uiFeedback: @escaping DriverFeedback,
+        shouldQuery: @escaping () -> Bool,
+        queryNotifacations: @escaping (MyNotificationsQuery) -> Single<CursorNotoficationsFragment>,
+        queryMark: @escaping (MarkNotificationsAsViewedQuery) -> Single<String>
+        ) -> Driver<NotificationsStateObject> {
         
-        let realm = try Realm()
-        let _state = try NotificationsStateObject.create()(realm)
-        let states = Observable.from(object: _state).asDriver(onErrorDriveWith: .empty())
+        let queryNotifacationsFeedback: DriverFeedback = react(query: { $0.notificationsQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
+            return queryNotifacations(query)
+                .map(Event.onGetData)
+                .asSignal(onErrorReturnJust: Event.onGetError)
+        })
         
-        self._state = _state
-        self.states = states
-    }
-    
-    func on(event: NotificationsStateObject.Event) {
-        let id = PrimaryKey.default
-        Realm.backgroundReduce(ofType: NotificationsStateObject.self, forPrimaryKey: id, event: event)
-    }
-    
-    func notifications() -> Driver<[NotificationObject]> {
-        guard let items = _state.notifications?.items else { return .empty() }
-        return Observable.collection(from: items)
-            .asDriver(onErrorDriveWith: .empty())
-            .map { $0.toArray() }
+        let queryMarkFeedback: DriverFeedback = react(query: { $0.markQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
+            return queryMark(query)
+                .map(Event.onMarkSuccess)
+                .asSignal(onErrorReturnJust: Event.onMarkError)
+        })
+        
+        return system(
+            feedbacks: [uiFeedback, queryNotifacationsFeedback, queryMarkFeedback],
+            //            composeStates: { $0.debug("NotificationsState", trimOutput: false) },
+            composeEvents: { $0.debug("NotificationsState.Event", trimOutput: true) }
+        )
     }
 }
-

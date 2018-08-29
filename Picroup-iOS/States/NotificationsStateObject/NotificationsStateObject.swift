@@ -12,14 +12,12 @@ import RxSwift
 import RxCocoa
 import RxRealm
 
-final class NotificationsStateObject: PrimaryObject {
+final class NotificationsStateObject: VersionedPrimaryObject {
     
     @objc dynamic var sessionState: UserSessionStateObject?
     
-    @objc dynamic var notifications: CursorNotificationsObject?
-    @objc dynamic var notificationsError: String?
-    @objc dynamic var triggerNotificationsQuery: Bool = false
-    
+    @objc dynamic var notificationsQueryState: CursorNotificationsQueryStateObject?
+
     @objc dynamic var marked: String?
     @objc dynamic var markError: String?
     @objc dynamic var triggerMarkQuery: Bool = false
@@ -30,27 +28,14 @@ final class NotificationsStateObject: PrimaryObject {
 
 extension NotificationsStateObject {
     public var notificationsQuery: MyNotificationsQuery? {
-        guard let userId = sessionState?.currentUserId else { return nil }
-        let next = MyNotificationsQuery(userId: userId, cursor: notifications?.cursor.value)
-        return triggerNotificationsQuery ? next : nil
-    }
-    var shouldQueryMoreNotifications: Bool {
-        return !triggerNotificationsQuery && hasMoreNotifications
-    }
-    var isNotificationsEmpty: Bool {
-        guard let items = notifications?.items else { return false }
-        return !triggerNotificationsQuery && notificationsError == nil && items.isEmpty
-    }
-    var hasMoreNotifications: Bool {
-        return notifications?.cursor.value != nil
+        return notificationsQueryState?.query(userId: sessionState?.currentUserId)
     }
     public var markQuery: MarkNotificationsAsViewedQuery? {
         guard let userId = sessionState?.currentUserId else { return nil }
         let next = MarkNotificationsAsViewedQuery(userId: userId)
-        return triggerMarkQuery && !isNotificationsEmpty ? next : nil
+        return triggerMarkQuery && notificationsQueryState?.isEmpty == false ? next : nil
     }
 }
-
 
 extension NotificationsStateObject {
     
@@ -60,7 +45,7 @@ extension NotificationsStateObject {
             let value: Any = [
                 "_id": _id,
                 "sessionState": UserSessionStateObject.createValues(),
-                "notifications": ["_id": _id],
+                "notificationsQueryState": CursorNotificationsQueryStateObject.createValues(id: _id),
                 "routeState": RouteStateObject.createValues(),
                 ]
             return try realm.update(NotificationsStateObject.self, value: value)
