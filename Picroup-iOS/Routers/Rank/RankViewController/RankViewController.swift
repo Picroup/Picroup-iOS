@@ -15,7 +15,7 @@ import Material
 import Apollo
 import RealmSwift
 
-final class RankViewController: BaseViewController {
+final class RankViewController: BaseViewController, IsStateViewController {
     
     @IBOutlet var presenter: RankViewPresenter!
     

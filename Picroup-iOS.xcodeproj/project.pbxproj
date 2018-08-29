@@ -318,6 +318,7 @@
 		45E977122134F5E500723BA1 /* UserSetPasswordQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E977112134F5E500723BA1 /* UserSetPasswordQueryStateObject.swift */; };
 		45E977142136291E00723BA1 /* HotMediaStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E977132136291E00723BA1 /* HotMediaStateObject.swift */; };
 		45E9771621362B3200723BA1 /* HotMediaTagsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E9771521362B3200723BA1 /* HotMediaTagsStateObject.swift */; };
+		45E9771821364BC900723BA1 /* IsStateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E9771721364BC900723BA1 /* IsStateViewController.swift */; };
 		45EC928120D3C65100A473D4 /* Moment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC928020D3C65100A473D4 /* Moment.swift */; };
 		45F0A7C820C65E8E0085F978 /* DeleteMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45F0A7C720C65E8E0085F978 /* DeleteMedium.graphql */; };
 		45F0A7CA20C65EC30085F978 /* DeleteComment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45F0A7C920C65EC30085F978 /* DeleteComment.graphql */; };
@@ -661,6 +662,7 @@
 		45E977112134F5E500723BA1 /* UserSetPasswordQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetPasswordQueryStateObject.swift; sourceTree = "<group>"; };
 		45E977132136291E00723BA1 /* HotMediaStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotMediaStateObject.swift; sourceTree = "<group>"; };
 		45E9771521362B3200723BA1 /* HotMediaTagsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotMediaTagsStateObject.swift; sourceTree = "<group>"; };
+		45E9771721364BC900723BA1 /* IsStateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsStateViewController.swift; sourceTree = "<group>"; };
 		45EC928020D3C65100A473D4 /* Moment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moment.swift; sourceTree = "<group>"; };
 		45F0A7C720C65E8E0085F978 /* DeleteMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = DeleteMedium.graphql; sourceTree = "<group>"; };
 		45F0A7C920C65EC30085F978 /* DeleteComment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = DeleteComment.graphql; sourceTree = "<group>"; };
@@ -997,6 +999,7 @@
 			children = (
 				45662A9C212B9B6D00964BC9 /* Services */,
 				45662B3D212EA00A00964BC9 /* Versioned.swift */,
+				45E9771721364BC900723BA1 /* IsStateViewController.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -2308,6 +2311,7 @@
 				45AA3B4520A311BD0032A8CF /* ImageDetailPresenter.swift in Sources */,
 				45B0204720AC0D7000BD5D8F /* ImageCommentsStateObject.swift in Sources */,
 				457BD99D20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift in Sources */,
+				45E9771821364BC900723BA1 /* IsStateViewController.swift in Sources */,
 				45B0207520B6B0D500BD5D8F /* MainStateObject.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,
 				459F259920A28C13008B6C9B /* ObservableType+catchErrorRecover.swift in Sources */,

@@ -14,10 +14,12 @@ import RxFeedback
 import Apollo
 import RealmSwift
 
-class UpdatePasswordViewController: BaseViewController {
+final class UpdatePasswordViewController: BaseViewController, IsStateViewController {
 
     @IBOutlet fileprivate var presenter: UpdatePasswordPresenter!
-    fileprivate typealias Feedback = (Driver<UpdatePasswordStateObject>) -> Signal<UpdatePasswordStateObject.Event>
+    
+    typealias State = UpdatePasswordStateObject
+    typealias Event = UpdatePasswordStateObject.Event
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +29,7 @@ class UpdatePasswordViewController: BaseViewController {
     
     private func setupRxFeedback() {
         
-        guard let realm = try? Realm(), let state = try? UpdatePasswordStateObject.create()(realm) else { return }
+        guard let realm = try? Realm(), let state = try? State.create()(realm) else { return }
 
         state.system(
             uiFeedback: uiFeedback,
@@ -40,7 +42,7 @@ class UpdatePasswordViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    var uiFeedback: UpdatePasswordStateObject.DriverFeedback {
+    var uiFeedback: State.DriverFeedback {
         return bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
@@ -53,9 +55,9 @@ class UpdatePasswordViewController: BaseViewController {
                 me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.oldPasswordField.rx.resignFirstResponder()),
                 me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.passwordField.rx.resignFirstResponder()),
                 ]
-            let events: [Signal<UpdatePasswordStateObject.Event>] = [
-                presenter.oldPasswordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).distinctUntilChanged().map(UpdatePasswordStateObject.Event.onChangeOldPassword),
-                presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).distinctUntilChanged().map(UpdatePasswordStateObject.Event.onChangePassword),
+            let events: [Signal<Event>] = [
+                presenter.oldPasswordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).distinctUntilChanged().map(Event.onChangeOldPassword),
+                presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).distinctUntilChanged().map(Event.onChangePassword),
                 presenter.setPasswordButton.rx.tap.asSignal().map { .onTriggerSetPassword },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)

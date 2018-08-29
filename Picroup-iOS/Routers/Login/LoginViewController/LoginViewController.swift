@@ -14,11 +14,13 @@ import RxFeedback
 import Apollo
 import RealmSwift
 
-class LoginViewController: ShowNavigationBarViewController {
+class LoginViewController: ShowNavigationBarViewController, IsStateViewController{
     
     @IBOutlet fileprivate var presenter: LoginViewPresenter!
-    fileprivate typealias Feedback = (Driver<LoginStateObject>) -> Signal<LoginStateObject.Event>
-
+    
+    typealias State = LoginStateObject
+    typealias Event = LoginStateObject.Event
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.setup(view: view, navigationItem: navigationItem)
@@ -27,7 +29,7 @@ class LoginViewController: ShowNavigationBarViewController {
     
     private func setupRxFeedback() {
         
-        guard let realm = try? Realm(), let state = try? LoginStateObject.create()(realm) else { return }
+        guard let realm = try? Realm(), let state = try? State.create()(realm) else { return }
         
         state.system(
             uiFeedback: uiFeedback,
@@ -44,7 +46,7 @@ class LoginViewController: ShowNavigationBarViewController {
         
     }
     
-    var uiFeedback: LoginStateObject.DriverFeedback {
+    var uiFeedback: State.DriverFeedback {
         weak var weakSelf = self
         return bind(self) { (me, state) in
             let presenter = me.presenter!
@@ -65,9 +67,9 @@ class LoginViewController: ShowNavigationBarViewController {
                 me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.usernameField.rx.resignFirstResponder()),
                 me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.passwordField.rx.resignFirstResponder()),
                 ]
-            let events: [Signal<LoginStateObject.Event>] = [
-                presenter.usernameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangeUsername),
-                presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangePassword),
+            let events: [Signal<Event>] = [
+                presenter.usernameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(Event.onChangeUsername),
+                presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(Event.onChangePassword),
                 presenter.loginButton.rx.tap.asSignal().map { .onTriggerLogin },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)

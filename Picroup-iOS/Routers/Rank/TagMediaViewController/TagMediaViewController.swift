@@ -15,7 +15,7 @@ import Material
 import Apollo
 import RealmSwift
 
-final class TagMediaViewController: ShowNavigationBarViewController {
+final class TagMediaViewController: ShowNavigationBarViewController, IsStateViewController {
     
     typealias Dependency = String
     var dependency: Dependency!

@@ -14,8 +14,11 @@ import RxFeedback
 import Apollo
 import RealmSwift
 
-final class HomeViewController: BaseViewController {
+final class HomeViewController: BaseViewController, IsStateViewController {
     
+    typealias State = HomeStateObject
+    typealias Event = HomeStateObject.Event
+
     @IBOutlet var presenter: HomeViewPresenter!
 
     override func viewDidLoad() {
@@ -26,7 +29,7 @@ final class HomeViewController: BaseViewController {
     
     private func setupRxFeedback() {
         
-        guard let realm = try? Realm(), let state = try? HomeStateObject.create()(realm) else { return }
+        guard let realm = try? Realm(), let state = try? State.create()(realm) else { return }
         
         state.system(
             uiFeedback: uiFeedback,
@@ -39,7 +42,7 @@ final class HomeViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    var uiFeedback: HomeStateObject.DriverFeedback {
+    var uiFeedback: State.DriverFeedback {
         typealias Section = MediaPreserter.Section
         weak var weakSelf = self
         return bind(self) { (me, state) in
@@ -57,7 +60,7 @@ final class HomeViewController: BaseViewController {
                 presenter.collectionView.rx.shouldHideNavigationBar().emit(to: presenter.isFabButtonHidden),
                 presenter.collectionView.rx.setDelegate(presenter.mediaPresenter),
                 ]
-            let events: [Signal<HomeStateObject.Event>] = [
+            let events: [Signal<Event>] = [
                 .just(.onTriggerReloadMyInterestedMedia),
                 //                _events.asSignal(),
                 me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMyInterestedMediaIfNeeded },
@@ -68,7 +71,7 @@ final class HomeViewController: BaseViewController {
                     }.map { .onTriggerGetMoreMyInterestedMedia },
                 presenter.collectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
                 presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReloadMyInterestedMedia },
-                presenter.fabButton.rx.tap.asSignal().flatMapLatest { PhotoPickerProvider.pickMedia(from: weakSelf) } .map(HomeStateObject.Event.onTriggerCreateImage),
+                presenter.fabButton.rx.tap.asSignal().flatMapLatest { PhotoPickerProvider.pickMedia(from: weakSelf) } .map(Event.onTriggerCreateImage),
                 presenter.addUserButton.rx.tap.asSignal().map { .onTriggerSearchUser },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
