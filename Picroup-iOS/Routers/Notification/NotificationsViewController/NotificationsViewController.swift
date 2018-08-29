@@ -13,7 +13,7 @@ import Apollo
 import RxFeedback
 import RealmSwift
 
-class NotificationsViewController: BaseViewController, IsStateViewController {
+final class NotificationsViewController: BaseViewController, IsStateViewController {
     
     @IBOutlet fileprivate var presenter: NotificationsViewPresenter!
     

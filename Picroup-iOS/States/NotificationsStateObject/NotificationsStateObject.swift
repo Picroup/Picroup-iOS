@@ -17,10 +17,11 @@ final class NotificationsStateObject: VersionedPrimaryObject {
     @objc dynamic var sessionState: UserSessionStateObject?
     
     @objc dynamic var notificationsQueryState: CursorNotificationsQueryStateObject?
+    @objc dynamic var markNotificationsQueryState: MarkNotificationsQueryStateObject?
 
-    @objc dynamic var marked: String?
-    @objc dynamic var markError: String?
-    @objc dynamic var triggerMarkQuery: Bool = false
+//    @objc dynamic var marked: String?
+//    @objc dynamic var markError: String?
+//    @objc dynamic var triggerMarkQuery: Bool = false
     
     @objc dynamic var routeState: RouteStateObject?
 
@@ -31,9 +32,7 @@ extension NotificationsStateObject {
         return notificationsQueryState?.query(userId: sessionState?.currentUserId)
     }
     public var markQuery: MarkNotificationsAsViewedQuery? {
-        guard let userId = sessionState?.currentUserId else { return nil }
-        let next = MarkNotificationsAsViewedQuery(userId: userId)
-        return triggerMarkQuery && notificationsQueryState?.isEmpty == false ? next : nil
+        return markNotificationsQueryState?.query(userId: sessionState?.currentUserId)
     }
 }
 
@@ -46,6 +45,7 @@ extension NotificationsStateObject {
                 "_id": _id,
                 "sessionState": UserSessionStateObject.createValues(),
                 "notificationsQueryState": CursorNotificationsQueryStateObject.createValues(id: _id),
+                "markNotificationsQueryState": MarkNotificationsQueryStateObject.createValues(),
                 "routeState": RouteStateObject.createValues(),
                 ]
             return try realm.update(NotificationsStateObject.self, value: value)

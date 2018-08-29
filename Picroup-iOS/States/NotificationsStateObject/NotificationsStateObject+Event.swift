@@ -35,30 +35,18 @@ extension NotificationsStateObject: IsFeedbackStateObject {
         switch event {
         case .onTriggerReload:
             notificationsQueryState?.reduce(event: .onTriggerReload, realm: realm)
-
         case .onTriggerGetMore:
             notificationsQueryState?.reduce(event: .onTriggerGetMore, realm: realm)
-
         case .onGetData(let data):
             notificationsQueryState?.reduce(event: .onGetData(data), realm: realm)
-
-            marked = nil
-            markError = nil
-            triggerMarkQuery = true
+            markNotificationsQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onGetError(let error):
             notificationsQueryState?.reduce(event: .onGetError(error), realm: realm)
-
-            
         case .onMarkSuccess(let id):
-            sessionState?.currentUser?.notificationsCount.value = 0
-            marked = id
-            markError = nil
-            triggerMarkQuery = false
+            sessionState?.reduce(event: .onClearNotificationCount, realm: realm)
+            markNotificationsQueryState?.reduce(event: .onSuccess(id), realm: realm)
         case .onMarkError(let error):
-            marked = nil
-            markError = error.localizedDescription
-            triggerMarkQuery = false
-            
+            markNotificationsQueryState?.reduce(event: .onError(error), realm: realm)
         case .onTriggerShowImage(let mediumId):
             routeState?.reduce(event: .onTriggerShowImage(mediumId), realm: realm)
         case .onTriggerShowComments(let mediumId):
