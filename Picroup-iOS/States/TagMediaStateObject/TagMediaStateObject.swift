@@ -37,7 +37,6 @@ extension TagMediaStateObject {
     static func create(tag: String) -> (Realm) throws -> TagMediaStateObject {
         let hotMediaId = PrimaryKey.hotMediaByTagId(tag)
         return { realm in
-            let _id = PrimaryKey.default
             let value: Any = [
                 "_id": tag,
                 "sessionState": UserSessionStateObject.createValues(),

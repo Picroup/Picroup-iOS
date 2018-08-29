@@ -35,7 +35,8 @@ final class HomeViewController: BaseViewController {
                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                     .map { $0?.data?.user?.interestedMedia.fragments.cursorMediaFragment }.forceUnwrap()
         })
-        .disposed(by: disposeBag)
+            .drive()
+            .disposed(by: disposeBag)
     }
     
     var uiFeedback: HomeStateObject.DriverFeedback {

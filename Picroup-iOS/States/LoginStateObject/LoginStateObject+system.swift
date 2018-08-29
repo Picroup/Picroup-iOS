@@ -17,7 +17,7 @@ extension LoginStateObject {
         uiFeedback: @escaping DriverFeedback,
         shouldQuery: @escaping () -> Bool,
         queryLogin: @escaping (LoginQuery) -> Single<UserDetailFragment>
-        ) -> Disposable {
+        ) -> Driver<LoginStateObject> {
         
         let queryLoginFeedback: DriverFeedback = react(query: { $0.loginQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
             return queryLogin(query)

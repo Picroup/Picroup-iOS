@@ -144,7 +144,7 @@
 		45662B11212E8B2100964BC9 /* MainStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B10212E8B2100964BC9 /* MainStateStore.swift */; };
 		45662B13212E8B2D00964BC9 /* MeStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B12212E8B2D00964BC9 /* MeStateStore.swift */; };
 		45662B15212E8B3C00964BC9 /* NotificationsStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B14212E8B3C00964BC9 /* NotificationsStateStore.swift */; };
-		45662B17212E8B5300964BC9 /* RankStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B16212E8B5300964BC9 /* RankStateStore.swift */; };
+		45662B17212E8B5300964BC9 /* RankStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B16212E8B5300964BC9 /* RankStateObject+system.swift */; };
 		45662B19212E8B5E00964BC9 /* RegisterUsernameStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B18212E8B5E00964BC9 /* RegisterUsernameStateStore.swift */; };
 		45662B1B212E8B6900964BC9 /* RegisterPasswordStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B1A212E8B6900964BC9 /* RegisterPasswordStateStore.swift */; };
 		45662B1D212E8B7500964BC9 /* RegisterPhoneStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B1C212E8B7500964BC9 /* RegisterPhoneStateStore.swift */; };
@@ -316,6 +316,8 @@
 		45E9770E2134ECAA00723BA1 /* IsFeedbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E9770D2134ECA900723BA1 /* IsFeedbackState.swift */; };
 		45E977102134F36400723BA1 /* UpdatePasswordPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E9770F2134F36400723BA1 /* UpdatePasswordPresenter.swift */; };
 		45E977122134F5E500723BA1 /* UserSetPasswordQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E977112134F5E500723BA1 /* UserSetPasswordQueryStateObject.swift */; };
+		45E977142136291E00723BA1 /* HotMediaStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E977132136291E00723BA1 /* HotMediaStateObject.swift */; };
+		45E9771621362B3200723BA1 /* HotMediaTagsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E9771521362B3200723BA1 /* HotMediaTagsStateObject.swift */; };
 		45EC928120D3C65100A473D4 /* Moment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC928020D3C65100A473D4 /* Moment.swift */; };
 		45F0A7C820C65E8E0085F978 /* DeleteMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45F0A7C720C65E8E0085F978 /* DeleteMedium.graphql */; };
 		45F0A7CA20C65EC30085F978 /* DeleteComment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45F0A7C920C65EC30085F978 /* DeleteComment.graphql */; };
@@ -485,7 +487,7 @@
 		45662B10212E8B2100964BC9 /* MainStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStateStore.swift; sourceTree = "<group>"; };
 		45662B12212E8B2D00964BC9 /* MeStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeStateStore.swift; sourceTree = "<group>"; };
 		45662B14212E8B3C00964BC9 /* NotificationsStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsStateStore.swift; sourceTree = "<group>"; };
-		45662B16212E8B5300964BC9 /* RankStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankStateStore.swift; sourceTree = "<group>"; };
+		45662B16212E8B5300964BC9 /* RankStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RankStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B18212E8B5E00964BC9 /* RegisterUsernameStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUsernameStateStore.swift; sourceTree = "<group>"; };
 		45662B1A212E8B6900964BC9 /* RegisterPasswordStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPasswordStateStore.swift; sourceTree = "<group>"; };
 		45662B1C212E8B7500964BC9 /* RegisterPhoneStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPhoneStateStore.swift; sourceTree = "<group>"; };
@@ -657,6 +659,8 @@
 		45E9770D2134ECA900723BA1 /* IsFeedbackState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsFeedbackState.swift; sourceTree = "<group>"; };
 		45E9770F2134F36400723BA1 /* UpdatePasswordPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordPresenter.swift; sourceTree = "<group>"; };
 		45E977112134F5E500723BA1 /* UserSetPasswordQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetPasswordQueryStateObject.swift; sourceTree = "<group>"; };
+		45E977132136291E00723BA1 /* HotMediaStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotMediaStateObject.swift; sourceTree = "<group>"; };
+		45E9771521362B3200723BA1 /* HotMediaTagsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotMediaTagsStateObject.swift; sourceTree = "<group>"; };
 		45EC928020D3C65100A473D4 /* Moment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moment.swift; sourceTree = "<group>"; };
 		45F0A7C720C65E8E0085F978 /* DeleteMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = DeleteMedium.graphql; sourceTree = "<group>"; };
 		45F0A7C920C65EC30085F978 /* DeleteComment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = DeleteComment.graphql; sourceTree = "<group>"; };
@@ -1112,7 +1116,7 @@
 			children = (
 				451DD4BC207F8BC7002C509A /* RankStateObject.swift */,
 				45662AE0212E89FB00964BC9 /* RankStateObject+Event.swift */,
-				45662B16212E8B5300964BC9 /* RankStateStore.swift */,
+				45662B16212E8B5300964BC9 /* RankStateObject+system.swift */,
 			);
 			path = RankStateObject;
 			sourceTree = "<group>";
@@ -1766,6 +1770,8 @@
 			isa = PBXGroup;
 			children = (
 				456D14652105B089008EDD41 /* CursorMediaStateObject.swift */,
+				45E977132136291E00723BA1 /* HotMediaStateObject.swift */,
+				45E9771521362B3200723BA1 /* HotMediaTagsStateObject.swift */,
 				45E977082134D81F00723BA1 /* LoginQueryStateObject.swift */,
 				45662B41212EA20400964BC9 /* SnackbarObject.swift */,
 				45CD0694212FA91200AE563E /* StarMediumStateObject.swift */,
@@ -2297,7 +2303,7 @@
 				45662B3E212EA00A00964BC9 /* Versioned.swift in Sources */,
 				45662B4C212EAE9900964BC9 /* UserSessionStateObject.swift in Sources */,
 				45B0206A20B4036100BD5D8F /* FollowersPresenter.swift in Sources */,
-				45662B17212E8B5300964BC9 /* RankStateStore.swift in Sources */,
+				45662B17212E8B5300964BC9 /* RankStateObject+system.swift in Sources */,
 				45662B4A212EADB300964BC9 /* SaveMediumStateObject.swift in Sources */,
 				45AA3B4520A311BD0032A8CF /* ImageDetailPresenter.swift in Sources */,
 				45B0204720AC0D7000BD5D8F /* ImageCommentsStateObject.swift in Sources */,
@@ -2322,6 +2328,7 @@
 				45183EC020CF862000497B59 /* RealmProvider.swift in Sources */,
 				45662B44212EAD3D00964BC9 /* RxProgressObject.swift in Sources */,
 				451CD31D207A393C0063A972 /* SharedSequence+Operator.swift in Sources */,
+				45E977142136291E00723BA1 /* HotMediaStateObject.swift in Sources */,
 				45FC0C0320A95765006AAF3D /* Realm+background.swift in Sources */,
 				45662AFF212E8AA900964BC9 /* UpdateUserStateObject+Event.swift in Sources */,
 				4591AEE220A3E0CC001EC384 /* SectionedDataSource+indexPath.swift in Sources */,
@@ -2375,6 +2382,7 @@
 				45662B33212E8C0200964BC9 /* UserFollowersStateStore.swift in Sources */,
 				45662B0D212E8B0A00964BC9 /* ImageCommentsStateStore.swift in Sources */,
 				45B0205820AE69A000BD5D8F /* PrimaryKey.swift in Sources */,
+				45E9771621362B3200723BA1 /* HotMediaTagsStateObject.swift in Sources */,
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
 				45662B25212E8BA100964BC9 /* ResetPasswordCodeStateStore.swift in Sources */,
 				45183EBE20CF65BC00497B59 /* AboutAppViewController.swift in Sources */,

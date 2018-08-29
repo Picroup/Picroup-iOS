@@ -15,27 +15,14 @@ import RxRealm
 final class RankStateObject: VersionedPrimaryObject {
     
     @objc dynamic var sessionState: UserSessionStateObject?
-    
-    let tagStates = List<TagStateObject>()
-    
-    @objc dynamic var hotMediaState: CursorMediaStateObject?
-
-    @objc dynamic var selectedTagHistory: SelectedTagHistoryObject?
-    
+    @objc dynamic var hotMediaTagsState: HotMediaTagsStateObject?
+    @objc dynamic var hotMediaQueryState: TagMediaQueryStateObject?
     @objc dynamic var routeState: RouteStateObject?
 
 }
 
 extension RankStateObject {
-    var hotMediaQuery: HotMediaByTagsQuery? {
-        return hotMediaState?.trigger == true
-            ? HotMediaByTagsQuery(tags: selectedTags, queryUserId: sessionState?.currentUserId)
-            : nil
-    }
-    private var selectedTags: [String]? {
-        return tagStates.first(where: { $0.isSelected })
-            .map { [$0.tag] }
-    }
+    var hotMediaQuery: HotMediaByTagsQuery? { return hotMediaQueryState?.query(tags: hotMediaTagsState?.selectedTags, queryUserId: sessionState?.currentUserId) }
 }
 
 extension RankStateObject {
@@ -47,27 +34,17 @@ extension RankStateObject {
             let value: Any = [
                 "_id": _id,
                 "sessionState": UserSessionStateObject.createValues(),
-                "hotMediaState": CursorMediaStateObject.createValues(id: hotMediaId),
-                "selectedTagHistory": ["_id": PrimaryKey.viewTagHistory],
+                "hotMediaTagsState": HotMediaTagsStateObject.createValues(),
+                "hotMediaQueryState": TagMediaQueryStateObject.createValues(id: hotMediaId),
                 "routeState": RouteStateObject.createValues(),
                 ]
             let result = try realm.update(RankStateObject.self, value: value)
             try realm.write {
-                result.resetTagStates(realm: realm)
+                result.hotMediaTagsState?.reduce(event: .resetTagStates, realm: realm)
             }
             return result
         }
     }
 }
 
-extension RankStateObject {
-    
-    fileprivate func resetTagStates(realm: Realm) {
-        let tags = selectedTagHistory?.getTags().toArray() ?? []
-        let tagStates = tags.map { realm.create(TagStateObject.self, value: ["tag": $0]) }
-        tagStates.first?.isSelected = true
-        self.tagStates.removeAll()
-        self.tagStates.append(objectsIn: tagStates)
-    }
-}
 

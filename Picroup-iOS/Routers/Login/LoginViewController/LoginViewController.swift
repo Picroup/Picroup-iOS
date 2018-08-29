@@ -39,6 +39,7 @@ class LoginViewController: ShowNavigationBarViewController {
                         return userDetailFragment
                 }
         })
+            .drive()
             .disposed(by: disposeBag)
         
     }

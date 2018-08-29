@@ -17,7 +17,7 @@ extension UpdatePasswordStateObject {
         uiFeedback: @escaping DriverFeedback,
         shouldQuery: @escaping () -> Bool,
         querySetPassword: @escaping (UserSetPasswordQuery) -> Single<UserFragment>
-        ) -> Disposable {
+        ) -> Driver<UpdatePasswordStateObject> {
         
         let querySetPasswordFeedback: DriverFeedback = react(query: { $0.setPasswordQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
             return querySetPassword(query)

@@ -15,7 +15,11 @@ import RxRealm
 extension RankStateObject {
     
     enum Event {
-        case hotMediaState(CursorMediaStateObject.Event)
+        case onTriggerReloadHotMedia
+        case onTriggerGetMoreHotMedia
+        case onGetHotMediaData(CursorMediaFragment)
+        case onGetHotMediaError(Error)
+        
         case onToggleTag(String)
         case onTriggerLogin
         case onTriggerShowImage(String)
@@ -26,23 +30,22 @@ extension RankStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
-        case .hotMediaState(let event):
-            hotMediaState?.reduce(event: event, realm: realm)
+        case .onTriggerReloadHotMedia:
+            hotMediaQueryState?.reduce(event: .onTriggerReload, realm: realm)
+        case .onTriggerGetMoreHotMedia:
+            hotMediaQueryState?.reduce(event: .onTriggerGetMore, realm: realm)
+        case .onGetHotMediaData(let data):
+            hotMediaQueryState?.reduce(event: .onGetSampleData(data), realm: realm)
+        case .onGetHotMediaError(let error):
+            hotMediaQueryState?.reduce(event: .onGetError(error), realm: realm)
+            
         case .onToggleTag(let tag):
-            tagStates.forEach { tagState in
-                if tagState.tag == tag {
-                    tagState.isSelected = !tagState.isSelected
-                    if tagState.isSelected { selectedTagHistory?.accept(tag) }
-                } else {
-                    tagState.isSelected = false
-                }
-            }
-            hotMediaState?.reduce(event: .onTriggerReload, realm: realm)
+            hotMediaTagsState?.reduce(event: .onToggleTag(tag), realm: realm)
+            hotMediaQueryState?.reduce(event: .onTriggerReload, realm: realm)
         case .onTriggerLogin:
             routeState?.reduce(event: .onTriggerLogin, realm: realm)
         case .onTriggerShowImage(let mediumId):
             routeState?.reduce(event: .onTriggerShowImage(mediumId), realm: realm)
         }
-        updateVersion()
     }
 }

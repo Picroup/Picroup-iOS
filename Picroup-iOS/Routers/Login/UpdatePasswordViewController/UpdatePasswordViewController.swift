@@ -36,6 +36,7 @@ class UpdatePasswordViewController: BaseViewController {
                 return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                     .map { $0?.data?.user?.setPassword.fragments.userFragment }.forceUnwrap()
         })
+            .drive()
             .disposed(by: disposeBag)
     }
     

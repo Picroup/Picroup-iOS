@@ -17,7 +17,7 @@ extension HomeStateObject {
         uiFeedback: @escaping DriverFeedback,
         shouldQuery: @escaping () -> Bool,
         queryMyInterestedMedia: @escaping (UserInterestedMediaQuery) -> Single<CursorMediaFragment>
-        ) -> Disposable {
+        ) -> Driver<HomeStateObject> {
         
         let queryMyInterestedMediaFeedback: DriverFeedback = react(query: { $0.myInterestedMediaQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
              return queryMyInterestedMedia(query)
