@@ -15,7 +15,10 @@ import RxRealm
 extension TagMediaStateObject {
     
     enum Event {
-        case hotMediaState(CursorMediaStateObject.Event)
+        case onTriggerReloadHotMedia
+        case onTriggerGetMoreHotMedia
+        case onGetHotMediaData(CursorMediaFragment)
+        case onGetHotMediaError(Error)
         case onTriggerShowImage(String)
     }
 }
@@ -24,11 +27,16 @@ extension TagMediaStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
-        case .hotMediaState(let event):
-            hotMediaState?.reduce(event: event, realm: realm)
+        case .onTriggerReloadHotMedia:
+            hotMediaQueryState?.reduce(event: .onTriggerReload, realm: realm)
+        case .onTriggerGetMoreHotMedia:
+            hotMediaQueryState?.reduce(event: .onTriggerGetMore, realm: realm)
+        case .onGetHotMediaData(let data):
+            hotMediaQueryState?.reduce(event: .onGetSampleData(data), realm: realm)
+        case .onGetHotMediaError(let error):
+            hotMediaQueryState?.reduce(event: .onGetError(error), realm: realm)
         case .onTriggerShowImage(let mediumId):
             routeState?.reduce(event: .onTriggerShowImage(mediumId), realm: realm)
         }
-        updateVersion()
     }
 }

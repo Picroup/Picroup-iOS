@@ -11,36 +11,26 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 import RxRealm
+import RxFeedback
 
-
-
-final class TagMediaStateObjectStore {
+extension TagMediaStateObject {
     
-    let tag: String
-    let states: Driver<TagMediaStateObject>
-    private let _state: TagMediaStateObject
-    
-    init(tag: String) throws {
-        let realm = try Realm()
-        let _state = try TagMediaStateObject.create(tag: tag)(realm)
-        let states = Observable.from(object: _state).asDriver(onErrorDriveWith: .empty())
+    func system(
+        uiFeedback: @escaping DriverFeedback,
+        shouldQuery: @escaping () -> Bool,
+        queryMedia: @escaping (HotMediaByTagsQuery) -> Single<CursorMediaFragment>
+        ) -> Driver<TagMediaStateObject> {
         
-        self.tag = tag
-        self._state = _state
-        self.states = states
-    }
-    
-    func on(event: TagMediaStateObject.Event) {
-        let id = tag
-        Realm.backgroundReduce(ofType: TagMediaStateObject.self, forPrimaryKey: id, event: event)
-    }
-    
-    func hotMediaItems() -> Driver<[MediumObject]> {
-        guard let items = _state.hotMediaState?.cursorMedia?.items else { return .empty() }
-        return Observable.collection(from: items)
-            //            .delaySubscription(0.3, scheduler: MainScheduler.instance)
-            .asDriver(onErrorDriveWith: .empty())
-            .map { $0.toArray() }
+        let queryMediaFeedback: DriverFeedback = react(query: { $0.hotMediaQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
+            return queryMedia(query)
+                .map(Event.onGetHotMediaData)
+                .asSignal(onErrorReturnJust: Event.onGetHotMediaError)
+        })
+        
+        return system(
+            feedbacks: [uiFeedback, queryMediaFeedback],
+            //            composeStates: { $0.debug("TagMediaState", trimOutput: false) },
+            composeEvents: { $0.debug("TagMediaState.Event", trimOutput: true) }
+        )
     }
 }
-

@@ -19,7 +19,6 @@ final class RankViewController: BaseViewController {
     
     @IBOutlet var presenter: RankViewPresenter!
     
-//    typealias Feedback = (Driver<RankStateObject>) -> Signal<RankStateObject.Event>
     typealias State = RankStateObject
     typealias Event = State.Event
 
@@ -32,8 +31,6 @@ final class RankViewController: BaseViewController {
     private func setupRxFeedback() {
         
         guard let realm = try? Realm(), let state = try? State.create()(realm) else { return }
-
-//        guard let store = try? RankStateStore() else { return }
         
         state.system(
             uiFeedback: uiFeedback,

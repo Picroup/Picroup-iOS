@@ -15,32 +15,24 @@ import RxRealm
 final class TagMediaStateObject: VersionedPrimaryObject {
     
     @objc dynamic var sessionState: UserSessionStateObject?
-    
-    @objc dynamic var hotMediaState: CursorMediaStateObject?
-
+    @objc dynamic var hotMediaQueryState: TagMediaQueryStateObject?
     @objc dynamic var routeState: RouteStateObject?
 }
 
 extension TagMediaStateObject {
-    var tag: String {
-        return _id
-    }
-    var hotMediaQuery: HotMediaByTagsQuery? {
-        return hotMediaState?.trigger == true
-            ? HotMediaByTagsQuery(tags: [tag], queryUserId: sessionState?.currentUserId)
-            : nil
-    }
+    var tag: String { return _id }
+    var hotMediaQuery: HotMediaByTagsQuery? { return hotMediaQueryState?.query(tags: [tag], queryUserId: sessionState?.currentUserId) }
 }
 
 extension TagMediaStateObject {
     
     static func create(tag: String) -> (Realm) throws -> TagMediaStateObject {
-        let hotMediaId = PrimaryKey.hotMediaByTagId(tag)
+        let tagMediaId = PrimaryKey.hotMediaByTagId(tag)
         return { realm in
             let value: Any = [
                 "_id": tag,
                 "sessionState": UserSessionStateObject.createValues(),
-                "hotMediaState": CursorMediaStateObject.createValues(id: hotMediaId),
+                "hotMediaQueryState": TagMediaQueryStateObject.createValues(id: tagMediaId),
                 "routeState": RouteStateObject.createValues(),
                 ]
             let result = try realm.update(TagMediaStateObject.self, value: value)

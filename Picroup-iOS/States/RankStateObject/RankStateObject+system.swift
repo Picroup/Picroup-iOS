@@ -28,7 +28,7 @@ extension RankStateObject {
         
         return system(
             feedbacks: [uiFeedback, queryMediaFeedback],
-            composeStates: { $0.debug("RankState", trimOutput: false) },
+//            composeStates: { $0.debug("RankState", trimOutput: false) },
             composeEvents: { $0.debug("RankState.Event", trimOutput: true) }
         )
     }
