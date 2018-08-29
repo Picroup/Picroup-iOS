@@ -1,62 +1,64 @@
 //
-//  CursorNotificationsStateObject.swift
+//  CursorReputationsQueryStateObject.swift
 //  Picroup-iOS
 //
 //  Created by ovfun on 2018/8/29.
 //  Copyright © 2018年 luojie. All rights reserved.
 //
 
+
 import Foundation
 import RealmSwift
 
-final class CursorNotificationsQueryStateObject: PrimaryObject {
-    @objc dynamic var cursorNotifications: CursorNotificationsObject?
+final class CursorReputationsQueryStateObject: PrimaryObject {
+    @objc dynamic var cursorReputations: CursorReputationsObject?
     @objc dynamic var error: String?
     @objc dynamic var isReload: Bool = false
     @objc dynamic var trigger: Bool = false
 }
 
-extension CursorNotificationsQueryStateObject: IsCursorItemsStateObject {
-    var cursorItemsObject: CursorNotificationsObject? { return cursorNotifications }
+extension CursorReputationsQueryStateObject: IsCursorItemsStateObject {
+    var cursorItemsObject: CursorReputationsObject? { return cursorReputations }
 }
 
-extension CursorNotificationsQueryStateObject {
+extension CursorReputationsQueryStateObject {
     
-    func query(userId: String?) -> MyNotificationsQuery? {
+    func query(userId: String?) -> MyReputationsQuery? {
         guard let userId = userId else { return nil }
         return trigger == true
-            ? MyNotificationsQuery(userId: userId, cursor: cursorItemsObject?.cursor.value)
+            ? MyReputationsQuery(userId: userId, cursor: cursorItemsObject?.cursor.value)
             : nil
     }
 }
 
-extension CursorNotificationsQueryStateObject {
+extension CursorReputationsQueryStateObject {
     
     static func createValues(id: String) -> Any {
         return  [
             "_id": id,
-            "cursorNotifications": ["_id": id],
+            "cursorReputations": ["_id": id],
         ]
     }
 }
 
-extension CursorNotificationsQueryStateObject {
+extension CursorReputationsQueryStateObject {
     
     enum Event {
         case onTriggerReload
         case onTriggerGetMore
-        case onGetData(CursorNotoficationsFragment)
+        case onGetData(CursorReputationLinksFragment)
         case onGetError(Error)
     }
 }
 
-extension CursorNotificationsQueryStateObject: IsFeedbackStateObject {
+
+extension CursorReputationsQueryStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
         case .onTriggerReload:
             isReload = true
-            cursorNotifications?.cursor.value = nil
+            cursorReputations?.cursor.value = nil
             error = nil
             trigger = true
         case .onTriggerGetMore:
@@ -66,10 +68,10 @@ extension CursorNotificationsQueryStateObject: IsFeedbackStateObject {
             trigger = true
         case .onGetData(let data):
             if isReload {
-                cursorNotifications = CursorNotificationsObject.create(from: data, id: _id)(realm)
+                cursorReputations = CursorReputationsObject.create(from: data, id: _id)(realm)
                 isReload = false
             } else {
-                cursorNotifications?.merge(from: data)(realm)
+                cursorReputations?.merge(from: data)(realm)
             }
             error = nil
             trigger = false
@@ -79,3 +81,4 @@ extension CursorNotificationsQueryStateObject: IsFeedbackStateObject {
         }
     }
 }
+

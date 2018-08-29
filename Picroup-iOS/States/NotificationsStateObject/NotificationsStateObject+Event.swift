@@ -42,11 +42,13 @@ extension NotificationsStateObject: IsFeedbackStateObject {
             markNotificationsQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onGetError(let error):
             notificationsQueryState?.reduce(event: .onGetError(error), realm: realm)
+            
         case .onMarkSuccess(let id):
             sessionState?.reduce(event: .onClearNotificationCount, realm: realm)
             markNotificationsQueryState?.reduce(event: .onSuccess(id), realm: realm)
         case .onMarkError(let error):
             markNotificationsQueryState?.reduce(event: .onError(error), realm: realm)
+            
         case .onTriggerShowImage(let mediumId):
             routeState?.reduce(event: .onTriggerShowImage(mediumId), realm: realm)
         case .onTriggerShowComments(let mediumId):

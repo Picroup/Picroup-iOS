@@ -11,11 +11,14 @@ import Apollo
 import RxSwift
 import RxCocoa
 import RxFeedback
+import RealmSwift
 
-class ReputationsViewController: ShowNavigationBarViewController {
+class ReputationsViewController: ShowNavigationBarViewController, IsStateViewController {
     
     @IBOutlet fileprivate var presenter: ReputationsViewPresenter!
-    fileprivate typealias Feedback = (Driver<ReputationsStateObject>) -> Signal<ReputationsStateObject.Event>
+    
+    typealias State = ReputationsStateObject
+    typealias Event = State.Event
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,22 +28,35 @@ class ReputationsViewController: ShowNavigationBarViewController {
     
     private func setupRxFeedback() {
         
-        guard let store = try? ReputationsStateStore() else { return }
+        guard let realm = try? Realm(), let state = try? State.create()(realm) else { return }
         
+        state.system(
+            uiFeedback: uiFeedback,
+            shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
+            queryReputations: { query in
+                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.reputationLinks.fragments.cursorReputationLinksFragment }.forceUnwrap()
+        },
+            queryMark: { query in
+                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.markReputationLinksAsViewed.id }.forceUnwrap()
+        })
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
+    var uiFeedback: State.DriverFeedback {
         typealias Section = ReputationsViewPresenter.Section
-        
-        let uiFeedback: Feedback = bind(self) { (me, state)  in
+        return bind(self) { (me, state)  in
             let presenter = me.presenter!
             let subscriptions = [
                 state.map { $0.sessionState?.currentUser?.reputation.value?.description ?? "0" }.drive(me.navigationItem.detailLabel.rx.text),
-                store.reputations().map { [Section(model: "", items: $0)] }.drive(presenter.items),
+                state.map { [Section(model: "", items: $0.reputations())] }.drive(presenter.items),
                 state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
-                state.map { $0.isReputationsEmpty }.drive(presenter.isReputationsEmpty),
+                state.map { $0.reputationsQueryState?.isEmpty ?? false }.drive(presenter.isReputationsEmpty),
                 ]
-            let events: [Signal<ReputationsStateObject.Event>] = [
+            let events: [Signal<Event>] = [
                 .just(.onTriggerReload),
                 state.flatMapLatest {
-                    $0.shouldQueryMoreReputations
+                    ($0.reputationsQueryState?.shouldQueryMore ?? false)
                         ? presenter.tableView.rx.triggerGetMore
                         : .empty()
                     }.map { .onTriggerGetMore },
@@ -59,30 +75,6 @@ class ReputationsViewController: ShowNavigationBarViewController {
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-        
-        let queryReputations: Feedback = react(query: { $0.reputationsQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.reputationLinks.fragments.cursorReputationLinksFragment }.unwrap()
-                .map(ReputationsStateObject.Event.onGetData(isReload: query.cursor == nil))
-                .asSignal(onErrorReturnJust: ReputationsStateObject.Event.onGetError)
-        })
-        
-        let queryMark: Feedback = react(query: { $0.markQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user?.markReputationLinksAsViewed.id }.unwrap()
-                .map(ReputationsStateObject.Event.onMarkSuccess)
-                .asSignal(onErrorReturnJust: ReputationsStateObject.Event.onMarkError)
-        })
-        
-        let states = store.states
-        
-        Signal.merge(
-            uiFeedback(states),
-            queryReputations(states),
-            queryMark(states)
-            )
-            .debug("ReputationsState.Event", trimOutput: true)
-            .emit(onNext: store.on)
-            .disposed(by: disposeBag)
-        
     }
 }
 
@@ -90,10 +82,14 @@ extension ReputationsStateObject {
     
     var footerState: LoadFooterViewState {
         return LoadFooterViewState.create(
-            cursor: reputations?.cursor.value,
-            items: reputations?.items,
-            trigger: triggerReputationsQuery,
-            error: reputationsError
+            cursor: reputationsQueryState?.cursorItemsObject?.cursor.value,
+            items: reputationsQueryState?.cursorItemsObject?.items,
+            trigger: reputationsQueryState?.trigger ?? false,
+            error: reputationsQueryState?.error
         )
+    }
+    
+    func reputations() -> [ReputationObject] {
+        return reputationsQueryState?.cursorReputations?.items.toArray() ?? []
     }
 }

@@ -45,7 +45,6 @@ final class NotificationsViewController: BaseViewController, IsStateViewControll
         })
         .drive()
         .disposed(by: disposeBag)
-        
     }
     
     var uiFeedback: State.DriverFeedback {
@@ -89,8 +88,8 @@ extension NotificationsStateObject {
     
     var footerState: LoadFooterViewState {
         return LoadFooterViewState.create(
-            cursor: notificationsQueryState?.cursorNotifications?.cursor.value,
-            items: notificationsQueryState?.cursorNotifications?.items,
+            cursor: notificationsQueryState?.cursorItemsObject?.cursor.value,
+            items: notificationsQueryState?.cursorItemsObject?.items,
             trigger: notificationsQueryState?.trigger ?? false,
             error: notificationsQueryState?.error
         )

@@ -12,45 +12,22 @@ import RxSwift
 import RxCocoa
 import RxRealm
 
-final class ReputationsStateObject: PrimaryObject {
+final class ReputationsStateObject: VersionedPrimaryObject {
     
     @objc dynamic var sessionState: UserSessionStateObject?
-    
-    @objc dynamic var reputations: CursorReputationsObject?
-    @objc dynamic var reputationsError: String?
-    @objc dynamic var triggerReputationsQuery: Bool = false
-    
-    @objc dynamic var marked: String?
-    @objc dynamic var markError: String?
-    @objc dynamic var triggerMarkQuery: Bool = false
-    
+    @objc dynamic var reputationsQueryState: CursorReputationsQueryStateObject?
+    @objc dynamic var markReputationsQueryState: MarkReputationsQueryStateObject?
     @objc dynamic var routeState: RouteStateObject?
-
 }
 
 extension ReputationsStateObject {
     public var reputationsQuery: MyReputationsQuery? {
-        guard let userId = sessionState?.currentUserId else { return nil }
-        let next = MyReputationsQuery(userId: userId, cursor: reputations?.cursor.value)
-        return triggerReputationsQuery ? next : nil
-    }
-    var shouldQueryMoreReputations: Bool {
-        return !triggerReputationsQuery && hasMoreReputations
-    }
-    var isReputationsEmpty: Bool {
-        guard let items = reputations?.items else { return false }
-        return !triggerReputationsQuery && reputationsError == nil && items.isEmpty
-    }
-    var hasMoreReputations: Bool {
-        return reputations?.cursor.value != nil
+        return reputationsQueryState?.query(userId: sessionState?.currentUserId)
     }
     public var markQuery: MarkReputationLinksAsViewedQuery? {
-        guard let userId = sessionState?.currentUserId else { return nil }
-        let next = MarkReputationLinksAsViewedQuery(userId: userId)
-        return triggerMarkQuery && !isReputationsEmpty ? next : nil
+        return markReputationsQueryState?.query(userId: sessionState?.currentUserId)
     }
 }
-
 
 extension ReputationsStateObject {
     
@@ -60,7 +37,8 @@ extension ReputationsStateObject {
             let value: Any = [
                 "_id": _id,
                 "sessionState": UserSessionStateObject.createValues(),
-                "reputations": ["_id": _id],
+                "reputationsQueryState": CursorReputationsQueryStateObject.createValues(id: _id),
+                "markReputationsQueryState": MarkReputationsQueryStateObject.createValues(),
                 "routeState": RouteStateObject.createValues(),
                 ]
             return try realm.update(ReputationsStateObject.self, value: value)

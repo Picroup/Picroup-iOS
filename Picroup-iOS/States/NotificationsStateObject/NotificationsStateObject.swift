@@ -15,16 +15,9 @@ import RxRealm
 final class NotificationsStateObject: VersionedPrimaryObject {
     
     @objc dynamic var sessionState: UserSessionStateObject?
-    
     @objc dynamic var notificationsQueryState: CursorNotificationsQueryStateObject?
     @objc dynamic var markNotificationsQueryState: MarkNotificationsQueryStateObject?
-
-//    @objc dynamic var marked: String?
-//    @objc dynamic var markError: String?
-//    @objc dynamic var triggerMarkQuery: Bool = false
-    
     @objc dynamic var routeState: RouteStateObject?
-
 }
 
 extension NotificationsStateObject {

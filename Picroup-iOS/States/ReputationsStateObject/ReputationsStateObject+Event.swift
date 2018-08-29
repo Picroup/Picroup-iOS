@@ -17,21 +17,15 @@ extension ReputationsStateObject {
     enum Event {
         case onTriggerReload
         case onTriggerGetMore
-        case onGetReloadData(CursorReputationLinksFragment)
-        case onGetMoreData(CursorReputationLinksFragment)
+        case onGetData(CursorReputationLinksFragment)
         case onGetError(Error)
+        
         case onMarkSuccess(String)
         case onMarkError(Error)
+        
         case onTriggerShowImage(String)
         case onTriggerShowUser(String)
         case onTriggerPop
-    }
-}
-
-extension ReputationsStateObject.Event {
-    
-    static func onGetData(isReload: Bool) -> (CursorReputationLinksFragment) -> ReputationsStateObject.Event {
-        return { isReload ? .onGetReloadData($0) : .onGetMoreData($0) }
     }
 }
 
@@ -40,37 +34,19 @@ extension ReputationsStateObject: IsFeedbackStateObject {
     func reduce(event: Event, realm: Realm) {
         switch event {
         case .onTriggerReload:
-            reputations?.cursor.value = nil
-            reputationsError = nil
-            triggerReputationsQuery = true
+            reputationsQueryState?.reduce(event: .onTriggerReload, realm: realm)
         case .onTriggerGetMore:
-            guard shouldQueryMoreReputations else { return }
-            reputationsError = nil
-            triggerReputationsQuery = true
-        case .onGetReloadData(let data):
-            reputations = CursorReputationsObject.create(from: data, id: PrimaryKey.default)(realm)
-            reputationsError = nil
-            triggerReputationsQuery = false
-            
-            marked = nil
-            markError = nil
-            triggerMarkQuery = true
-        case .onGetMoreData(let data):
-            reputations?.merge(from: data)(realm)
-            reputationsError = nil
-            triggerReputationsQuery = false
+            reputationsQueryState?.reduce(event: .onTriggerGetMore, realm: realm)
+        case .onGetData(let data):
+            reputationsQueryState?.reduce(event: .onGetData(data), realm: realm)
+            markReputationsQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onGetError(let error):
-            reputationsError = error.localizedDescription
-            triggerReputationsQuery = false
+            reputationsQueryState?.reduce(event: .onGetError(error), realm: realm)
             
         case .onMarkSuccess(let id):
-            marked = id
-            markError = nil
-            triggerMarkQuery = false
+            markReputationsQueryState?.reduce(event: .onSuccess(id), realm: realm)
         case .onMarkError(let error):
-            marked = nil
-            markError = error.localizedDescription
-            triggerMarkQuery = false
+            markReputationsQueryState?.reduce(event: .onError(error), realm: realm)
             
         case .onTriggerShowImage(let mediumId):
             routeState?.reduce(event: .onTriggerShowImage(mediumId), realm: realm)
