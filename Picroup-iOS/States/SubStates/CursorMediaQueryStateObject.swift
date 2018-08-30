@@ -1,5 +1,5 @@
 //
-//  CursorMediaStateObject.swift
+//  CursorMediaQueryStateObject.swift
 //  Picroup-iOS
 //
 //  Created by luojie on 2018/7/23.
@@ -9,18 +9,18 @@
 import Foundation
 import RealmSwift
 
-class CursorMediaStateObject: PrimaryObject {
+class CursorMediaQueryStateObject: PrimaryObject {
     @objc dynamic var cursorMedia: CursorMediaObject?
     @objc dynamic var error: String?
     @objc dynamic var isReload: Bool = false
     @objc dynamic var trigger: Bool = false
 }
 
-extension CursorMediaStateObject: IsCursorItemsStateObject {
+extension CursorMediaQueryStateObject: IsCursorItemsStateObject {
     var cursorItemsObject: CursorMediaObject? { return cursorMedia }
 }
 
-extension CursorMediaStateObject {
+extension CursorMediaQueryStateObject {
     
     static func createValues(id: String) -> Any {
         return  [
@@ -30,7 +30,7 @@ extension CursorMediaStateObject {
     }
 }
 
-extension CursorMediaStateObject {
+extension CursorMediaQueryStateObject {
     
     enum Event {
         case onTriggerReload
@@ -41,7 +41,7 @@ extension CursorMediaStateObject {
     }
 }
 
-extension CursorMediaStateObject: IsFeedbackStateObject {
+extension CursorMediaQueryStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {

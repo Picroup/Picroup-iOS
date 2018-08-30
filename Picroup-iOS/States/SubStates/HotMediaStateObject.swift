@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Apollo
 
-final class TagMediaQueryStateObject: CursorMediaStateObject {}
+final class TagMediaQueryStateObject: CursorMediaQueryStateObject {}
 
 extension TagMediaQueryStateObject {
     

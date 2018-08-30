@@ -19,7 +19,7 @@ extension UserStateObject {
         case onGetUserSuccess(UserQuery.Data.User)
         case onGetUserError(Error)
         
-        case userMediaState(CursorMediaStateObject.Event)
+        case userMediaState(CursorMediaQueryStateObject.Event)
         
         case onTriggerFollowUser
         case onFollowUserSuccess(FollowUserMutation.Data.FollowUser)

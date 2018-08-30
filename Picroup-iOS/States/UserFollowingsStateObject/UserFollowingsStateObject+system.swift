@@ -1,5 +1,5 @@
 //
-//  SearchUserStateStore.swift
+//  UserFollowingsStateStore.swift
 //  Picroup-iOS
 //
 //  Created by ovfun on 2018/8/23.
@@ -13,20 +13,20 @@ import RxCocoa
 import RxRealm
 import RxFeedback
 
-extension SearchUserStateObject {
+extension UserFollowingsStateObject {
     
     func system(
         uiFeedback: @escaping DriverFeedback,
         shouldQuery: @escaping () -> Bool,
-        searchUser: @escaping (SearchUserQuery) -> Single<SearchUserQuery.Data.SearchUser?>,
+        queryUserFollowings: @escaping (UserFollowingsQuery) -> Single<UserFollowingsQuery.Data.User.Following>,
         followUser: @escaping (FollowUserMutation) -> Single<FollowUserMutation.Data.FollowUser>,
         unfollowUser: @escaping (UnfollowUserMutation) -> Single<UnfollowUserMutation.Data.UnfollowUser>
-        ) -> Driver<SearchUserStateObject> {
+        ) -> Driver<UserFollowingsStateObject> {
         
-        let searchUserFeedback: DriverFeedback = react(query: { $0.searchUserQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
-            return searchUser(query)
-                .map(Event.onSearchUserSuccess)
-                .asSignal(onErrorReturnJust: Event.onSearchUserError)
+        let queryUserFollowingsFeedback: DriverFeedback = react(query: { $0.userFollowingsQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
+            return queryUserFollowings(query)
+                .map(Event.onGetUserFollowingsData)
+                .asSignal(onErrorReturnJust: Event.onGetUserFollowingsError)
         })
         
         let followUserFeedback: DriverFeedback = react(query: { $0.followUserQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
@@ -42,9 +42,9 @@ extension SearchUserStateObject {
         })
         
         return system(
-            feedbacks: [uiFeedback, searchUserFeedback, followUserFeedback, unfollowUserFeedback],
-            //            composeStates: { $0.debug("SearchUserState", trimOutput: false) },
-            composeEvents: { $0.debug("SearchUserState.Event", trimOutput: true) }
+            feedbacks: [uiFeedback, queryUserFollowingsFeedback, followUserFeedback, unfollowUserFeedback],
+            //            composeStates: { $0.debug("UserFollowingsState", trimOutput: false) },
+            composeEvents: { $0.debug("UserFollowingsState.Event", trimOutput: true) }
         )
     }
 }

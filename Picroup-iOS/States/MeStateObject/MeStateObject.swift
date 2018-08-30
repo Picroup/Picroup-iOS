@@ -18,9 +18,9 @@ final class MeStateObject: VersionedPrimaryObject {
     
     @objc dynamic var selectedTabIndex: Int = 0
     
-    @objc dynamic var myMediaState: CursorMediaStateObject?
+    @objc dynamic var myMediaState: CursorMediaQueryStateObject?
     
-    @objc dynamic var myStaredMediaState: CursorMediaStateObject?
+    @objc dynamic var myStaredMediaState: CursorMediaQueryStateObject?
 
     @objc dynamic var needUpdate: NeedUpdateStateObject?
     
@@ -58,8 +58,8 @@ extension MeStateObject {
             let value: Any = [
                 "_id": _id,
                 "sessionState": UserSessionStateObject.createValues(),
-                "myMediaState": CursorMediaStateObject.createValues(id: PrimaryKey.myMediaId),
-                "myStaredMediaState":  CursorMediaStateObject.createValues(id: PrimaryKey.myStaredMediaId),
+                "myMediaState": CursorMediaQueryStateObject.createValues(id: PrimaryKey.myMediaId),
+                "myStaredMediaState":  CursorMediaQueryStateObject.createValues(id: PrimaryKey.myStaredMediaId),
                 "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
                 ]

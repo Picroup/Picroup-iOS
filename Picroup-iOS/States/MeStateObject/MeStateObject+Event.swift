@@ -17,10 +17,10 @@ extension MeStateObject {
     enum Event {
         case onChangeSelectedTab(Tab)
         
-        case myMediaState(CursorMediaStateObject.Event)
+        case myMediaState(CursorMediaQueryStateObject.Event)
         case onTriggerReloadMyMediaIfNeeded
         
-        case myStaredMediaState(CursorMediaStateObject.Event)
+        case myStaredMediaState(CursorMediaQueryStateObject.Event)
         case onTriggerReloadMyStaredMediaIfNeeded
         
         case onTriggerShowImage(String)

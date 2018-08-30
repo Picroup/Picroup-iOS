@@ -20,7 +20,7 @@ final class UserStateObject: VersionedPrimaryObject {
     @objc dynamic var userError: String?
     @objc dynamic var triggerUserQuery: Bool = false
     
-    @objc dynamic var userMediaState: CursorMediaStateObject?
+    @objc dynamic var userMediaState: CursorMediaQueryStateObject?
     
     @objc dynamic var followUserVersion: String?
     @objc dynamic var followUserError: String?
@@ -101,7 +101,7 @@ extension UserStateObject {
                 "_id": userId,
                 "sessionState": UserSessionStateObject.createValues(),
                 "user": ["_id": userId],
-                "userMediaState": CursorMediaStateObject.createValues(id: PrimaryKey.userMediaId(userId)),
+                "userMediaState": CursorMediaQueryStateObject.createValues(id: PrimaryKey.userMediaId(userId)),
                 "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],

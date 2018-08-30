@@ -14,7 +14,7 @@ final class HomeStateObject: VersionedPrimaryObject {
         
     @objc dynamic var sessionState: UserSessionStateObject?
     
-    @objc dynamic var myInterestedMediaState: CursorMediaStateObject?
+    @objc dynamic var myInterestedMediaState: CursorMediaQueryStateObject?
 
     @objc dynamic var needUpdate: NeedUpdateStateObject?
 
@@ -38,7 +38,7 @@ extension HomeStateObject {
             let value: Any = [
                 "_id": _id,
                 "sessionState": UserSessionStateObject.createValues(),
-                "myInterestedMediaState": CursorMediaStateObject.createValues(id: PrimaryKey.myInterestedMediaId),
+                "myInterestedMediaState": CursorMediaQueryStateObject.createValues(id: PrimaryKey.myInterestedMediaId),
                 "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
                 ]

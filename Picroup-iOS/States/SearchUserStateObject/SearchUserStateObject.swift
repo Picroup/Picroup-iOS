@@ -15,10 +15,10 @@ import RxRealm
 final class SearchUserStateObject: VersionedPrimaryObject {
     
     @objc dynamic var sessionState: UserSessionStateObject?
-    @objc dynamic var searchUserQueryStateObject: SearchUserQueryStateObject?
+    @objc dynamic var searchUserQueryState: SearchUserQueryStateObject?
     
-    @objc dynamic var followUserQueryStateObject: FollowUserQueryStateObject?
-    @objc dynamic var unfollowUserQueryStateObject: UnfollowUserQueryStateObject?
+    @objc dynamic var followUserQueryState: FollowUserQueryStateObject?
+    @objc dynamic var unfollowUserQueryState: UnfollowUserQueryStateObject?
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
     @objc dynamic var routeState: RouteStateObject?
@@ -26,15 +26,15 @@ final class SearchUserStateObject: VersionedPrimaryObject {
 
 extension SearchUserStateObject {
     var searchUserQuery: SearchUserQuery? {
-        return searchUserQueryStateObject?.query(followedByUserId: sessionState?.currentUserId)
+        return searchUserQueryState?.query(followedByUserId: sessionState?.currentUserId)
     }
     
     var followUserQuery: FollowUserMutation? {
-        return followUserQueryStateObject?.query(userId: sessionState?.currentUserId)
+        return followUserQueryState?.query(userId: sessionState?.currentUserId)
     }
     
     var unfollowUserQuery: UnfollowUserMutation? {
-        return unfollowUserQueryStateObject?.query(userId: sessionState?.currentUserId)
+        return unfollowUserQueryState?.query(userId: sessionState?.currentUserId)
     }
 }
 
@@ -46,9 +46,9 @@ extension SearchUserStateObject {
             let value: Any = [
                 "_id": _id,
                 "sessionState": UserSessionStateObject.createValues(),
-                "searchUserQueryStateObject": SearchUserQueryStateObject.createValues(),
-                "followUserQuery": FollowUserQueryStateObject.createValues(),
-                "unfollowUserQuery": UnfollowUserQueryStateObject.createValues(),
+                "searchUserQueryState": SearchUserQueryStateObject.createValues(),
+                "followUserQueryState": FollowUserQueryStateObject.createValues(),
+                "unfollowUserQueryState": UnfollowUserQueryStateObject.createValues(),
                 "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
                 ]

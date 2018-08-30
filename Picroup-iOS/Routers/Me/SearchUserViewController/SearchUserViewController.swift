@@ -59,15 +59,15 @@ final class SearchUserViewController: ShowNavigationBarViewController, IsStateVi
         typealias Section = SearchUserPresenter.Section
         return bind(self) { (me, state)  in
             let presenter = me.presenter!
-            let _events = PublishRelay<SearchUserStateObject.Event>()
+            let _events = PublishRelay<Event>()
             let subscriptions = [
-                state.map { $0.searchUserQueryStateObject?.searchText }.asObservable().take(1).bind(to: presenter.searchBar.rx.text),
+                state.map { $0.searchUserQueryState?.searchText }.asObservable().take(1).bind(to: presenter.searchBar.rx.text),
                 state.map { [Section(model: "", items: $0.usersItems())] }.drive(presenter.items(_events)),
                 state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
                 me.rx.viewDidAppear.asSignal().mapToVoid().emit(to: presenter.searchBar.rx.becomeFirstResponder()),
                 me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.searchBar.rx.resignFirstResponder()),
                 ]
-            let events: [Signal<SearchUserStateObject.Event>] = [
+            let events: [Signal<Event>] = [
                 _events.asSignal(),
                 presenter.searchBar.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).skip(1).distinctUntilChanged().map { .onChangeSearchText($0) },
                 presenter.tableView.rx.modelSelected(UserObject.self).asSignal().map { .onTriggerShowUser($0._id) },
@@ -79,22 +79,22 @@ final class SearchUserViewController: ShowNavigationBarViewController, IsStateVi
 
 extension SearchUserStateObject {
     
-    func usersItems() -> [UserObject] {
-        guard let user = searchUserQueryStateObject?.success else { return [] }
-        return [user]
-    }
-    
     var footerState: LoadFooterViewState {
         return LoadFooterViewState.create(searchUser: self)
+    }
+    
+    func usersItems() -> [UserObject] {
+        guard let user = searchUserQueryState?.success else { return [] }
+        return [user]
     }
 }
 
 extension LoadFooterViewState {
     
     static func create(searchUser: SearchUserStateObject) -> LoadFooterViewState {
-        let trigger = searchUser.searchUserQueryStateObject?.trigger ?? false
-        let searchText = searchUser.searchUserQueryStateObject?.searchText ?? ""
-        let user = searchUser.searchUserQueryStateObject?.success
+        let trigger = searchUser.searchUserQueryState?.trigger ?? false
+        let searchText = searchUser.searchUserQueryState?.searchText ?? ""
+        let user = searchUser.searchUserQueryState?.success
         if trigger {
             return .loading
         }

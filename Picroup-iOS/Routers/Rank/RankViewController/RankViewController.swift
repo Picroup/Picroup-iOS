@@ -101,7 +101,7 @@ extension RankStateObject {
     }
 }
 
-extension CursorMediaStateObject {
+extension CursorMediaQueryStateObject {
     
     var footerState: LoadFooterViewState {
         if isReload == true {
