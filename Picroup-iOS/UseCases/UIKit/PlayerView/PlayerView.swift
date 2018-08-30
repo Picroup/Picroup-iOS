@@ -40,7 +40,7 @@ public final class PlayerView: UIView {
         
         player = AVPlayer(playerItem: nil)
         player.isMuted = true
-        player.automaticallyWaitsToMinimizeStalling = false
+//        player.automaticallyWaitsToMinimizeStalling = false
         
         playerLayer = AVPlayerLayer(player: player)
         playerLayer.videoGravity = .resizeAspectFill
@@ -64,7 +64,7 @@ public final class PlayerView: UIView {
         guard let url = url else { return reset() }
         self.url = url
         weak var weakSelf = self
-        
+
         let urlAsset: AVURLAsset
         if let fileURL = cacheService?.fileURL(for: url) {
             print("from cache")
@@ -80,12 +80,12 @@ public final class PlayerView: UIView {
         let playerItem = AVPlayerItem(asset: urlAsset)
         player.replaceCurrentItem(with: playerItem)
         player.play()
-        
+
         tokens.append(NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerItem, queue: .main) { _ in
             weakSelf?.player?.seek(to: kCMTimeZero)
             weakSelf?.player?.play()
         })
-        
+
         tokens.append(NotificationCenter.default.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: .main) { _ in
             weakSelf?.player?.play()
         })
