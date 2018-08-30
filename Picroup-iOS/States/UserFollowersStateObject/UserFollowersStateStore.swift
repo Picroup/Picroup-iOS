@@ -7,38 +7,42 @@
 //
 
 import Foundation
-import RealmSwift
 import RxSwift
 import RxCocoa
-import RxRealm
+import RxFeedback
 
-final class UserFollowersStateStore {
+extension UserFollowersStateObject {
     
-    let states: Driver<UserFollowersStateObject>
-    private let _state: UserFollowersStateObject
-    private let userId: String
-    
-    init(userId: String) throws {
-        let realm = try Realm()
-        let _state = try UserFollowersStateObject.create(userId: userId)(realm)
-        let states = Observable.from(object: _state).asDriver(onErrorDriveWith: .empty())
+    func system(
+        uiFeedback: @escaping DriverFeedback,
+        shouldQuery: @escaping () -> Bool,
+        queryUserFollowers: @escaping (UserFollowersQuery) -> Single<UserFollowersQuery.Data.User.Follower>,
+        followUser: @escaping (FollowUserMutation) -> Single<FollowUserMutation.Data.FollowUser>,
+        unfollowUser: @escaping (UnfollowUserMutation) -> Single<UnfollowUserMutation.Data.UnfollowUser>
+        ) -> Driver<UserFollowersStateObject> {
         
-        self.userId = userId
-        self._state = _state
-        self.states = states
-    }
-    
-    func on(event: UserFollowersStateObject.Event) {
-        Realm.backgroundReduce(ofType: UserFollowersStateObject.self, forPrimaryKey: userId, event: event)
-    }
-    
-    func userFollowersItems() -> Driver<[UserObject]> {
-        guard let items = _state.userFollowers?.items else { return .empty() }
-        return Observable.collection(from: items)
-            //            .delaySubscription(0.3, scheduler: MainScheduler.instance)
-            .asDriver(onErrorDriveWith: .empty())
-            .map { $0.toArray() }
+        let queryUserFollowersFeedback: DriverFeedback = react(query: { $0.userFollowersQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
+            return queryUserFollowers(query)
+                .map(Event.onGetUserFollowersData)
+                .asSignal(onErrorReturnJust: Event.onGetUserFollowersError)
+        })
+        
+        let followUserFeedback: DriverFeedback = react(query: { $0.followUserQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
+            return followUser(query)
+                .map(Event.onFollowUserSuccess)
+                .asSignal(onErrorReturnJust: Event.onFollowUserError)
+        })
+        
+        let unfollowUserFeedback: DriverFeedback = react(query: { $0.unfollowUserQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
+            return unfollowUser(query)
+                .map(Event.onUnfollowUserSuccess)
+                .asSignal(onErrorReturnJust: Event.onUnfollowUserError)
+        })
+        
+        return system(
+            feedbacks: [uiFeedback, queryUserFollowersFeedback, followUserFeedback, unfollowUserFeedback],
+            //            composeStates: { $0.debug("UserFollowersState", trimOutput: false) },
+            composeEvents: { $0.debug("UserFollowersState.Event", trimOutput: true) }
+        )
     }
 }
-
-

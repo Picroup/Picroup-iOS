@@ -12,23 +12,15 @@ import RxSwift
 import RxCocoa
 import RxRealm
 
-final class UserFollowersStateObject: PrimaryObject {
+final class UserFollowersStateObject: VersionedPrimaryObject {
     
     @objc dynamic var sessionState: UserSessionStateObject?
     
     @objc dynamic var user: UserObject?
     
-    @objc dynamic var userFollowers: CursorUsersObject?
-    @objc dynamic var userFollowersError: String?
-    @objc dynamic var triggerUserFollowersQuery: Bool = false
-    
-    @objc dynamic var followToUserId: String?
-    @objc dynamic var followUserError: String?
-    @objc dynamic var triggerFollowUserQuery: Bool = false
-    
-    @objc dynamic var unfollowToUserId: String?
-    @objc dynamic var unfollowUserError: String?
-    @objc dynamic var triggerUnfollowUserQuery: Bool = false
+    @objc dynamic var userFollowersQueryState: UserFollowersQueryStateObject?
+    @objc dynamic var followUserQueryState: FollowUserQueryStateObject?
+    @objc dynamic var unfollowUserQueryState: UnfollowUserQueryStateObject?
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
     
@@ -38,45 +30,15 @@ final class UserFollowersStateObject: PrimaryObject {
 extension UserFollowersStateObject {
     var userId: String { return _id }
     var userFollowersQuery: UserFollowersQuery? {
-        let (byUserId, withFollowed) = sessionState?.currentUserId == nil
-            ? ("", false)
-            : (sessionState!.currentUser!._id, true)
-        let next = UserFollowersQuery(userId: userId, followedByUserId: byUserId, cursor: userFollowers?.cursor.value, withFollowed: withFollowed)
-        return triggerUserFollowersQuery ? next : nil
-    }
-    var shouldQueryMoreUserFollowers: Bool {
-        return !triggerUserFollowersQuery && hasMoreUserFollowers
-    }
-    var isFollowersEmpty: Bool {
-        guard let items = userFollowers?.items else { return false }
-        return !triggerUserFollowersQuery && userFollowersError == nil && items.isEmpty
-    }
-    var hasMoreUserFollowers: Bool {
-        return userFollowers?.cursor.value != nil
+        return userFollowersQueryState?.query(currentUserId: sessionState?.currentUserId)
     }
     
-    var shouldFollowUser: Bool {
-        return !triggerFollowUserQuery
-    }
     var followUserQuery: FollowUserMutation? {
-        guard
-            let userId = sessionState?.currentUserId,
-            let toUserId = followToUserId else {
-                return nil
-        }
-        return triggerFollowUserQuery ? FollowUserMutation(userId: userId, toUserId: toUserId) : nil
+        return followUserQueryState?.query(userId: sessionState?.currentUserId)
     }
     
-    var shouldUnfollowUser: Bool {
-        return !triggerUnfollowUserQuery
-    }
     var unfollowUserQuery: UnfollowUserMutation? {
-        guard
-            let userId = sessionState?.currentUserId,
-            let toUserId = unfollowToUserId else {
-                return nil
-        }
-        return triggerUnfollowUserQuery ? UnfollowUserMutation(userId: userId, toUserId: toUserId) : nil
+        return unfollowUserQueryState?.query(userId: sessionState?.currentUserId)
     }
 }
 
@@ -89,7 +51,9 @@ extension UserFollowersStateObject {
                 "_id": userId,
                 "sessionState": UserSessionStateObject.createValues(),
                 "user": ["_id": userId],
-                "userFollowers": ["_id": PrimaryKey.userFollowersId(userId)],
+                "userFollowersQueryState": UserFollowersQueryStateObject.createValues(id: PrimaryKey.userFollowingsId(userId), userId: userId),
+                "followUserQueryState": FollowUserQueryStateObject.createValues(),
+                "unfollowUserQueryState": UnfollowUserQueryStateObject.createValues(),
                 "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
                 ]

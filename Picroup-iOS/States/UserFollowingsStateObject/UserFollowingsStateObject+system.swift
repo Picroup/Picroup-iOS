@@ -7,10 +7,8 @@
 //
 
 import Foundation
-import RealmSwift
 import RxSwift
 import RxCocoa
-import RxRealm
 import RxFeedback
 
 extension UserFollowingsStateObject {

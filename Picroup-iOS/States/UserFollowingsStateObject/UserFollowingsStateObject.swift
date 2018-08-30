@@ -19,7 +19,6 @@ final class UserFollowingsStateObject: VersionedPrimaryObject {
     @objc dynamic var user: UserObject?
     
     @objc dynamic var userFollowingsQueryState: UserFollowingsQueryStateObject?
-    
     @objc dynamic var followUserQueryState: FollowUserQueryStateObject?
     @objc dynamic var unfollowUserQueryState: UnfollowUserQueryStateObject?
     

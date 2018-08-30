@@ -17,8 +17,7 @@ extension UserFollowersStateObject {
     enum Event {
         case onTriggerReloadUserFollowers
         case onTriggerGetMoreUserFollowers
-        case onGetReloadUserFollowers(UserFollowersQuery.Data.User.Follower)
-        case onGetMoreUserFollowers(UserFollowersQuery.Data.User.Follower)
+        case onGetUserFollowersData(UserFollowersQuery.Data.User.Follower)
         case onGetUserFollowersError(Error)
         
         case onTriggerFollowUser(String)
@@ -34,68 +33,34 @@ extension UserFollowersStateObject {
     }
 }
 
-extension UserFollowersStateObject.Event {
-    
-    static func onGetUserFollowers(isReload: Bool) -> (UserFollowersQuery.Data.User.Follower) -> UserFollowersStateObject.Event {
-        return { isReload ? .onGetReloadUserFollowers($0) : .onGetMoreUserFollowers($0) }
-    }
-}
-
 extension UserFollowersStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
         case .onTriggerReloadUserFollowers:
-            userFollowers?.cursor.value = nil
-            userFollowersError = nil
-            triggerUserFollowersQuery = true
+            userFollowersQueryState?.reduce(event: .onTriggerReload, realm: realm)
         case .onTriggerGetMoreUserFollowers:
-            guard shouldQueryMoreUserFollowers else { return }
-            userFollowersError = nil
-            triggerUserFollowersQuery = true
-        case .onGetReloadUserFollowers(let data):
-            userFollowers = CursorUsersObject.create(from: data, id: PrimaryKey.userFollowersId(userId))(realm)
-            userFollowersError = nil
-            triggerUserFollowersQuery = false
-        case .onGetMoreUserFollowers(let data):
-            userFollowers?.merge(from: data)(realm)
-            userFollowersError = nil
-            triggerUserFollowersQuery = false
+            userFollowersQueryState?.reduce(event: .onTriggerGetMore, realm: realm)
+        case .onGetUserFollowersData(let data):
+            userFollowersQueryState?.reduce(event: .onGetData(data), realm: realm)
         case .onGetUserFollowersError(let error):
-            userFollowersError = error.localizedDescription
-            triggerUserFollowersQuery = false
+            userFollowersQueryState?.reduce(event: .onGetError(error), realm: realm)
             
         case .onTriggerFollowUser(let toUserId):
-            guard shouldFollowUser else { return }
-            followToUserId = toUserId
-            followUserError = nil
-            triggerFollowUserQuery = true
+            followUserQueryState?.reduce(event: .onTriggerFollowUser(toUserId), realm: realm)
         case .onFollowUserSuccess(let data):
-            realm.create(UserObject.self, value: data.snapshot, update: true)
-            followToUserId = nil
-            followUserError = nil
-            triggerFollowUserQuery = false
+            followUserQueryState?.reduce(event: .onSuccess(data), realm: realm)
             needUpdate?.myInterestedMedia = true
-            
         case .onFollowUserError(let error):
-            followUserError = error.localizedDescription
-            triggerFollowUserQuery = false
+            followUserQueryState?.reduce(event: .onError(error), realm: realm)
             
         case .onTriggerUnfollowUser(let toUserId):
-            guard shouldUnfollowUser else { return }
-            unfollowToUserId = toUserId
-            unfollowUserError = nil
-            triggerUnfollowUserQuery = true
+            unfollowUserQueryState?.reduce(event: .onTriggerUnfollowUser(toUserId), realm: realm)
         case .onUnfollowUserSuccess(let data):
-            realm.create(UserObject.self, value: data.snapshot, update: true)
-            unfollowToUserId = nil
-            unfollowUserError = nil
-            triggerUnfollowUserQuery = false
+            unfollowUserQueryState?.reduce(event: .onSuccess(data), realm: realm)
             needUpdate?.myInterestedMedia = true
-            
         case .onUnfollowUserError(let error):
-            unfollowUserError = error.localizedDescription
-            triggerUnfollowUserQuery = false
+            unfollowUserQueryState?.reduce(event: .onError(error), realm: realm)
             
         case .onTriggerShowUser(let userId):
             routeState?.reduce(event: .onTriggerShowUser(userId), realm: realm)

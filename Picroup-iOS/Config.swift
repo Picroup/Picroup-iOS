@@ -13,5 +13,5 @@ struct Config {
     static let maxDiskImageCacheSize: UInt = 100 * 1024 * 1024 // 100 MB
     static let maxDiskVideoCacheSize: UInt = 150 * 1024 * 1024 // 100 MB
 //    static let maxMemoryVideoCacheCount: UInt = 24
-    static let realmSchemaVersion: UInt64 = 48
+    static let realmSchemaVersion: UInt64 = 49
 }
