@@ -11,62 +11,26 @@ import RxSwift
 import RxCocoa
 import Apollo
 
-final class FeedbackStateObject: PrimaryObject {
+final class FeedbackStateObject: VersionedPrimaryObject {
     
     @objc dynamic var sessionState: UserSessionStateObject?
-    
-    @objc dynamic var mediumId: String?
-    @objc dynamic var toUserId: String?
-    @objc dynamic var commentId: String?
-    @objc dynamic var kind: String?
-    @objc dynamic var content: String = ""
-    
-    @objc dynamic var savedFeedbackId: String?
-    @objc dynamic var savedFeedbackError: String?
-    @objc dynamic var triggerSaveFeedback: Bool = false
-
+    @objc dynamic var saveFeedbackQueryState: SaveFeedbackQueryState?
     @objc dynamic var routeState: RouteStateObject?
     @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension FeedbackStateObject {
     var saveAppFeedbackQuery: SaveAppFeedbackMutation? {
-        guard kind == FeedbackKind.app.rawValue,
-            !content.isEmpty,
-            let userId = sessionState?.currentUserId
-            else { return nil }
-        let next = SaveAppFeedbackMutation(userId: userId, content: content)
-        return triggerSaveFeedback ? next : nil
+        return saveFeedbackQueryState?.saveAppFeedbackQuery(userId: sessionState?.currentUserId)
     }
     var saveUserFeedbackQuery: SaveUserFeedbackMutation? {
-        guard kind == FeedbackKind.user.rawValue,
-            !content.isEmpty,
-            let userId = sessionState?.currentUserId,
-            let toUserId = toUserId
-            else { return nil }
-        let next = SaveUserFeedbackMutation(userId: userId, toUserId: toUserId, content: content)
-        return triggerSaveFeedback ? next : nil
+        return saveFeedbackQueryState?.saveUserFeedbackQuery(userId: sessionState?.currentUserId)
     }
     var saveMediumFeedbackQuery: SaveMediumFeedbackMutation? {
-        guard kind == FeedbackKind.medium.rawValue,
-            !content.isEmpty,
-            let userId = sessionState?.currentUserId,
-            let mediumId = mediumId
-            else { return nil }
-        let next = SaveMediumFeedbackMutation(userId: userId, mediumId: mediumId, content: content)
-        return triggerSaveFeedback ? next : nil
+        return saveFeedbackQueryState?.saveMediumFeedbackQuery(userId: sessionState?.currentUserId)
     }
     var saveCommentFeedbackQuery: SaveCommentFeedbackMutation? {
-        guard kind == FeedbackKind.comment.rawValue,
-            !content.isEmpty,
-            let userId = sessionState?.currentUserId,
-            let commentId = commentId
-            else { return nil }
-        let next = SaveCommentFeedbackMutation(userId: userId, commentId: commentId, content: content)
-        return triggerSaveFeedback ? next : nil
-    }
-    var shouldSaveFeedback: Bool {
-        return !triggerSaveFeedback && content.matchExpression(RegularPattern.default)
+        return saveFeedbackQueryState?.saveCommentFeedbackQuery(userId: sessionState?.currentUserId)
     }
 }
 
@@ -79,10 +43,7 @@ extension FeedbackStateObject {
             let value: Snapshot = [
                 "_id": feedbackId,
                 "sessionState": UserSessionStateObject.createValues(),
-                "kind": kind,
-                "toUserId": toUserId,
-                "mediumId": mediumId,
-                "commentId": commentId,
+                "saveFeedbackQueryState": SaveFeedbackQueryState.createValues(id: feedbackId, kind: kind, toUserId: toUserId, mediumId: mediumId, commentId: commentId),
                 "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],
                 ]

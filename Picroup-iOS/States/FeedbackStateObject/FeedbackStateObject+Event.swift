@@ -29,26 +29,16 @@ extension FeedbackStateObject: IsFeedbackStateObject {
     func reduce(event: Event, realm: Realm) {
         switch event {
         case .onTriggerSaveFeedback:
-            guard shouldSaveFeedback else { return }
-            savedFeedbackId = nil
-            savedFeedbackError = nil
-            triggerSaveFeedback = true
+            saveFeedbackQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onSaveFeedbackSuccess(let data):
-            savedFeedbackId = data
-            savedFeedbackError = nil
-            triggerSaveFeedback = false
-            content = ""
-            
+            saveFeedbackQueryState?.reduce(event: .onSuccess(data), realm: realm)
             snackbar?.reduce(event: .onUpdateMessage("已提交"), realm: realm)
             routeState?.reduce(event: .onTriggerPop, realm: realm)
         case .onSaveFeedbackError(let error):
-            savedFeedbackId = nil
-            savedFeedbackError = error.localizedDescription
-            triggerSaveFeedback = false
-            
+            saveFeedbackQueryState?.reduce(event: .onError(error), realm: realm)
             snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
         case .onChangeContent(let content):
-            self.content = content
+            saveFeedbackQueryState?.reduce(event: .onChangeContent(content), realm: realm)
         case .onTriggerPop:
             routeState?.reduce(event: .onTriggerPop, realm: realm)
         }

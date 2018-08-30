@@ -14,7 +14,7 @@ import RxFeedback
 import Apollo
 import RealmSwift
 
-class LoginViewController: ShowNavigationBarViewController, IsStateViewController{
+final class LoginViewController: ShowNavigationBarViewController, IsStateViewController {
     
     @IBOutlet fileprivate var presenter: LoginViewPresenter!
     
