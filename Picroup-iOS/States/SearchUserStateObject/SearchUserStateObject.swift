@@ -12,70 +12,29 @@ import RxSwift
 import RxCocoa
 import RxRealm
 
-final class SearchUserStateObject: PrimaryObject {
+final class SearchUserStateObject: VersionedPrimaryObject {
     
     @objc dynamic var sessionState: UserSessionStateObject?
+    @objc dynamic var searchUserQueryStateObject: SearchUserQueryStateObject?
     
-    @objc dynamic var searchText: String = ""
-    @objc dynamic var user: UserObject?
-    @objc dynamic var searchError: String?
-    @objc dynamic var triggerSearchUserQuery: Bool = false
-    
-    @objc dynamic var followToUserId: String?
-    @objc dynamic var followUserError: String?
-    @objc dynamic var triggerFollowUserQuery: Bool = false
-    
-    @objc dynamic var unfollowToUserId: String?
-    @objc dynamic var unfollowUserError: String?
-    @objc dynamic var triggerUnfollowUserQuery: Bool = false
+    @objc dynamic var followUserQueryStateObject: FollowUserQueryStateObject?
+    @objc dynamic var unfollowUserQueryStateObject: UnfollowUserQueryStateObject?
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
-    
     @objc dynamic var routeState: RouteStateObject?
 }
 
 extension SearchUserStateObject {
     var searchUserQuery: SearchUserQuery? {
-        guard let byUserId = sessionState?.currentUserId, !searchText.isEmpty else { return nil }
-        let next = SearchUserQuery(username: searchText, followedByUserId: byUserId)
-        return triggerSearchUserQuery ? next : nil
-    }
-    var userNotfound: Bool {
-        return !searchText.isEmpty
-            && !triggerSearchUserQuery
-            && searchError == nil
-            && user == nil
+        return searchUserQueryStateObject?.query(followedByUserId: sessionState?.currentUserId)
     }
     
-    var shouldFollowUser: Bool {
-        return !triggerFollowUserQuery
-    }
     var followUserQuery: FollowUserMutation? {
-        guard
-            let userId = sessionState?.currentUserId,
-            let toUserId = followToUserId else {
-                return nil
-        }
-        return triggerFollowUserQuery ? FollowUserMutation(userId: userId, toUserId: toUserId) : nil
+        return followUserQueryStateObject?.query(userId: sessionState?.currentUserId)
     }
     
-    var shouldUnfollowUser: Bool {
-        return !triggerUnfollowUserQuery
-    }
     var unfollowUserQuery: UnfollowUserMutation? {
-        guard
-            let userId = sessionState?.currentUserId,
-            let toUserId = unfollowToUserId else {
-                return nil
-        }
-        return triggerUnfollowUserQuery ? UnfollowUserMutation(userId: userId, toUserId: toUserId) : nil
-    }
-}
-
-extension SearchUserQuery: Equatable {
-    public static func ==(lhs: SearchUserQuery, rhs: SearchUserQuery) -> Bool {
-        return lhs.username == rhs.username
-            && lhs.followedByUserId == rhs.followedByUserId
+        return unfollowUserQueryStateObject?.query(userId: sessionState?.currentUserId)
     }
 }
 
@@ -87,6 +46,9 @@ extension SearchUserStateObject {
             let value: Any = [
                 "_id": _id,
                 "sessionState": UserSessionStateObject.createValues(),
+                "searchUserQueryStateObject": SearchUserQueryStateObject.createValues(),
+                "followUserQuery": FollowUserQueryStateObject.createValues(),
+                "unfollowUserQuery": UnfollowUserQueryStateObject.createValues(),
                 "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
                 ]

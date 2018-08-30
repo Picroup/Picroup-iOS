@@ -151,7 +151,7 @@
 		45662B23212E8B9600964BC9 /* ResetPasswordPhoneStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B22212E8B9600964BC9 /* ResetPasswordPhoneStateStore.swift */; };
 		45662B25212E8BA100964BC9 /* ResetPasswordCodeStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B24212E8BA100964BC9 /* ResetPasswordCodeStateStore.swift */; };
 		45662B27212E8BAE00964BC9 /* ResetPasswordStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B26212E8BAE00964BC9 /* ResetPasswordStateStore.swift */; };
-		45662B29212E8BCA00964BC9 /* SearchUserStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B28212E8BCA00964BC9 /* SearchUserStateStore.swift */; };
+		45662B29212E8BCA00964BC9 /* SearchUserStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B28212E8BCA00964BC9 /* SearchUserStateObject+system.swift */; };
 		45662B2B212E8BD400964BC9 /* TagMediaStateObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B2A212E8BD400964BC9 /* TagMediaStateObjectStore.swift */; };
 		45662B2D212E8BE000964BC9 /* UserStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B2C212E8BE000964BC9 /* UserStateStore.swift */; };
 		45662B2F212E8BEC00964BC9 /* UserBlockingsStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B2E212E8BEC00964BC9 /* UserBlockingsStateStore.swift */; };
@@ -214,6 +214,9 @@
 		457D8AA321368FC400719F23 /* CursorReputationsQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D8AA221368FC400719F23 /* CursorReputationsQueryStateObject.swift */; };
 		457D8AA52136949900719F23 /* MarkReputationsQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D8AA42136949900719F23 /* MarkReputationsQueryStateObject.swift */; };
 		457D8AA72137824D00719F23 /* SaveFeedbackQueryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D8AA62137824D00719F23 /* SaveFeedbackQueryState.swift */; };
+		457D8AA92137987600719F23 /* SearchUserQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D8AA82137987600719F23 /* SearchUserQueryStateObject.swift */; };
+		457D8AAB2137A5DE00719F23 /* FollowUserQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D8AAA2137A5DE00719F23 /* FollowUserQueryStateObject.swift */; };
+		457D8AAD2137BDC300719F23 /* UnfollowUserQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D8AAC2137BDC300719F23 /* UnfollowUserQueryStateObject.swift */; };
 		458006D820A17283004BD982 /* UIViewController+Rx+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */; };
 		458006DA20A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */; };
 		4580F4F821001DA5006EFF85 /* AVHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4580F4F721001DA4006EFF85 /* AVHelper.swift */; };
@@ -498,7 +501,7 @@
 		45662B22212E8B9600964BC9 /* ResetPasswordPhoneStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordPhoneStateStore.swift; sourceTree = "<group>"; };
 		45662B24212E8BA100964BC9 /* ResetPasswordCodeStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordCodeStateStore.swift; sourceTree = "<group>"; };
 		45662B26212E8BAE00964BC9 /* ResetPasswordStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordStateStore.swift; sourceTree = "<group>"; };
-		45662B28212E8BCA00964BC9 /* SearchUserStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserStateStore.swift; sourceTree = "<group>"; };
+		45662B28212E8BCA00964BC9 /* SearchUserStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchUserStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B2A212E8BD400964BC9 /* TagMediaStateObjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaStateObjectStore.swift; sourceTree = "<group>"; };
 		45662B2C212E8BE000964BC9 /* UserStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStateStore.swift; sourceTree = "<group>"; };
 		45662B2E212E8BEC00964BC9 /* UserBlockingsStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBlockingsStateStore.swift; sourceTree = "<group>"; };
@@ -561,6 +564,9 @@
 		457D8AA221368FC400719F23 /* CursorReputationsQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorReputationsQueryStateObject.swift; sourceTree = "<group>"; };
 		457D8AA42136949900719F23 /* MarkReputationsQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkReputationsQueryStateObject.swift; sourceTree = "<group>"; };
 		457D8AA62137824D00719F23 /* SaveFeedbackQueryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFeedbackQueryState.swift; sourceTree = "<group>"; };
+		457D8AA82137987600719F23 /* SearchUserQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserQueryStateObject.swift; sourceTree = "<group>"; };
+		457D8AAA2137A5DE00719F23 /* FollowUserQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowUserQueryStateObject.swift; sourceTree = "<group>"; };
+		457D8AAC2137BDC300719F23 /* UnfollowUserQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfollowUserQueryStateObject.swift; sourceTree = "<group>"; };
 		458006D720A17283004BD982 /* UIViewController+Rx+NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx+NavigationBar.swift"; sourceTree = "<group>"; };
 		458006D920A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx+shouldHideNavigationBar.swift"; sourceTree = "<group>"; };
 		4580F4F721001DA4006EFF85 /* AVHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVHelper.swift; sourceTree = "<group>"; };
@@ -1206,7 +1212,7 @@
 			children = (
 				45B0207220B5182300BD5D8F /* SearchUserStateObject.swift */,
 				45662AF2212E8A6A00964BC9 /* SearchUserStateObject+Event.swift */,
-				45662B28212E8BCA00964BC9 /* SearchUserStateStore.swift */,
+				45662B28212E8BCA00964BC9 /* SearchUserStateObject+system.swift */,
 			);
 			path = SearchUserStateObject;
 			sourceTree = "<group>";
@@ -1771,14 +1777,17 @@
 				457D8A9C21366D1A00719F23 /* CursorNotificationsQueryStateObject.swift */,
 				456D14652105B089008EDD41 /* CursorMediaStateObject.swift */,
 				457D8AA221368FC400719F23 /* CursorReputationsQueryStateObject.swift */,
+				457D8AAA2137A5DE00719F23 /* FollowUserQueryStateObject.swift */,
 				45E977132136291E00723BA1 /* HotMediaStateObject.swift */,
 				45E9771521362B3200723BA1 /* HotMediaTagsStateObject.swift */,
 				45E977082134D81F00723BA1 /* LoginQueryStateObject.swift */,
 				457D8AA021367CCD00719F23 /* MarkNotificationsQueryStateObject.swift */,
 				457D8AA42136949900719F23 /* MarkReputationsQueryStateObject.swift */,
 				457D8AA62137824D00719F23 /* SaveFeedbackQueryState.swift */,
+				457D8AA82137987600719F23 /* SearchUserQueryStateObject.swift */,
 				45662B41212EA20400964BC9 /* SnackbarObject.swift */,
 				45CD0694212FA91200AE563E /* StarMediumStateObject.swift */,
+				457D8AAC2137BDC300719F23 /* UnfollowUserQueryStateObject.swift */,
 				45662B4B212EAE9900964BC9 /* UserSessionStateObject.swift */,
 				45E977112134F5E500723BA1 /* UserSetPasswordQueryStateObject.swift */,
 			);
@@ -2156,6 +2165,7 @@
 				456D145E21057E6F008EDD41 /* MediumDetailPresenter+CellStyle.swift in Sources */,
 				45F0A7D420C7B32B0085F978 /* RegisterUsernameViewController.swift in Sources */,
 				45662B13212E8B2D00964BC9 /* MeStateStore.swift in Sources */,
+				457D8AAB2137A5DE00719F23 /* FollowUserQueryStateObject.swift in Sources */,
 				457BD99420B146CD007F0492 /* AppStateService.swift in Sources */,
 				45FC0BF520A42F4A006AAF3D /* UserPresenter.swift in Sources */,
 				45662AE3212E8A0B00964BC9 /* RegisterUsernameStateObject+Event.swift in Sources */,
@@ -2202,6 +2212,7 @@
 				45B0205320AD72D600BD5D8F /* PhotoPickerController.swift in Sources */,
 				45662B39212E8C2600964BC9 /* UpdatePasswordStateObject+system.swift in Sources */,
 				45EC928120D3C65100A473D4 /* Moment.swift in Sources */,
+				457D8AAD2137BDC300719F23 /* UnfollowUserQueryStateObject.swift in Sources */,
 				451CD330207BB62D0063A972 /* HomeViewPresenter.swift in Sources */,
 				454B4A4C20ABB73900990063 /* MeStateObject.swift in Sources */,
 				45B0204B20AC14D700BD5D8F /* Int+increase.swift in Sources */,
@@ -2366,7 +2377,7 @@
 				45662AFD212E8A9E00964BC9 /* UserFollowersStateObject+Event.swift in Sources */,
 				45CD0695212FA91200AE563E /* StarMediumStateObject.swift in Sources */,
 				45517D4E20BCEDE100F2D7DE /* UserCell.swift in Sources */,
-				45662B29212E8BCA00964BC9 /* SearchUserStateStore.swift in Sources */,
+				45662B29212E8BCA00964BC9 /* SearchUserStateObject+system.swift in Sources */,
 				45662B03212E8ABE00964BC9 /* UpdatePasswordStateObject+Event.swift in Sources */,
 				455D69042080409A00C651A0 /* BaseNavigationController.swift in Sources */,
 				457BD98320AB12AD007F0492 /* RouteStateObject.swift in Sources */,
@@ -2407,6 +2418,7 @@
 				4595F223207C97410040E5FA /* UIView+Motion+Rx.swift in Sources */,
 				451CD314207910D10063A972 /* SharedSequence+unwrap.swift in Sources */,
 				45517D4020BCDCA800F2D7DE /* NotificationCell.swift in Sources */,
+				457D8AA92137987600719F23 /* SearchUserQueryStateObject.swift in Sources */,
 				45662B27212E8BAE00964BC9 /* ResetPasswordStateStore.swift in Sources */,
 				455808E620EDAB65005F1A00 /* Constants.swift in Sources */,
 				45662B05212E8AD100964BC9 /* CreateImageStateStore.swift in Sources */,

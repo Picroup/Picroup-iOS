@@ -36,48 +36,27 @@ extension SearchUserStateObject: IsFeedbackStateObject {
     func reduce(event: Event, realm: Realm) {
         switch event {
         case .onChangeSearchText(let searchText):
-            self.searchText = searchText
-            user = nil
-            let shouldQuery = !searchText.isEmpty
-            triggerSearchUserQuery = shouldQuery
+            searchUserQueryStateObject?.reduce(event: .onChangeSearchText(searchText), realm: realm)
         case .onSearchUserSuccess(let data):
-            user = data.map { realm.create(UserObject.self, value: $0.snapshot, update: true) }
-            searchError = nil
-            triggerSearchUserQuery = false
+            searchUserQueryStateObject?.reduce(event: .onSuccess(data), realm: realm)
         case .onSearchUserError(let error):
-            searchError = error.localizedDescription
-            triggerSearchUserQuery = false
+            searchUserQueryStateObject?.reduce(event: .onError(error), realm: realm)
             
         case .onTriggerFollowUser(let toUserId):
-            guard shouldFollowUser else { return }
-            followToUserId = toUserId
-            followUserError = nil
-            triggerFollowUserQuery = true
+            followUserQueryStateObject?.reduce(event: .onTriggerFollowUser(toUserId), realm: realm)
         case .onFollowUserSuccess(let data):
-            realm.create(UserObject.self, value: data.snapshot, update: true)
-            followToUserId = nil
-            followUserError = nil
-            triggerFollowUserQuery = false
+            followUserQueryStateObject?.reduce(event: .onSuccess(data), realm: realm)
             needUpdate?.myInterestedMedia = true
         case .onFollowUserError(let error):
-            followUserError = error.localizedDescription
-            triggerFollowUserQuery = false
+            followUserQueryStateObject?.reduce(event: .onError(error), realm: realm)
             
         case .onTriggerUnfollowUser(let toUserId):
-            guard shouldUnfollowUser else { return }
-            unfollowToUserId = toUserId
-            unfollowUserError = nil
-            triggerUnfollowUserQuery = true
+            unfollowUserQueryStateObject?.reduce(event: .onTriggerUnfollowUser(toUserId), realm: realm)
         case .onUnfollowUserSuccess(let data):
-            realm.create(UserObject.self, value: data.snapshot, update: true)
-            unfollowToUserId = nil
-            unfollowUserError = nil
-            triggerUnfollowUserQuery = false
+            unfollowUserQueryStateObject?.reduce(event: .onSuccess(data), realm: realm)
             needUpdate?.myInterestedMedia = true
-            
         case .onUnfollowUserError(let error):
-            unfollowUserError = error.localizedDescription
-            triggerUnfollowUserQuery = false
+            unfollowUserQueryStateObject?.reduce(event: .onError(error), realm: realm)
             
         case .onTriggerShowUser(let userId):
             routeState?.reduce(event: .onTriggerShowUser(userId), realm: realm)
