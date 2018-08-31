@@ -57,6 +57,8 @@ extension BlockUserQueryStateObject: IsFeedbackStateObject {
             error = nil
             trigger = true
         case .onSuccess(let data):
+            let blockedMedia = realm.objects(MediumObject.self).filter("userId = %@", data.id)
+            realm.delete(blockedMedia)
             let user = realm.create(UserObject.self, value: data.snapshot, update: true)
             user.blocked.value = true
             blockingUserId = nil

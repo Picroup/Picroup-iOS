@@ -16,23 +16,11 @@ final class UserStateObject: VersionedPrimaryObject {
     
     @objc dynamic var sessionState: UserSessionStateObject?
     
-    @objc dynamic var user: UserObject?
-    @objc dynamic var userError: String?
-    @objc dynamic var triggerUserQuery: Bool = false
-    
-    @objc dynamic var userMediaState: CursorMediaQueryStateObject?
-    
-    @objc dynamic var followUserVersion: String?
-    @objc dynamic var followUserError: String?
-    @objc dynamic var triggerFollowUserQuery: Bool = false
-    
-    @objc dynamic var unfollowUserVersion: String?
-    @objc dynamic var unfollowUserError: String?
-    @objc dynamic var triggerUnfollowUserQuery: Bool = false
-    
-    @objc dynamic var blockUserVersion: String?
-    @objc dynamic var blockUserError: String?
-    @objc dynamic var triggerBlockUserQuery: Bool = false
+    @objc dynamic var userQueryState: UserQueryStateObject?
+    @objc dynamic var userMediaQueryState: UserMediaQueryStateObject?
+    @objc dynamic var followUserQueryState: FollowUserQueryStateObject?
+    @objc dynamic var unfollowUserQueryState: UnfollowUserQueryStateObject?
+    @objc dynamic var blockUserQueryState: BlockUserQueryStateObject?
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
 
@@ -43,52 +31,25 @@ final class UserStateObject: VersionedPrimaryObject {
 
 extension UserStateObject {
     var userId: String { return _id }
+    
     var userQuery: UserQuery? {
-        let (byUserId, withFollowed) = sessionState?.currentUserId == nil
-            ? ("", false)
-            : (sessionState!.currentUser!._id, true)
-        let next = UserQuery(userId: userId, followedByUserId: byUserId, withFollowed: withFollowed)
-        return triggerUserQuery ? next : nil
+        return userQueryState?.query(currentUserId: sessionState?.currentUserId)
     }
+    
     var userMediaQuery: MyMediaQuery? {
-        return userMediaState?.trigger == true
-            ? MyMediaQuery(userId: userId, cursor: userMediaState?.cursorMedia?.cursor.value, queryUserId: sessionState?.currentUserId)
-            : nil
+        return userMediaQueryState?.query(userId: userId, currentUserId: sessionState?.currentUserId)
     }
-    var shouldFollowUser: Bool {
-        return user?.followed.value == false && !triggerFollowUserQuery
-    }
+    
     var followUserQuery: FollowUserMutation? {
-        guard
-            let userId = sessionState?.currentUserId,
-            let toUserId = user?._id else {
-                return nil
-        }
-        return triggerFollowUserQuery ? FollowUserMutation(userId: userId, toUserId: toUserId) : nil
+        return followUserQueryState?.query(userId: sessionState?.currentUserId)
     }
-    var shouldUnfollowUser: Bool {
-        return user?.followed.value == true && !triggerUnfollowUserQuery
-    }
+    
     var unfollowUserQuery: UnfollowUserMutation? {
-        guard
-            let userId = sessionState?.currentUserId,
-            let toUserId = user?._id else {
-                return nil
-        }
-        return triggerUnfollowUserQuery ? UnfollowUserMutation(userId: userId, toUserId: toUserId) : nil
+        return unfollowUserQueryState?.query(userId: sessionState?.currentUserId)
     }
-    var shouldBlockUser: Bool {
-        return !triggerBlockUserQuery
-    }
+    
     var blockUserQuery: BlockUserMutation? {
-        guard
-            let userId = sessionState?.currentUserId,
-            let toUserId = user?._id else {
-                return nil
-        }
-        return triggerBlockUserQuery
-            ? BlockUserMutation(userId: userId, blockingUserId: toUserId)
-            : nil
+        return blockUserQueryState?.query(userId: sessionState?.currentUserId)
     }
 }
 
@@ -100,8 +61,11 @@ extension UserStateObject {
             let value: Any = [
                 "_id": userId,
                 "sessionState": UserSessionStateObject.createValues(),
-                "user": ["_id": userId],
-                "userMediaState": CursorMediaQueryStateObject.createValues(id: PrimaryKey.userMediaId(userId)),
+                "userQueryState":  UserQueryStateObject.createValues(id: userId),
+                "userMediaQueryState": UserMediaQueryStateObject.createValues(id: PrimaryKey.userMediaId(userId)),
+                "followUserQueryState": FollowUserQueryStateObject.createValues(),
+                "unfollowUserQueryState": UnfollowUserQueryStateObject.createValues(),
+                "blockUserQueryState": BlockUserQueryStateObject.createValues(),
                 "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],

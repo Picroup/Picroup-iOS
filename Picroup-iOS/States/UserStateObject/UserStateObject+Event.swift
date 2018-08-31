@@ -19,7 +19,10 @@ extension UserStateObject {
         case onGetUserSuccess(UserQuery.Data.User)
         case onGetUserError(Error)
         
-        case userMediaState(CursorMediaQueryStateObject.Event)
+        case onTriggerReloadUserMedia
+        case onTriggerGetMoreUserMedia
+        case onGetUserMediaData(CursorMediaFragment)
+        case onGetUserMediaError(Error)
         
         case onTriggerFollowUser
         case onFollowUserSuccess(FollowUserMutation.Data.FollowUser)
@@ -30,7 +33,7 @@ extension UserStateObject {
         case onUnfollowUserError(Error)
         
         case onTriggerBlockUser
-        case onBlockUserSuccess(UserFragment)
+        case onBlockUserSuccess(BlockUserMutation.Data.BlockUser)
         case onBlockUserError(Error)
         
         case onTriggerLogin
@@ -47,85 +50,60 @@ extension UserStateObject: IsFeedbackStateObject {
     func reduce(event: Event, realm: Realm) {
         switch event {
         case .onTriggerReloadUser:
-            userError = nil
-            triggerUserQuery = true
+            userQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onGetUserSuccess(let data):
-            user = realm.create(UserObject.self, value: data.snapshot, update: true)
-            userError = nil
-            triggerUserQuery = false
+            userQueryState?.reduce(event: .onSuccess(data), realm: realm)
         case .onGetUserError(let error):
-            userError = error.localizedDescription
-            triggerUserQuery = false
+            userQueryState?.reduce(event: .onError(error), realm: realm)
             
-        case .userMediaState(let event):
-            userMediaState?.reduce(event: event, realm: realm)
+        case .onTriggerReloadUserMedia:
+            userMediaQueryState?.reduce(event: .onTriggerReload, realm: realm)
+        case .onTriggerGetMoreUserMedia:
+            userMediaQueryState?.reduce(event: .onTriggerGetMore, realm: realm)
+        case .onGetUserMediaData(let data):
+            userMediaQueryState?.reduce(event: .onGetData(data), realm: realm)
+        case .onGetUserMediaError(let error):
+            userMediaQueryState?.reduce(event: .onGetError(error), realm: realm)
             
         case .onTriggerFollowUser:
-            guard shouldFollowUser else { return }
-            followUserVersion = nil
-            followUserError = nil
-            triggerFollowUserQuery = true
+            followUserQueryState?.reduce(event: .onTriggerFollowUser(userId), realm: realm)
         case .onFollowUserSuccess(let data):
-            user = realm.create(UserObject.self, value: data.snapshot, update: true)
-            followUserVersion = UUID().uuidString
-            followUserError = nil
-            triggerFollowUserQuery = false
+            followUserQueryState?.reduce(event: .onSuccess(data), realm: realm)
             needUpdate?.myInterestedMedia = true
-            
-            snackbar?.reduce(event: .onUpdateMessage("已关注 @\(user?.username ?? "")"), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage("已关注 @\(userQueryState?.user?.username ?? "")"), realm: realm)
         case .onFollowUserError(let error):
-            followUserVersion = nil
-            followUserError = error.localizedDescription
-            triggerFollowUserQuery = false
+            followUserQueryState?.reduce(event: .onError(error), realm: realm)
             
         case .onTriggerUnfollowUser:
-            guard shouldUnfollowUser else { return }
-            unfollowUserVersion = nil
-            unfollowUserError = nil
-            triggerUnfollowUserQuery = true
+            unfollowUserQueryState?.reduce(event: .onTriggerUnfollowUser(userId), realm: realm)
         case .onUnfollowUserSuccess(let data):
-            user = realm.create(UserObject.self, value: data.snapshot, update: true)
-            unfollowUserVersion = UUID().uuidString
-            unfollowUserError = nil
-            triggerUnfollowUserQuery = false
+            unfollowUserQueryState?.reduce(event: .onSuccess(data), realm: realm)
             needUpdate?.myInterestedMedia = true
-            snackbar?.reduce(event: .onUpdateMessage("已取消关注 @\(user?.username ?? "")"), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage("已取消关注 @\(userQueryState?.user?.username ?? "")"), realm: realm)
         case .onUnfollowUserError(let error):
-            unfollowUserVersion = nil
-            unfollowUserError = error.localizedDescription
-            triggerUnfollowUserQuery = false
+            unfollowUserQueryState?.reduce(event: .onError(error), realm: realm)
             
         case .onTriggerBlockUser:
-            guard shouldBlockUser else { return }
-            blockUserVersion = nil
-            blockUserError = nil
-            triggerBlockUserQuery = true
+            blockUserQueryState?.reduce(event: .onTriggerBlockUser(userId), realm: realm)
         case .onBlockUserSuccess(let data):
-            let blockedMedia = realm.objects(MediumObject.self).filter("userId = %@", data.id)
-            realm.delete(blockedMedia)
-            blockUserVersion = UUID().uuidString
-            blockUserError = nil
-            triggerBlockUserQuery = false
+            blockUserQueryState?.reduce(event: .onSuccess(data), realm: realm)
             needUpdate?.myInterestedMedia = true
-            snackbar?.reduce(event: .onUpdateMessage("已拉黑 @\(user?.username ?? "")，您可以前往设置取消拉黑"), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage("已拉黑 @\(userQueryState?.user?.username ?? "")，您可以前往设置取消拉黑"), realm: realm)
         case .onBlockUserError(let error):
-            blockUserVersion = nil
-            blockUserError = error.localizedDescription
-            triggerBlockUserQuery = false
+            blockUserQueryState?.reduce(event: .onError(error), realm: realm)
             
         case .onTriggerLogin:
             routeState?.reduce(event: .onTriggerLogin, realm: realm)
         case .onTriggerShowImage(let mediumId):
             routeState?.reduce(event: .onTriggerShowImage(mediumId), realm: realm)
         case .onTriggerShowUserFollowings:
-            routeState?.reduce(event: .onTriggerShowUserFollowings(user?._id), realm: realm)
+            routeState?.reduce(event: .onTriggerShowUserFollowings(userId), realm: realm)
         case .onTriggerShowUserFollowers:
-            routeState?.reduce(event: .onTriggerShowUserFollowers(user?._id), realm: realm)
+            routeState?.reduce(event: .onTriggerShowUserFollowers(userId), realm: realm)
         case .onTriggerUserFeedback:
             routeState?.reduce(event: .onTriggerUserFeedback(userId), realm: realm)
         case .onTriggerPop:
             routeState?.reduce(event: .onTriggerPop, realm: realm)
         }
-        updateVersion()
     }
 }

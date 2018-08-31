@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0501F76BC004870A4FD7F133 /* Pods_Picroup_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8313C3A5A66E13D50250DFC2 /* Pods_Picroup_iOS.framework */; };
+		451631E621391A8C00CC3E55 /* UserMediaQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451631E521391A8C00CC3E55 /* UserMediaQueryStateObject.swift */; };
+		451631E821391DB800CC3E55 /* UserQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451631E721391DB800CC3E55 /* UserQueryStateObject.swift */; };
 		45183EBE20CF65BC00497B59 /* AboutAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EBD20CF65BC00497B59 /* AboutAppViewController.swift */; };
 		45183EC020CF862000497B59 /* RealmProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EBF20CF862000497B59 /* RealmProvider.swift */; };
 		45183EC220D0E94100497B59 /* createFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EC120D0E94100497B59 /* createFeedback.swift */; };
@@ -153,7 +155,7 @@
 		45662B27212E8BAE00964BC9 /* ResetPasswordStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B26212E8BAE00964BC9 /* ResetPasswordStateStore.swift */; };
 		45662B29212E8BCA00964BC9 /* SearchUserStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B28212E8BCA00964BC9 /* SearchUserStateObject+system.swift */; };
 		45662B2B212E8BD400964BC9 /* TagMediaStateObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B2A212E8BD400964BC9 /* TagMediaStateObjectStore.swift */; };
-		45662B2D212E8BE000964BC9 /* UserStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B2C212E8BE000964BC9 /* UserStateStore.swift */; };
+		45662B2D212E8BE000964BC9 /* UserStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B2C212E8BE000964BC9 /* UserStateObject+system.swift */; };
 		45662B2F212E8BEC00964BC9 /* UserBlockingsStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B2E212E8BEC00964BC9 /* UserBlockingsStateObject+system.swift */; };
 		45662B31212E8BF700964BC9 /* UserFollowingsStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B30212E8BF700964BC9 /* UserFollowingsStateObject+system.swift */; };
 		45662B33212E8C0200964BC9 /* UserFollowersStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B32212E8C0200964BC9 /* UserFollowersStateStore.swift */; };
@@ -366,6 +368,8 @@
 
 /* Begin PBXFileReference section */
 		0C1CA8B77EB5486794A21137 /* Pods-Picroup-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picroup-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Picroup-iOS/Pods-Picroup-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		451631E521391A8C00CC3E55 /* UserMediaQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMediaQueryStateObject.swift; sourceTree = "<group>"; };
+		451631E721391DB800CC3E55 /* UserQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserQueryStateObject.swift; sourceTree = "<group>"; };
 		45183EBD20CF65BC00497B59 /* AboutAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppViewController.swift; sourceTree = "<group>"; };
 		45183EBF20CF862000497B59 /* RealmProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmProvider.swift; sourceTree = "<group>"; };
 		45183EC120D0E94100497B59 /* createFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createFeedback.swift; sourceTree = "<group>"; };
@@ -513,7 +517,7 @@
 		45662B26212E8BAE00964BC9 /* ResetPasswordStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordStateStore.swift; sourceTree = "<group>"; };
 		45662B28212E8BCA00964BC9 /* SearchUserStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchUserStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B2A212E8BD400964BC9 /* TagMediaStateObjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMediaStateObjectStore.swift; sourceTree = "<group>"; };
-		45662B2C212E8BE000964BC9 /* UserStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStateStore.swift; sourceTree = "<group>"; };
+		45662B2C212E8BE000964BC9 /* UserStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B2E212E8BEC00964BC9 /* UserBlockingsStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserBlockingsStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B30212E8BF700964BC9 /* UserFollowingsStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserFollowingsStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B32212E8C0200964BC9 /* UserFollowersStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFollowersStateStore.swift; sourceTree = "<group>"; };
@@ -1252,7 +1256,7 @@
 			children = (
 				45B0205920AEA35600BD5D8F /* UserStateObject.swift */,
 				45662AF6212E8A7F00964BC9 /* UserStateObject+Event.swift */,
-				45662B2C212E8BE000964BC9 /* UserStateStore.swift */,
+				45662B2C212E8BE000964BC9 /* UserStateObject+system.swift */,
 			);
 			path = UserStateObject;
 			sourceTree = "<group>";
@@ -1818,6 +1822,8 @@
 				457D8AB22137D14800719F23 /* UserFollowersQueryStateObject.swift */,
 				457D8AB42138C95E00719F23 /* UsersQueryStateObject.swift */,
 				457D8AB62138CC1300719F23 /* UserBlockingUsersQueryStateObject.swift */,
+				451631E521391A8C00CC3E55 /* UserMediaQueryStateObject.swift */,
+				451631E721391DB800CC3E55 /* UserQueryStateObject.swift */,
 				45662B4B212EAE9900964BC9 /* UserSessionStateObject.swift */,
 				45E977112134F5E500723BA1 /* UserSetPasswordQueryStateObject.swift */,
 			);
@@ -2253,7 +2259,7 @@
 				45B0206820B4031100BD5D8F /* FollowersViewController.swift in Sources */,
 				457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */,
 				45C1994A20A97402001924B9 /* UserObject.swift in Sources */,
-				45662B2D212E8BE000964BC9 /* UserStateStore.swift in Sources */,
+				45662B2D212E8BE000964BC9 /* UserStateObject+system.swift in Sources */,
 				451CD337207D0B9A0063A972 /* RankViewController.swift in Sources */,
 				45315C1520F61CBB00E3BCAB /* UpdateMediumTagsPresenter.swift in Sources */,
 				452EAD1F20F339B200FE5E5F /* TagObject.swift in Sources */,
@@ -2280,6 +2286,7 @@
 				4561DE6B2100412800F77510 /* RankVideoCell.swift in Sources */,
 				457D8AB12137D07B00719F23 /* UserFollowingsQueryStateObject.swift in Sources */,
 				457D8A9F2136709F00719F23 /* IsCursorItemsStateObject.swift in Sources */,
+				451631E621391A8C00CC3E55 /* UserMediaQueryStateObject.swift in Sources */,
 				45662A9E212B9B8700964BC9 /* CacheService.swift in Sources */,
 				45517D4620BCDCF900F2D7DE /* FollowButtonPresenter.swift in Sources */,
 				455D69082080890B00C651A0 /* UIScrollView+Rx.swift in Sources */,
@@ -2412,6 +2419,7 @@
 				455808DD20EC9D99005F1A00 /* UIRefreshControl+refreshing.swift in Sources */,
 				451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */,
 				45662AFD212E8A9E00964BC9 /* UserFollowersStateObject+Event.swift in Sources */,
+				451631E821391DB800CC3E55 /* UserQueryStateObject.swift in Sources */,
 				45CD0695212FA91200AE563E /* StarMediumStateObject.swift in Sources */,
 				45517D4E20BCEDE100F2D7DE /* UserCell.swift in Sources */,
 				45662B29212E8BCA00964BC9 /* SearchUserStateObject+system.swift in Sources */,

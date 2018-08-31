@@ -35,7 +35,7 @@ private func mapMoreButtonTapToEvent(sender: UIView) -> (MeStateObject) -> Signa
     }
 }
 
-class MeViewController: ShowNavigationBarViewController, IsStateViewController {
+final class MeViewController: ShowNavigationBarViewController, IsStateViewController {
     
     typealias State = MeStateObject
     typealias Event = State.Event
