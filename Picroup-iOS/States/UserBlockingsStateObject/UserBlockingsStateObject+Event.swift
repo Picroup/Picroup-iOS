@@ -16,8 +16,8 @@ extension UserBlockingsStateObject {
     
     enum Event {
         case onTriggerReloadUserBlockings
-        case onGetReloadUserFollowings(UserBlockingUsersQuery.Data.User)
-        case onGetUserFollowingsError(Error)
+        case onGetUserBlockingsData([UserFragment])
+        case onGetUserBlockingsError(Error)
         
         case onTriggerBlockUser(String)
         case onBlockUserSuccess(BlockUserMutation.Data.BlockUser)
@@ -36,58 +36,30 @@ extension UserBlockingsStateObject: IsFeedbackStateObject {
     func reduce(event: Event, realm: Realm) {
         switch event {
         case .onTriggerReloadUserBlockings:
-            userBlockingsError = nil
-            triggerUserBlockingsQuery = true
-        case .onGetReloadUserFollowings(let data):
-        {
-            userBlockings.removeAll()
-            let users: [UserObject] = data.blockingUsers.map {
-                let user = realm.create(UserObject.self, value: $0.snapshot, update: true)
-                user.blocked.value = true
-                return user
-            }
-            userBlockings.append(objectsIn: users)
-        }()
-        userBlockingsError = nil
-        triggerUserBlockingsQuery = false
-        case .onGetUserFollowingsError(let error):
-            userBlockingsError = error.localizedDescription
-            triggerUserBlockingsQuery = false
+            userBlockingUsersQueryState?.reduce(event: .onTrigger, realm: realm)
+        case .onGetUserBlockingsData(let data):
+            userBlockingUsersQueryState?.reduce(event: .onGetData(data), realm: realm)
+        case .onGetUserBlockingsError(let error):
+            userBlockingUsersQueryState?.reduce(event: .onGetError(error), realm: realm)
             
         case .onTriggerBlockUser(let blockingUserId):
-            guard shouldBlockUser else { return }
-            self.blockingUserId = blockingUserId
-            blockUserError = nil
-            triggerBlockUserQuery = true
+            blockUserQueryState?.reduce(event: .onTriggerBlockUser(blockingUserId), realm: realm)
         case .onBlockUserSuccess(let data):
-            let user = realm.create(UserObject.self, value: data.snapshot, update: true)
-            user.blocked.value = true
-            blockingUserId = nil
-            blockUserError = nil
-            triggerBlockUserQuery = false
+            blockUserQueryState?.reduce(event: .onSuccess(data), realm: realm)
             needUpdate?.myInterestedMedia = true
             needUpdate?.myStaredMedia = true
         case .onBlockUserError(let error):
-            blockUserError = error.localizedDescription
-            triggerBlockUserQuery = false
+            blockUserQueryState?.reduce(event: .onError(error), realm: realm)
             
         case .onTriggerUnblockUser(let toUserId):
-            guard shouldUnblockUser else { return }
-            unblockingUserId = toUserId
-            unblockUserError = nil
-            triggerUnblockUserQuery = true
+            unblockUserQueryState?.reduce(event: .onTriggerUnblockUser(toUserId), realm: realm)
         case .onUnblockUserSuccess(let data):
-            let user = realm.create(UserObject.self, value: data.snapshot, update: true)
-            user.blocked.value = false
-            unblockingUserId = nil
-            unblockUserError = nil
-            triggerUnblockUserQuery = false
+            unblockUserQueryState?.reduce(event: .onSuccess(data), realm: realm)
             needUpdate?.myInterestedMedia = true
             needUpdate?.myStaredMedia = true
         case .onUnblockUserError(let error):
-            unblockUserError = error.localizedDescription
-            triggerUnblockUserQuery = false
-            
+            unblockUserQueryState?.reduce(event: .onError(error), realm: realm)
+
         case .onTriggerShowUser(let userId):
             routeState?.reduce(event: .onTriggerShowUser(userId), realm: realm)
         }

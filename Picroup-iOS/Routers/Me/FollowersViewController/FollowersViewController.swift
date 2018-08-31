@@ -40,7 +40,7 @@ class FollowersViewController: ShowNavigationBarViewController, IsStateViewContr
             uiFeedback: uiFeedback,
             shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
             queryUserFollowers: { query in
-                return ApolloClient.shared.rx.fetch(query: query)
+                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                     .map { $0?.data?.user?.followers }.forceUnwrap()
         },
             followUser: { query in

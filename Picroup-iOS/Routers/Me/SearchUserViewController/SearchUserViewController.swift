@@ -40,7 +40,7 @@ final class SearchUserViewController: ShowNavigationBarViewController, IsStateVi
             uiFeedback: uiFeedback,
             shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
             searchUser: { query in
-                return ApolloClient.shared.rx.fetch(query: query)
+                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                     .map { $0?.data?.searchUser }
         },
             followUser: { query in

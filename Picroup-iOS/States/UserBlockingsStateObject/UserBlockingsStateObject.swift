@@ -12,58 +12,27 @@ import RxSwift
 import RxCocoa
 import RxRealm
 
-final class UserBlockingsStateObject: PrimaryObject {
+final class UserBlockingsStateObject: VersionedPrimaryObject {
     
     @objc dynamic var sessionState: UserSessionStateObject?
-    
-    let userBlockings = List<UserObject>()
-    @objc dynamic var userBlockingsError: String?
-    @objc dynamic var triggerUserBlockingsQuery: Bool = false
-    
-    @objc dynamic var blockingUserId: String?
-    @objc dynamic var blockUserError: String?
-    @objc dynamic var triggerBlockUserQuery: Bool = false
-    
-    @objc dynamic var unblockingUserId: String?
-    @objc dynamic var unblockUserError: String?
-    @objc dynamic var triggerUnblockUserQuery: Bool = false
-    
+    @objc dynamic var userBlockingUsersQueryState: UserBlockingUsersQueryStateObject?
+    @objc dynamic var blockUserQueryState: BlockUserQueryStateObject?
+    @objc dynamic var unblockUserQueryState: UnblockUserQueryStateObject?
     @objc dynamic var needUpdate: NeedUpdateStateObject?
-    
     @objc dynamic var routeState: RouteStateObject?
 }
 
 extension UserBlockingsStateObject {
     var userBlockingsQuery: UserBlockingUsersQuery? {
-        guard let userId = sessionState?.currentUserId else { return nil }
-        return triggerUserBlockingsQuery
-            ? UserBlockingUsersQuery(userId: userId)
-            : nil
-    }
-    var isBlockingsEmpty: Bool {
-        return !triggerUserBlockingsQuery && userBlockingsError == nil && userBlockings.isEmpty
+        return userBlockingUsersQueryState?.query(userId: sessionState?.currentUserId)
     }
     
-    var shouldBlockUser: Bool {
-        return !triggerBlockUserQuery
-    }
     var blockUserQuery: BlockUserMutation? {
-        guard let userId = sessionState?.currentUserId,
-            let blockingUserId = blockingUserId else { return nil }
-        return triggerBlockUserQuery
-            ? BlockUserMutation(userId: userId, blockingUserId: blockingUserId)
-            : nil
+        return blockUserQueryState?.query(userId: sessionState?.currentUserId)
     }
     
-    var shouldUnblockUser: Bool {
-        return !triggerUnblockUserQuery
-    }
     var unblockUserQuery: UnblockUserMutation? {
-        guard let userId = sessionState?.currentUserId,
-            let unblockingUserId = unblockingUserId else { return nil }
-        return triggerUnblockUserQuery
-            ? UnblockUserMutation(userId: userId, blockingUserId: unblockingUserId)
-            : nil
+        return unblockUserQueryState?.query(userId: sessionState?.currentUserId)
     }
 }
 
@@ -75,7 +44,9 @@ extension UserBlockingsStateObject {
             let value: Any = [
                 "_id": _id,
                 "sessionState": UserSessionStateObject.createValues(),
-                "userBlockings": [],
+                "userBlockingUsersQueryState": UserBlockingUsersQueryStateObject.createValues(id: _id),
+                "blockUserQueryState": BlockUserQueryStateObject.createValues(),
+                "unblockUserQueryState": UnblockUserQueryStateObject.createValues(),
                 "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
                 ]

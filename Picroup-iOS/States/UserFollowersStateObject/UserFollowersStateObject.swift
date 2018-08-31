@@ -51,7 +51,7 @@ extension UserFollowersStateObject {
                 "_id": userId,
                 "sessionState": UserSessionStateObject.createValues(),
                 "user": ["_id": userId],
-                "userFollowersQueryState": UserFollowersQueryStateObject.createValues(id: PrimaryKey.userFollowingsId(userId), userId: userId),
+                "userFollowersQueryState": UserFollowersQueryStateObject.createValues(id: PrimaryKey.userFollowersId(userId), userId: userId),
                 "followUserQueryState": FollowUserQueryStateObject.createValues(),
                 "unfollowUserQueryState": UnfollowUserQueryStateObject.createValues(),
                 "needUpdate": ["_id": _id],

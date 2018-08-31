@@ -12,11 +12,14 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import RxFeedback
+import RealmSwift
 
-final class BlockingsViewController: ShowNavigationBarViewController {
+final class BlockingsViewController: ShowNavigationBarViewController, IsStateViewController {
     
     @IBOutlet var presenter: BlockingsPresenter!
-    fileprivate typealias Feedback = (Driver<UserBlockingsStateObject>) -> Signal<UserBlockingsStateObject.Event>
+    
+    typealias State = UserBlockingsStateObject
+    typealias Event = State.Event
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,57 +29,49 @@ final class BlockingsViewController: ShowNavigationBarViewController {
     
     private func setupRxFeedback() {
         
-        guard let store = try? UserBlockingsStateStore() else { return }
+        guard let realm = try? Realm(), let state = try? State.create()(realm) else { return }
         
+        state.system(
+            uiFeedback: uiFeedback,
+            shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
+            queryUserBlockings: { query in
+                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                    .map { $0?.data?.user?.blockingUsers.map { $0.fragments.userFragment } }.forceUnwrap()
+        },
+            blockUser: { query in
+                return ApolloClient.shared.rx.perform(mutation: query)
+                    .map { $0?.data?.blockUser }.forceUnwrap()
+        },
+            unblockUser: { query in
+                return ApolloClient.shared.rx.perform(mutation: query)
+                    .map { $0?.data?.unblockUser }.forceUnwrap()
+        })
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
+    var uiFeedback: State.DriverFeedback {
         typealias Section = BlockingsPresenter.Section
-        
-        let uiFeedback: Feedback = bind(self) { (me, state)  in
+        return bind(self) { (me, state)  in
             let presenter = me.presenter!
-            let _events = PublishRelay<UserBlockingsStateObject.Event>()
+            let _events = PublishRelay<Event>()
             let subscriptions = [
-                store.userBlockingsItems().map { [Section(model: "", items: $0)] }.drive(presenter.items(_events)),
-                state.map { $0.isBlockingsEmpty }.drive(presenter.isBlockingsEmpty),
+                state.map { [Section(model: "", items: $0.userBlockingsItems())] }.drive(presenter.items(_events)),
+                state.map { $0.userBlockingUsersQueryState?.isEmpty ?? false }.drive(presenter.isBlockingsEmpty),
                 ]
-            let events: [Signal<UserBlockingsStateObject.Event>] = [
+            let events: [Signal<Event>] = [
                 .just(.onTriggerReloadUserBlockings),
                 _events.asSignal(),
                 presenter.tableView.rx.modelSelected(UserObject.self).asSignal().map { .onTriggerShowUser($0._id) },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-        
-        let queryUserBlockings: Feedback = react(query: { $0.userBlockingsQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData).map { $0?.data?.user }.unwrap()
-                .map(UserBlockingsStateObject.Event.onGetReloadUserFollowings)
-                .asSignal(onErrorReturnJust: UserBlockingsStateObject.Event.onGetUserFollowingsError)
-        })
-        
-        let blockUser: Feedback = react(query: { $0.blockUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            ApolloClient.shared.rx.perform(mutation: query).asObservable()
-                .map { $0?.data?.blockUser }.unwrap()
-                .map(UserBlockingsStateObject.Event.onBlockUserSuccess)
-                .asSignal(onErrorReturnJust: UserBlockingsStateObject.Event.onBlockUserError)
-        })
-        
-        let unblockUser: Feedback = react(query: { $0.unblockUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            ApolloClient.shared.rx.perform(mutation: query).asObservable()
-                .map { $0?.data?.unblockUser }.unwrap()
-                .map(UserBlockingsStateObject.Event.onUnblockUserSuccess)
-                .asSignal(onErrorReturnJust: UserBlockingsStateObject.Event.onUnblockUserError)
-        })
-        
-        let states = store.states
-        
-        Signal.merge(
-            uiFeedback(states),
-            queryUserBlockings(states),
-            blockUser(states),
-            unblockUser(states)
-            )
-            .debug("UserBlockingsState.Event", trimOutput: true)
-            .emit(onNext: store.on)
-            .disposed(by: disposeBag)
-        
     }
 }
 
+extension UserBlockingsStateObject {
+    
+    func userBlockingsItems() -> [UserObject] {
+        return userBlockingUsersQueryState?.userBlockings.toArray() ?? []
+    }
+}
