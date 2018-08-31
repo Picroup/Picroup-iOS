@@ -92,7 +92,7 @@ class MePresenter: NSObject {
     
     var selectedTabIndex: Binder<Int> {
         return Binder(self) { me, index in
-            guard let tab = MeStateObject.Tab(rawValue: index) else { return }
+            guard let tab = MeTabStateObject.Tab(rawValue: index) else { return }
             let offsetX = CGFloat(tab.rawValue) * me.scrollView.frame.width
             let offsetY = me.scrollView.contentOffset.y
             let animated = !me.isFirstTimeSetSelectedTab

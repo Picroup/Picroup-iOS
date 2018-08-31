@@ -47,7 +47,7 @@ final class HomeViewController: BaseViewController, IsStateViewController {
         weak var weakSelf = self
         return bind(self) { (me, state) in
             let presenter = me.presenter!
-            //            let _events = PublishRelay<HomeStateObject.Event>()
+            //            let _events = PublishRelay<Event>()
             let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions = [
                 state.map { [Section(model: "", items: $0.myInterestedMediaItems())] }.drive(presenter.mediaPresenter.items(footerState: footerState.asDriver())),

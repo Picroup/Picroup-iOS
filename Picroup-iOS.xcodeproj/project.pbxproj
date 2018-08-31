@@ -140,7 +140,7 @@
 		45662B0B212E8AFD00964BC9 /* ImageDetailStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B0A212E8AFD00964BC9 /* ImageDetailStateStore.swift */; };
 		45662B0D212E8B0A00964BC9 /* ImageCommentsStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B0C212E8B0A00964BC9 /* ImageCommentsStateStore.swift */; };
 		45662B0F212E8B1700964BC9 /* LoginStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B0E212E8B1700964BC9 /* LoginStateObject+system.swift */; };
-		45662B13212E8B2D00964BC9 /* MeStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B12212E8B2D00964BC9 /* MeStateStore.swift */; };
+		45662B13212E8B2D00964BC9 /* MeStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B12212E8B2D00964BC9 /* MeStateObject+system.swift */; };
 		45662B15212E8B3C00964BC9 /* NotificationsStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B14212E8B3C00964BC9 /* NotificationsStateObject+system.swift */; };
 		45662B17212E8B5300964BC9 /* RankStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B16212E8B5300964BC9 /* RankStateObject+system.swift */; };
 		45662B19212E8B5E00964BC9 /* RegisterUsernameStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B18212E8B5E00964BC9 /* RegisterUsernameStateStore.swift */; };
@@ -297,6 +297,9 @@
 		45C3930220C5875D00F4A69A /* SaveMediumFeedback.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C392FF20C5875D00F4A69A /* SaveMediumFeedback.graphql */; };
 		45C5E5212138D565004C6F4A /* BlockUserQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5E5202138D565004C6F4A /* BlockUserQueryStateObject.swift */; };
 		45C5E5232138D585004C6F4A /* UnblockUserQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5E5222138D585004C6F4A /* UnblockUserQueryStateObject.swift */; };
+		45C5E5252138E3CB004C6F4A /* MeTabStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5E5242138E3CB004C6F4A /* MeTabStateObject.swift */; };
+		45C5E5272138E861004C6F4A /* MyMediaQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5E5262138E861004C6F4A /* MyMediaQueryStateObject.swift */; };
+		45C5E5292138E88F004C6F4A /* MyStaredMediaQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5E5282138E88F004C6F4A /* MyStaredMediaQueryStateObject.swift */; };
 		45CD0695212FA91200AE563E /* StarMediumStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0694212FA91200AE563E /* StarMediumStateObject.swift */; };
 		45CD0697212FD26B00AE563E /* MediumDetailObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0696212FD26B00AE563E /* MediumDetailObject.swift */; };
 		45CD0699212FD28200AE563E /* CursorMediaObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD0698212FD28200AE563E /* CursorMediaObject.swift */; };
@@ -497,7 +500,7 @@
 		45662B0A212E8AFD00964BC9 /* ImageDetailStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailStateStore.swift; sourceTree = "<group>"; };
 		45662B0C212E8B0A00964BC9 /* ImageCommentsStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsStateStore.swift; sourceTree = "<group>"; };
 		45662B0E212E8B1700964BC9 /* LoginStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginStateObject+system.swift"; sourceTree = "<group>"; };
-		45662B12212E8B2D00964BC9 /* MeStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeStateStore.swift; sourceTree = "<group>"; };
+		45662B12212E8B2D00964BC9 /* MeStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B14212E8B3C00964BC9 /* NotificationsStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B16212E8B5300964BC9 /* RankStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RankStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B18212E8B5E00964BC9 /* RegisterUsernameStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUsernameStateStore.swift; sourceTree = "<group>"; };
@@ -654,6 +657,9 @@
 		45C392FF20C5875D00F4A69A /* SaveMediumFeedback.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SaveMediumFeedback.graphql; sourceTree = "<group>"; };
 		45C5E5202138D565004C6F4A /* BlockUserQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockUserQueryStateObject.swift; sourceTree = "<group>"; };
 		45C5E5222138D585004C6F4A /* UnblockUserQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockUserQueryStateObject.swift; sourceTree = "<group>"; };
+		45C5E5242138E3CB004C6F4A /* MeTabStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTabStateObject.swift; sourceTree = "<group>"; };
+		45C5E5262138E861004C6F4A /* MyMediaQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMediaQueryStateObject.swift; sourceTree = "<group>"; };
+		45C5E5282138E88F004C6F4A /* MyStaredMediaQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStaredMediaQueryStateObject.swift; sourceTree = "<group>"; };
 		45CD0694212FA91200AE563E /* StarMediumStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarMediumStateObject.swift; sourceTree = "<group>"; };
 		45CD0696212FD26B00AE563E /* MediumDetailObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumDetailObject.swift; sourceTree = "<group>"; };
 		45CD0698212FD28200AE563E /* CursorMediaObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorMediaObject.swift; sourceTree = "<group>"; };
@@ -1116,7 +1122,7 @@
 			children = (
 				454B4A4B20ABB73900990063 /* MeStateObject.swift */,
 				45662ADC212E89E500964BC9 /* MeStateObject+Event.swift */,
-				45662B12212E8B2D00964BC9 /* MeStateStore.swift */,
+				45662B12212E8B2D00964BC9 /* MeStateObject+system.swift */,
 			);
 			path = MeStateObject;
 			sourceTree = "<group>";
@@ -1799,6 +1805,9 @@
 				45E977082134D81F00723BA1 /* LoginQueryStateObject.swift */,
 				457D8AA021367CCD00719F23 /* MarkNotificationsQueryStateObject.swift */,
 				457D8AA42136949900719F23 /* MarkReputationsQueryStateObject.swift */,
+				45C5E5242138E3CB004C6F4A /* MeTabStateObject.swift */,
+				45C5E5262138E861004C6F4A /* MyMediaQueryStateObject.swift */,
+				45C5E5282138E88F004C6F4A /* MyStaredMediaQueryStateObject.swift */,
 				457D8AA62137824D00719F23 /* SaveFeedbackQueryState.swift */,
 				457D8AA82137987600719F23 /* SearchUserQueryStateObject.swift */,
 				45662B41212EA20400964BC9 /* SnackbarObject.swift */,
@@ -2169,6 +2178,7 @@
 				457D8AA72137824D00719F23 /* SaveFeedbackQueryState.swift in Sources */,
 				45E977102134F36400723BA1 /* UpdatePasswordPresenter.swift in Sources */,
 				45315C1320F61CA700E3BCAB /* UpdateMediumTagsViewController.swift in Sources */,
+				45C5E5272138E861004C6F4A /* MyMediaQueryStateObject.swift in Sources */,
 				457BD98920AC695A007F0492 /* ReputationObject.swift in Sources */,
 				45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */,
 				4580F4F821001DA5006EFF85 /* AVHelper.swift in Sources */,
@@ -2185,7 +2195,7 @@
 				45183EC220D0E94100497B59 /* createFeedback.swift in Sources */,
 				456D145E21057E6F008EDD41 /* MediumDetailPresenter+CellStyle.swift in Sources */,
 				45F0A7D420C7B32B0085F978 /* RegisterUsernameViewController.swift in Sources */,
-				45662B13212E8B2D00964BC9 /* MeStateStore.swift in Sources */,
+				45662B13212E8B2D00964BC9 /* MeStateObject+system.swift in Sources */,
 				457D8AAB2137A5DE00719F23 /* FollowUserQueryStateObject.swift in Sources */,
 				457BD99420B146CD007F0492 /* AppStateService.swift in Sources */,
 				45FC0BF520A42F4A006AAF3D /* UserPresenter.swift in Sources */,
@@ -2251,6 +2261,7 @@
 				45662AE9212E8A3100964BC9 /* RegisterCodeStateObject+Event.swift in Sources */,
 				458006DA20A17365004BD982 /* UIScrollView+Rx+shouldHideNavigationBar.swift in Sources */,
 				4561DE732100477E00F77510 /* TagCollectionViewCell.swift in Sources */,
+				45C5E5252138E3CB004C6F4A /* MeTabStateObject.swift in Sources */,
 				45662ADD212E89E500964BC9 /* MeStateObject+Event.swift in Sources */,
 				45662B37212E8C1900964BC9 /* UpdateMediumTagsStateStore.swift in Sources */,
 				45BA0D7D208ED3B30002E1D5 /* ReputationsViewController.swift in Sources */,
@@ -2388,6 +2399,7 @@
 				45E240B22084D2CF004B58EF /* ImageDetailViewController.swift in Sources */,
 				45FC0BFE20A94995006AAF3D /* Realm+findOrCreate.swift in Sources */,
 				457BD99320B146CD007F0492 /* MediumService.swift in Sources */,
+				45C5E5292138E88F004C6F4A /* MyStaredMediaQueryStateObject.swift in Sources */,
 				453B95C720C622320043D915 /* FeedbackPresenter.swift in Sources */,
 				45662AF7212E8A7F00964BC9 /* UserStateObject+Event.swift in Sources */,
 				457BD98B20ADB55E007F0492 /* CreateImageStateObject.swift in Sources */,

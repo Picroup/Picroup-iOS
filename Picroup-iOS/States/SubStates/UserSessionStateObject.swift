@@ -34,7 +34,7 @@ extension UserSessionStateObject {
         case onCreateUser(UserDetailFragment)
         case onUpdateUser(UserFragment)
         case onClearNotificationCount
-        case onRemoveUser
+        case onLogout
     }
 }
 
@@ -47,8 +47,12 @@ extension UserSessionStateObject: IsFeedbackStateObject {
             currentUser = UserObject.create(from: data)(realm)
         case .onClearNotificationCount:
             currentUser?.notificationsCount.value = 0
-        case .onRemoveUser:
+        case .onLogout:
             currentUser = nil
+            realm.delete(realm.objects(UserObject.self))
+            realm.delete(realm.objects(MediumObject.self))
+            realm.delete(realm.objects(NotificationObject.self))
+            realm.delete(realm.objects(ReputationObject.self))
         }
     }
 }

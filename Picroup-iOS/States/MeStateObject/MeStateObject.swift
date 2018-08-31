@@ -15,38 +15,19 @@ import RxRealm
 final class MeStateObject: VersionedPrimaryObject {
     
     @objc dynamic var sessionState: UserSessionStateObject?
-    
-    @objc dynamic var selectedTabIndex: Int = 0
-    
-    @objc dynamic var myMediaState: CursorMediaQueryStateObject?
-    
-    @objc dynamic var myStaredMediaState: CursorMediaQueryStateObject?
-
+    @objc dynamic var tabState: MeTabStateObject?
+    @objc dynamic var myMediaQueryState: MyMediaQueryStateObject?
+    @objc dynamic var myStaredMediaQueryState: MyStaredMediaQueryStateObject?
     @objc dynamic var needUpdate: NeedUpdateStateObject?
-    
     @objc dynamic var routeState: RouteStateObject?
 }
 
 extension MeStateObject {
-    
-    enum Tab: Int {
-        case myMedia
-        case myStaredMedia
-    }
-}
-
-extension MeStateObject {
     var myMediaQuery: MyMediaQuery? {
-        guard let userId = sessionState?.currentUserId else { return nil }
-        return myMediaState?.trigger == true
-            ? MyMediaQuery(userId: userId, cursor: myMediaState?.cursorMedia?.cursor.value, queryUserId: userId)
-            : nil
+        return myMediaQueryState?.query(userId: sessionState?.currentUserId)
     }
     var myStaredMediaQuery: MyStaredMediaQuery? {
-        guard let userId = sessionState?.currentUserId else { return nil }
-        return myStaredMediaState?.trigger == true
-            ? MyStaredMediaQuery(userId: userId, cursor: myStaredMediaState?.cursorMedia?.cursor.value)
-            : nil
+        return myStaredMediaQueryState?.query(userId: sessionState?.currentUserId)
     }
 }
 
@@ -58,8 +39,9 @@ extension MeStateObject {
             let value: Any = [
                 "_id": _id,
                 "sessionState": UserSessionStateObject.createValues(),
-                "myMediaState": CursorMediaQueryStateObject.createValues(id: PrimaryKey.myMediaId),
-                "myStaredMediaState":  CursorMediaQueryStateObject.createValues(id: PrimaryKey.myStaredMediaId),
+                "tabState": MeTabStateObject.createValues(id: _id),
+                "myMediaQueryState": CursorMediaQueryStateObject.createValues(id: PrimaryKey.myMediaId),
+                "myStaredMediaQueryState":  CursorMediaQueryStateObject.createValues(id: PrimaryKey.myStaredMediaId),
                 "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
                 ]

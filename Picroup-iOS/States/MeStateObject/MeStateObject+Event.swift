@@ -15,14 +15,20 @@ import RxRealm
 extension MeStateObject {
     
     enum Event {
-        case onChangeSelectedTab(Tab)
+        case onChangeSelectedTab(MeTabStateObject.Tab)
         
-        case myMediaState(CursorMediaQueryStateObject.Event)
         case onTriggerReloadMyMediaIfNeeded
-        
-        case myStaredMediaState(CursorMediaQueryStateObject.Event)
+        case onTriggerReloadMyMedia
+        case onTriggerGetMoreMyMedia
+        case onGetMyMediaData(CursorMediaFragment)
+        case onGetMyMediaError(Error)
+
         case onTriggerReloadMyStaredMediaIfNeeded
-        
+        case onTriggerReloadMyStaredMedia
+        case onTriggerGetMoreMyStaredMedia
+        case onGetMyStaredMediaData(CursorMediaFragment)
+        case onGetMyStaredMediaError(Error)
+
         case onTriggerShowImage(String)
         case onTriggerShowReputations
         case onTriggerShowUserFollowings
@@ -41,21 +47,33 @@ extension MeStateObject: IsFeedbackStateObject {
     func reduce(event: Event, realm: Realm) {
         switch event {
         case .onChangeSelectedTab(let tab):
-            selectedTabIndex = tab.rawValue
+            tabState?.reduce(event: .onChangeSelectedTab(tab), realm: realm)
             
-        case .myMediaState(let event):
-            myMediaState?.reduce(event: event, realm: realm)
         case .onTriggerReloadMyMediaIfNeeded:
             guard needUpdate?.myMedia == true else { return }
             needUpdate?.myMedia = false
-            myMediaState?.reduce(event: .onTriggerReload, realm: realm)
+            myMediaQueryState?.reduce(event: .onTriggerReload, realm: realm)
+        case .onTriggerReloadMyMedia:
+            myMediaQueryState?.reduce(event: .onTriggerReload, realm: realm)
+        case .onTriggerGetMoreMyMedia:
+            myMediaQueryState?.reduce(event: .onTriggerGetMore, realm: realm)
+        case .onGetMyMediaData(let data):
+            myMediaQueryState?.reduce(event: .onGetData(data), realm: realm)
+        case .onGetMyMediaError(let error):
+            myMediaQueryState?.reduce(event: .onGetError(error), realm: realm)
             
-        case .myStaredMediaState(let event):
-            myStaredMediaState?.reduce(event: event, realm: realm)
         case .onTriggerReloadMyStaredMediaIfNeeded:
             guard needUpdate?.myStaredMedia == true else { return }
             needUpdate?.myStaredMedia = false
-            myStaredMediaState?.reduce(event: .onTriggerReload, realm: realm)
+            myStaredMediaQueryState?.reduce(event: .onTriggerReload, realm: realm)
+        case .onTriggerReloadMyStaredMedia:
+            myStaredMediaQueryState?.reduce(event: .onTriggerReload, realm: realm)
+        case .onTriggerGetMoreMyStaredMedia:
+            myStaredMediaQueryState?.reduce(event: .onTriggerGetMore, realm: realm)
+        case .onGetMyStaredMediaData(let data):
+            myStaredMediaQueryState?.reduce(event: .onGetData(data), realm: realm)
+        case .onGetMyStaredMediaError(let error):
+            myStaredMediaQueryState?.reduce(event: .onGetError(error), realm: realm)
             
         case .onTriggerShowImage(let mediumId):
             routeState?.reduce(event: .onTriggerShowImage(mediumId), realm: realm)
@@ -76,12 +94,7 @@ extension MeStateObject: IsFeedbackStateObject {
         case .onTriggerPop:
             routeState?.reduce(event: .onTriggerPop, realm: realm)
         case .onLogout:
-            sessionState?.reduce(event: .onRemoveUser, realm: realm)
-            realm.delete(realm.objects(UserObject.self))
-            realm.delete(realm.objects(MediumObject.self))
-            realm.delete(realm.objects(NotificationObject.self))
-            realm.delete(realm.objects(ReputationObject.self))
+            sessionState?.reduce(event: .onLogout, realm: realm)
         }
-        updateVersion()
     }
 }
