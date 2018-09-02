@@ -20,6 +20,7 @@
 		451631FA213B9E3C00CC3E55 /* RegisterQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451631F9213B9E3C00CC3E55 /* RegisterQueryStateObject.swift */; };
 		451631FC213BBDCF00CC3E55 /* ResetPhoneAvailableQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451631FB213BBDCF00CC3E55 /* ResetPhoneAvailableQueryStateObject.swift */; };
 		451631FE213BC65500CC3E55 /* VerifyCodeQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451631FD213BC65500CC3E55 /* VerifyCodeQueryStateObject.swift */; };
+		45163200213BCADF00CC3E55 /* QueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451631FF213BCADF00CC3E55 /* QueryStateObject.swift */; };
 		45183EBE20CF65BC00497B59 /* AboutAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EBD20CF65BC00497B59 /* AboutAppViewController.swift */; };
 		45183EC020CF862000497B59 /* RealmProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EBF20CF862000497B59 /* RealmProvider.swift */; };
 		45183EC220D0E94100497B59 /* createFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EC120D0E94100497B59 /* createFeedback.swift */; };
@@ -389,6 +390,7 @@
 		451631F9213B9E3C00CC3E55 /* RegisterQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterQueryStateObject.swift; sourceTree = "<group>"; };
 		451631FB213BBDCF00CC3E55 /* ResetPhoneAvailableQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPhoneAvailableQueryStateObject.swift; sourceTree = "<group>"; };
 		451631FD213BC65500CC3E55 /* VerifyCodeQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeQueryStateObject.swift; sourceTree = "<group>"; };
+		451631FF213BCADF00CC3E55 /* QueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryStateObject.swift; sourceTree = "<group>"; };
 		45183EBD20CF65BC00497B59 /* AboutAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppViewController.swift; sourceTree = "<group>"; };
 		45183EBF20CF862000497B59 /* RealmProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmProvider.swift; sourceTree = "<group>"; };
 		45183EC120D0E94100497B59 /* createFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createFeedback.swift; sourceTree = "<group>"; };
@@ -1834,6 +1836,7 @@
 				45C5E5262138E861004C6F4A /* MyMediaQueryStateObject.swift */,
 				45C5E5282138E88F004C6F4A /* MyStaredMediaQueryStateObject.swift */,
 				451631EF213B84A600CC3E55 /* PasswordValidQueryStateObject.swift */,
+				451631FF213BCADF00CC3E55 /* QueryStateObject.swift */,
 				451631E9213B6EF500CC3E55 /* RegisterParamStateObject.swift */,
 				451631F3213B8DD600CC3E55 /* RegisterPhoneAvailableQueryStateObject.swift */,
 				451631F9213B9E3C00CC3E55 /* RegisterQueryStateObject.swift */,
@@ -2311,6 +2314,7 @@
 				45AA3B4820A346DB0032A8CF /* DispachQueue+realm.swift in Sources */,
 				45662AEB212E8A3B00964BC9 /* ReputationsStateObject+Event.swift in Sources */,
 				451DD4C12083125A002C509A /* Objective.swift in Sources */,
+				45163200213BCADF00CC3E55 /* QueryStateObject.swift in Sources */,
 				4595F219207A15010040E5FA /* Mutabled.swift in Sources */,
 				4561DE6B2100412800F77510 /* RankVideoCell.swift in Sources */,
 				457D8AB12137D07B00719F23 /* UserFollowingsQueryStateObject.swift in Sources */,

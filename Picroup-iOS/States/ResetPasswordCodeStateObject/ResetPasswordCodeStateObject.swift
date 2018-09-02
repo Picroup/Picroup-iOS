@@ -47,9 +47,9 @@ extension ResetPasswordCodeStateObject {
             let value: Any = [
                 "_id": _id,
                 "resetPasswordStateParam": ["_id": _id, "code": 0],
-                "getVerifyCodeQueryState": GetVerifyCodeQueryStateObject.createValues(),
-                "codeValidQueryState": CodeValidQueryStateObject.createValues(id: "\(self).\(_id)"),
-                "verifyCodeQueryState": VerifyCodeQueryStateObject.createValues(),
+                "getVerifyCodeQueryState": GetVerifyCodeQueryStateObject.createValues(id: "\(self).\(_id).getVerifyCodeQueryState"),
+                "codeValidQueryState": CodeValidQueryStateObject.createValues(id: "\(self).\(_id).codeValidQueryState"),
+                "verifyCodeQueryState": VerifyCodeQueryStateObject.createValues(id: "\(self).\(_id).verifyCodeQueryState"),
                 "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],
                 ]

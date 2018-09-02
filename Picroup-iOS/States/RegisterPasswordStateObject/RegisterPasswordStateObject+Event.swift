@@ -28,7 +28,7 @@ extension RegisterPasswordStateObject: IsFeedbackStateObject {
             registerParamState?.reduce(event: .onChangePassword(password), realm: realm)
             passwordValidQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onValidPasswordSuccess:
-            passwordValidQueryState?.reduce(event: .onSuccess, realm: realm)
+            passwordValidQueryState?.reduce(event: .onSuccess(""), realm: realm)
         case .onValidPasswordError(let error):
             passwordValidQueryState?.reduce(event: .onError(error), realm: realm)
         }

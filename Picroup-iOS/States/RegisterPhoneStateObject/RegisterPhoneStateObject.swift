@@ -33,7 +33,7 @@ extension RegisterPhoneStateObject {
             let value: Any = [
                 "_id": _id,
                 "registerParamState": RegisterParamStateObject.createValues(),
-                "registerPhoneAvailableQueryState": RegisterPhoneAvailableQueryStateObject.createValues(),
+                "registerPhoneAvailableQueryState": RegisterPhoneAvailableQueryStateObject.createValues(id: "\(self).\(_id).registerPhoneAvailableQueryState"),
                 ]
             return try realm.update(RegisterPhoneStateObject.self, value: value)
         }

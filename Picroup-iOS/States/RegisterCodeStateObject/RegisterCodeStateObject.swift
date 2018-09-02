@@ -51,9 +51,9 @@ extension RegisterCodeStateObject {
                 "_id": _id,
                 "sessionState": UserSessionStateObject.createValues(),
                 "registerParamState": RegisterParamStateObject.createValues(),
-                "getVerifyCodeQueryState": GetVerifyCodeQueryStateObject.createValues(),
-                "codeValidQueryState": CodeValidQueryStateObject.createValues(id: "\(self).\(_id)"),
-                "registerQueryState": RegisterQueryStateObject.createValues(),
+                "getVerifyCodeQueryState": GetVerifyCodeQueryStateObject.createValues(id: "\(self).\(_id).getVerifyCodeQueryState"),
+                "codeValidQueryState": CodeValidQueryStateObject.createValues(id: "\(self).\(_id).codeValidQueryState"),
+                "registerQueryState": RegisterQueryStateObject.createValues(id: "\(self).\(_id).registerQueryState"),
                 "snackbar": ["_id": _id],
                 ]
             return try realm.update(RegisterCodeStateObject.self, value: value)

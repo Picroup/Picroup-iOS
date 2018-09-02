@@ -29,7 +29,7 @@ extension ResetPasswordPhoneStateObject: IsFeedbackStateObject {
             resetPasswordStateParam?.reduce(event: .onChangePhoneNumber(phoneNumber), realm: realm)
             resetPhoneAvailableQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onPhoneNumberAvailableSuccess:
-            resetPhoneAvailableQueryState?.reduce(event: .onSuccess, realm: realm)
+            resetPhoneAvailableQueryState?.reduce(event: .onSuccess(""), realm: realm)
         case .onPhoneNumberAvailableError(let error):
             resetPhoneAvailableQueryState?.reduce(event: .onError(error), realm: realm)
         }

@@ -33,7 +33,7 @@ extension RegisterUsernameStateObject {
             let value: Any = [
                 "_id": _id,
                 "registerParamState": RegisterParamStateObject.createValues(),
-                "registerUsernameAvailableQueryState": RegisterUsernameAvailableQueryStateObject.createValues(),
+                "registerUsernameAvailableQueryState": RegisterUsernameAvailableQueryStateObject.createValues(id: _id),
                 ]
             return try realm.update(RegisterUsernameStateObject.self, value: value)
         }

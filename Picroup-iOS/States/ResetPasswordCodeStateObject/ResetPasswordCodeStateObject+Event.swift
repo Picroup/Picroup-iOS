@@ -35,7 +35,7 @@ extension ResetPasswordCodeStateObject: IsFeedbackStateObject {
         case .onTriggerGetVerifyCode:
             getVerifyCodeQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onGetVerifyCodeSuccess:
-            getVerifyCodeQueryState?.reduce(event: .onSuccess, realm: realm)
+            getVerifyCodeQueryState?.reduce(event: .onSuccess(""), realm: realm)
         case .onGetVerifyCodeError(let error):
             getVerifyCodeQueryState?.reduce(event: .onError(error), realm: realm)
             snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
@@ -44,7 +44,7 @@ extension ResetPasswordCodeStateObject: IsFeedbackStateObject {
             resetPasswordStateParam?.reduce(event: .onChangeCode(codeText), realm: realm)
             codeValidQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onValidCodeSuccess:
-            codeValidQueryState?.reduce(event: .onSuccess, realm: realm)
+            codeValidQueryState?.reduce(event: .onSuccess(""), realm: realm)
         case .onValidCodeError(let error):
             codeValidQueryState?.reduce(event: .onError(error), realm: realm)
             
@@ -52,7 +52,7 @@ extension ResetPasswordCodeStateObject: IsFeedbackStateObject {
             verifyCodeQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onVerifySuccess(let token):
             resetPasswordStateParam?.reduce(event: .onChangeToken(token), realm: realm)
-            verifyCodeQueryState?.reduce(event: .onSuccess, realm: realm)
+            verifyCodeQueryState?.reduce(event: .onSuccess(""), realm: realm)
             routeState?.reduce(event: .onTriggerResetPassword, realm: realm)
         case .onVerifyError(let error):
             verifyCodeQueryState?.reduce(event: .onError(error), realm: realm)

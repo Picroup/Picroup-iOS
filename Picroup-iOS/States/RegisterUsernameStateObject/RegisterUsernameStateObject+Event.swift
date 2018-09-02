@@ -27,7 +27,7 @@ extension RegisterUsernameStateObject: IsFeedbackStateObject {
             registerParamState?.reduce(event: .onChangeUsername(username), realm: realm)
             registerUsernameAvailableQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onUsernameAvailableSuccess:
-            registerUsernameAvailableQueryState?.reduce(event: .onSuccess, realm: realm)
+            registerUsernameAvailableQueryState?.reduce(event: .onSuccess(""), realm: realm)
         case .onUsernameAvailableError(let error):
             registerUsernameAvailableQueryState?.reduce(event: .onError(error), realm: realm)
         }

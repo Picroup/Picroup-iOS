@@ -35,7 +35,7 @@ extension ResetPasswordPhoneStateObject {
             let value: Any = [
                 "_id": _id,
                 "resetPasswordStateParam": RegisterParamStateObject.createValues(),
-                "resetPhoneAvailableQueryState": ResetPhoneAvailableQueryStateObject.createValues(),
+                "resetPhoneAvailableQueryState": ResetPhoneAvailableQueryStateObject.createValues(id: "\(self).\(_id).resetPhoneAvailableQueryState"),
                 ]
             return try realm.update(ResetPasswordPhoneStateObject.self, value: value)
         }

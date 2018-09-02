@@ -28,7 +28,7 @@ extension RegisterPhoneStateObject: IsFeedbackStateObject {
             registerParamState?.reduce(event: .onChangePhoneNumber(phoneNumber), realm: realm)
             registerPhoneAvailableQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onPhoneNumberAvailableSuccess:
-            registerPhoneAvailableQueryState?.reduce(event: .onSuccess, realm: realm)
+            registerPhoneAvailableQueryState?.reduce(event: .onSuccess(""), realm: realm)
         case .onPhoneNumberAvailableError(let error):
             registerPhoneAvailableQueryState?.reduce(event: .onError(error), realm: realm)
         }
