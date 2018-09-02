@@ -15,6 +15,8 @@ extension RegisterPasswordStateObject {
     
     enum Event {
         case onChangePassword(String)
+        case onValidPasswordSuccess
+        case onValidPasswordError(Error)
     }
 }
 
@@ -23,8 +25,12 @@ extension RegisterPasswordStateObject: IsFeedbackStateObject {
     func reduce(event: RegisterPasswordStateObject.Event, realm: Realm) {
         switch event {
         case .onChangePassword(let password):
-            self.registerParam?.password = password
-            self.isPasswordValid = password.matchExpression(RegularPattern.password)
+            registerParamState?.reduce(event: .onChangePassword(password), realm: realm)
+            passwordValidQueryState?.reduce(event: .onTrigger, realm: realm)
+        case .onValidPasswordSuccess:
+            passwordValidQueryState?.reduce(event: .onSuccess, realm: realm)
+        case .onValidPasswordError(let error):
+            passwordValidQueryState?.reduce(event: .onError(error), realm: realm)
         }
     }
 }

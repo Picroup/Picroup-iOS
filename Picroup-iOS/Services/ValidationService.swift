@@ -11,10 +11,13 @@ import RxSwift
 
 extension ValidationService {
     
-   enum Error: Swift.Error {
+    enum Error: Swift.Error {
         case usernameIsEmpty
         case usernameNotValid
         case usernameInUse
+        
+        case passwordIsEmpty
+        case passwordNotValid
     }
 }
 
@@ -25,6 +28,9 @@ extension ValidationService.Error: LocalizedError {
         case .usernameIsEmpty: return "用户名不能为空"
         case .usernameNotValid: return "字母加数字，至少需要 4 个字"
         case .usernameInUse: return "用户名已被注册"
+            
+        case .passwordIsEmpty: return "密码不能为空"
+        case .passwordNotValid: return "至少需要 6 个字"
         }
     }
 }
@@ -48,6 +54,21 @@ struct ValidationService {
                     guard data == nil else { throw Error.usernameInUse }
                     return ()
             }
+        }
+    }
+    
+    static func queryValidPassword() -> (String) -> Single<Void> {
+        return { password in
+            
+            guard !password.isEmpty else {
+                return Single.error(Error.passwordIsEmpty)
+            }
+            
+            guard password.matchExpression(RegularPattern.password) else {
+                return Single.error(Error.passwordNotValid)
+            }
+            
+            return .just(())
         }
     }
 }

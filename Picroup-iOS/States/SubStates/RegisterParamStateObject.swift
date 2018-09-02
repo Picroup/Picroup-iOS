@@ -18,10 +18,15 @@ final class RegisterParamStateObject: PrimaryObject {
 
 extension RegisterParamStateObject {
     
-    static func createValues() -> Any {
-        return  [
+    static func createValues(clearPassword: Bool = false) -> Any {
+        var result: [String : Any] = [
             "_id": PrimaryKey.default,
-        ]
+            "code": 0,
+            ]
+        if clearPassword {
+            result["password"] = ""
+        }
+        return result
     }
 }
 
@@ -29,6 +34,7 @@ extension RegisterParamStateObject {
     
     enum Event {
         case onChangeUsername(String)
+        case onChangePassword(String)
     }
 }
 
@@ -38,6 +44,8 @@ extension RegisterParamStateObject: IsFeedbackStateObject {
         switch event {
         case .onChangeUsername(let username):
             self.username = username
+        case .onChangePassword(let password):
+            self.password = password
         }
     }
 }

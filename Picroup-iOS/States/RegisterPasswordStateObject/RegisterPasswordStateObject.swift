@@ -10,10 +10,19 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
-final class RegisterPasswordStateObject: PrimaryObject {
+final class RegisterPasswordStateObject: VersionedPrimaryObject {
     
-    @objc dynamic var registerParam: RegisterParamObject?
-    @objc dynamic var isPasswordValid: Bool = false
+    @objc dynamic var registerParamState: RegisterParamStateObject?
+    @objc dynamic var passwordValidQueryState: PasswordValidQueryStateObject?
+}
+
+extension RegisterPasswordStateObject {
+    var validPasswordQuery: String? {
+        return passwordValidQueryState?.query(password: registerParamState?.password)
+    }
+    var isPasswordValid: Bool {
+        return passwordValidQueryState?.success != nil
+    }
 }
 
 extension RegisterPasswordStateObject {
@@ -23,8 +32,8 @@ extension RegisterPasswordStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "registerParam": ["_id": _id, "password": ""],
-                "isPasswordValid": false,
+                "registerParamState": RegisterParamStateObject.createValues(clearPassword: true),
+                "passwordValidQueryState": PasswordValidQueryStateObject.createValues(id: "\(self).\(_id)"),
                 ]
             return try realm.update(RegisterPasswordStateObject.self, value: value)
         }
