@@ -22,13 +22,7 @@ final class ResetPasswordCodePresenter: NSObject {
     
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
-        prepareNavigationItem()
         prepareUsernameField()
-    }
-    
-    fileprivate func prepareNavigationItem() {
-        //        navigationItem.titleLabel.text = "注册"
-        //        navigationItem.titleLabel.textColor = .primaryText
     }
     
     fileprivate func prepareUsernameField() {

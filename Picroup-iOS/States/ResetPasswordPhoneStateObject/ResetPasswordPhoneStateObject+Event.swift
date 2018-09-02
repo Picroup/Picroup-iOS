@@ -26,7 +26,7 @@ extension ResetPasswordPhoneStateObject: IsFeedbackStateObject {
     func reduce(event: ResetPasswordPhoneStateObject.Event, realm: Realm) {
         switch event {
         case .onChangePhoneNumber(let phoneNumber):
-            resetPasswordStateParam?.reduce(event: .onChangePhoneNumber(phoneNumber), realm: realm)
+            resetPasswordParamState?.reduce(event: .onChangePhoneNumber(phoneNumber), realm: realm)
             resetPhoneAvailableQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onPhoneNumberAvailableSuccess:
             resetPhoneAvailableQueryState?.reduce(event: .onSuccess(""), realm: realm)

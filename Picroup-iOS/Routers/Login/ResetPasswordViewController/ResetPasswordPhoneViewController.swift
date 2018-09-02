@@ -72,7 +72,7 @@ final class ResetPasswordPhoneViewController: BaseViewController, IsStateViewCon
         return bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
-                state.map { $0.resetPasswordStateParam?.phoneNumber ?? "" }.asObservable().take(1).bind(to: presenter.phoneField.rx.text),
+                state.map { $0.resetPasswordParamState?.phoneNumber ?? "" }.asObservable().take(1).bind(to: presenter.phoneField.rx.text),
                 state.map { $0.isPhoneNumberValid }.distinctUntilChanged().drive(presenter.nextButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 state.map { $0.detail }.debounce(0.1).drive(presenter.phoneField.rx.detail),
                 me.rx.viewDidAppear.asSignal().mapToVoid().emit(to: presenter.phoneField.rx.becomeFirstResponder()),
@@ -89,7 +89,7 @@ final class ResetPasswordPhoneViewController: BaseViewController, IsStateViewCon
 extension ResetPasswordPhoneStateObject {
     
     var detail: String {
-        if resetPasswordStateParam?.phoneNumber.isEmpty == true {
+        if resetPasswordParamState?.phoneNumber.isEmpty == true {
             return " "
         }
         if resetPhoneAvailableQueryState?.trigger == true {

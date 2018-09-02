@@ -15,6 +15,8 @@ extension ResetPasswordStateObject {
     
     enum Event {
         case onChangePassword(String)
+        case onValidPasswordSuccess
+        case onValidPasswordError(Error)
         
         case onTriggerResetPassword
         case onResetPasswordSuccess(String)
@@ -29,22 +31,21 @@ extension ResetPasswordStateObject: IsFeedbackStateObject {
     func reduce(event: ResetPasswordStateObject.Event, realm: Realm) {
         switch event {
         case .onChangePassword(let password):
-            self.resetPasswordStateParam?.password = password
-            self.isPasswordValid = password.matchExpression(RegularPattern.password)
+            resetPasswordParamState?.reduce(event: .onChangePassword(password), realm: realm)
+            passwordValidQueryState?.reduce(event: .onTrigger, realm: realm)
+        case .onValidPasswordSuccess:
+            passwordValidQueryState?.reduce(event: .onSuccess(""), realm: realm)
+        case .onValidPasswordError(let error):
+            passwordValidQueryState?.reduce(event: .onError(error), realm: realm)
             
         case .onTriggerResetPassword:
-            guard !triggerResetPasswordQuery else { return }
-            resetPasswordError = nil
-            triggerResetPasswordQuery = true
+            resetPasswordQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onResetPasswordSuccess(let username):
-            self.username = username
-            resetPasswordError = nil
-            triggerResetPasswordQuery = false
+            resetPasswordQueryState?.reduce(event: .onSuccess(username), realm: realm)
         case .onResetPasswordError(let error):
-            resetPasswordError = error.localizedDescription
-            triggerResetPasswordQuery = false
-            snackbar?.reduce(event: .onUpdateMessage(resetPasswordError), realm: realm)
-            
+            resetPasswordQueryState?.reduce(event: .onError(error), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
+
         case .onConfirmResetPasswordSuccess:
             routeState?.reduce(event: .onTriggerBackToLogin, realm: realm)
         }

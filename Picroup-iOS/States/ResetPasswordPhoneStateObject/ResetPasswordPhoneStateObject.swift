@@ -12,7 +12,7 @@ import RxCocoa
 
 final class ResetPasswordPhoneStateObject: VersionedPrimaryObject {
     
-    @objc dynamic var resetPasswordStateParam: ResetPasswordParamStateObject?
+    @objc dynamic var resetPasswordParamState: ResetPasswordParamStateObject?
     @objc dynamic var resetPhoneAvailableQueryState: ResetPhoneAvailableQueryStateObject?
 //    @objc dynamic var isPhoneNumberValid: Bool = false
 //    @objc dynamic var triggerValidPhoneQuery: Bool = false
@@ -20,7 +20,7 @@ final class ResetPasswordPhoneStateObject: VersionedPrimaryObject {
 
 extension ResetPasswordPhoneStateObject {
     var phoneNumberAvailableQuery: String? {
-        return resetPhoneAvailableQueryState?.query(phoneNumber: resetPasswordStateParam?.phoneNumber)
+        return resetPhoneAvailableQueryState?.query(phoneNumber: resetPasswordParamState?.phoneNumber)
     }
     var isPhoneNumberValid: Bool {
         return resetPhoneAvailableQueryState?.success != nil
@@ -34,7 +34,7 @@ extension ResetPasswordPhoneStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "resetPasswordStateParam": RegisterParamStateObject.createValues(),
+                "resetPasswordParamState": RegisterParamStateObject.createValues(),
                 "resetPhoneAvailableQueryState": ResetPhoneAvailableQueryStateObject.createValues(id: "\(self).\(_id).resetPhoneAvailableQueryState"),
                 ]
             return try realm.update(ResetPasswordPhoneStateObject.self, value: value)

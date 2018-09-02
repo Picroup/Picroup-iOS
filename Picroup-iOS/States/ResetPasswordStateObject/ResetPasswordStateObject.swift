@@ -10,30 +10,32 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
-final class ResetPasswordStateObject: PrimaryObject {
+final class ResetPasswordStateObject: VersionedPrimaryObject {
     
-    @objc dynamic var resetPasswordStateParam: ResetPasswordParamStateObject?
-    @objc dynamic var isPasswordValid: Bool = false
-    
-    @objc dynamic var username: String?
-    @objc dynamic var resetPasswordError: String?
-    @objc dynamic var triggerResetPasswordQuery: Bool = false
+    @objc dynamic var resetPasswordParamState: ResetPasswordParamStateObject?
+    @objc dynamic var passwordValidQueryState: PasswordValidQueryStateObject?
+    @objc dynamic var resetPasswordQueryState: ResetPasswordQueryStateObject?
     
     @objc dynamic var routeState: RouteStateObject?
-
     @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension ResetPasswordStateObject {
+    var validPasswordQuery: String? {
+        return passwordValidQueryState?.query(password: resetPasswordParamState?.password)
+    }
+    var isPasswordValid: Bool {
+        return passwordValidQueryState?.success != nil
+    }
     var resetPasswordQuery: ResetPasswordMutation? {
-        guard let phoneNumber = resetPasswordStateParam?.phoneNumber,
-            let password = resetPasswordStateParam?.password,
-            let token = resetPasswordStateParam?.token else {
-                return nil
-        }
-        return triggerResetPasswordQuery
-            ? ResetPasswordMutation(phoneNumber: phoneNumber, password: password, token: token)
-            : nil
+        return resetPasswordQueryState?.query(
+            phoneNumber: resetPasswordParamState?.phoneNumber,
+            password: resetPasswordParamState?.password,
+            token: resetPasswordParamState?.token
+        )
+    }
+    var username: String? {
+        return resetPasswordQueryState?.success
     }
 }
 
@@ -44,8 +46,9 @@ extension ResetPasswordStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "resetPasswordStateParam": ["_id": _id, "password": ""],
-                "isPasswordValid": false,
+                "resetPasswordParamState": ResetPasswordParamStateObject.createValues(),
+                "passwordValidQueryState": PasswordValidQueryStateObject.createValues(id: "\(self).\(_id).passwordValidQueryState"),
+                "resetPasswordQueryState": ResetPasswordQueryStateObject.createValues(id: "\(self).\(_id).resetPasswordQueryState"),
                 "username": nil,
                 "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],
@@ -54,7 +57,5 @@ extension ResetPasswordStateObject {
         }
     }
 }
-
-
 
 

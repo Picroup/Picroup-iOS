@@ -12,7 +12,7 @@ import RxCocoa
 
 final class ResetPasswordCodeStateObject: VersionedPrimaryObject {
     
-    @objc dynamic var resetPasswordStateParam: ResetPasswordParamStateObject?
+    @objc dynamic var resetPasswordParamState: ResetPasswordParamStateObject?
     @objc dynamic var getVerifyCodeQueryState: GetVerifyCodeQueryStateObject?
     @objc dynamic var codeValidQueryState: CodeValidQueryStateObject?
     @objc dynamic var verifyCodeQueryState: VerifyCodeQueryStateObject?
@@ -23,18 +23,18 @@ final class ResetPasswordCodeStateObject: VersionedPrimaryObject {
 
 extension ResetPasswordCodeStateObject {
     var getVerifyCodeQuery: GetVerifyCodeMutation? {
-        return getVerifyCodeQueryState?.query(phoneNumber: resetPasswordStateParam?.phoneNumber)
+        return getVerifyCodeQueryState?.query(phoneNumber: resetPasswordParamState?.phoneNumber)
     }
     var codeValidQuery: Double? {
-        return codeValidQueryState?.query(code: resetPasswordStateParam?.code)
+        return codeValidQueryState?.query(code: resetPasswordParamState?.code)
     }
     var isCodeValid: Bool {
         return codeValidQueryState?.success != nil
     }
     var verifyCodeQuery: VerifyCodeQuery? {
         return verifyCodeQueryState?.query(
-            phoneNumber: resetPasswordStateParam?.phoneNumber,
-            code: resetPasswordStateParam?.code
+            phoneNumber: resetPasswordParamState?.phoneNumber,
+            code: resetPasswordParamState?.code
         )
     }
 }
@@ -46,7 +46,7 @@ extension ResetPasswordCodeStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "resetPasswordStateParam": ["_id": _id, "code": 0],
+                "resetPasswordParamState": ["_id": _id, "code": 0],
                 "getVerifyCodeQueryState": GetVerifyCodeQueryStateObject.createValues(id: "\(self).\(_id).getVerifyCodeQueryState"),
                 "codeValidQueryState": CodeValidQueryStateObject.createValues(id: "\(self).\(_id).codeValidQueryState"),
                 "verifyCodeQueryState": VerifyCodeQueryStateObject.createValues(id: "\(self).\(_id).verifyCodeQueryState"),
