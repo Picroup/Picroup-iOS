@@ -19,6 +19,9 @@ extension ValidationService {
         
         case phoneNumberNotValid
         case phoneNumberInUse
+        
+        case codeNotValid
+
     }
 }
 
@@ -33,6 +36,8 @@ extension ValidationService.Error: LocalizedError {
             
         case .phoneNumberNotValid: return "请输入 11 位手机号"
         case .phoneNumberInUse: return "手机号已被注册"
+            
+        case .codeNotValid: return "请输入 6 位验证码"
         }
     }
 }
@@ -79,6 +84,17 @@ struct ValidationService {
                     guard data == nil else { throw Error.phoneNumberInUse }
                     return ()
             }
+        }
+    }
+    
+    static func queryValidCode() -> (Double) -> Single<Void> {
+        return { code in
+            
+            guard Int(code).description.matchExpression(RegularPattern.code6) else {
+                return Single.error(Error.codeNotValid)
+            }
+            
+            return .just(())
         }
     }
 }

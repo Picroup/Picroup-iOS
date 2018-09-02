@@ -36,6 +36,7 @@ extension RegisterParamStateObject {
         case onChangeUsername(String)
         case onChangePassword(String)
         case onChangePhoneNumber(String)
+        case onChangeCode(String)
     }
 }
 
@@ -49,6 +50,9 @@ extension RegisterParamStateObject: IsFeedbackStateObject {
             self.password = password
         case .onChangePhoneNumber(let phoneNumber):
             self.phoneNumber = phoneNumber
+        case .onChangeCode(let codeText):
+            let code = Double(codeText) ?? 0
+            self.code = code
         }
     }
 }

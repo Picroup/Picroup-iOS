@@ -14,15 +14,17 @@ import RxCocoa
 extension RegisterCodeStateObject {
     
     enum Event {
+        case onTriggerGetVerifyCode
+        case onGetVerifyCodeSuccess(String)
+        case onGetVerifyCodeError(Error)
+        
         case onChangeCode(String)
+        case onValidCodeSuccess
+        case onValidCodeError(Error)
         
         case onTriggerRegister
         case onRegisterSuccess(UserDetailFragment)
         case onRegisterError(Error)
-        
-        case onTriggerGetVerifyCode
-        case onGetVerifyCodeSuccess(String)
-        case onGetVerifyCodeError(Error)
     }
 }
 
@@ -30,40 +32,31 @@ extension RegisterCodeStateObject: IsFeedbackStateObject {
     
     func reduce(event: RegisterCodeStateObject.Event, realm: Realm) {
         switch event {
+        case .onTriggerGetVerifyCode:
+            getVerifyCodeQueryState?.reduce(event: .onTrigger, realm: realm)
+        case .onGetVerifyCodeSuccess:
+            getVerifyCodeQueryState?.reduce(event: .onSuccess, realm: realm)
+        case .onGetVerifyCodeError(let error):
+            getVerifyCodeQueryState?.reduce(event: .onError(error), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
+            
         case .onChangeCode(let codeText):
-            let code = Double(codeText) ?? 0
-            self.registerParam?.code = code
-            self.isCodeAvaliable = codeText.matchExpression(RegularPattern.code6)
+            registerParamState?.reduce(event: .onChangeCode(codeText), realm: realm)
+            codeValidQueryState?.reduce(event: .onTrigger, realm: realm)
+        case .onValidCodeSuccess:
+            codeValidQueryState?.reduce(event: .onSuccess, realm: realm)
+        case .onValidCodeError(let error):
+            codeValidQueryState?.reduce(event: .onError(error), realm: realm)
             
         case .onTriggerRegister:
-            guard !triggerRegisterQuery else { return }
-            registerError = nil
-            triggerRegisterQuery = true
+            registerQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onRegisterSuccess(let data):
             sessionState?.reduce(event: .onCreateUser(data), realm: realm)
-
-            registerError = nil
-            triggerRegisterQuery = false
+            registerQueryState?.reduce(event: .onSuccess, realm: realm)
             snackbar?.reduce(event: .onUpdateMessage("注册成功"), realm: realm)
         case .onRegisterError(let error):
-            registerError = error.localizedDescription
-            triggerRegisterQuery = false
-            snackbar?.reduce(event: .onUpdateMessage(registerError), realm: realm)
-            
-        case .onTriggerGetVerifyCode:
-            phoneNumber = nil
-            getVerifyCodeError = nil
-            triggerGetVerifyCodeQuery = true
-        case .onGetVerifyCodeSuccess(let phoneNumber):
-            self.phoneNumber = phoneNumber
-            getVerifyCodeError = nil
-            triggerGetVerifyCodeQuery = false
-        case .onGetVerifyCodeError(let error):
-            phoneNumber = nil
-            getVerifyCodeError = error.localizedDescription
-            triggerGetVerifyCodeQuery = false
-            
-            snackbar?.reduce(event: .onUpdateMessage(getVerifyCodeError), realm: realm)
+            registerQueryState?.reduce(event: .onError(error), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
         }
     }
 }

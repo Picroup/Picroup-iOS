@@ -10,38 +10,35 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
-final class RegisterCodeStateObject: PrimaryObject {
+final class RegisterCodeStateObject: VersionedPrimaryObject {
     
     @objc dynamic var sessionState: UserSessionStateObject?
     
-    @objc dynamic var registerParam: RegisterParamObject?
-    @objc dynamic var isCodeAvaliable: Bool = false
-    
-    @objc dynamic var registerError: String?
-    @objc dynamic var triggerRegisterQuery: Bool = false
-    
-    @objc dynamic var phoneNumber: String?
-    @objc dynamic var getVerifyCodeError: String?
-    @objc dynamic var triggerGetVerifyCodeQuery: Bool = false
+    @objc dynamic var registerParamState: RegisterParamStateObject?
+    @objc dynamic var getVerifyCodeQueryState: GetVerifyCodeQueryStateObject?
+    @objc dynamic var codeValidQueryState: CodeValidQueryStateObject?
+    @objc dynamic var registerQueryState: RegisterQueryStateObject?
     
     @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension RegisterCodeStateObject {
-    var registerQuery: RegisterMutation? {
-        guard let username = registerParam?.username,
-            let password = registerParam?.password,
-            let phoneNumber = registerParam?.phoneNumber,
-            let code = registerParam?.code else {
-            return nil
-        }
-        let next = RegisterMutation(username: username, password: password, phoneNumber: phoneNumber, code: code)
-        return triggerRegisterQuery ? next : nil
-    }
     var getVerifyCodeQuery: GetVerifyCodeMutation? {
-        guard let phoneNumber = registerParam?.phoneNumber else { return nil }
-        let next = GetVerifyCodeMutation(phoneNumber: phoneNumber)
-        return triggerGetVerifyCodeQuery ? next : nil
+        return getVerifyCodeQueryState?.query(phoneNumber: registerParamState?.phoneNumber)
+    }
+    var codeValidQuery: Double? {
+        return codeValidQueryState?.query(code: registerParamState?.code)
+    }
+    var isCodeValid: Bool {
+        return codeValidQueryState?.success != nil
+    }
+    var registerQuery: RegisterMutation? {
+        return registerQueryState?.query(
+            username: registerParamState?.username,
+            password: registerParamState?.password,
+            phoneNumber: registerParamState?.phoneNumber,
+            code: registerParamState?.code
+        )
     }
 }
 
@@ -53,12 +50,14 @@ extension RegisterCodeStateObject {
             let value: Any = [
                 "_id": _id,
                 "sessionState": UserSessionStateObject.createValues(),
-                "registerParam": ["_id": _id, "code": 0],
-                "isCodeAvaliable": false,
-                "phoneNumber": nil,
+                "registerParamState": RegisterParamStateObject.createValues(),
+                "getVerifyCodeQueryState": GetVerifyCodeQueryStateObject.createValues(),
+                "codeValidQueryState": CodeValidQueryStateObject.createValues(id: "\(self).\(_id)"),
+                "registerQueryState": RegisterQueryStateObject.createValues(),
                 "snackbar": ["_id": _id],
                 ]
             return try realm.update(RegisterCodeStateObject.self, value: value)
         }
     }
 }
+
