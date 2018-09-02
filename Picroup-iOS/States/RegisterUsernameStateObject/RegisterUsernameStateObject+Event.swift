@@ -14,22 +14,22 @@ extension RegisterUsernameStateObject {
     
     enum Event {
         case onChangeUsername(String)
-        case onUsernameAvailableResponse(String?)
+        case onUsernameAvailableSuccess
+        case onUsernameAvailableError(Error)
     }
 }
 
 extension RegisterUsernameStateObject: IsFeedbackStateObject {
     
-    func reduce(event: RegisterUsernameStateObject.Event, realm: Realm) {
+    func reduce(event: Event, realm: Realm) {
         switch event {
         case .onChangeUsername(let username):
-            self.registerParam?.username = username
-            self.isUsernameAvaliable = false
-            guard shouldValidUsername else { return }
-            self.triggerValidUsernameQuery = true
-        case .onUsernameAvailableResponse(let data):
-            self.isUsernameAvaliable = data == nil
-            self.triggerValidUsernameQuery = false
+            registerParamState?.reduce(event: .onChangeUsername(username), realm: realm)
+            registerUsernameAvailableQueryState?.reduce(event: .onTrigger, realm: realm)
+        case .onUsernameAvailableSuccess:
+            registerUsernameAvailableQueryState?.reduce(event: .onSuccess, realm: realm)
+        case .onUsernameAvailableError(let error):
+            registerUsernameAvailableQueryState?.reduce(event: .onError(error), realm: realm)
         }
     }
 }

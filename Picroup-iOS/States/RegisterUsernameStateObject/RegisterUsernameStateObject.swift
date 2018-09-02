@@ -10,25 +10,18 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
-
-final class RegisterUsernameStateObject: PrimaryObject {
+final class RegisterUsernameStateObject: VersionedPrimaryObject {
     
-    @objc dynamic var registerParam: RegisterParamObject?
-    @objc dynamic var isUsernameAvaliable: Bool = false
-    @objc dynamic var triggerValidUsernameQuery: Bool = false
+    @objc dynamic var registerParamState: RegisterParamStateObject?
+    @objc dynamic var registerUsernameAvailableQueryState: RegisterUsernameAvailableQueryStateObject?
 }
 
 extension RegisterUsernameStateObject {
-    var usernameAvailableQuery: UsernameAvailableQuery? {
-        guard let username = registerParam?.username, !username.isEmpty else {
-            return nil
-        }
-        let next = UsernameAvailableQuery(username: username)
-        return triggerValidUsernameQuery ? next : nil
+    var usernameAvailableQuery: String? {
+        return registerUsernameAvailableQueryState?.query(username: registerParamState?.username)
     }
-    var shouldValidUsername: Bool {
-        guard let username = registerParam?.username else { return false }
-        return username.matchExpression(RegularPattern.username) 
+    var isUsernameAvaliable: Bool {
+        return registerUsernameAvailableQueryState?.success != nil
     }
 }
 
@@ -39,17 +32,11 @@ extension RegisterUsernameStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "registerParam": ["_id": _id],
-                "isUsernameAvaliable": false,
+                "registerParamState": RegisterParamStateObject.createValues(),
+                "registerUsernameAvailableQueryState": RegisterUsernameAvailableQueryStateObject.createValues(),
                 ]
             return try realm.update(RegisterUsernameStateObject.self, value: value)
         }
-    }
-}
-
-extension UsernameAvailableQuery: Equatable {
-    public static func ==(lhs: UsernameAvailableQuery, rhs: UsernameAvailableQuery) -> Bool {
-        return lhs.username == rhs.username
     }
 }
 

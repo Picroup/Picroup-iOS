@@ -16,8 +16,8 @@ enum LoginError: LocalizedError {
 }
 
 extension LoginError {
-    
-    var errorDescription: String {
+
+    var errorDescription: String? {
         switch self {
         case .usernameOrPasswordIncorrect: return "用户名或密码错误"
         }

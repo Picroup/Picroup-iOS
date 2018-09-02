@@ -16,10 +16,10 @@ import RealmSwift
 
 final class LoginViewController: ShowNavigationBarViewController, IsStateViewController {
     
-    @IBOutlet fileprivate var presenter: LoginViewPresenter!
-    
     typealias State = LoginStateObject
     typealias Event = State.Event
+    
+    @IBOutlet fileprivate var presenter: LoginViewPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
