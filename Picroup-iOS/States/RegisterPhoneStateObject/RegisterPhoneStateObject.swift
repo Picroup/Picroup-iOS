@@ -10,24 +10,18 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
-final class RegisterPhoneStateObject: PrimaryObject {
+final class RegisterPhoneStateObject: VersionedPrimaryObject {
     
-    @objc dynamic var registerParam: RegisterParamObject?
-    @objc dynamic var isPhoneNumberValid: Bool = false
-    @objc dynamic var triggerValidPhoneQuery: Bool = false
+    @objc dynamic var registerParamState: RegisterParamStateObject?
+    @objc dynamic var registerPhoneAvailableQueryState: RegisterPhoneAvailableQueryStateObject?
 }
 
 extension RegisterPhoneStateObject {
-    var phoneNumberAvailableQuery: PhoneNumberAvailableQuery? {
-        guard let phoneNumber = registerParam?.phoneNumber, !phoneNumber.isEmpty else {
-            return nil
-        }
-        let next = PhoneNumberAvailableQuery(phoneNumber: phoneNumber)
-        return triggerValidPhoneQuery ? next : nil
+    var phoneNumberAvailableQuery: String? {
+        return registerPhoneAvailableQueryState?.query(phoneNumber: registerParamState?.phoneNumber)
     }
-    var shouldValidPhone: Bool {
-        guard let phoneNumber = registerParam?.phoneNumber else { return false }
-        return phoneNumber.matchExpression(RegularPattern.chinesePhone)
+    var isPhoneNumberValid: Bool {
+        return registerPhoneAvailableQueryState?.success != nil
     }
 }
 
@@ -38,13 +32,12 @@ extension RegisterPhoneStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "registerParam": ["_id": _id],
-                "isPhoneNumberValid": false,
+                "registerParamState": RegisterParamStateObject.createValues(),
+                "registerPhoneAvailableQueryState": RegisterPhoneAvailableQueryStateObject.createValues(),
                 ]
             return try realm.update(RegisterPhoneStateObject.self, value: value)
         }
     }
 }
-
 
 

@@ -35,6 +35,7 @@ extension RegisterParamStateObject {
     enum Event {
         case onChangeUsername(String)
         case onChangePassword(String)
+        case onChangePhoneNumber(String)
     }
 }
 
@@ -46,6 +47,8 @@ extension RegisterParamStateObject: IsFeedbackStateObject {
             self.username = username
         case .onChangePassword(let password):
             self.password = password
+        case .onChangePhoneNumber(let phoneNumber):
+            self.phoneNumber = phoneNumber
         }
     }
 }
