@@ -13,6 +13,7 @@ import RxSwift
 import RxCocoa
 import RxFeedback
 import Apollo
+import RealmSwift
 
 final class ResetPasswordCodePresenter: NSObject {
     @IBOutlet weak var codeField: TextField!
@@ -39,23 +40,41 @@ final class ResetPasswordCodePresenter: NSObject {
     }
 }
 
-final class ResetPasswordCodeViewController: BaseViewController {
+final class ResetPasswordCodeViewController: BaseViewController, IsStateViewController {
+    
+    typealias State = ResetPasswordCodeStateObject
+    typealias Event = State.Event
     
     @IBOutlet fileprivate var presenter: ResetPasswordCodePresenter!
-    fileprivate typealias Feedback = (Driver<ResetPasswordCodeStateObject>) -> Signal<ResetPasswordCodeStateObject.Event>
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
     private func setupRxFeedback() {
         
-        guard let store = try? ResetPasswordCodeStateStore() else { return }
+        guard let realm = try? Realm(), let state = try? State.create()(realm) else { return }
         
-        presenter.setup(navigationItem: navigationItem)
-        
-        let uiFeedback: Feedback = bind(self) { (me, state) in
+        state.system(
+            uiFeedback: uiFeedback,
+            shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
+            getVerifyCode: { query in
+                return ApolloClient.shared.rx.perform(mutation: query)
+                    .map { $0?.data?.getVerifyCode }.forceUnwrap()
+        },
+            queryValidCode: ValidationService.queryValidCode(),
+            verifyCode: { query in
+                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                    .map { $0?.data?.verifyCode }.forceUnwrap()
+        })
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
+    var uiFeedback: State.DriverFeedback {
+        return bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
                 state.map { $0.isResetPasswordEnabled }.distinctUntilChanged().drive(presenter.validButton.rx.isEnabledWithBackgroundColor(.secondary)),
@@ -71,43 +90,17 @@ final class ResetPasswordCodeViewController: BaseViewController {
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-        
-        let verifyCode: Feedback = react(query: { $0.verifyCodeQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.verifyCode }.unwrap()
-                .map(ResetPasswordCodeStateObject.Event.onVerifySuccess)
-                .asSignal(onErrorReturnJust: ResetPasswordCodeStateObject.Event.onVerifyError)
-        })
-        
-        let getVerifyCode: Feedback = react(query: { $0.getVerifyCodeQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            return ApolloClient.shared.rx.perform(mutation: query)
-                .map { $0?.data?.getVerifyCode }.unwrap()
-                .map(ResetPasswordCodeStateObject.Event.onGetVerifyCodeSuccess)
-                .asSignal(onErrorReturnJust: ResetPasswordCodeStateObject.Event.onGetVerifyCodeError)
-        })
-        
-        let states = store.states
-//            .debug("ResetPasswordCodeState")
-        
-        Signal.merge(
-            uiFeedback(states),
-            verifyCode(states),
-            getVerifyCode(states)
-            )
-            .debug("ResetPasswordCodeState.Event", trimOutput: true)
-            .emit(onNext: store.on)
-            .disposed(by: disposeBag)
     }
 }
 
 extension ResetPasswordCodeStateObject {
     
     fileprivate var isResetPasswordEnabled: Bool {
-        return isCodeAvaliable && !triggerVerifyCodeQuery
+        return isCodeValid && verifyCodeQueryState?.trigger == false
     }
     
     fileprivate var detail: String {
-        return phoneNumber != nil ? "已发送 6 位数验证码" : " "
+        return getVerifyCodeQueryState?.success != nil ? "已发送 6 位数验证码" : " "
     }
 }
 

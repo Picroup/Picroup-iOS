@@ -14,15 +14,17 @@ import RxCocoa
 extension ResetPasswordCodeStateObject {
     
     enum Event {
+        case onTriggerGetVerifyCode
+        case onGetVerifyCodeSuccess(String)
+        case onGetVerifyCodeError(Error)
+        
         case onChangeCode(String)
+        case onValidCodeSuccess
+        case onValidCodeError(Error)
         
         case onTriggerVerify
         case onVerifySuccess(String)
         case onVerifyError(Error)
-        
-        case onTriggerGetVerifyCode
-        case onGetVerifyCodeSuccess(String)
-        case onGetVerifyCodeError(Error)
     }
 }
 
@@ -30,42 +32,31 @@ extension ResetPasswordCodeStateObject: IsFeedbackStateObject {
     
     func reduce(event: ResetPasswordCodeStateObject.Event, realm: Realm) {
         switch event {
+        case .onTriggerGetVerifyCode:
+            getVerifyCodeQueryState?.reduce(event: .onTrigger, realm: realm)
+        case .onGetVerifyCodeSuccess:
+            getVerifyCodeQueryState?.reduce(event: .onSuccess, realm: realm)
+        case .onGetVerifyCodeError(let error):
+            getVerifyCodeQueryState?.reduce(event: .onError(error), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
+
         case .onChangeCode(let codeText):
-            let code = Double(codeText) ?? 0
-            self.resetPasswordStateParam?.code = code
-            self.isCodeAvaliable = codeText.matchExpression(RegularPattern.code6)
+            resetPasswordStateParam?.reduce(event: .onChangeCode(codeText), realm: realm)
+            codeValidQueryState?.reduce(event: .onTrigger, realm: realm)
+        case .onValidCodeSuccess:
+            codeValidQueryState?.reduce(event: .onSuccess, realm: realm)
+        case .onValidCodeError(let error):
+            codeValidQueryState?.reduce(event: .onError(error), realm: realm)
             
         case .onTriggerVerify:
-            guard !triggerVerifyCodeQuery else { return }
-            verifyCodeError = nil
-            triggerVerifyCodeQuery = true
+            verifyCodeQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onVerifySuccess(let token):
-            self.resetPasswordStateParam?.token = token
-            verifyCodeError = nil
-            triggerVerifyCodeQuery = false
-            
+            resetPasswordStateParam?.reduce(event: .onChangeToken(token), realm: realm)
+            verifyCodeQueryState?.reduce(event: .onSuccess, realm: realm)
             routeState?.reduce(event: .onTriggerResetPassword, realm: realm)
-            
         case .onVerifyError(let error):
-            verifyCodeError = error.localizedDescription
-            triggerVerifyCodeQuery = false
-            
-            snackbar?.reduce(event: .onUpdateMessage(verifyCodeError), realm: realm)
-            
-        case .onTriggerGetVerifyCode:
-            phoneNumber = nil
-            getVerifyCodeError = nil
-            triggerGetVerifyCodeQuery = true
-        case .onGetVerifyCodeSuccess(let phoneNumber):
-            self.phoneNumber = phoneNumber
-            getVerifyCodeError = nil
-            triggerGetVerifyCodeQuery = false
-        case .onGetVerifyCodeError(let error):
-            phoneNumber = nil
-            getVerifyCodeError = error.localizedDescription
-            triggerGetVerifyCodeQuery = false
-            
-            snackbar?.reduce(event: .onUpdateMessage(getVerifyCodeError), realm: realm)
+            verifyCodeQueryState?.reduce(event: .onError(error), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
         }
     }
 }

@@ -10,37 +10,32 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
-final class ResetPasswordCodeStateObject: PrimaryObject {
+final class ResetPasswordCodeStateObject: VersionedPrimaryObject {
     
     @objc dynamic var resetPasswordStateParam: ResetPasswordParamStateObject?
-    @objc dynamic var isCodeAvaliable: Bool = false
-    
-    @objc dynamic var verifyCodeError: String?
-    @objc dynamic var triggerVerifyCodeQuery: Bool = false
-    
-    @objc dynamic var phoneNumber: String?
-    @objc dynamic var getVerifyCodeError: String?
-    @objc dynamic var triggerGetVerifyCodeQuery: Bool = false
+    @objc dynamic var getVerifyCodeQueryState: GetVerifyCodeQueryStateObject?
+    @objc dynamic var codeValidQueryState: CodeValidQueryStateObject?
+    @objc dynamic var verifyCodeQueryState: VerifyCodeQueryStateObject?
     
     @objc dynamic var routeState: RouteStateObject?
-
     @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension ResetPasswordCodeStateObject {
-    var verifyCodeQuery: VerifyCodeQuery? {
-        guard let phoneNumber = resetPasswordStateParam?.phoneNumber,
-            let code = resetPasswordStateParam?.code else {
-                return nil
-        }
-        return triggerVerifyCodeQuery
-            ? VerifyCodeQuery(phoneNumber: phoneNumber, code: code)
-            : nil
-    }
     var getVerifyCodeQuery: GetVerifyCodeMutation? {
-        guard let phoneNumber = resetPasswordStateParam?.phoneNumber else { return nil }
-        let next = GetVerifyCodeMutation(phoneNumber: phoneNumber)
-        return triggerGetVerifyCodeQuery ? next : nil
+        return getVerifyCodeQueryState?.query(phoneNumber: resetPasswordStateParam?.phoneNumber)
+    }
+    var codeValidQuery: Double? {
+        return codeValidQueryState?.query(code: resetPasswordStateParam?.code)
+    }
+    var isCodeValid: Bool {
+        return codeValidQueryState?.success != nil
+    }
+    var verifyCodeQuery: VerifyCodeQuery? {
+        return verifyCodeQueryState?.query(
+            phoneNumber: resetPasswordStateParam?.phoneNumber,
+            code: resetPasswordStateParam?.code
+        )
     }
 }
 
@@ -52,8 +47,9 @@ extension ResetPasswordCodeStateObject {
             let value: Any = [
                 "_id": _id,
                 "resetPasswordStateParam": ["_id": _id, "code": 0],
-                "isCodeAvaliable": false,
-                "phoneNumber": nil,
+                "getVerifyCodeQueryState": GetVerifyCodeQueryStateObject.createValues(),
+                "codeValidQueryState": CodeValidQueryStateObject.createValues(id: "\(self).\(_id)"),
+                "verifyCodeQueryState": VerifyCodeQueryStateObject.createValues(),
                 "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],
                 ]
