@@ -57,7 +57,7 @@ final class ResetPasswordViewController: BaseViewController {
         let uiFeedback: Feedback = bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
-                state.map { $0.resetPasswordParam?.password ?? "" }.asObservable().take(1).bind(to: presenter.passwordField.rx.text),
+                state.map { $0.resetPasswordStateParam?.password ?? "" }.asObservable().take(1).bind(to: presenter.passwordField.rx.text),
                 state.map { $0.isPasswordValid }.distinctUntilChanged().drive(presenter.resetButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 state.map { $0.detail }.drive(presenter.passwordField.rx.detail),
                 me.rx.viewDidAppear.asSignal().mapToVoid().emit(to: presenter.passwordField.rx.becomeFirstResponder()),
@@ -99,7 +99,7 @@ final class ResetPasswordViewController: BaseViewController {
 extension ResetPasswordStateObject {
     
     var detail: String {
-        if resetPasswordParam?.password.isEmpty == true {
+        if resetPasswordStateParam?.password.isEmpty == true {
             return " "
         }
         if !isPasswordValid {

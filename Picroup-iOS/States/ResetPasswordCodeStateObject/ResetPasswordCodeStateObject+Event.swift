@@ -32,7 +32,7 @@ extension ResetPasswordCodeStateObject: IsFeedbackStateObject {
         switch event {
         case .onChangeCode(let codeText):
             let code = Double(codeText) ?? 0
-            self.resetPasswordParam?.code = code
+            self.resetPasswordStateParam?.code = code
             self.isCodeAvaliable = codeText.matchExpression(RegularPattern.code6)
             
         case .onTriggerVerify:
@@ -40,7 +40,7 @@ extension ResetPasswordCodeStateObject: IsFeedbackStateObject {
             verifyCodeError = nil
             triggerVerifyCodeQuery = true
         case .onVerifySuccess(let token):
-            self.resetPasswordParam?.token = token
+            self.resetPasswordStateParam?.token = token
             verifyCodeError = nil
             triggerVerifyCodeQuery = false
             

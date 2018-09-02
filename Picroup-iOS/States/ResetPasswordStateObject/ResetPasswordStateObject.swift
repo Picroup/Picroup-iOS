@@ -12,7 +12,7 @@ import RxCocoa
 
 final class ResetPasswordStateObject: PrimaryObject {
     
-    @objc dynamic var resetPasswordParam: ResetPasswordParamObject?
+    @objc dynamic var resetPasswordStateParam: ResetPasswordParamStateObject?
     @objc dynamic var isPasswordValid: Bool = false
     
     @objc dynamic var username: String?
@@ -26,9 +26,9 @@ final class ResetPasswordStateObject: PrimaryObject {
 
 extension ResetPasswordStateObject {
     var resetPasswordQuery: ResetPasswordMutation? {
-        guard let phoneNumber = resetPasswordParam?.phoneNumber,
-            let password = resetPasswordParam?.password,
-            let token = resetPasswordParam?.token else {
+        guard let phoneNumber = resetPasswordStateParam?.phoneNumber,
+            let password = resetPasswordStateParam?.password,
+            let token = resetPasswordStateParam?.token else {
                 return nil
         }
         return triggerResetPasswordQuery
@@ -44,7 +44,7 @@ extension ResetPasswordStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "resetPasswordParam": ["_id": _id, "password": ""],
+                "resetPasswordStateParam": ["_id": _id, "password": ""],
                 "isPasswordValid": false,
                 "username": nil,
                 "routeState": RouteStateObject.createValues(),

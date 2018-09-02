@@ -29,7 +29,7 @@ extension ResetPasswordStateObject: IsFeedbackStateObject {
     func reduce(event: ResetPasswordStateObject.Event, realm: Realm) {
         switch event {
         case .onChangePassword(let password):
-            self.resetPasswordParam?.password = password
+            self.resetPasswordStateParam?.password = password
             self.isPasswordValid = password.matchExpression(RegularPattern.password)
             
         case .onTriggerResetPassword:

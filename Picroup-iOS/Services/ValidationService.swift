@@ -21,6 +21,8 @@ extension ValidationService {
         case phoneNumberInUse
         
         case codeNotValid
+        
+        case phoneNumberNotRegister
 
     }
 }
@@ -38,6 +40,8 @@ extension ValidationService.Error: LocalizedError {
         case .phoneNumberInUse: return "手机号已被注册"
             
         case .codeNotValid: return "请输入 6 位验证码"
+            
+        case .phoneNumberNotRegister: return "手机号未注册"
         }
     }
 }
@@ -95,6 +99,22 @@ struct ValidationService {
             }
             
             return .just(())
+        }
+    }
+    
+    static func queryIsResetPhoneNumberAvailable(queryPhoneNumberAvailable: @escaping (PhoneNumberAvailableQuery) -> Single<PhoneNumberAvailableQuery.Data.SearchUserByPhoneNumber?>) -> (String) -> Single<Void> {
+        return { phoneNumber in
+            
+            guard phoneNumber.matchExpression(RegularPattern.chinesePhone) else {
+                return Single.error(Error.phoneNumberNotValid)
+            }
+            
+            let query = PhoneNumberAvailableQuery(phoneNumber: phoneNumber)
+            return queryPhoneNumberAvailable(query)
+                .map { data in
+                    guard data != nil else { throw Error.phoneNumberNotRegister }
+                    return ()
+            }
         }
     }
 }

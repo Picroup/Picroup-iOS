@@ -18,6 +18,7 @@
 		451631F6213B950100CC3E55 /* GetVerifyCodeQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451631F5213B950100CC3E55 /* GetVerifyCodeQueryStateObject.swift */; };
 		451631F8213B982C00CC3E55 /* CodeValidQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451631F7213B982C00CC3E55 /* CodeValidQueryStateObject.swift */; };
 		451631FA213B9E3C00CC3E55 /* RegisterQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451631F9213B9E3C00CC3E55 /* RegisterQueryStateObject.swift */; };
+		451631FC213BBDCF00CC3E55 /* ResetPhoneAvailableQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451631FB213BBDCF00CC3E55 /* ResetPhoneAvailableQueryStateObject.swift */; };
 		45183EBE20CF65BC00497B59 /* AboutAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EBD20CF65BC00497B59 /* AboutAppViewController.swift */; };
 		45183EC020CF862000497B59 /* RealmProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EBF20CF862000497B59 /* RealmProvider.swift */; };
 		45183EC220D0E94100497B59 /* createFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EC120D0E94100497B59 /* createFeedback.swift */; };
@@ -158,7 +159,7 @@
 		45662B1D212E8B7500964BC9 /* RegisterPhoneStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B1C212E8B7500964BC9 /* RegisterPhoneStateObject+system.swift */; };
 		45662B1F212E8B8100964BC9 /* RegisterCodeStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B1E212E8B8100964BC9 /* RegisterCodeStateObject+system.swift */; };
 		45662B21212E8B8C00964BC9 /* ReputationsStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B20212E8B8C00964BC9 /* ReputationsStateObject+system.swift */; };
-		45662B23212E8B9600964BC9 /* ResetPasswordPhoneStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B22212E8B9600964BC9 /* ResetPasswordPhoneStateStore.swift */; };
+		45662B23212E8B9600964BC9 /* ResetPasswordPhoneStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B22212E8B9600964BC9 /* ResetPasswordPhoneStateObject+system.swift */; };
 		45662B25212E8BA100964BC9 /* ResetPasswordCodeStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B24212E8BA100964BC9 /* ResetPasswordCodeStateStore.swift */; };
 		45662B27212E8BAE00964BC9 /* ResetPasswordStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B26212E8BAE00964BC9 /* ResetPasswordStateStore.swift */; };
 		45662B29212E8BCA00964BC9 /* SearchUserStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B28212E8BCA00964BC9 /* SearchUserStateObject+system.swift */; };
@@ -178,8 +179,7 @@
 		45662B48212EAD9500964BC9 /* MediaItemObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B47212EAD9500964BC9 /* MediaItemObject.swift */; };
 		45662B4A212EADB300964BC9 /* SaveMediumStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B49212EADB300964BC9 /* SaveMediumStateObject.swift */; };
 		45662B4C212EAE9900964BC9 /* UserSessionStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B4B212EAE9900964BC9 /* UserSessionStateObject.swift */; };
-		45662B4E212EAEE700964BC9 /* RegisterParamObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B4D212EAEE700964BC9 /* RegisterParamObject.swift */; };
-		45662B50212EAF2D00964BC9 /* ResetPasswordParamObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B4F212EAF2D00964BC9 /* ResetPasswordParamObject.swift */; };
+		45662B50212EAF2D00964BC9 /* ResetPasswordParamStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B4F212EAF2D00964BC9 /* ResetPasswordParamStateObject.swift */; };
 		456D1457210564E4008EDD41 /* HasMoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D1456210564E4008EDD41 /* HasMoreButton.swift */; };
 		456D145921057539008EDD41 /* HasPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D145821057539008EDD41 /* HasPlayerView.swift */; };
 		456D145C21057903008EDD41 /* ImageCache+retrieveImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D145B21057903008EDD41 /* ImageCache+retrieveImage.swift */; };
@@ -386,6 +386,7 @@
 		451631F5213B950100CC3E55 /* GetVerifyCodeQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetVerifyCodeQueryStateObject.swift; sourceTree = "<group>"; };
 		451631F7213B982C00CC3E55 /* CodeValidQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeValidQueryStateObject.swift; sourceTree = "<group>"; };
 		451631F9213B9E3C00CC3E55 /* RegisterQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterQueryStateObject.swift; sourceTree = "<group>"; };
+		451631FB213BBDCF00CC3E55 /* ResetPhoneAvailableQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPhoneAvailableQueryStateObject.swift; sourceTree = "<group>"; };
 		45183EBD20CF65BC00497B59 /* AboutAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppViewController.swift; sourceTree = "<group>"; };
 		45183EBF20CF862000497B59 /* RealmProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmProvider.swift; sourceTree = "<group>"; };
 		45183EC120D0E94100497B59 /* createFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createFeedback.swift; sourceTree = "<group>"; };
@@ -528,7 +529,7 @@
 		45662B1C212E8B7500964BC9 /* RegisterPhoneStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RegisterPhoneStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B1E212E8B8100964BC9 /* RegisterCodeStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RegisterCodeStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B20212E8B8C00964BC9 /* ReputationsStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReputationsStateObject+system.swift"; sourceTree = "<group>"; };
-		45662B22212E8B9600964BC9 /* ResetPasswordPhoneStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordPhoneStateStore.swift; sourceTree = "<group>"; };
+		45662B22212E8B9600964BC9 /* ResetPasswordPhoneStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResetPasswordPhoneStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B24212E8BA100964BC9 /* ResetPasswordCodeStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordCodeStateStore.swift; sourceTree = "<group>"; };
 		45662B26212E8BAE00964BC9 /* ResetPasswordStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordStateStore.swift; sourceTree = "<group>"; };
 		45662B28212E8BCA00964BC9 /* SearchUserStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchUserStateObject+system.swift"; sourceTree = "<group>"; };
@@ -548,8 +549,7 @@
 		45662B47212EAD9500964BC9 /* MediaItemObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemObject.swift; sourceTree = "<group>"; };
 		45662B49212EADB300964BC9 /* SaveMediumStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveMediumStateObject.swift; sourceTree = "<group>"; };
 		45662B4B212EAE9900964BC9 /* UserSessionStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionStateObject.swift; sourceTree = "<group>"; };
-		45662B4D212EAEE700964BC9 /* RegisterParamObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterParamObject.swift; sourceTree = "<group>"; };
-		45662B4F212EAF2D00964BC9 /* ResetPasswordParamObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordParamObject.swift; sourceTree = "<group>"; };
+		45662B4F212EAF2D00964BC9 /* ResetPasswordParamStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordParamStateObject.swift; sourceTree = "<group>"; };
 		456D1456210564E4008EDD41 /* HasMoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasMoreButton.swift; sourceTree = "<group>"; };
 		456D145821057539008EDD41 /* HasPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasPlayerView.swift; sourceTree = "<group>"; };
 		456D145B21057903008EDD41 /* ImageCache+retrieveImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCache+retrieveImage.swift"; sourceTree = "<group>"; };
@@ -1222,7 +1222,7 @@
 			children = (
 				45CEDD5E21240CBE00491B60 /* ResetPasswordPhoneStateObject.swift */,
 				45662AEC212E8A4700964BC9 /* ResetPasswordPhoneStateObject+Event.swift */,
-				45662B22212E8B9600964BC9 /* ResetPasswordPhoneStateStore.swift */,
+				45662B22212E8B9600964BC9 /* ResetPasswordPhoneStateObject+system.swift */,
 			);
 			path = ResetPasswordPhoneStateObject;
 			sourceTree = "<group>";
@@ -1836,6 +1836,8 @@
 				451631F3213B8DD600CC3E55 /* RegisterPhoneAvailableQueryStateObject.swift */,
 				451631F9213B9E3C00CC3E55 /* RegisterQueryStateObject.swift */,
 				451631ED213B776000CC3E55 /* RegisterUsernameAvailableQueryStateObject.swift */,
+				45662B4F212EAF2D00964BC9 /* ResetPasswordParamStateObject.swift */,
+				451631FB213BBDCF00CC3E55 /* ResetPhoneAvailableQueryStateObject.swift */,
 				457D8AA62137824D00719F23 /* SaveFeedbackQueryState.swift */,
 				457D8AA82137987600719F23 /* SearchUserQueryStateObject.swift */,
 				45662B41212EA20400964BC9 /* SnackbarObject.swift */,
@@ -1953,8 +1955,6 @@
 				45CD0696212FD26B00AE563E /* MediumDetailObject.swift */,
 				456D14672105BE63008EDD41 /* NeedUpdateStateObject.swift */,
 				457BD98020A9D504007F0492 /* NotificationObject.swift */,
-				45662B4D212EAEE700964BC9 /* RegisterParamObject.swift */,
-				45662B4F212EAF2D00964BC9 /* ResetPasswordParamObject.swift */,
 				457BD98820AC695A007F0492 /* ReputationObject.swift */,
 				45662AAA212D3DCA00964BC9 /* RouteObjects.swift */,
 				45662B43212EAD3D00964BC9 /* RxProgressObject.swift */,
@@ -2234,7 +2234,6 @@
 				451631F0213B84A600CC3E55 /* PasswordValidQueryStateObject.swift in Sources */,
 				45662AB5212E880300964BC9 /* CreateImageStateObject+Event.swift in Sources */,
 				45F55F9121070183002BF481 /* ProgressView.swift in Sources */,
-				45662B4E212EAEE700964BC9 /* RegisterParamObject.swift in Sources */,
 				45CEDD5F21240CBE00491B60 /* ResetPasswordPhoneStateObject.swift in Sources */,
 				45662B2B212E8BD400964BC9 /* TagMediaStateObjectStore.swift in Sources */,
 				45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */,
@@ -2260,7 +2259,7 @@
 				454F72962089B44500850471 /* RxCollectionViewCell.swift in Sources */,
 				45D04F8B208F60A600AC2226 /* ReputationsViewPresenter.swift in Sources */,
 				45B5E27620C8D2D7005E2E58 /* PlaceholderTextView.swift in Sources */,
-				45662B50212EAF2D00964BC9 /* ResetPasswordParamObject.swift in Sources */,
+				45662B50212EAF2D00964BC9 /* ResetPasswordParamStateObject.swift in Sources */,
 				45662B1F212E8B8100964BC9 /* RegisterCodeStateObject+system.swift in Sources */,
 				45F0A7DA20C7C4720085F978 /* RegisterCodeViewController.swift in Sources */,
 				45662ADF212E89EF00964BC9 /* NotificationsStateObject+Event.swift in Sources */,
@@ -2421,7 +2420,7 @@
 				45FC0C0320A95765006AAF3D /* Realm+background.swift in Sources */,
 				45662AFF212E8AA900964BC9 /* UpdateUserStateObject+Event.swift in Sources */,
 				4591AEE220A3E0CC001EC384 /* SectionedDataSource+indexPath.swift in Sources */,
-				45662B23212E8B9600964BC9 /* ResetPasswordPhoneStateStore.swift in Sources */,
+				45662B23212E8B9600964BC9 /* ResetPasswordPhoneStateObject+system.swift in Sources */,
 				458006D820A17283004BD982 /* UIViewController+Rx+NavigationBar.swift in Sources */,
 				45D04F742088ABB500AC2226 /* ObservableType+Operator.swift in Sources */,
 				454F72A0208DB90000850471 /* RouterService+Image.swift in Sources */,
@@ -2447,6 +2446,7 @@
 				454F72982089B46300850471 /* RxTableViewCell.swift in Sources */,
 				457BD99A20B306AA007F0492 /* UserFollowingsStateObject.swift in Sources */,
 				455808DD20EC9D99005F1A00 /* UIRefreshControl+refreshing.swift in Sources */,
+				451631FC213BBDCF00CC3E55 /* ResetPhoneAvailableQueryStateObject.swift in Sources */,
 				451CD324207A4A6E0063A972 /* PrimitiveSequence+unwrap.swift in Sources */,
 				45662AFD212E8A9E00964BC9 /* UserFollowersStateObject+Event.swift in Sources */,
 				451631E821391DB800CC3E55 /* UserQueryStateObject.swift in Sources */,

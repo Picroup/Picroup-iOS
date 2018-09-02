@@ -12,7 +12,7 @@ import RxCocoa
 
 final class ResetPasswordCodeStateObject: PrimaryObject {
     
-    @objc dynamic var resetPasswordParam: ResetPasswordParamObject?
+    @objc dynamic var resetPasswordStateParam: ResetPasswordParamStateObject?
     @objc dynamic var isCodeAvaliable: Bool = false
     
     @objc dynamic var verifyCodeError: String?
@@ -29,8 +29,8 @@ final class ResetPasswordCodeStateObject: PrimaryObject {
 
 extension ResetPasswordCodeStateObject {
     var verifyCodeQuery: VerifyCodeQuery? {
-        guard let phoneNumber = resetPasswordParam?.phoneNumber,
-            let code = resetPasswordParam?.code else {
+        guard let phoneNumber = resetPasswordStateParam?.phoneNumber,
+            let code = resetPasswordStateParam?.code else {
                 return nil
         }
         return triggerVerifyCodeQuery
@@ -38,7 +38,7 @@ extension ResetPasswordCodeStateObject {
             : nil
     }
     var getVerifyCodeQuery: GetVerifyCodeMutation? {
-        guard let phoneNumber = resetPasswordParam?.phoneNumber else { return nil }
+        guard let phoneNumber = resetPasswordStateParam?.phoneNumber else { return nil }
         let next = GetVerifyCodeMutation(phoneNumber: phoneNumber)
         return triggerGetVerifyCodeQuery ? next : nil
     }
@@ -51,7 +51,7 @@ extension ResetPasswordCodeStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "resetPasswordParam": ["_id": _id, "code": 0],
+                "resetPasswordStateParam": ["_id": _id, "code": 0],
                 "isCodeAvaliable": false,
                 "phoneNumber": nil,
                 "routeState": RouteStateObject.createValues(),

@@ -15,7 +15,9 @@ extension ResetPasswordPhoneStateObject {
     
     enum Event {
         case onChangePhoneNumber(String)
-        case onPhoneNumberAvailableResponse(String?)
+        case onPhoneNumberAvailableSuccess
+        case onPhoneNumberAvailableError(Error)
+//        case onPhoneNumberAvailableResponse(String?)
     }
 }
 
@@ -24,13 +26,12 @@ extension ResetPasswordPhoneStateObject: IsFeedbackStateObject {
     func reduce(event: ResetPasswordPhoneStateObject.Event, realm: Realm) {
         switch event {
         case .onChangePhoneNumber(let phoneNumber):
-            self.resetPasswordParam?.phoneNumber = phoneNumber
-            self.isPhoneNumberValid = false
-            guard shouldValidPhone else { return }
-            self.triggerValidPhoneQuery = true
-        case .onPhoneNumberAvailableResponse(let data):
-            self.isPhoneNumberValid = data != nil
-            self.triggerValidPhoneQuery = false
+            resetPasswordStateParam?.reduce(event: .onChangePhoneNumber(phoneNumber), realm: realm)
+            resetPhoneAvailableQueryState?.reduce(event: .onTrigger, realm: realm)
+        case .onPhoneNumberAvailableSuccess:
+            resetPhoneAvailableQueryState?.reduce(event: .onSuccess, realm: realm)
+        case .onPhoneNumberAvailableError(let error):
+            resetPhoneAvailableQueryState?.reduce(event: .onError(error), realm: realm)
         }
     }
 }

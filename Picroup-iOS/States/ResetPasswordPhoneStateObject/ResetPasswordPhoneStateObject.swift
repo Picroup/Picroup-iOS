@@ -10,24 +10,20 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 
-final class ResetPasswordPhoneStateObject: PrimaryObject {
+final class ResetPasswordPhoneStateObject: VersionedPrimaryObject {
     
-    @objc dynamic var resetPasswordParam: ResetPasswordParamObject?
-    @objc dynamic var isPhoneNumberValid: Bool = false
-    @objc dynamic var triggerValidPhoneQuery: Bool = false
+    @objc dynamic var resetPasswordStateParam: ResetPasswordParamStateObject?
+    @objc dynamic var resetPhoneAvailableQueryState: ResetPhoneAvailableQueryStateObject?
+//    @objc dynamic var isPhoneNumberValid: Bool = false
+//    @objc dynamic var triggerValidPhoneQuery: Bool = false
 }
 
 extension ResetPasswordPhoneStateObject {
-    var phoneNumberAvailableQuery: PhoneNumberAvailableQuery? {
-        guard let phoneNumber = resetPasswordParam?.phoneNumber, !phoneNumber.isEmpty else {
-            return nil
-        }
-        let next = PhoneNumberAvailableQuery(phoneNumber: phoneNumber)
-        return triggerValidPhoneQuery ? next : nil
+    var phoneNumberAvailableQuery: String? {
+        return resetPhoneAvailableQueryState?.query(phoneNumber: resetPasswordStateParam?.phoneNumber)
     }
-    var shouldValidPhone: Bool {
-        guard let phoneNumber = resetPasswordParam?.phoneNumber else { return false }
-        return phoneNumber.matchExpression(RegularPattern.chinesePhone)
+    var isPhoneNumberValid: Bool {
+        return resetPhoneAvailableQueryState?.success != nil
     }
 }
 
@@ -38,8 +34,8 @@ extension ResetPasswordPhoneStateObject {
             let _id = PrimaryKey.default
             let value: Any = [
                 "_id": _id,
-                "resetPasswordParam": ["_id": _id],
-                "isPhoneNumberValid": false,
+                "resetPasswordStateParam": RegisterParamStateObject.createValues(),
+                "resetPhoneAvailableQueryState": ResetPhoneAvailableQueryStateObject.createValues(),
                 ]
             return try realm.update(ResetPasswordPhoneStateObject.self, value: value)
         }
