@@ -13,38 +13,21 @@ import RxCocoa
 import RxRealm
 import RxAlamofire
 
-final class UpdateUserStateObject: PrimaryObject {
-    
-    typealias SetImageKeyQuery = (userId: String, imageKey: String)
+final class UpdateUserStateObject: VersionedPrimaryObject {
     
     @objc dynamic var sessionState: UserSessionStateObject?
-    
-    @objc dynamic var imageKey: String?
-    @objc dynamic var setAvatarIdError: String?
-    @objc dynamic var triggerSetAvatarIdQuery: Bool = false
-    
-    @objc dynamic var displayName: String = ""
-    @objc dynamic var setDisplayNameError: String?
-    @objc dynamic var triggerSetDisplayNameQuery: Bool = false
+    @objc dynamic var setAvatarQueryState: UserSetAvatarQueryStateObject?
+    @objc dynamic var setDisplayNameQueryState: UserSetDisplayNameQueryStateObject?
 
     @objc dynamic var routeState: RouteStateObject?
 }
 
 extension UpdateUserStateObject {
-    var setImageKeyQuery: SetImageKeyQuery? {
-        guard let userId = sessionState?.currentUserId,
-            let imageKey = imageKey
-            else { return nil }
-        let next = (userId, imageKey)
-        return triggerSetAvatarIdQuery ? next : nil
+    var setAvatarQuery: UserSetAvatarQueryStateObject.Query? {
+        return setAvatarQueryState?.query(userId: sessionState?.currentUserId)
     }
     var setDisplayNameQuery: UserSetDisplayNameQuery? {
-        guard let userId = sessionState?.currentUserId else { return nil }
-        let next = UserSetDisplayNameQuery(userId: userId, displayName: displayName)
-        return triggerSetDisplayNameQuery ? next : nil
-    }
-    var shouldSetDisplay: Bool {
-        return displayName.matchExpression(RegularPattern.displayName)
+        return setDisplayNameQueryState?.query(userId: sessionState?.currentUserId)
     }
 }
 
@@ -56,14 +39,12 @@ extension UpdateUserStateObject {
             let value: Any = [
                 "_id": _id,
                 "sessionState": UserSessionStateObject.createValues(),
+                "setAvatarQueryState": UserSetAvatarQueryStateObject.createValues(),
+                "setDisplayNameQueryState": UserSetDisplayNameQueryStateObject.createValues(),
                 "routeState": RouteStateObject.createValues(),
                 ]
-            let result = try realm.update(UpdateUserStateObject.self, value: value)
-            try realm.write {
-                result.imageKey = nil
-                result.displayName = result.sessionState?.currentUser?.displayName ?? ""
-            }
-            return result
+            return try realm.update(UpdateUserStateObject.self, value: value)
         }
     }
 }
+

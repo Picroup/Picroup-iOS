@@ -17,7 +17,6 @@ extension ResetPasswordPhoneStateObject {
         case onChangePhoneNumber(String)
         case onPhoneNumberAvailableSuccess
         case onPhoneNumberAvailableError(Error)
-//        case onPhoneNumberAvailableResponse(String?)
     }
 }
 

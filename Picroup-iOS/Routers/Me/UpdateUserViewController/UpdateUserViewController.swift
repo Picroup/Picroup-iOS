@@ -13,11 +13,14 @@ import RxCocoa
 import RxFeedback
 import Apollo
 import Kingfisher
+import RealmSwift
 
-final class UpdateUserViewController: ShowNavigationBarViewController {
+final class UpdateUserViewController: ShowNavigationBarViewController, IsStateViewController {
+    
+    typealias State = UpdateUserStateObject
+    typealias Event = State.Event
     
     @IBOutlet fileprivate weak var presenter: UpdateUserPresenter!
-    fileprivate typealias Feedback = (Driver<UpdateUserStateObject>) -> Signal<UpdateUserStateObject.Event>
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,61 +30,52 @@ final class UpdateUserViewController: ShowNavigationBarViewController {
     
     private func setupRxFeedback() {
         
-        guard let store = try? UpdateUserStateStore()  else { return }
+        guard let realm = try? Realm(), let state = try? State.create()(realm) else { return }
         
+        state.system(
+            uiFeedback: uiFeedback,
+            shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
+            querySetAvatar: { query in
+                guard let pickedImage = ImageCache.default.retrieveImage(forKey: query.imageKey) else {
+                    return Single.error(CacheError.imageNotCached)
+                }
+                let (progress, filename) = UpoaderService.uploadImage(pickedImage)
+                let next = UserSetAvatarIdQuery(userId: query.userId, avatarId: filename)
+                return Observable.concat([
+                    progress.flatMap { _ in Observable<UserFragment>.empty() },
+                    ApolloClient.shared.rx.fetch(query: next, cachePolicy: .fetchIgnoringCacheData)
+                        .map { $0?.data?.user?.setAvatarId.fragments.userFragment }.forceUnwrap().asObservable()
+                    ])
+                    .asSingle()
+        },
+            querySetDisplayName: { query in
+                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                    .map { $0?.data?.user?.setDisplayName.fragments.userFragment }.forceUnwrap()
+        })
+            .drive()
+            .disposed(by: disposeBag)
+
+    }
+    
+    var uiFeedback: State.DriverFeedback {
         weak var weakSelf = self
-        let uiFeedback: Feedback = bind(self) { (me, state) in
+        return bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
                 state.map { $0.sessionState?.currentUser }.drive(presenter.userAvatarImageView.rx.userAvatar),
-                state.map { $0.triggerSetAvatarIdQuery }.drive(presenter.userAvatarSpinner.rx.isAnimating),
-                state.map { $0.displayName }.asObservable().take(1).bind(to: presenter.displaynameField.rx.text),
+                state.map { $0.setAvatarQueryState?.trigger ?? false }.drive(presenter.userAvatarSpinner.rx.isAnimating),
+                state.map { $0.sessionState?.currentUser?.displayName }.asObservable().take(1).bind(to: presenter.displaynameField.rx.text),
                 state.map { $0.sessionState?.currentUser?.username.map { "@\($0)" } ?? " " }.drive(presenter.usernameLabel.rx.text),
                 ]
             let events: [Signal<UpdateUserStateObject.Event>] = [
                 presenter.displaynameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).skip(2).distinctUntilChanged()
                     .map(UpdateUserStateObject.Event.onTriggerSetDisplayName),
-//                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
+                //                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 presenter.userAvatarImageView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().flatMapLatest { _ in
                     PhotoPickerProvider.pickImage(from: weakSelf)
                     }.map(UpdateUserStateObject.Event.onChangeImageKey)
-                ]
+            ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-        
-        let querySetImageKey: Feedback = react(query: { $0.setImageKeyQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            guard let pickedImage = ImageCache.default.retrieveImage(forKey: query.imageKey) else {
-                return .just(.onSetAvatarIdError(CacheError.imageNotCached))
-            }
-            let (progress, filename) = UpoaderService.uploadImage(pickedImage)
-            let next = UserSetAvatarIdQuery(userId: query.userId, avatarId: filename)
-            return Observable.concat([
-                progress.flatMap { _ in Observable<UpdateUserStateObject.Event>.empty() },
-                ApolloClient.shared.rx.fetch(query: next, cachePolicy: .fetchIgnoringCacheData).asObservable()
-                    .map { $0?.data?.user?.setAvatarId.fragments.userFragment }.unwrap()
-                    .map(UpdateUserStateObject.Event.onSetAvatarIdSuccess)
-                ])
-                .asSignal(onErrorReturnJust: UpdateUserStateObject.Event.onSetAvatarIdError)
-        })
-        
-        let querySetDisplayName: Feedback = react(query: { $0.setDisplayNameQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.user?.setDisplayName.fragments.userFragment }.unwrap()
-                .map(UpdateUserStateObject.Event.onSetDisplayNameSuccess)
-                .asSignal(onErrorReturnJust: UpdateUserStateObject.Event.onSetDisplayNameError)
-        })
-        
-        let states = store.states
-//            .debug("UpdateUserState", trimOutput: true)
-
-        Signal.merge(
-            uiFeedback(states),
-            querySetImageKey(states),
-            querySetDisplayName(states)
-            )
-            .debug("UpdateUserState.Event", trimOutput: true)
-            .emit(onNext: store.on)
-            .disposed(by: disposeBag)
-
     }
 }

@@ -23,6 +23,7 @@ extension UpdateUserStateObject {
         case onTriggerSetDisplayName(String)
         case onSetDisplayNameSuccess(UserFragment)
         case onSetDisplayNameError(Error)
+        
         case onTriggerPop
     }
 }
@@ -32,32 +33,20 @@ extension UpdateUserStateObject: IsFeedbackStateObject {
     func reduce(event: UpdateUserStateObject.Event, realm: Realm) {
         switch event {
         case .onChangeImageKey(let imageKey):
-            self.imageKey = imageKey
-            setAvatarIdError = nil
-            triggerSetAvatarIdQuery = true
+            setAvatarQueryState?.reduce(event: .onChangeImageKey(imageKey), realm: realm)
         case .onSetAvatarIdSuccess(let data):
             sessionState?.reduce(event: .onUpdateUser(data), realm: realm)
-
-            setAvatarIdError = nil
-            triggerSetAvatarIdQuery = false
+            setAvatarQueryState?.reduce(event: .onSuccess(data), realm: realm)
         case .onSetAvatarIdError(let error):
-            setAvatarIdError = error.localizedDescription
-            triggerSetAvatarIdQuery = false
+            setAvatarQueryState?.reduce(event: .onError(error), realm: realm)
             
         case .onTriggerSetDisplayName(let displayName):
-            self.displayName = displayName
-            guard shouldSetDisplay else { return }
-            setDisplayNameError = nil
-            triggerSetDisplayNameQuery = true
+            setDisplayNameQueryState?.reduce(event: .onTriggerSetDisplayName(displayName), realm: realm)
         case .onSetDisplayNameSuccess(let data):
             sessionState?.reduce(event: .onUpdateUser(data), realm: realm)
-
-            setDisplayNameError = nil
-            triggerSetDisplayNameQuery = false
+            setDisplayNameQueryState?.reduce(event: .onSuccess(data), realm: realm)
         case .onSetDisplayNameError(let error):
-            self.displayName = sessionState?.currentUser?.displayName ?? ""
-            setDisplayNameError = error.localizedDescription
-            triggerSetDisplayNameQuery = false
+            setDisplayNameQueryState?.reduce(event: .onError(error), realm: realm)
             
         case .onTriggerPop:
             routeState?.reduce(event: .onTriggerPop, realm: realm)

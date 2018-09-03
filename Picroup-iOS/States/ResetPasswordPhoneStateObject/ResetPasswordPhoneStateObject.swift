@@ -14,8 +14,6 @@ final class ResetPasswordPhoneStateObject: VersionedPrimaryObject {
     
     @objc dynamic var resetPasswordParamState: ResetPasswordParamStateObject?
     @objc dynamic var resetPhoneAvailableQueryState: ResetPhoneAvailableQueryStateObject?
-//    @objc dynamic var isPhoneNumberValid: Bool = false
-//    @objc dynamic var triggerValidPhoneQuery: Bool = false
 }
 
 extension ResetPasswordPhoneStateObject {
