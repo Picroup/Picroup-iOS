@@ -27,6 +27,8 @@ final class MediumObject: PrimaryObject {
 extension MediumObject {
     enum Event {
         case onStared(TimeInterval)
+        case onIncreaseCommentsCount
+        case onDecreaseCommentsCount
     }
 }
 
@@ -37,6 +39,10 @@ extension MediumObject: IsFeedbackStateObject {
         case .onStared(let endedAt):
             stared.value = true
             self.endedAt.value = endedAt
+        case .onIncreaseCommentsCount:
+            self.commentsCount.value?.increase(1)
+        case .onDecreaseCommentsCount:
+            self.commentsCount.value?.increase(-1)
         }
     }
 }

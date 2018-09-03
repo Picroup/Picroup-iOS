@@ -13,6 +13,7 @@ import RxCocoa
 import RxFeedback
 import RxDataSources
 import Apollo
+import RealmSwift
 
 private func mapCommentMoreButtonTapToEvent(sender: UITableView) -> (CommentObject, ImageCommentsStateObject) -> Signal<ImageCommentsStateObject.Event> {
     return { comment, state in
@@ -20,7 +21,7 @@ private func mapCommentMoreButtonTapToEvent(sender: UITableView) -> (CommentObje
         guard state.sessionState?.isLogin == true else {
             return .just(.onTriggerLogin)
         }
-        guard let row = state.comments?.items.index(of: comment),
+        guard let row = state.commentsQueryState?.cursorComments?.items.index(of: comment),
             let cell = sender.cellForRow(at: IndexPath(row: row, section: 0)) as? CommentCell
             else { return .empty() }
         let currentUserId = state.sessionState?.currentUserId
@@ -39,12 +40,14 @@ private func mapCommentMoreButtonTapToEvent(sender: UITableView) -> (CommentObje
     }
 }
 
-class ImageCommentsViewController: ShowNavigationBarViewController {
+class ImageCommentsViewController: ShowNavigationBarViewController, IsStateViewController  {
+    
+    typealias State = ImageCommentsStateObject
+    typealias Event = State.Event
     
     typealias Dependency = String
     var dependency: Dependency!
     
-    fileprivate typealias Feedback = (Driver<ImageCommentsStateObject>) -> Signal<ImageCommentsStateObject.Event>
     @IBOutlet private var presenter: ImageCommentsPresenter!
     
     override func viewDidLoad() {
@@ -56,44 +59,62 @@ class ImageCommentsViewController: ShowNavigationBarViewController {
     private func setupRxFeedback() {
         
         guard let mediumId = dependency,
-            let store = try? ImageCommentsStateStore(mediumId: mediumId)
-            else { return }
+            let realm = try? Realm(),
+            let state = try? State.create(mediumId: mediumId)(realm) else { return }
         
-        
-        store.medium().bind(to: presenter.medium).disposed(by: disposeBag)
+        state.rxMedium().bind(to: presenter.medium).disposed(by: disposeBag)
 
+        state.system(
+            uiFeedback: uiFeedback,
+            shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
+            queryComments: { query in
+                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                    .map { $0?.data?.medium?.comments.fragments.cursorCommentsFragment }.forceUnwrap()
+        },
+            saveComment: { query in
+                return ApolloClient.shared.rx.perform(mutation: query)
+                    .map { $0?.data?.saveComment.fragments.commentFragment }.forceUnwrap()
+        },
+            deleteComment: { query in
+                return ApolloClient.shared.rx.perform(mutation: query)
+                    .map { $0?.data?.deleteComment }.forceUnwrap()
+        })
+            .drive()
+            .disposed(by: disposeBag)
+
+    }
+    
+    var uiFeedback: State.DriverFeedback {
         typealias Section = ImageCommentsPresenter.Section
-        let uiFeedback: Feedback = bind(presenter) { (presenter, state) in
-            
+        return bind(presenter) { (presenter, state) in
             let commentMoreButtonTap = PublishRelay<CommentObject>()
             let subscriptions = [
                 state.map { $0.sessionState?.isLogin ?? false }.drive(presenter.sendCommentContentView.rx.isShowed),
-                state.map { $0.saveCommentContent }.asObservable().take(1).bind(to: presenter.contentTextField.rx.text),
-                state.map { $0.shouldSendComment ? 1 : 0 }.drive(presenter.sendButton.rx.alpha),
+                state.map { $0.saveCommentQueryState?.content }.asObservable().take(1).bind(to: presenter.contentTextField.rx.text),
+                state.map { $0.saveCommentQueryState?.shouldQuery == true ? 1 : 0 }.drive(presenter.sendButton.rx.alpha),
                 presenter.sendButton.rx.tap.bind(to: presenter.contentTextField.rx.resignFirstResponder()),
                 presenter.sendButton.rx.tap.map { "" }.bind(to: presenter.contentTextField.rx.text),
-                store.commentsItems().map { [Section(model: "", items: $0)]  }
+                state.map { [Section(model: "", items: $0.commentsItems())]  }
                     .drive(presenter.items(
                         onMoreButtonTap: { commentMoreButtonTap.accept($0) }
                     )),
-                state.map { $0.isMediumDeleted ? 1 : 0 }.drive(presenter.deleteAlertView.rx.alpha),
+//                state.map { $0.isMediumDeleted ? 1 : 0 }.drive(presenter.deleteAlertView.rx.alpha),
                 state.map { $0.footerState }.drive(onNext: presenter.loadFooterView.on),
-                state.map { $0.isCommentsEmpty }.drive(presenter.isCommentsEmpty),
+                state.map { $0.commentsQueryState?.isEmpty ?? false }.drive(presenter.isCommentsEmpty),
                 ]
             
-            
-            let events: [Signal<ImageCommentsStateObject.Event>] = [
-                .just(.onTriggerReloadData),
+            let events: [Signal<Event>] = [
+                .just(.onTriggerReloadComments),
                 commentMoreButtonTap.asObservable().withLatestFrom(state) { ($0, $1) }
                     .asSignalOnErrorRecoverEmpty().flatMapLatest(mapCommentMoreButtonTapToEvent(sender: presenter.tableView)),
                 state.flatMapLatest {
-                    $0.shouldQueryMoreComments
+                    ($0.commentsQueryState?.shouldQueryMore ?? false)
                         ? presenter.tableView.rx.triggerGetMore
                         : .empty()
-                    }.map { .onTriggerGetMoreData },
+                    }.map { .onTriggerGetMoreComments },
                 presenter.sendButton.rx.tap.asSignal().map { .onTriggerSaveComment },
                 presenter.contentTextField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty()
-                    .debounce(0.3).distinctUntilChanged().map(ImageCommentsStateObject.Event.onChangeCommentContent),
+                    .debounce(0.3).distinctUntilChanged().map(Event.onChangeCommentContent),
                 presenter.hideCommentsContentView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 presenter.imageView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 presenter.tableViewBackgroundButton.rx.tap.asSignal().map { _ in .onTriggerPop },
@@ -101,39 +122,6 @@ class ImageCommentsViewController: ShowNavigationBarViewController {
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-        
-        let queryComments: Feedback = react(query: { $0.commentsQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { (query) in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.medium?.comments.fragments.cursorCommentsFragment }
-                .map(ImageCommentsStateObject.Event.onGetData(isReload: query.cursor == nil))
-                .asSignal(onErrorReturnJust: ImageCommentsStateObject.Event.onGetDataError)
-        })
-        
-        let saveComment: Feedback = react(query: { $0.saveCommentQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            ApolloClient.shared.rx.perform(mutation: query)
-                .map { $0?.data?.saveComment.fragments.commentFragment }.unwrap()
-                .map(ImageCommentsStateObject.Event.onSaveCommentSuccess)
-                .asSignal(onErrorReturnJust: ImageCommentsStateObject.Event.onSaveCommentError)
-        })
-        
-        let deleteComment: Feedback = react(query: { $0.deleteCommentQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            ApolloClient.shared.rx.perform(mutation: query)
-                .map { $0?.data?.deleteComment }.unwrap()
-                .map(ImageCommentsStateObject.Event.onDeleteCommentSuccess)
-                .asSignal(onErrorReturnJust: ImageCommentsStateObject.Event.onDeleteCommentError)
-        })
-        
-        let states = store.states
-        
-        Signal.merge(
-            uiFeedback(states),
-            queryComments(states),
-            saveComment(states),
-            deleteComment(states)
-            )
-            .debug("ImageCommentsState.Event", trimOutput: true)
-            .emit(onNext: store.on)
-            .disposed(by: disposeBag)
     }
 }
 
@@ -141,11 +129,20 @@ extension ImageCommentsStateObject {
     
     var footerState: LoadFooterViewState {
         return LoadFooterViewState.create(
-            cursor: comments?.cursor.value,
-            items: comments?.items,
-            trigger: triggerCommentsQuery,
-            error: commentsError
+            cursor: commentsQueryState?.cursorComments?.cursor.value,
+            items: commentsQueryState?.cursorComments?.items,
+            trigger: commentsQueryState?.trigger ?? false,
+            error: commentsQueryState?.error
         )
+    }
+    
+    func rxMedium() -> Observable<MediumObject> {
+        guard let medium = medium else { return .empty() }
+        return Observable.from(object: medium).catchErrorRecoverEmpty()
+    }
+    
+    func commentsItems() -> [CommentObject] {
+        return commentsQueryState?.cursorComments?.items.toArray() ?? []
     }
 }
 

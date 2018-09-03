@@ -24,6 +24,9 @@
 		45163202213BCFE700CC3E55 /* ResetPasswordQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45163201213BCFE700CC3E55 /* ResetPasswordQueryStateObject.swift */; };
 		45163204213CC2CB00CC3E55 /* UserSetAvatarQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45163203213CC2CB00CC3E55 /* UserSetAvatarQueryStateObject.swift */; };
 		45163206213CC42E00CC3E55 /* UserSetDisplayNameQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45163205213CC42E00CC3E55 /* UserSetDisplayNameQueryStateObject.swift */; };
+		45163208213CD00300CC3E55 /* CursorCommentsQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45163207213CD00300CC3E55 /* CursorCommentsQueryStateObject.swift */; };
+		4516320A213CD01D00CC3E55 /* MediumCommentsQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45163209213CD01D00CC3E55 /* MediumCommentsQueryStateObject.swift */; };
+		4516320C213CDC1700CC3E55 /* SaveCommentQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4516320B213CDC1700CC3E55 /* SaveCommentQueryStateObject.swift */; };
 		45183EBE20CF65BC00497B59 /* AboutAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EBD20CF65BC00497B59 /* AboutAppViewController.swift */; };
 		45183EC020CF862000497B59 /* RealmProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EBF20CF862000497B59 /* RealmProvider.swift */; };
 		45183EC220D0E94100497B59 /* createFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EC120D0E94100497B59 /* createFeedback.swift */; };
@@ -154,7 +157,7 @@
 		45662B07212E8ADB00964BC9 /* FeedbackStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B06212E8ADB00964BC9 /* FeedbackStateObject+system.swift */; };
 		45662B09212E8AE900964BC9 /* HomeStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B08212E8AE900964BC9 /* HomeStateObject+system.swift */; };
 		45662B0B212E8AFD00964BC9 /* ImageDetailStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B0A212E8AFD00964BC9 /* ImageDetailStateStore.swift */; };
-		45662B0D212E8B0A00964BC9 /* ImageCommentsStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B0C212E8B0A00964BC9 /* ImageCommentsStateStore.swift */; };
+		45662B0D212E8B0A00964BC9 /* ImageCommentsStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B0C212E8B0A00964BC9 /* ImageCommentsStateObject+system.swift */; };
 		45662B0F212E8B1700964BC9 /* LoginStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B0E212E8B1700964BC9 /* LoginStateObject+system.swift */; };
 		45662B13212E8B2D00964BC9 /* MeStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B12212E8B2D00964BC9 /* MeStateObject+system.swift */; };
 		45662B15212E8B3C00964BC9 /* NotificationsStateObject+system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45662B14212E8B3C00964BC9 /* NotificationsStateObject+system.swift */; };
@@ -397,6 +400,9 @@
 		45163201213BCFE700CC3E55 /* ResetPasswordQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordQueryStateObject.swift; sourceTree = "<group>"; };
 		45163203213CC2CB00CC3E55 /* UserSetAvatarQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetAvatarQueryStateObject.swift; sourceTree = "<group>"; };
 		45163205213CC42E00CC3E55 /* UserSetDisplayNameQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetDisplayNameQueryStateObject.swift; sourceTree = "<group>"; };
+		45163207213CD00300CC3E55 /* CursorCommentsQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorCommentsQueryStateObject.swift; sourceTree = "<group>"; };
+		45163209213CD01D00CC3E55 /* MediumCommentsQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumCommentsQueryStateObject.swift; sourceTree = "<group>"; };
+		4516320B213CDC1700CC3E55 /* SaveCommentQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveCommentQueryStateObject.swift; sourceTree = "<group>"; };
 		45183EBD20CF65BC00497B59 /* AboutAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppViewController.swift; sourceTree = "<group>"; };
 		45183EBF20CF862000497B59 /* RealmProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmProvider.swift; sourceTree = "<group>"; };
 		45183EC120D0E94100497B59 /* createFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createFeedback.swift; sourceTree = "<group>"; };
@@ -529,7 +535,7 @@
 		45662B06212E8ADB00964BC9 /* FeedbackStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedbackStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B08212E8AE900964BC9 /* HomeStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B0A212E8AFD00964BC9 /* ImageDetailStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailStateStore.swift; sourceTree = "<group>"; };
-		45662B0C212E8B0A00964BC9 /* ImageCommentsStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsStateStore.swift; sourceTree = "<group>"; };
+		45662B0C212E8B0A00964BC9 /* ImageCommentsStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCommentsStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B0E212E8B1700964BC9 /* LoginStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B12212E8B2D00964BC9 /* MeStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeStateObject+system.swift"; sourceTree = "<group>"; };
 		45662B14212E8B3C00964BC9 /* NotificationsStateObject+system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsStateObject+system.swift"; sourceTree = "<group>"; };
@@ -1132,7 +1138,7 @@
 			children = (
 				45B0204620AC0D7000BD5D8F /* ImageCommentsStateObject.swift */,
 				45662AD6212E892A00964BC9 /* ImageCommentsStateObject+Event.swift */,
-				45662B0C212E8B0A00964BC9 /* ImageCommentsStateStore.swift */,
+				45662B0C212E8B0A00964BC9 /* ImageCommentsStateObject+system.swift */,
 			);
 			path = ImageCommentsStateObject;
 			sourceTree = "<group>";
@@ -1827,6 +1833,7 @@
 			children = (
 				45C5E5202138D565004C6F4A /* BlockUserQueryStateObject.swift */,
 				451631F7213B982C00CC3E55 /* CodeValidQueryStateObject.swift */,
+				45163207213CD00300CC3E55 /* CursorCommentsQueryStateObject.swift */,
 				457D8A9C21366D1A00719F23 /* CursorNotificationsQueryStateObject.swift */,
 				456D14652105B089008EDD41 /* CursorMediaQueryStateObject.swift */,
 				457D8AA221368FC400719F23 /* CursorReputationsQueryStateObject.swift */,
@@ -1838,6 +1845,7 @@
 				45E977082134D81F00723BA1 /* LoginQueryStateObject.swift */,
 				457D8AA021367CCD00719F23 /* MarkNotificationsQueryStateObject.swift */,
 				457D8AA42136949900719F23 /* MarkReputationsQueryStateObject.swift */,
+				45163209213CD01D00CC3E55 /* MediumCommentsQueryStateObject.swift */,
 				45C5E5242138E3CB004C6F4A /* MeTabStateObject.swift */,
 				45C5E5262138E861004C6F4A /* MyMediaQueryStateObject.swift */,
 				45C5E5282138E88F004C6F4A /* MyStaredMediaQueryStateObject.swift */,
@@ -1850,6 +1858,7 @@
 				45662B4F212EAF2D00964BC9 /* ResetPasswordParamStateObject.swift */,
 				45163201213BCFE700CC3E55 /* ResetPasswordQueryStateObject.swift */,
 				451631FB213BBDCF00CC3E55 /* ResetPhoneAvailableQueryStateObject.swift */,
+				4516320B213CDC1700CC3E55 /* SaveCommentQueryStateObject.swift */,
 				457D8AA62137824D00719F23 /* SaveFeedbackQueryState.swift */,
 				457D8AA82137987600719F23 /* SearchUserQueryStateObject.swift */,
 				45662B41212EA20400964BC9 /* SnackbarObject.swift */,
@@ -2382,6 +2391,7 @@
 				45183EC420D0ED2300497B59 /* UIViewController+isViewAppears.swift in Sources */,
 				454714A0211D65E4003A5D04 /* WatermarkService.swift in Sources */,
 				45662AD9212E89C700964BC9 /* LoginStateObject+Event.swift in Sources */,
+				4516320C213CDC1700CC3E55 /* SaveCommentQueryStateObject.swift in Sources */,
 				45FC0BFB20A91541006AAF3D /* PrimaryObject.swift in Sources */,
 				451DD4B7207E3EB5002C509A /* ErrorMessage.swift in Sources */,
 				45F0A7E220C8C6E60085F978 /* RegularPattern.swift in Sources */,
@@ -2398,6 +2408,7 @@
 				451DD4BD207F8BC7002C509A /* RankStateObject.swift in Sources */,
 				45662B0F212E8B1700964BC9 /* LoginStateObject+system.swift in Sources */,
 				451631FA213B9E3C00CC3E55 /* RegisterQueryStateObject.swift in Sources */,
+				45163208213CD00300CC3E55 /* CursorCommentsQueryStateObject.swift in Sources */,
 				45BA0D8520903A020002E1D5 /* NotificationsStateObject.swift in Sources */,
 				45662AB2212E879600964BC9 /* AppStateStore.swift in Sources */,
 				45662B35212E8C0F00964BC9 /* UpdateUserStateObject+system.swift in Sources */,
@@ -2496,7 +2507,7 @@
 				45E240B520862981004B58EF /* HideNavigationBarViewController.swift in Sources */,
 				45662B19212E8B5E00964BC9 /* RegisterUsernameStateObject+system.swift in Sources */,
 				45662B33212E8C0200964BC9 /* UserFollowersStateObject+system.swift in Sources */,
-				45662B0D212E8B0A00964BC9 /* ImageCommentsStateStore.swift in Sources */,
+				45662B0D212E8B0A00964BC9 /* ImageCommentsStateObject+system.swift in Sources */,
 				45B0205820AE69A000BD5D8F /* PrimaryKey.swift in Sources */,
 				45E9771621362B3200723BA1 /* HotMediaTagsStateObject.swift in Sources */,
 				457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */,
@@ -2521,6 +2532,7 @@
 				457D8AA92137987600719F23 /* SearchUserQueryStateObject.swift in Sources */,
 				45662B27212E8BAE00964BC9 /* ResetPasswordStateObject+system.swift in Sources */,
 				455808E620EDAB65005F1A00 /* Constants.swift in Sources */,
+				4516320A213CD01D00CC3E55 /* MediumCommentsQueryStateObject.swift in Sources */,
 				45662B05212E8AD100964BC9 /* CreateImageStateStore.swift in Sources */,
 				456D146121058B58008EDD41 /* MediaPreserter.swift in Sources */,
 				45CEDD5D21240B3F00491B60 /* ResetPasswordViewController.swift in Sources */,
