@@ -17,8 +17,10 @@ extension UpdateMediumTagsStateObject {
     enum Event {
         case onToggleTag(String)
         case onAddTag(String)
+        
         case onAddTagSuccess(MediumFragment)
         case onAddTagError(Error, String)
+        
         case onRemoveTagSuccess(MediumFragment)
         case onRemoveTagError(Error, String)
     }
@@ -29,50 +31,35 @@ extension UpdateMediumTagsStateObject: IsFeedbackStateObject {
     func reduce(event: Event, realm: Realm) {
         switch event {
         case .onToggleTag(let tag):
-            if let tagState = tagStates.first(where: { $0.tag == tag }) {
-                tagState.isSelected = !tagState.isSelected
-                triggerSyncTagState(tagState)
-                if tagState.isSelected { selectedTagHistory?.accept(tag) }
+            tagsState?.reduce(event: .onToggleTag(tag), realm: realm)
+            if let tagState = tagsState?.tagStates.first(where: { $0.tag == tag }) {
+                triggerSyncTagState(tagState, realm: realm)
             }
         case .onAddTag(let tag):
-            if let tagState = tagStates.first(where: { $0.tag == tag }), !tagState.isSelected {
-                tagState.isSelected = true
-                triggerSyncTagState(tagState)
-            } else {
-                let newTag = realm.create(TagStateObject.self, value: ["tag": tag])
-                newTag.isSelected = true
-                triggerSyncTagState(newTag)
-                tagStates.append(newTag)
+            tagsState?.reduce(event: .onAddTag(tag), realm: realm)
+            if let tagState = tagsState?.tagStates.first(where: { $0.tag == tag }) {
+                triggerSyncTagState(tagState, realm: realm)
             }
-            selectedTagHistory?.accept(tag)
+            
         case .onAddTagSuccess(let data):
-            medium = realm.create(MediumObject.self, value: data.rawSnapshot, update: true)
-            addTagError = nil
-            triggerAddTagQuery = false
+            addTagQueryState?.reduce(event: .onSuccess(data), realm: realm)
         case .onAddTagError(let error, let tag):
-            tagStates.first(where: { $0.tag == tag })?.isSelected = false
-            addTagError = error.localizedDescription
-            triggerAddTagQuery = false
+            tagsState?.reduce(event: .onToggleTag(tag), realm: realm)
+            addTagQueryState?.reduce(event: .onError(error), realm: realm)
+            
         case .onRemoveTagSuccess(let data):
-            medium = realm.create(MediumObject.self, value: data.rawSnapshot, update: true)
-            removeTagError = nil
-            triggerRemoveTagQuery = false
+            removeTagQueryState?.reduce(event: .onSuccess(data), realm: realm)
         case .onRemoveTagError(let error, let tag):
-            tagStates.first(where: { $0.tag == tag })?.isSelected = true
-            removeTagError = error.localizedDescription
-            triggerRemoveTagQuery = false
+            tagsState?.reduce(event: .onToggleTag(tag), realm: realm)
+            removeTagQueryState?.reduce(event: .onError(error), realm: realm)
         }
     }
     
-    func triggerSyncTagState(_ tagState: TagStateObject) {
+    func triggerSyncTagState(_ tagState: TagStateObject, realm: Realm) {
         if tagState.isSelected {
-            addTag = tagState.tag
-            addTagError = nil
-            triggerAddTagQuery = true
+            addTagQueryState?.reduce(event: .onTriggerAddTag(tagState.tag), realm: realm)
         } else {
-            removeTag = tagState.tag
-            removeTagError = nil
-            triggerRemoveTagQuery = true
+            removeTagQueryState?.reduce(event: .onTriggerRemoveTag(tagState.tag), realm: realm)
         }
     }
 }

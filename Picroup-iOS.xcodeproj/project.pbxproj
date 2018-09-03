@@ -29,6 +29,9 @@
 		4516320C213CDC1700CC3E55 /* SaveCommentQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4516320B213CDC1700CC3E55 /* SaveCommentQueryStateObject.swift */; };
 		4516320E213D072700CC3E55 /* CreateImageTagsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4516320D213D072700CC3E55 /* CreateImageTagsStateObject.swift */; };
 		45163210213D162C00CC3E55 /* SaveImagesQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4516320F213D162C00CC3E55 /* SaveImagesQueryStateObject.swift */; };
+		45163212213D280600CC3E55 /* UpdateImageTagsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45163211213D280600CC3E55 /* UpdateImageTagsStateObject.swift */; };
+		45163214213D2DCC00CC3E55 /* MediumRemoveTagQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45163213213D2DCC00CC3E55 /* MediumRemoveTagQueryStateObject.swift */; };
+		45163216213D2DE900CC3E55 /* MediumAddTagQueryStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45163215213D2DE900CC3E55 /* MediumAddTagQueryStateObject.swift */; };
 		45183EBE20CF65BC00497B59 /* AboutAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EBD20CF65BC00497B59 /* AboutAppViewController.swift */; };
 		45183EC020CF862000497B59 /* RealmProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EBF20CF862000497B59 /* RealmProvider.swift */; };
 		45183EC220D0E94100497B59 /* createFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45183EC120D0E94100497B59 /* createFeedback.swift */; };
@@ -407,6 +410,9 @@
 		4516320B213CDC1700CC3E55 /* SaveCommentQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveCommentQueryStateObject.swift; sourceTree = "<group>"; };
 		4516320D213D072700CC3E55 /* CreateImageTagsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageTagsStateObject.swift; sourceTree = "<group>"; };
 		4516320F213D162C00CC3E55 /* SaveImagesQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveImagesQueryStateObject.swift; sourceTree = "<group>"; };
+		45163211213D280600CC3E55 /* UpdateImageTagsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateImageTagsStateObject.swift; sourceTree = "<group>"; };
+		45163213213D2DCC00CC3E55 /* MediumRemoveTagQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumRemoveTagQueryStateObject.swift; sourceTree = "<group>"; };
+		45163215213D2DE900CC3E55 /* MediumAddTagQueryStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumAddTagQueryStateObject.swift; sourceTree = "<group>"; };
 		45183EBD20CF65BC00497B59 /* AboutAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppViewController.swift; sourceTree = "<group>"; };
 		45183EBF20CF862000497B59 /* RealmProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmProvider.swift; sourceTree = "<group>"; };
 		45183EC120D0E94100497B59 /* createFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createFeedback.swift; sourceTree = "<group>"; };
@@ -1850,7 +1856,9 @@
 				45E977082134D81F00723BA1 /* LoginQueryStateObject.swift */,
 				457D8AA021367CCD00719F23 /* MarkNotificationsQueryStateObject.swift */,
 				457D8AA42136949900719F23 /* MarkReputationsQueryStateObject.swift */,
+				45163215213D2DE900CC3E55 /* MediumAddTagQueryStateObject.swift */,
 				45163209213CD01D00CC3E55 /* MediumCommentsQueryStateObject.swift */,
+				45163213213D2DCC00CC3E55 /* MediumRemoveTagQueryStateObject.swift */,
 				45C5E5242138E3CB004C6F4A /* MeTabStateObject.swift */,
 				45C5E5262138E861004C6F4A /* MyMediaQueryStateObject.swift */,
 				45C5E5282138E88F004C6F4A /* MyStaredMediaQueryStateObject.swift */,
@@ -1871,6 +1879,7 @@
 				45CD0694212FA91200AE563E /* StarMediumStateObject.swift */,
 				45C5E5222138D585004C6F4A /* UnblockUserQueryStateObject.swift */,
 				457D8AAC2137BDC300719F23 /* UnfollowUserQueryStateObject.swift */,
+				45163211213D280600CC3E55 /* UpdateImageTagsStateObject.swift */,
 				457D8AB02137D07B00719F23 /* UserFollowingsQueryStateObject.swift */,
 				457D8AB22137D14800719F23 /* UserFollowersQueryStateObject.swift */,
 				457D8AB42138C95E00719F23 /* UsersQueryStateObject.swift */,
@@ -2244,6 +2253,7 @@
 				45D04F72208790C700AC2226 /* TimeInterval+.swift in Sources */,
 				4580F4F821001DA5006EFF85 /* AVHelper.swift in Sources */,
 				45662B15212E8B3C00964BC9 /* NotificationsStateObject+system.swift in Sources */,
+				45163214213D2DCC00CC3E55 /* MediumRemoveTagQueryStateObject.swift in Sources */,
 				45F0A7CD20C662F10085F978 /* Object+Delete.swift in Sources */,
 				454CD57720C810BD0087C634 /* RegisterPasswordStateObject.swift in Sources */,
 				45662B40212EA06900964BC9 /* VersionedPrimaryObject.swift in Sources */,
@@ -2313,6 +2323,7 @@
 				458C106920849058005E94CD /* RankViewPresenter.swift in Sources */,
 				456E90D920F5DEC40006FFA8 /* TagMediaViewController.swift in Sources */,
 				45E9770E2134ECAA00723BA1 /* IsFeedbackState.swift in Sources */,
+				45163212213D280600CC3E55 /* UpdateImageTagsStateObject.swift in Sources */,
 				45B0206820B4031100BD5D8F /* FollowersViewController.swift in Sources */,
 				457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */,
 				45C1994A20A97402001924B9 /* UserObject.swift in Sources */,
@@ -2432,6 +2443,7 @@
 				45B0204720AC0D7000BD5D8F /* ImageCommentsStateObject.swift in Sources */,
 				457BD99D20B30D45007F0492 /* PrimaryObject+IdentifiableType.swift in Sources */,
 				457D8AB72138CC1300719F23 /* UserBlockingUsersQueryStateObject.swift in Sources */,
+				45163216213D2DE900CC3E55 /* MediumAddTagQueryStateObject.swift in Sources */,
 				45E9771821364BC900723BA1 /* IsStateViewController.swift in Sources */,
 				451631F4213B8DD600CC3E55 /* RegisterPhoneAvailableQueryStateObject.swift in Sources */,
 				4595F21F207C96410040E5FA /* RxFABMenuDelegateDelegateProxy.swift in Sources */,

@@ -11,32 +11,33 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 import RxRealm
-import RxAlamofire
+import RxFeedback
 
-final class UpdateMediumTagsStateStore {
+extension UpdateMediumTagsStateObject {
     
-    let mediumId: String
-    let states: Driver<UpdateMediumTagsStateObject>
-    private let _state: UpdateMediumTagsStateObject
-    
-    init(mediumId: String) throws {
-        let realm = try Realm()
-        let _state = try UpdateMediumTagsStateObject.create(mediumId: mediumId)(realm)
-        let states = Observable.from(object: _state).asDriver(onErrorDriveWith: .empty())
+    func system(
+        uiFeedback: @escaping DriverFeedback,
+        shouldQuery: @escaping () -> Bool,
+        addTag: @escaping (MediumAddTagQuery) -> Single<MediumFragment>,
+        remeveTag: @escaping (MediumRemoveTagQuery) -> Single<MediumFragment>
+        ) -> Driver<UpdateMediumTagsStateObject> {
         
-        self.mediumId = mediumId
-        self._state = _state
-        self.states = states
-    }
-    
-    func on(event: UpdateMediumTagsStateObject.Event) {
-        let id = mediumId
-        Realm.backgroundReduce(ofType: UpdateMediumTagsStateObject.self, forPrimaryKey: id, event: event)
-    }
-    
-    func tagStates() -> Driver<[TagStateObject]> {
-        return Observable.collection(from: _state.tagStates)
-            .asDriver(onErrorDriveWith: .empty())
-            .map { $0.toArray() }
+        let addTagFeedback: DriverFeedback = react(query: { $0.addTagQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
+            return addTag(query)
+                .map(Event.onAddTagSuccess)
+                .asSignal(onErrorReturnJust: { .onAddTagError($0, query.tag) })
+        })
+        
+        let remeveTagFeedback: DriverFeedback = react(query: { $0.removeTagQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
+            return remeveTag(query)
+                .map(Event.onRemoveTagSuccess)
+                .asSignal(onErrorReturnJust: { .onRemoveTagError($0, query.tag) })
+        })
+        
+        return system(
+            feedbacks: [uiFeedback, addTagFeedback, remeveTagFeedback],
+            //            composeStates: { $0.debug("UpdateMediumTagsState", trimOutput: false) },
+            composeEvents: { $0.debug("UpdateMediumTagsState.Event", trimOutput: true) }
+        )
     }
 }
