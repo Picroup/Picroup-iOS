@@ -18,7 +18,6 @@ final class RankStateObject: VersionedPrimaryObject {
     @objc dynamic var hotMediaTagsState: HotMediaTagsStateObject?
     @objc dynamic var hotMediaQueryState: TagMediaQueryStateObject?
     @objc dynamic var routeState: RouteStateObject?
-
 }
 
 extension RankStateObject {

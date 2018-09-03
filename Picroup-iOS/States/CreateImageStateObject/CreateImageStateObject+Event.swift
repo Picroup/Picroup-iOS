@@ -14,13 +14,13 @@ import RxAlamofire
 
 extension CreateImageStateObject {
     enum Event {
+        case onToggleTag(String)
+        case onAddTag(String)
+        
         case onTriggerSaveMedium
         case onProgress(RxProgress, Int)
         case onSavedMediumSuccess(MediumFragment, Int)
         case onSavedMediumError(Error, Int)
-        case onToggleTag(String)
-        case onAddTag(String)
-        //        case triggerCancel
     }
 }
 
@@ -28,53 +28,34 @@ extension CreateImageStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
-        case .onTriggerSaveMedium:
-            guard shouldSaveMedium else { return }
-            triggerSaveMediumQuery = true
-        case .onProgress(let progress, let index):
-            saveMediumStates[index].progress?.bytesWritten = Int(progress.bytesWritten)
-            saveMediumStates[index].progress?.totalBytes = Int(progress.totalBytes)
-            triggerSaveMediumQuery = true // trigger state update
-        case .onSavedMediumSuccess(let medium, let index):
-            let mediumObject = realm.create(MediumObject.self, value: medium.rawSnapshot, update: true)
-            saveMediumStates[index].savedMedium = mediumObject
-            finished += 1
-            if allFinished {
-                triggerSaveMediumQuery = false
-                needUpdate?.myInterestedMedia = true
-                needUpdate?.myMedia = true
-                let failState = saveMediumStates.first(where: { $0.savedError != nil })
-                let allSuccess = failState == nil
-                if allSuccess {
-                    snackbar?.reduce(event: .onUpdateMessage("已分享"), realm: realm)
-                    routeState?.reduce(event: .onTriggerPop, realm: realm)
-                } else {
-                    snackbar?.reduce(event: .onUpdateMessage(failState?.savedError), realm: realm)
-                }
-            }
-        case .onSavedMediumError(let error, let index):
-            saveMediumStates[index].savedMedium = nil
-            saveMediumStates[index].savedError = error.localizedDescription
-            finished += 1
-            if allFinished {
-                triggerSaveMediumQuery = false
-                needUpdate?.myInterestedMedia = true
-                needUpdate?.myMedia = true
-            }
         case .onToggleTag(let tag):
-            if let tagState = tagStates.first(where: { $0.tag == tag }) {
-                tagState.isSelected = !tagState.isSelected
-                if tagState.isSelected { selectedTagHistory?.accept(tag) }
-            }
+            tagsState?.reduce(event: .onToggleTag(tag), realm: realm)
         case .onAddTag(let tag):
-            if let tagState = tagStates.first(where: { $0.tag == tag }) {
-                tagState.isSelected = true
-            } else {
-                let newTag = realm.create(TagStateObject.self, value: ["tag": tag])
-                newTag.isSelected = true
-                tagStates.append(newTag)
-            }
-            selectedTagHistory?.accept(tag)
+            tagsState?.reduce(event: .onAddTag(tag), realm: realm)
+            
+        case .onTriggerSaveMedium:
+            saveImagesQueryState?.reduce(event: .onTrigger, realm: realm)
+        case .onProgress(let progress, let index):
+            saveImagesQueryState?.reduce(event: .onProgress(progress, index), realm: realm)
+        case .onSavedMediumSuccess(let medium, let index):
+            saveImagesQueryState?.reduce(event: .onSuccess(medium, index), realm: realm)
+            self.onFinishIfNeeded(realm: realm)
+        case .onSavedMediumError(let error, let index):
+            saveImagesQueryState?.reduce(event: .onError(error, index), realm: realm)
+            self.onFinishIfNeeded(realm: realm)
+        }
+    }
+    
+    func onFinishIfNeeded(realm: Realm) {
+        if saveImagesQueryState?.success != nil {
+            snackbar?.reduce(event: .onUpdateMessage("已分享"), realm: realm)
+            routeState?.reduce(event: .onTriggerPop, realm: realm)
+            needUpdate?.myInterestedMedia = true
+            needUpdate?.myMedia = true
+        } else if saveImagesQueryState?.error != nil {
+            snackbar?.reduce(event: .onUpdateMessage("部分内容分享失败"), realm: realm)
+            needUpdate?.myInterestedMedia = true
+            needUpdate?.myMedia = true
         }
     }
 }

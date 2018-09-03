@@ -13,49 +13,24 @@ import RxCocoa
 import RxRealm
 import RxAlamofire
 
-
-final class CreateImageStateObject: PrimaryObject {
-    typealias Query = (userId: String, mediaItems: [MediumItem], tags: [String]?)
+final class CreateImageStateObject: VersionedPrimaryObject {
 
     @objc dynamic var sessionState: UserSessionStateObject?
     
-    let mediaItemObjects = List<MediaItemObject>()
-    let tagStates = List<TagStateObject>()
-    let saveMediumStates = List<SaveMediumStateObject>()
-    @objc dynamic var finished: Int = 0
-    @objc dynamic var triggerSaveMediumQuery: Bool = false
-    
-    @objc dynamic var selectedTagHistory: SelectedTagHistoryObject?
+    @objc dynamic var tagsState: CreateImageTagsStateObject?
+    @objc dynamic var saveImagesQueryState: SaveImagesQueryStateObject?
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
-
     @objc dynamic var routeState: RouteStateObject?
-    
     @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension CreateImageStateObject {
-    var saveQuery: Query? {
-        guard let userId = sessionState?.currentUserId else { return nil }
-        return triggerSaveMediumQuery ? (userId: userId, mediaItems: mediaItemObjects.map { $0.mediaItem }, tags: selectedTags) : nil
-    }
-    private var selectedTags: [String]? {
-        return tagStates.compactMap { $0.isSelected ? $0.tag : nil }
-    }
-    var shouldSaveMedium: Bool {
-        return !triggerSaveMediumQuery
-    }
-    var allFinished: Bool { return finished == mediaItemObjects.count }
-    var completed: Float {
-        let count = saveMediumStates.count
-        let allProgress = saveMediumStates.reduce(0) { $0 + ($1.progress?.completed ?? 0)
-        }
-        if count > 0 {
-            return Float(allProgress) / Float(count)
-        }
-        else {
-            return 0
-        }
+    var saveQuery: SaveImagesQueryStateObject.Query? {
+        return saveImagesQueryState?.query(
+            userId: sessionState?.currentUserId,
+            tags: tagsState?.selectedTags
+        )
     }
 }
 
@@ -67,32 +42,18 @@ extension CreateImageStateObject {
             let value: Any = [
                 "_id": _id,
                 "sessionState": UserSessionStateObject.createValues(),
-                "mediaItemObjects": mediaItems.map { ["_id": $0.id] },
-                "tags": [],
-                "saveMediumStates": mediaItems.map { ["_id": $0.id, "progress": [:]] },
-                "finished": 0,
-                "triggerSaveMediumQuery": false,
-                "selectedTagHistory": ["_id": _id],
+                "tagsState": CreateImageTagsStateObject.createValues(id: _id),
+                "saveImagesQueryState": SaveImagesQueryStateObject.createValues(id: _id, mediaItems: mediaItems),
                 "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],
                 ]
             let result = try realm.update(CreateImageStateObject.self, value: value)
             try realm.write {
-                result.resetTagStates(realm: realm)
+                result.tagsState?.reduce(event: .resetTagStates, realm: realm)
             }
             return result
         }
-    }
-}
-
-extension CreateImageStateObject {
-    
-    fileprivate func resetTagStates(realm: Realm) {
-        let tags = selectedTagHistory?.getTags().toArray() ?? []
-        let tagStates = tags.map { realm.create(TagStateObject.self, value: ["tag": $0]) }
-        self.tagStates.removeAll()
-        self.tagStates.append(objectsIn: tagStates)
     }
 }
 
