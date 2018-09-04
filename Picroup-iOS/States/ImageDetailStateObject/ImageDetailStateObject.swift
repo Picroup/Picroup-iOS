@@ -17,24 +17,11 @@ final class ImageDetailStateObject: VersionedPrimaryObject {
     @objc dynamic var sessionState: UserSessionStateObject?
     @objc dynamic var isMediumDeleted: Bool = false
 
-    @objc dynamic var medium: MediumObject?
-    @objc dynamic var recommendMedia: CursorMediaObject?
-    @objc dynamic var mediumError: String?
-    @objc dynamic var triggerMediumQuery: Bool = false
-
-    @objc dynamic var starMediumState: StarMediumStateObject?
-
-    @objc dynamic var myStaredMedia: CursorMediaObject?
-    
-    @objc dynamic var deleteMediumError: String?
-    @objc dynamic var triggerDeleteMediumQuery: Bool = false
-    
-    @objc dynamic var blockMediumVersion: String?
-    @objc dynamic var blockMediumError: String?
-    @objc dynamic var triggerBlockMediumQuery: Bool = false
-    
-    @objc dynamic var shareMediumError: String?
-    @objc dynamic var triggerShareMediumQuery: Bool = false
+    @objc dynamic var mediumQueryState: MediumQueryStateObject?
+    @objc dynamic var starMediumQueryState: StarMediumQueryStateObject?
+    @objc dynamic var deleteMediumQueryState: DeleteMediumQueryStateObject?
+    @objc dynamic var blockMediumQueryState: BlockMediumQueryStateObject?
+    @objc dynamic var shareMediumQueryState: ShareMediumQueryStateObject?
     
     @objc dynamic var needUpdate: NeedUpdateStateObject?
     
@@ -46,44 +33,21 @@ final class ImageDetailStateObject: VersionedPrimaryObject {
 extension ImageDetailStateObject {
     var mediumId: String { return _id }
     var mediumQuery: MediumQuery? {
-        let (userId, withStared) = sessionState?.currentUserId == nil
-            ? ("", false)
-            : (sessionState!.currentUser!._id, true)
-        let next = MediumQuery(userId: userId, mediumId: mediumId, cursor: recommendMedia?.cursor.value, withStared: withStared, queryUserId: sessionState?.currentUserId)
-        return triggerMediumQuery ? next : nil
-    }
-    var shouldQueryMoreRecommendMedia: Bool {
-        return !triggerMediumQuery && hasMoreRecommendMedia
-    }
-    var hasMoreRecommendMedia: Bool {
-        return recommendMedia?.cursor.value != nil
+        return mediumQueryState?.query(currentUserId: sessionState?.currentUserId)
     }
     
     var starMediumQuery: StarMediumMutation? {
-        return starMediumState?.query(userId: sessionState?.currentUserId)
+        return starMediumQueryState?.query(userId: sessionState?.currentUserId, mediumId: mediumId)
     }
     
     var deleteMediumQuery: DeleteMediumMutation? {
-        let next = DeleteMediumMutation(mediumId: mediumId)
-        return triggerDeleteMediumQuery ? next : nil
-    }
-    public var shouldDeleteMedium: Bool {
-        return !triggerDeleteMediumQuery
-    }
-    var shouldBlockMedium: Bool {
-        return !triggerBlockMediumQuery
+        return deleteMediumQueryState?.query(mediumId: mediumId)
     }
     var blockUserQuery: BlockMediumMutation? {
-        guard let userId = sessionState?.currentUserId else { return nil }
-        return triggerBlockMediumQuery
-            ? BlockMediumMutation(userId: userId, mediumId: mediumId)
-            : nil
+        return blockMediumQueryState?.query(userId: sessionState?.currentUserId, mediumId: mediumId)
     }
-    var shareMediumQuery: (String, MediumItem)? {
-        guard triggerShareMediumQuery else { return nil }
-        guard let username = medium?.user?.username,
-            let mediumItem = MediumItemHelper.mediumItem(from: medium) else { return nil }
-        return (username, mediumItem)
+    var shareMediumQuery: ShareMediumQueryStateObject.Query? {
+        return shareMediumQueryState?.query(medium: mediumQueryState?.medium)
     }
 }
 
@@ -95,10 +59,11 @@ extension ImageDetailStateObject {
             let value: Any = [
                 "_id": mediumId,
                 "sessionState": UserSessionStateObject.createValues(),
-                "medium": ["_id": mediumId],
-                "recommendMedia": ["_id": PrimaryKey.recommendMediaId(mediumId)],
-                "starMediumState": StarMediumStateObject.createValues(mediumId: mediumId),
-                "myStaredMedia": ["_id": PrimaryKey.myStaredMediaId],
+                "mediumQueryState": MediumQueryStateObject.createValues(mediumId: mediumId),
+                "starMediumQueryState": StarMediumQueryStateObject.createValues(id: mediumId),
+                "deleteMediumQueryState": DeleteMediumQueryStateObject.createValues(id: mediumId),
+                "blockMediumQueryState": BlockMediumQueryStateObject.createValues(id: mediumId),
+                "shareMediumQueryState": ShareMediumQueryStateObject.createValues(id: mediumId),
                 "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],
@@ -107,3 +72,4 @@ extension ImageDetailStateObject {
         }
     }
 }
+

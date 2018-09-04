@@ -40,7 +40,7 @@ private func mapCommentMoreButtonTapToEvent(sender: UITableView) -> (CommentObje
     }
 }
 
-class ImageCommentsViewController: ShowNavigationBarViewController, IsStateViewController {
+final class ImageCommentsViewController: ShowNavigationBarViewController, IsStateViewController {
     
     typealias State = ImageCommentsStateObject
     typealias Event = State.Event

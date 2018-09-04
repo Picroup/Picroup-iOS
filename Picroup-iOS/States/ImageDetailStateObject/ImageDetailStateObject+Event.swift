@@ -11,14 +11,12 @@ import RxSwift
 import RxCocoa
 import RxRealm
 
-
 extension ImageDetailStateObject {
     
     enum Event {
         case onTriggerReloadData
         case onTriggerGetMoreData
-        case onGetReloadData(MediumQuery.Data.Medium?)
-        case onGetMoreData(MediumQuery.Data.Medium?)
+        case onGetData(MediumQuery.Data.Medium?)
         case onGetError(Error)
         
         case onTriggerStarMedium
@@ -48,102 +46,60 @@ extension ImageDetailStateObject {
     }
 }
 
-extension ImageDetailStateObject.Event {
-    
-    static func onGetData(isReload: Bool) -> (MediumQuery.Data.Medium?) -> ImageDetailStateObject.Event {
-        return { isReload ? .onGetReloadData($0) : .onGetMoreData($0) }
-    }
-}
-
 extension ImageDetailStateObject: IsFeedbackStateObject {
     
     func reduce(event: Event, realm: Realm) {
         switch event {
         case .onTriggerReloadData:
-            recommendMedia?.cursor.value = nil
-            mediumError = nil
-            triggerMediumQuery = true
+            mediumQueryState?.reduce(event: .onTriggerReload, realm: realm)
         case .onTriggerGetMoreData:
-            guard shouldQueryMoreRecommendMedia else { return }
-            mediumError = nil
-            triggerMediumQuery = true
-        case .onGetReloadData(let data):
-            if let data = data {
-                medium = realm.create(MediumObject.self, value: data.rawSnapshot, update: true)
-                let fragment = data.recommendedMedia.fragments.cursorMediaFragment
-                recommendMedia = CursorMediaObject.create(from: fragment, id: PrimaryKey.recommendMediaId(_id))(realm)
-            } else {
-                medium?.delete()
-                isMediumDeleted = true
-            }
-            mediumError = nil
-            triggerMediumQuery = false
-        case .onGetMoreData(let data):
-            if let data = data {
-                medium = realm.create(MediumObject.self, value: data.snapshot, update: true)
-                let fragment = data.recommendedMedia.fragments.cursorMediaFragment
-                recommendMedia?.merge(from: fragment)(realm)
-            } else {
-                medium?.delete()
-                isMediumDeleted = true
-            }
-            mediumError = nil
-            triggerMediumQuery = false
+            mediumQueryState?.reduce(event: .onTriggerGetMore, realm: realm)
+        case .onGetData(let data):
+            mediumQueryState?.reduce(event: .onGetData(data), realm: realm)
         case .onGetError(let error):
-            mediumError = error.localizedDescription
-            triggerMediumQuery = false
+            mediumQueryState?.reduce(event: .onGetError(error), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
             
         case .onTriggerStarMedium:
-            starMediumState?.reduce(event: .onTrigger, realm: realm)
+            starMediumQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onStarMediumSuccess(let data):
-            medium?.reduce(event: .onStared(data.endedAt), realm: realm)
-            starMediumState?.reduce(event: .onSuccess(data), realm: realm)
+            mediumQueryState?.medium?.reduce(event: .onStared(data.endedAt), realm: realm)
+            starMediumQueryState?.reduce(event: .onSuccess(""), realm: realm)
             needUpdate?.myStaredMedia = true
-            
             snackbar?.reduce(event: .onUpdateMessage("感谢你给图片续命一周"), realm: realm)
-            
         case .onStarMediumError(let error):
-            starMediumState?.reduce(event: .onError(error), realm: realm)
-            
+            starMediumQueryState?.reduce(event: .onError(error), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
+
         case .onTriggerDeleteMedium:
-            guard shouldDeleteMedium else { return }
-            deleteMediumError = nil
-            triggerDeleteMediumQuery = true
+            deleteMediumQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onDeleteMediumSuccess:
-            medium?.delete()
-            deleteMediumError = nil
-            triggerDeleteMediumQuery = false
+            mediumQueryState?.reduce(event: .onDeleteMedium, realm: realm)
+            deleteMediumQueryState?.reduce(event: .onSuccess(""), realm: realm)
             routeState?.reduce(event: .onTriggerPop, realm: realm)
             snackbar?.reduce(event: .onUpdateMessage("已删除"), realm: realm)
         case .onDeleteMediumError(let error):
-            deleteMediumError = error.localizedDescription
-            triggerDeleteMediumQuery = false
+            deleteMediumQueryState?.reduce(event: .onError(error), realm: realm)
             snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
             
         case .onTriggerBlockMedium:
-            guard shouldBlockMedium else { return }
-            blockMediumVersion = nil
-            blockMediumError = nil
-            triggerBlockMediumQuery = true
+            blockMediumQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onBlockMediumSuccess:
-            medium?.delete()
-            blockMediumVersion = UUID().uuidString
-            blockMediumError = nil
-            triggerBlockMediumQuery = false
+            mediumQueryState?.reduce(event: .onDeleteMedium, realm: realm)
+            blockMediumQueryState?.reduce(event: .onSuccess(""), realm: realm)
             routeState?.reduce(event: .onTriggerPop, realm: realm)
             snackbar?.reduce(event: .onUpdateMessage("已减少类似内容"), realm: realm)
         case .onBlockMediumError(let error):
-            blockMediumVersion = nil
-            blockMediumError = error.localizedDescription
-            triggerBlockMediumQuery = false
+            blockMediumQueryState?.reduce(event: .onError(error), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
             
         case .onTriggerShareMedium:
-            triggerShareMediumQuery = true
+            shareMediumQueryState?.reduce(event: .onTrigger, realm: realm)
         case .onShareMediumSuccess:
-            triggerShareMediumQuery = false
+            shareMediumQueryState?.reduce(event: .onSuccess(""), realm: realm)
         case .onShareMediumError(let error):
-            shareMediumError = error.localizedDescription
-            triggerShareMediumQuery = false
+            shareMediumQueryState?.reduce(event: .onError(error), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
             
         case .onTriggerLogin:
             routeState?.reduce(event: .onTriggerLogin, realm: realm)
@@ -162,6 +118,5 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
         case .onTriggerPop:
             routeState?.reduce(event: .onTriggerPop, realm: realm)
         }
-        updateVersion()
     }
 }

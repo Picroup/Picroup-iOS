@@ -46,7 +46,7 @@ extension IsFeedbackStateObject where Self: VersionedPrimaryObject {
         composeEvents: (Observable<Event>) -> Observable<Event> = { $0 }
         ) -> Observable<Self> {
         
-        let states = Observable.from(object: self)
+        let states = rx.observe().share()
         let composedStates = composeStates(states)
         let feedbackEvents = Observable.merge(feedbacks.map { $0(composedStates) })
         let composedEvents = composeEvents(feedbackEvents)
