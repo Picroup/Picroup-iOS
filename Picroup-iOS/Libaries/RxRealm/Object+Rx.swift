@@ -18,3 +18,10 @@ extension Reactive where Base: Object {
     }
 }
 
+extension Reactive where Base: NotificationEmitter {
+    
+    public func observe(synchronousStart: Bool = true) -> Observable<Base> {
+        return Observable.collection(from: base, synchronousStart: synchronousStart)
+    }
+}
+

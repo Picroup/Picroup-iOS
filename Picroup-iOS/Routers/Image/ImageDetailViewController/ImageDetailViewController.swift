@@ -106,6 +106,7 @@ final class ImageDetailViewController: ShowNavigationBarViewController, IsStateV
             queryMedium: { query in
                 return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                     .map { $0?.data?.medium }
+                    .delay(0.4, scheduler: MainScheduler.instance)
         },
             starMedium: { query in
                 return ApolloClient.shared.rx.perform(mutation: query)
@@ -187,14 +188,12 @@ extension ImageDetailStateObject {
     
     fileprivate func medium() -> Observable<MediumObject> {
         guard let medium = mediumQueryState?.medium else { return .empty() }
-        return Observable.from(object: medium).catchErrorJustReturn(medium)
+        return medium.rx.observe().catchErrorJustReturn(medium)
     }
     
     fileprivate func recommendMediaItems() -> Observable<[MediumObject]> {
         guard let items = mediumQueryState?.recommendMedia?.items else { return .empty() }
-        return Observable.collection(from: items)
-            .map { $0.toArray() }
-            .catchErrorRecoverEmpty()
+        return items.rx.observe().map { $0.toArray() }.catchErrorRecoverEmpty()
     }
     
     fileprivate func mediumWithRecommendMedia() -> Observable<(MediumObject, [MediumObject])> {

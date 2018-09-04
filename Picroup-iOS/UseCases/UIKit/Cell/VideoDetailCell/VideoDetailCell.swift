@@ -36,7 +36,7 @@ class VideoDetailCell: RxCollectionViewCell {
         onMoreTap: (() -> Void)?
         ) {
         
-       Observable.from(object: item)
+        item.rx.observe()
             .asDriverOnErrorRecoverEmpty()
             .drive(rxItem)
             .disposed(by: disposeBag)
@@ -89,7 +89,6 @@ class VideoDetailCell: RxCollectionViewCell {
         return Binder(self) { cell, item in
             if item.isInvalidated { return }
             let viewModel = ImageDetailViewModel(medium: item)
-            
             cell.playerView.backgroundColor = viewModel.placeholderColor
             cell.playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
             cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier

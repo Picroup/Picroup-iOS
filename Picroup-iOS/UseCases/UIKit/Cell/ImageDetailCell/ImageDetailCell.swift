@@ -89,7 +89,8 @@ class ImageDetailCell: RxCollectionViewCell {
         onMoreTap: (() -> Void)?
         ) {
 
-        Observable.from(object: item)
+        item.rx.observe()
+            .debug("MediumObject", trimOutput: false)
             .asDriverOnErrorRecoverEmpty()
             .drive(rxItem)
             .disposed(by: disposeBag)
@@ -142,7 +143,6 @@ class ImageDetailCell: RxCollectionViewCell {
         return Binder(self) { cell, item in
             if item.isInvalidated { return }
             let viewModel = ImageDetailViewModel(medium: item)
-            
             if viewModel.kind == MediumKind.image.rawValue {
                 cell.imageView.setImage(with: viewModel.imageViewURL)
                 cell.suggestUpdateLabel.isHidden = true
