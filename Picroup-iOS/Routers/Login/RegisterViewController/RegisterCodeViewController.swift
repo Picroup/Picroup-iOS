@@ -12,6 +12,7 @@ import RxSwift
 import RxCocoa
 import RxFeedback
 import Apollo
+import RealmSwift
 
 final class RegisterCodePresenter: NSObject {
     @IBOutlet weak var codeField: TextField!
@@ -20,13 +21,7 @@ final class RegisterCodePresenter: NSObject {
     
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
-        prepareNavigationItem()
         prepareUsernameField()
-    }
-    
-    fileprivate func prepareNavigationItem() {
-//        navigationItem.titleLabel.text = "注册"
-//        navigationItem.titleLabel.textColor = .primaryText
     }
     
     fileprivate func prepareUsernameField() {
@@ -38,23 +33,41 @@ final class RegisterCodePresenter: NSObject {
     }
 }
 
-final class RegisterCodeViewController: BaseViewController {
+final class RegisterCodeViewController: BaseViewController, IsStateViewController {
+    
+    typealias State = RegisterCodeStateObject
+    typealias Event = State.Event
     
     @IBOutlet fileprivate var presenter: RegisterCodePresenter!
-    fileprivate typealias Feedback = (Driver<RegisterCodeStateObject>) -> Signal<RegisterCodeStateObject.Event>
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
     private func setupRxFeedback() {
         
-        guard let store = try? RegisterCodeStateStore() else { return }
+        guard let realm = try? Realm(), let state = try? State.create()(realm) else { return }
 
-        presenter.setup(navigationItem: navigationItem)
-
-        let uiFeedback: Feedback = bind(self) { (me, state) in
+        state.system(
+            uiFeedback: uiFeedback,
+            shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
+            getVerifyCode: { query in
+                return ApolloClient.shared.rx.perform(mutation: query)
+                    .map { $0?.data?.getVerifyCode }.forceUnwrap()
+        },
+            queryValidCode: ValidationService.queryValidCode(),
+            register: { query in
+                return ApolloClient.shared.rx.perform(mutation: query)
+                    .map { $0?.data?.register.fragments.userDetailFragment }.forceUnwrap()
+        })
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
+    var uiFeedback: State.DriverFeedback {
+        return bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
                 state.map { $0.isRegisterEnabled }.distinctUntilChanged().drive(presenter.validButton.rx.isEnabledWithBackgroundColor(.secondary)),
@@ -63,49 +76,23 @@ final class RegisterCodeViewController: BaseViewController {
                 me.rx.viewDidAppear.asSignal().mapToVoid().emit(to: presenter.codeField.rx.becomeFirstResponder()),
                 me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.codeField.rx.resignFirstResponder()),
                 ]
-            let events: [Signal<RegisterCodeStateObject.Event>] = [
+            let events: [Signal<Event>] = [
                 .just(.onTriggerGetVerifyCode),
-                presenter.codeField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).distinctUntilChanged().map(RegisterCodeStateObject.Event.onChangeCode),
-                presenter.validButton.rx.tap.asSignal().map { RegisterCodeStateObject.Event.onTriggerRegister },
+                presenter.codeField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).distinctUntilChanged().map(Event.onChangeCode),
+                presenter.validButton.rx.tap.asSignal().map { .onTriggerRegister },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-
-        let register: Feedback = react(query: { $0.registerQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            return ApolloClient.shared.rx.perform(mutation: query)
-                .map { $0?.data?.register.fragments.userDetailFragment }.unwrap()
-                .map(RegisterCodeStateObject.Event.onRegisterSuccess)
-                .asSignal(onErrorReturnJust: RegisterCodeStateObject.Event.onRegisterError)
-        })
-        
-        let getVerifyCode: Feedback = react(query: { $0.getVerifyCodeQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            return ApolloClient.shared.rx.perform(mutation: query)
-                .map { $0?.data?.getVerifyCode }.unwrap()
-                .map(RegisterCodeStateObject.Event.onGetVerifyCodeSuccess)
-                .asSignal(onErrorReturnJust: RegisterCodeStateObject.Event.onGetVerifyCodeError)
-        })
-
-        let states = store.states
-            .debug("RegisterCodeState")
-
-        Signal.merge(
-            uiFeedback(states),
-            register(states),
-            getVerifyCode(states)
-            )
-            .debug("RegisterCodeState.Event", trimOutput: true)
-            .emit(onNext: store.on)
-            .disposed(by: disposeBag)
     }
 }
 
 extension RegisterCodeStateObject {
     
     fileprivate var isRegisterEnabled: Bool {
-        return isCodeAvaliable && !triggerRegisterQuery
+        return isCodeValid && registerQueryState?.trigger == false
     }
     
     fileprivate var detail: String {
-        return phoneNumber != nil ? "已发送 6 位数验证码" : " "
+        return getVerifyCodeQueryState?.success != nil ? "已发送 6 位数验证码" : " "
     }
 }

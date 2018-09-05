@@ -12,30 +12,48 @@ import RxSwift
 import RxCocoa
 import RxFeedback
 import Apollo
+import RealmSwift
 
-class LoginViewController: ShowNavigationBarViewController {
+final class LoginViewController: ShowNavigationBarViewController, IsStateViewController {
+    
+    typealias State = LoginStateObject
+    typealias Event = State.Event
     
     @IBOutlet fileprivate var presenter: LoginViewPresenter!
-    fileprivate typealias Feedback = (Driver<LoginStateObject>) -> Signal<LoginStateObject.Event>
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(view: view, navigationItem: navigationItem)
         setupRxFeedback()
     }
     
     private func setupRxFeedback() {
         
-        guard let store = try? LoginStateStore() else { return }
+        guard let realm = try? Realm(), let state = try? State.create()(realm) else { return }
         
-        presenter.setup(view: view, navigationItem: navigationItem)
+        state.system(
+            uiFeedback: uiFeedback,
+            shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
+            queryLogin: { query in
+                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                    .map { $0?.data?.login?.fragments.userDetailFragment }.map {
+                        guard let userDetailFragment = $0 else { throw LoginError.usernameOrPasswordIncorrect }
+                        return userDetailFragment
+                }
+        })
+            .drive()
+            .disposed(by: disposeBag)
         
+    }
+    
+    var uiFeedback: State.DriverFeedback {
         weak var weakSelf = self
-        let uiFeedback: Feedback = bind(self) { (me, state) in
+        return bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
-                state.map { $0.username }.asObservable().take(1).bind(to: presenter.usernameField.rx.text),
-                state.map { $0.password }.asObservable().take(1).bind(to: presenter.passwordField.rx.text),
-                state.map { $0.shouldHideUseenameWarning }.distinctUntilChanged().drive(presenter.usernameField.detailLabel.rx.isHidden),
+                state.map { $0.loginQueryState?.username }.asObservable().take(1).bind(to: presenter.usernameField.rx.text),
+                state.map { $0.loginQueryState?.password }.asObservable().take(1).bind(to: presenter.passwordField.rx.text),
+                state.map { $0.shouldHideUsernameWarning }.distinctUntilChanged().drive(presenter.usernameField.detailLabel.rx.isHidden),
                 state.map { $0.shouldHidePasswordWarning }.distinctUntilChanged().drive(presenter.passwordField.detailLabel.rx.isHidden),
                 state.map { $0.shouldHideForgetPasswordButton }.distinctUntilChanged().drive(presenter.forgetPasswordButton.rx.isHidden),
                 state.map { $0.isLoginButtonEnabled }.distinctUntilChanged().drive(presenter.loginButton.rx.isEnabledWithBackgroundColor(.secondary)),
@@ -49,49 +67,32 @@ class LoginViewController: ShowNavigationBarViewController {
                 me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.usernameField.rx.resignFirstResponder()),
                 me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.passwordField.rx.resignFirstResponder()),
                 ]
-            let events: [Signal<LoginStateObject.Event>] = [
-                presenter.usernameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangeUsername),
-                presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(LoginStateObject.Event.onChangePassword),
+            let events: [Signal<Event>] = [
+                presenter.usernameField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(Event.onChangeUsername),
+                presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().map(Event.onChangePassword),
                 presenter.loginButton.rx.tap.asSignal().map { .onTriggerLogin },
-            ]
+                ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-        
-        let queryLogin: Feedback = react(query: { $0.loginQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.login?.fragments.userDetailFragment }.map {
-                    guard let userDetailFragment = $0 else { throw LoginError.usernameOrPasswordIncorrect }
-                    return userDetailFragment
-                }
-                .map(LoginStateObject.Event.onLoginSuccess)
-                .asSignal(onErrorReturnJust: LoginStateObject.Event.onLoginError)
-        })
-
-        let states = store.states
-        
-        Signal.merge(
-            uiFeedback(states),
-            queryLogin(states)
-            )
-            .debug("LoginState.Event", trimOutput: true)
-            .emit(onNext: store.on)
-            .disposed(by: disposeBag)
-        
     }
 }
 
 private extension LoginStateObject {
-    var shouldHideUseenameWarning: Bool {
+    var shouldHideUsernameWarning: Bool {
+        guard let username = loginQueryState?.username, let isUsernameValid = loginQueryState?.isUsernameValid else { return true }
         return username.isEmpty || isUsernameValid
     }
     
     var shouldHidePasswordWarning: Bool {
+        guard let password = loginQueryState?.password, let isPasswordValid = loginQueryState?.isPasswordValid else { return true }
         return password.isEmpty || isPasswordValid
     }
     var shouldHideForgetPasswordButton: Bool {
+        guard let password = loginQueryState?.password else { return true }
         return !password.isEmpty
     }
     var isLoginButtonEnabled: Bool {
-        return shouldLogin && !triggerLoginQuery
+        guard let shouldLogin = loginQueryState?.shouldLogin, let trigger = loginQueryState?.trigger else { return true }
+        return shouldLogin && !trigger
     }
 }

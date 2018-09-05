@@ -12,6 +12,7 @@ import RxSwift
 import RxCocoa
 import RxFeedback
 import Apollo
+import RealmSwift
 
 final class ResetPasswordPhonePresenter: NSObject {
     @IBOutlet weak var phoneField: TextField!
@@ -38,26 +39,40 @@ final class ResetPasswordPhonePresenter: NSObject {
     }
 }
 
-final class ResetPasswordPhoneViewController: BaseViewController {
+final class ResetPasswordPhoneViewController: BaseViewController, IsStateViewController {
+    
+    typealias State = ResetPasswordPhoneStateObject
+    typealias Event = State.Event
     
     @IBOutlet fileprivate var presenter: ResetPasswordPhonePresenter!
-    fileprivate typealias Feedback = (Driver<ResetPasswordPhoneStateObject>) -> Signal<ResetPasswordPhoneStateObject.Event>
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
     private func setupRxFeedback() {
         
-        guard let store = try? ResetPasswordPhoneStateStore() else { return }
+        guard let realm = try? Realm(), let state = try? State.create()(realm) else { return }
         
-        presenter.setup(navigationItem: navigationItem)
+        state.system(
+            uiFeedback: uiFeedback,
+            shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
+            queryIsResetPhoneNumberAvailable: ValidationService.queryIsResetPhoneNumberAvailable(queryPhoneNumberAvailable: { query in
+                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                    .map { $0?.data?.searchUserByPhoneNumber }
+            }))
+            .drive()
+            .disposed(by: disposeBag)
         
-        let uiFeedback: Feedback = bind(self) { (me, state) in
+    }
+    
+    var uiFeedback: State.DriverFeedback {
+        return bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
-                state.map { $0.resetPasswordParam?.phoneNumber ?? "" }.asObservable().take(1).bind(to: presenter.phoneField.rx.text),
+                state.map { $0.resetPasswordParamState?.phoneNumber ?? "" }.asObservable().take(1).bind(to: presenter.phoneField.rx.text),
                 state.map { $0.isPhoneNumberValid }.distinctUntilChanged().drive(presenter.nextButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 state.map { $0.detail }.debounce(0.1).drive(presenter.phoneField.rx.detail),
                 me.rx.viewDidAppear.asSignal().mapToVoid().emit(to: presenter.phoneField.rx.becomeFirstResponder()),
@@ -68,41 +83,20 @@ final class ResetPasswordPhoneViewController: BaseViewController {
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-        
-        let phoneNumberAvailable: Feedback = react(query: { $0.phoneNumberAvailableQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.searchUserByPhoneNumber?.username }
-                .asSignal(onErrorJustReturn: nil)
-                .map(ResetPasswordPhoneStateObject.Event.onPhoneNumberAvailableResponse)
-        })
-        
-        let states = store.states
-        
-        Signal.merge(
-            uiFeedback(states),
-            phoneNumberAvailable(states)
-            )
-            .debug("ResetPasswordPhoneState.Event", trimOutput: true)
-            .emit(onNext: store.on)
-            .disposed(by: disposeBag)
-        
     }
 }
 
 extension ResetPasswordPhoneStateObject {
     
     var detail: String {
-        if resetPasswordParam?.phoneNumber.isEmpty == true {
+        if resetPasswordParamState?.phoneNumber.isEmpty == true {
             return " "
         }
-        if !shouldValidPhone {
-            return "请输入 11 位手机号"
-        }
-        if triggerValidPhoneQuery {
+        if resetPhoneAvailableQueryState?.trigger == true {
             return "正在验证..."
         }
-        if !isPhoneNumberValid {
-            return "手机号未注册"
+        if let error = resetPhoneAvailableQueryState?.error {
+            return error
         }
         return " "
     }

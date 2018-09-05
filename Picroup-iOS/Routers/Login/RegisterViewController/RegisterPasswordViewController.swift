@@ -12,6 +12,7 @@ import RxSwift
 import RxCocoa
 import RxFeedback
 import Apollo
+import RealmSwift
 
 final class RegisterPasswordPresenter: NSObject {
     @IBOutlet weak var passwordField: TextField!
@@ -20,13 +21,7 @@ final class RegisterPasswordPresenter: NSObject {
     
     func setup(navigationItem: UINavigationItem) {
         self.navigationItem = navigationItem
-        prepareNavigationItem()
         preparePasswordField()
-    }
-    
-    fileprivate func prepareNavigationItem() {
-//        navigationItem.titleLabel.text = "注册"
-//        navigationItem.titleLabel.textColor = .primaryText
     }
     
     fileprivate func preparePasswordField() {
@@ -38,56 +33,60 @@ final class RegisterPasswordPresenter: NSObject {
     }
 }
 
-final class RegisterPasswordViewController: BaseViewController {
+final class RegisterPasswordViewController: BaseViewController, IsStateViewController {
+    
+    typealias State = RegisterPasswordStateObject
+    typealias Event = State.Event
     
     @IBOutlet fileprivate var presenter: RegisterPasswordPresenter!
-    fileprivate typealias Feedback = (Driver<RegisterPasswordStateObject>) -> Signal<RegisterPasswordStateObject.Event>
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
     private func setupRxFeedback() {
         
-        guard let store = try? RegisterPasswordStateStore() else { return }
-
-        presenter.setup(navigationItem: navigationItem)
-
-        let uiFeedback: Feedback = bind(self) { (me, state) in
+        guard let realm = try? Realm(), let state = try? State.create()(realm) else { return }
+        
+        state.system(
+            uiFeedback: uiFeedback,
+            shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
+            queryValidPassword: ValidationService.queryValidPassword())
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
+    var uiFeedback: State.DriverFeedback {
+        return bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
-                state.map { $0.registerParam?.password ?? "" }.asObservable().take(1).bind(to: presenter.passwordField.rx.text),
+                state.map { $0.registerParamState?.password ?? "" }.asObservable().take(1).bind(to: presenter.passwordField.rx.text),
                 state.map { $0.isPasswordValid }.distinctUntilChanged().drive(presenter.nextButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 state.map { $0.detail }.drive(presenter.passwordField.rx.detail),
                 me.rx.viewDidAppear.asSignal().mapToVoid().emit(to: presenter.passwordField.rx.becomeFirstResponder()),
                 me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.passwordField.rx.resignFirstResponder()),
                 ]
-            let events: [Signal<RegisterPasswordStateObject.Event>] = [
-                presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).distinctUntilChanged().map(RegisterPasswordStateObject.Event.onChangePassword),
+            let events: [Signal<Event>] = [
+                presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).distinctUntilChanged().map(Event.onChangePassword),
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-
-        let states = store.states
-
-        Signal.merge(
-            uiFeedback(states)
-            )
-            .debug("RegisterPasswordState.Event", trimOutput: true)
-            .emit(onNext: store.on)
-            .disposed(by: disposeBag)
     }
 }
 
 extension RegisterPasswordStateObject {
     
     var detail: String {
-        if registerParam?.password.isEmpty == true {
+        if registerParamState?.password.isEmpty == true {
             return " "
         }
-        if !isPasswordValid {
-            return "至少需要 6 个字"
+        if passwordValidQueryState?.trigger == true {
+            return "正在验证..."
+        }
+        if let error = passwordValidQueryState?.error {
+            return error
         }
         return " "
     }

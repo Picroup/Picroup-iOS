@@ -63,7 +63,7 @@ private func configureCell<D>(events:
 private func configureMediumDetailCell<D>(events:
     PublishRelay<ImageDetailStateObject.Event>, isSharing: Driver<Bool>, moreButtonTap: PublishRelay<Void>) -> (D, UICollectionView, IndexPath, MediumObject) -> UICollectionViewCell {
     return { dataSource, collectionView, indexPath, item in
-        let defaultCell: () -> UICollectionViewCell = {
+        let createImageDetailCell: () -> UICollectionViewCell = {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageDetailCell", for: indexPath) as! ImageDetailCell
             cell.configure(
                 with: item,
@@ -79,9 +79,7 @@ private func configureMediumDetailCell<D>(events:
             )
             return cell
         }
-        guard !item.isInvalidated else { return defaultCell() }
-        switch item.kind {
-        case MediumKind.video.rawValue?:
+        let createVideoDetailCell: () -> UICollectionViewCell = {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoDetailCell", for: indexPath) as! VideoDetailCell
             cell.configure(
                 with: item,
@@ -96,8 +94,13 @@ private func configureMediumDetailCell<D>(events:
                onMoreTap: { moreButtonTap.accept(()) }
             )
             return cell
+        }
+        guard !item.isInvalidated else { return createImageDetailCell() }
+        switch item.kind {
+        case MediumKind.video.rawValue?:
+            return createVideoDetailCell()
         default:
-            return defaultCell()
+            return createImageDetailCell()
         }
     }
 }

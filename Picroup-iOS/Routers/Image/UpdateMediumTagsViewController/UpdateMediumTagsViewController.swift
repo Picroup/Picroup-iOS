@@ -13,13 +13,16 @@ import RxCocoa
 import RxFeedback
 import Apollo
 import Kingfisher
+import RealmSwift
 
-final class UpdateMediumTagsViewController: ShowNavigationBarViewController {
+final class UpdateMediumTagsViewController: ShowNavigationBarViewController, IsStateViewController {
+    
+    typealias State = UpdateMediumTagsStateObject
+    typealias Event = State.Event
     
     typealias Dependency = String
     var dependency: Dependency?
     
-    fileprivate typealias Feedback = (Driver<UpdateMediumTagsStateObject>) -> Signal<UpdateMediumTagsStateObject.Event>
     @IBOutlet fileprivate var presenter: UpdateMediumTagsPresenter!
     
     override func viewDidLoad() {
@@ -29,55 +32,47 @@ final class UpdateMediumTagsViewController: ShowNavigationBarViewController {
     
     private func setupRxFeedback() {
         
-        guard
-            let mediumId = dependency,
-            let store = try? UpdateMediumTagsStateStore(mediumId: mediumId)
-            else { return }
+        guard let mediumId = dependency,
+            let realm = try? Realm(),
+            let state = try? State.create(mediumId: mediumId)(realm) else { return }
         
-        let uiFeedback: Feedback =  bind(self) { (me, state) in
+        state.system(
+            uiFeedback: uiFeedback,
+            shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
+            addTag: { query in
+                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                    .map { $0?.data?.medium?.addTag.fragments.mediumFragment }.forceUnwrap()
+        },
+            remeveTag: { query in
+                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                    .map { $0?.data?.medium?.removeTag.fragments.mediumFragment }.forceUnwrap()
+        })
+            .drive()
+            .disposed(by: disposeBag)
+        
+    }
+    
+    var uiFeedback: State.DriverFeedback {
+        return bind(self) { (me, state) in
+            let presenter = me.presenter!
             let subscriptions = [
-                store.tagStates().drive(me.presenter.tagsCollectionView.rx.items(cellIdentifier: "TagCollectionViewCell", cellType: TagCollectionViewCell.self)) { index, tagState, cell in
+                state.map { $0.tagStates() }.drive(presenter.tagsCollectionView.rx.items(cellIdentifier: "TagCollectionViewCell", cellType: TagCollectionViewCell.self)) { index, tagState, cell in
                     cell.tagLabel.text = tagState.tag
                     cell.setSelected(tagState.isSelected)
                 },
                 ]
-            let events: [Signal<UpdateMediumTagsStateObject.Event>] = [
-                me.presenter.tagsCollectionView.rx.modelSelected(TagStateObject.self).asSignal().map { .onToggleTag($0.tag) },
-                me.presenter.didCommitTag.asSignal().map(UpdateMediumTagsStateObject.Event.onAddTag),
-                //                .never()
+            let events: [Signal<Event>] = [
+                presenter.tagsCollectionView.rx.modelSelected(TagStateObject.self).asSignal().map { .onToggleTag($0.tag) },
+                presenter.didCommitTag.asSignal().map(Event.onAddTag),
             ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-        
-        let addTag: Feedback = react(query: { $0.addTagQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { (query) in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.medium?.addTag.fragments.mediumFragment }.unwrap()
-                .map(UpdateMediumTagsStateObject.Event.onAddTagSuccess)
-                .asSignal(onErrorReturnJust: { .onAddTagError($0, query.tag) })
-        })
-        
-        let remeveTag: Feedback = react(query: { $0.removeTagQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { (query) in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.medium?.removeTag.fragments.mediumFragment }.unwrap()
-                .map(UpdateMediumTagsStateObject.Event.onRemoveTagSuccess)
-                .asSignal(onErrorReturnJust: { .onRemoveTagError($0, query.tag) })
-        })
-        
-        let states = store.states
-        //            .debug("CreateImageState")
-        
-        Signal.merge(
-            uiFeedback(states),
-            addTag(states),
-            remeveTag(states)
-            )
-            .debug("UpdateMediumTagsState.Event", trimOutput: true)
-            .emit(onNext: store.on)
-            .disposed(by: disposeBag)
-        
-        //        presenter.collectionView.rx.setDelegate(presenter).disposed(by: disposeBag)
-        
     }
 }
 
+extension UpdateMediumTagsStateObject {
+    func tagStates() -> [TagStateObject] {
+        return tagsState?.tagStates.toArray() ?? []
+    }
+}
 
