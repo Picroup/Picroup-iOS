@@ -11,7 +11,7 @@ import Foundation
 struct UserViewModel {
     let username: String
     let displayName: String
-    let avatarId: String?
+    let url: String?
     let reputation: String
     let followersCount: String
     let followingsCount: String
@@ -24,7 +24,7 @@ struct UserViewModel {
         guard user?.isInvalidated == false else {
             self.username = " "
             self.displayName = " "
-            self.avatarId = nil
+            self.url = nil
             self.reputation = "0"
             self.followersCount = "0"
             self.followingsCount = "0"
@@ -36,7 +36,7 @@ struct UserViewModel {
         }
         self.username = user.map { "@\($0.username ?? "")" } ?? " "
         self.displayName = user?.displayName ?? " "
-        self.avatarId = user?.avatarId
+        self.url = user?.url
         self.reputation = user?.reputation.value?.description ?? "0"
         self.followersCount = user?.followersCount.value?.description ?? "0"
         self.followingsCount = user?.followingsCount.value?.description ?? "0"

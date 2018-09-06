@@ -14,21 +14,32 @@ import Material
 
 class CreateImagePresenter: NSObject {
     
-    @IBOutlet weak var collectionView: UICollectionView! {
-        didSet { prepareCollectionView() }
-    }
-    @IBOutlet weak var tagsCollectionView: UICollectionView! {
-        didSet {
-            (tagsCollectionView.collectionViewLayout as! UICollectionViewFlowLayout)
-                .estimatedItemSize = CGSize(width: 44, height: 22)
-            tagsCollectionView.register(UINib(nibName: "TagCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TagCollectionViewCell")
-        }
-    }
-    @IBOutlet weak var addTagTextField: UITextField!
-        @IBOutlet weak var saveButton: RaisedButton!
-    @IBOutlet weak var progressView: ProgressView!
-    
     let didCommitTag = PublishRelay<String>()
+
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var tagsCollectionView: UICollectionView!
+    @IBOutlet weak var addTagTextField: UITextField!
+    @IBOutlet weak var saveButton: RaisedButton!
+    @IBOutlet weak var progressView: ProgressView!
+    weak var navigationItem: UINavigationItem!
+
+    func setup(navigationItem: UINavigationItem, mediaItemsCount: Int) {
+        self.navigationItem = navigationItem
+        prepareNavigationItem(mediaItemsCount: mediaItemsCount)
+        prepareCollectionView()
+        prepareTagsCollectionView()
+    }
+    
+    private func prepareNavigationItem(mediaItemsCount: Int) {
+        navigationItem.titleLabel.text = "共 \(mediaItemsCount) 个"
+        navigationItem.titleLabel.textColor = .primaryText
+    }
+    
+    private func prepareTagsCollectionView() {
+        (tagsCollectionView.collectionViewLayout as! UICollectionViewFlowLayout)
+            .estimatedItemSize = CGSize(width: 44, height: 22)
+        tagsCollectionView.register(UINib(nibName: "TagCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TagCollectionViewCell")
+    }
     
     private func prepareCollectionView() {
         collectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")

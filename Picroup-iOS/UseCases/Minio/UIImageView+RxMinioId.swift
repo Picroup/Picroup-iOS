@@ -11,12 +11,16 @@ import Kingfisher
 import RxSwift
 import RxCocoa
 
-extension Reactive where Base: UIImageView {
-    
-    var imageMinioId: Binder<String?> {
-        return Binder(base) { imageView, minioId in
-            imageView.setImage(with: minioId)
-        }
+extension String {
+    func toURL() -> URL? {
+        return URL(string: self)
+    }
+}
+
+extension UIImageView {
+
+    func setImage(with url: String?) {
+        kf.setImage(with: url?.toURL(), options: [.transition(.fade(0.2))])
     }
 }
 
@@ -31,24 +35,16 @@ extension Reactive where Base: UIImageView {
 
 extension UIImageView {
     
-    func setImage(with minioId: String?) {
-        let url = URLHelper.url(from: minioId)
-        kf.setImage(with: url, options: [.transition(.fade(0.2))])
-    }
-}
-
-extension UIImageView {
-    
     func setUserAvatar(with user: UserObject?) {
-        switch (user?.avatarId, user?.displayName) {
-        case (let avatarId?, _):
-            setImage(with: avatarId)
+        switch (user?.url, user?.displayName) {
+        case (let url?, _):
+            setImage(with: url)
         case (_, let displayName?) where !displayName.isEmpty:
             let (first, color) = (displayName.first!, avatarColor(for: displayName))
             let imageKey = "local://\(first).\(color.hashValue)"
             let cached = ImageCache.default.imageCachedType(forKey: imageKey) != .none
             if cached {
-                kf.setImage(with: URL(string: imageKey), options: [.transition(.fade(0.2))])
+                setImage(with: imageKey)
             } else {
                 let image = ImageGenerator.image(char: first, color: color)
                 ImageCache.default.store(image, forKey: imageKey)

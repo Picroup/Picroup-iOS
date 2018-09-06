@@ -12,17 +12,20 @@ import RxSwift
 import RxCocoa
 import RxFeedback
 import Apollo
+import Kingfisher
+import AVKit
+import RealmSwift
 
 private func mapMoreButtonTapToEvent(sender: UICollectionView) -> (ImageDetailStateObject) -> Signal<ImageDetailStateObject.Event> {
     return { state in
         
-        guard state.session?.isLogin == true else {
+        guard state.sessionState?.isLogin == true else {
             return .just(.onTriggerLogin)
         }
         guard let cell = sender.cellForItem(at: IndexPath(item: 0, section: 0)) as? HasMoreButton else { return .empty() }
-        let isMyMedium = state.medium?.userId == state.session?.currentUserId
+        let isMyMedium = state.mediumQueryState?.medium?.userId == state.sessionState?.currentUserId
         let actions: [String]
-        switch (isMyMedium, state.session?.currentUser?.reputation.value) {
+        switch (isMyMedium, state.sessionState?.currentUser?.reputation.value) {
         case (true, _):
             actions = ["更新标签", "删除"]
         case (false, let reputation?) where reputation > 100:
@@ -60,12 +63,14 @@ private func comfirmDelete() -> Signal<ImageDetailStateObject.Event> {
 fileprivate typealias Section = MediumDetailPresenter.Section
 fileprivate typealias CellStyle = MediumDetailPresenter.CellStyle
 
-class ImageDetailViewController: ShowNavigationBarViewController {
+final class ImageDetailViewController: ShowNavigationBarViewController, IsStateViewController {
+    
+    typealias State = ImageDetailStateObject
+    typealias Event = State.Event
     
     typealias Dependency = String
     var dependency: Dependency!
     
-    fileprivate typealias Feedback = (Driver<ImageDetailStateObject>) -> Signal<ImageDetailStateObject.Event>
     @IBOutlet var presenter: ImageDetailPresenter!
 
     override func viewDidLoad() {
@@ -75,44 +80,94 @@ class ImageDetailViewController: ShowNavigationBarViewController {
     
     private func setupRxFeedback() {
         
-        guard
-            let mediumId = dependency,
-            let store = try? ImageDetailStateStore(mediumId: mediumId)
-            else {
-                return
-        }
+        guard let mediumId = dependency,
+            let realm = try? Realm(),
+            let state = try? State.create(mediumId: mediumId)(realm) else { return }
         
         appStateService?.events.accept(.onViewMedium(mediumId))
         
-        let _events = PublishRelay<ImageDetailStateObject.Event>()
+        weak var weakSelf = self
+        let _events = PublishRelay<Event>()
         let _moreButtonTap = PublishRelay<Void>()
-        
+
         // I known this is ugly but it enabled the transition animations
-        let sections = Observable.combineLatest(store.sections, store.states.asObservable()) { $1.isMediumDeleted ? [] : $0 }
+        let rxState = state.rx.observe().share(replay: 1)
         
-        sections
-            .bind(to: presenter.mediumDetailPresenter.items(events: _events, moreButtonTap: _moreButtonTap))
+        let sections = Observable.combineLatest(state.sections, rxState) { $1.isMediumDeleted ? [] : $0 }
+        let isSharing = rxState.map { $0.shareMediumQueryState?.trigger ?? false }.asDriverOnErrorRecoverEmpty()
+
+        state.sections
+            .bind(to: presenter.mediumDetailPresenter.items(events: _events, isSharing: isSharing, moreButtonTap: _moreButtonTap))
             .disposed(by: disposeBag)
         
-        let uiFeedback: Feedback = bind(self) { (me, state) in
+        state.system(
+            uiFeedback: uiFeedback(sections: sections, _events: _events, _moreButtonTap: _moreButtonTap),
+            shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
+            queryMedium: { query in
+                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                    .map { $0?.data?.medium }
+                    .delay(0.4, scheduler: MainScheduler.instance)
+        },
+            starMedium: { query in
+                return ApolloClient.shared.rx.perform(mutation: query)
+                    .map { $0?.data?.starMedium }.forceUnwrap()
+        },
+            deleteMedium: { query in
+                return ApolloClient.shared.rx.perform(mutation: query)
+                    .map { $0?.data?.deleteMedium }.forceUnwrap()
+        },
+            blockMedium: { query in
+                return ApolloClient.shared.rx.perform(mutation: query)
+                    .map { $0?.data?.blockMedium.fragments.userFragment }.forceUnwrap()
+        },
+            shareMedium: { query in
+                let (username, mediumItem) = query
+                switch mediumItem {
+                case .image(let cacheKey):
+                    let image = ImageCache.default.retrieveImage(forKey: cacheKey)!
+                    return WatermarkService.addImageWatermark(image: image, username: username)
+                        .observeOn(MainScheduler.instance)
+                        .do(onSuccess: {  item in
+                            let vc = UIActivityViewController(activityItems: [item], applicationActivities: nil)
+                            weakSelf?.present(vc, animated: true, completion: nil)
+                        })
+                        .mapToVoid()
+                case .video(thumbnailImageKey: _, videoFileURL: let videoURL):
+                    let url = HYDefaultCacheService.shared?.fileURL(for: videoURL) ?? videoURL
+                    return WatermarkService.addVideoWatermark(videoURL: url, username: username)
+                        .observeOn(MainScheduler.instance)
+                        .do(onSuccess: { item in
+                            let vc = UIActivityViewController(activityItems: [item], applicationActivities: nil)
+                            weakSelf?.present(vc, animated: true, completion: nil)
+                        })
+                        .mapToVoid()
+                }
+        })
+            .drive()
+            .disposed(by: disposeBag)
+        
+        presenter.collectionView.rx.setDelegate(presenter.mediumDetailPresenter).disposed(by: disposeBag)
+    }
+    
+    fileprivate func uiFeedback(sections: Observable<[Section]>, _events: PublishRelay<Event>, _moreButtonTap: PublishRelay<Void>) -> State.DriverFeedback {
+        return bind(self) { (me, state) in
             let presenter = me.presenter!
-
             let subscriptions = [
                 sections.map { $0.isEmpty }.subscribe(onNext: { presenter.collectionView.backgroundView = $0 ? presenter.deleteAlertView : nil }),
                 presenter.backgroundButton.rx.tap.subscribe(onNext: { _events.accept(.onTriggerPop) }),
                 presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
                 ]
-            let events: [Signal<ImageDetailStateObject.Event>] = [
+            let events: [Signal<Event>] = [
                 .just(.onTriggerReloadData),
                 _events.asSignal(),
                 _moreButtonTap.asSignal().withLatestFrom(state).flatMapLatest(mapMoreButtonTapToEvent(sender: presenter.collectionView)),
                 state.flatMapLatest {
-                    $0.shouldQueryMoreRecommendMedia
+                    ($0.mediumQueryState?.shouldQueryMore ?? false)
                         ? presenter.collectionView.rx.triggerGetMore
                         : .empty()
                     }.map { .onTriggerGetMoreData },
                 me.presenter.collectionView.rx.modelSelected(MediumDetailPresenter.CellStyle.self).asSignal()
-                    .flatMapLatest { cellStyle -> Signal<ImageDetailStateObject.Event> in
+                    .flatMapLatest { cellStyle -> Signal<Event> in
                         switch cellStyle {
                         case .recommendMedium(let medium):
                             return .just(.onTriggerShowImage(medium._id))
@@ -123,59 +178,31 @@ class ImageDetailViewController: ShowNavigationBarViewController {
                         }
                 },
                 presenter.deleteAlertView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
-            ]
+                ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-        
-        let queryMedium: Feedback = react(query: { $0.mediumQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.medium }
-                .map(ImageDetailStateObject.Event.onGetData(isReload: query.cursor == nil))
-                .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onGetError)
-                .delay(0.4)
-        })
-        
-        let starMedium: Feedback = react(query: { $0.starMediumQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            ApolloClient.shared.rx.perform(mutation: query)
-                .map { $0?.data?.starMedium }.unwrap()
-                .map(ImageDetailStateObject.Event.onStarMediumSuccess)
-                .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onStarMediumError)
-        })
-        
-        let deleteMedium: Feedback = react(query: { $0.deleteMediumQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            ApolloClient.shared.rx.perform(mutation: query)
-                .map { $0?.data?.deleteMedium }.unwrap()
-                .map(ImageDetailStateObject.Event.onDeleteMediumSuccess)
-                .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onDeleteMediumError)
-        })
-        
-        let blockMedium: Feedback = react(query: { $0.blockUserQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            ApolloClient.shared.rx.perform(mutation: query)
-                .map { $0?.data?.blockMedium.fragments.userFragment }.unwrap()
-                .map(ImageDetailStateObject.Event.onBlockMediumSuccess)
-                .asSignal(onErrorReturnJust: ImageDetailStateObject.Event.onBlockMediumError)
-        })
-        
-        let states = store.states
-        
-        Signal.merge(
-            uiFeedback(states),
-            queryMedium(states),
-            starMedium(states),
-            deleteMedium(states),
-            blockMedium(states)
-            )
-            .debug("ImageDetailState.Event", trimOutput: true)
-            .emit(onNext: store.on)
-            .disposed(by: disposeBag)
-        
-        presenter.collectionView.rx.setDelegate(presenter.mediumDetailPresenter).disposed(by: disposeBag)
     }
 }
 
-extension ImageDetailStateStore {
+extension ImageDetailStateObject {
+    
+    fileprivate func medium() -> Observable<MediumObject> {
+        guard let medium = mediumQueryState?.medium else { return .empty() }
+        return medium.rx.observe().catchErrorJustReturn(medium)
+    }
+    
+    fileprivate func recommendMediaItems() -> Observable<[MediumObject]> {
+        guard let items = mediumQueryState?.recommendMedia?.items else { return .empty() }
+        return items.rx.observe().map { $0.toArray() }.catchErrorRecoverEmpty()
+    }
+    
+    fileprivate func mediumWithRecommendMedia() -> Observable<(MediumObject, [MediumObject])> {
+        return Observable.combineLatest(medium(), recommendMediaItems())
+            .catchErrorRecoverEmpty()
+    }
     
     fileprivate var sections: Observable<[Section]> {
+        
         return mediumWithRecommendMedia().map { data in
             let (medium, items) = data
             var result = [Section]()
@@ -200,4 +227,5 @@ extension ImageDetailStateStore {
         }
     }
 }
+
 

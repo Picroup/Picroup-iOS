@@ -13,13 +13,15 @@ import RxDataSources
 import RxFeedback
 import Material
 import Apollo
+import RealmSwift
 
-final class RankViewController: BaseViewController {
+final class RankViewController: BaseViewController, IsStateViewController {
     
     @IBOutlet var presenter: RankViewPresenter!
     
-    typealias Feedback = (Driver<RankStateObject>) -> Signal<RankStateObject.Event>
-    
+    typealias State = RankStateObject
+    typealias Event = State.Event
+
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.setup(navigationItem: navigationItem)
@@ -28,82 +30,78 @@ final class RankViewController: BaseViewController {
     
     private func setupRxFeedback() {
         
-        guard let store = try? RankStateStore() else { return }
+        guard let realm = try? Realm(), let state = try? State.create()(realm) else { return }
         
-        typealias Section = MediaPreserter.Section
-                
-        let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
-            let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
-            let subscriptions = [
-                store.tagStates().drive(presenter.tagsCollectionView.rx.items(cellIdentifier: "TagCollectionViewCell", cellType: TagCollectionViewCell.self)) { index, tagState, cell in
-                    cell.tagLabel.text = tagState.tag
-                    cell.setSelected(tagState.isSelected)
-                },
-                store.hotMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.mediaPresenter.items(footerState: footerState.asDriver())),
-                state.map { $0.hotMediaState?.isReload ?? false }.drive(presenter.refreshControl.rx.refreshing),
-                state.map { $0.hotMediaState?.footerState ?? .empty }.drive(footerState),
-                state.map { $0.session?.isLogin ?? false }.drive(presenter.userButton.rx.isHidden),
-            ]
-            let events: [Signal<RankStateObject.Event>] = [
-                presenter.tagsCollectionView.rx.modelSelected(TagStateObject.self).asSignal().map { .onToggleTag($0.tag) },
-                state.flatMapLatest {
-                    ($0.hotMediaState?.shouldQueryMore ?? false)
-                        ? presenter.collectionView.rx.triggerGetMore
-                        : .empty()
-                }.map { .hotMediaState(.onTriggerGetMore) },
-                presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .hotMediaState(.onTriggerReload) },
-                presenter.collectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
-                presenter.userButton.rx.tap.asSignal().map { .onTriggerLogin },
-            ]
-            return Bindings(subscriptions: subscriptions, events: events)
+        state.system(
+            uiFeedback: uiFeedback,
+            shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
+            queryMedia: { query in
+                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                    .map { $0?.data?.hotMediaByTags.fragments.cursorMediaFragment }.forceUnwrap()
+                    .retryWhen { errors -> Observable<Int> in
+                        errors.enumerated().flatMapLatest { Observable<Int>.timer(5 * RxTimeInterval($0.index + 1), scheduler: MainScheduler.instance) }
+                    }
+                    .delay(0.3, scheduler: MainScheduler.instance)
         }
+        )
+        .drive()
+        .disposed(by: disposeBag)
         
-        let vcFeedback: Feedback = bind(self) { (me, state)  in
+        
+    }
+    
+    var uiFeedback: State.DriverFeedback {
+        typealias Section = MediaPreserter.Section
+        let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
+        return bind(self) { (me, state)  in
             let presenter = me.presenter!
             let view = me.view!
             let subscriptions = [
+                state.map { $0.tagStates() }.drive(presenter.tagsCollectionView.rx.items(cellIdentifier: "TagCollectionViewCell", cellType: TagCollectionViewCell.self)) { index, tagState, cell in
+                    cell.tagLabel.text = tagState.tag
+                    cell.setSelected(tagState.isSelected)
+                },
+                state.map { [Section(model: "", items: $0.hotMediaItems())] }.drive(presenter.mediaPresenter.items(footerState: footerState.asDriver())),
+                state.map { $0.hotMediaQueryState?.isReload ?? false }.drive(presenter.refreshControl.rx.refreshing),
+                state.map { $0.hotMediaQueryState?.footerState ?? .empty }.drive(footerState),
+                state.map { $0.sessionState?.isLogin ?? false }.drive(presenter.userButton.rx.isHidden),
                 presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
                 presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setTabBarHidden(animated: true)),
                 presenter.collectionView.rx.shouldHideNavigationBar().emit(onNext: {
                     presenter.hideTagsLayoutConstraint.isActive = $0
                     UIView.animate(withDuration: 0.3) { view.layoutIfNeeded() }
-                    }),
-            ]
-            let events: [Signal<RankStateObject.Event>] = [
-                .just(.hotMediaState(.onTriggerReload)),
-                .never(),
+                }),
+                presenter.collectionView.rx.setDelegate(presenter.mediaPresenter),
+                ]
+            let events: [Signal<Event>] = [
+                .just(.onTriggerReloadHotMedia),
+                presenter.tagsCollectionView.rx.modelSelected(TagStateObject.self).asSignal().map { .onToggleTag($0.tag) },
+                state.flatMapLatest {
+                    ($0.hotMediaQueryState?.shouldQueryMore ?? false)
+                        ? presenter.collectionView.rx.triggerGetMore
+                        : .empty()
+                    }.map { .onTriggerGetMoreHotMedia },
+                presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReloadHotMedia },
+                presenter.collectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
+                presenter.userButton.rx.tap.asSignal().map { .onTriggerLogin },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-        
-        let queryMedia: Feedback = react(query: { $0.hotMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.hotMediaByTags.fragments.cursorMediaFragment }.unwrap()
-                .map { .hotMediaState(.onGetData($0)) }
-                .retryWhen { errors -> Observable<Int> in
-                    errors.enumerated().flatMapLatest { Observable<Int>.timer(5 * RxTimeInterval($0.index + 1), scheduler: MainScheduler.instance) }
-                }
-                .asSignal(onErrorReturnJust: { .hotMediaState(.onGetError($0)) })
-                .delay(0.3)
-        })
-        
-        let states = store.states
-//            .debug("RankState")
-        
-        Signal.merge(
-            vcFeedback(states),
-            uiFeedback(states),
-            queryMedia(states)
-            )
-            .debug("RankState.Event", trimOutput: true)
-            .emit(onNext: store.on)
-            .disposed(by: disposeBag)
-        
-        presenter.collectionView.rx.setDelegate(presenter.mediaPresenter).disposed(by: disposeBag)
     }
 }
 
-extension CursorMediaStateObject {
+extension RankStateObject {
+    
+    func hotMediaItems() -> [MediumObject] {
+        return hotMediaQueryState?.cursorMedia?.items.toArray() ?? []
+    }
+    
+    func tagStates() -> [TagStateObject] {
+        return hotMediaTagsState?.tagStates.toArray() ?? []
+    }
+}
+
+extension CursorMediaQueryStateObject {
     
     var footerState: LoadFooterViewState {
         if isReload == true {

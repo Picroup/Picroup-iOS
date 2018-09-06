@@ -12,51 +12,38 @@ import RxSwift
 import RxCocoa
 import RxFeedback
 import Apollo
+import RealmSwift
 
-final class UpdatePasswordPresenter: NSObject {
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var oldPasswordField: TextField!
-    @IBOutlet weak var passwordField: TextField!
-    @IBOutlet weak var setPasswordButton: RaisedButton!
-    
-    func setup() {
-        prepareOldPasswordField()
-        preparePasswordField()
-    }
-    
-    fileprivate func prepareOldPasswordField() {
-        oldPasswordField.placeholderActiveColor = .primary
-        oldPasswordField.dividerActiveColor = .primary
-        oldPasswordField.clearButtonMode = .whileEditing
-        oldPasswordField.isVisibilityIconButtonEnabled = true
-//        _ = oldPasswordField.becomeFirstResponder()
-    }
-    
-    fileprivate func preparePasswordField() {
-        passwordField.placeholderActiveColor = .primary
-        passwordField.dividerActiveColor = .primary
-        passwordField.clearButtonMode = .whileEditing
-        passwordField.isVisibilityIconButtonEnabled = true
-    }
-}
-
-class UpdatePasswordViewController: BaseViewController {
+final class UpdatePasswordViewController: BaseViewController, IsStateViewController {
 
     @IBOutlet fileprivate var presenter: UpdatePasswordPresenter!
-    fileprivate typealias Feedback = (Driver<UpdatePasswordStateObject>) -> Signal<UpdatePasswordStateObject.Event>
+    
+    typealias State = UpdatePasswordStateObject
+    typealias Event = State.Event
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setup(navigationItem: navigationItem)
         setupRxFeedback()
     }
     
     private func setupRxFeedback() {
         
-        guard let store = try? UpdatePasswordStateStore() else { return }
+        guard let realm = try? Realm(), let state = try? State.create()(realm) else { return }
 
-        presenter.setup()
-
-        let uiFeedback: Feedback = bind(self) { (me, state) in
+        state.system(
+            uiFeedback: uiFeedback,
+            shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
+            querySetPassword: { query in
+                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                    .map { $0?.data?.user?.setPassword.fragments.userFragment }.forceUnwrap()
+        })
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
+    var uiFeedback: State.DriverFeedback {
+        return bind(self) { (me, state) in
             let presenter = me.presenter!
             let subscriptions = [
                 state.map { $0.shouldHideOldPasswordWarning }.distinctUntilChanged().drive(presenter.oldPasswordField.detailLabel.rx.isHidden),
@@ -68,40 +55,24 @@ class UpdatePasswordViewController: BaseViewController {
                 me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.oldPasswordField.rx.resignFirstResponder()),
                 me.rx.viewWillDisappear.asSignal().mapToVoid().emit(to: presenter.passwordField.rx.resignFirstResponder()),
                 ]
-            let events: [Signal<UpdatePasswordStateObject.Event>] = [
-                presenter.oldPasswordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).map(UpdatePasswordStateObject.Event.onChangeOldPassword),
-                presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).map(UpdatePasswordStateObject.Event.onChangePassword),
+            let events: [Signal<Event>] = [
+                presenter.oldPasswordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).distinctUntilChanged().map(Event.onChangeOldPassword),
+                presenter.passwordField.rx.text.orEmpty.asSignalOnErrorRecoverEmpty().debounce(0.5).distinctUntilChanged().map(Event.onChangePassword),
                 presenter.setPasswordButton.rx.tap.asSignal().map { .onTriggerSetPassword },
-                presenter.headerView.rx.tapGesture().when(.recognized).asSignalOnErrorRecoverEmpty().map { _ in .onTriggerPop },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-        
-        let querySetPassword: Feedback = react(query: { $0.setPasswordQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.user?.setPassword.fragments.userFragment }.unwrap()
-                .map(UpdatePasswordStateObject.Event.onSetPasswordSuccess)
-                .asSignal(onErrorReturnJust: UpdatePasswordStateObject.Event.onSetPasswordError)
-        })
-
-        let states = store.states
-
-        Signal.merge(
-            uiFeedback(states),
-            querySetPassword(states)
-            )
-            .debug("UpdatePasswordState.Event", trimOutput: true)
-            .emit(onNext: store.on)
-            .disposed(by: disposeBag)
     }
 }
 
 private extension UpdatePasswordStateObject {
     var shouldHideOldPasswordWarning: Bool {
+        guard let oldPassword = userSetPasswordQueryState?.oldPassword, let isOldPasswordValid = userSetPasswordQueryState?.isOldPasswordValid else { return true }
         return oldPassword.isEmpty || isOldPasswordValid
     }
     
     var shouldHidePasswordWarning: Bool {
+        guard let password = userSetPasswordQueryState?.password, let isPasswordValid = userSetPasswordQueryState?.isPasswordValid else { return true }
         return password.isEmpty || isPasswordValid
     }
 }

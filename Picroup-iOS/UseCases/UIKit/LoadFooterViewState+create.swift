@@ -28,15 +28,3 @@ extension LoadFooterViewState {
     }
 }
 
-extension LoadFooterViewState {
-    
-    static func create(searchUser: SearchUserStateObject) -> LoadFooterViewState {
-        if searchUser.triggerSearchUserQuery {
-            return .loading
-        }
-        if !searchUser.searchText.isEmpty && !searchUser.triggerSearchUserQuery  && searchUser.user == nil {
-            return .message("💁🏻‍♀️ 无此人")
-        }
-        return .empty
-    }
-}

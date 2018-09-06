@@ -18,7 +18,8 @@ final class NotificationCell: RxTableViewCell {
         guard !item.isInvalidated else { return }
         
         userAvatarImageView.setUserAvatar(with: item.user)
-        mediumImageView.setImage(with: item.medium?.minioId)
+        mediumImageView.setImage(with: item.medium?.url)
+        mediumImageView.backgroundColor = item.medium?.placeholderColor
         mediumImageView.motionIdentifier = item.medium?._id
         switch item.kind {
         case NotificationKind.commentMedium.rawValue?:

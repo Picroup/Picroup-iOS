@@ -8,9 +8,10 @@ fragment MediumFragment on Medium {
     detail {
         width
         aspectRatio
-        videoMinioId
+        videoURL
+        placeholderColor
     }
-    minioId
+    url
     commentsCount
     user { ...UserFragment }
 }

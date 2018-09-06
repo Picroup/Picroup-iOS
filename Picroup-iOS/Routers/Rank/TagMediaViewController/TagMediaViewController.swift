@@ -6,7 +6,6 @@
 //  Copyright © 2018年 luojie. All rights reserved.
 //
 
-
 import UIKit
 import RxSwift
 import RxCocoa
@@ -14,15 +13,17 @@ import RxDataSources
 import RxFeedback
 import Material
 import Apollo
+import RealmSwift
 
-final class TagMediaViewController: ShowNavigationBarViewController {
+final class TagMediaViewController: ShowNavigationBarViewController, IsStateViewController {
     
     typealias Dependency = String
     var dependency: Dependency!
     
     @IBOutlet var presenter: TagMediaViewPresenter!
     
-    typealias Feedback = (Driver<TagMediaStateObject>) -> Signal<TagMediaStateObject.Event>
+    typealias State = TagMediaStateObject
+    typealias Event = State.Event
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,66 +34,58 @@ final class TagMediaViewController: ShowNavigationBarViewController {
     private func setupRxFeedback() {
         
         guard let tag = dependency,
-            let store = try? TagMediaStateObjectStore(tag: tag) else { return }
+            let realm = try? Realm(),
+            let state = try? State.create(tag: tag)(realm) else { return }
         
-        typealias Section = MediaPreserter.Section
+        state.system(
+            uiFeedback: uiFeedback,
+            shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
+            queryMedia: { query in
+                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
+                    .map { $0?.data?.hotMediaByTags.fragments.cursorMediaFragment }.forceUnwrap()
+                    .retryWhen { errors -> Observable<Int> in
+                        errors.enumerated().flatMapLatest { Observable<Int>.timer(5 * RxTimeInterval($0.index + 1), scheduler: MainScheduler.instance) }
+                    }
+                    .delay(0.3, scheduler: MainScheduler.instance)
+        }
+            )
+            .drive()
+            .disposed(by: disposeBag)
 
-        let uiFeedback: Feedback = bind(presenter) { (presenter, state)  in
-            let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
+    }
+    
+    var uiFeedback: State.DriverFeedback {
+        typealias Section = MediaPreserter.Section
+        let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
+        return bind(self) { (me, state)  in
+            let presenter = me.presenter!
             let subscriptions = [
                 state.map { "# \($0.tag)" }.drive(presenter.navigationItem.titleLabel.rx.text),
-                store.hotMediaItems().map { [Section(model: "", items: $0)] }.drive(presenter.mediaPresenter.items(footerState: footerState.asDriver())),
-                state.map { $0.hotMediaState?.isReload ?? false }.drive(presenter.refreshControl.rx.refreshing),
-                state.map { $0.hotMediaState?.footerState ?? .empty }.drive(footerState),
+                state.map { [Section(model: "", items: $0.hotMediaItems())] }.drive(presenter.mediaPresenter.items(footerState: footerState.asDriver())),
+                state.map { $0.hotMediaQueryState?.isReload ?? false }.drive(presenter.refreshControl.rx.refreshing),
+                state.map { $0.hotMediaQueryState?.footerState ?? .empty }.drive(footerState),
+                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
+                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setTabBarHidden(animated: true)),
+                presenter.collectionView.rx.setDelegate(presenter.mediaPresenter),
                 ]
             let events: [Signal<TagMediaStateObject.Event>] = [
+                .just(.onTriggerReloadHotMedia),
                 state.flatMapLatest {
-                    ($0.hotMediaState?.shouldQueryMore ?? false)
+                    ($0.hotMediaQueryState?.shouldQueryMore ?? false)
                         ? presenter.collectionView.rx.triggerGetMore
                         : .empty()
-                    }.map { .hotMediaState(.onTriggerGetMore) },
-                presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .hotMediaState(.onTriggerReload) },
+                    }.map { .onTriggerGetMoreHotMedia },
+                presenter.refreshControl.rx.controlEvent(.valueChanged).asSignal().map { .onTriggerReloadHotMedia },
                 presenter.collectionView.rx.modelSelected(MediumObject.self).asSignal().map { .onTriggerShowImage($0._id) },
                 ]
             return Bindings(subscriptions: subscriptions, events: events)
         }
-        
-        let vcFeedback: Feedback = bind(self) { (me, state)  in
-            let presenter = me.presenter!
-            let subscriptions = [
-                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),
-                presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setTabBarHidden(animated: true)),
-                ]
-            let events: [Signal<TagMediaStateObject.Event>] = [
-                .just(.hotMediaState(.onTriggerReload)),
-                .never(),
-                ]
-            return Bindings(subscriptions: subscriptions, events: events)
-        }
-        
-        let queryMedia: Feedback = react(query: { $0.hotMediaQuery }, effects: composeEffects(shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  }) { query in
-            ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                .map { $0?.data?.hotMediaByTags.fragments.cursorMediaFragment }.unwrap()
-                .map { .hotMediaState(.onGetData($0)) }
-                .retryWhen { errors -> Observable<Int> in
-                    errors.enumerated().flatMapLatest { Observable<Int>.timer(5 * RxTimeInterval($0.index + 1), scheduler: MainScheduler.instance) }
-                }
-                .asSignal(onErrorReturnJust: { .hotMediaState(.onGetError($0)) })
-                .delay(0.3)
-        })
-        
-        let states = store.states
-//            .debug("TagMediaState")
+    }
+}
 
-        Signal.merge(
-            vcFeedback(states),
-            uiFeedback(states),
-            queryMedia(states)
-            )
-            .debug("TagMediaState.Event", trimOutput: true)
-            .emit(onNext: store.on)
-            .disposed(by: disposeBag)
-        
-        presenter.collectionView.rx.setDelegate(presenter.mediaPresenter).disposed(by: disposeBag)
+extension TagMediaStateObject {
+    
+    func hotMediaItems() -> [MediumObject] {
+        return hotMediaQueryState?.cursorMedia?.items.toArray() ?? []
     }
 }

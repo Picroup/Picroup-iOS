@@ -7,25 +7,34 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+
 
 class RankVideoCell: RxCollectionViewCell {
     @IBOutlet weak var playerView: PlayerView!
     @IBOutlet weak var progressView: ProgressView!
-//    @IBOutlet weak var lifeBar: UIView!
-//    @IBOutlet weak var lifeViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var starPlaceholderView: UIView!
     
     func configure(with item: MediumObject) {
-//        if item.isInvalidated { return }
-        let viewModel = MediumViewModel(item: item)
-        //        playerView.play(with: item.detail?.videoMinioId)
-        playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
-        transition(.fadeOut, .scale(0.75))
-        progressView.progress = viewModel.progress
-        progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
-//        lifeViewWidthConstraint.constant = viewModel.progress * lifeBar.bounds.width
-//        lifeBar.motionIdentifier = viewModel.lifeBarMotionIdentifier
-        starPlaceholderView.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier
+        Observable.from(object: item)
+            .asDriverOnErrorRecoverEmpty()
+            .drive(rxItem)
+            .disposed(by: disposeBag)
+    }
+    
+    private var rxItem: Binder<MediumObject> {
+        return Binder(self) { cell, item in
+            //        if item.isInvalidated { return }
+            let viewModel = MediumViewModel(item: item)
+            //        playerView.play(with: item.detail?.videoMinioId)
+            cell.playerView.backgroundColor = viewModel.placeholderColor
+            cell.playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
+            cell.transition(.fadeOut, .scale(0.75))
+            cell.progressView.progress = viewModel.progress
+            cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
+            cell.starPlaceholderView.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier
+        }
     }
 }
 

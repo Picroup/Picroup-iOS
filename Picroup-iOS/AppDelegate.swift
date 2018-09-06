@@ -32,6 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appStateService?.events.accept(.onTriggerReloadMe)
     }
     
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        HYDefaultCacheService.shared?.removeExpiredObjects()
+    }
+    
     private func prepareKingfisher() {
         ImageCache.default.maxDiskCacheSize = Config.maxDiskImageCacheSize
     }

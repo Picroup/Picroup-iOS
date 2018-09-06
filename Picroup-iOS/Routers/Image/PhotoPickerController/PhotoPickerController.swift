@@ -14,12 +14,12 @@ import Kingfisher
 import YPImagePicker
 import AVKit
 
-private func photoPicker(from vc: UIViewController?, configure: ((inout YPImagePickerConfiguration) -> Void) = { _ in }) -> Signal<[MediaItem]> {
+private func photoPicker(from vc: UIViewController?, configure: ((inout YPImagePickerConfiguration) -> Void) = { _ in }) -> Signal<[MediumItem]> {
     guard let vc = vc else { return .empty() }
     var configuration = YPImagePickerConfiguration()
     configure(&configuration)
     let photoPickerController = YPImagePicker(configuration: configuration)
-    let pickedItems = PublishRelay<[MediaItem]>()
+    let pickedItems = PublishRelay<[MediumItem]>()
     photoPickerController.didFinishPicking { [weak photoPickerController] (items, cancel) in
         photoPickerController?.dismiss(animated: true)
         if cancel { return }
@@ -47,7 +47,7 @@ struct PhotoPickerProvider {
         }
     }
     
-    static func pickMedia(from vc: UIViewController?) -> Signal<[MediaItem]> {
+    static func pickMedia(from vc: UIViewController?) -> Signal<[MediumItem]> {
         return _pickMedia(from: vc) { configuration in
             configuration.library.maxNumberOfItems = 10
             configuration.shouldSaveNewPicturesToAlbum = false
@@ -70,7 +70,7 @@ struct PhotoPickerProvider {
         }
     }
     
-    private static func _pickMedia(from vc: UIViewController?, configure: ((inout YPImagePickerConfiguration) -> Void)) -> Signal<[MediaItem]> {
+    private static func _pickMedia(from vc: UIViewController?, configure: ((inout YPImagePickerConfiguration) -> Void)) -> Signal<[MediumItem]> {
         return photoPicker(from: vc) { configuration in
             
             configuration.filters = [
@@ -120,14 +120,14 @@ struct PhotoPickerProvider {
     }
 }
 
-enum MediaItem {
+enum MediumItem {
     case image(String)
     case video(thumbnailImageKey: String, videoFileURL: URL)
 }
 
 extension YPMediaItem {
 
-    var mediaItem: Single<MediaItem> {
+    var mediaItem: Single<MediumItem> {
         return Single.create { observer in
             switch self {
             case .photo(let photo):

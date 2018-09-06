@@ -1,5 +1,11 @@
-query UserAvailable($username: String!) {
+query UsernameAvailable($username: String!) {
     searchUser(username: $username) {
+        username
+    }
+}
+
+query PhoneNumberAvailable($phoneNumber: String!) {
+    searchUserByPhoneNumber(phoneNumber: $phoneNumber) {
         username
     }
 }

@@ -13,18 +13,18 @@ import RxCocoa
 
 struct ImageDetailViewModel {
     let kind: String?
-    let imageViewMinioId: String?
+    let imageViewURL: String?
     let imageViewMotionIdentifier: String?
     let progress: Float
     let lifeBarMotionIdentifier: String?
     let starButtonMotionIdentifier: String?
     let remainTimeLabelText: String?
-    let commentsCountText: String?
+    let commentsCountText: String
     let stared: Bool?
-    let animatedChangeProgress: Bool
-    
+    let placeholderColor: UIColor
+
     let displayName: String?
-    let avatarId: String?
+    let userURL: String?
 }
 
 extension ImageDetailViewModel {
@@ -32,7 +32,7 @@ extension ImageDetailViewModel {
     init(medium: MediumObject) {
         guard !medium.isInvalidated else {
             self.kind = nil
-            self.imageViewMinioId = nil
+            self.imageViewURL = nil
             self.imageViewMotionIdentifier = nil
             self.progress = 0
             self.lifeBarMotionIdentifier = nil
@@ -40,15 +40,15 @@ extension ImageDetailViewModel {
             self.remainTimeLabelText = "\(0) 周"
             self.commentsCountText = "\(0)"
             self.stared = nil
-            self.animatedChangeProgress = false
             self.displayName = nil
-            self.avatarId = nil
+            self.userURL = nil
+            self.placeholderColor = .background
             return
         }
         let remainTime = medium.endedAt.value?.sinceNow ?? 0
         
         self.kind = medium.kind
-        self.imageViewMinioId = medium.minioId
+        self.imageViewURL = medium.url
         self.imageViewMotionIdentifier = medium._id
         self.progress = Float(remainTime / 12.0.weeks)
         self.lifeBarMotionIdentifier = "lifeBar_\(medium._id)"
@@ -56,10 +56,10 @@ extension ImageDetailViewModel {
         self.remainTimeLabelText = Moment.string(from: medium.endedAt.value)
         self.commentsCountText = "  \(medium.commentsCount.value ?? 0)"
         self.stared = medium.stared.value
-        self.animatedChangeProgress = false
-        
+        self.placeholderColor = medium.placeholderColor
+
         self.displayName = medium.user?.displayName
-        self.avatarId = medium.user?.avatarId
+        self.userURL = medium.user?.url
     }
 }
 
@@ -74,42 +74,31 @@ class ImageDetailCell: RxCollectionViewCell {
     @IBOutlet weak var displayNameLabel: UILabel!
     @IBOutlet weak var remainTimeLabel: UILabel!
     @IBOutlet weak var commentButton: UIButton!
+    @IBOutlet weak var shareButton: SpinnerButton!
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var suggestUpdateLabel: UILabel!
 
     func configure(
         with item: MediumObject,
+        isSharing: Driver<Bool>,
         onStarButtonTap: (() -> Void)?,
         onCommentsTap: (() -> Void)?,
         onImageViewTap: (() -> Void)?,
         onUserTap: (() -> Void)?,
+        onShareTap: (() -> Void)?,
         onMoreTap: (() -> Void)?
         ) {
-        if item.isInvalidated { return }
-        let viewModel = ImageDetailViewModel(medium: item)
+
+        item.rx.observe()
+            .debug("MediumObject", trimOutput: false)
+            .asDriverOnErrorRecoverEmpty()
+            .drive(rxItem)
+            .disposed(by: disposeBag)
         
-        if viewModel.kind == MediumKind.image.rawValue {
-            imageView.setImage(with: item.minioId)
-            suggestUpdateLabel.isHidden = true
-        } else {
-            imageView.image = nil
-            suggestUpdateLabel.isHidden = false
-        }
-        imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
-        progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
-        progressView.progress = viewModel.progress
-        starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
-        userAvatarImageView.setUserAvatar(with: item.user)
-        displayNameLabel.text = viewModel.displayName
-        remainTimeLabel.text = viewModel.remainTimeLabelText
-        commentButton.setTitle(viewModel.commentsCountText, for: .normal)
-        configureStarButton(with: viewModel)
-        if viewModel.animatedChangeProgress {
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
-                self.layoutIfNeeded()
-            })
-        }
-        
+        isSharing.distinctUntilChanged()
+            .drive(shareButton.rx.spinning)
+            .disposed(by: disposeBag)
+
         if let onCommentsTap = onCommentsTap {
             commentButton.rx.tap
                 .subscribe(onNext: onCommentsTap)
@@ -136,10 +125,42 @@ class ImageDetailCell: RxCollectionViewCell {
                 .disposed(by: disposeBag)
         }
         
+        if let onShareTap = onShareTap {
+            shareButton.rx.tap
+                .mapToVoid()
+                .subscribe(onNext: onShareTap)
+                .disposed(by: disposeBag)
+        }
+        
         if let onMoreTap = onMoreTap {
             moreButton.rx.tap
                 .subscribe(onNext: onMoreTap)
                 .disposed(by: disposeBag)
+        }
+    }
+    
+    private var rxItem: Binder<MediumObject> {
+        return Binder(self) { cell, item in
+            if item.isInvalidated { return }
+            let viewModel = ImageDetailViewModel(medium: item)
+            if viewModel.kind == MediumKind.image.rawValue {
+                cell.imageView.setImage(with: viewModel.imageViewURL)
+                cell.suggestUpdateLabel.isHidden = true
+            } else {
+                cell.imageView.image = nil
+                cell.suggestUpdateLabel.isHidden = false
+            }
+            cell.imageView.backgroundColor = viewModel.placeholderColor
+            cell.imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
+            cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
+            cell.progressView.progress = viewModel.progress
+            cell.starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
+            cell.userAvatarImageView.setUserAvatar(with: item.user)
+            cell.displayNameLabel.text = viewModel.displayName
+            cell.remainTimeLabel.text = viewModel.remainTimeLabelText
+            cell.commentButton.setTitle(viewModel.commentsCountText, for: .normal)
+            DispatchQueue.main.async { cell.configureStarButton(with: viewModel) }
+            
         }
     }
     
@@ -171,3 +192,11 @@ struct StarButtonPresenter {
     }
 }
 
+extension Reactive where Base: SpinnerButton {
+    
+    var spinning: Binder<Bool> {
+        return Binder(base) { spinnerButton, spinning in
+            spinning ? spinnerButton.startSpinning() : spinnerButton.stopSpinning()
+        }
+    }
+}

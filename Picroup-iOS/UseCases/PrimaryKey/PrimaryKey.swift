@@ -26,7 +26,7 @@ struct PrimaryKey {
     }
     
     static func commentsId(_ mediumId: String) -> String {
-        return "medium.\(mediumId).comments"
+        return "medium.\(mediumId).commentsQueryStateObject"
     }
     
     static func userMediaId(_ userId: String) -> String {

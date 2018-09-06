@@ -1,7 +1,5 @@
-mutation SaveImageMedium($userId: ID!, $minioId: ID!, $width: Float!, $aspectRatio: Float!, $tags: [String!]){
-    saveImageMedium(userId: $userId, minioId: $minioId, width: $width, aspectRatio: $aspectRatio, tags: $tags) {
+mutation SaveImageMedium($userId: ID!, $minioId: ID!, $width: Float!, $aspectRatio: Float!, $placeholderColor: String, $tags: [String!]){
+    saveImageMedium(userId: $userId, minioId: $minioId, width: $width, aspectRatio: $aspectRatio, placeholderColor: $placeholderColor, tags: $tags) {
         ...MediumFragment
     }
 }
-
-
