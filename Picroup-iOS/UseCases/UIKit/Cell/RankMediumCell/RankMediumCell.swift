@@ -9,11 +9,13 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Material
 
 struct MediumViewModel {
     let imageViewURL: String?
     let imageViewMotionIdentifier: String?
     let progress: Float
+    let remainTimeLabelText: String?
     let kind: String?
     let lifeBarMotionIdentifier: String?
     let starPlaceholderViewMotionIdentifier: String?
@@ -24,6 +26,7 @@ struct MediumViewModel {
             self.imageViewURL = nil
             self.imageViewMotionIdentifier = nil
             self.progress = 0
+            self.remainTimeLabelText = "\(0) 周"
             self.kind = nil
             self.lifeBarMotionIdentifier = nil
             self.starPlaceholderViewMotionIdentifier = nil
@@ -36,6 +39,7 @@ struct MediumViewModel {
         self.imageViewURL = item.url
         self.imageViewMotionIdentifier = item._id
         self.progress = Float(remainTime / 12.0.weeks)
+        self.remainTimeLabelText = Moment.string(from: item.endedAt.value)
         self.kind = item.kind
         self.lifeBarMotionIdentifier = "lifeBar_\(item._id)"
         self.starPlaceholderViewMotionIdentifier = "starButton_\(item._id)"
@@ -46,7 +50,10 @@ struct MediumViewModel {
 class RankMediumCell: RxCollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var progressView: ProgressView!
-    @IBOutlet weak var starPlaceholderView: UIView!
+    @IBOutlet weak var starButton: UIButton! {
+        didSet { starButton.setImage(Icon.favorite, for: .normal)}
+    }
+    @IBOutlet weak var remainTimeLabel: UILabel!
     @IBOutlet weak var suggestUpdateLabel: UILabel!
     
     func configure(with item: MediumObject) {
@@ -67,12 +74,13 @@ class RankMediumCell: RxCollectionViewCell {
                 cell.imageView.image = nil
                 cell.suggestUpdateLabel.isHidden = false
             }
+            cell.remainTimeLabel.text = viewModel.remainTimeLabelText
             cell.imageView.backgroundColor = viewModel.placeholderColor
             cell.imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
             cell.transition(.fadeOut, .scale(0.75))
             cell.progressView.progress = viewModel.progress
             cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
-            cell.starPlaceholderView.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier
+            cell.starButton.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier
         }
     }
     

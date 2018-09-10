@@ -28,6 +28,10 @@ final class MediaPreserter: NSObject {
     private func setup(collectionView: UICollectionView) {
         collectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
         collectionView.register(UINib(nibName: "RankVideoCell", bundle: nil), forCellWithReuseIdentifier: "RankVideoCell")
+        
+        if let layout = collectionView.collectionViewLayout as? WaterFlowLayout {
+            layout.delegate = self
+        }
     }
     
     func items(footerState: Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
@@ -65,6 +69,12 @@ func configureMediumCell<D>() -> (D, UICollectionView, IndexPath, MediumObject) 
         default:
             return defaultCell()
         }
+    }
+}
+
+extension MediaPreserter: WaterFlowLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, heightForItemAtIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
+        return CollectionViewLayoutManager.height(withWidth: width, with: dataSource?[indexPath])
     }
 }
 
@@ -115,6 +125,18 @@ extension CollectionViewLayoutManager {
             aspectRatio = 1
         }
         return CollectionViewLayoutManager.size(in: bounds, aspectRatio: aspectRatio)
+    }
+    
+    
+    
+    static func height(withWidth width: CGFloat, with medium: MediumObject?) -> CGFloat {
+        let aspectRatio: Double
+        if let medium = medium, !medium.isInvalidated {
+            aspectRatio = medium.detail?.aspectRatio.value ?? 1
+        } else {
+            aspectRatio = 1
+        }
+        return width / CGFloat(aspectRatio) + 48
     }
 }
 

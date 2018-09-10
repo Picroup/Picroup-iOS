@@ -217,6 +217,7 @@
 		456E910A20FC9B540006FFA8 /* MinioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E910920FC9B540006FFA8 /* MinioHelper.swift */; };
 		456E910C20FD8A510006FFA8 /* UpoaderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E910B20FD8A510006FFA8 /* UpoaderService.swift */; };
 		456E911120FD98780006FFA8 /* SaveVideoMedium.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 456E911020FD98780006FFA8 /* SaveVideoMedium.graphql */; };
+		4571A42221465E320027E865 /* WaterFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4571A42121465E320027E865 /* WaterFlowLayout.swift */; };
 		4574E2A620CE4726005784C8 /* CollectionViewLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4574E2A520CE4726005784C8 /* CollectionViewLayoutManager.swift */; };
 		457B1B8B205FEA1000BEDDF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */; };
 		457B1B90205FEA1000BEDDF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457B1B8E205FEA1000BEDDF1 /* Main.storyboard */; };
@@ -606,6 +607,7 @@
 		456E910920FC9B540006FFA8 /* MinioHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinioHelper.swift; sourceTree = "<group>"; };
 		456E910B20FD8A510006FFA8 /* UpoaderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpoaderService.swift; sourceTree = "<group>"; };
 		456E911020FD98780006FFA8 /* SaveVideoMedium.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SaveVideoMedium.graphql; sourceTree = "<group>"; };
+		4571A42121465E320027E865 /* WaterFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterFlowLayout.swift; sourceTree = "<group>"; };
 		4574E2A520CE4726005784C8 /* CollectionViewLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayoutManager.swift; sourceTree = "<group>"; };
 		457B1B87205FEA1000BEDDF1 /* Picroup-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Picroup-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457B1B8A205FEA1000BEDDF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1951,6 +1953,7 @@
 				45183EC320D0ED2300497B59 /* UIViewController+isViewAppears.swift */,
 				455808DA20EC6B5C005F1A00 /* UIViewController+setTabBarHidden.swift */,
 				454F72992089BA1300850471 /* UIView+IBInspectable.swift */,
+				4571A42121465E320027E865 /* WaterFlowLayout.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -2335,6 +2338,7 @@
 				456E90DD20F5F6140006FFA8 /* UpdateMediumTagsStateObject.swift in Sources */,
 				456E910C20FD8A510006FFA8 /* UpoaderService.swift in Sources */,
 				45662B2F212E8BEC00964BC9 /* UserBlockingsStateObject+system.swift in Sources */,
+				4571A42221465E320027E865 /* WaterFlowLayout.swift in Sources */,
 				45A6810F20FF23B80070606B /* PlayerView.swift in Sources */,
 				45CEDD5921240AF000491B60 /* ResetPasswordPhoneViewController.swift in Sources */,
 				45E9770C2134E9FF00723BA1 /* IsFeedbackStateObject+system.swift in Sources */,
