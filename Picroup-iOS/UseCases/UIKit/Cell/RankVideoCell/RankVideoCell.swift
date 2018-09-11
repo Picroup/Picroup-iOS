@@ -37,7 +37,9 @@ class RankVideoCell: RxCollectionViewCell {
             cell.playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
             cell.transition(.fadeOut, .scale(0.75))
             cell.progressView.progress = viewModel.progress
+            cell.motionIdentifier = viewModel.cellMotionIdentifier
             cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
+            cell.remainTimeLabel.motionIdentifier = viewModel.remainTimeLabelMotionIdentifier
             cell.starButton.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier
         }
     }

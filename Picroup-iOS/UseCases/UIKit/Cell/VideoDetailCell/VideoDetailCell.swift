@@ -90,20 +90,22 @@ class VideoDetailCell: RxCollectionViewCell {
             if item.isInvalidated { return }
             let viewModel = ImageDetailViewModel(medium: item)
             cell.playerView.backgroundColor = viewModel.placeholderColor
-            cell.playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
-            cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
             cell.progressView.progress = viewModel.progress
-            cell.starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
             cell.userAvatarImageView.setUserAvatar(with: item.user)
             cell.displayNameLabel.text = viewModel.displayName
             cell.remainTimeLabel.text = viewModel.remainTimeLabelText
             cell.commentButton.setTitle(viewModel.commentsCountText, for: .normal)
+            cell.motionIdentifier = viewModel.cellMotionIdentifier
+            cell.playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
+            cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
+            cell.remainTimeLabel.motionIdentifier = viewModel.remainTimeLabelMotionIdentifier
+            cell.starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
             DispatchQueue.main.async { cell.configureStarButton(with: viewModel) }
         }
     }
     
     private func configureStarButton(with viewModel: ImageDetailViewModel) {
-        starButton.isEnabled = viewModel.stared == false
+        starButton.isUserInteractionEnabled = viewModel.stared == false
         StarButtonPresenter.isSelected(base: starButton).onNext(viewModel.stared)
     }
 }

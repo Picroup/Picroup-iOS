@@ -33,6 +33,7 @@ class WaterFlowLayout: UICollectionViewLayout {
     weak var delegate: WaterFlowLayoutDelegate?
     var configuration: Configuration
     fileprivate var cache = [UICollectionViewLayoutAttributes]()
+    fileprivate var supplementaryViewCache = [UICollectionViewLayoutAttributes]()
     fileprivate var _collectionViewContentSize: CGSize = .zero
 
 }
@@ -56,6 +57,7 @@ extension WaterFlowLayout {
         
         resetCollectionViewContentSize(collectionView)
         cache.removeAll()
+        supplementaryViewCache.removeAll()
         
         let collectionViewWidth = collectionView.bounds.width
         
@@ -88,13 +90,21 @@ extension WaterFlowLayout {
             yOffsets[column] = cellFrame.maxY
             _collectionViewContentSize.height = {
                 let columnMaxY = cellFrame.maxY + configuration.lineSpace
-                return max(_collectionViewContentSize.height, columnMaxY)
+                return max(_collectionViewContentSize.height, columnMaxY + 80)
             }()
             column = {
                 let minYColumn = yOffsets.enumerated().min(by: { $0.element < $1.element})?.offset
                 return minYColumn ?? 0
             }()
         }
+        
+        let indexPath = IndexPath(item: 0, section: 0)
+        let attributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, with: indexPath)
+        attributes.frame = CGRect(
+            x: 0, y: _collectionViewContentSize.height - 80,
+            width: collectionViewWidth, height: 80
+        )
+        supplementaryViewCache.append(attributes)
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
@@ -102,11 +112,17 @@ extension WaterFlowLayout {
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        return cache.filter { $0.frame.intersects(rect) }
+        return [cache, supplementaryViewCache].lazy
+            .flatMap { $0 }
+            .filter { $0.frame.intersects(rect) }
     }
     
     override var collectionViewContentSize: CGSize {
         return _collectionViewContentSize
+    }
+    
+    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return supplementaryViewCache[indexPath.section]
     }
 }
 

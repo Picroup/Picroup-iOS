@@ -17,9 +17,12 @@ struct MediumViewModel {
     let progress: Float
     let remainTimeLabelText: String?
     let kind: String?
-    let lifeBarMotionIdentifier: String?
-    let starPlaceholderViewMotionIdentifier: String?
+    let stared: Bool?
     let placeholderColor: UIColor
+    let cellMotionIdentifier: String?
+    let lifeBarMotionIdentifier: String?
+    let remainTimeLabelMotionIdentifier: String?
+    let starPlaceholderViewMotionIdentifier: String?
     
     init(item: MediumObject) {
         guard !item.isInvalidated else {
@@ -28,7 +31,10 @@ struct MediumViewModel {
             self.progress = 0
             self.remainTimeLabelText = "\(0) 周"
             self.kind = nil
+            self.stared = nil
+            self.cellMotionIdentifier = nil
             self.lifeBarMotionIdentifier = nil
+            self.remainTimeLabelMotionIdentifier = nil
             self.starPlaceholderViewMotionIdentifier = nil
             self.placeholderColor = .background
             return
@@ -41,7 +47,10 @@ struct MediumViewModel {
         self.progress = Float(remainTime / 12.0.weeks)
         self.remainTimeLabelText = Moment.string(from: item.endedAt.value)
         self.kind = item.kind
+        self.stared = item.stared.value
+        self.cellMotionIdentifier = "cell\(item._id)"
         self.lifeBarMotionIdentifier = "lifeBar_\(item._id)"
+        self.remainTimeLabelMotionIdentifier = "remainTime_\(item._id)"
         self.starPlaceholderViewMotionIdentifier = "starButton_\(item._id)"
         self.placeholderColor = item.placeholderColor
     }
@@ -79,8 +88,13 @@ class RankMediumCell: RxCollectionViewCell {
             cell.imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
             cell.transition(.fadeOut, .scale(0.75))
             cell.progressView.progress = viewModel.progress
+            cell.motionIdentifier = viewModel.cellMotionIdentifier
             cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
+            cell.remainTimeLabel.motionIdentifier = viewModel.remainTimeLabelMotionIdentifier
             cell.starButton.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier
+            
+            DispatchQueue.main.async { StarButtonPresenter.isSelected(base: cell.starButton).onNext(viewModel.stared) }
+
         }
     }
     

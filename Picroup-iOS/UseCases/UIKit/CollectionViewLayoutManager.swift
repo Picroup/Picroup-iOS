@@ -27,8 +27,8 @@ struct CollectionViewLayoutManager {
     
     static func size(in bounds: CGRect, aspectRatio: Double) -> CGSize {
 
-        let cellWidth = bounds.width - 4
-        let cellHeight = cellWidth / CGFloat(aspectRatio) + 2
+        let cellWidth = bounds.width - 16
+        let cellHeight = cellWidth / CGFloat(aspectRatio) + 2 + 48
         return CGSize(width: cellWidth, height: cellHeight)
     }
     

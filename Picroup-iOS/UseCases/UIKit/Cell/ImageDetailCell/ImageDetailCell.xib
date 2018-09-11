@@ -158,7 +158,7 @@
                             <constraint firstAttribute="width" constant="56" id="HV1-od-TQP"/>
                             <constraint firstAttribute="width" secondItem="A0d-T5-LoM" secondAttribute="height" multiplier="1:1" id="VJf-Tu-pXo"/>
                         </constraints>
-                        <color key="tintColor" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.42655369640000002" green="0.475846082" blue="0.4802647531" alpha="1" colorSpace="calibratedRGB"/>
                         <state key="normal" image="ic_favorite_white"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="image" value="ic_favorite_white"/>
