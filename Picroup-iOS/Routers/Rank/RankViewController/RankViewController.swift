@@ -37,7 +37,7 @@ final class RankViewController: BaseViewController, IsStateViewController {
             shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
             queryMedia: { query in
                 return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                    .map { $0?.data?.hotMediaByTags.fragments.cursorMediaFragment }.forceUnwrap()
+                    .map { ($0?.data?.hotMediaByTags.snapshot).map(CursorMediaFragment.init(snapshot: )) }.forceUnwrap()
                     .retryWhen { errors -> Observable<Int> in
                         errors.enumerated().flatMapLatest { Observable<Int>.timer(5 * RxTimeInterval($0.index + 1), scheduler: MainScheduler.instance) }
                     }

@@ -75,7 +75,7 @@ final class UserViewController: ShowNavigationBarViewController, IsStateViewCont
         },
             queryUserMedia: { query in
                 return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                    .map { $0?.data?.user?.media.fragments.cursorMediaFragment }.forceUnwrap()
+                    .map { ($0?.data?.user?.media.snapshot).map(CursorMediaFragment.init(snapshot: )) }.forceUnwrap()
         },
             followUser: { query in
                 return ApolloClient.shared.rx.perform(mutation: query)

@@ -100,12 +100,9 @@ class VideoDetailCell: RxCollectionViewCell {
             cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
             cell.remainTimeLabel.motionIdentifier = viewModel.remainTimeLabelMotionIdentifier
             cell.starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
-            DispatchQueue.main.async { cell.configureStarButton(with: viewModel) }
+            DispatchQueue.main.async {
+                StarButtonPresenter.isMediumStared(base: cell.starButton).onNext(viewModel.stared)
+            }
         }
-    }
-    
-    private func configureStarButton(with viewModel: ImageDetailViewModel) {
-        starButton.isUserInteractionEnabled = viewModel.stared == false
-        StarButtonPresenter.isSelected(base: starButton).onNext(viewModel.stared)
     }
 }

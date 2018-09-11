@@ -41,6 +41,7 @@ class RankVideoCell: RxCollectionViewCell {
             cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
             cell.remainTimeLabel.motionIdentifier = viewModel.remainTimeLabelMotionIdentifier
             cell.starButton.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier
+            StarButtonPresenter.isMediumStared(base: cell.starButton).onNext(viewModel.stared)
         }
     }
 }

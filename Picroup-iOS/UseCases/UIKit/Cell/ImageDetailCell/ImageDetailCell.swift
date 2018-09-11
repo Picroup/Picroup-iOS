@@ -171,19 +171,32 @@ class ImageDetailCell: RxCollectionViewCell {
             cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
             cell.remainTimeLabel.motionIdentifier = viewModel.remainTimeLabelMotionIdentifier
             cell.starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
-
-            DispatchQueue.main.async { cell.configureStarButton(with: viewModel) }
-
+            DispatchQueue.main.async {
+                StarButtonPresenter.isMediumStared(base: cell.starButton).onNext(viewModel.stared)
+            }
         }
-    }
-    
-    private func configureStarButton(with viewModel: ImageDetailViewModel) {
-        starButton.isUserInteractionEnabled = viewModel.stared == false
-        StarButtonPresenter.isSelected(base: starButton).onNext(viewModel.stared)
     }
 }
 
 struct StarButtonPresenter {
+    
+    static func isMediumStared(base: UIButton) -> Binder<Bool?> {
+        return Binder(base) { button, isStared in
+            button.isUserInteractionEnabled = isStared == false
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
+                guard let isStared = isStared else {
+                    button.alpha = 0
+                    return
+                }
+                button.alpha =  1
+                if !isStared {
+                    button.tintColor = .gray
+                } else {
+                    button.tintColor = .secondary
+                }
+            })
+        }
+    }
     
     static func isSelected(base: UIButton) -> Binder<Bool?> {
         return Binder(base) { button, isSelected in

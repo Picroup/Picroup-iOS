@@ -13,7 +13,7 @@ extension MyStaredMediaQueryStateObject {
     func query(userId: String?) -> MyStaredMediaQuery? {
         guard let userId = userId else { return nil }
         return trigger
-            ? MyStaredMediaQuery(userId: userId, cursor: cursorMedia?.cursor.value)
+            ? MyStaredMediaQuery(userId: userId, cursor: cursorMedia?.cursor.value, withStared: true)
             : nil
     }
 }

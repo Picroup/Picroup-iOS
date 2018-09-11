@@ -60,11 +60,11 @@ final class MeViewController: ShowNavigationBarViewController, IsStateViewContro
             shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
             queryMyMedia: { query in
                 return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                    .map { $0?.data?.user?.media.fragments.cursorMediaFragment }.forceUnwrap()
+                    .map { ($0?.data?.user?.media.snapshot).map(CursorMediaFragment.init(snapshot: )) }.forceUnwrap()
         },
             queryMyStaredMedia: { query in
                 return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                    .map { $0?.data?.user?.staredMedia.fragments.cursorMediaFragment }.forceUnwrap()
+                    .map { ($0?.data?.user?.staredMedia.snapshot).map(CursorMediaFragment.init(snapshot: )) }.forceUnwrap()
         })
             .drive()
             .disposed(by: disposeBag)

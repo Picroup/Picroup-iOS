@@ -36,7 +36,7 @@ final class HomeViewController: BaseViewController, IsStateViewController {
             shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
             queryMyInterestedMedia: { query in
                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                    .map { $0?.data?.user?.interestedMedia.fragments.cursorMediaFragment }.forceUnwrap()
+                    .map { ($0?.data?.user?.interestedMedia.snapshot).map(CursorMediaFragment.init(snapshot: )) }.forceUnwrap()
         })
             .drive()
             .disposed(by: disposeBag)

@@ -92,9 +92,7 @@ class RankMediumCell: RxCollectionViewCell {
             cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
             cell.remainTimeLabel.motionIdentifier = viewModel.remainTimeLabelMotionIdentifier
             cell.starButton.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier
-            
-            DispatchQueue.main.async { StarButtonPresenter.isSelected(base: cell.starButton).onNext(viewModel.stared) }
-
+            StarButtonPresenter.isMediumStared(base: cell.starButton).onNext(viewModel.stared)
         }
     }
     

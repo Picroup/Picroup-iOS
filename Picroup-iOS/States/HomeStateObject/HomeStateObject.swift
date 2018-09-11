@@ -25,7 +25,7 @@ extension HomeStateObject {
     var myInterestedMediaQuery: UserInterestedMediaQuery? {
         guard let userId = sessionState?.currentUserId else { return nil }
         return myInterestedMediaState?.trigger == true
-            ? UserInterestedMediaQuery(userId: userId, cursor: myInterestedMediaState?.cursorMedia?.cursor.value)
+            ? UserInterestedMediaQuery(userId: userId, cursor: myInterestedMediaState?.cursorMedia?.cursor.value, withStared: true)
             : nil
     }
 }

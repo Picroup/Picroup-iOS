@@ -17,13 +17,13 @@ import RealmSwift
 
 final class TagMediaViewController: ShowNavigationBarViewController, IsStateViewController {
     
+    typealias State = TagMediaStateObject
+    typealias Event = State.Event
+    
     typealias Dependency = String
     var dependency: Dependency!
     
     @IBOutlet var presenter: TagMediaViewPresenter!
-    
-    typealias State = TagMediaStateObject
-    typealias Event = State.Event
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +42,7 @@ final class TagMediaViewController: ShowNavigationBarViewController, IsStateView
             shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
             queryMedia: { query in
                 return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                    .map { $0?.data?.hotMediaByTags.fragments.cursorMediaFragment }.forceUnwrap()
+                    .map { ($0?.data?.hotMediaByTags.snapshot).map(CursorMediaFragment.init(snapshot: )) }.forceUnwrap()
                     .retryWhen { errors -> Observable<Int> in
                         errors.enumerated().flatMapLatest { Observable<Int>.timer(5 * RxTimeInterval($0.index + 1), scheduler: MainScheduler.instance) }
                     }
