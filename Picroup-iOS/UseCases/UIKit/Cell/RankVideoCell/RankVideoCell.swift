@@ -32,9 +32,6 @@ class RankVideoCell: RxCollectionViewCell {
             .disposed(by: disposeBag)
         
         let mediumId = item._id
-        
-        print("mediumId", mediumId)
-        print("onStarButtonTap", onStarButtonTap)
 
         if let onStarButtonTap = onStarButtonTap {
             starButton.rx.tap

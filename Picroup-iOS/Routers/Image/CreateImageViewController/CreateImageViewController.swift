@@ -56,10 +56,9 @@ final class CreateImageViewController: ShowNavigationBarViewController, IsStateV
     var uiFeedback: State.DriverFeedback {
         return bind(self) { (me, state) in
             let subscriptions = [
-                state.map { $0.saveMediumStates() }.drive(me.presenter.collectionView.rx.items(cellIdentifier: "RankMediumCell", cellType: RankMediumCell.self)) { index, item, cell in
+                state.map { $0.saveMediumStates() }.drive(me.presenter.collectionView.rx.items(cellIdentifier: "BasicImageCell", cellType: BasicImageCell.self)) { index, item, cell in
                     let image = ImageCache.default.retrieveImage(forKey: item._id)
                     cell.imageView.image = image
-                    cell.progressView.isHidden = true
                 },
                 state.map { $0.tagStates() }.drive(me.presenter.tagsCollectionView.rx.items(cellIdentifier: "TagCollectionViewCell", cellType: TagCollectionViewCell.self)) { index, tagState, cell in
                     cell.tagLabel.text = tagState.tag

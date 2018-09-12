@@ -281,6 +281,8 @@
 		45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */; };
 		45AA3B4520A311BD0032A8CF /* ImageDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4420A311BD0032A8CF /* ImageDetailPresenter.swift */; };
 		45AA3B4820A346DB0032A8CF /* DispachQueue+realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */; };
+		45ABE7C12148C60A008DA8BD /* BasicImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45ABE7C02148C60A008DA8BD /* BasicImageCell.xib */; };
+		45ABE7C32148C61B008DA8BD /* BasicImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ABE7C22148C61B008DA8BD /* BasicImageCell.swift */; };
 		45B0204720AC0D7000BD5D8F /* ImageCommentsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0204620AC0D7000BD5D8F /* ImageCommentsStateObject.swift */; };
 		45B0204920AC0E8C00BD5D8F /* CommentObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0204820AC0E8C00BD5D8F /* CommentObject.swift */; };
 		45B0204B20AC14D700BD5D8F /* Int+increase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B0204A20AC14D700BD5D8F /* Int+increase.swift */; };
@@ -671,6 +673,8 @@
 		45A827C7208370C500A3121E /* PublishRelay+asBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PublishRelay+asBinder.swift"; sourceTree = "<group>"; };
 		45AA3B4420A311BD0032A8CF /* ImageDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailPresenter.swift; sourceTree = "<group>"; };
 		45AA3B4720A346DB0032A8CF /* DispachQueue+realm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispachQueue+realm.swift"; sourceTree = "<group>"; };
+		45ABE7C02148C60A008DA8BD /* BasicImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BasicImageCell.xib; sourceTree = "<group>"; };
+		45ABE7C22148C61B008DA8BD /* BasicImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicImageCell.swift; sourceTree = "<group>"; };
 		45B0204620AC0D7000BD5D8F /* ImageCommentsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentsStateObject.swift; sourceTree = "<group>"; };
 		45B0204820AC0E8C00BD5D8F /* CommentObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentObject.swift; sourceTree = "<group>"; };
 		45B0204A20AC14D700BD5D8F /* Int+increase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+increase.swift"; sourceTree = "<group>"; };
@@ -1033,6 +1037,7 @@
 		4561DE612100407200F77510 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				45ABE7BF2148C5E7008DA8BD /* BasicImageCell */,
 				4561DE6F210046C700F77510 /* TagCollectionViewCell */,
 				4561DE6C2100464B00F77510 /* ImageDetailCell */,
 				4561DE7421004BE900F77510 /* VideoDetailCell */,
@@ -1761,6 +1766,15 @@
 			path = Realm;
 			sourceTree = "<group>";
 		};
+		45ABE7BF2148C5E7008DA8BD /* BasicImageCell */ = {
+			isa = PBXGroup;
+			children = (
+				45ABE7C02148C60A008DA8BD /* BasicImageCell.xib */,
+				45ABE7C22148C61B008DA8BD /* BasicImageCell.swift */,
+			);
+			path = BasicImageCell;
+			sourceTree = "<group>";
+		};
 		45B0205020AD72C300BD5D8F /* PhotoPickerController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2125,6 +2139,7 @@
 				45F0A7D120C7B0BD0085F978 /* UserAvailable.graphql in Resources */,
 				45B0206F20B5153100BD5D8F /* SearchUser.graphql in Resources */,
 				457B1B95205FEA1000BEDDF1 /* LaunchScreen.storyboard in Resources */,
+				45ABE7C12148C60A008DA8BD /* BasicImageCell.xib in Resources */,
 				45BA0D7F209010670002E1D5 /* MarkReputationLinksAsViewed.graphql in Resources */,
 				457B1B92205FEA1000BEDDF1 /* Assets.xcassets in Resources */,
 				45C2076721140A1100A0227B /* UserBlockingUsers.graphql in Resources */,
@@ -2389,6 +2404,7 @@
 				4561DE6B2100412800F77510 /* RankVideoCell.swift in Sources */,
 				457D8AB12137D07B00719F23 /* UserFollowingsQueryStateObject.swift in Sources */,
 				457D8A9F2136709F00719F23 /* IsCursorItemsStateObject.swift in Sources */,
+				45ABE7C32148C61B008DA8BD /* BasicImageCell.swift in Sources */,
 				451631E621391A8C00CC3E55 /* UserMediaQueryStateObject.swift in Sources */,
 				45662A9E212B9B8700964BC9 /* CacheService.swift in Sources */,
 				45517D4620BCDCF900F2D7DE /* FollowButtonPresenter.swift in Sources */,
