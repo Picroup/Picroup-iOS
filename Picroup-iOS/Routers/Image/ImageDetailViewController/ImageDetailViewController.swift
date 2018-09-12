@@ -90,15 +90,22 @@ final class ImageDetailViewController: ShowNavigationBarViewController, IsStateV
         let _events = PublishRelay<Event>()
         let _moreButtonTap = PublishRelay<Void>()
 
-        // I known this is ugly but it enabled the transition animations
+        // I known this is ugly but it enable transition animations
         let rxState = state.rx.observe().share(replay: 1)
         
         let sections = Observable.combineLatest(state.sections, rxState) { $1.isMediumDeleted ? [] : $0 }
         let isSharing = rxState.map { $0.shareMediumQueryState?.trigger ?? false }.asDriverOnErrorRecoverEmpty()
-
+        
         state.sections
-            .bind(to: presenter.mediumDetailPresenter.items(events: _events, isSharing: isSharing, moreButtonTap: _moreButtonTap))
-            .disposed(by: disposeBag)
+            .bind(to: presenter.mediumDetailPresenter.items(
+                isSharing: isSharing,
+                onStarButtonTap: { mediumId in _events.accept(.onTriggerStarMedium(mediumId)) },
+                onCommentsTap: { mediumId in _events.accept(.onTriggerShowComments(mediumId)) },
+                onImageViewTap: { _ in _events.accept(.onTriggerPop) },
+                onUserTap: { userId in _events.accept(.onTriggerShowUser(userId)) },
+                onShareTap: { _ in _events.accept(.onTriggerShareMedium) },
+                onMoreTap: { _ in _moreButtonTap.accept(()) })
+            ).disposed(by: disposeBag)
         
         state.system(
             uiFeedback: uiFeedback(sections: sections, _events: _events, _moreButtonTap: _moreButtonTap),

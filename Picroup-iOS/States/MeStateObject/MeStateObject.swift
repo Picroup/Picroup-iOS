@@ -18,8 +18,10 @@ final class MeStateObject: VersionedPrimaryObject {
     @objc dynamic var tabState: MeTabStateObject?
     @objc dynamic var myMediaQueryState: MyMediaQueryStateObject?
     @objc dynamic var myStaredMediaQueryState: MyStaredMediaQueryStateObject?
+    @objc dynamic var starMediumQueryState: StarMediumQueryStateObject?
     @objc dynamic var needUpdate: NeedUpdateStateObject?
     @objc dynamic var routeState: RouteStateObject?
+    @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension MeStateObject {
@@ -28,6 +30,9 @@ extension MeStateObject {
     }
     var myStaredMediaQuery: MyStaredMediaQuery? {
         return myStaredMediaQueryState?.query(userId: sessionState?.currentUserId)
+    }
+    var starMediumQuery: StarMediumMutation? {
+        return starMediumQueryState?.query(userId: sessionState?.currentUserId)
     }
 }
 
@@ -42,8 +47,10 @@ extension MeStateObject {
                 "tabState": MeTabStateObject.createValues(id: _id),
                 "myMediaQueryState": CursorMediaQueryStateObject.createValues(id: PrimaryKey.myMediaId),
                 "myStaredMediaQueryState":  CursorMediaQueryStateObject.createValues(id: PrimaryKey.myStaredMediaId),
+                "starMediumQueryState": StarMediumQueryStateObject.createValues(),
                 "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
+                "snackbar": ["_id": _id],
                 ]
             return try realm.update(MeStateObject.self, value: value)
         }

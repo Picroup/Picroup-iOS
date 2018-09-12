@@ -21,6 +21,11 @@ extension RankStateObject {
         case onGetHotMediaError(Error)
         
         case onToggleTag(String)
+        
+        case onTriggerStarMedium(String)
+        case onStarMediumSuccess(StarMediumMutation.Data.StarMedium)
+        case onStarMediumError(Error)
+        
         case onTriggerLogin
         case onTriggerShowImage(String)
     }
@@ -42,6 +47,17 @@ extension RankStateObject: IsFeedbackStateObject {
         case .onToggleTag(let tag):
             hotMediaTagsState?.reduce(event: .onToggleTag(tag), realm: realm)
             hotMediaQueryState?.reduce(event: .onTriggerReload, realm: realm)
+            
+        case .onTriggerStarMedium(let mediumId):
+            starMediumQueryState?.reduce(event: .onTrigger(mediumId), realm: realm)
+        case .onStarMediumSuccess(let data):
+            starMediumQueryState?.reduce(event: .onSuccess(data), realm: realm)
+            needUpdate?.myStaredMedia = true
+            snackbar?.reduce(event: .onUpdateMessage("感谢你给图片续命一周"), realm: realm)
+        case .onStarMediumError(let error):
+            starMediumQueryState?.reduce(event: .onError(error), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
+            
         case .onTriggerLogin:
             routeState?.reduce(event: .onTriggerLogin, realm: realm)
         case .onTriggerShowImage(let mediumId):

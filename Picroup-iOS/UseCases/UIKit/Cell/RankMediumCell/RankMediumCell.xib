@@ -38,16 +38,16 @@
                                 <rect key="frame" x="0.0" y="208" width="184" height="48"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SxC-Bu-HSJ">
-                                        <rect key="frame" x="138" y="9" width="30" height="30"/>
+                                        <rect key="frame" x="132" y="6" width="36" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="SxC-Bu-HSJ" secondAttribute="height" multiplier="1:1" id="0Z5-S0-Hb4"/>
-                                            <constraint firstAttribute="width" constant="30" id="KMP-Zc-fkd"/>
+                                            <constraint firstAttribute="width" constant="36" id="KMP-Zc-fkd"/>
                                         </constraints>
                                         <color key="tintColor" red="0.42655369640000002" green="0.475846082" blue="0.4802647531" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="ic_favorite_white"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 周" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="89S-Vh-FTR">
-                                        <rect key="frame" x="16" y="14.5" width="114" height="19.5"/>
+                                        <rect key="frame" x="16" y="14.5" width="108" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>

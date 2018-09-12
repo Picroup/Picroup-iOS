@@ -18,7 +18,8 @@ extension TagMediaStateObject {
     func system(
         uiFeedback: @escaping DriverFeedback,
         shouldQuery: @escaping () -> Bool,
-        queryMedia: @escaping (HotMediaByTagsQuery) -> Single<CursorMediaFragment>
+        queryMedia: @escaping (HotMediaByTagsQuery) -> Single<CursorMediaFragment>,
+        starMedium: @escaping (StarMediumMutation) -> Single<StarMediumMutation.Data.StarMedium>
         ) -> Driver<TagMediaStateObject> {
         
         let queryMediaFeedback: DriverFeedback = react(query: { $0.hotMediaQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
@@ -27,8 +28,14 @@ extension TagMediaStateObject {
                 .asSignal(onErrorReturnJust: Event.onGetHotMediaError)
         })
         
+        let starMediumFeedback: DriverFeedback = react(query: { $0.starMediumQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
+            return starMedium(query)
+                .map(Event.onStarMediumSuccess)
+                .asSignal(onErrorReturnJust: Event.onStarMediumError)
+        })
+        
         return system(
-            feedbacks: [uiFeedback, queryMediaFeedback],
+            feedbacks: [uiFeedback, queryMediaFeedback, starMediumFeedback],
             //            composeStates: { $0.debug("TagMediaState", trimOutput: false) },
             composeEvents: { $0.debug("TagMediaState.Event", trimOutput: true) }
         )

@@ -21,35 +21,31 @@ final class UserStateObject: VersionedPrimaryObject {
     @objc dynamic var followUserQueryState: FollowUserQueryStateObject?
     @objc dynamic var unfollowUserQueryState: UnfollowUserQueryStateObject?
     @objc dynamic var blockUserQueryState: BlockUserQueryStateObject?
-    
+    @objc dynamic var starMediumQueryState: StarMediumQueryStateObject?
     @objc dynamic var needUpdate: NeedUpdateStateObject?
-
     @objc dynamic var routeState: RouteStateObject?
-    
     @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension UserStateObject {
     var userId: String { return _id }
-    
     var userQuery: UserQuery? {
         return userQueryState?.query(currentUserId: sessionState?.currentUserId)
     }
-    
     var userMediaQuery: MyMediaQuery? {
         return userMediaQueryState?.query(userId: userId, currentUserId: sessionState?.currentUserId)
     }
-    
     var followUserQuery: FollowUserMutation? {
         return followUserQueryState?.query(userId: sessionState?.currentUserId)
     }
-    
     var unfollowUserQuery: UnfollowUserMutation? {
         return unfollowUserQueryState?.query(userId: sessionState?.currentUserId)
     }
-    
     var blockUserQuery: BlockUserMutation? {
         return blockUserQueryState?.query(userId: sessionState?.currentUserId)
+    }
+    var starMediumQuery: StarMediumMutation? {
+        return starMediumQueryState?.query(userId: sessionState?.currentUserId)
     }
 }
 
@@ -66,6 +62,7 @@ extension UserStateObject {
                 "followUserQueryState": FollowUserQueryStateObject.createValues(),
                 "unfollowUserQueryState": UnfollowUserQueryStateObject.createValues(),
                 "blockUserQueryState": BlockUserQueryStateObject.createValues(),
+                "starMediumQueryState": StarMediumQueryStateObject.createValues(),
                 "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
                 "snackbar": ["_id": _id],

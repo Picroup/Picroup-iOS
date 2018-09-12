@@ -35,7 +35,7 @@ final class TagMediaViewPresenter: NSObject {
     }
     
     fileprivate func prepareNavigationItem() {
-        navigationItem.titleLabel.text = ""
+        navigationItem.titleLabel.text = " "
         navigationItem.titleLabel.textColor = .primaryText
     }
 

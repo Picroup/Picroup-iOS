@@ -36,6 +36,10 @@ extension UserStateObject {
         case onBlockUserSuccess(BlockUserMutation.Data.BlockUser)
         case onBlockUserError(Error)
         
+        case onTriggerStarMedium(String)
+        case onStarMediumSuccess(StarMediumMutation.Data.StarMedium)
+        case onStarMediumError(Error)
+        
         case onTriggerLogin
         case onTriggerShowImage(String)
         case onTriggerShowUserFollowings
@@ -91,6 +95,16 @@ extension UserStateObject: IsFeedbackStateObject {
             snackbar?.reduce(event: .onUpdateMessage("已拉黑 @\(userQueryState?.user?.username ?? "")，您可以前往设置取消拉黑"), realm: realm)
         case .onBlockUserError(let error):
             blockUserQueryState?.reduce(event: .onError(error), realm: realm)
+            
+        case .onTriggerStarMedium(let mediumId):
+            starMediumQueryState?.reduce(event: .onTrigger(mediumId), realm: realm)
+        case .onStarMediumSuccess(let data):
+            starMediumQueryState?.reduce(event: .onSuccess(data), realm: realm)
+            needUpdate?.myStaredMedia = true
+            snackbar?.reduce(event: .onUpdateMessage("感谢你给图片续命一周"), realm: realm)
+        case .onStarMediumError(let error):
+            starMediumQueryState?.reduce(event: .onError(error), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
             
         case .onTriggerLogin:
             routeState?.reduce(event: .onTriggerLogin, realm: realm)

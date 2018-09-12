@@ -37,20 +37,30 @@ final class HomeViewController: BaseViewController, IsStateViewController {
             queryMyInterestedMedia: { query in
                return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
                     .map { ($0?.data?.user?.interestedMedia.snapshot).map(CursorMediaFragment.init(snapshot: )) }.forceUnwrap()
+        },
+            starMedium: { query in
+                return ApolloClient.shared.rx.perform(mutation: query)
+                    .map { $0?.data?.starMedium }.forceUnwrap()
         })
             .drive()
             .disposed(by: disposeBag)
     }
     
     var uiFeedback: State.DriverFeedback {
-        typealias Section = MediaPreserter.Section
         weak var weakSelf = self
         return bind(self) { (me, state) in
+            
+            typealias Section = MediaPreserter.Section
             let presenter = me.presenter!
-            //            let _events = PublishRelay<Event>()
+            let _events = PublishRelay<Event>()
             let footerState = BehaviorRelay<LoadFooterViewState>(value: .empty)
+            
             let subscriptions = [
-                state.map { [Section(model: "", items: $0.myInterestedMediaItems())] }.drive(presenter.mediaPresenter.items(footerState: footerState.asDriver())),
+                state.map { [Section(model: "", items: $0.myInterestedMediaItems())] }
+                    .drive(presenter.mediaPresenter.items(
+                        footerState: footerState.asDriver(),
+                        onStarButtonTap: { _events.accept(.onTriggerStarMedium($0))  }
+                    )),
                 state.map { $0.myInterestedMediaState?.isReload ?? false }.drive(presenter.refreshControl.rx.isRefreshing),
                 state.map { $0.myInterestedMediaState?.footerState ?? .empty }.drive(footerState),
                 state.map { $0.myInterestedMediaState?.isEmpty ??  false }.drive(presenter.isMyInterestedMediaEmpty),
@@ -62,7 +72,7 @@ final class HomeViewController: BaseViewController, IsStateViewController {
                 ]
             let events: [Signal<Event>] = [
                 .just(.onTriggerReloadMyInterestedMedia),
-                //                _events.asSignal(),
+                _events.asSignal(),
                 me.rx.viewWillAppear.asSignal().map { _ in .onTriggerReloadMyInterestedMediaIfNeeded },
                 state.flatMapLatest {
                     ($0.myInterestedMediaState?.shouldQueryMore ?? false)

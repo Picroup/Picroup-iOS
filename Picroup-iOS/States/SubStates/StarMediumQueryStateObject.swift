@@ -9,12 +9,63 @@
 import Foundation
 import RealmSwift
 
-final class StarMediumQueryStateObject: QueryStateObject {}
+final class StarMediumQueryStateObject: PrimaryObject {
+    @objc dynamic var mediumId: String?
+    @objc dynamic var error: String?
+    @objc dynamic var trigger: Bool = false
+}
+
 extension StarMediumQueryStateObject {
-    func query(userId: String?, mediumId: String) -> StarMediumMutation? {
-        guard let userId = userId else { return nil }
+    var shouldQuery: Bool {
+        return !trigger
+    }
+    func query(userId: String?) -> StarMediumMutation? {
+        guard let userId = userId, let mediumId = mediumId else { return nil }
         return trigger
             ? StarMediumMutation(userId: userId, mediumId: mediumId)
             : nil
     }
 }
+
+extension StarMediumQueryStateObject {
+    
+    static func createValues() -> Any {
+        return  [
+            "_id": PrimaryKey.default,
+            "success": nil,
+            "error": nil,
+            "trigger": false,
+        ]
+    }
+}
+
+extension StarMediumQueryStateObject {
+    
+    enum Event {
+        case onTrigger(String)
+        case onSuccess(StarMediumMutation.Data.StarMedium)
+        case onError(Error)
+    }
+}
+
+extension StarMediumQueryStateObject: IsFeedbackStateObject {
+    
+    func reduce(event: Event, realm: Realm) {
+        switch event {
+        case .onTrigger(let mediumId):
+            guard shouldQuery else { return }
+            self.mediumId = mediumId
+            error = nil
+            trigger = true
+        case .onSuccess(let data):
+            let medium = realm.create(MediumObject.self, value: data.snapshot, update: true)
+            medium.stared.value = true
+            error = nil
+            trigger = false
+        case .onError(let error):
+            self.error = error.localizedDescription
+            trigger = false
+        }
+    }
+}
+

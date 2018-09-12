@@ -18,13 +18,29 @@ class RankVideoCell: RxCollectionViewCell {
         didSet { starButton.setImage(Icon.favorite, for: .normal)}
     }
     @IBOutlet weak var remainTimeLabel: UILabel!
-//    @IBOutlet weak var starPlaceholderView: UIView!
     
-    func configure(with item: MediumObject) {
+    func configure(
+        with item: MediumObject,
+        onStarButtonTap: ((String) -> Void)?
+        ) {
+        
+        if item.isInvalidated { return }
+
         Observable.from(object: item)
             .asDriverOnErrorRecoverEmpty()
             .drive(rxItem)
             .disposed(by: disposeBag)
+        
+        let mediumId = item._id
+        
+        print("mediumId", mediumId)
+        print("onStarButtonTap", onStarButtonTap)
+
+        if let onStarButtonTap = onStarButtonTap {
+            starButton.rx.tap
+                .subscribe(onNext: { onStarButtonTap(mediumId) })
+                .disposed(by: disposeBag)
+        }
     }
     
     private var rxItem: Binder<MediumObject> {

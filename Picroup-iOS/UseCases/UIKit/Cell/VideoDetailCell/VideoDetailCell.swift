@@ -28,14 +28,16 @@ class VideoDetailCell: RxCollectionViewCell {
     func configure(
         with item: MediumObject,
         isSharing: Driver<Bool>,
-        onStarButtonTap: (() -> Void)?,
-        onCommentsTap: (() -> Void)?,
-        onImageViewTap: (() -> Void)?,
-        onUserTap: (() -> Void)?,
-        onShareTap: (() -> Void)?,
-        onMoreTap: (() -> Void)?
+        onStarButtonTap: ((String) -> Void)?,
+        onCommentsTap: ((String) -> Void)?,
+        onImageViewTap: ((String) -> Void)?,
+        onUserTap: ((String) -> Void)?,
+        onShareTap: ((String) -> Void)?,
+        onMoreTap: ((String) -> Void)?
         ) {
         
+        if item.isInvalidated { return }
+
         item.rx.observe()
             .asDriverOnErrorRecoverEmpty()
             .drive(rxItem)
@@ -45,42 +47,44 @@ class VideoDetailCell: RxCollectionViewCell {
             .drive(shareButton.rx.spinning)
             .disposed(by: disposeBag)
         
+        let mediumId = item._id
+
         if let onCommentsTap = onCommentsTap {
             commentButton.rx.tap
-                .subscribe(onNext: onCommentsTap)
+                .subscribe(onNext: { onCommentsTap(mediumId) })
                 .disposed(by: disposeBag)
         }
         
         if let onStarButtonTap = onStarButtonTap {
             starButton.rx.tap
-                .subscribe(onNext: onStarButtonTap)
+                .subscribe(onNext: { onStarButtonTap(mediumId) })
                 .disposed(by: disposeBag)
         }
         
         if let onImageViewTap = onImageViewTap {
             playerView.rx.tapGesture().when(.recognized)
                 .mapToVoid()
-                .subscribe(onNext: onImageViewTap)
+                .subscribe(onNext: { onImageViewTap(mediumId) })
                 .disposed(by: disposeBag)
         }
         
-        if let onUserTap = onUserTap {
+        if let onUserTap = onUserTap, let userId = item.userId {
             userView.rx.tapGesture().when(.recognized)
                 .mapToVoid()
-                .subscribe(onNext: onUserTap)
+                .subscribe(onNext: { onUserTap(userId) })
                 .disposed(by: disposeBag)
         }
         
         if let onShareTap = onShareTap {
             shareButton.rx.tap
                 .mapToVoid()
-                .subscribe(onNext: onShareTap)
+                .subscribe(onNext: { onShareTap(mediumId) })
                 .disposed(by: disposeBag)
         }
         
         if let onMoreTap = onMoreTap {
             moreButton.rx.tap
-                .subscribe(onNext: onMoreTap)
+                .subscribe(onNext: { onMoreTap(mediumId) })
                 .disposed(by: disposeBag)
         }
     }

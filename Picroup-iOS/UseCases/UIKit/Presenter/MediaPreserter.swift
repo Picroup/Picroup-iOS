@@ -34,17 +34,17 @@ final class MediaPreserter: NSObject {
         }
     }
     
-    func items(footerState: Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
+    func items(footerState: Driver<LoadFooterViewState>, onStarButtonTap: ((String) -> Void)?) -> (Observable<[Section]>) -> Disposable {
         if _animatedDataSource {
             let _dataSource = RxCollectionViewSectionedAnimatedDataSource<Section>(
-                configureCell: configureMediumCell(),
+                configureCell: configureMediumCell(onStarButtonTap: onStarButtonTap),
                 configureSupplementaryView: createLoadFooterSupplementaryView(footerState: footerState)
             )
             self.dataSource = _dataSource
             return _collectionView!.rx.items(dataSource: _dataSource)
         } else {
             let dataSource =  RxCollectionViewSectionedReloadDataSource<Section>(
-                configureCell: configureMediumCell(),
+                configureCell: configureMediumCell(onStarButtonTap: onStarButtonTap),
                 configureSupplementaryView: createLoadFooterSupplementaryView(footerState: footerState)
             )
             self.dataSource = dataSource
@@ -53,18 +53,18 @@ final class MediaPreserter: NSObject {
     }
 }
 
-func configureMediumCell<D>() -> (D, UICollectionView, IndexPath, MediumObject) -> UICollectionViewCell {
+func configureMediumCell<D>(onStarButtonTap: ((String) -> Void)?) -> (D, UICollectionView, IndexPath, MediumObject) -> UICollectionViewCell {
     return { dataSource, collectionView, indexPath, item in
         let defaultCell: () -> UICollectionViewCell = {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-            cell.configure(with: item)
+            cell.configure(with: item, onStarButtonTap: onStarButtonTap)
             return cell
         }
         guard !item.isInvalidated else { return defaultCell() }
         switch item.kind {
         case MediumKind.video.rawValue?:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankVideoCell", for: indexPath) as! RankVideoCell
-            cell.configure(with: item)
+            cell.configure(with: item, onStarButtonTap: onStarButtonTap)
             return cell
         default:
             return defaultCell()
