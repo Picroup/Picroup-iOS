@@ -42,7 +42,7 @@ extension MeStateObject {
         
         return system(
             feedbacks: [uiFeedback, queryMyMediaMediaFeedback, queryMyStaredMediaFeedback, starMediumFeedback],
-                        composeStates: { $0.debug("MeState", trimOutput: false) },
+//                        composeStates: { $0.debug("MeState", trimOutput: false) },
             composeEvents: { $0.debug("MeState.Event", trimOutput: true) }
         )
     }

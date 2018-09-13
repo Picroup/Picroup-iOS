@@ -33,8 +33,8 @@ final class LoginViewPresenter: NSObject {
     }
     
     fileprivate func prepareNavigationItem() {
-//        navigationItem.titleLabel.text = "登录"
-//        navigationItem.titleLabel.textColor = .primaryText
+        navigationItem.titleLabel.text = "登录"
+        navigationItem.titleLabel.textColor = .primaryText
         registerButton = FlatButton(title: "注册", titleColor: .primaryText)
         navigationItem.rightViews = [registerButton]
     }

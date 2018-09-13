@@ -46,7 +46,7 @@ final class TagMediaViewController: ShowNavigationBarViewController, IsStateView
                     .retryWhen { errors -> Observable<Int> in
                         errors.enumerated().flatMapLatest { Observable<Int>.timer(5 * RxTimeInterval($0.index + 1), scheduler: MainScheduler.instance) }
                     }
-                    .delay(0.3, scheduler: MainScheduler.instance)
+                    .delay(1, scheduler: MainScheduler.instance)
         },
             starMedium: { query in
                 return ApolloClient.shared.rx.perform(mutation: query)
@@ -65,10 +65,11 @@ final class TagMediaViewController: ShowNavigationBarViewController, IsStateView
             let presenter = me.presenter!
             let subscriptions = [
                 state.map { "# \($0.tag)" }.delay(0.3).drive(presenter.navigationItem.titleLabel.rx.text),
-                state.map { [Section(model: "", items: $0.hotMediaItems())] }.drive(presenter.mediaPresenter.items(
-                    footerState: footerState.asDriver(),
-                    onStarButtonTap: { _events.accept(.onTriggerStarMedium($0)) }
-                )),
+                state.map { [Section(model: "", items: $0.hotMediaItems())] }
+                    .drive(presenter.mediaPresenter.items(
+                        footerState: footerState.asDriver(),
+                        onStarButtonTap: { _events.accept(.onTriggerStarMedium($0)) }
+                    )),
                 state.map { $0.hotMediaQueryState?.isReload ?? false }.drive(presenter.refreshControl.rx.refreshing),
                 state.map { $0.hotMediaQueryState?.footerState ?? .empty }.drive(footerState),
                 presenter.collectionView.rx.shouldHideNavigationBar().emit(to: me.rx.setNavigationBarHidden(animated: true)),

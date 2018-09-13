@@ -101,7 +101,7 @@ class ImageDetailCell: RxCollectionViewCell {
         if item.isInvalidated { return }
         
         item.rx.observe()
-            .debug("MediumObject", trimOutput: false)
+//            .debug("MediumObject", trimOutput: false)
             .asDriverOnErrorRecoverEmpty()
             .drive(rxItem)
             .disposed(by: disposeBag)
@@ -186,17 +186,17 @@ struct StarButtonPresenter {
     
     static func isMediumStared(base: UIButton) -> Binder<Bool?> {
         return Binder(base) { button, isStared in
-            button.isUserInteractionEnabled = isStared == false
+            button.isUserInteractionEnabled = isStared != true
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
-                guard let isStared = isStared else {
-                    button.alpha = 0
-                    return
-                }
-                button.alpha =  1
-                if !isStared {
-                    button.tintColor = .gray
-                } else {
+//                guard let isStared = isStared else {
+//                    button.alpha = 0
+//                    return
+//                }
+//                button.alpha =  1
+                if isStared == true {
                     button.tintColor = .secondary
+                } else {
+                    button.tintColor = .gray
                 }
             })
         }
@@ -205,15 +205,15 @@ struct StarButtonPresenter {
     static func isSelected(base: UIButton) -> Binder<Bool?> {
         return Binder(base) { button, isSelected in
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
-                guard let isSelected = isSelected else {
-                    button.alpha = 0
-                    return
-                }
-                button.alpha =  1
-                if !isSelected {
-                    button.tintColor = .gray
-                } else {
+//                guard let isSelected = isSelected else {
+//                    button.alpha = 0
+//                    return
+//                }
+//                button.alpha =  1
+                if isSelected == true {
                     button.tintColor = .secondary
+                } else {
+                    button.tintColor = .gray
                 }
             })
         }

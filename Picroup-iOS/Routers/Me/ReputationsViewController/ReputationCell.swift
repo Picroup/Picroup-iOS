@@ -25,9 +25,9 @@ class ReputationCell: RxTableViewCell {
         mediumImageView.motionIdentifier = item.medium?._id
         switch item.kind {
         case ReputationKind.saveMedium.rawValue?:
-            contentLabel.text = "分享了图片"
+            contentLabel.text = "分享了\(item.medium?.kindDescripting ?? "")"
         case ReputationKind.starMedium.rawValue?:
-            contentLabel.text = "给你的图片续命"
+            contentLabel.text = "给你的\(item.medium?.kindDescripting ?? "")续命"
         case ReputationKind.followUser.rawValue?:
             contentLabel.text = "关注了你"
         default:
@@ -37,3 +37,15 @@ class ReputationCell: RxTableViewCell {
 }
 
 
+extension MediumObject {
+    var kindDescripting: String {
+        switch self.kind {
+        case MediumKind.image.rawValue?:
+            return "图片"
+        case MediumKind.video.rawValue?:
+            return "视频"
+        default:
+            return "媒体"
+        }
+    }
+}

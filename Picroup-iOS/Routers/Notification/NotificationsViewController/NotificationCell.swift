@@ -23,9 +23,9 @@ final class NotificationCell: RxTableViewCell {
         mediumImageView.motionIdentifier = item.medium?._id
         switch item.kind {
         case NotificationKind.commentMedium.rawValue?:
-            contentLabel.text = "评论了你的图片"
+            contentLabel.text = "评论了你的\(item.medium?.kindDescripting ?? "")"
         case NotificationKind.starMedium.rawValue?:
-            contentLabel.text = "给你的图片续命"
+            contentLabel.text = "给你的\(item.medium?.kindDescripting ?? "")续命"
         case NotificationKind.followUser.rawValue?:
             contentLabel.text = "关注了你"
         default:

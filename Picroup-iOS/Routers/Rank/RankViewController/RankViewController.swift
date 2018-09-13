@@ -41,7 +41,7 @@ final class RankViewController: BaseViewController, IsStateViewController {
                     .retryWhen { errors -> Observable<Int> in
                         errors.enumerated().flatMapLatest { Observable<Int>.timer(5 * RxTimeInterval($0.index + 1), scheduler: MainScheduler.instance) }
                     }
-                    .delay(0.3, scheduler: MainScheduler.instance)
+                    .delay(1, scheduler: MainScheduler.instance)
         },
             starMedium: { query in
                 return ApolloClient.shared.rx.perform(mutation: query)
