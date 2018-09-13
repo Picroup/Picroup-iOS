@@ -15,7 +15,7 @@ protocol WaterFlowLayoutDelegate: AnyObject {
 class WaterFlowLayout: UICollectionViewLayout {
     
     struct Configuration {
-        var minCellWidth: CGFloat = 128
+        var minCellWidth: CGFloat = 196
         var cellSpace: CGFloat = 8
         var lineSpace: CGFloat = 8
     }
@@ -64,7 +64,7 @@ extension WaterFlowLayout {
         let (columnCount, cellWidth, cellUnitWidth): (Int, CGFloat, CGFloat) = {
             let cellUnitsWidth = collectionViewWidth - configuration.cellSpace
             let minCellUnitsWidth = configuration.minCellWidth + configuration.cellSpace
-            let columnCount = Int(cellUnitsWidth / minCellUnitsWidth)
+            let columnCount = max(2, Int(cellUnitsWidth / minCellUnitsWidth))
             let cellUnitWidth = cellUnitsWidth / CGFloat(columnCount)
             let cellWidth = cellUnitWidth - configuration.cellSpace
             return (columnCount, cellWidth, cellUnitWidth)

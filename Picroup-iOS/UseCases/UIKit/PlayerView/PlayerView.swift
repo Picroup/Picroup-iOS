@@ -94,6 +94,7 @@ public final class PlayerView: UIView {
     func reset() {
         self.url = nil
         player.pause()
+        (player.currentItem?.asset as? DVURLAsset)?.cancelLoading()
         player.replaceCurrentItem(with: nil)
         removeObservers()
     }

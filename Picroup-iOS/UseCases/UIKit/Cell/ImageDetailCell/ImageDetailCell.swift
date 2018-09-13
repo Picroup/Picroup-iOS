@@ -205,11 +205,11 @@ struct StarButtonPresenter {
     static func isSelected(base: UIButton) -> Binder<Bool?> {
         return Binder(base) { button, isSelected in
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
-//                guard let isSelected = isSelected else {
-//                    button.alpha = 0
-//                    return
-//                }
-//                button.alpha =  1
+                guard let isSelected = isSelected else {
+                    button.alpha = 0
+                    return
+                }
+                button.alpha =  1
                 if isSelected == true {
                     button.tintColor = .secondary
                 } else {
