@@ -90,7 +90,7 @@ class RankMediumCell: RxCollectionViewCell {
         return Binder(self) { cell, item in
             let viewModel = MediumViewModel(item: item)
             if viewModel.kind == MediumKind.image.rawValue {
-                cell.imageView.setImage(with: viewModel.imageViewURL)
+                cell.imageView.setImage(with: viewModel.imageViewURL?.toURL())
                 cell.suggestUpdateLabel.isHidden = true
             } else {
                 cell.imageView.image = nil

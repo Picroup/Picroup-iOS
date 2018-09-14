@@ -157,7 +157,7 @@ class ImageDetailCell: RxCollectionViewCell {
             if item.isInvalidated { return }
             let viewModel = ImageDetailViewModel(medium: item)
             if viewModel.kind == MediumKind.image.rawValue {
-                cell.imageView.setImage(with: viewModel.imageViewURL)
+                cell.imageView.setImage(with: viewModel.imageViewURL?.toURL())
                 cell.suggestUpdateLabel.isHidden = true
             } else {
                 cell.imageView.image = nil

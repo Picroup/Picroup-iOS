@@ -85,7 +85,7 @@ final class MeViewController: ShowNavigationBarViewController, IsStateViewContro
             let _events = PublishRelay<Event>()
             
             let subscriptions: [Disposable] = [
-                appStore.me().drive(presenter.me),
+                appStore.me().map { $0 as UserPresentable }.drive(presenter.me),
                 state.map { $0.tabState?.selectedIndex ?? 0 }.distinctUntilChanged().drive(presenter.selectedTabIndex),
                 state.map { [Section(model: "", items: $0.myMediaItems())] }
                     .drive(presenter.myMediaPresenter.items(

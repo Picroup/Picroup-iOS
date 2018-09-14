@@ -108,7 +108,6 @@
 		454F72A2208DD1AA00850471 /* MyMedia.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 454F72A1208DD1AA00850471 /* MyMedia.graphql */; };
 		45517D4020BCDCA800F2D7DE /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D3F20BCDCA800F2D7DE /* NotificationCell.swift */; };
 		45517D4220BCDCC500F2D7DE /* ReputationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4120BCDCC500F2D7DE /* ReputationCell.swift */; };
-		45517D4420BCDCD900F2D7DE /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4320BCDCD900F2D7DE /* UserViewModel.swift */; };
 		45517D4620BCDCF900F2D7DE /* FollowButtonPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4520BCDCF900F2D7DE /* FollowButtonPresenter.swift */; };
 		45517D4820BCDD3E00F2D7DE /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4720BCDD3E00F2D7DE /* CommentCell.swift */; };
 		45517D4A20BCDD8000F2D7DE /* CollectionLoadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45517D4920BCDD8000F2D7DE /* CollectionLoadFooterView.swift */; };
@@ -311,6 +310,7 @@
 		45BA0D83209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45BA0D82209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql */; };
 		45BA0D8520903A020002E1D5 /* NotificationsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D8420903A020002E1D5 /* NotificationsStateObject.swift */; };
 		45BA0D8A20903C760002E1D5 /* NotificationsViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D8920903C760002E1D5 /* NotificationsViewPresenter.swift */; };
+		45BC52AF214B43F3009B87AF /* UserPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC52AE214B43F3009B87AF /* UserPresentable.swift */; };
 		45C02050212528070095DB0C /* PresignedPutURL.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C0204F212528070095DB0C /* PresignedPutURL.graphql */; };
 		45C1994820A973DD001924B9 /* MediumObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994720A973DD001924B9 /* MediumObject.swift */; };
 		45C1994A20A97402001924B9 /* UserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994920A97402001924B9 /* UserObject.swift */; };
@@ -498,7 +498,6 @@
 		454F72A1208DD1AA00850471 /* MyMedia.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyMedia.graphql; sourceTree = "<group>"; };
 		45517D3F20BCDCA800F2D7DE /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		45517D4120BCDCC500F2D7DE /* ReputationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationCell.swift; sourceTree = "<group>"; };
-		45517D4320BCDCD900F2D7DE /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		45517D4520BCDCF900F2D7DE /* FollowButtonPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowButtonPresenter.swift; sourceTree = "<group>"; };
 		45517D4720BCDD3E00F2D7DE /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		45517D4920BCDD8000F2D7DE /* CollectionLoadFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionLoadFooterView.swift; sourceTree = "<group>"; };
@@ -703,6 +702,7 @@
 		45BA0D82209039AC0002E1D5 /* MarkNotificationsAsViewed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MarkNotificationsAsViewed.graphql; sourceTree = "<group>"; };
 		45BA0D8420903A020002E1D5 /* NotificationsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsStateObject.swift; sourceTree = "<group>"; };
 		45BA0D8920903C760002E1D5 /* NotificationsViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewPresenter.swift; sourceTree = "<group>"; };
+		45BC52AE214B43F3009B87AF /* UserPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresentable.swift; sourceTree = "<group>"; };
 		45C0204F212528070095DB0C /* PresignedPutURL.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = PresignedPutURL.graphql; sourceTree = "<group>"; };
 		45C1994720A973DD001924B9 /* MediumObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumObject.swift; sourceTree = "<group>"; };
 		45C1994920A97402001924B9 /* UserObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserObject.swift; sourceTree = "<group>"; };
@@ -958,7 +958,6 @@
 			children = (
 				451CD33A207D0BB60063A972 /* MeViewController.swift */,
 				45D04F83208E0EAA00AC2226 /* MePresenter.swift */,
-				45517D4320BCDCD900F2D7DE /* UserViewModel.swift */,
 			);
 			path = MeViewController;
 			sourceTree = "<group>";
@@ -1542,6 +1541,7 @@
 			children = (
 				4561DE612100407200F77510 /* Cell */,
 				45A6810C20FF23B80070606B /* PlayerView */,
+				45BC52AD214B43D8009B87AF /* Presentable */,
 				456D145F21058B43008EDD41 /* Presenter */,
 				45F55F8D21070154002BF481 /* ProgressView */,
 				455D69032080409A00C651A0 /* BaseNavigationController.swift */,
@@ -1837,6 +1837,14 @@
 				45517D4120BCDCC500F2D7DE /* ReputationCell.swift */,
 			);
 			path = ReputationsViewController;
+			sourceTree = "<group>";
+		};
+		45BC52AD214B43D8009B87AF /* Presentable */ = {
+			isa = PBXGroup;
+			children = (
+				45BC52AE214B43F3009B87AF /* UserPresentable.swift */,
+			);
+			path = Presentable;
 			sourceTree = "<group>";
 		};
 		45C1994B20A983BC001924B9 /* RxCocoa */ = {
@@ -2389,7 +2397,6 @@
 				4595F214207A0CA20040E5FA /* UIImage+Color.swift in Sources */,
 				453B95BC20C4D7090043D915 /* UpdateUserPresenter.swift in Sources */,
 				457B1BA1205FF2A100BEDDF1 /* API.swift in Sources */,
-				45517D4420BCDCD900F2D7DE /* UserViewModel.swift in Sources */,
 				45163202213BCFE700CC3E55 /* ResetPasswordQueryStateObject.swift in Sources */,
 				45662AF9212E8A8A00964BC9 /* UserBlockingsStateObject+Event.swift in Sources */,
 				4516321E213E16DB00CC3E55 /* ShareMediumQueryStateObject.swift in Sources */,
@@ -2427,6 +2434,7 @@
 				45C1994820A973DD001924B9 /* MediumObject.swift in Sources */,
 				458C050520C91C07004EB2D8 /* ImageGenerator.swift in Sources */,
 				45B0205A20AEA35600BD5D8F /* UserStateObject.swift in Sources */,
+				45BC52AF214B43F3009B87AF /* UserPresentable.swift in Sources */,
 				456E910A20FC9B540006FFA8 /* MinioHelper.swift in Sources */,
 				45662AD3212E891000964BC9 /* HomeStateObject+Event.swift in Sources */,
 				45FC0BF320A42F26006AAF3D /* UserViewController.swift in Sources */,

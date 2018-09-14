@@ -76,17 +76,19 @@ class MePresenter: NSObject {
         navigationItem.rightViews = [moreButton]
     }
     
-    var me: Binder<UserObject?> {
-        return Binder(self) { presenter, me in
-            let viewModel = UserViewModel(user: me)
-            presenter.userAvatarImageView.setUserAvatar(with: me)
-            presenter.navigationItem?.titleLabel.text = viewModel.displayName
-            presenter.navigationItem?.detailLabel.text = viewModel.username
-            presenter.reputationCountLabel.text = viewModel.reputation
-            presenter.followersCountLabel.text = viewModel.followersCount
-            presenter.followingsCountLabel.text = viewModel.followingsCount
-            presenter.gainedReputationCountButton.setTitle(viewModel.gainedReputationCount, for: .normal)
-            presenter.gainedReputationCountButton.isHidden = viewModel.isGainedReputationCountHidden
+    var me: Binder<UserPresentable?> {
+        return Binder(self) { presenter, user in
+            guard let user = user, !user.isInvalidated else {
+                return
+            }
+            presenter.userAvatarImageView.setUserAvatar(with: user)
+            presenter.navigationItem?.titleLabel.text = user.displayNameDisplay
+            presenter.navigationItem?.detailLabel.text = user.usernameDisplay
+            presenter.reputationCountLabel.text = user.reputationDisplay
+            presenter.followersCountLabel.text = user.followersCountDisplay
+            presenter.followingsCountLabel.text = user.followingsCountDisplay
+            presenter.gainedReputationCountButton.setTitle(user.gainedReputationCountDisplay, for: .normal)
+            presenter.gainedReputationCountButton.isHidden = user.isGainedReputationCountHidden
         }
     }
     
