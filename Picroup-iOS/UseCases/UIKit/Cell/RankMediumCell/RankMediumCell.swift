@@ -9,23 +9,32 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Material
 
 struct MediumViewModel {
     let imageViewURL: String?
     let imageViewMotionIdentifier: String?
     let progress: Float
+    let remainTimeLabelText: String?
     let kind: String?
-    let lifeBarMotionIdentifier: String?
-    let starPlaceholderViewMotionIdentifier: String?
+    let stared: Bool?
     let placeholderColor: UIColor
+    let cellMotionIdentifier: String?
+    let lifeBarMotionIdentifier: String?
+    let remainTimeLabelMotionIdentifier: String?
+    let starPlaceholderViewMotionIdentifier: String?
     
     init(item: MediumObject) {
         guard !item.isInvalidated else {
             self.imageViewURL = nil
             self.imageViewMotionIdentifier = nil
             self.progress = 0
+            self.remainTimeLabelText = "\(0) 周"
             self.kind = nil
+            self.stared = nil
+            self.cellMotionIdentifier = nil
             self.lifeBarMotionIdentifier = nil
+            self.remainTimeLabelMotionIdentifier = nil
             self.starPlaceholderViewMotionIdentifier = nil
             self.placeholderColor = .background
             return
@@ -36,8 +45,12 @@ struct MediumViewModel {
         self.imageViewURL = item.url
         self.imageViewMotionIdentifier = item._id
         self.progress = Float(remainTime / 12.0.weeks)
+        self.remainTimeLabelText = Moment.string(from: item.endedAt.value)
         self.kind = item.kind
+        self.stared = item.stared.value
+        self.cellMotionIdentifier = "cell\(item._id)"
         self.lifeBarMotionIdentifier = "lifeBar_\(item._id)"
+        self.remainTimeLabelMotionIdentifier = "remainTime_\(item._id)"
         self.starPlaceholderViewMotionIdentifier = "starButton_\(item._id)"
         self.placeholderColor = item.placeholderColor
     }
@@ -46,15 +59,31 @@ struct MediumViewModel {
 class RankMediumCell: RxCollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var progressView: ProgressView!
-    @IBOutlet weak var starPlaceholderView: UIView!
+    @IBOutlet weak var starButton: UIButton! {
+        didSet { starButton.setImage(Icon.favorite, for: .normal)}
+    }
+    @IBOutlet weak var remainTimeLabel: UILabel!
     @IBOutlet weak var suggestUpdateLabel: UILabel!
     
-    func configure(with item: MediumObject) {
+    func configure(
+        with item: MediumObject,
+        onStarButtonTap: ((String) -> Void)?
+        ) {
+        
         if item.isInvalidated { return }
+
         Observable.from(object: item)
             .asDriverOnErrorRecoverEmpty()
             .drive(rxItem)
             .disposed(by: disposeBag)
+        
+        let mediumId = item._id
+
+        if let onStarButtonTap = onStarButtonTap {
+            starButton.rx.tap
+                .subscribe(onNext: { onStarButtonTap(mediumId) })
+                .disposed(by: disposeBag)
+        }
     }
     
     private var rxItem: Binder<MediumObject> {
@@ -67,12 +96,16 @@ class RankMediumCell: RxCollectionViewCell {
                 cell.imageView.image = nil
                 cell.suggestUpdateLabel.isHidden = false
             }
+            cell.remainTimeLabel.text = viewModel.remainTimeLabelText
             cell.imageView.backgroundColor = viewModel.placeholderColor
             cell.imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
             cell.transition(.fadeOut, .scale(0.75))
             cell.progressView.progress = viewModel.progress
+            cell.motionIdentifier = viewModel.cellMotionIdentifier
             cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
-            cell.starPlaceholderView.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier
+            cell.remainTimeLabel.motionIdentifier = viewModel.remainTimeLabelMotionIdentifier
+            cell.starButton.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier
+            StarButtonPresenter.isMediumStared(base: cell.starButton).onNext(viewModel.stared)
         }
     }
     

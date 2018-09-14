@@ -75,7 +75,7 @@ final class UserViewController: ShowNavigationBarViewController, IsStateViewCont
         },
             queryUserMedia: { query in
                 return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                    .map { $0?.data?.user?.media.fragments.cursorMediaFragment }.forceUnwrap()
+                    .map { ($0?.data?.user?.media.snapshot).map(CursorMediaFragment.init(snapshot: )) }.forceUnwrap()
         },
             followUser: { query in
                 return ApolloClient.shared.rx.perform(mutation: query)
@@ -88,6 +88,10 @@ final class UserViewController: ShowNavigationBarViewController, IsStateViewCont
             blockUser: { query in
                 return ApolloClient.shared.rx.perform(mutation: query)
                     .map { $0?.data?.blockUser }.forceUnwrap()
+        },
+            starMedium: { query in
+                return ApolloClient.shared.rx.perform(mutation: query)
+                    .map { $0?.data?.starMedium }.forceUnwrap()
         })
             .drive()
             .disposed(by: disposeBag)
@@ -95,14 +99,18 @@ final class UserViewController: ShowNavigationBarViewController, IsStateViewCont
     }
     
     var uiFeedback: State.DriverFeedback {
-        typealias Section = MediaPreserter.Section
         weak var weakSelf = self
         return bind(self) { (me, state) -> Bindings<UserStateObject.Event> in
+            typealias Section = MediaPreserter.Section
+            let _events = PublishRelay<Event>()
             let presenter = me.presenter!
             let myMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let subscriptions: [Disposable] = [
                 state.map { $0.userQueryState?.user }.drive(presenter.user),
-                state.map { [Section(model: "", items: $0.userMediaItems())] }.drive(presenter.myMediaPresenter.items(footerState: myMediaFooterState.asDriver())),
+                state.map { [Section(model: "", items: $0.userMediaItems())] }.drive(presenter.myMediaPresenter.items(
+                    footerState: myMediaFooterState.asDriver(),
+                    onStarButtonTap: { _events.accept(.onTriggerStarMedium($0)) }
+                )),
                 state.map { $0.userMediaQueryState?.footerState ?? .empty }.drive(myMediaFooterState),
                 state.map { $0.userMediaQueryState?.isEmpty ?? false }.drive(presenter.isUserMediaEmpty),
                 presenter.myMediaCollectionView.rx.shouldHideNavigationBar().emit(onNext: {
@@ -113,6 +121,7 @@ final class UserViewController: ShowNavigationBarViewController, IsStateViewCont
                 ]
             let events: [Signal<Event>] = [
                 .of(.onTriggerReloadUser, .onTriggerReloadUserMedia),
+                _events.asSignal(),
                 presenter.moreButton.rx.tap.asSignal().withLatestFrom(state).flatMapLatest(mapMoreButtonTapToEvent(sender: presenter.moreButton)),
                 state.flatMapLatest {
                     ($0.userMediaQueryState?.shouldQueryMore ?? false)

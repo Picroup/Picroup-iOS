@@ -9,18 +9,35 @@
 import UIKit
 import RxSwift
 import RxCocoa
-
+import Material
 
 class RankVideoCell: RxCollectionViewCell {
     @IBOutlet weak var playerView: PlayerView!
     @IBOutlet weak var progressView: ProgressView!
-    @IBOutlet weak var starPlaceholderView: UIView!
+    @IBOutlet weak var starButton: UIButton! {
+        didSet { starButton.setImage(Icon.favorite, for: .normal)}
+    }
+    @IBOutlet weak var remainTimeLabel: UILabel!
     
-    func configure(with item: MediumObject) {
+    func configure(
+        with item: MediumObject,
+        onStarButtonTap: ((String) -> Void)?
+        ) {
+        
+        if item.isInvalidated { return }
+
         Observable.from(object: item)
             .asDriverOnErrorRecoverEmpty()
             .drive(rxItem)
             .disposed(by: disposeBag)
+        
+        let mediumId = item._id
+
+        if let onStarButtonTap = onStarButtonTap {
+            starButton.rx.tap
+                .subscribe(onNext: { onStarButtonTap(mediumId) })
+                .disposed(by: disposeBag)
+        }
     }
     
     private var rxItem: Binder<MediumObject> {
@@ -28,12 +45,16 @@ class RankVideoCell: RxCollectionViewCell {
             //        if item.isInvalidated { return }
             let viewModel = MediumViewModel(item: item)
             //        playerView.play(with: item.detail?.videoMinioId)
+            cell.remainTimeLabel.text = viewModel.remainTimeLabelText
             cell.playerView.backgroundColor = viewModel.placeholderColor
             cell.playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
             cell.transition(.fadeOut, .scale(0.75))
             cell.progressView.progress = viewModel.progress
+            cell.motionIdentifier = viewModel.cellMotionIdentifier
             cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
-            cell.starPlaceholderView.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier
+            cell.remainTimeLabel.motionIdentifier = viewModel.remainTimeLabelMotionIdentifier
+            cell.starButton.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier
+            StarButtonPresenter.isMediumStared(base: cell.starButton).onNext(viewModel.stared)
         }
     }
 }

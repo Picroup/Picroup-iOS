@@ -60,28 +60,43 @@ final class MeViewController: ShowNavigationBarViewController, IsStateViewContro
             shouldQuery: { [weak self] in self?.shouldReactQuery ?? false  },
             queryMyMedia: { query in
                 return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                    .map { $0?.data?.user?.media.fragments.cursorMediaFragment }.forceUnwrap()
+                    .map { ($0?.data?.user?.media.snapshot).map(CursorMediaFragment.init(snapshot: )) }.forceUnwrap()
         },
             queryMyStaredMedia: { query in
                 return ApolloClient.shared.rx.fetch(query: query, cachePolicy: .fetchIgnoringCacheData)
-                    .map { $0?.data?.user?.staredMedia.fragments.cursorMediaFragment }.forceUnwrap()
+                    .map { ($0?.data?.user?.staredMedia.snapshot).map(CursorMediaFragment.init(snapshot: )) }.forceUnwrap()
+        },
+            starMedium: { query in
+                return ApolloClient.shared.rx.perform(mutation: query)
+                    .map { $0?.data?.starMedium }.forceUnwrap()
         })
             .drive()
             .disposed(by: disposeBag)
     }
     
     func uiFeedback(appStateService: AppStateService, appStore: AppStateStore) -> State.DriverFeedback {
-        typealias Section = MediaPreserter.Section
         weak var weakSelf = self
         return bind(self) { (me, state) in
+            
+            typealias Section = MediaPreserter.Section
             let presenter = me.presenter!
             let myMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
             let myStaredMediaFooterState = BehaviorRelay<LoadFooterViewState>(value: .empty)
+            let _events = PublishRelay<Event>()
+            
             let subscriptions: [Disposable] = [
                 appStore.me().drive(presenter.me),
                 state.map { $0.tabState?.selectedIndex ?? 0 }.distinctUntilChanged().drive(presenter.selectedTabIndex),
-                state.map { [Section(model: "", items: $0.myMediaItems())] }.drive(presenter.myMediaPresenter.items(footerState: myMediaFooterState.asDriver())),
-                state.map { [Section(model: "", items: $0.myStaredMediaItems())] }.drive(presenter.myStaredMediaPresenter.items(footerState: myStaredMediaFooterState.asDriver())),
+                state.map { [Section(model: "", items: $0.myMediaItems())] }
+                    .drive(presenter.myMediaPresenter.items(
+                        footerState: myMediaFooterState.asDriver(),
+                        onStarButtonTap: { _events.accept(.onTriggerStarMedium($0)) }
+                    )),
+                state.map { [Section(model: "", items: $0.myStaredMediaItems())] }
+                    .drive(presenter.myStaredMediaPresenter.items(
+                        footerState: myStaredMediaFooterState.asDriver(),
+                        onStarButtonTap: { _events.accept(.onTriggerStarMedium($0)) }
+                    )),
                 state.map { $0.myMediaQueryState?.footerState ?? .empty }.drive(myMediaFooterState),
                 state.map { $0.myStaredMediaQueryState?.footerState ?? .empty }.drive(myStaredMediaFooterState),
                 state.map { $0.myMediaQueryState?.isEmpty ?? false }.drive(presenter.isMyMediaEmpty),
@@ -102,6 +117,7 @@ final class MeViewController: ShowNavigationBarViewController, IsStateViewContro
             let events: [Signal<Event>] = [
                 .of(.onTriggerReloadMyMedia, .onTriggerReloadMyStaredMedia),
                 presenter.moreButton.rx.tap.asSignal().withLatestFrom(state).flatMapLatest(mapMoreButtonTapToEvent(sender: presenter.moreButton)),
+                _events.asSignal(),
                 presenter.myMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myMedia) },
                 presenter.myStaredMediaButton.rx.tap.asSignal().map { .onChangeSelectedTab(.myStaredMedia) },
                 state.flatMapLatest {

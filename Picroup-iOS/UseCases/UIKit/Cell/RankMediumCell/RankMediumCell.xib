@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,65 +15,90 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RankMediumCell" id="zxf-7a-hWq" customClass="RankMediumCell" customModule="Picroup_iOS" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="184" height="186"/>
+            <rect key="frame" x="0.0" y="0.0" width="184" height="256"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                <rect key="frame" x="0.0" y="0.0" width="184" height="186"/>
+                <rect key="frame" x="0.0" y="0.0" width="184" height="256"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I3t-Tc-y1P">
-                        <rect key="frame" x="0.0" y="0.0" width="184" height="182"/>
-                        <color key="backgroundColor" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
-                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="0N6-hO-ztb">
+                        <rect key="frame" x="0.0" y="0.0" width="184" height="256"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I3t-Tc-y1P">
+                                <rect key="frame" x="0.0" y="0.0" width="184" height="204"/>
+                                <color key="backgroundColor" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xDI-aD-DyT" customClass="ProgressView" customModule="Picroup_iOS" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="204" width="184" height="4"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="4" id="Znr-cd-NdY"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9nX-FV-ud2">
+                                <rect key="frame" x="0.0" y="208" width="184" height="48"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SxC-Bu-HSJ">
+                                        <rect key="frame" x="132" y="6" width="36" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="SxC-Bu-HSJ" secondAttribute="height" multiplier="1:1" id="0Z5-S0-Hb4"/>
+                                            <constraint firstAttribute="width" constant="36" id="KMP-Zc-fkd"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.42655369640000002" green="0.475846082" blue="0.4802647531" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="ic_favorite_white"/>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 周" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="89S-Vh-FTR">
+                                        <rect key="frame" x="16" y="14.5" width="108" height="19.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="89S-Vh-FTR" firstAttribute="leading" secondItem="9nX-FV-ud2" secondAttribute="leading" constant="16" id="8fR-am-2Gu"/>
+                                    <constraint firstAttribute="height" constant="48" id="dX0-ax-GT2"/>
+                                    <constraint firstItem="SxC-Bu-HSJ" firstAttribute="leading" secondItem="89S-Vh-FTR" secondAttribute="trailing" constant="8" symbolic="YES" id="hKA-Tg-6Xb"/>
+                                    <constraint firstAttribute="trailing" secondItem="SxC-Bu-HSJ" secondAttribute="trailing" constant="16" id="jf6-Xg-SAa"/>
+                                    <constraint firstItem="89S-Vh-FTR" firstAttribute="centerY" secondItem="SxC-Bu-HSJ" secondAttribute="centerY" id="mQm-ai-ehR"/>
+                                    <constraint firstItem="SxC-Bu-HSJ" firstAttribute="centerY" secondItem="9nX-FV-ud2" secondAttribute="centerY" id="yII-px-NuM"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                    </stackView>
                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="应用版本过低，请升级查看" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wzf-Hb-sqk">
-                        <rect key="frame" x="16" y="70" width="152" height="42.5"/>
+                        <rect key="frame" x="16" y="81" width="152" height="42.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uWy-sn-cmQ">
-                        <rect key="frame" x="175" y="185" width="1" height="1"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="1" id="fNA-t0-5mA"/>
-                            <constraint firstAttribute="width" constant="1" id="jaS-Jb-QGM"/>
-                        </constraints>
-                    </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xDI-aD-DyT" customClass="ProgressView" customModule="Picroup_iOS" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="182" width="184" height="4"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="4" id="Znr-cd-NdY"/>
-                        </constraints>
-                    </view>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="xDI-aD-DyT" firstAttribute="leading" secondItem="zxf-7a-hWq" secondAttribute="leading" id="CCe-u0-30U"/>
-                <constraint firstAttribute="trailing" secondItem="I3t-Tc-y1P" secondAttribute="trailing" id="GGi-Gg-4v6"/>
-                <constraint firstAttribute="trailing" secondItem="xDI-aD-DyT" secondAttribute="trailing" id="OY7-i7-K6g"/>
-                <constraint firstItem="I3t-Tc-y1P" firstAttribute="top" secondItem="zxf-7a-hWq" secondAttribute="top" id="QgB-90-SWT"/>
-                <constraint firstItem="I3t-Tc-y1P" firstAttribute="leading" secondItem="zxf-7a-hWq" secondAttribute="leading" id="Tw7-Q2-amr"/>
-                <constraint firstAttribute="trailing" secondItem="uWy-sn-cmQ" secondAttribute="trailing" constant="8" id="YEF-so-eoU"/>
-                <constraint firstAttribute="bottom" secondItem="uWy-sn-cmQ" secondAttribute="bottom" id="Zar-w4-Yqr"/>
-                <constraint firstItem="Wzf-Hb-sqk" firstAttribute="centerY" secondItem="I3t-Tc-y1P" secondAttribute="centerY" id="hlT-e6-qDP"/>
+                <constraint firstAttribute="trailing" secondItem="0N6-hO-ztb" secondAttribute="trailing" id="HgH-CY-bW9"/>
+                <constraint firstItem="0N6-hO-ztb" firstAttribute="top" secondItem="zxf-7a-hWq" secondAttribute="top" id="TXh-0m-KPk"/>
+                <constraint firstItem="Wzf-Hb-sqk" firstAttribute="centerY" secondItem="I3t-Tc-y1P" secondAttribute="centerY" id="b7l-ql-2bq"/>
+                <constraint firstAttribute="bottom" secondItem="0N6-hO-ztb" secondAttribute="bottom" id="n1O-kW-iYz"/>
+                <constraint firstItem="0N6-hO-ztb" firstAttribute="leading" secondItem="zxf-7a-hWq" secondAttribute="leading" id="prN-Yz-vba"/>
                 <constraint firstItem="Wzf-Hb-sqk" firstAttribute="leading" secondItem="zxf-7a-hWq" secondAttribute="leadingMargin" id="pt6-ex-NdB"/>
-                <constraint firstItem="xDI-aD-DyT" firstAttribute="top" secondItem="I3t-Tc-y1P" secondAttribute="bottom" id="swh-uz-aCv"/>
                 <constraint firstAttribute="trailingMargin" secondItem="Wzf-Hb-sqk" secondAttribute="trailing" id="xNc-jp-mdS"/>
-                <constraint firstAttribute="bottom" secondItem="xDI-aD-DyT" secondAttribute="bottom" id="yVG-G2-XxA"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="oPO-NS-9e2"/>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                    <real key="value" value="2"/>
+                    <integer key="value" value="5"/>
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="imageView" destination="I3t-Tc-y1P" id="Nuv-WY-x7I"/>
                 <outlet property="progressView" destination="xDI-aD-DyT" id="Dg6-kN-Nf5"/>
-                <outlet property="starPlaceholderView" destination="uWy-sn-cmQ" id="IvV-Km-KKS"/>
+                <outlet property="remainTimeLabel" destination="89S-Vh-FTR" id="ONl-AD-dZ8"/>
+                <outlet property="starButton" destination="SxC-Bu-HSJ" id="SNs-Hw-QIg"/>
                 <outlet property="suggestUpdateLabel" destination="Wzf-Hb-sqk" id="rqO-3f-InH"/>
             </connections>
             <point key="canvasLocation" x="27" y="87"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="ic_favorite_white" width="24" height="24"/>
+    </resources>
 </document>

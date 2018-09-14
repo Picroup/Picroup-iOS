@@ -12,8 +12,9 @@ final class UserMediaQueryStateObject: CursorMediaQueryStateObject {}
 extension UserMediaQueryStateObject {
     func query(userId: String?, currentUserId: String?) -> MyMediaQuery? {
         guard let userId = userId else { return nil }
+        let (queryUserId, withStared) = createWithStarInfo(currentUserId: currentUserId)
         return trigger
-            ? MyMediaQuery(userId: userId, cursor: cursorMedia?.cursor.value, queryUserId: currentUserId)
+            ? MyMediaQuery(userId: userId, cursor: cursorMedia?.cursor.value, queryUserId: queryUserId, withStared: withStared)
             : nil
     }
 }

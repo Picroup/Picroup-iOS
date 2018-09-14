@@ -19,7 +19,7 @@ extension ImageDetailStateObject {
         case onGetData(MediumQuery.Data.Medium?)
         case onGetError(Error)
         
-        case onTriggerStarMedium
+        case onTriggerStarMedium(String)
         case onStarMediumSuccess(StarMediumMutation.Data.StarMedium)
         case onStarMediumError(Error)
         
@@ -60,13 +60,17 @@ extension ImageDetailStateObject: IsFeedbackStateObject {
             mediumQueryState?.reduce(event: .onGetError(error), realm: realm)
             snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)
             
-        case .onTriggerStarMedium:
-            starMediumQueryState?.reduce(event: .onTrigger, realm: realm)
+        case .onTriggerStarMedium(let mediumId):
+            guard sessionState?.isLogin == true else {
+                routeState?.reduce(event: .onTriggerLogin, realm: realm)
+                return
+            }
+            starMediumQueryState?.reduce(event: .onTrigger(mediumId), realm: realm)
         case .onStarMediumSuccess(let data):
-            mediumQueryState?.medium?.reduce(event: .onStared(data.endedAt), realm: realm)
-            starMediumQueryState?.reduce(event: .onSuccess(""), realm: realm)
+//            mediumQueryState?.medium?.reduce(event: .onStared(data.endedAt), realm: realm)
+            starMediumQueryState?.reduce(event: .onSuccess(data), realm: realm)
             needUpdate?.myStaredMedia = true
-            snackbar?.reduce(event: .onUpdateMessage("感谢你给图片续命一周"), realm: realm)
+            snackbar?.reduce(event: .onUpdateMessage("感谢你给媒体续命一周"), realm: realm)
         case .onStarMediumError(let error):
             starMediumQueryState?.reduce(event: .onError(error), realm: realm)
             snackbar?.reduce(event: .onUpdateMessage(error.localizedDescription), realm: realm)

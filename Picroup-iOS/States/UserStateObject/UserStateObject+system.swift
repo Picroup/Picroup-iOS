@@ -22,7 +22,8 @@ extension UserStateObject {
         queryUserMedia: @escaping (MyMediaQuery) -> Single<CursorMediaFragment>,
         followUser: @escaping (FollowUserMutation) -> Single<FollowUserMutation.Data.FollowUser>,
         unfollowUser: @escaping (UnfollowUserMutation) -> Single<UnfollowUserMutation.Data.UnfollowUser>,
-        blockUser: @escaping (BlockUserMutation) -> Single<BlockUserMutation.Data.BlockUser>
+        blockUser: @escaping (BlockUserMutation) -> Single<BlockUserMutation.Data.BlockUser>,
+        starMedium: @escaping (StarMediumMutation) -> Single<StarMediumMutation.Data.StarMedium>
         ) -> Driver<UserStateObject> {
         
         let queryUserFeedback: DriverFeedback = react(query: { $0.userQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
@@ -55,8 +56,14 @@ extension UserStateObject {
                 .asSignal(onErrorReturnJust: Event.onBlockUserError)
         })
         
+        let starMediumFeedback: DriverFeedback = react(query: { $0.starMediumQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
+            return starMedium(query)
+                .map(Event.onStarMediumSuccess)
+                .asSignal(onErrorReturnJust: Event.onStarMediumError)
+        })
+        
         return system(
-            feedbacks: [uiFeedback, queryUserFeedback, queryUserMediaFeedback, followUserFeedback, unfollowUserFeedback, blockUserFeedback],
+            feedbacks: [uiFeedback, queryUserFeedback, queryUserMediaFeedback, followUserFeedback, unfollowUserFeedback, blockUserFeedback, starMediumFeedback],
             //            composeStates: { $0.debug("UserState", trimOutput: false) },
             composeEvents: { $0.debug("UserState.Event", trimOutput: true) }
         )

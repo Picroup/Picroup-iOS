@@ -14,10 +14,7 @@ import RxCocoa
 struct ImageDetailViewModel {
     let kind: String?
     let imageViewURL: String?
-    let imageViewMotionIdentifier: String?
     let progress: Float
-    let lifeBarMotionIdentifier: String?
-    let starButtonMotionIdentifier: String?
     let remainTimeLabelText: String?
     let commentsCountText: String
     let stared: Bool?
@@ -25,6 +22,13 @@ struct ImageDetailViewModel {
 
     let displayName: String?
     let userURL: String?
+    
+    let cellMotionIdentifier: String?
+    let imageViewMotionIdentifier: String?
+    let lifeBarMotionIdentifier: String?
+    let remainTimeLabelMotionIdentifier: String?
+    let starButtonMotionIdentifier: String?
+
 }
 
 extension ImageDetailViewModel {
@@ -33,26 +37,25 @@ extension ImageDetailViewModel {
         guard !medium.isInvalidated else {
             self.kind = nil
             self.imageViewURL = nil
-            self.imageViewMotionIdentifier = nil
             self.progress = 0
-            self.lifeBarMotionIdentifier = nil
-            self.starButtonMotionIdentifier = nil
             self.remainTimeLabelText = "\(0) 周"
             self.commentsCountText = "\(0)"
             self.stared = nil
             self.displayName = nil
             self.userURL = nil
             self.placeholderColor = .background
+            self.cellMotionIdentifier = nil
+            self.imageViewMotionIdentifier = nil
+            self.lifeBarMotionIdentifier = nil
+            self.remainTimeLabelMotionIdentifier = nil
+            self.starButtonMotionIdentifier = nil
             return
         }
         let remainTime = medium.endedAt.value?.sinceNow ?? 0
         
         self.kind = medium.kind
         self.imageViewURL = medium.url
-        self.imageViewMotionIdentifier = medium._id
         self.progress = Float(remainTime / 12.0.weeks)
-        self.lifeBarMotionIdentifier = "lifeBar_\(medium._id)"
-        self.starButtonMotionIdentifier = "starButton_\(medium._id)"
         self.remainTimeLabelText = Moment.string(from: medium.endedAt.value)
         self.commentsCountText = "  \(medium.commentsCount.value ?? 0)"
         self.stared = medium.stared.value
@@ -60,6 +63,12 @@ extension ImageDetailViewModel {
 
         self.displayName = medium.user?.displayName
         self.userURL = medium.user?.url
+        
+        self.cellMotionIdentifier = "cell\(medium._id)"
+        self.imageViewMotionIdentifier = medium._id
+        self.lifeBarMotionIdentifier = "lifeBar_\(medium._id)"
+        self.remainTimeLabelMotionIdentifier = "remainTime_\(medium._id)"
+        self.starButtonMotionIdentifier = "starButton_\(medium._id)"
     }
 }
 
@@ -81,16 +90,18 @@ class ImageDetailCell: RxCollectionViewCell {
     func configure(
         with item: MediumObject,
         isSharing: Driver<Bool>,
-        onStarButtonTap: (() -> Void)?,
-        onCommentsTap: (() -> Void)?,
-        onImageViewTap: (() -> Void)?,
-        onUserTap: (() -> Void)?,
-        onShareTap: (() -> Void)?,
-        onMoreTap: (() -> Void)?
+        onStarButtonTap: ((String) -> Void)?,
+        onCommentsTap: ((String) -> Void)?,
+        onImageViewTap: ((String) -> Void)?,
+        onUserTap: ((String) -> Void)?,
+        onShareTap: ((String) -> Void)?,
+        onMoreTap: ((String) -> Void)?
         ) {
-
+        
+        if item.isInvalidated { return }
+        
         item.rx.observe()
-            .debug("MediumObject", trimOutput: false)
+//            .debug("MediumObject", trimOutput: false)
             .asDriverOnErrorRecoverEmpty()
             .drive(rxItem)
             .disposed(by: disposeBag)
@@ -98,43 +109,45 @@ class ImageDetailCell: RxCollectionViewCell {
         isSharing.distinctUntilChanged()
             .drive(shareButton.rx.spinning)
             .disposed(by: disposeBag)
+        
+        let mediumId = item._id
 
         if let onCommentsTap = onCommentsTap {
             commentButton.rx.tap
-                .subscribe(onNext: onCommentsTap)
+                .subscribe(onNext: { onCommentsTap(mediumId) })
                 .disposed(by: disposeBag)
         }
         
         if let onStarButtonTap = onStarButtonTap {
             starButton.rx.tap
-                .subscribe(onNext: onStarButtonTap)
+                .subscribe(onNext: { onStarButtonTap(mediumId) })
                 .disposed(by: disposeBag)
         }
         
         if let onImageViewTap = onImageViewTap {
             imageView.rx.tapGesture().when(.recognized)
                 .mapToVoid()
-                .subscribe(onNext: onImageViewTap)
+                .subscribe(onNext: { onImageViewTap(mediumId) })
                 .disposed(by: disposeBag)
         }
         
-        if let onUserTap = onUserTap {
+        if let onUserTap = onUserTap, let userId = item.userId {
             userView.rx.tapGesture().when(.recognized)
                 .mapToVoid()
-                .subscribe(onNext: onUserTap)
+                .subscribe(onNext: { onUserTap(userId) })
                 .disposed(by: disposeBag)
         }
         
         if let onShareTap = onShareTap {
             shareButton.rx.tap
                 .mapToVoid()
-                .subscribe(onNext: onShareTap)
+                .subscribe(onNext: { onShareTap(mediumId) })
                 .disposed(by: disposeBag)
         }
         
         if let onMoreTap = onMoreTap {
             moreButton.rx.tap
-                .subscribe(onNext: onMoreTap)
+                .subscribe(onNext: { onMoreTap(mediumId) })
                 .disposed(by: disposeBag)
         }
     }
@@ -151,28 +164,45 @@ class ImageDetailCell: RxCollectionViewCell {
                 cell.suggestUpdateLabel.isHidden = false
             }
             cell.imageView.backgroundColor = viewModel.placeholderColor
-            cell.imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
-            cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
             cell.progressView.progress = viewModel.progress
-            cell.starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
             cell.userAvatarImageView.setUserAvatar(with: item.user)
             cell.displayNameLabel.text = viewModel.displayName
             cell.remainTimeLabel.text = viewModel.remainTimeLabelText
             cell.commentButton.setTitle(viewModel.commentsCountText, for: .normal)
-            DispatchQueue.main.async { cell.configureStarButton(with: viewModel) }
             
+            cell.motionIdentifier = viewModel.cellMotionIdentifier
+            cell.imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
+            cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
+            cell.remainTimeLabel.motionIdentifier = viewModel.remainTimeLabelMotionIdentifier
+            cell.starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
+            DispatchQueue.main.async {
+                StarButtonPresenter.isMediumStared(base: cell.starButton).onNext(viewModel.stared)
+            }
         }
-    }
-    
-    private func configureStarButton(with viewModel: ImageDetailViewModel) {
-        starButton.isEnabled = viewModel.stared == false
-        StarButtonPresenter.isSelected(base: starButton).onNext(viewModel.stared)
     }
 }
 
 struct StarButtonPresenter {
     
-    static func isSelected(base: FABButton) -> Binder<Bool?> {
+    static func isMediumStared(base: UIButton) -> Binder<Bool?> {
+        return Binder(base) { button, isStared in
+            button.isUserInteractionEnabled = isStared != true
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
+//                guard let isStared = isStared else {
+//                    button.alpha = 0
+//                    return
+//                }
+//                button.alpha =  1
+                if isStared == true {
+                    button.tintColor = .secondary
+                } else {
+                    button.tintColor = .gray
+                }
+            })
+        }
+    }
+    
+    static func isSelected(base: UIButton) -> Binder<Bool?> {
         return Binder(base) { button, isSelected in
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
                 guard let isSelected = isSelected else {
@@ -180,12 +210,10 @@ struct StarButtonPresenter {
                     return
                 }
                 button.alpha =  1
-                if !isSelected {
-                    button.backgroundColor = .primaryText
+                if isSelected == true {
                     button.tintColor = .secondary
                 } else {
-                    button.backgroundColor = .secondary
-                    button.tintColor = .primaryText
+                    button.tintColor = .gray
                 }
             })
         }

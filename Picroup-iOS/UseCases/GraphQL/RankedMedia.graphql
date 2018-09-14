@@ -1,11 +1,9 @@
-query RankedMedia($rankBy: RankBy, $cursor: Float) {
-    rankedMedia(rankBy: $rankBy, cursor: $cursor) {
-        ...CursorMediaFragment
-    }
-}
-
-query HotMediaByTags($tags: [String!], $queryUserId: ID) {
-    hotMediaByTags(tags: $tags, queryUserId: $queryUserId) {
-        ...CursorMediaFragment
+query HotMediaByTags($tags: [String!], $userId: ID!, $withStared: Boolean!) {
+    hotMediaByTags(tags: $tags, queryUserId: $userId) {
+        cursor
+        items {
+            stared(userId: $userId) @include(if: $withStared)
+            ...MediumFragment
+        }
     }
 }

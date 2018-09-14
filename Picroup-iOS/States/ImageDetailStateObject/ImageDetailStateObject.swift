@@ -22,7 +22,7 @@ final class ImageDetailStateObject: VersionedPrimaryObject {
     @objc dynamic var deleteMediumQueryState: DeleteMediumQueryStateObject?
     @objc dynamic var blockMediumQueryState: BlockMediumQueryStateObject?
     @objc dynamic var shareMediumQueryState: ShareMediumQueryStateObject?
-    
+
     @objc dynamic var needUpdate: NeedUpdateStateObject?
     
     @objc dynamic var routeState: RouteStateObject?
@@ -35,11 +35,9 @@ extension ImageDetailStateObject {
     var mediumQuery: MediumQuery? {
         return mediumQueryState?.query(currentUserId: sessionState?.currentUserId)
     }
-    
     var starMediumQuery: StarMediumMutation? {
-        return starMediumQueryState?.query(userId: sessionState?.currentUserId, mediumId: mediumId)
+        return starMediumQueryState?.query(userId: sessionState?.currentUserId)
     }
-    
     var deleteMediumQuery: DeleteMediumMutation? {
         return deleteMediumQueryState?.query(mediumId: mediumId)
     }
@@ -60,7 +58,7 @@ extension ImageDetailStateObject {
                 "_id": mediumId,
                 "sessionState": UserSessionStateObject.createValues(),
                 "mediumQueryState": MediumQueryStateObject.createValues(mediumId: mediumId),
-                "starMediumQueryState": StarMediumQueryStateObject.createValues(id: mediumId),
+                "starMediumQueryState": StarMediumQueryStateObject.createValues(),
                 "deleteMediumQueryState": DeleteMediumQueryStateObject.createValues(id: mediumId),
                 "blockMediumQueryState": BlockMediumQueryStateObject.createValues(id: mediumId),
                 "shareMediumQueryState": ShareMediumQueryStateObject.createValues(id: mediumId),

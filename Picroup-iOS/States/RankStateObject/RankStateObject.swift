@@ -17,11 +17,19 @@ final class RankStateObject: VersionedPrimaryObject {
     @objc dynamic var sessionState: UserSessionStateObject?
     @objc dynamic var hotMediaTagsState: HotMediaTagsStateObject?
     @objc dynamic var hotMediaQueryState: TagMediaQueryStateObject?
+    @objc dynamic var starMediumQueryState: StarMediumQueryStateObject?
+    @objc dynamic var needUpdate: NeedUpdateStateObject?
     @objc dynamic var routeState: RouteStateObject?
+    @objc dynamic var snackbar: SnackbarObject?
 }
 
 extension RankStateObject {
-    var hotMediaQuery: HotMediaByTagsQuery? { return hotMediaQueryState?.query(tags: hotMediaTagsState?.selectedTags, queryUserId: sessionState?.currentUserId) }
+    var hotMediaQuery: HotMediaByTagsQuery? {
+        return hotMediaQueryState?.query(tags: hotMediaTagsState?.selectedTags, queryUserId: sessionState?.currentUserId)
+    }
+    var starMediumQuery: StarMediumMutation? {
+        return starMediumQueryState?.query(userId: sessionState?.currentUserId)
+    }
 }
 
 extension RankStateObject {
@@ -35,7 +43,10 @@ extension RankStateObject {
                 "sessionState": UserSessionStateObject.createValues(),
                 "hotMediaTagsState": HotMediaTagsStateObject.createValues(),
                 "hotMediaQueryState": TagMediaQueryStateObject.createValues(id: hotMediaId),
+                "starMediumQueryState": StarMediumQueryStateObject.createValues(),
+                "needUpdate": ["_id": _id],
                 "routeState": RouteStateObject.createValues(),
+                "snackbar": ["_id": _id],
                 ]
             let result = try realm.update(RankStateObject.self, value: value)
             try realm.write {
