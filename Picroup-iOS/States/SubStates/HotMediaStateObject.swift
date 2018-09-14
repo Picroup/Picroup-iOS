@@ -15,8 +15,9 @@ final class TagMediaQueryStateObject: CursorMediaQueryStateObject {}
 extension TagMediaQueryStateObject {
     
     func query(tags: [String]?, queryUserId: GraphQLID?) -> HotMediaByTagsQuery? {
+        let (userId, withStared) = createWithStarInfo(currentUserId: queryUserId)
         return trigger == true
-            ? HotMediaByTagsQuery(tags: tags, queryUserId: queryUserId)
+            ? HotMediaByTagsQuery(tags: tags, userId: userId, withStared: withStared)
             : nil
         
     }

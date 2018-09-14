@@ -42,7 +42,7 @@ class CreateImagePresenter: NSObject {
     }
     
     private func prepareCollectionView() {
-        collectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
+        collectionView.register(UINib(nibName: "BasicImageCell", bundle: nil), forCellWithReuseIdentifier: "BasicImageCell")
     }
     
 }

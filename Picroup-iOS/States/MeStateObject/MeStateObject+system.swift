@@ -18,7 +18,8 @@ extension MeStateObject {
         uiFeedback: @escaping DriverFeedback,
         shouldQuery: @escaping () -> Bool,
         queryMyMedia: @escaping (MyMediaQuery) -> Single<CursorMediaFragment>,
-        queryMyStaredMedia: @escaping (MyStaredMediaQuery) -> Single<CursorMediaFragment>
+        queryMyStaredMedia: @escaping (MyStaredMediaQuery) -> Single<CursorMediaFragment>,
+        starMedium: @escaping (StarMediumMutation) -> Single<StarMediumMutation.Data.StarMedium>
         ) -> Driver<MeStateObject> {
         
         let queryMyMediaMediaFeedback: DriverFeedback = react(query: { $0.myMediaQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
@@ -33,9 +34,15 @@ extension MeStateObject {
                 .asSignal(onErrorReturnJust: (Event.onGetMyStaredMediaError))
         })
         
+        let starMediumFeedback: DriverFeedback = react(query: { $0.starMediumQuery }, effects: composeEffects(shouldQuery: shouldQuery) { query in
+            return starMedium(query)
+                .map(Event.onStarMediumSuccess)
+                .asSignal(onErrorReturnJust: Event.onStarMediumError)
+        })
+        
         return system(
-            feedbacks: [uiFeedback, queryMyMediaMediaFeedback, queryMyStaredMediaFeedback],
-            //            composeStates: { $0.debug("MeState", trimOutput: false) },
+            feedbacks: [uiFeedback, queryMyMediaMediaFeedback, queryMyStaredMediaFeedback, starMediumFeedback],
+//                        composeStates: { $0.debug("MeState", trimOutput: false) },
             composeEvents: { $0.debug("MeState.Event", trimOutput: true) }
         )
     }

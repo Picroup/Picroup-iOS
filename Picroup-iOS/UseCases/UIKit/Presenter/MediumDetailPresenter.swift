@@ -32,10 +32,26 @@ final class MediumDetailPresenter: NSObject {
         collectionView.register(UINib(nibName: "RankVideoCell", bundle: nil), forCellWithReuseIdentifier: "RankVideoCell")
     }
     
-    func items(events:
-        PublishRelay<ImageDetailStateObject.Event>, isSharing: Driver<Bool>, moreButtonTap: PublishRelay<Void>) -> (Observable<[Section]>) -> Disposable {
+    func items(
+        isSharing: Driver<Bool>,
+        onStarButtonTap: ((String) -> Void)?,
+        onCommentsTap: ((String) -> Void)?,
+        onImageViewTap: ((String) -> Void)?,
+        onUserTap: ((String) -> Void)?,
+        onShareTap: ((String) -> Void)?,
+        onMoreTap: ((String) -> Void)?
+        )
+        -> (Observable<[Section]>) -> Disposable {
         dataSource = DataSource(
-            configureCell: configureCell(events: events, isSharing: isSharing, moreButtonTap: moreButtonTap),
+            configureCell: configureCell(
+                isSharing: isSharing,
+                onStarButtonTap: onStarButtonTap,
+                onCommentsTap: onCommentsTap,
+                onImageViewTap: onImageViewTap,
+                onUserTap: onUserTap,
+                onShareTap: onShareTap,
+                onMoreTap: onMoreTap
+            ),
             configureSupplementaryView: { dataSource, collectionView, title, indexPath in
                 return UICollectionReusableView()
         })
@@ -43,39 +59,60 @@ final class MediumDetailPresenter: NSObject {
     }
 }
 
-private func configureCell<D>(events:
-    PublishRelay<ImageDetailStateObject.Event>,isSharing: Driver<Bool>, moreButtonTap: PublishRelay<Void>) -> (D, UICollectionView, IndexPath, MediumDetailPresenter.CellStyle) -> UICollectionViewCell {
+private func configureCell<D>(
+    isSharing: Driver<Bool>,
+    onStarButtonTap: ((String) -> Void)?,
+    onCommentsTap: ((String) -> Void)?,
+    onImageViewTap: ((String) -> Void)?,
+    onUserTap: ((String) -> Void)?,
+    onShareTap: ((String) -> Void)?,
+    onMoreTap: ((String) -> Void)?
+    )
+    -> (D, UICollectionView, IndexPath, MediumDetailPresenter.CellStyle) -> UICollectionViewCell {
     return { dataSource, collectionView, indexPath, cellStyle in
         switch cellStyle {
         case .imageDetail(let item):
-            return configureMediumDetailCell(events: events, isSharing: isSharing, moreButtonTap: moreButtonTap)(dataSource, collectionView, indexPath, item)
+            return configureMediumDetailCell(
+                isSharing: isSharing,
+                onStarButtonTap: onStarButtonTap,
+                onCommentsTap: onCommentsTap,
+                onImageViewTap: onImageViewTap,
+                onUserTap: onUserTap, onShareTap:
+                onShareTap,
+                onMoreTap: onMoreTap
+                )(dataSource, collectionView, indexPath, item)
         case .imageTag(let tag):
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TagCollectionViewCell", for: indexPath) as! TagCollectionViewCell
             cell.tagLabel.text = tag
             cell.setSelected(true)
             return cell
         case .recommendMedium(let item):
-            return configureMediumCell()(dataSource, collectionView, indexPath, item)
+            return configureMediumCell(onStarButtonTap: onStarButtonTap)(dataSource, collectionView, indexPath, item)
         }
     }
 }
 
-private func configureMediumDetailCell<D>(events:
-    PublishRelay<ImageDetailStateObject.Event>, isSharing: Driver<Bool>, moreButtonTap: PublishRelay<Void>) -> (D, UICollectionView, IndexPath, MediumObject) -> UICollectionViewCell {
+private func configureMediumDetailCell<D>(
+    isSharing: Driver<Bool>,
+    onStarButtonTap: ((String) -> Void)?,
+    onCommentsTap: ((String) -> Void)?,
+    onImageViewTap: ((String) -> Void)?,
+    onUserTap: ((String) -> Void)?,
+    onShareTap: ((String) -> Void)?,
+    onMoreTap: ((String) -> Void)?
+    ) -> (D, UICollectionView, IndexPath, MediumObject) -> UICollectionViewCell {
     return { dataSource, collectionView, indexPath, item in
         let createImageDetailCell: () -> UICollectionViewCell = {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageDetailCell", for: indexPath) as! ImageDetailCell
             cell.configure(
                 with: item,
                 isSharing: isSharing,
-                onStarButtonTap: { events.accept(.onTriggerStarMedium) },
-                onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
-                onImageViewTap: { events.accept(.onTriggerPop) },
-                onUserTap: {
-                    guard let userId = item.user?._id else { return }
-                    events.accept(.onTriggerShowUser(userId))
-            }, onShareTap: { events.accept(.onTriggerShareMedium) },
-               onMoreTap: { moreButtonTap.accept(()) }
+                onStarButtonTap: onStarButtonTap,
+                onCommentsTap: onCommentsTap,
+                onImageViewTap: onImageViewTap,
+                onUserTap: onUserTap,
+                onShareTap: onShareTap,
+               onMoreTap: onMoreTap
             )
             return cell
         }
@@ -84,14 +121,12 @@ private func configureMediumDetailCell<D>(events:
             cell.configure(
                 with: item,
                 isSharing: isSharing,
-                onStarButtonTap: { events.accept(.onTriggerStarMedium) },
-                onCommentsTap: { events.accept(.onTriggerShowComments(item._id)) },
-                onImageViewTap: { events.accept(.onTriggerPop) },
-                onUserTap: {
-                    guard let userId = item.user?._id else { return }
-                    events.accept(.onTriggerShowUser(userId))
-            }, onShareTap: { events.accept(.onTriggerShareMedium) },
-               onMoreTap: { moreButtonTap.accept(()) }
+                onStarButtonTap: onStarButtonTap,
+                onCommentsTap: onCommentsTap,
+                onImageViewTap: onImageViewTap,
+                onUserTap: onUserTap,
+                onShareTap: onShareTap,
+                onMoreTap: onMoreTap
             )
             return cell
         }

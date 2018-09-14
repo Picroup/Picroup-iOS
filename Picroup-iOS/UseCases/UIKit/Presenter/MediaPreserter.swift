@@ -28,19 +28,23 @@ final class MediaPreserter: NSObject {
     private func setup(collectionView: UICollectionView) {
         collectionView.register(UINib(nibName: "RankMediumCell", bundle: nil), forCellWithReuseIdentifier: "RankMediumCell")
         collectionView.register(UINib(nibName: "RankVideoCell", bundle: nil), forCellWithReuseIdentifier: "RankVideoCell")
+        
+        if let layout = collectionView.collectionViewLayout as? WaterFlowLayout {
+            layout.delegate = self
+        }
     }
     
-    func items(footerState: Driver<LoadFooterViewState>) -> (Observable<[Section]>) -> Disposable {
+    func items(footerState: Driver<LoadFooterViewState>, onStarButtonTap: ((String) -> Void)?) -> (Observable<[Section]>) -> Disposable {
         if _animatedDataSource {
             let _dataSource = RxCollectionViewSectionedAnimatedDataSource<Section>(
-                configureCell: configureMediumCell(),
+                configureCell: configureMediumCell(onStarButtonTap: onStarButtonTap),
                 configureSupplementaryView: createLoadFooterSupplementaryView(footerState: footerState)
             )
             self.dataSource = _dataSource
             return _collectionView!.rx.items(dataSource: _dataSource)
         } else {
             let dataSource =  RxCollectionViewSectionedReloadDataSource<Section>(
-                configureCell: configureMediumCell(),
+                configureCell: configureMediumCell(onStarButtonTap: onStarButtonTap),
                 configureSupplementaryView: createLoadFooterSupplementaryView(footerState: footerState)
             )
             self.dataSource = dataSource
@@ -49,22 +53,28 @@ final class MediaPreserter: NSObject {
     }
 }
 
-func configureMediumCell<D>() -> (D, UICollectionView, IndexPath, MediumObject) -> UICollectionViewCell {
+func configureMediumCell<D>(onStarButtonTap: ((String) -> Void)?) -> (D, UICollectionView, IndexPath, MediumObject) -> UICollectionViewCell {
     return { dataSource, collectionView, indexPath, item in
         let defaultCell: () -> UICollectionViewCell = {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankMediumCell", for: indexPath) as! RankMediumCell
-            cell.configure(with: item)
+            cell.configure(with: item, onStarButtonTap: onStarButtonTap)
             return cell
         }
         guard !item.isInvalidated else { return defaultCell() }
         switch item.kind {
         case MediumKind.video.rawValue?:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankVideoCell", for: indexPath) as! RankVideoCell
-            cell.configure(with: item)
+            cell.configure(with: item, onStarButtonTap: onStarButtonTap)
             return cell
         default:
             return defaultCell()
         }
+    }
+}
+
+extension MediaPreserter: WaterFlowLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, heightForItemAtIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
+        return CollectionViewLayoutManager.height(withWidth: width, with: dataSource?[indexPath])
     }
 }
 
@@ -115,6 +125,18 @@ extension CollectionViewLayoutManager {
             aspectRatio = 1
         }
         return CollectionViewLayoutManager.size(in: bounds, aspectRatio: aspectRatio)
+    }
+    
+    
+    
+    static func height(withWidth width: CGFloat, with medium: MediumObject?) -> CGFloat {
+        let aspectRatio: Double
+        if let medium = medium, !medium.isInvalidated {
+            aspectRatio = medium.detail?.aspectRatio.value ?? 1
+        } else {
+            aspectRatio = 1
+        }
+        return width / CGFloat(aspectRatio) + 48
     }
 }
 

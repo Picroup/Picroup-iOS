@@ -27,13 +27,17 @@ extension MediumQueryStateObject: IsCursorItemsStateObject {
 extension MediumQueryStateObject {
     var mediumId: String { return _id }
     func query(currentUserId: String?) -> MediumQuery? {
-        let (userId, withStared) = currentUserId == nil
-            ? ("", false)
-            : (currentUserId!, true)
+        let (userId, withStared) = createWithStarInfo(currentUserId: currentUserId)
         return trigger
-            ? MediumQuery(userId: userId, mediumId: mediumId, cursor: recommendMedia?.cursor.value, withStared: withStared, queryUserId: currentUserId)
+            ? MediumQuery(userId: userId, mediumId: mediumId, cursor: recommendMedia?.cursor.value, withStared: withStared)
             : nil
     }
+}
+
+func createWithStarInfo(currentUserId: String?) -> (userId: String, withStared: Bool) {
+    return currentUserId == nil
+        ? ("", false)
+        : (currentUserId!, true)
 }
 
 extension MediumQueryStateObject {
@@ -77,11 +81,11 @@ extension MediumQueryStateObject: IsFeedbackStateObject {
             switch (isReload, data) {
             case (true, let data?):
                 medium = realm.create(MediumObject.self, value: data.rawSnapshot, update: true)
-                let fragment = data.recommendedMedia.fragments.cursorMediaFragment
+                let fragment = CursorMediaFragment(snapshot: data.recommendedMedia.snapshot)
                 recommendMedia = CursorMediaObject.create(from: fragment, id: PrimaryKey.recommendMediaId(_id))(realm)
             case (false, let data?):
                 medium = realm.create(MediumObject.self, value: data.snapshot, update: true)
-                let fragment = data.recommendedMedia.fragments.cursorMediaFragment
+                let fragment = CursorMediaFragment(snapshot: data.recommendedMedia.snapshot)
                 recommendMedia?.merge(from: fragment)(realm)
             case (_, nil):
                 medium?.delete()

@@ -55,7 +55,7 @@ final class LoginViewController: ShowNavigationBarViewController, IsStateViewCon
                 state.map { $0.loginQueryState?.password }.asObservable().take(1).bind(to: presenter.passwordField.rx.text),
                 state.map { $0.shouldHideUsernameWarning }.distinctUntilChanged().drive(presenter.usernameField.detailLabel.rx.isHidden),
                 state.map { $0.shouldHidePasswordWarning }.distinctUntilChanged().drive(presenter.passwordField.detailLabel.rx.isHidden),
-                state.map { $0.shouldHideForgetPasswordButton }.distinctUntilChanged().drive(presenter.forgetPasswordButton.rx.isHidden),
+//                state.map { $0.shouldHideForgetPasswordButton }.distinctUntilChanged().drive(presenter.forgetPasswordButton.rx.isHidden),
                 state.map { $0.isLoginButtonEnabled }.distinctUntilChanged().drive(presenter.loginButton.rx.isEnabledWithBackgroundColor(.secondary)),
                 presenter.loginButton.rx.tap.asSignal().emit(to: presenter.usernameField.rx.resignFirstResponder()),
                 presenter.loginButton.rx.tap.asSignal().emit(to: presenter.passwordField.rx.resignFirstResponder()),
@@ -87,10 +87,10 @@ private extension LoginStateObject {
         guard let password = loginQueryState?.password, let isPasswordValid = loginQueryState?.isPasswordValid else { return true }
         return password.isEmpty || isPasswordValid
     }
-    var shouldHideForgetPasswordButton: Bool {
-        guard let password = loginQueryState?.password else { return true }
-        return !password.isEmpty
-    }
+//    var shouldHideForgetPasswordButton: Bool {
+//        guard let password = loginQueryState?.password else { return true }
+//        return !password.isEmpty
+//    }
     var isLoginButtonEnabled: Bool {
         guard let shouldLogin = loginQueryState?.shouldLogin, let trigger = loginQueryState?.trigger else { return true }
         return shouldLogin && !trigger

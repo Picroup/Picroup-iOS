@@ -49,7 +49,7 @@ struct PhotoPickerProvider {
     
     static func pickMedia(from vc: UIViewController?) -> Signal<[MediumItem]> {
         return _pickMedia(from: vc) { configuration in
-            configuration.library.maxNumberOfItems = 10
+            configuration.library.maxNumberOfItems = Config.maxUploadsCount
             configuration.shouldSaveNewPicturesToAlbum = false
 
             configuration.video.compression = AVAssetExportPresetMediumQuality
@@ -63,10 +63,6 @@ struct PhotoPickerProvider {
             configuration.library.mediaType = .photoAndVideo
             configuration.startOnScreen = .library
             configuration.screens = [.library, .photo, .video]
-//            configuration.library.maxNumberOfItems = 1
-//            configuration.shouldSaveNewPicturesToAlbum = false
-//            configuration.startOnScreen = .library
-//            configuration.screens = [.library, .photo,]
         }
     }
     

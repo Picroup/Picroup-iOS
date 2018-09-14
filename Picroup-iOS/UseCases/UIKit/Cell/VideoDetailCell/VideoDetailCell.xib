@@ -150,14 +150,14 @@
                             </view>
                         </subviews>
                     </stackView>
-                    <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxV-Bb-TLb" customClass="FABButton" customModule="Material">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxV-Bb-TLb" customClass="FABButton" customModule="Material">
                         <rect key="frame" x="295" y="317" width="56" height="56"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="rxV-Bb-TLb" secondAttribute="height" multiplier="1:1" id="9dX-lh-5OA"/>
                             <constraint firstAttribute="width" constant="56" id="DxM-z5-9RQ"/>
                         </constraints>
-                        <color key="tintColor" red="1" green="0.25098039220000001" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.42655369640000002" green="0.475846082" blue="0.4802647531" alpha="1" colorSpace="calibratedRGB"/>
                         <state key="normal" image="ic_favorite_white"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="image" value="ic_favorite_white"/>

@@ -1,7 +1,11 @@
-query MyStaredMedia($userId: ID!, $cursor: Float = null) {
+query MyStaredMedia($userId: ID!, $cursor: Float = null, $withStared: Boolean!) {
     user(userId: $userId) {
         staredMedia(cursor: $cursor, queryUserId: $userId) {
-            ...CursorMediaFragment
+            cursor
+            items {
+                stared(userId: $userId) @include(if: $withStared)
+                ...MediumFragment
+            }
         }
     }
 }

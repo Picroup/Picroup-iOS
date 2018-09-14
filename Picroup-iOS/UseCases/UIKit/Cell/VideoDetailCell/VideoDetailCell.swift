@@ -28,14 +28,16 @@ class VideoDetailCell: RxCollectionViewCell {
     func configure(
         with item: MediumObject,
         isSharing: Driver<Bool>,
-        onStarButtonTap: (() -> Void)?,
-        onCommentsTap: (() -> Void)?,
-        onImageViewTap: (() -> Void)?,
-        onUserTap: (() -> Void)?,
-        onShareTap: (() -> Void)?,
-        onMoreTap: (() -> Void)?
+        onStarButtonTap: ((String) -> Void)?,
+        onCommentsTap: ((String) -> Void)?,
+        onImageViewTap: ((String) -> Void)?,
+        onUserTap: ((String) -> Void)?,
+        onShareTap: ((String) -> Void)?,
+        onMoreTap: ((String) -> Void)?
         ) {
         
+        if item.isInvalidated { return }
+
         item.rx.observe()
             .asDriverOnErrorRecoverEmpty()
             .drive(rxItem)
@@ -45,42 +47,44 @@ class VideoDetailCell: RxCollectionViewCell {
             .drive(shareButton.rx.spinning)
             .disposed(by: disposeBag)
         
+        let mediumId = item._id
+
         if let onCommentsTap = onCommentsTap {
             commentButton.rx.tap
-                .subscribe(onNext: onCommentsTap)
+                .subscribe(onNext: { onCommentsTap(mediumId) })
                 .disposed(by: disposeBag)
         }
         
         if let onStarButtonTap = onStarButtonTap {
             starButton.rx.tap
-                .subscribe(onNext: onStarButtonTap)
+                .subscribe(onNext: { onStarButtonTap(mediumId) })
                 .disposed(by: disposeBag)
         }
         
         if let onImageViewTap = onImageViewTap {
             playerView.rx.tapGesture().when(.recognized)
                 .mapToVoid()
-                .subscribe(onNext: onImageViewTap)
+                .subscribe(onNext: { onImageViewTap(mediumId) })
                 .disposed(by: disposeBag)
         }
         
-        if let onUserTap = onUserTap {
+        if let onUserTap = onUserTap, let userId = item.userId {
             userView.rx.tapGesture().when(.recognized)
                 .mapToVoid()
-                .subscribe(onNext: onUserTap)
+                .subscribe(onNext: { onUserTap(userId) })
                 .disposed(by: disposeBag)
         }
         
         if let onShareTap = onShareTap {
             shareButton.rx.tap
                 .mapToVoid()
-                .subscribe(onNext: onShareTap)
+                .subscribe(onNext: { onShareTap(mediumId) })
                 .disposed(by: disposeBag)
         }
         
         if let onMoreTap = onMoreTap {
             moreButton.rx.tap
-                .subscribe(onNext: onMoreTap)
+                .subscribe(onNext: { onMoreTap(mediumId) })
                 .disposed(by: disposeBag)
         }
     }
@@ -90,20 +94,19 @@ class VideoDetailCell: RxCollectionViewCell {
             if item.isInvalidated { return }
             let viewModel = ImageDetailViewModel(medium: item)
             cell.playerView.backgroundColor = viewModel.placeholderColor
-            cell.playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
-            cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
             cell.progressView.progress = viewModel.progress
-            cell.starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
             cell.userAvatarImageView.setUserAvatar(with: item.user)
             cell.displayNameLabel.text = viewModel.displayName
             cell.remainTimeLabel.text = viewModel.remainTimeLabelText
             cell.commentButton.setTitle(viewModel.commentsCountText, for: .normal)
-            DispatchQueue.main.async { cell.configureStarButton(with: viewModel) }
+            cell.motionIdentifier = viewModel.cellMotionIdentifier
+            cell.playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
+            cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
+            cell.remainTimeLabel.motionIdentifier = viewModel.remainTimeLabelMotionIdentifier
+            cell.starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
+            DispatchQueue.main.async {
+                StarButtonPresenter.isMediumStared(base: cell.starButton).onNext(viewModel.stared)
+            }
         }
-    }
-    
-    private func configureStarButton(with viewModel: ImageDetailViewModel) {
-        starButton.isEnabled = viewModel.stared == false
-        StarButtonPresenter.isSelected(base: starButton).onNext(viewModel.stared)
     }
 }
