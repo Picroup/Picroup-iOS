@@ -42,21 +42,20 @@ class ImageCommentsPresenter: NSObject {
         navigationItem.detailLabel.textColor = .primaryText
     }
     
-    var medium: Binder<MediumObject> {
-        return Binder(self) { me, medium in
-            let viewModel = ImageDetailViewModel(medium: medium)
-            switch viewModel.kind {
-            case MediumKind.image.rawValue?, MediumKind.video.rawValue?:
-                me.imageView.setImage(with: medium.url?.toURL())
+    var medium: Binder<MediumPresentable> {
+        return Binder(self) { me, item in
+            switch item.mediumKind {
+            case MediumKind.image?, MediumKind.video?:
+                me.imageView.setImage(with: item.imageURL)
                 me.suggestUpdateLabel.isHidden = true
             default:
                 me.imageView.image = nil
                 me.suggestUpdateLabel.isHidden = false
             }
-            me.imageView.backgroundColor = viewModel.placeholderColor
-            me.imageView.motionIdentifier = viewModel.imageViewMotionIdentifier
-            me.sendButton.motionIdentifier = viewModel.starButtonMotionIdentifier
-            me.navigationItem.detailLabel.text = "\(viewModel.commentsCountText) 条  "
+            me.imageView.backgroundColor = item.placeholderColor
+            me.imageView.motionIdentifier = item.imageViewMotionIdentifier
+            me.sendButton.motionIdentifier = item.starButtonMotionIdentifier
+            me.navigationItem.detailLabel.text = "\(item.commentsCountDisplay) 条  "
         }
     }
     

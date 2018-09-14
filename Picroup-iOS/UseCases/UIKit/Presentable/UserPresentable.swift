@@ -8,9 +8,7 @@
 
 import Foundation
 
-protocol UserPresentable {
-    var isInvalidated: Bool { get }
-    var _id: String { get }
+protocol UserPresentable: BasePresentable {
     var usernameDisplay: String { get }
     var displayNameDisplay: String { get }
     var avatarURL: URL? { get }
@@ -36,7 +34,7 @@ extension UserObject: UserPresentable {
     }
     
     var avatarURL: URL? {
-        return url.flatMap(URL.init(string: ))
+        return url?.toURL()
     }
     
     var reputationDisplay: String {

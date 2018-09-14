@@ -311,6 +311,8 @@
 		45BA0D8520903A020002E1D5 /* NotificationsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D8420903A020002E1D5 /* NotificationsStateObject.swift */; };
 		45BA0D8A20903C760002E1D5 /* NotificationsViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0D8920903C760002E1D5 /* NotificationsViewPresenter.swift */; };
 		45BC52AF214B43F3009B87AF /* UserPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC52AE214B43F3009B87AF /* UserPresentable.swift */; };
+		45BC52B1214B4DE8009B87AF /* BasePresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC52B0214B4DE8009B87AF /* BasePresentable.swift */; };
+		45BC52B3214B4E7F009B87AF /* MediumPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC52B2214B4E7F009B87AF /* MediumPresentable.swift */; };
 		45C02050212528070095DB0C /* PresignedPutURL.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 45C0204F212528070095DB0C /* PresignedPutURL.graphql */; };
 		45C1994820A973DD001924B9 /* MediumObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994720A973DD001924B9 /* MediumObject.swift */; };
 		45C1994A20A97402001924B9 /* UserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1994920A97402001924B9 /* UserObject.swift */; };
@@ -703,6 +705,8 @@
 		45BA0D8420903A020002E1D5 /* NotificationsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsStateObject.swift; sourceTree = "<group>"; };
 		45BA0D8920903C760002E1D5 /* NotificationsViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewPresenter.swift; sourceTree = "<group>"; };
 		45BC52AE214B43F3009B87AF /* UserPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresentable.swift; sourceTree = "<group>"; };
+		45BC52B0214B4DE8009B87AF /* BasePresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePresentable.swift; sourceTree = "<group>"; };
+		45BC52B2214B4E7F009B87AF /* MediumPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumPresentable.swift; sourceTree = "<group>"; };
 		45C0204F212528070095DB0C /* PresignedPutURL.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = PresignedPutURL.graphql; sourceTree = "<group>"; };
 		45C1994720A973DD001924B9 /* MediumObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumObject.swift; sourceTree = "<group>"; };
 		45C1994920A97402001924B9 /* UserObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserObject.swift; sourceTree = "<group>"; };
@@ -1842,6 +1846,8 @@
 		45BC52AD214B43D8009B87AF /* Presentable */ = {
 			isa = PBXGroup;
 			children = (
+				45BC52B0214B4DE8009B87AF /* BasePresentable.swift */,
+				45BC52B2214B4E7F009B87AF /* MediumPresentable.swift */,
 				45BC52AE214B43F3009B87AF /* UserPresentable.swift */,
 			);
 			path = Presentable;
@@ -2326,6 +2332,7 @@
 				451631F0213B84A600CC3E55 /* PasswordValidQueryStateObject.swift in Sources */,
 				45662AB5212E880300964BC9 /* CreateImageStateObject+Event.swift in Sources */,
 				45F55F9121070183002BF481 /* ProgressView.swift in Sources */,
+				45BC52B3214B4E7F009B87AF /* MediumPresentable.swift in Sources */,
 				45CEDD5F21240CBE00491B60 /* ResetPasswordPhoneStateObject.swift in Sources */,
 				45662B2B212E8BD400964BC9 /* TagMediaStateObject+system.swift in Sources */,
 				45A827C8208370C500A3121E /* PublishRelay+asBinder.swift in Sources */,
@@ -2379,6 +2386,7 @@
 				45E9770E2134ECAA00723BA1 /* IsFeedbackState.swift in Sources */,
 				45163212213D280600CC3E55 /* UpdateImageTagsStateObject.swift in Sources */,
 				45B0206820B4031100BD5D8F /* FollowersViewController.swift in Sources */,
+				45BC52B1214B4DE8009B87AF /* BasePresentable.swift in Sources */,
 				457B1BA3205FFE9D00BEDDF1 /* Config.swift in Sources */,
 				45C1994A20A97402001924B9 /* UserObject.swift in Sources */,
 				45662B2D212E8BE000964BC9 /* UserStateObject+system.swift in Sources */,

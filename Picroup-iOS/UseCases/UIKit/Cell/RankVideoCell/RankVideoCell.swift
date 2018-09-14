@@ -20,19 +20,18 @@ class RankVideoCell: RxCollectionViewCell {
     @IBOutlet weak var remainTimeLabel: UILabel!
     
     func configure(
-        with item: MediumObject,
+        with item: MediumPresentable,
         onStarButtonTap: ((String) -> Void)?
         ) {
         
         if item.isInvalidated { return }
-
-        Observable.from(object: item)
-            .asDriverOnErrorRecoverEmpty()
+        
+        item.asDriver()
             .drive(rxItem)
             .disposed(by: disposeBag)
         
         let mediumId = item._id
-
+        
         if let onStarButtonTap = onStarButtonTap {
             starButton.rx.tap
                 .subscribe(onNext: { onStarButtonTap(mediumId) })
@@ -40,21 +39,18 @@ class RankVideoCell: RxCollectionViewCell {
         }
     }
     
-    private var rxItem: Binder<MediumObject> {
+    private var rxItem: Binder<MediumPresentable> {
         return Binder(self) { cell, item in
-            //        if item.isInvalidated { return }
-            let viewModel = MediumViewModel(item: item)
-            //        playerView.play(with: item.detail?.videoMinioId)
-            cell.remainTimeLabel.text = viewModel.remainTimeLabelText
-            cell.playerView.backgroundColor = viewModel.placeholderColor
-            cell.playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
+            cell.remainTimeLabel.text = item.remainTimeDisplay
+            cell.playerView.backgroundColor = item.placeholderColor
+            cell.playerView.motionIdentifier = item.imageViewMotionIdentifier
+            cell.progressView.progress = item.lifeProgress
+            cell.motionIdentifier = item.cellMotionIdentifier
+            cell.progressView.motionIdentifier = item.lifeBarMotionIdentifier
+            cell.remainTimeLabel.motionIdentifier = item.remainTimeLabelMotionIdentifier
+            cell.starButton.motionIdentifier = item.starButtonMotionIdentifier
+            StarButtonPresenter.isMediumStared(base: cell.starButton).onNext(item.isStared)
             cell.transition(.fadeOut, .scale(0.75))
-            cell.progressView.progress = viewModel.progress
-            cell.motionIdentifier = viewModel.cellMotionIdentifier
-            cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
-            cell.remainTimeLabel.motionIdentifier = viewModel.remainTimeLabelMotionIdentifier
-            cell.starButton.motionIdentifier = viewModel.starPlaceholderViewMotionIdentifier
-            StarButtonPresenter.isMediumStared(base: cell.starButton).onNext(viewModel.stared)
         }
     }
 }

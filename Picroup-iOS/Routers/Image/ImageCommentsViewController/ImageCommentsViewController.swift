@@ -62,7 +62,7 @@ final class ImageCommentsViewController: ShowNavigationBarViewController, IsStat
             let realm = try? Realm(),
             let state = try? State.create(mediumId: mediumId)(realm) else { return }
         
-        state.rxMedium().bind(to: presenter.medium).disposed(by: disposeBag)
+        state.rxMedium().map { $0 }.bind(to: presenter.medium).disposed(by: disposeBag)
 
         state.system(
             uiFeedback: uiFeedback,

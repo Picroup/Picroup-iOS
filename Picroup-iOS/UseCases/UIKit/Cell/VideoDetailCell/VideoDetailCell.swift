@@ -26,7 +26,7 @@ class VideoDetailCell: RxCollectionViewCell {
     @IBOutlet weak var moreButton: UIButton!
     
     func configure(
-        with item: MediumObject,
+        with item: MediumPresentable,
         isSharing: Driver<Bool>,
         onStarButtonTap: ((String) -> Void)?,
         onCommentsTap: ((String) -> Void)?,
@@ -37,9 +37,8 @@ class VideoDetailCell: RxCollectionViewCell {
         ) {
         
         if item.isInvalidated { return }
-
-        item.rx.observe()
-            .asDriverOnErrorRecoverEmpty()
+        
+        item.asDriver()
             .drive(rxItem)
             .disposed(by: disposeBag)
         
@@ -48,7 +47,7 @@ class VideoDetailCell: RxCollectionViewCell {
             .disposed(by: disposeBag)
         
         let mediumId = item._id
-
+        
         if let onCommentsTap = onCommentsTap {
             commentButton.rx.tap
                 .subscribe(onNext: { onCommentsTap(mediumId) })
@@ -68,7 +67,7 @@ class VideoDetailCell: RxCollectionViewCell {
                 .disposed(by: disposeBag)
         }
         
-        if let onUserTap = onUserTap, let userId = item.userId {
+        if let onUserTap = onUserTap, let userId = item.userDisplay?._id {
             userView.rx.tapGesture().when(.recognized)
                 .mapToVoid()
                 .subscribe(onNext: { onUserTap(userId) })
@@ -89,23 +88,22 @@ class VideoDetailCell: RxCollectionViewCell {
         }
     }
     
-    private var rxItem: Binder<MediumObject> {
+    private var rxItem: Binder<MediumPresentable> {
         return Binder(self) { cell, item in
             if item.isInvalidated { return }
-            let viewModel = ImageDetailViewModel(medium: item)
-            cell.playerView.backgroundColor = viewModel.placeholderColor
-            cell.progressView.progress = viewModel.progress
-            cell.userAvatarImageView.setUserAvatar(with: item.user)
-            cell.displayNameLabel.text = viewModel.displayName
-            cell.remainTimeLabel.text = viewModel.remainTimeLabelText
-            cell.commentButton.setTitle(viewModel.commentsCountText, for: .normal)
-            cell.motionIdentifier = viewModel.cellMotionIdentifier
-            cell.playerView.motionIdentifier = viewModel.imageViewMotionIdentifier
-            cell.progressView.motionIdentifier = viewModel.lifeBarMotionIdentifier
-            cell.remainTimeLabel.motionIdentifier = viewModel.remainTimeLabelMotionIdentifier
-            cell.starButton.motionIdentifier = viewModel.starButtonMotionIdentifier
+            cell.playerView.backgroundColor = item.placeholderColor
+            cell.progressView.progress = item.lifeProgress
+            cell.userAvatarImageView.setUserAvatar(with: item.userDisplay)
+            cell.displayNameLabel.text = item.userDisplay?.displayNameDisplay
+            cell.remainTimeLabel.text = item.remainTimeDisplay
+            cell.commentButton.setTitle(item.commentsCountDisplay, for: .normal)
+            cell.motionIdentifier = item.cellMotionIdentifier
+            cell.playerView.motionIdentifier = item.imageViewMotionIdentifier
+            cell.progressView.motionIdentifier = item.lifeBarMotionIdentifier
+            cell.remainTimeLabel.motionIdentifier = item.remainTimeLabelMotionIdentifier
+            cell.starButton.motionIdentifier = item.starButtonMotionIdentifier
             DispatchQueue.main.async {
-                StarButtonPresenter.isMediumStared(base: cell.starButton).onNext(viewModel.stared)
+                StarButtonPresenter.isMediumStared(base: cell.starButton).onNext(item.isStared)
             }
         }
     }
