@@ -60,14 +60,16 @@ class UserPresenter: NSObject {
     
     var user: Binder<UserObject?> {
         return Binder(self) { presenter, user in
-            let viewModel = UserViewModel(user: user)
+            guard let user = user, !user.isInvalidated else {
+                return
+            }
             presenter.userAvatarImageView.setUserAvatar(with: user)
-            presenter.navigationItem?.titleLabel.text = viewModel.displayName
-            presenter.navigationItem?.detailLabel.text = viewModel.username
-            presenter.reputationCountLabel.text = viewModel.reputation
-            presenter.followersCountLabel.text = viewModel.followersCount
-            presenter.followingsCountLabel.text = viewModel.followingsCount
-            StarButtonPresenter.isSelected(base: presenter.followButton).onNext(viewModel.followed)
+            presenter.navigationItem?.titleLabel.text = user.displayNameDisplay
+            presenter.navigationItem?.detailLabel.text = user.usernameDisplay
+            presenter.reputationCountLabel.text = user.reputationDisplay
+            presenter.followersCountLabel.text = user.followersCountDisplay
+            presenter.followingsCountLabel.text = user.followingsCountDisplay
+            StarButtonPresenter.isSelected(base: presenter.followButton).onNext(user.isFollowed)
         }
     }
     

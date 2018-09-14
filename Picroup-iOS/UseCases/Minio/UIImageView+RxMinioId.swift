@@ -18,9 +18,9 @@ extension String {
 }
 
 extension UIImageView {
-
-    func setImage(with url: String?) {
-        kf.setImage(with: url?.toURL(), options: [.transition(.fade(0.2))])
+    
+    func setImage(with url: URL?) {
+        kf.setImage(with: url, options: [.transition(.fade(0.2))])
     }
 }
 
@@ -35,8 +35,8 @@ extension Reactive where Base: UIImageView {
 
 extension UIImageView {
     
-    func setUserAvatar(with user: UserObject?) {
-        switch (user?.url, user?.displayName) {
+    func setUserAvatar(with item: UserPresentable?) {
+        switch (item?.avatarURL, item?.displayNameDisplay) {
         case (let url?, _):
             setImage(with: url)
         case (_, let displayName?) where !displayName.isEmpty:
@@ -44,7 +44,7 @@ extension UIImageView {
             let imageKey = "local://\(first).\(color.hashValue)"
             let cached = ImageCache.default.imageCachedType(forKey: imageKey) != .none
             if cached {
-                setImage(with: imageKey)
+                setImage(with: imageKey.toURL())
             } else {
                 let image = ImageGenerator.image(char: first, color: color)
                 ImageCache.default.store(image, forKey: imageKey)

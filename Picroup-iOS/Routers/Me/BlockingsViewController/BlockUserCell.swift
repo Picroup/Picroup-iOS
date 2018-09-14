@@ -16,12 +16,15 @@ final class BlockUserCell: RxTableViewCell {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var blockButton: RaisedButton!
     
-    func configure(with item: UserObject?, onBlockButtonTap: (()-> Void)?) {
-        let viewModel = UserViewModel(user: item)
+    func configure(with item: UserPresentable?, onBlockButtonTap: (()-> Void)?) {
+        guard let item = item, !item.isInvalidated else {
+            return
+        }
         userAvatarImageView.setUserAvatar(with: item)
-        displaynameLabel.text = viewModel.displayName
-        usernameLabel.text = viewModel.username
-        BlockButtonPresenter.isSelected(base: blockButton).onNext(viewModel.blocked)
+        displaynameLabel.text = item.displayNameDisplay
+        usernameLabel.text = item.usernameDisplay
+        BlockButtonPresenter.isSelected(base: blockButton).onNext(item.isBlocked)
+        
         if let onBlockButtonTap = onBlockButtonTap {
             blockButton.rx.tap
                 .subscribe(onNext: onBlockButtonTap)
