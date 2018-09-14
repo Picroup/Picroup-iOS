@@ -112,6 +112,10 @@ class ImageDetailCell: RxCollectionViewCell {
             cell.motionIdentifier = item.cellMotionIdentifier
             cell.imageView.motionIdentifier = item.imageViewMotionIdentifier
             cell.progressView.motionIdentifier = item.lifeBarMotionIdentifier
+            
+            cell.userAvatarImageView.motionIdentifier = item.userDisplay?.userImageViewMotionIdentifier
+            cell.displayNameLabel.motionIdentifier = item.userDisplay?.displayNameLabelMotionIdentifier
+            
             cell.remainTimeLabel.motionIdentifier = item.remainTimeLabelMotionIdentifier
             cell.starButton.motionIdentifier = item.starButtonMotionIdentifier
             DispatchQueue.main.async {

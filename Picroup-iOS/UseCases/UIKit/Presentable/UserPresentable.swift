@@ -19,6 +19,9 @@ protocol UserPresentable: BasePresentable {
     var gainedReputationCountDisplay: String { get }
     var isGainedReputationCountHidden: Bool { get }
     
+    var userImageViewMotionIdentifier: String? { get }
+    var displayNameLabelMotionIdentifier: String? { get }
+
     var isFollowed: Bool? { get }
     var isBlocked: Bool? { get }
 }
@@ -63,5 +66,13 @@ extension UserObject: UserPresentable {
     
     var isBlocked: Bool? {
         return blocked.value
+    }
+    
+    var userImageViewMotionIdentifier: String? {
+        return "userImageView.\(_id)"
+    }
+    
+    var displayNameLabelMotionIdentifier: String? {
+        return "displayNameLabel.\(_id)"
     }
 }

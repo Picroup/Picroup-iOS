@@ -97,9 +97,14 @@ class VideoDetailCell: RxCollectionViewCell {
             cell.displayNameLabel.text = item.userDisplay?.displayNameDisplay
             cell.remainTimeLabel.text = item.remainTimeDisplay
             cell.commentButton.setTitle(item.commentsCountDisplay, for: .normal)
+            
             cell.motionIdentifier = item.cellMotionIdentifier
             cell.playerView.motionIdentifier = item.imageViewMotionIdentifier
             cell.progressView.motionIdentifier = item.lifeBarMotionIdentifier
+            
+            cell.userAvatarImageView.motionIdentifier = item.userDisplay?.userImageViewMotionIdentifier
+            cell.displayNameLabel.motionIdentifier = item.userDisplay?.displayNameLabelMotionIdentifier
+            
             cell.remainTimeLabel.motionIdentifier = item.remainTimeLabelMotionIdentifier
             cell.starButton.motionIdentifier = item.starButtonMotionIdentifier
             DispatchQueue.main.async {

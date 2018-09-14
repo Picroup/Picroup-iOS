@@ -89,6 +89,9 @@ class MePresenter: NSObject {
             presenter.followingsCountLabel.text = user.followingsCountDisplay
             presenter.gainedReputationCountButton.setTitle(user.gainedReputationCountDisplay, for: .normal)
             presenter.gainedReputationCountButton.isHidden = user.isGainedReputationCountHidden
+            
+            presenter.userAvatarImageView.motionIdentifier = user.userImageViewMotionIdentifier
+            presenter.navigationItem?.titleLabel.motionIdentifier = user.displayNameLabelMotionIdentifier
         }
     }
     

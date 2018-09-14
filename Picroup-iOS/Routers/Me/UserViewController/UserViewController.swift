@@ -100,7 +100,7 @@ final class UserViewController: ShowNavigationBarViewController, IsStateViewCont
     
     var uiFeedback: State.DriverFeedback {
         weak var weakSelf = self
-        return bind(self) { (me, state) -> Bindings<UserStateObject.Event> in
+        return bind(self) { (me, state) -> Bindings<Event> in
             typealias Section = MediaPreserter.Section
             let _events = PublishRelay<Event>()
             let presenter = me.presenter!
